@@ -26,10 +26,20 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+        man_applet.cpp \
+        man_tray_icon.cpp \
+        man_tree_item.cpp \
+        man_tree_model.cpp \
+        man_tree_view.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+        man_applet.h \
+        man_tray_icon.h \
+        man_tree_item.h \
+        man_tree_model.h \
+        man_tree_view.h
 
 FORMS += \
         mainwindow.ui
