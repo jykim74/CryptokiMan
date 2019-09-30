@@ -1,6 +1,7 @@
 #include "man_tree_view.h"
 
-ManTreeView::ManTreeView()
+ManTreeView::ManTreeView( QWidget *parent )
+    : QTreeView (parent)
 {
 
 }

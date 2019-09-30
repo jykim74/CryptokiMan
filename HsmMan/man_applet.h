@@ -3,6 +3,7 @@
 
 #include <QObject>
 
+class MainWindow;
 
 class ManApplet : public QObject
 {
@@ -10,6 +11,14 @@ class ManApplet : public QObject
 
 public:
     ManApplet( QObject *parent = nullptr );
+    void start();
+
+private:
+    Q_DISABLE_COPY(ManApplet)
+
+    MainWindow* main_win_;
 };
+
+extern ManApplet *manApplet;
 
 #endif // MAN_APPLET_H

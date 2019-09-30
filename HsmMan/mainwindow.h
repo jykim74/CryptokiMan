@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QSplitter>
 #include <QTreeView>
+#include <QTableWidget>
+#include <QTextEdit>
 
 class ManTreeView;
 class ManTreeModel;
@@ -20,12 +22,16 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void initialize();
+
 private:
     QSplitter       *hsplitter_;
     QSplitter       *vsplitter_;
 
     ManTreeView     *left_tree_;
     ManTreeModel    *left_model_;
+    QTableWidget    *right_table_;
+    QTextEdit       *right_text_;
 
 };
 

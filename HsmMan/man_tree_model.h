@@ -6,7 +6,7 @@
 class ManTreeModel : public QStandardItemModel
 {
 public:
-    ManTreeModel();
+    ManTreeModel( QObject *parent = nullptr );
 };
 
 #endif // MAN_TREE_MODEL_H

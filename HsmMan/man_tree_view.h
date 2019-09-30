@@ -5,8 +5,9 @@
 
 class ManTreeView : public QTreeView
 {
+    Q_OBJECT
 public:
-    ManTreeView();
+    ManTreeView( QWidget* parent = nullptr );
 };
 
 #endif // MAN_TREE_VIEW_H
