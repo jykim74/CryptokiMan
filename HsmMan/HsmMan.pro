@@ -31,7 +31,8 @@ SOURCES += \
         man_tray_icon.cpp \
         man_tree_item.cpp \
         man_tree_model.cpp \
-        man_tree_view.cpp
+        man_tree_view.cpp \
+        open_session_dlg.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -39,10 +40,12 @@ HEADERS += \
         man_tray_icon.h \
         man_tree_item.h \
         man_tree_model.h \
-        man_tree_view.h
+        man_tree_view.h \
+        open_session_dlg.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+        open_session_dlg.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

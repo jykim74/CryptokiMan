@@ -11,6 +11,8 @@
 #include "man_tree_view.h"
 #include "js_pkcs11.h"
 #include "js_bin.h"
+#include "man_applet.h"
+#include "open_session_dlg.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -93,12 +95,29 @@ void MainWindow::createActions()
     fileMenu->addAction(openAct);
     fileToolBar->addAction(openAct);
 
+    QAction *unloadAct = new QAction( tr("Unload"), this );
+    unloadAct->setStatusTip(tr("Unload cryptoki library"));
+    connect( unloadAct, &QAction::triggered, this, &MainWindow::unload );
+    fileMenu->addAction(unloadAct);
+
     fileMenu->addSeparator();
 
     QAction *quitAct = new QAction( tr("&Quit"), this );
     quitAct->setStatusTip( tr( "Quit HsmMan" ) );
     connect( quitAct, &QAction::triggered, this, &MainWindow::quit );
     fileMenu->addAction(quitAct);
+
+    QMenu *moduleMenu = menuBar()->addMenu(tr("&Module"));
+    QToolBar *moduleToolBar = addToolBar(tr("Module"));
+
+    QAction *initAct = moduleMenu->addAction(tr("P11Initialize"), left_tree_, &ManTreeView::P11Initialize );
+    initAct->setStatusTip(tr("PKCS11 initialize"));
+
+    QAction *finalAct = moduleMenu->addAction(tr("P11Finalize"), left_tree_, &ManTreeView::P11Finalize);
+    finalAct->setStatusTip(tr("PKCS11 finalize"));
+
+    QAction *openSessAct = moduleMenu->addAction(tr("Open Session"), this, &MainWindow::openSession );
+    openSessAct->setStatusTip(tr("PKCS11 Open Session" ));
 }
 
 void MainWindow::createStatusBar()
@@ -145,4 +164,16 @@ void MainWindow::open()
 void MainWindow::quit()
 {
     exit(0);
+}
+
+void MainWindow::unload()
+{
+   if( p11_ctx_ ) JS_PKCS11_ReleaseLibrry( (JSP11_CTX **)&p11_ctx_ );
+}
+
+void MainWindow::openSession()
+{
+    manApplet->openSessionDlg()->show();
+    manApplet->openSessionDlg()->raise();
+    manApplet->openSessionDlg()->activateWindow();
 }

@@ -28,6 +28,8 @@ private slots:
     void newFile();
     void open();
     void quit();
+    void unload();
+    void openSession();
 
 private:
     void createTableMenu();

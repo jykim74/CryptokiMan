@@ -16,6 +16,7 @@ private slots:
     void onItemClicked( const QModelIndex& index );
     void showContextMenu( QPoint point );
 
+public slots:
     void P11Initialize();
     void P11Finalize();
 

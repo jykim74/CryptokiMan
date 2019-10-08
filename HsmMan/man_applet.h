@@ -4,6 +4,7 @@
 #include <QObject>
 
 class MainWindow;
+class OpenSessionDlg;
 
 class ManApplet : public QObject
 {
@@ -13,10 +14,13 @@ public:
     ManApplet( QObject *parent = nullptr );
     void start();
 
+    OpenSessionDlg* openSessionDlg() { return open_session_dlg_; };
+
 private:
     Q_DISABLE_COPY(ManApplet)
 
     MainWindow* main_win_;
+    OpenSessionDlg* open_session_dlg_;
 };
 
 extern ManApplet *manApplet;
