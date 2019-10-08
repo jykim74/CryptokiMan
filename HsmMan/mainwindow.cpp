@@ -2,6 +2,7 @@
 #include <QFileDialog>
 #include <QFile>
 #include <QDir>
+#include <QString>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -9,6 +10,7 @@
 #include "man_tree_model.h"
 #include "man_tree_view.h"
 #include "js_pkcs11.h"
+#include "js_bin.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -90,6 +92,13 @@ void MainWindow::createActions()
     connect( openAct, &QAction::triggered, this, &MainWindow::open);
     fileMenu->addAction(openAct);
     fileToolBar->addAction(openAct);
+
+    fileMenu->addSeparator();
+
+    QAction *quitAct = new QAction( tr("&Quit"), this );
+    quitAct->setStatusTip( tr( "Quit HsmMan" ) );
+    connect( quitAct, &QAction::triggered, this, &MainWindow::quit );
+    fileMenu->addAction(quitAct);
 }
 
 void MainWindow::createStatusBar()
@@ -106,10 +115,34 @@ void MainWindow::newFile()
 void MainWindow::open()
 {
     QString fileName = QFileDialog::getOpenFileName( this, "/", QDir::currentPath(),
-                                                     "All files(*.*);;DLL files(*.dll))");
+                                                 "All files(*.*);;DLL files(*.dll))");
+
 
     if( !fileName.isEmpty() )
     {
+        int ret = 0;
         file_path_ = fileName;
+        JS_PKCS11_LoadLibrary( (JSP11_CTX **)&p11_ctx_, file_path_.toLocal8Bit().toStdString().c_str() );
+
+        if( ret == 0 )
+        {
+            left_model_->clear();
+
+            QStringList labels;
+            labels << tr("SLot List");
+            left_model_->setHorizontalHeaderLabels( labels );
+
+
+            ManTreeItem *pItem = new ManTreeItem();
+            pItem->setText( tr("CryptokiToken"));
+            left_model_->insertRow(0, pItem );
+
+            left_model_->setP11CTX( (JSP11_CTX *)p11_ctx_ );
+        }
     }
+}
+
+void MainWindow::quit()
+{
+    exit(0);
 }

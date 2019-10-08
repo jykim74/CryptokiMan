@@ -27,6 +27,7 @@ public:
 private slots:
     void newFile();
     void open();
+    void quit();
 
 private:
     void createTableMenu();
