@@ -3,5 +3,6 @@
 ManTreeView::ManTreeView( QWidget *parent )
     : QTreeView (parent)
 {
-
+    setAcceptDrops(true);
+    setContextMenuPolicy(Qt::CustomContextMenu);
 }

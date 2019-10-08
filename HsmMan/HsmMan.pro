@@ -53,3 +53,5 @@ RESOURCES += \
     hsmman.qrc
 
 TRANSLATIONS += i18n/hsmman_ko_KR.ts
+
+INCLUDEPATH += "../../PKILib"

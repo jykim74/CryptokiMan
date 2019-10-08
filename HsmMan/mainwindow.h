@@ -24,7 +24,15 @@ public:
 
     void initialize();
 
+private slots:
+    void newFile();
+    void open();
+
 private:
+    void createTableMenu();
+    void createActions();
+    void createStatusBar();
+
     QSplitter       *hsplitter_;
     QSplitter       *vsplitter_;
 
@@ -32,6 +40,9 @@ private:
     ManTreeModel    *left_model_;
     QTableWidget    *right_table_;
     QTextEdit       *right_text_;
+
+    void            *p11_ctx_;
+    QString         file_path_;
 
 };
 
