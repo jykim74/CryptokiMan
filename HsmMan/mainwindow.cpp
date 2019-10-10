@@ -13,6 +13,7 @@
 #include "js_bin.h"
 #include "man_applet.h"
 #include "open_session_dlg.h"
+#include "close_session_dlg.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -44,6 +45,7 @@ void MainWindow::initialize()
     left_model_ = new ManTreeModel(this);
 
     left_tree_->setModel(left_model_);
+    left_model_->setRightTable( right_table_ );
 
     hsplitter_->addWidget(left_tree_);
     hsplitter_->addWidget(vsplitter_);
@@ -60,6 +62,8 @@ void MainWindow::initialize()
 
     hsplitter_->setSizes(sizes);
     setCentralWidget(hsplitter_);
+
+    connect( right_table_, SIGNAL(clicked(QModelIndex)), this, SLOT(rightTableClick(QModelIndex) ));
 }
 
 void MainWindow::createTableMenu()
@@ -118,6 +122,9 @@ void MainWindow::createActions()
 
     QAction *openSessAct = moduleMenu->addAction(tr("Open Session"), this, &MainWindow::openSession );
     openSessAct->setStatusTip(tr("PKCS11 Open Session" ));
+
+    QAction *closeSessAct = moduleMenu->addAction(tr("Close Session"), this, &MainWindow::closeSession );
+    closeSessAct->setStatusTip(tr("PKCS11 Close Session"));
 }
 
 void MainWindow::createStatusBar()
@@ -176,4 +183,30 @@ void MainWindow::openSession()
     manApplet->openSessionDlg()->show();
     manApplet->openSessionDlg()->raise();
     manApplet->openSessionDlg()->activateWindow();
+}
+
+void MainWindow::closeSession()
+{
+    manApplet->closeSessionDlg()->show();
+    manApplet->closeSessionDlg()->raise();
+    manApplet->closeSessionDlg()->activateWindow();
+}
+
+
+void MainWindow::rightTableClick(QModelIndex index)
+{
+    qDebug( "clicked view" );
+
+    int row = index.row();
+    int col = index.column();
+
+    QTableWidgetItem *item = right_table_->item( row, col );
+
+    if( item == NULL )
+    {
+        qDebug( "item is null" );
+        return;
+    }
+
+    right_text_->setPlainText( item->text() );
 }

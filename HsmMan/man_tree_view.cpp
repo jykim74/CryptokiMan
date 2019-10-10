@@ -18,7 +18,8 @@ ManTreeView::ManTreeView( QWidget *parent )
 
 void ManTreeView::onItemClicked( const QModelIndex& index )
 {
-
+    ManTreeModel *tree_model = (ManTreeModel *)model();
+    tree_model->showGetInfo();
 }
 
 void ManTreeView::showContextMenu( QPoint point )

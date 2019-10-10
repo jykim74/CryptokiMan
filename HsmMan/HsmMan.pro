@@ -25,6 +25,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        close_session_dlg.cpp \
         main.cpp \
         mainwindow.cpp \
         man_applet.cpp \
@@ -35,6 +36,7 @@ SOURCES += \
         open_session_dlg.cpp
 
 HEADERS += \
+        close_session_dlg.h \
         mainwindow.h \
         man_applet.h \
         man_tray_icon.h \
@@ -44,6 +46,7 @@ HEADERS += \
         open_session_dlg.h
 
 FORMS += \
+        close_session_dlg.ui \
         mainwindow.ui \
         open_session_dlg.ui
 

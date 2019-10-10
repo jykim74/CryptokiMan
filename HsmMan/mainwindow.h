@@ -30,6 +30,9 @@ private slots:
     void quit();
     void unload();
     void openSession();
+    void closeSession();
+
+    void rightTableClick( QModelIndex index );
 
 private:
     void createTableMenu();
