@@ -85,6 +85,72 @@ void ManTreeModel::showGetInfo()
     row++;
 }
 
+void ManTreeModel::showSlotInfo()
+{
+    long uSlotID = -1;
+
+    CK_SLOT_INFO stSlotInfo;
+
+    int rv = JS_PKCS11_GetSlotInfo( p11_ctx_, uSlotID, &stSlotInfo );
+
+    if( rv != CKR_OK )
+    {
+        return;
+    }
+
+    removeAllRightTable();
+
+    int row = 0;
+    QString strMsg = "";
+
+    right_table_->insertRow( row );
+    right_table_->setItem( row, 0, new QTableWidgetItem( QString("Slot ID" )));
+    strMsg = QString("%1").arg(uSlotID);
+    right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
+    row++;
+
+    right_table_->insertRow( row );
+    right_table_->setItem( row, 0, new QTableWidgetItem( QString("firmwareVersion" )));
+    strMsg = QString( "V%1.%2").arg( stSlotInfo.firmwareVersion.major ).arg( stSlotInfo.firmwareVersion.minor );
+    right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ));
+    row++;
+
+    right_table_->insertRow( row );
+    right_table_->setItem( row, 0, new QTableWidgetItem( QString("flags" )));
+    strMsg = QString( "%1" ).arg( stSlotInfo.flags );
+    if( stSlotInfo.flags & CKF_TOKEN_PRESENT )
+        strMsg += " | token present";
+
+    if( stSlotInfo.flags & CKF_REMOVABLE_DEVICE )
+        strMsg += " | removable device";
+
+    if( stSlotInfo.flags & CKF_HW_SLOT )
+        strMsg += " | HW slot";
+
+
+    right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
+    row++;
+
+    right_table_->insertRow( row );
+    right_table_->setItem( row, 0, new QTableWidgetItem( QString("hardwareVersion") ));
+    strMsg = QString( "V%1.%2").arg( stSlotInfo.hardwareVersion.major ).arg( stSlotInfo.hardwareVersion.minor );
+    right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
+    row++;
+
+    right_table_->insertRow( row );
+    right_table_->setItem( row, 0, new QTableWidgetItem( QString("manufacturerID")));
+    strMsg = QString( "%1" ).arg( (char *)stSlotInfo.manufacturerID );
+    right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
+    row++;
+
+    right_table_->insertRow( row );
+    right_table_->setItem( row, 0, new QTableWidgetItem( QString("slotDescription" )));
+    strMsg = QString( "%1" ).arg( (char *)stSlotInfo.slotDescription );
+    right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
+    row++;
+}
+
+
 void ManTreeModel::setRightTable(QTableWidget *right_table)
 {
     right_table_ = right_table;

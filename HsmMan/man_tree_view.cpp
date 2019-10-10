@@ -23,6 +23,8 @@ void ManTreeView::onItemClicked( const QModelIndex& index )
 
     if( item->getType() == HM_ITEM_TYPE_ROOT )
         tree_model->showGetInfo();
+    else if( item->getType() == HM_ITEM_TYPE_SLOT )
+        tree_model->showSlotInfo();
     else {
         tree_model->removeAllRightTable();
     }
@@ -79,6 +81,7 @@ void ManTreeView::P11Initialize()
             ManTreeItem *item = new ManTreeItem;
             item->setType( HM_ITEM_TYPE_SLOT );
             item->setText( strDesc );
+            item->setSlotID( sSlotList[i] );
 
             parent_item->appendRow( item );
 

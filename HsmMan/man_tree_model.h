@@ -17,6 +17,8 @@ public:
     void setP11CTX( JSP11_CTX *pCTX );
 
     void showGetInfo();
+    void showSlotInfo();
+
     void setRightTable( QTableWidget *right_table );
     void removeAllRightTable();
 
