@@ -14,6 +14,8 @@
 #include "man_applet.h"
 #include "open_session_dlg.h"
 #include "close_session_dlg.h"
+#include "login_dlg.h"
+#include "gen_key_pair_dlg.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -125,6 +127,21 @@ void MainWindow::createActions()
 
     QAction *closeSessAct = moduleMenu->addAction(tr("Close Session"), this, &MainWindow::closeSession );
     closeSessAct->setStatusTip(tr("PKCS11 Close Session"));
+
+    QAction *closeAllSessAct = moduleMenu->addAction(tr("Close All Sessions"), this, &MainWindow::closeAllSessions );
+    closeAllSessAct->setStatusTip(tr("PKCS11 Close All Sessions"));
+
+    QAction *loginAct = moduleMenu->addAction(tr("Login"), this, &MainWindow::login );
+    loginAct->setStatusTip(tr( "PKCS11 Login" ));
+
+    QAction *logoutAct = moduleMenu->addAction(tr("Logout"), this, &MainWindow::logout );
+    logoutAct->setStatusTip(tr( "PKCS11 Login" ));
+
+    QMenu *objetsMenu = menuBar()->addMenu(tr("&Objects"));
+    QToolBar *objectsToolBar = addToolBar(tr("Objects"));
+
+    QAction *genKeyPairAct = objetsMenu->addAction(tr("Generate Key Pair" ), this, &MainWindow::generateKeyPair );
+    genKeyPairAct->setStatusTip(tr("PKCS11 Generate KeyPair" ));
 }
 
 void MainWindow::createStatusBar()
@@ -161,6 +178,7 @@ void MainWindow::open()
 
             ManTreeItem *pItem = new ManTreeItem();
             pItem->setText( tr("CryptokiToken"));
+            pItem->setType( HM_ITEM_TYPE_ROOT );
             left_model_->insertRow(0, pItem );
 
             left_model_->setP11CTX( (JSP11_CTX *)p11_ctx_ );
@@ -193,6 +211,32 @@ void MainWindow::closeSession()
 }
 
 
+void MainWindow::closeAllSessions()
+{
+    manApplet->closeSessionDlg()->show();
+    manApplet->closeSessionDlg()->raise();
+    manApplet->closeSessionDlg()->activateWindow();
+}
+
+void MainWindow::login()
+{
+    manApplet->loginDlg()->show();
+    manApplet->loginDlg()->raise();
+    manApplet->loginDlg()->activateWindow();
+}
+
+void MainWindow::logout()
+{
+    manApplet->yesOrNoBox( tr("Do you want to logout?" ), this );
+}
+
+void MainWindow::generateKeyPair()
+{
+    manApplet->genKeyPairDlg()->show();
+    manApplet->genKeyPairDlg()->raise();
+    manApplet->genKeyPairDlg()->activateWindow();
+}
+
 void MainWindow::rightTableClick(QModelIndex index)
 {
     qDebug( "clicked view" );
@@ -209,4 +253,12 @@ void MainWindow::rightTableClick(QModelIndex index)
     }
 
     right_text_->setPlainText( item->text() );
+}
+
+void MainWindow::showWindow()
+{
+    showNormal();
+    show();
+    raise();
+    activateWindow();
 }

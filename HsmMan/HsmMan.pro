@@ -26,6 +26,8 @@ CONFIG += c++11
 
 SOURCES += \
         close_session_dlg.cpp \
+        gen_key_pair_dlg.cpp \
+        login_dlg.cpp \
         main.cpp \
         mainwindow.cpp \
         man_applet.cpp \
@@ -37,6 +39,8 @@ SOURCES += \
 
 HEADERS += \
         close_session_dlg.h \
+        gen_key_pair_dlg.h \
+        login_dlg.h \
         mainwindow.h \
         man_applet.h \
         man_tray_icon.h \
@@ -47,6 +51,8 @@ HEADERS += \
 
 FORMS += \
         close_session_dlg.ui \
+        gen_key_pair_dlg.ui \
+        login_dlg.ui \
         mainwindow.ui \
         open_session_dlg.ui
 

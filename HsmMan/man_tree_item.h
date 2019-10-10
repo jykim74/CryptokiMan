@@ -3,17 +3,29 @@
 
 #include <QStandardItem>
 
-#define     CM_TREE_ROOT            "ROOT"
-#define     CM_TREE_SLOT            "SLOT"
-#define     CM_TREE_TOKEN           "TOKEN"
-#define     CM_TREE_MECHANISM       "MECHANISM"
-#define     CM_TREE_SESSION         "SESSION"
-#define     CM_TREE_OBJECTS         "OBJECTS"
-#define     CM_TREE_CERTIFICATE     "CERTIFICATE"
-#define     CM_TREE_PUBLICKEY       "PUBLICKEY"
-#define     CM_TREE_PRIVATEKEY      "PRIVATEKEY"
-#define     CM_TREE_SECRETKEY       "SECRETKEY"
-#define     CM_TREE_DATA            "DATA"
+#define     HM_TREE_ROOT            "ROOT"
+#define     HM_TREE_SLOT            "SLOT"
+#define     HM_TREE_TOKEN           "TOKEN"
+#define     HM_TREE_MECHANISM       "MECHANISM"
+#define     HM_TREE_SESSION         "SESSION"
+#define     HM_TREE_OBJECTS         "OBJECTS"
+#define     HM_TREE_CERTIFICATE     "CERTIFICATE"
+#define     HM_TREE_PUBLICKEY       "PUBLICKEY"
+#define     HM_TREE_PRIVATEKEY      "PRIVATEKEY"
+#define     HM_TREE_SECRETKEY       "SECRETKEY"
+#define     HM_TREE_DATA            "DATA"
+
+#define     HM_ITEM_TYPE_ROOT           0
+#define     HM_ITEM_TYPE_SLOT           1
+#define     HM_ITEM_TYPE_TOKEN          2
+#define     HM_ITEM_TYPE_MECHANISM      3
+#define     HM_ITEM_TYPE_SESSION        4
+#define     HM_ITEM_TYPE_OBJECTS        5
+#define     HM_ITEM_TYPE_CERTIFICATE    6
+#define     HM_ITEM_TYPE_PUBLICKEY      7
+#define     HM_ITEM_TYPE_PRIVATEKEY     8
+#define     HM_ITEM_TYPE_SECRETKEY      9
+#define     HM_ITEM_TYPE_DATA           10
 
 class ManTreeItem : public QStandardItem
 {
@@ -23,15 +35,12 @@ public:
 
 
     int getType() { return type_; };
-    int getStatus() { return status_; };
 
     void setType( int type );
-    void setStatus( int status );
 
 
 private:
     int     type_;
-    int     status_;
 };
 
 #endif // MAN_TREE_ITEM_H

@@ -23,6 +23,7 @@ public:
     ~MainWindow();
 
     void initialize();
+    void showWindow();
 
 private slots:
     void newFile();
@@ -31,8 +32,14 @@ private slots:
     void unload();
     void openSession();
     void closeSession();
+    void closeAllSessions();
+    void login();
+    void logout();
+    void generateKeyPair();
 
     void rightTableClick( QModelIndex index );
+
+
 
 private:
     void createTableMenu();
