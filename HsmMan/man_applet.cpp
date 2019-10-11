@@ -6,6 +6,8 @@
 #include "close_session_dlg.h"
 #include "login_dlg.h"
 #include "gen_key_pair_dlg.h"
+#include "gen_key_dlg.h"
+#include "gen_data_dlg.h"
 
 ManApplet *manApplet;
 
@@ -16,6 +18,8 @@ ManApplet::ManApplet( QObject *parent )
     close_session_dlg_ = new CloseSessionDlg;
     login_dlg_ = new LoginDlg;
     gen_key_pair_dlg_ = new GenKeyPairDlg;
+    gen_key_dlg_ = new GenKeyDlg;
+    gen_data_dlg_ = new GenDataDlg;
 }
 
 void ManApplet::start()

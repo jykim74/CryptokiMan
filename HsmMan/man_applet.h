@@ -9,6 +9,8 @@ class OpenSessionDlg;
 class CloseSessionDlg;
 class LoginDlg;
 class GenKeyPairDlg;
+class GenKeyDlg;
+class GenDataDlg;
 
 class ManApplet : public QObject
 {
@@ -22,6 +24,8 @@ public:
     CloseSessionDlg* closeSessionDlg() { return close_session_dlg_; };
     LoginDlg* loginDlg() { return login_dlg_; };
     GenKeyPairDlg* genKeyPairDlg() { return gen_key_pair_dlg_; };
+    GenKeyDlg* genKeyDlg() { return gen_key_dlg_; };
+    GenDataDlg* genDataDlg() { return gen_data_dlg_; };
 
 
     void messageBox(const QString& msg, QWidget *parent=0);
@@ -43,6 +47,8 @@ private:
     CloseSessionDlg* close_session_dlg_;
     LoginDlg* login_dlg_;
     GenKeyPairDlg* gen_key_pair_dlg_;
+    GenKeyDlg* gen_key_dlg_;
+    GenDataDlg* gen_data_dlg_;
 };
 
 extern ManApplet *manApplet;

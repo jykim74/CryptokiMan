@@ -16,6 +16,8 @@
 #include "close_session_dlg.h"
 #include "login_dlg.h"
 #include "gen_key_pair_dlg.h"
+#include "gen_key_dlg.h"
+#include "gen_data_dlg.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -137,11 +139,17 @@ void MainWindow::createActions()
     QAction *logoutAct = moduleMenu->addAction(tr("Logout"), this, &MainWindow::logout );
     logoutAct->setStatusTip(tr( "PKCS11 Login" ));
 
-    QMenu *objetsMenu = menuBar()->addMenu(tr("&Objects"));
+    QMenu *objectsMenu = menuBar()->addMenu(tr("&Objects"));
     QToolBar *objectsToolBar = addToolBar(tr("Objects"));
 
-    QAction *genKeyPairAct = objetsMenu->addAction(tr("Generate Key Pair" ), this, &MainWindow::generateKeyPair );
+    QAction *genKeyPairAct = objectsMenu->addAction(tr("Generate Key Pair" ), this, &MainWindow::generateKeyPair );
     genKeyPairAct->setStatusTip(tr("PKCS11 Generate KeyPair" ));
+
+    QAction *genKeyAct = objectsMenu->addAction(tr("Generate Key"), this, &MainWindow::generateKey );
+    genKeyAct->setStatusTip(tr("PKCS11 Generate Key"));
+
+    QAction *genDataAct = objectsMenu->addAction(tr("Generate Data"), this, &MainWindow::generateData );
+    genDataAct->setStatusTip(tr("PKCS11 Generate Data"));
 }
 
 void MainWindow::createStatusBar()
@@ -235,6 +243,20 @@ void MainWindow::generateKeyPair()
     manApplet->genKeyPairDlg()->show();
     manApplet->genKeyPairDlg()->raise();
     manApplet->genKeyPairDlg()->activateWindow();
+}
+
+void MainWindow::generateKey()
+{
+    manApplet->genKeyDlg()->show();
+    manApplet->genKeyDlg()->raise();
+    manApplet->genKeyDlg()->activateWindow();
+}
+
+void MainWindow::generateData()
+{
+    manApplet->genDataDlg()->show();
+    manApplet->genDataDlg()->raise();
+    manApplet->genDataDlg()->activateWindow();
 }
 
 void MainWindow::rightTableClick(QModelIndex index)

@@ -36,6 +36,8 @@ private slots:
     void login();
     void logout();
     void generateKeyPair();
+    void generateKey();
+    void generateData();
 
     void rightTableClick( QModelIndex index );
 
