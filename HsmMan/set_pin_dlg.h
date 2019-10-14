@@ -2,12 +2,13 @@
 #define SET_PIN_DLG_H
 
 #include <QDialog>
+#include "ui_set_pin_dlg.h"
 
 namespace Ui {
 class SetPinDlg;
 }
 
-class SetPinDlg : public QDialog
+class SetPinDlg : public QDialog, public Ui::SetPinDlg
 {
     Q_OBJECT
 
@@ -16,7 +17,6 @@ public:
     ~SetPinDlg();
 
 private:
-    Ui::SetPinDlg *ui;
 };
 
 #endif // SET_PIN_DLG_H

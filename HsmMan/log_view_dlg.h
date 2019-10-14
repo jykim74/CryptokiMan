@@ -2,12 +2,13 @@
 #define LOG_VIEW_DLG_H
 
 #include <QDialog>
+#include "ui_log_view_dlg.h"
 
 namespace Ui {
 class LogViewDlg;
 }
 
-class LogViewDlg : public QDialog
+class LogViewDlg : public QDialog, public Ui::LogViewDlg
 {
     Q_OBJECT
 
@@ -16,7 +17,7 @@ public:
     ~LogViewDlg();
 
 private:
-    Ui::LogViewDlg *ui;
+
 };
 
 #endif // LOG_VIEW_DLG_H

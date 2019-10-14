@@ -2,12 +2,13 @@
 #define INIT_TOKEN_DLG_H
 
 #include <QDialog>
+#include "ui_init_token_dlg.h"
 
 namespace Ui {
 class InitTokenDlg;
 }
 
-class InitTokenDlg : public QDialog
+class InitTokenDlg : public QDialog, public Ui::InitTokenDlg
 {
     Q_OBJECT
 
@@ -16,7 +17,7 @@ public:
     ~InitTokenDlg();
 
 private:
-    Ui::InitTokenDlg *ui;
+
 };
 
 #endif // INIT_TOKEN_DLG_H

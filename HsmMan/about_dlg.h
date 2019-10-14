@@ -2,12 +2,13 @@
 #define ABOUT_DLG_H
 
 #include <QDialog>
+#include "ui_about_dlg.h"
 
 namespace Ui {
 class AboutDlg;
 }
 
-class AboutDlg : public QDialog
+class AboutDlg : public QDialog, public Ui::AboutDlg
 {
     Q_OBJECT
 
@@ -16,7 +17,7 @@ public:
     ~AboutDlg();
 
 private:
-    Ui::AboutDlg *ui;
+
 };
 
 #endif // ABOUT_DLG_H

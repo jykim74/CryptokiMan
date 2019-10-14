@@ -2,12 +2,13 @@
 #define UNWRAP_KEY_DLG_H
 
 #include <QDialog>
+#include "ui_unwrap_key_dlg.h"
 
 namespace Ui {
 class UnwrapKeyDlg;
 }
 
-class UnwrapKeyDlg : public QDialog
+class UnwrapKeyDlg : public QDialog, public Ui::UnwrapKeyDlg
 {
     Q_OBJECT
 
@@ -16,7 +17,7 @@ public:
     ~UnwrapKeyDlg();
 
 private:
-    Ui::UnwrapKeyDlg *ui;
+
 };
 
 #endif // UNWRAP_KEY_DLG_H
