@@ -25,6 +25,23 @@
 #include "create_key_dlg.h"
 #include "del_object_dlg.h"
 #include "edit_attribute_dlg.h"
+#include "digest_dlg.h"
+#include "sign_dlg.h"
+#include "verify_dlg.h"
+#include "encrypt_dlg.h"
+#include "decrypt_dlg.h"
+#include "import_cert_dlg.h"
+#include "import_pfx_dlg.h"
+#include "import_pri_key_dlg.h"
+#include "init_token_dlg.h"
+#include "rand_dlg.h"
+#include "set_pin_dlg.h"
+#include "init_pin_dlg.h"
+#include "wrap_key_dlg.h"
+#include "unwrap_key_dlg.h"
+#include "derive_key_dlg.h"
+#include "about_dlg.h"
+#include "log_view_dlg.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -178,6 +195,69 @@ void MainWindow::createActions()
 
     QAction *editAttributeAct = objectsMenu->addAction(tr("Edit Attribute"), this, &MainWindow::editAttribute );
     editAttributeAct->setStatusTip(tr("PKCS11 Edit Attribute"));
+
+    QMenu *cryptMenu = menuBar()->addMenu(tr("&Crypt"));
+    QToolBar *cryptToolBar = addToolBar(tr("Crypt"));
+
+    QAction *digestAct = cryptMenu->addAction(tr("Digest"), this, &MainWindow::digest );
+    digestAct->setStatusTip(tr("PKCS11 Digest"));
+
+    QAction *signAct = cryptMenu->addAction(tr("Signature"), this, &MainWindow::sign );
+    signAct->setStatusTip(tr("PKCS11 Signature"));
+
+    QAction *verifyAct = cryptMenu->addAction(tr("Verify"), this, &MainWindow::verify);
+    verifyAct->setStatusTip(tr("PKCS11 Verify"));
+
+    QAction *encryptAct = cryptMenu->addAction(tr("Encrypt"), this, &MainWindow::encrypt );
+    encryptAct->setStatusTip(tr( "PKCS11 Encrypt"));
+
+    QAction *decryptAct = cryptMenu->addAction(tr("Decrypt"), this, &MainWindow::decrypt );
+    decryptAct->setStatusTip(tr("PKCS11 Decrypt"));
+
+    QMenu *importMenu = menuBar()->addMenu(tr("&Import"));
+    QToolBar *importToolBar = addToolBar(tr("Import"));
+
+    QAction *importCertAct = importMenu->addAction(tr("Import certificate"), this, &MainWindow::importCert );
+    importCertAct->setStatusTip(tr("PKCS11 import certificate"));
+
+    QAction *importPFXAct = importMenu->addAction(tr("Import PFX"), this, &MainWindow::importPFX);
+    importPFXAct->setStatusTip(tr("PKCS11 import PFX"));
+
+    QAction *importPriKeyAct = importMenu->addAction(tr("Import Private Key"), this, &MainWindow::improtPrivateKey);
+    importPriKeyAct->setStatusTip(tr("PKCS11 import private key"));
+
+    QMenu *toolsMenu = menuBar()->addMenu(tr("&Tools"));
+    QToolBar *toolsToolBar = addToolBar(tr("Tools"));
+
+    QAction *initTokenAct = toolsMenu->addAction(tr("Initialize Token"), this, &MainWindow::initToken );
+    initTokenAct->setStatusTip(tr("PKCS11 Initialize token"));
+
+    QAction *randAct = toolsMenu->addAction(tr("Random"), this, &MainWindow::rand);
+    randAct->setStatusTip(tr("PKCS11 Random"));
+
+    QAction *setPinAct = toolsMenu->addAction(tr("Set PIN"), this, &MainWindow::setPin);
+    setPinAct->setStatusTip(tr("PKCS11 set PIN"));
+
+    QAction *initPinAct = toolsMenu->addAction(tr("Init PIN"), this, &MainWindow::initPin);
+    initPinAct->setStatusTip(tr("PKCS11 init PIN"));
+
+    QAction *wrapKeyAct = toolsMenu->addAction(tr("Wrap Key"), this, &MainWindow::wrapKey);
+    wrapKeyAct->setStatusTip(tr("PKCS11 wrap key"));
+
+    QAction *unwrapKeyAct = toolsMenu->addAction(tr("Unwrap Key"), this, &MainWindow::unwrapKey);
+    unwrapKeyAct->setStatusTip(tr("PKCS11 unwrap key"));
+
+    QAction *deriveKeyAct = toolsMenu->addAction(tr("Derive Key"), this, &MainWindow::deriveKey);
+    deriveKeyAct->setStatusTip(tr("PKCS11 derive key"));
+
+    QMenu *helpMenu = menuBar()->addMenu(tr("&Help"));
+    QToolBar *helpToolBar = addToolBar(tr("Help"));
+
+    QAction *aboutAct = helpMenu->addAction(tr("About"), this, &MainWindow::about );
+    aboutAct->setStatusTip(tr("About HsmMan"));
+
+    QAction *logViewAct = helpMenu->addAction(tr("Log View"), this, &MainWindow::logView);
+    logViewAct->setStatusTip(tr("view log for PKCS11"));
 }
 
 void MainWindow::createStatusBar()
@@ -334,6 +414,125 @@ void MainWindow::editAttribute()
     manApplet->editAttributeDlg()->show();
     manApplet->editAttributeDlg()->raise();
     manApplet->editAttributeDlg()->activateWindow();
+}
+
+void MainWindow::digest()
+{
+    manApplet->digestDlg()->show();
+    manApplet->digestDlg()->raise();
+    manApplet->digestDlg()->activateWindow();
+}
+
+void MainWindow::sign()
+{
+    manApplet->signDlg()->show();
+    manApplet->signDlg()->raise();
+    manApplet->signDlg()->activateWindow();
+}
+
+void MainWindow::verify()
+{
+    manApplet->verifyDlg()->show();
+    manApplet->verifyDlg()->raise();
+    manApplet->verifyDlg()->activateWindow();
+}
+
+void MainWindow::encrypt()
+{
+    manApplet->encryptDlg()->show();
+    manApplet->encryptDlg()->raise();
+    manApplet->encryptDlg()->activateWindow();
+}
+
+void MainWindow::decrypt()
+{
+    manApplet->decryptDlg()->show();
+    manApplet->decryptDlg()->raise();
+    manApplet->decryptDlg()->activateWindow();
+}
+
+void MainWindow::importCert()
+{
+    manApplet->importCertDlg()->show();
+    manApplet->importCertDlg()->raise();
+    manApplet->importCertDlg()->activateWindow();
+}
+
+void MainWindow::importPFX()
+{
+    manApplet->importPFXDlg()->show();
+    manApplet->importPFXDlg()->raise();
+    manApplet->importPFXDlg()->activateWindow();
+}
+
+void MainWindow::improtPrivateKey()
+{
+    manApplet->importPriKeyDlg()->show();
+    manApplet->importPriKeyDlg()->raise();
+    manApplet->importPriKeyDlg()->activateWindow();
+}
+
+void MainWindow::about()
+{
+    manApplet->aboutDlg()->show();
+    manApplet->aboutDlg()->raise();
+    manApplet->aboutDlg()->activateWindow();
+}
+
+void MainWindow::logView()
+{
+    manApplet->logViewDlg()->show();
+    manApplet->logViewDlg()->raise();
+    manApplet->logViewDlg()->activateWindow();
+}
+
+void MainWindow::initToken()
+{
+    manApplet->initTokenDlg()->show();
+    manApplet->initTokenDlg()->raise();
+    manApplet->initTokenDlg()->activateWindow();
+}
+
+void MainWindow::rand()
+{
+    manApplet->randDlg()->show();
+    manApplet->randDlg()->raise();
+    manApplet->randDlg()->activateWindow();
+}
+
+void MainWindow::setPin()
+{
+    manApplet->setPinDlg()->show();
+    manApplet->setPinDlg()->raise();
+    manApplet->setPinDlg()->activateWindow();
+}
+
+void MainWindow::initPin()
+{
+    manApplet->initPinDlg()->show();
+    manApplet->initPinDlg()->raise();
+    manApplet->initPinDlg()->activateWindow();
+}
+
+void MainWindow::wrapKey()
+{
+    manApplet->wrapKeyDlg()->show();
+    manApplet->wrapKeyDlg()->raise();
+    manApplet->wrapKeyDlg()->activateWindow();
+}
+
+void MainWindow::unwrapKey()
+{
+    manApplet->unwrapKeyDlg()->show();
+    manApplet->unwrapKeyDlg()->raise();
+    manApplet->unwrapKeyDlg()->activateWindow();
+}
+
+void MainWindow::deriveKey()
+{
+    manApplet->deriveKeyDlg()->show();
+    manApplet->deriveKeyDlg()->raise();
+    manApplet->deriveKeyDlg()->activateWindow();
 }
 
 void MainWindow::rightTableClick(QModelIndex index)

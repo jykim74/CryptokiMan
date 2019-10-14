@@ -15,6 +15,23 @@
 #include "create_key_dlg.h"
 #include "del_object_dlg.h"
 #include "edit_attribute_dlg.h"
+#include "digest_dlg.h"
+#include "sign_dlg.h"
+#include "verify_dlg.h"
+#include "encrypt_dlg.h"
+#include "decrypt_dlg.h"
+#include "import_cert_dlg.h"
+#include "import_pfx_dlg.h"
+#include "import_pri_key_dlg.h"
+#include "about_dlg.h"
+#include "log_view_dlg.h"
+#include "init_token_dlg.h"
+#include "rand_dlg.h"
+#include "set_pin_dlg.h"
+#include "init_pin_dlg.h"
+#include "wrap_key_dlg.h"
+#include "unwrap_key_dlg.h"
+#include "derive_key_dlg.h"
 
 ManApplet *manApplet;
 
@@ -34,6 +51,23 @@ ManApplet::ManApplet( QObject *parent )
     create_key_dlg_ = new CreateKeyDlg;
     del_object_dlg_ = new DelObjectDlg;
     edit_attribute_dlg_ = new EditAttributeDlg;
+    digest_dlg_ = new DigestDlg;
+    sign_dlg_ = new SignDlg;
+    verify_dlg_ = new VerifyDlg;
+    encrypt_dlg_ = new EncryptDlg;
+    decrypt_dlg_ = new DecryptDlg;
+    import_cert_dlg_ = new ImportCertDlg;
+    import_pfx_dlg_ = new ImportPFXDlg;
+    import_pri_key_dlg_ = new ImportPriKeyDlg;
+    about_dlg_ = new AboutDlg;
+    log_view_dlg_ = new LogViewDlg;
+    init_token_dlg_ = new InitTokenDlg;
+    rand_dlg_ = new RandDlg;
+    set_pin_dlg_ = new SetPinDlg;
+    init_pin_dlg_ = new InitPinDlg;
+    wrap_key_dlg_ = new WrapKeyDlg;
+    unwrap_key_dlg_ = new UnwrapKeyDlg;
+    derive_key_dlg_ = new DeriveKeyDlg;
 }
 
 void ManApplet::start()

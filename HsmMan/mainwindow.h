@@ -45,6 +45,23 @@ private slots:
     void createKey();
     void deleteObject();
     void editAttribute();
+    void digest();
+    void sign();
+    void verify();
+    void encrypt();
+    void decrypt();
+    void importCert();
+    void importPFX();
+    void improtPrivateKey();
+    void initToken();
+    void rand();
+    void setPin();
+    void initPin();
+    void wrapKey();
+    void unwrapKey();
+    void deriveKey();
+    void about();
+    void logView();
 
     void rightTableClick( QModelIndex index );
 
