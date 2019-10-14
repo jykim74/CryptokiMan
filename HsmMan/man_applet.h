@@ -11,6 +11,13 @@ class LoginDlg;
 class GenKeyPairDlg;
 class GenKeyDlg;
 class GenDataDlg;
+class GenRSAPubKeyDlg;
+class GenRSAPriKeyDlg;
+class GenECPubKeyDlg;
+class GenECPriKeyDlg;
+class CreateKeyDlg;
+class DelObjectDlg;
+class EditAttributeDlg;
 
 class ManApplet : public QObject
 {
@@ -26,6 +33,13 @@ public:
     GenKeyPairDlg* genKeyPairDlg() { return gen_key_pair_dlg_; };
     GenKeyDlg* genKeyDlg() { return gen_key_dlg_; };
     GenDataDlg* genDataDlg() { return gen_data_dlg_; };
+    GenRSAPubKeyDlg* genRSAPubKeyDlg() { return gen_rsa_pub_key_dlg_; };
+    GenRSAPriKeyDlg* genRSAPriKeyDlg() { return gen_rsa_pri_key_dlg_; };
+    GenECPubKeyDlg* genECPubKeyDlg() { return gen_ec_pub_key_dlg_; };
+    GenECPriKeyDlg* genECPriKeyDlg() { return gen_ec_pri_key_dlg_; };
+    CreateKeyDlg* createKeyDlg() { return create_key_dlg_; };
+    DelObjectDlg* delObjectDlg() { return del_object_dlg_; };
+    EditAttributeDlg* editAttributeDlg() { return edit_attribute_dlg_; };
 
 
     void messageBox(const QString& msg, QWidget *parent=0);
@@ -49,6 +63,13 @@ private:
     GenKeyPairDlg* gen_key_pair_dlg_;
     GenKeyDlg* gen_key_dlg_;
     GenDataDlg* gen_data_dlg_;
+    GenRSAPubKeyDlg* gen_rsa_pub_key_dlg_;
+    GenRSAPriKeyDlg* gen_rsa_pri_key_dlg_;
+    GenECPubKeyDlg* gen_ec_pub_key_dlg_;
+    GenECPriKeyDlg* gen_ec_pri_key_dlg_;
+    CreateKeyDlg* create_key_dlg_;
+    DelObjectDlg* del_object_dlg_;
+    EditAttributeDlg* edit_attribute_dlg_;
 };
 
 extern ManApplet *manApplet;

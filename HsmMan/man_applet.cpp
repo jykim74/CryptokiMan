@@ -8,6 +8,13 @@
 #include "gen_key_pair_dlg.h"
 #include "gen_key_dlg.h"
 #include "gen_data_dlg.h"
+#include "gen_rsa_pub_key_dlg.h"
+#include "gen_rsa_pri_key_dlg.h"
+#include "gen_ec_pub_key_dlg.h"
+#include "gen_ec_pri_key_dlg.h"
+#include "create_key_dlg.h"
+#include "del_object_dlg.h"
+#include "edit_attribute_dlg.h"
 
 ManApplet *manApplet;
 
@@ -20,6 +27,13 @@ ManApplet::ManApplet( QObject *parent )
     gen_key_pair_dlg_ = new GenKeyPairDlg;
     gen_key_dlg_ = new GenKeyDlg;
     gen_data_dlg_ = new GenDataDlg;
+    gen_rsa_pub_key_dlg_ = new GenRSAPubKeyDlg;
+    gen_rsa_pri_key_dlg_ = new GenRSAPriKeyDlg;
+    gen_ec_pub_key_dlg_ = new GenECPubKeyDlg;
+    gen_ec_pri_key_dlg_ = new GenECPriKeyDlg;
+    create_key_dlg_ = new CreateKeyDlg;
+    del_object_dlg_ = new DelObjectDlg;
+    edit_attribute_dlg_ = new EditAttributeDlg;
 }
 
 void ManApplet::start()

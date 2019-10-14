@@ -18,6 +18,13 @@
 #include "gen_key_pair_dlg.h"
 #include "gen_key_dlg.h"
 #include "gen_data_dlg.h"
+#include "gen_rsa_pub_key_dlg.h"
+#include "gen_rsa_pri_key_dlg.h"
+#include "gen_ec_pub_key_dlg.h"
+#include "gen_ec_pri_key_dlg.h"
+#include "create_key_dlg.h"
+#include "del_object_dlg.h"
+#include "edit_attribute_dlg.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -150,6 +157,27 @@ void MainWindow::createActions()
 
     QAction *genDataAct = objectsMenu->addAction(tr("Generate Data"), this, &MainWindow::generateData );
     genDataAct->setStatusTip(tr("PKCS11 Generate Data"));
+
+    QAction *genRSAPubKeyAct = objectsMenu->addAction(tr("Generate RSA Public Key"), this, &MainWindow::generateRSAPublicKey );
+    genRSAPubKeyAct->setStatusTip(tr( "PKCS11 Generate RSA Public key" ));
+
+    QAction *genRSAPriKeyAct = objectsMenu->addAction(tr("Generate RSA Private Key"), this, &MainWindow::generateRSAPrivateKey );
+    genRSAPriKeyAct->setStatusTip(tr( "PKCS11 Generate RSA Private key" ));
+
+    QAction *genECPubKeyAct = objectsMenu->addAction(tr("Generate EC Public Key"), this, &MainWindow::generateECPublicKey );
+    genECPubKeyAct->setStatusTip(tr( "PKCS11 Generate EC Public key" ));
+
+    QAction *genECPriKeyAct = objectsMenu->addAction(tr("Generate EC Private Key"), this, &MainWindow::generateECPrivateKey );
+    genECPriKeyAct->setStatusTip(tr("PKCS11 Generate EC Private key" ));
+
+    QAction *createKeyAct = objectsMenu->addAction(tr("Create Key" ), this, &MainWindow::createKey );
+    createKeyAct->setStatusTip(tr("PKCS11 Create Key"));
+
+    QAction *delObjectAct = objectsMenu->addAction(tr("Delete Object"), this, &MainWindow::deleteObject );
+    delObjectAct->setStatusTip(tr("PKCS11 Delete Object"));
+
+    QAction *editAttributeAct = objectsMenu->addAction(tr("Edit Attribute"), this, &MainWindow::editAttribute );
+    editAttributeAct->setStatusTip(tr("PKCS11 Edit Attribute"));
 }
 
 void MainWindow::createStatusBar()
@@ -257,6 +285,55 @@ void MainWindow::generateData()
     manApplet->genDataDlg()->show();
     manApplet->genDataDlg()->raise();
     manApplet->genDataDlg()->activateWindow();
+}
+
+void MainWindow::generateRSAPublicKey()
+{
+    manApplet->genRSAPubKeyDlg()->show();
+    manApplet->genRSAPubKeyDlg()->raise();
+    manApplet->genRSAPubKeyDlg()->activateWindow();
+}
+
+void MainWindow::generateRSAPrivateKey()
+{
+    manApplet->genRSAPriKeyDlg()->show();
+    manApplet->genRSAPriKeyDlg()->raise();
+    manApplet->genRSAPriKeyDlg()->activateWindow();
+}
+
+void MainWindow::generateECPublicKey()
+{
+    manApplet->genECPubKeyDlg()->show();
+    manApplet->genECPubKeyDlg()->raise();
+    manApplet->genECPubKeyDlg()->activateWindow();
+}
+
+void MainWindow::generateECPrivateKey()
+{
+    manApplet->genECPriKeyDlg()->show();
+    manApplet->genECPriKeyDlg()->raise();
+    manApplet->genECPriKeyDlg()->activateWindow();
+}
+
+void MainWindow::createKey()
+{
+    manApplet->createKeyDlg()->show();
+    manApplet->createKeyDlg()->raise();
+    manApplet->createKeyDlg()->activateWindow();
+}
+
+void MainWindow::deleteObject()
+{
+    manApplet->delObjectDlg()->show();
+    manApplet->delObjectDlg()->raise();
+    manApplet->delObjectDlg()->activateWindow();
+}
+
+void MainWindow::editAttribute()
+{
+    manApplet->editAttributeDlg()->show();
+    manApplet->editAttributeDlg()->raise();
+    manApplet->editAttributeDlg()->activateWindow();
 }
 
 void MainWindow::rightTableClick(QModelIndex index)

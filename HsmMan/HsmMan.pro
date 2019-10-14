@@ -26,9 +26,16 @@ CONFIG += c++11
 
 SOURCES += \
         close_session_dlg.cpp \
+        create_key_dlg.cpp \
+        del_object_dlg.cpp \
+        edit_attribute_dlg.cpp \
         gen_data_dlg.cpp \
+        gen_ec_pri_key_dlg.cpp \
+        gen_ec_pub_key_dlg.cpp \
         gen_key_dlg.cpp \
         gen_key_pair_dlg.cpp \
+        gen_rsa_pri_key_dlg.cpp \
+        gen_rsa_pub_key_dlg.cpp \
         login_dlg.cpp \
         main.cpp \
         mainwindow.cpp \
@@ -41,9 +48,16 @@ SOURCES += \
 
 HEADERS += \
         close_session_dlg.h \
+        create_key_dlg.h \
+        del_object_dlg.h \
+        edit_attribute_dlg.h \
         gen_data_dlg.h \
+        gen_ec_pri_key_dlg.h \
+        gen_ec_pub_key_dlg.h \
         gen_key_dlg.h \
         gen_key_pair_dlg.h \
+        gen_rsa_pri_key_dlg.h \
+        gen_rsa_pub_key_dlg.h \
         login_dlg.h \
         mainwindow.h \
         man_applet.h \
@@ -55,9 +69,16 @@ HEADERS += \
 
 FORMS += \
         close_session_dlg.ui \
+        create_key_dlg.ui \
+        del_object_dlg.ui \
+        edit_attribute_dlg.ui \
         gen_data_dlg.ui \
+        gen_ec_pri_key_dlg.ui \
+        gen_ec_pub_key_dlg.ui \
         gen_key_dlg.ui \
         gen_key_pair_dlg.ui \
+        gen_rsa_pri_key_dlg.ui \
+        gen_rsa_pub_key_dlg.ui \
         login_dlg.ui \
         mainwindow.ui \
         open_session_dlg.ui

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>EditAttributeDlg</class>
+ <widget class="QDialog" name="EditAttributeDlg">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0" colspan="3">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Slot list</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="9">
+    <widget class="QComboBox" name="comboBox"/>
+   </item>
+   <item row="4" column="0" colspan="2">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Attribute</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QLineEdit" name="lineEdit"/>
+   </item>
+   <item row="3" column="6">
+    <widget class="QLabel" name="label_7">
+     <property name="text">
+      <string>Login</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Slot ID</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="3">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Slot status</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>Type</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="7">
+    <widget class="QLineEdit" name="lineEdit_3"/>
+   </item>
+   <item row="6" column="0" colspan="9">
+    <widget class="QTextBrowser" name="textBrowser"/>
+   </item>
+   <item row="3" column="4" colspan="2">
+    <widget class="QLineEdit" name="lineEdit_2"/>
+   </item>
+   <item row="3" column="2" colspan="2">
+    <widget class="QLabel" name="label_6">
+     <property name="text">
+      <string>Session Handle</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="4" colspan="2">
+    <widget class="QLabel" name="label_8">
+     <property name="text">
+      <string>Object Handle</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="6" colspan="2">
+    <widget class="QPushButton" name="pushButton_3">
+     <property name="text">
+      <string>Close</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="3">
+    <widget class="QPushButton" name="pushButton">
+     <property name="text">
+      <string>Get Attribute</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="4">
+    <widget class="QPushButton" name="pushButton_2">
+     <property name="text">
+      <string>Set Attribute</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="6" colspan="2">
+    <widget class="QLineEdit" name="lineEdit_4"/>
+   </item>
+   <item row="5" column="1" colspan="3">
+    <widget class="QComboBox" name="comboBox_2"/>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -38,6 +38,13 @@ private slots:
     void generateKeyPair();
     void generateKey();
     void generateData();
+    void generateRSAPublicKey();
+    void generateRSAPrivateKey();
+    void generateECPublicKey();
+    void generateECPrivateKey();
+    void createKey();
+    void deleteObject();
+    void editAttribute();
 
     void rightTableClick( QModelIndex index );
 
