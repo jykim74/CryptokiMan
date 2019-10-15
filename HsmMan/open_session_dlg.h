@@ -16,6 +16,10 @@ public:
     explicit OpenSessionDlg(QWidget *parent = nullptr);
     ~OpenSessionDlg();
 
+private slots:
+    void showEvent(QShowEvent *event);
+    virtual void accept();
+
 private:
     void initialize();
 //    Ui::OpenSessionDlg *ui;
