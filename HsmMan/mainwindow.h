@@ -7,6 +7,8 @@
 #include <QTableWidget>
 #include <QTextEdit>
 #include "js_pkcs11.h"
+#include "temp_array.h"
+#include "slot_info.h"
 
 class ManTreeView;
 class ManTreeModel;
@@ -26,6 +28,8 @@ public:
     void initialize();
     void showWindow();
     JSP11_CTX* getP11CTX() { return p11_ctx_; };
+    QList<SlotInfo>& getSlotInfos() { return slot_infos_; };
+
 
 private slots:
     void newFile();
@@ -85,6 +89,7 @@ private:
     JSP11_CTX       *p11_ctx_;
     QString         file_path_;
 
+    QList<SlotInfo> slot_infos_;
 };
 
 #endif // MAINWINDOW_H

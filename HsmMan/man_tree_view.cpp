@@ -63,6 +63,7 @@ void ManTreeView::P11Initialize()
     ManTreeItem *parent_item = currentItem();
 
     pCTX = manApplet->mainWindow()->getP11CTX();
+    QList<SlotInfo>& slotInfos = manApplet->mainWindow()->getSlotInfos();
 
     if( pCTX == NULL ) return;
 
@@ -75,9 +76,12 @@ void ManTreeView::P11Initialize()
         for( int i=0; i < uSlotCnt; i++ )
         {
             CK_SLOT_INFO    sSlotInfo;
+            SlotInfo    slotInfo;
 
             ret = JS_PKCS11_GetSlotInfo( pCTX, sSlotList[i], &sSlotInfo );
             if( ret != 0 ) continue;
+
+
 
             QString strDesc = QString( "%1 [%2]" ).arg( (char *)sSlotInfo.slotDescription ).arg(i);
             ManTreeItem *item = new ManTreeItem;
@@ -86,6 +90,13 @@ void ManTreeView::P11Initialize()
             item->setSlotID( sSlotList[i] );
 
             parent_item->appendRow( item );
+
+            slotInfo.setDesc( strDesc );
+            slotInfo.setLogin( false );
+            slotInfo.setSlotID( sSlotList[i]);
+            slotInfo.setSessionHandle(-1);
+
+            slotInfos.push_back( slotInfo );
 
 
             ManTreeItem *pItemToken = new ManTreeItem( QString("Token") );

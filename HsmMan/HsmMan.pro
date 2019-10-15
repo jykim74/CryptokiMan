@@ -59,6 +59,7 @@ SOURCES += \
         rand_dlg.cpp \
         set_pin_dlg.cpp \
         sign_dlg.cpp \
+        slot_info.cpp \
         unwrap_key_dlg.cpp \
         verify_dlg.cpp \
         wrap_key_dlg.cpp
@@ -97,6 +98,8 @@ HEADERS += \
         rand_dlg.h \
         set_pin_dlg.h \
         sign_dlg.h \
+        slot_info.h \
+        temp_array.h \
         unwrap_key_dlg.h \
         verify_dlg.h \
         wrap_key_dlg.h
