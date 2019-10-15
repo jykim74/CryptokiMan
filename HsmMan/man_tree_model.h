@@ -13,8 +13,7 @@ class ManTreeModel : public QStandardItemModel
 {
 public:
     ManTreeModel( QObject *parent = nullptr );
-    JSP11_CTX* getP11CTX() { return p11_ctx_; };
-    void setP11CTX( JSP11_CTX *pCTX );
+
 
     void showGetInfo();
     void showSlotInfo();
@@ -25,7 +24,6 @@ public:
 private:
     void initialize();
 
-    JSP11_CTX *p11_ctx_;
     QTableWidget    *right_table_;
 
 };

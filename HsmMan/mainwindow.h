@@ -6,6 +6,7 @@
 #include <QTreeView>
 #include <QTableWidget>
 #include <QTextEdit>
+#include "js_pkcs11.h"
 
 class ManTreeView;
 class ManTreeModel;
@@ -24,6 +25,7 @@ public:
 
     void initialize();
     void showWindow();
+    JSP11_CTX* getP11CTX() { return p11_ctx_; };
 
 private slots:
     void newFile();
@@ -80,7 +82,7 @@ private:
     QTableWidget    *right_table_;
     QTextEdit       *right_text_;
 
-    void            *p11_ctx_;
+    JSP11_CTX       *p11_ctx_;
     QString         file_path_;
 
 };

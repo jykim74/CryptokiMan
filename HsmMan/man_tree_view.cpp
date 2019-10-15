@@ -5,6 +5,8 @@
 #include "man_tree_view.h"
 #include "man_tree_model.h"
 #include "man_tree_item.h"
+#include "man_applet.h"
+#include "mainwindow.h"
 
 ManTreeView::ManTreeView( QWidget *parent )
     : QTreeView (parent)
@@ -60,7 +62,7 @@ void ManTreeView::P11Initialize()
     ManTreeModel *tree_model = (ManTreeModel *)model();
     ManTreeItem *parent_item = currentItem();
 
-    pCTX = tree_model->getP11CTX();
+    pCTX = manApplet->mainWindow()->getP11CTX();
 
     if( pCTX == NULL ) return;
 
@@ -136,7 +138,7 @@ void ManTreeView::P11Finalize()
 
     ManTreeModel *tree_model = (ManTreeModel *)model();
 
-    pCTX = tree_model->getP11CTX();
+    pCTX = manApplet->mainWindow()->getP11CTX();
 
     if( pCTX == NULL ) return;
 

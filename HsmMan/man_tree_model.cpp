@@ -3,12 +3,13 @@
 #include "man_tree_model.h"
 #include "man_tree_item.h"
 #include "js_pkcs11.h"
+#include "man_applet.h"
+#include "mainwindow.h"
 
 ManTreeModel::ManTreeModel( QObject *parent )
     : QStandardItemModel(parent)
 {
     initialize();
-    p11_ctx_ = NULL;
 }
 
 void ManTreeModel::initialize()
@@ -24,10 +25,6 @@ void ManTreeModel::initialize()
     insertRow( 0, item_ );
 }
 
-void ManTreeModel::setP11CTX(JSP11_CTX *pCTX)
-{
-    p11_ctx_ = pCTX;
-}
 
 void ManTreeModel::removeAllRightTable()
 {
@@ -43,10 +40,13 @@ void ManTreeModel::showGetInfo()
 {
     int ret = 0;
     CK_INFO     sInfo;
+    JSP11_CTX*  p11_ctx = NULL;
 
     memset( &sInfo, 0x00, sizeof(sInfo));
 
-    ret = JS_PKCS11_GetInfo( p11_ctx_, &sInfo );
+    p11_ctx = manApplet->mainWindow()->getP11CTX();
+
+    ret = JS_PKCS11_GetInfo( p11_ctx, &sInfo );
     if( ret != CKR_OK ) return;
 
     removeAllRightTable();
@@ -89,9 +89,11 @@ void ManTreeModel::showSlotInfo()
 {
     long uSlotID = -1;
 
+    JSP11_CTX* p11_ctx = NULL;
     CK_SLOT_INFO stSlotInfo;
 
-    int rv = JS_PKCS11_GetSlotInfo( p11_ctx_, uSlotID, &stSlotInfo );
+    p11_ctx = manApplet->mainWindow()->getP11CTX();
+    int rv = JS_PKCS11_GetSlotInfo( p11_ctx, uSlotID, &stSlotInfo );
 
     if( rv != CKR_OK )
     {

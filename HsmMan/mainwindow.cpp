@@ -296,8 +296,6 @@ void MainWindow::open()
             pItem->setText( tr("CryptokiToken"));
             pItem->setType( HM_ITEM_TYPE_ROOT );
             left_model_->insertRow(0, pItem );
-
-            left_model_->setP11CTX( (JSP11_CTX *)p11_ctx_ );
         }
     }
 }

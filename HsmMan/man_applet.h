@@ -44,6 +44,7 @@ public:
     ManApplet( QObject *parent = nullptr );
     void start();
 
+    MainWindow* mainWindow() { return main_win_; };
     OpenSessionDlg* openSessionDlg() { return open_session_dlg_; };
     CloseSessionDlg* closeSessionDlg() { return close_session_dlg_; };
     LoginDlg* loginDlg() { return login_dlg_; };
