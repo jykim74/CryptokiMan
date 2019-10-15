@@ -42,6 +42,7 @@
 #include "derive_key_dlg.h"
 #include "about_dlg.h"
 #include "log_view_dlg.h"
+#include "settings_dlg.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -100,7 +101,7 @@ void MainWindow::createTableMenu()
 
     labels << tr("Field") << tr("Value");
     right_table_->setColumnCount(2);
-
+    right_table_->setColumnWidth(1, 500);
     right_table_->setHorizontalHeaderLabels( labels );
     right_table_->verticalHeader()->setVisible(false);
 
@@ -258,6 +259,9 @@ void MainWindow::createActions()
 
     QAction *logViewAct = helpMenu->addAction(tr("Log View"), this, &MainWindow::logView);
     logViewAct->setStatusTip(tr("view log for PKCS11"));
+
+    QAction *settingsAct = helpMenu->addAction(tr("Settings"), this, &MainWindow::settings );
+    settingsAct->setStatusTip(tr("Settings HsmMan"));
 }
 
 void MainWindow::createStatusBar()
@@ -531,6 +535,13 @@ void MainWindow::deriveKey()
     manApplet->deriveKeyDlg()->show();
     manApplet->deriveKeyDlg()->raise();
     manApplet->deriveKeyDlg()->activateWindow();
+}
+
+void MainWindow::settings()
+{
+    manApplet->settingsDlg()->show();
+    manApplet->settingsDlg()->raise();
+    manApplet->settingsDlg()->activateWindow();
 }
 
 void MainWindow::rightTableClick(QModelIndex index)

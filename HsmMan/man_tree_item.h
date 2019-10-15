@@ -35,15 +35,15 @@ public:
 
 
     int getType() { return type_; };
-    long getSlotID() { return slot_id_; };
+    long getSlotIndex() { return slot_index_; };
 
     void setType( int type );
-    void setSlotID( long slot_id );
+    void setSlotIndex( long slot_index );
 
 
 private:
     int     type_;
-    long    slot_id_;
+    long    slot_index_;
 };
 
 #endif // MAN_TREE_ITEM_H

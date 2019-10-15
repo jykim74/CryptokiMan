@@ -26,7 +26,9 @@ void ManTreeView::onItemClicked( const QModelIndex& index )
     if( item->getType() == HM_ITEM_TYPE_ROOT )
         tree_model->showGetInfo();
     else if( item->getType() == HM_ITEM_TYPE_SLOT )
-        tree_model->showSlotInfo();
+        tree_model->showSlotInfo( item->getSlotIndex() );
+    else if( item->getType() == HM_ITEM_TYPE_TOKEN )
+        tree_model->showTokenInfo( item->getSlotIndex() );
     else {
         tree_model->removeAllRightTable();
     }
@@ -87,7 +89,7 @@ void ManTreeView::P11Initialize()
             ManTreeItem *item = new ManTreeItem;
             item->setType( HM_ITEM_TYPE_SLOT );
             item->setText( strDesc );
-            item->setSlotID( sSlotList[i] );
+            item->setSlotIndex( i );
 
             parent_item->appendRow( item );
 
@@ -101,39 +103,48 @@ void ManTreeView::P11Initialize()
 
             ManTreeItem *pItemToken = new ManTreeItem( QString("Token") );
             pItemToken->setType( HM_ITEM_TYPE_TOKEN );
+            pItemToken->setSlotIndex(i);
             item->appendRow( pItemToken );
 
 
             ManTreeItem *pItemMech = new ManTreeItem( QString("Mechanism") );
             pItemMech->setType( HM_ITEM_TYPE_MECHANISM );
+            pItemMech->setSlotIndex(i);
             item->appendRow( pItemMech );
 
             ManTreeItem *pItemSession = new ManTreeItem( QString("Session") );
             pItemSession->setType( HM_ITEM_TYPE_SESSION );
+            pItemSession->setSlotIndex(i);
             item->appendRow( pItemSession );
 
             ManTreeItem *pItemObjects = new ManTreeItem( QString("Objects") );
             pItemObjects->setType( HM_ITEM_TYPE_OBJECTS );
+            pItemObjects->setSlotIndex(i);
             item->appendRow( pItemObjects );
 
             ManTreeItem *pItemCert = new ManTreeItem( QString("Certificate" ) );
             pItemCert->setType( HM_ITEM_TYPE_CERTIFICATE );
+            pItemCert->setSlotIndex(i);
             pItemObjects->appendRow( pItemCert );
 
             ManTreeItem *pItemPubKey = new ManTreeItem( QString("PublicKey") );
             pItemPubKey->setType( HM_ITEM_TYPE_PUBLICKEY );
+            pItemPubKey->setSlotIndex(i);
             pItemObjects->appendRow( pItemPubKey );
 
             ManTreeItem *pItemPriKey = new ManTreeItem( QString("PrivateKey" ) );
             pItemPriKey->setType( HM_ITEM_TYPE_PRIVATEKEY );
+            pItemPriKey->setSlotIndex(i);
             pItemObjects->appendRow( pItemPriKey );
 
             ManTreeItem *pItemSecKey = new ManTreeItem( QString("SecretKey" ) );
             pItemSecKey->setType( HM_ITEM_TYPE_SECRETKEY );
+            pItemSecKey->setSlotIndex(i);
             pItemObjects->appendRow( pItemSecKey );
 
             ManTreeItem *pItemData = new ManTreeItem( QString("Data" ) );
             pItemData->setType( HM_ITEM_TYPE_DATA );
+            pItemData->setSlotIndex(i);
             pItemObjects->appendRow( pItemData );
         }
 

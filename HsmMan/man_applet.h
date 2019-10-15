@@ -35,6 +35,7 @@ class InitPinDlg;
 class WrapKeyDlg;
 class UnwrapKeyDlg;
 class DeriveKeyDlg;
+class SettingsDlg;
 
 class ManApplet : public QObject
 {
@@ -75,6 +76,7 @@ public:
     WrapKeyDlg* wrapKeyDlg() {return wrap_key_dlg_; };
     UnwrapKeyDlg* unwrapKeyDlg() {return unwrap_key_dlg_; };
     DeriveKeyDlg* deriveKeyDlg() {return derive_key_dlg_; };
+    SettingsDlg* settingsDlg() { return settings_dlg_; };
 
 
     void messageBox(const QString& msg, QWidget *parent=0);
@@ -122,6 +124,7 @@ private:
     WrapKeyDlg* wrap_key_dlg_;
     UnwrapKeyDlg* unwrap_key_dlg_;
     DeriveKeyDlg* derive_key_dlg_;
+    SettingsDlg* settings_dlg_;
 };
 
 extern ManApplet *manApplet;

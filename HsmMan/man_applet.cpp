@@ -32,6 +32,7 @@
 #include "wrap_key_dlg.h"
 #include "unwrap_key_dlg.h"
 #include "derive_key_dlg.h"
+#include "settings_dlg.h"
 
 ManApplet *manApplet;
 
@@ -68,6 +69,7 @@ ManApplet::ManApplet( QObject *parent )
     wrap_key_dlg_ = new WrapKeyDlg;
     unwrap_key_dlg_ = new UnwrapKeyDlg;
     derive_key_dlg_ = new DeriveKeyDlg;
+    settings_dlg_ = new SettingsDlg;
 }
 
 void ManApplet::start()

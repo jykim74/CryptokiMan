@@ -68,6 +68,7 @@ private slots:
     void deriveKey();
     void about();
     void logView();
+    void settings();
 
     void rightTableClick( QModelIndex index );
 

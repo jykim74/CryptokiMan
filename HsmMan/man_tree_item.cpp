@@ -3,13 +3,13 @@
 ManTreeItem::ManTreeItem()
 {
     type_ = -1;
-    slot_id_ = -1;
+    slot_index_ = -1;
 }
 
 ManTreeItem::ManTreeItem( const QString& text )
 {
     type_ = -1;
-    slot_id_ = -1;
+    slot_index_ = -1;
 
     setText( text );
 }
@@ -19,7 +19,7 @@ void ManTreeItem::setType(int type)
     type_ = type;
 }
 
-void ManTreeItem::setSlotID(long slot_id)
+void ManTreeItem::setSlotIndex(long slot_index)
 {
-    slot_id_ = slot_id;
+    slot_index_ = slot_index;
 }

@@ -58,6 +58,7 @@ SOURCES += \
         open_session_dlg.cpp \
         rand_dlg.cpp \
         set_pin_dlg.cpp \
+        settings_dlg.cpp \
         sign_dlg.cpp \
         slot_info.cpp \
         unwrap_key_dlg.cpp \
@@ -97,6 +98,7 @@ HEADERS += \
         open_session_dlg.h \
         rand_dlg.h \
         set_pin_dlg.h \
+        settings_dlg.h \
         sign_dlg.h \
         slot_info.h \
         temp_array.h \
@@ -132,6 +134,7 @@ FORMS += \
         open_session_dlg.ui \
         rand_dlg.ui \
         set_pin_dlg.ui \
+        settings_dlg.ui \
         sign_dlg.ui \
         unwrap_key_dlg.ui \
         verify_dlg.ui \

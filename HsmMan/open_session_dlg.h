@@ -17,6 +17,7 @@ public:
     ~OpenSessionDlg();
 
 private:
+    void initialize();
 //    Ui::OpenSessionDlg *ui;
 };
 

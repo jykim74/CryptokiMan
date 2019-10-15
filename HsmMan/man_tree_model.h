@@ -16,7 +16,8 @@ public:
 
 
     void showGetInfo();
-    void showSlotInfo();
+    void showSlotInfo( int index );
+    void showTokenInfo( int index );
 
     void setRightTable( QTableWidget *right_table );
     void removeAllRightTable();
