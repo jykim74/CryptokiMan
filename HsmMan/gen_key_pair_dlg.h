@@ -16,8 +16,35 @@ public:
     explicit GenKeyPairDlg(QWidget *parent = nullptr);
     ~GenKeyPairDlg();
 
-private:
+private slots:
+    void showEvent(QShowEvent *event);
+    virtual void accept();
+    void slotChanged( int index );
+    void mechChanged( int nIndex );
 
+    void clickPriPrivate();
+    void clickPriDecrypt();
+    void clickPriSign();
+    void clickPriUnwrap();
+    void clickPriModifiable();
+    void clickPriSensitive();
+    void clickPriDerive();
+    void clickPriExtractable();
+    void clickPriToken();
+
+    void clickPubPrivate();
+    void clickPubEncrypt();
+    void clickPubWrap();
+    void clickPubVerify();
+    void clickPubDerive();
+    void clickPubModifiable();
+    void clickPubToken();
+
+private:
+    void initialize();
+    void initAttributes();
+    void setAttributes();
+    void connectAttributes();
 };
 
 #endif // GEN_KEY_PAIR_DLG_H
