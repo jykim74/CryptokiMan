@@ -15,6 +15,7 @@
 #include "open_session_dlg.h"
 #include "close_session_dlg.h"
 #include "login_dlg.h"
+#include "logout_dlg.h"
 #include "gen_key_pair_dlg.h"
 #include "gen_key_dlg.h"
 #include "gen_data_dlg.h"
@@ -323,6 +324,7 @@ void MainWindow::openSession()
 
 void MainWindow::closeSession()
 {
+    manApplet->closeSessionDlg()->setAll(false);
     manApplet->closeSessionDlg()->show();
     manApplet->closeSessionDlg()->raise();
     manApplet->closeSessionDlg()->activateWindow();
@@ -331,6 +333,7 @@ void MainWindow::closeSession()
 
 void MainWindow::closeAllSessions()
 {
+    manApplet->closeSessionDlg()->setAll(true);
     manApplet->closeSessionDlg()->show();
     manApplet->closeSessionDlg()->raise();
     manApplet->closeSessionDlg()->activateWindow();
@@ -345,7 +348,10 @@ void MainWindow::login()
 
 void MainWindow::logout()
 {
-    manApplet->yesOrNoBox( tr("Do you want to logout?" ), this );
+//    manApplet->yesOrNoBox( tr("Do you want to logout?" ), this );
+    manApplet->logoutDlg()->show();
+    manApplet->logoutDlg()->raise();
+    manApplet->logoutDlg()->activateWindow();
 }
 
 void MainWindow::generateKeyPair()

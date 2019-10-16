@@ -48,6 +48,7 @@ SOURCES += \
         init_token_dlg.cpp \
         log_view_dlg.cpp \
         login_dlg.cpp \
+        logout_dlg.cpp \
         main.cpp \
         mainwindow.cpp \
         man_applet.cpp \
@@ -89,6 +90,7 @@ HEADERS += \
         init_token_dlg.h \
         log_view_dlg.h \
         login_dlg.h \
+        logout_dlg.h \
         mainwindow.h \
         man_applet.h \
         man_tray_icon.h \
@@ -130,6 +132,7 @@ FORMS += \
         init_token_dlg.ui \
         log_view_dlg.ui \
         login_dlg.ui \
+        logout_dlg.ui \
         mainwindow.ui \
         open_session_dlg.ui \
         rand_dlg.ui \

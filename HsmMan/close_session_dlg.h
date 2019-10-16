@@ -15,9 +15,15 @@ class CloseSessionDlg : public QDialog, public Ui::CloseSessionDlg
 public:
     explicit CloseSessionDlg(QWidget *parent = nullptr);
     ~CloseSessionDlg();
+    void setAll( bool all );
+private slots:
+    void showEvent(QShowEvent *event);
+    virtual void accept();
+    void slotChanged( int index );
 
 private:
-
+    void initialize();
+    bool     all_;
 };
 
 #endif // CLOSE_SESSION_DLG_H

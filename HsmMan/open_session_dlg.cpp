@@ -39,12 +39,13 @@ void OpenSessionDlg::initialize()
 void OpenSessionDlg::accept()
 {
     JSP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
-    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
+    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nFlags = 0;
     CK_SESSION_HANDLE   hSession = -1;
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.at(index);
+    SlotInfo slotInfo = slot_infos.takeAt(index);
+
 
     if( mRWCheck->isChecked() )
         nFlags |= CKF_RW_SESSION;
@@ -57,6 +58,7 @@ void OpenSessionDlg::accept()
     if( rv == CKR_OK )
     {
         slotInfo.setSessionHandle( hSession );
+        slot_infos.replace(index, slotInfo);
         manApplet->messageBox( tr("OpenSession is success"), this );
     }
     else {
