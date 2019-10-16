@@ -16,8 +16,14 @@ public:
     explicit LoginDlg(QWidget *parent = nullptr);
     ~LoginDlg();
 
+private slots:
+    void showEvent(QShowEvent *event);
+    virtual void accept();
+    void slotChanged( int index );
+
 private:
-//    Ui::LoginDlg *ui;
+    void initialize();
+
 };
 
 #endif // LOGIN_DLG_H

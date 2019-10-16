@@ -22,7 +22,6 @@ private slots:
 
 private:
     void initialize();
-//    Ui::OpenSessionDlg *ui;
 };
 
 #endif // OPEN_SESSION_DLG_H

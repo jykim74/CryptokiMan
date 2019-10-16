@@ -24,7 +24,7 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
-      <widget class="QComboBox" name="comboBox"/>
+      <widget class="QComboBox" name="mSlotsCombo"/>
      </item>
     </layout>
    </item>
@@ -45,7 +45,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit"/>
+      <widget class="QLineEdit" name="mSlotIDText"/>
      </item>
      <item>
       <widget class="QLabel" name="label_5">
@@ -55,7 +55,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_2"/>
+      <widget class="QLineEdit" name="mSessionText"/>
      </item>
     </layout>
    </item>
@@ -69,14 +69,17 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QRadioButton" name="radioButton_2">
+      <widget class="QRadioButton" name="mUserCheck">
        <property name="text">
         <string>User</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="radioButton">
+      <widget class="QRadioButton" name="mSOCheck">
        <property name="text">
         <string>SO</string>
        </property>
@@ -103,7 +106,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_3"/>
+      <widget class="QLineEdit" name="mPinText"/>
      </item>
     </layout>
    </item>

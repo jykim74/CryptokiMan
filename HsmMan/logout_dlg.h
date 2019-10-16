@@ -16,7 +16,13 @@ public:
     explicit LogoutDlg(QWidget *parent = nullptr);
     ~LogoutDlg();
 
+private slots:
+    void showEvent(QShowEvent *event);
+    virtual void accept();
+    void slotChanged( int index );
+
 private:
+    void initialize();
 
 };
 

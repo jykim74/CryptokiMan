@@ -29,6 +29,12 @@ void ManTreeView::onItemClicked( const QModelIndex& index )
         tree_model->showSlotInfo( item->getSlotIndex() );
     else if( item->getType() == HM_ITEM_TYPE_TOKEN )
         tree_model->showTokenInfo( item->getSlotIndex() );
+    else if( item->getType() == HM_ITEM_TYPE_MECHANISM )
+        tree_model->showMechanismInfo( item->getSlotIndex() );
+    else if( item->getType() == HM_ITEM_TYPE_SESSION )
+        tree_model->showSessionInfo( item->getSlotIndex() );
+    else if( item->getType() == HM_ITEM_TYPE_OBJECTS )
+        tree_model->showObjectsInfo( item->getSlotIndex() );
     else {
         tree_model->removeAllRightTable();
     }
