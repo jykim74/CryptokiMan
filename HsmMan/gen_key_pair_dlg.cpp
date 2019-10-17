@@ -2,6 +2,8 @@
 #include "mainwindow.h"
 #include "gen_key_pair_dlg.h"
 #include "js_pkcs11.h"
+#include "js_pki.h"
+#include "js_pki_tools.h"
 
 static QStringList sMechList = { "RSA", "ECC" };
 static QStringList sRSAOptionList = { "1024", "2048", "3096", "4082" };
@@ -138,6 +140,288 @@ void GenKeyPairDlg::accept()
     int rv = -1;
 
 
+    CK_MECHANISM stMech;
+    CK_ULONG uPubCount = 0;
+    CK_ATTRIBUTE sPubTemplate[20];
+    CK_ULONG uPriCount = 0;
+    CK_ATTRIBUTE sPriTemplate[20];
+
+    CK_OBJECT_CLASS pubClass = CKO_PUBLIC_KEY;
+    CK_OBJECT_CLASS priClass = CKO_PRIVATE_KEY;
+    CK_KEY_TYPE keyType;
+
+    CK_BBOOL bTrue = CK_TRUE;
+    CK_BBOOL bFalse = CK_FALSE;
+
+    CK_OBJECT_HANDLE uPubHandle = -1;
+    CK_OBJECT_HANDLE uPriHandle = -1;
+
+    long uSession = slotInfo.getSessionHandle();
+
+    memset( &stMech, 0x00, sizeof(stMech) );
+
+    int iSelMech = mMechCombo->currentIndex();
+
+    if( iSelMech == 0 )
+    {
+        stMech.mechanism = CKM_RSA_PKCS_KEY_PAIR_GEN;
+        keyType = CKK_RSA;
+    }
+    else if( iSelMech == 1 )
+    {
+        stMech.mechanism = CKM_ECDSA_KEY_PAIR_GEN;
+        keyType = CKK_ECDSA;
+    }
+
+    sPubTemplate[uPubCount].type = CKA_CLASS;
+    sPubTemplate[uPubCount].pValue = &pubClass;
+    sPubTemplate[uPubCount].ulValueLen = sizeof(pubClass);
+    uPubCount++;
+
+    sPubTemplate[uPubCount].type = CKA_KEY_TYPE;
+    sPubTemplate[uPubCount].pValue = &keyType;
+    sPubTemplate[uPubCount].ulValueLen = sizeof(keyType);
+    uPubCount++;
+
+
+    BIN binExponent = {0,0};
+    BIN binECParam = {0,0};
+
+    CK_ULONG uModulusBits = 0;
+    int nSelOption = mOptionCombo->currentIndex();
+
+    if( iSelMech == 0 )
+    {
+        uModulusBits = sRSAOptionList.at(nSelOption).toInt();
+        sPubTemplate[uPubCount].type = CKA_MODULUS_BITS;
+        sPubTemplate[uPubCount].pValue = &uModulusBits;
+        sPubTemplate[uPubCount].ulValueLen = sizeof( uModulusBits );
+        uPubCount++;
+
+        QString strPubExponent = mPubExponentText->text();
+
+        if( !strPubExponent.isEmpty() )
+        {
+            JS_BIN_decodeHex( strPubExponent.toStdString().c_str(), &binExponent );
+            sPubTemplate[uPubCount].type = CKA_PUBLIC_EXPONENT;
+            sPubTemplate[uPubCount].pValue = binExponent.pVal;
+            sPubTemplate[uPubCount].ulValueLen = binExponent.nLen;
+            uPubCount++;
+        }
+    }
+    else if( iSelMech == 1 )
+    {
+        char sPararmHex[256];
+        const char *pCurveName = sECOptionList.at(nSelOption).toStdString().c_str();
+        memset( sPararmHex, 0x00, sizeof(sPararmHex));
+
+        // 아래 함수 시 실행이 안되지? 파악 해야 함
+ //       JS_PKI_getHexOIDFromSN( pCurveName, sPararmHex );
+        JS_BIN_decodeHex( sPararmHex, &binECParam );
+
+        sPubTemplate[uPubCount].type = CKA_EC_PARAMS;
+        sPubTemplate[uPubCount].pValue = binECParam.pVal;
+        sPubTemplate[uPubCount].ulValueLen = binECParam.nLen;
+        uPubCount++;
+    }
+
+    BIN binPubLabel = {0,0};
+
+    QString strPubLabel = mPubLabelText->text();
+    if( !strPubLabel.isEmpty() )
+    {
+        JS_BIN_set( &binPubLabel, (unsigned char *)strPubLabel.toStdString().c_str(), strPubLabel.length());
+        sPubTemplate[uPubCount].type = CKA_LABEL;
+        sPubTemplate[uPubCount].pValue = binPubLabel.pVal;
+        sPubTemplate[uPubCount].ulValueLen = binPubLabel.nLen;
+        uPubCount++;
+    }
+
+    BIN binPubID = {0,0};
+    QString strPubID = mPubIDText->text();
+    if( !strPubID.isEmpty() )
+    {
+        JS_BIN_set( &binPubID, (unsigned char *)strPubID.toStdString().c_str(), strPubID.length());
+        sPubTemplate[uPubCount].type = CKA_ID;
+        sPubTemplate[uPubCount].pValue = binPubID.pVal;
+        sPubTemplate[uPubCount].ulValueLen = binPubID.nLen;
+        uPubCount++;
+    }
+
+    if( mPubTokenCheck->isChecked() )
+    {
+        sPubTemplate[uPubCount].type = CKA_TOKEN;
+        sPubTemplate[uPubCount].pValue = ( mPubTokenCombo->currentIndex() ? &bTrue : &bFalse );
+        sPubTemplate[uPubCount].ulValueLen = sizeof(CK_BBOOL);
+        uPubCount++;
+    }
+
+    if( mPubPrivateCheck->isChecked() )
+    {
+        sPubTemplate[uPubCount].type = CKA_PRIVATE;
+        sPubTemplate[uPubCount].pValue = (mPubPrivateCombo->currentIndex() ? &bTrue : &bFalse );
+        sPubTemplate[uPubCount].ulValueLen = sizeof(CK_BBOOL);
+        uPubCount++;
+    }
+
+    if( mPubEncryptCheck->isChecked() )
+    {
+        sPubTemplate[uPubCount].type = CKA_ENCRYPT;
+        sPubTemplate[uPubCount].pValue = (mPubEncryptCombo->currentIndex() ? &bTrue : &bFalse );
+        sPubTemplate[uPubCount].ulValueLen = sizeof(CK_BBOOL);
+        uPubCount++;
+    }
+
+    if( mPubWrapCheck->isChecked() )
+    {
+        sPubTemplate[uPubCount].type = CKA_WRAP;
+        sPubTemplate[uPubCount].pValue = (mPubWrapCombo->currentIndex() ? &bTrue : &bFalse );
+        sPubTemplate[uPubCount].ulValueLen = sizeof(CK_BBOOL);
+        uPubCount++;
+    }
+
+    if( mPubVerifyCheck->isChecked() )
+    {
+        sPubTemplate[uPubCount].type = CKA_VERIFY;
+        sPubTemplate[uPubCount].pValue = (mPubVerifyCombo->currentIndex() ? &bTrue : &bFalse );
+        sPubTemplate[uPubCount].ulValueLen = sizeof(CK_BBOOL);
+        uPubCount++;
+    }
+
+    if( mPubModifiableCheck->isChecked() )
+    {
+        sPubTemplate[uPubCount].type = CKA_MODIFIABLE;
+        sPubTemplate[uPubCount].pValue = (mPubModifiableCombo->currentIndex() ? &bTrue : &bFalse );
+        sPubTemplate[uPubCount].ulValueLen = sizeof(CK_BBOOL);
+        uPubCount++;
+    }
+
+    sPriTemplate[uPriCount].type = CKA_CLASS;
+    sPriTemplate[uPriCount].pValue = &priClass;
+    sPriTemplate[uPriCount].ulValueLen = sizeof(priClass);
+    uPriCount++;
+
+    sPriTemplate[uPriCount].type = CKA_KEY_TYPE;
+    sPriTemplate[uPriCount].pValue = &keyType;
+    sPriTemplate[uPriCount].ulValueLen = sizeof(keyType);
+    uPriCount++;
+
+    BIN binPriLabel = {0,0};
+    QString strPriLabel = mPriLabelText->text();
+
+    if( !strPriLabel.isEmpty() )
+    {
+        JS_BIN_set( &binPriLabel, (unsigned char *)strPriLabel.toStdString().c_str(), strPriLabel.length());
+        sPriTemplate[uPriCount].type = CKA_LABEL;
+        sPriTemplate[uPriCount].pValue = binPriLabel.pVal;
+        sPriTemplate[uPriCount].ulValueLen = binPriLabel.nLen;
+        uPriCount++;
+    }
+
+    BIN binPriSubject = {0,0};
+    QString strPriSubject = mPriSubjectText->text();
+
+    if( !strPriSubject.isEmpty() )
+    {
+        JS_BIN_set( &binPriSubject, (unsigned char *)strPriSubject.toStdString().c_str(), strPriSubject.length() );
+        sPriTemplate[uPriCount].type = CKA_SUBJECT;
+        sPriTemplate[uPriCount].pValue = binPriLabel.pVal;
+        sPriTemplate[uPriCount].ulValueLen = binPriLabel.nLen;
+        uPriCount++;
+    }
+
+    BIN binPriID = {0,0};
+    QString strPriID = mPriIDText->text();
+    if( !strPriID.isEmpty() )
+    {
+        JS_BIN_set( &binPriID, (unsigned char *)strPriID.toStdString().c_str(), strPriID.length());
+        sPriTemplate[uPriCount].type = CKA_ID;
+        sPriTemplate[uPriCount].pValue = binPriID.pVal;
+        sPriTemplate[uPriCount].ulValueLen = binPriID.nLen;
+        uPriCount++;
+    }
+
+    if( mPriPrivateCheck->isChecked() )
+    {
+        sPriTemplate[uPriCount].type = CKA_PRIVATE;
+        sPriTemplate[uPriCount].pValue = ( mPriPrivateCombo->currentIndex() ? &bTrue : &bFalse );
+        sPriTemplate[uPriCount].ulValueLen = sizeof( CK_BBOOL );
+        uPriCount++;
+    }
+
+    if( mPriTokenCheck->isChecked() )
+    {
+        sPriTemplate[uPriCount].type = CKA_TOKEN;
+        sPriTemplate[uPriCount].pValue = (mPriTokenCombo->currentIndex() ? &bTrue : &bFalse );
+        sPriTemplate[uPriCount].ulValueLen = sizeof( CK_BBOOL );
+        uPriCount++;
+    }
+
+    if( mPriDecryptCheck->isChecked() )
+    {
+        sPriTemplate[uPriCount].type = CKA_DECRYPT;
+        sPriTemplate[uPriCount].pValue = (mPriDecryptCombo->currentIndex() ? &bTrue : &bFalse );
+        sPriTemplate[uPriCount].ulValueLen = sizeof( CK_BBOOL );
+        uPriCount++;
+    }
+
+    if( mPriUnwrapCheck->isChecked() )
+    {
+        sPriTemplate[uPriCount].type = CKA_UNWRAP;
+        sPriTemplate[uPriCount].pValue = (mPriUnwrapCombo->currentIndex() ? &bTrue : &bFalse );
+        sPriTemplate[uPriCount].ulValueLen = sizeof( CK_BBOOL );
+        uPriCount++;
+    }
+
+    if( mPriModifiableCheck->isChecked() )
+    {
+        sPriTemplate[uPriCount].type = CKA_MODIFIABLE;
+        sPriTemplate[uPriCount].pValue = (mPriModifiableCombo->currentIndex() ? &bTrue : &bFalse );
+        sPriTemplate[uPriCount].ulValueLen = sizeof( CK_BBOOL );
+        uPriCount++;
+    }
+
+    if( mPriSensitiveCheck->isChecked() )
+    {
+        sPriTemplate[uPriCount].type = CKA_MODIFIABLE;
+        sPriTemplate[uPriCount].pValue = (mPriSensitiveCombo->currentIndex() ? &bTrue : &bFalse );
+        sPriTemplate[uPriCount].ulValueLen = sizeof( CK_BBOOL );
+        uPriCount++;
+    }
+
+    if( mPriDeriveCheck->isChecked() )
+    {
+        sPriTemplate[uPriCount].type = CKA_MODIFIABLE;
+        sPriTemplate[uPriCount].pValue = (mPriDeriveCombo->currentIndex() ? &bTrue : &bFalse );
+        sPriTemplate[uPriCount].ulValueLen = sizeof( CK_BBOOL );
+        uPriCount++;
+    }
+
+    if( mPriExtractableCheck->isChecked() )
+    {
+        sPriTemplate[uPriCount].type = CKA_MODIFIABLE;
+        sPriTemplate[uPriCount].pValue = (mPriExtractableCombo->currentIndex() ? &bTrue : &bFalse );
+        sPriTemplate[uPriCount].ulValueLen = sizeof( CK_BBOOL );
+        uPriCount++;
+    }
+
+    if( mPriSignCheck->isChecked() )
+    {
+        sPriTemplate[uPriCount].type = CKA_MODIFIABLE;
+        sPriTemplate[uPriCount].pValue = (mPriSignCombo->currentIndex() ? &bTrue : &bFalse );
+        sPriTemplate[uPriCount].ulValueLen = sizeof( CK_BBOOL );
+        uPriCount++;
+    }
+
+
+    rv = JS_PKCS11_GenerateKeyPair( p11_ctx, uSession, &stMech, sPubTemplate, uPubCount, sPriTemplate, uPriCount, &uPubHandle, &uPriHandle );
+    if( rv != CKR_OK )
+    {
+        manApplet->warningBox( tr( "failed to generate key pairs"), this );
+        return;
+    }
+
+    QDialog::accept();
 }
 
 void GenKeyPairDlg::slotChanged(int index)

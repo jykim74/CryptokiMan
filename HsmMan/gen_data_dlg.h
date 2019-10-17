@@ -16,8 +16,21 @@ public:
     explicit GenDataDlg(QWidget *parent = nullptr);
     ~GenDataDlg();
 
-private:
+private slots:
+    void showEvent(QShowEvent *event);
+    virtual void accept();
+    void slotChanged( int index );
 
+    void clickPrivate();
+    void clickSensitive();
+    void clickModifiable();
+    void clickToken();
+
+private:
+    void initialize();
+    void initAttributes();
+    void setAttributes();
+    void connectAttributes();
 };
 
 #endif // GEN_DATA_DLG_H

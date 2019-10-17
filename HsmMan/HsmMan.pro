@@ -155,6 +155,7 @@ TRANSLATIONS += i18n/hsmman_ko_KR.ts
 
 win32 {
     LIBS += -L"../../build-PKILib-Desktop_Qt_5_12_2_MinGW_32_bit-Debug/debug" -lPKILib
+    LIBS += -L"../../PKILib/lib/win32/cmpossl-mingw32/lib" -lcrypto
     LIBS += -L"../../PKILib/lib/win32/ltdl/lib" -lltdl
 }
 
