@@ -16,7 +16,25 @@ public:
     explicit CreateECPubKeyDlg(QWidget *parent = nullptr);
     ~CreateECPubKeyDlg();
 
+private slots:
+    void showEvent(QShowEvent *event);
+    virtual void accept();
+    void slotChanged( int index );
+
+    void clickPrivate();
+    void clickEncrypt();
+    void clickWrap();
+    void clickVerify();
+    void clickDerive();
+    void clickModifiable();
+    void clickToken();
+
 private:
+    void initialize();
+    void initAttributes();
+    void setAttributes();
+    void connectAttributes();
+
 
 };
 
