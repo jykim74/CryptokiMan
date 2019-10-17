@@ -28,19 +28,19 @@ SOURCES += \
         about_dlg.cpp \
         close_session_dlg.cpp \
         create_data_dlg.cpp \
+        create_ec_pri_key_dlg.cpp \
+        create_ec_pub_key_dlg.cpp \
         create_key_dlg.cpp \
+        create_rsa_pri_key_dlg.cpp \
+        create_rsa_pub_key_dlg.cpp \
         decrypt_dlg.cpp \
         del_object_dlg.cpp \
         derive_key_dlg.cpp \
         digest_dlg.cpp \
         edit_attribute_dlg.cpp \
         encrypt_dlg.cpp \
-        gen_ec_pri_key_dlg.cpp \
-        gen_ec_pub_key_dlg.cpp \
         gen_key_dlg.cpp \
         gen_key_pair_dlg.cpp \
-        gen_rsa_pri_key_dlg.cpp \
-        gen_rsa_pub_key_dlg.cpp \
         import_cert_dlg.cpp \
         import_pfx_dlg.cpp \
         import_pri_key_dlg.cpp \
@@ -70,19 +70,19 @@ HEADERS += \
         about_dlg.h \
         close_session_dlg.h \
         create_data_dlg.h \
+        create_ec_pri_key_dlg.h \
+        create_ec_pub_key_dlg.h \
         create_key_dlg.h \
+        create_rsa_pri_key_dlg.h \
+        create_rsa_pub_key_dlg.h \
         decrypt_dlg.h \
         del_object_dlg.h \
         derive_key_dlg.h \
         digest_dlg.h \
         edit_attribute_dlg.h \
         encrypt_dlg.h \
-        gen_ec_pri_key_dlg.h \
-        gen_ec_pub_key_dlg.h \
         gen_key_dlg.h \
         gen_key_pair_dlg.h \
-        gen_rsa_pri_key_dlg.h \
-        gen_rsa_pub_key_dlg.h \
         import_cert_dlg.h \
         import_pfx_dlg.h \
         import_pri_key_dlg.h \
@@ -112,19 +112,19 @@ FORMS += \
         about_dlg.ui \
         close_session_dlg.ui \
         create_data_dlg.ui \
+        create_ec_pri_key_dlg.ui \
+        create_ec_pub_key_dlg.ui \
         create_key_dlg.ui \
+        create_rsa_pri_key_dlg.ui \
+        create_rsa_pub_key_dlg.ui \
         decrypt_dlg.ui \
         del_object_dlg.ui \
         derive_key_dlg.ui \
         digest_dlg.ui \
         edit_attribute_dlg.ui \
         encrypt_dlg.ui \
-        gen_ec_pri_key_dlg.ui \
-        gen_ec_pub_key_dlg.ui \
         gen_key_dlg.ui \
         gen_key_pair_dlg.ui \
-        gen_rsa_pri_key_dlg.ui \
-        gen_rsa_pub_key_dlg.ui \
         import_cert_dlg.ui \
         import_pfx_dlg.ui \
         import_pri_key_dlg.ui \

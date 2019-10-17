@@ -44,10 +44,10 @@ private slots:
     void generateKeyPair();
     void generateKey();
     void createData();
-    void generateRSAPublicKey();
-    void generateRSAPrivateKey();
-    void generateECPublicKey();
-    void generateECPrivateKey();
+    void createRSAPublicKey();
+    void createRSAPrivateKey();
+    void createECPublicKey();
+    void createECPrivateKey();
     void createKey();
     void deleteObject();
     void editAttribute();

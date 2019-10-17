@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>GenECPriKeyDlg</class>
- <widget class="QDialog" name="GenECPriKeyDlg">
+ <class>CreateECPriKeyDlg</class>
+ <widget class="QDialog" name="CreateECPriKeyDlg">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>517</width>
     <height>300</height>
    </rect>
   </property>
@@ -266,7 +266,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>GenECPriKeyDlg</receiver>
+   <receiver>CreateECPriKeyDlg</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -282,7 +282,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>GenECPriKeyDlg</receiver>
+   <receiver>CreateECPriKeyDlg</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

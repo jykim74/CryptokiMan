@@ -19,10 +19,10 @@
 #include "gen_key_pair_dlg.h"
 #include "gen_key_dlg.h"
 #include "create_data_dlg.h"
-#include "gen_rsa_pub_key_dlg.h"
-#include "gen_rsa_pri_key_dlg.h"
-#include "gen_ec_pub_key_dlg.h"
-#include "gen_ec_pri_key_dlg.h"
+#include "create_rsa_pub_key_dlg.h"
+#include "create_rsa_pri_key_dlg.h"
+#include "create_ec_pub_key_dlg.h"
+#include "create_ec_pri_key_dlg.h"
 #include "create_key_dlg.h"
 #include "del_object_dlg.h"
 #include "edit_attribute_dlg.h"
@@ -177,17 +177,17 @@ void MainWindow::createActions()
     QAction *createDataAct = objectsMenu->addAction(tr("Create Data"), this, &MainWindow::createData );
     createDataAct->setStatusTip(tr("PKCS11 Create Data"));
 
-    QAction *genRSAPubKeyAct = objectsMenu->addAction(tr("Generate RSA Public Key"), this, &MainWindow::generateRSAPublicKey );
-    genRSAPubKeyAct->setStatusTip(tr( "PKCS11 Generate RSA Public key" ));
+    QAction *createRSAPubKeyAct = objectsMenu->addAction(tr("Create RSA Public Key"), this, &MainWindow::createRSAPublicKey );
+    createRSAPubKeyAct->setStatusTip(tr( "PKCS11 Create RSA Public key" ));
 
-    QAction *genRSAPriKeyAct = objectsMenu->addAction(tr("Generate RSA Private Key"), this, &MainWindow::generateRSAPrivateKey );
-    genRSAPriKeyAct->setStatusTip(tr( "PKCS11 Generate RSA Private key" ));
+    QAction *createRSAPriKeyAct = objectsMenu->addAction(tr("Create RSA Private Key"), this, &MainWindow::createRSAPrivateKey );
+    createRSAPriKeyAct->setStatusTip(tr( "PKCS11 Create RSA Private key" ));
 
-    QAction *genECPubKeyAct = objectsMenu->addAction(tr("Generate EC Public Key"), this, &MainWindow::generateECPublicKey );
-    genECPubKeyAct->setStatusTip(tr( "PKCS11 Generate EC Public key" ));
+    QAction *createECPubKeyAct = objectsMenu->addAction(tr("Create EC Public Key"), this, &MainWindow::createECPublicKey );
+    createECPubKeyAct->setStatusTip(tr( "PKCS11 Create EC Public key" ));
 
-    QAction *genECPriKeyAct = objectsMenu->addAction(tr("Generate EC Private Key"), this, &MainWindow::generateECPrivateKey );
-    genECPriKeyAct->setStatusTip(tr("PKCS11 Generate EC Private key" ));
+    QAction *createECPriKeyAct = objectsMenu->addAction(tr("Create EC Private Key"), this, &MainWindow::createECPrivateKey );
+    createECPriKeyAct->setStatusTip(tr("PKCS11 Create EC Private key" ));
 
     QAction *createKeyAct = objectsMenu->addAction(tr("Create Key" ), this, &MainWindow::createKey );
     createKeyAct->setStatusTip(tr("PKCS11 Create Key"));
@@ -375,32 +375,32 @@ void MainWindow::createData()
     manApplet->createDataDlg()->activateWindow();
 }
 
-void MainWindow::generateRSAPublicKey()
+void MainWindow::createRSAPublicKey()
 {
-    manApplet->genRSAPubKeyDlg()->show();
-    manApplet->genRSAPubKeyDlg()->raise();
-    manApplet->genRSAPubKeyDlg()->activateWindow();
+    manApplet->createRSAPubKeyDlg()->show();
+    manApplet->createRSAPubKeyDlg()->raise();
+    manApplet->createRSAPubKeyDlg()->activateWindow();
 }
 
-void MainWindow::generateRSAPrivateKey()
+void MainWindow::createRSAPrivateKey()
 {
-    manApplet->genRSAPriKeyDlg()->show();
-    manApplet->genRSAPriKeyDlg()->raise();
-    manApplet->genRSAPriKeyDlg()->activateWindow();
+    manApplet->createRSAPriKeyDlg()->show();
+    manApplet->createRSAPriKeyDlg()->raise();
+    manApplet->createRSAPriKeyDlg()->activateWindow();
 }
 
-void MainWindow::generateECPublicKey()
+void MainWindow::createECPublicKey()
 {
-    manApplet->genECPubKeyDlg()->show();
-    manApplet->genECPubKeyDlg()->raise();
-    manApplet->genECPubKeyDlg()->activateWindow();
+    manApplet->createECPubKeyDlg()->show();
+    manApplet->createECPubKeyDlg()->raise();
+    manApplet->createECPubKeyDlg()->activateWindow();
 }
 
-void MainWindow::generateECPrivateKey()
+void MainWindow::createECPrivateKey()
 {
-    manApplet->genECPriKeyDlg()->show();
-    manApplet->genECPriKeyDlg()->raise();
-    manApplet->genECPriKeyDlg()->activateWindow();
+    manApplet->createECPriKeyDlg()->show();
+    manApplet->createECPriKeyDlg()->raise();
+    manApplet->createECPriKeyDlg()->activateWindow();
 }
 
 void MainWindow::createKey()

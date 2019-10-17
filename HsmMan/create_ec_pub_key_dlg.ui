@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>GenECPubKeyDlg</class>
- <widget class="QDialog" name="GenECPubKeyDlg">
+ <class>CreateECPubKeyDlg</class>
+ <widget class="QDialog" name="CreateECPubKeyDlg">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>500</width>
     <height>300</height>
    </rect>
   </property>
@@ -229,7 +229,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>GenECPubKeyDlg</receiver>
+   <receiver>CreateECPubKeyDlg</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -245,7 +245,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>GenECPubKeyDlg</receiver>
+   <receiver>CreateECPubKeyDlg</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
