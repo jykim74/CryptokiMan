@@ -18,7 +18,7 @@
 #include "logout_dlg.h"
 #include "gen_key_pair_dlg.h"
 #include "gen_key_dlg.h"
-#include "gen_data_dlg.h"
+#include "create_data_dlg.h"
 #include "gen_rsa_pub_key_dlg.h"
 #include "gen_rsa_pri_key_dlg.h"
 #include "gen_ec_pub_key_dlg.h"
@@ -174,8 +174,8 @@ void MainWindow::createActions()
     QAction *genKeyAct = objectsMenu->addAction(tr("Generate Key"), this, &MainWindow::generateKey );
     genKeyAct->setStatusTip(tr("PKCS11 Generate Key"));
 
-    QAction *genDataAct = objectsMenu->addAction(tr("Generate Data"), this, &MainWindow::generateData );
-    genDataAct->setStatusTip(tr("PKCS11 Generate Data"));
+    QAction *createDataAct = objectsMenu->addAction(tr("Create Data"), this, &MainWindow::createData );
+    createDataAct->setStatusTip(tr("PKCS11 Create Data"));
 
     QAction *genRSAPubKeyAct = objectsMenu->addAction(tr("Generate RSA Public Key"), this, &MainWindow::generateRSAPublicKey );
     genRSAPubKeyAct->setStatusTip(tr( "PKCS11 Generate RSA Public key" ));
@@ -368,11 +368,11 @@ void MainWindow::generateKey()
     manApplet->genKeyDlg()->activateWindow();
 }
 
-void MainWindow::generateData()
+void MainWindow::createData()
 {
-    manApplet->genDataDlg()->show();
-    manApplet->genDataDlg()->raise();
-    manApplet->genDataDlg()->activateWindow();
+    manApplet->createDataDlg()->show();
+    manApplet->createDataDlg()->raise();
+    manApplet->createDataDlg()->activateWindow();
 }
 
 void MainWindow::generateRSAPublicKey()

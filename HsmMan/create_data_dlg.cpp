@@ -1,4 +1,4 @@
-#include "gen_data_dlg.h"
+#include "create_data_dlg.h"
 #include "man_applet.h"
 #include "mainwindow.h"
 #include "js_pkcs11.h"
@@ -7,7 +7,7 @@ static QStringList sFalseTrue = { "false", "true" };
 
 static QStringList sDataList = { "String", "Hex", "Base64" };
 
-GenDataDlg::GenDataDlg(QWidget *parent) :
+CreateDataDlg::CreateDataDlg(QWidget *parent) :
     QDialog(parent)
 {
     setupUi(this);
@@ -17,12 +17,12 @@ GenDataDlg::GenDataDlg(QWidget *parent) :
     connectAttributes();
 }
 
-GenDataDlg::~GenDataDlg()
+CreateDataDlg::~CreateDataDlg()
 {
 
 }
 
-void GenDataDlg::slotChanged(int index)
+void CreateDataDlg::slotChanged(int index)
 {
     if( index < 0 ) return;
 
@@ -34,12 +34,12 @@ void GenDataDlg::slotChanged(int index)
     mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
 }
 
-void GenDataDlg::showEvent(QShowEvent* event )
+void CreateDataDlg::showEvent(QShowEvent* event )
 {
     initialize();
 }
 
-void GenDataDlg::initialize()
+void CreateDataDlg::initialize()
 {
     mSlotsCombo->clear();
 
@@ -55,7 +55,7 @@ void GenDataDlg::initialize()
     if( slot_infos.size() > 0 ) slotChanged(0);
 }
 
-void GenDataDlg::initAttributes()
+void CreateDataDlg::initAttributes()
 {
     mDataCombo->addItems(sDataList);
 
@@ -65,7 +65,7 @@ void GenDataDlg::initAttributes()
     mTokenCombo->addItems(sFalseTrue);
 }
 
-void GenDataDlg::setAttributes()
+void CreateDataDlg::setAttributes()
 {
     mPrivateCombo->setEnabled(mPrivateCheck->isChecked());
     mSensitiveCombo->setEnabled(mSensitiveCheck->isChecked());
@@ -73,7 +73,7 @@ void GenDataDlg::setAttributes()
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
 }
 
-void GenDataDlg::connectAttributes()
+void CreateDataDlg::connectAttributes()
 {
     connect( mPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPrivate()));
     connect( mSensitiveCheck, SIGNAL(clicked()), this, SLOT(clickSensitive()));
@@ -81,7 +81,7 @@ void GenDataDlg::connectAttributes()
     connect( mTokenCheck, SIGNAL(clicked()), this, SLOT(clickToken()));
 }
 
-void GenDataDlg::accept()
+void CreateDataDlg::accept()
 {
     JSP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
@@ -176,22 +176,22 @@ void GenDataDlg::accept()
     QDialog::accept();
 }
 
-void GenDataDlg::clickPrivate()
+void CreateDataDlg::clickPrivate()
 {
     mPrivateCombo->setEnabled(mPrivateCheck->isChecked());
 }
 
-void GenDataDlg::clickSensitive()
+void CreateDataDlg::clickSensitive()
 {
     mSensitiveCombo->setEnabled(mSensitiveCheck->isChecked());
 }
 
-void GenDataDlg::clickModifiable()
+void CreateDataDlg::clickModifiable()
 {
     mModifiableCombo->setEnabled(mModifiableCheck->isChecked());
 }
 
-void GenDataDlg::clickToken()
+void CreateDataDlg::clickToken()
 {
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
 }

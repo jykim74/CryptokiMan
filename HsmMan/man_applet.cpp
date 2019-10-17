@@ -8,7 +8,7 @@
 #include "logout_dlg.h"
 #include "gen_key_pair_dlg.h"
 #include "gen_key_dlg.h"
-#include "gen_data_dlg.h"
+#include "create_data_dlg.h"
 #include "gen_rsa_pub_key_dlg.h"
 #include "gen_rsa_pri_key_dlg.h"
 #include "gen_ec_pub_key_dlg.h"
@@ -46,7 +46,7 @@ ManApplet::ManApplet( QObject *parent )
     logout_dlg_ = new LogoutDlg;
     gen_key_pair_dlg_ = new GenKeyPairDlg;
     gen_key_dlg_ = new GenKeyDlg;
-    gen_data_dlg_ = new GenDataDlg;
+    create_data_dlg_ = new CreateDataDlg;
     gen_rsa_pub_key_dlg_ = new GenRSAPubKeyDlg;
     gen_rsa_pri_key_dlg_ = new GenRSAPriKeyDlg;
     gen_ec_pub_key_dlg_ = new GenECPubKeyDlg;

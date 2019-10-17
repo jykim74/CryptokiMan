@@ -2,19 +2,19 @@
 #define GEN_DATA_DLG_H
 
 #include <QDialog>
-#include "ui_gen_data_dlg.h"
+#include "ui_create_data_dlg.h"
 
 namespace Ui {
-class GenDataDlg;
+class CreateDataDlg;
 }
 
-class GenDataDlg : public QDialog, public Ui::GenDataDlg
+class CreateDataDlg : public QDialog, public Ui::CreateDataDlg
 {
     Q_OBJECT
 
 public:
-    explicit GenDataDlg(QWidget *parent = nullptr);
-    ~GenDataDlg();
+    explicit CreateDataDlg(QWidget *parent = nullptr);
+    ~CreateDataDlg();
 
 private slots:
     void showEvent(QShowEvent *event);

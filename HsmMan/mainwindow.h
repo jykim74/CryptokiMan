@@ -43,7 +43,7 @@ private slots:
     void logout();
     void generateKeyPair();
     void generateKey();
-    void generateData();
+    void createData();
     void generateRSAPublicKey();
     void generateRSAPrivateKey();
     void generateECPublicKey();

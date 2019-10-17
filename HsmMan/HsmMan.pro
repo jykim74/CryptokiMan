@@ -27,6 +27,7 @@ CONFIG += c++11
 SOURCES += \
         about_dlg.cpp \
         close_session_dlg.cpp \
+        create_data_dlg.cpp \
         create_key_dlg.cpp \
         decrypt_dlg.cpp \
         del_object_dlg.cpp \
@@ -34,7 +35,6 @@ SOURCES += \
         digest_dlg.cpp \
         edit_attribute_dlg.cpp \
         encrypt_dlg.cpp \
-        gen_data_dlg.cpp \
         gen_ec_pri_key_dlg.cpp \
         gen_ec_pub_key_dlg.cpp \
         gen_key_dlg.cpp \
@@ -69,6 +69,7 @@ SOURCES += \
 HEADERS += \
         about_dlg.h \
         close_session_dlg.h \
+        create_data_dlg.h \
         create_key_dlg.h \
         decrypt_dlg.h \
         del_object_dlg.h \
@@ -76,7 +77,6 @@ HEADERS += \
         digest_dlg.h \
         edit_attribute_dlg.h \
         encrypt_dlg.h \
-        gen_data_dlg.h \
         gen_ec_pri_key_dlg.h \
         gen_ec_pub_key_dlg.h \
         gen_key_dlg.h \
@@ -111,6 +111,7 @@ HEADERS += \
 FORMS += \
         about_dlg.ui \
         close_session_dlg.ui \
+        create_data_dlg.ui \
         create_key_dlg.ui \
         decrypt_dlg.ui \
         del_object_dlg.ui \
@@ -118,7 +119,6 @@ FORMS += \
         digest_dlg.ui \
         edit_attribute_dlg.ui \
         encrypt_dlg.ui \
-        gen_data_dlg.ui \
         gen_ec_pri_key_dlg.ui \
         gen_ec_pub_key_dlg.ui \
         gen_key_dlg.ui \

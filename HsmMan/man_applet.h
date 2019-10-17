@@ -11,7 +11,7 @@ class LoginDlg;
 class LogoutDlg;
 class GenKeyPairDlg;
 class GenKeyDlg;
-class GenDataDlg;
+class CreateDataDlg;
 class GenRSAPubKeyDlg;
 class GenRSAPriKeyDlg;
 class GenECPubKeyDlg;
@@ -53,7 +53,7 @@ public:
     LogoutDlg* logoutDlg() { return logout_dlg_; };
     GenKeyPairDlg* genKeyPairDlg() { return gen_key_pair_dlg_; };
     GenKeyDlg* genKeyDlg() { return gen_key_dlg_; };
-    GenDataDlg* genDataDlg() { return gen_data_dlg_; };
+    CreateDataDlg* createDataDlg() { return create_data_dlg_; };
     GenRSAPubKeyDlg* genRSAPubKeyDlg() { return gen_rsa_pub_key_dlg_; };
     GenRSAPriKeyDlg* genRSAPriKeyDlg() { return gen_rsa_pri_key_dlg_; };
     GenECPubKeyDlg* genECPubKeyDlg() { return gen_ec_pub_key_dlg_; };
@@ -102,7 +102,7 @@ private:
     LogoutDlg* logout_dlg_;
     GenKeyPairDlg* gen_key_pair_dlg_;
     GenKeyDlg* gen_key_dlg_;
-    GenDataDlg* gen_data_dlg_;
+    CreateDataDlg* create_data_dlg_;
     GenRSAPubKeyDlg* gen_rsa_pub_key_dlg_;
     GenRSAPriKeyDlg* gen_rsa_pri_key_dlg_;
     GenECPubKeyDlg* gen_ec_pub_key_dlg_;
