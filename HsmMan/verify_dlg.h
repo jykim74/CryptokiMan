@@ -16,8 +16,22 @@ public:
     explicit VerifyDlg(QWidget *parent = nullptr);
     ~VerifyDlg();
 
-private:
+private slots:
+    void showEvent(QShowEvent *event);
+    void slotChanged( int index );
 
+    void clickInit();
+    void clickUpdate();
+    void clickFinal();
+    void clickVerify();
+    void clickClose();
+
+    void keyTypeChanged( int index );
+    void labelChanged( int index );
+
+private:
+    void initialize();
+    void initUI();
 };
 
 #endif // VERIFY_DLG_H

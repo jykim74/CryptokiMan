@@ -16,8 +16,22 @@ public:
     explicit SignDlg(QWidget *parent = nullptr);
     ~SignDlg();
 
-private:
+private slots:
+    void showEvent(QShowEvent *event);
+    void slotChanged( int index );
 
+    void clickInit();
+    void clickUpdate();
+    void clickFinal();
+    void clickSign();
+    void clickClose();
+
+    void keyTypeChanged( int index );
+    void labelChanged( int index );
+
+private:
+    void initialize();
+    void initUI();
 };
 
 #endif // SIGN_DLG_H

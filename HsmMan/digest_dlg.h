@@ -16,8 +16,19 @@ public:
     explicit DigestDlg(QWidget *parent = nullptr);
     ~DigestDlg();
 
-private:
+private slots:
+    void showEvent(QShowEvent *event);
+    void slotChanged( int index );
 
+    void clickInit();
+    void clickUpdate();
+    void clickFinal();
+    void clickDigest();
+    void clickClose();
+
+private:
+    void initialize();
+    void initUI();
 };
 
 #endif // DIGEST_DLG_H

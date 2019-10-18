@@ -16,8 +16,22 @@ public:
     explicit EncryptDlg(QWidget *parent = nullptr);
     ~EncryptDlg();
 
-private:
+private slots:
+    void showEvent(QShowEvent *event);
+    void slotChanged( int index );
 
+    void clickInit();
+    void clickUpdate();
+    void clickFinal();
+    void clickEncrypt();
+    void clickClose();
+
+    void keyTypeChanged( int index );
+    void labelChanged( int index );
+
+private:
+    void initialize();
+    void initUI();
 };
 
 #endif // ENCRYPT_DLG_H
