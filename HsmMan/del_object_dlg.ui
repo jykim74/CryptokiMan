@@ -15,23 +15,23 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="3" column="0">
-    <widget class="QLabel" name="label_3">
+    <widget class="QLabel" name="mSlotIDText">
      <property name="text">
       <string>Slot ID</string>
      </property>
     </widget>
    </item>
    <item row="5" column="5">
-    <widget class="QLineEdit" name="lineEdit_4"/>
+    <widget class="QLineEdit" name="mObjectText"/>
    </item>
    <item row="3" column="1">
     <widget class="QLineEdit" name="lineEdit"/>
    </item>
    <item row="1" column="0" colspan="6">
-    <widget class="QComboBox" name="comboBox"/>
+    <widget class="QComboBox" name="mSlotsCombo"/>
    </item>
    <item row="5" column="1" colspan="4">
-    <widget class="QComboBox" name="comboBox_3"/>
+    <widget class="QComboBox" name="mLabelCombo"/>
    </item>
    <item row="3" column="3">
     <widget class="QLineEdit" name="lineEdit_2"/>
@@ -57,12 +57,12 @@
     <widget class="QLineEdit" name="lineEdit_3"/>
    </item>
    <item row="5" column="0">
-    <widget class="QComboBox" name="comboBox_2"/>
+    <widget class="QComboBox" name="mObjectCombo"/>
    </item>
    <item row="3" column="2">
-    <widget class="QLabel" name="label_5">
+    <widget class="QLabel" name="mSessionText">
      <property name="text">
-      <string>Session Handle</string>
+      <string>Session</string>
      </property>
     </widget>
    </item>
@@ -81,7 +81,7 @@
     </widget>
    </item>
    <item row="3" column="4">
-    <widget class="QLabel" name="label_6">
+    <widget class="QLabel" name="mLoginText">
      <property name="text">
       <string>Login</string>
      </property>

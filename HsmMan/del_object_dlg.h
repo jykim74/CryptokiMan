@@ -16,8 +16,16 @@ public:
     explicit DelObjectDlg(QWidget *parent = nullptr);
     ~DelObjectDlg();
 
-private:
+private slots:
+    void showEvent(QShowEvent *event);
+    virtual void accept();
+    void slotChanged( int index );
 
+    void labelChanged( int index );
+    void objectChanged( int index );
+
+private:
+    void initialize();
 };
 
 #endif // DEL_OBJECT_DLG_H

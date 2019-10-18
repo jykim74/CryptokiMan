@@ -16,8 +16,27 @@ public:
     explicit CreateKeyDlg(QWidget *parent = nullptr);
     ~CreateKeyDlg();
 
-private:
+private slots:
+    void showEvent(QShowEvent *event);
+    virtual void accept();
+    void slotChanged( int index );
 
+    void clickPrivate();
+    void clickSensitive();
+    void clickWrap();
+    void clickUnwrap();
+    void clickEncrypt();
+    void clickDecrypt();
+    void clickModifiable();
+    void clickSign();
+    void clickVerify();
+    void clickToken();
+
+private:
+    void initialize();
+    void initAttributes();
+    void setAttributes();
+    void connectAttributes();
 };
 
 #endif // CREATE_KEY_DLG_H

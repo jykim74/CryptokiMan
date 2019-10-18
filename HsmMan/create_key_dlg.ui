@@ -17,39 +17,25 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
        <string>General</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>Mechanism</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="4">
-        <widget class="QLabel" name="label_6">
-         <property name="text">
-          <string>Login</string>
-         </property>
-        </widget>
-       </item>
        <item row="3" column="5">
-        <widget class="QLineEdit" name="lineEdit_3"/>
-       </item>
-       <item row="3" column="1">
-        <widget class="QLineEdit" name="lineEdit"/>
+        <widget class="QLineEdit" name="mLoginText"/>
        </item>
        <item row="3" column="2">
         <widget class="QLabel" name="label_5">
          <property name="text">
-          <string>Session Handle</string>
+          <string>Session</string>
          </property>
         </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="mSlotIDText"/>
        </item>
        <item row="3" column="0">
         <widget class="QLabel" name="label_3">
@@ -58,10 +44,14 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="3">
-        <widget class="QLineEdit" name="lineEdit_2"/>
+       <item row="2" column="0" colspan="2">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Slot status</string>
+         </property>
+        </widget>
        </item>
-       <item row="5" column="1">
+       <item row="4" column="1">
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -74,9 +64,6 @@
          </property>
         </spacer>
        </item>
-       <item row="1" column="0" colspan="6">
-        <widget class="QComboBox" name="comboBox"/>
-       </item>
        <item row="0" column="0" colspan="2">
         <widget class="QLabel" name="label">
          <property name="text">
@@ -84,15 +71,18 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="0" colspan="2">
-        <widget class="QLabel" name="label_2">
+       <item row="3" column="4">
+        <widget class="QLabel" name="label_6">
          <property name="text">
-          <string>Slot status</string>
+          <string>Login</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="1" colspan="2">
-        <widget class="QComboBox" name="comboBox_2"/>
+       <item row="3" column="3">
+        <widget class="QLineEdit" name="mSessionText"/>
+       </item>
+       <item row="1" column="0" colspan="6">
+        <widget class="QComboBox" name="mSlotsCombo"/>
        </item>
       </layout>
      </widget>
@@ -101,22 +91,88 @@
        <string>Key</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_9">
+       <item row="4" column="0">
+        <widget class="QCheckBox" name="mPrivateCheck">
          <property name="text">
-          <string>Attributes</string>
+          <string>Private</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="5">
+        <widget class="QComboBox" name="mDecryptCombo"/>
+       </item>
+       <item row="6" column="1">
+        <widget class="QComboBox" name="mModifiableCombo"/>
+       </item>
+       <item row="6" column="5">
+        <widget class="QComboBox" name="mVerifyCombo"/>
+       </item>
+       <item row="0" column="1" colspan="5">
+        <widget class="QLineEdit" name="mLabelText"/>
+       </item>
+       <item row="5" column="4">
+        <widget class="QCheckBox" name="mDecryptCheck">
+         <property name="text">
+          <string>Decrypt</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_8">
+         <property name="text">
+          <string>Key</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="3">
+        <widget class="QComboBox" name="mSensitiveCombo"/>
+       </item>
+       <item row="6" column="4">
+        <widget class="QCheckBox" name="mVerifyCheck">
+         <property name="text">
+          <string>Verify</string>
          </property>
         </widget>
        </item>
        <item row="6" column="0">
-        <widget class="QCheckBox" name="checkBox_4">
+        <widget class="QCheckBox" name="mModifiableCheck">
+         <property name="text">
+          <string>Modifiable</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="3">
+        <widget class="QComboBox" name="mSignCombo"/>
+       </item>
+       <item row="8" column="1">
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="7" column="0">
+        <widget class="QCheckBox" name="mTokenCheck">
          <property name="text">
           <string>Token</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="3">
-        <widget class="QComboBox" name="comboBox_5"/>
+       <item row="6" column="2">
+        <widget class="QCheckBox" name="mSignCheck">
+         <property name="text">
+          <string>Sign</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QComboBox" name="mUnwrapCombo"/>
        </item>
        <item row="0" column="0">
         <widget class="QLabel" name="label_7">
@@ -125,111 +181,68 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
-        <widget class="QCheckBox" name="checkBox">
-         <property name="text">
-          <string>Private</string>
-         </property>
-        </widget>
+       <item row="4" column="1">
+        <widget class="QComboBox" name="mPrivateCombo"/>
        </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_8">
-         <property name="text">
-          <string>Key</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QCheckBox" name="checkBox_2">
-         <property name="text">
-          <string>Unwrap</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="2">
-        <widget class="QCheckBox" name="checkBox_5">
-         <property name="text">
-          <string>Sensitive</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="4">
-        <widget class="QCheckBox" name="checkBox_6">
+       <item row="4" column="4">
+        <widget class="QCheckBox" name="mWrapCheck">
          <property name="text">
           <string>Wrap</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
-        <widget class="QComboBox" name="comboBox_4"/>
+       <item row="2" column="2" colspan="4">
+        <widget class="QLineEdit" name="mKeyText"/>
+       </item>
+       <item row="4" column="5">
+        <widget class="QComboBox" name="mWrapCombo"/>
        </item>
        <item row="5" column="0">
-        <widget class="QCheckBox" name="checkBox_3">
+        <widget class="QCheckBox" name="mUnwrapCheck">
          <property name="text">
-          <string>Modifiable</string>
+          <string>Unwrap</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="5">
-        <widget class="QComboBox" name="comboBox_6"/>
+       <item row="7" column="1">
+        <widget class="QComboBox" name="mTokenCombo"/>
        </item>
-       <item row="4" column="1">
-        <widget class="QComboBox" name="comboBox_7"/>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_9">
+         <property name="text">
+          <string>Attributes</string>
+         </property>
+        </widget>
        </item>
-       <item row="5" column="1">
-        <widget class="QComboBox" name="comboBox_8"/>
-       </item>
-       <item row="6" column="1">
-        <widget class="QComboBox" name="comboBox_9"/>
-       </item>
-       <item row="4" column="3">
-        <widget class="QComboBox" name="comboBox_10"/>
-       </item>
-       <item row="5" column="3">
-        <widget class="QComboBox" name="comboBox_11"/>
-       </item>
-       <item row="4" column="5">
-        <widget class="QComboBox" name="comboBox_12"/>
-       </item>
-       <item row="5" column="5">
-        <widget class="QComboBox" name="comboBox_13"/>
-       </item>
-       <item row="4" column="2">
-        <widget class="QCheckBox" name="checkBox_7">
+       <item row="5" column="2">
+        <widget class="QCheckBox" name="mEncryptCheck">
          <property name="text">
           <string>Encrypt</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="2">
-        <widget class="QCheckBox" name="checkBox_8">
+       <item row="5" column="3">
+        <widget class="QComboBox" name="mEncryptCombo"/>
+       </item>
+       <item row="4" column="2">
+        <widget class="QCheckBox" name="mSensitiveCheck">
          <property name="text">
-          <string>Sign</string>
+          <string>Sensitive</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="4">
-        <widget class="QCheckBox" name="checkBox_9">
+       <item row="2" column="1">
+        <widget class="QComboBox" name="mKeyCombo"/>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_10">
          <property name="text">
-          <string>Decrypt</string>
+          <string>Mechanism</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="4">
-        <widget class="QCheckBox" name="checkBox_10">
-         <property name="text">
-          <string>Verify</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1" colspan="5">
-        <widget class="QLineEdit" name="lineEdit_4"/>
-       </item>
-       <item row="1" column="1">
-        <widget class="QComboBox" name="comboBox_3"/>
-       </item>
-       <item row="1" column="2" colspan="4">
-        <widget class="QLineEdit" name="lineEdit_5"/>
+       <item row="1" column="1" colspan="2">
+        <widget class="QComboBox" name="mMechCombo"/>
        </item>
       </layout>
      </widget>
