@@ -14,6 +14,7 @@ DelObjectDlg::DelObjectDlg(QWidget *parent) :
     setupUi(this);
 
     connect( mLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(labelChanged(int)));
+    /* need to check for being crashed */
     connect( mObjectCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(objectChanged(int)));
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
 
@@ -93,10 +94,12 @@ void DelObjectDlg::labelChanged( int index )
 
 void DelObjectDlg::objectChanged( int index )
 {
+    if( manApplet == NULL ) return;
     JSP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    if( p11_ctx == NULL ) return;
+
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
-    int nFlags = 0;
     CK_SESSION_HANDLE   hSession = -1;
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.takeAt(nSlotSel);
