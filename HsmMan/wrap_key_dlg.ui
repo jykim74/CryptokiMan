@@ -29,7 +29,7 @@
     </widget>
    </item>
    <item row="6" column="1">
-    <widget class="QComboBox" name="comboBox_3"/>
+    <widget class="QComboBox" name="mWrappingMechCombo"/>
    </item>
    <item row="2" column="0">
     <widget class="QLabel" name="label_2">
@@ -53,7 +53,7 @@
     </widget>
    </item>
    <item row="3" column="3">
-    <widget class="QLineEdit" name="lineEdit_2"/>
+    <widget class="QLineEdit" name="mSessionText"/>
    </item>
    <item row="8" column="0">
     <widget class="QLabel" name="label_12">
@@ -70,10 +70,10 @@
     </widget>
    </item>
    <item row="1" column="0" colspan="6">
-    <widget class="QComboBox" name="comboBox"/>
+    <widget class="QComboBox" name="mSlotsCombo"/>
    </item>
    <item row="3" column="5">
-    <widget class="QLineEdit" name="lineEdit_3"/>
+    <widget class="QLineEdit" name="mLoginText"/>
    </item>
    <item row="7" column="0">
     <widget class="QLabel" name="label_11">
@@ -90,7 +90,7 @@
     </widget>
    </item>
    <item row="3" column="1">
-    <widget class="QLineEdit" name="lineEdit"/>
+    <widget class="QLineEdit" name="mSlotIDText"/>
    </item>
    <item row="10" column="3" colspan="3">
     <widget class="QDialogButtonBox" name="buttonBox">
@@ -117,7 +117,7 @@
     </widget>
    </item>
    <item row="6" column="3" colspan="3">
-    <widget class="QLineEdit" name="lineEdit_5"/>
+    <widget class="QLineEdit" name="mWrappingParamText"/>
    </item>
    <item row="9" column="0">
     <widget class="QLabel" name="label_14">
@@ -127,17 +127,17 @@
     </widget>
    </item>
    <item row="9" column="5">
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="mFindBtn">
      <property name="text">
       <string>Find</string>
      </property>
     </widget>
    </item>
    <item row="9" column="1" colspan="4">
-    <widget class="QLineEdit" name="lineEdit_7"/>
+    <widget class="QLineEdit" name="mPathText"/>
    </item>
    <item row="5" column="5">
-    <widget class="QLineEdit" name="lineEdit_4"/>
+    <widget class="QLineEdit" name="mWrappingObjectText"/>
    </item>
    <item row="5" column="4">
     <widget class="QLabel" name="label_8">
@@ -147,7 +147,7 @@
     </widget>
    </item>
    <item row="8" column="5">
-    <widget class="QLineEdit" name="lineEdit_6"/>
+    <widget class="QLineEdit" name="mObjectText"/>
    </item>
    <item row="8" column="4">
     <widget class="QLabel" name="label_13">
@@ -157,10 +157,10 @@
     </widget>
    </item>
    <item row="5" column="1" colspan="3">
-    <widget class="QComboBox" name="comboBox_2"/>
+    <widget class="QComboBox" name="mWrappingLabelCombo"/>
    </item>
    <item row="8" column="1" colspan="3">
-    <widget class="QComboBox" name="comboBox_4"/>
+    <widget class="QComboBox" name="mLabelCombo"/>
    </item>
   </layout>
  </widget>

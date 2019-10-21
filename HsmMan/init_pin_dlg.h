@@ -16,7 +16,13 @@ public:
     explicit InitPinDlg(QWidget *parent = nullptr);
     ~InitPinDlg();
 
+private slots:
+    void showEvent(QShowEvent *event);
+    virtual void accept();
+    void slotChanged( int index );
+
 private:
+    void initialize();
 
 };
 

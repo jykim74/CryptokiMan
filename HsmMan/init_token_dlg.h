@@ -16,8 +16,13 @@ public:
     explicit InitTokenDlg(QWidget *parent = nullptr);
     ~InitTokenDlg();
 
-private:
+private slots:
+    void showEvent(QShowEvent *event);
+    virtual void accept();
+    void slotChanged( int index );
 
+private:
+    void initialize();
 };
 
 #endif // INIT_TOKEN_DLG_H

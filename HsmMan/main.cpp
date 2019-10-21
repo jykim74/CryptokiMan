@@ -3,6 +3,7 @@
 #include <QCommandLineOption>
 #include <QCommandLineParser>
 #include "man_applet.h"
+#include "js_pki.h"
 
 int main(int argc, char *argv[])
 {
@@ -17,6 +18,8 @@ int main(int argc, char *argv[])
     parser.addHelpOption();
     parser.addPositionalArgument( "file", "the file to open" );
     parser.process(app);
+
+//    JS_PKI_init();
 
     ManApplet mApplet;
     manApplet = &mApplet;

@@ -16,7 +16,15 @@ public:
     explicit RandDlg(QWidget *parent = nullptr);
     ~RandDlg();
 
+private slots:
+    void showEvent(QShowEvent *event);
+    virtual void accept();
+    void slotChanged( int index );
+    void clickSeed();
+
 private:
+    void initialize();
+    void initUI();
 };
 
 #endif // RAND_DLG_H

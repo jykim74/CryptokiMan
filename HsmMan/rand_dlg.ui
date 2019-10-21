@@ -22,7 +22,7 @@
     </widget>
    </item>
    <item row="1" column="0" colspan="6">
-    <widget class="QComboBox" name="comboBox"/>
+    <widget class="QComboBox" name="mSlotsCombo"/>
    </item>
    <item row="0" column="0" colspan="2">
     <widget class="QLabel" name="label">
@@ -32,19 +32,19 @@
     </widget>
    </item>
    <item row="5" column="1" colspan="4">
-    <widget class="QLineEdit" name="lineEdit_4"/>
+    <widget class="QLineEdit" name="mSeedText"/>
    </item>
    <item row="7" column="0" colspan="6">
-    <widget class="QPlainTextEdit" name="plainTextEdit"/>
+    <widget class="QPlainTextEdit" name="mOutputText"/>
    </item>
    <item row="6" column="2" colspan="2">
-    <widget class="QLineEdit" name="lineEdit_5"/>
+    <widget class="QLineEdit" name="mLengthText"/>
    </item>
    <item row="5" column="0">
-    <widget class="QComboBox" name="comboBox_2"/>
+    <widget class="QComboBox" name="mSeedCombo"/>
    </item>
    <item row="5" column="5">
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="mSetSeedBtn">
      <property name="text">
       <string>Set Seed</string>
      </property>
@@ -87,7 +87,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit"/>
+      <widget class="QLineEdit" name="mSlotIDText"/>
      </item>
      <item>
       <widget class="QLabel" name="label_6">
@@ -97,7 +97,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_2"/>
+      <widget class="QLineEdit" name="mSessionText"/>
      </item>
      <item>
       <widget class="QLabel" name="label_7">
@@ -107,7 +107,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_3"/>
+      <widget class="QLineEdit" name="mLoginText"/>
      </item>
     </layout>
    </item>
