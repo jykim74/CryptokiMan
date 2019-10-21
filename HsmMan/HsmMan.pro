@@ -26,6 +26,7 @@ CONFIG += c++11
 
 SOURCES += \
         about_dlg.cpp \
+        auto_update_service.cpp \
         close_session_dlg.cpp \
         create_data_dlg.cpp \
         create_ec_pri_key_dlg.cpp \
@@ -60,6 +61,7 @@ SOURCES += \
         rand_dlg.cpp \
         set_pin_dlg.cpp \
         settings_dlg.cpp \
+        settings_mgr.cpp \
         sign_dlg.cpp \
         slot_info.cpp \
         unwrap_key_dlg.cpp \
@@ -68,6 +70,7 @@ SOURCES += \
 
 HEADERS += \
         about_dlg.h \
+        auto_update_service.h \
         close_session_dlg.h \
         create_data_dlg.h \
         create_ec_pri_key_dlg.h \
@@ -101,6 +104,7 @@ HEADERS += \
         rand_dlg.h \
         set_pin_dlg.h \
         settings_dlg.h \
+        settings_mgr.h \
         sign_dlg.h \
         slot_info.h \
         temp_array.h \
