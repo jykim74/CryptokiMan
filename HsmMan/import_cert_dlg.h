@@ -16,7 +16,21 @@ public:
     explicit ImportCertDlg(QWidget *parent = nullptr);
     ~ImportCertDlg();
 
+private slots:
+    void showEvent(QShowEvent *event);
+    void slotChanged( int index );
+    virtual void accept();
+    void clickPrivate();
+    void clickSensitive();
+    void clickModifiable();
+    void clickToken();
+    void clickFind();
+
 private:
+    void initialize();
+    void initAttributes();
+    void setAttributes();
+    void connectAttributes();
 
 };
 

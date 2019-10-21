@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>493</width>
     <height>300</height>
    </rect>
   </property>
@@ -14,20 +14,10 @@
    <string>Dialog</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="3" column="0">
-    <widget class="QLabel" name="label_3">
+   <item row="6" column="0">
+    <widget class="QLabel" name="label_6">
      <property name="text">
-      <string>Slot ID</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="1">
-    <widget class="QLineEdit" name="lineEdit"/>
-   </item>
-   <item row="9" column="0">
-    <widget class="QCheckBox" name="checkBox_2">
-     <property name="text">
-      <string>Token</string>
+      <string>Cert Path</string>
      </property>
     </widget>
    </item>
@@ -38,10 +28,116 @@
      </property>
     </widget>
    </item>
+   <item row="8" column="1">
+    <widget class="QComboBox" name="mPrivateCombo"/>
+   </item>
+   <item row="3" column="5">
+    <widget class="QLineEdit" name="mLoginText"/>
+   </item>
+   <item row="4" column="1" colspan="5">
+    <widget class="QLineEdit" name="mLabelText"/>
+   </item>
+   <item row="3" column="4">
+    <widget class="QLabel" name="label_9">
+     <property name="text">
+      <string>Login</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Slot list</string>
+     </property>
+    </widget>
+   </item>
    <item row="8" column="0">
-    <widget class="QCheckBox" name="checkBox">
+    <widget class="QCheckBox" name="mPrivateCheck">
      <property name="text">
       <string>Private</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>ID</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="3">
+    <widget class="QLineEdit" name="mSessionText"/>
+   </item>
+   <item row="9" column="0">
+    <widget class="QCheckBox" name="mTokenCheck">
+     <property name="text">
+      <string>Token</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QLineEdit" name="mSlotIDText"/>
+   </item>
+   <item row="8" column="4">
+    <widget class="QCheckBox" name="mModifiableCheck">
+     <property name="text">
+      <string>Modifiable</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="2">
+    <widget class="QCheckBox" name="mSensitiveCheck">
+     <property name="text">
+      <string>Sensitive</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QLabel" name="label_7">
+     <property name="text">
+      <string>Attributes</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="6">
+    <widget class="QComboBox" name="mSlotsCombo"/>
+   </item>
+   <item row="6" column="1" colspan="4">
+    <widget class="QLineEdit" name="mCertPathText"/>
+   </item>
+   <item row="11" column="3" colspan="3">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="5">
+    <widget class="QPushButton" name="mFindBtn">
+     <property name="text">
+      <string>Find</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="1">
+    <widget class="QComboBox" name="mTokenCombo"/>
+   </item>
+   <item row="5" column="1" colspan="5">
+    <widget class="QLineEdit" name="mIDText"/>
+   </item>
+   <item row="8" column="3">
+    <widget class="QComboBox" name="mSensitiveCombo"/>
+   </item>
+   <item row="8" column="5">
+    <widget class="QComboBox" name="mModifiableCombo"/>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Slot ID</string>
      </property>
     </widget>
    </item>
@@ -59,101 +155,18 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="3">
-    <widget class="QLineEdit" name="lineEdit_2"/>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Slot list</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="4">
-    <widget class="QLabel" name="label_9">
-     <property name="text">
-      <string>Login</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="0">
-    <widget class="QLabel" name="label_7">
-     <property name="text">
-      <string>Attributes</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0">
-    <widget class="QLabel" name="label_5">
-     <property name="text">
-      <string>ID</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0">
-    <widget class="QLabel" name="label_6">
-     <property name="text">
-      <string>Cert Path</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="5">
-    <widget class="QLineEdit" name="lineEdit_3"/>
-   </item>
-   <item row="6" column="5">
-    <widget class="QPushButton" name="pushButton">
-     <property name="text">
-      <string>Find</string>
-     </property>
-    </widget>
-   </item>
-   <item row="10" column="3" colspan="3">
-    <widget class="QDialogButtonBox" name="buttonBox">
+   <item row="10" column="1">
+    <spacer name="verticalSpacer">
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Vertical</enum>
      </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
      </property>
-    </widget>
-   </item>
-   <item row="1" column="0" colspan="6">
-    <widget class="QComboBox" name="comboBox"/>
-   </item>
-   <item row="4" column="1" colspan="5">
-    <widget class="QLineEdit" name="lineEdit_4"/>
-   </item>
-   <item row="5" column="1" colspan="5">
-    <widget class="QLineEdit" name="lineEdit_5"/>
-   </item>
-   <item row="6" column="1" colspan="4">
-    <widget class="QLineEdit" name="lineEdit_6"/>
-   </item>
-   <item row="8" column="1">
-    <widget class="QComboBox" name="comboBox_2"/>
-   </item>
-   <item row="8" column="2">
-    <widget class="QCheckBox" name="checkBox_3">
-     <property name="text">
-      <string>Sensitive</string>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="3">
-    <widget class="QComboBox" name="comboBox_3"/>
-   </item>
-   <item row="8" column="4">
-    <widget class="QCheckBox" name="checkBox_4">
-     <property name="text">
-      <string>Modifiable</string>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="5">
-    <widget class="QComboBox" name="comboBox_4"/>
-   </item>
-   <item row="9" column="1">
-    <widget class="QComboBox" name="comboBox_5"/>
+    </spacer>
    </item>
   </layout>
  </widget>
