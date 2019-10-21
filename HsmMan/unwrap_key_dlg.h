@@ -21,8 +21,13 @@ private slots:
     virtual void accept();
     void slotChanged( int index );
 
+    void unwrapLabelChanged(int index);
+    void clickFind();
+
 private:
     void initialize();
+    void initUI();
+    void setUnwrapLabelList();
 
 };
 

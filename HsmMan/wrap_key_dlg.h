@@ -21,9 +21,14 @@ private slots:
     virtual void accept();
     void slotChanged( int index );
 
+    void labelChanged(int index );
+    void wrappingLabelChanged(int index );
+    void clickFind();
+
 private:
     void initialize();
-
+    void initUI();
+    void setWrapLabelList();
 };
 
 #endif // WRAP_KEY_DLG_H
