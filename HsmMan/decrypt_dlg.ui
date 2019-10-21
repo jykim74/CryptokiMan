@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>300</height>
+    <height>330</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,7 +15,7 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="4" column="3">
-    <widget class="QLineEdit" name="lineEdit"/>
+    <widget class="QLineEdit" name="mObjectText"/>
    </item>
    <item row="3" column="0">
     <widget class="QLabel" name="label_2">
@@ -25,10 +25,10 @@
     </widget>
    </item>
    <item row="5" column="1">
-    <widget class="QComboBox" name="comboBox_4"/>
+    <widget class="QComboBox" name="mMechCombo"/>
    </item>
    <item row="4" column="1">
-    <widget class="QComboBox" name="comboBox_3"/>
+    <widget class="QComboBox" name="mLabelCombo"/>
    </item>
    <item row="0" column="0">
     <widget class="QLabel" name="label">
@@ -38,7 +38,7 @@
     </widget>
    </item>
    <item row="6" column="2" colspan="2">
-    <widget class="QLineEdit" name="lineEdit_3"/>
+    <widget class="QLineEdit" name="mInputText"/>
    </item>
    <item row="5" column="0">
     <widget class="QLabel" name="label_4">
@@ -67,17 +67,17 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_4"/>
+      <widget class="QLineEdit" name="mSlotIDText"/>
      </item>
      <item>
       <widget class="QLabel" name="label_9">
        <property name="text">
-        <string>Session Handle</string>
+        <string>Session</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_5"/>
+      <widget class="QLineEdit" name="mSessionText"/>
      </item>
      <item>
       <widget class="QLabel" name="label_8">
@@ -87,15 +87,15 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_6"/>
+      <widget class="QLineEdit" name="mLoginText"/>
      </item>
     </layout>
    </item>
    <item row="5" column="3">
-    <widget class="QLineEdit" name="lineEdit_2"/>
+    <widget class="QLineEdit" name="mParamText"/>
    </item>
    <item row="9" column="3">
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="mCloseBtn">
      <property name="text">
       <string>Close</string>
      </property>
@@ -109,10 +109,10 @@
     </widget>
    </item>
    <item row="7" column="0" colspan="4">
-    <widget class="QPlainTextEdit" name="plainTextEdit"/>
+    <widget class="QPlainTextEdit" name="mOutputText"/>
    </item>
    <item row="3" column="1">
-    <widget class="QComboBox" name="comboBox_2"/>
+    <widget class="QComboBox" name="mKeyTypeCombo"/>
    </item>
    <item row="6" column="0">
     <widget class="QLabel" name="label_5">
@@ -122,15 +122,15 @@
     </widget>
    </item>
    <item row="1" column="0" colspan="4">
-    <widget class="QComboBox" name="comboBox"/>
+    <widget class="QComboBox" name="mSlotsCombo"/>
    </item>
    <item row="6" column="1">
-    <widget class="QComboBox" name="comboBox_5"/>
+    <widget class="QComboBox" name="mInputCombo"/>
    </item>
    <item row="4" column="2">
     <widget class="QLabel" name="label_6">
      <property name="text">
-      <string>Handle</string>
+      <string>Object</string>
      </property>
     </widget>
    </item>
@@ -140,21 +140,21 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="mInitBtn">
        <property name="text">
         <string>Init</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_3">
+      <widget class="QPushButton" name="mUpdateBtn">
        <property name="text">
         <string>Update</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_4">
+      <widget class="QPushButton" name="mFinalBtn">
        <property name="text">
         <string>Final</string>
        </property>
@@ -174,13 +174,20 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_5">
+      <widget class="QPushButton" name="mDecryptBtn">
        <property name="text">
         <string>Decrypt</string>
        </property>
       </widget>
      </item>
     </layout>
+   </item>
+   <item row="9" column="0" colspan="3">
+    <widget class="QLabel" name="mStatusLabel">
+     <property name="text">
+      <string>Status</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

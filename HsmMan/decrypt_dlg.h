@@ -16,7 +16,22 @@ public:
     explicit DecryptDlg(QWidget *parent = nullptr);
     ~DecryptDlg();
 
+private slots:
+    void showEvent(QShowEvent *event);
+    void slotChanged( int index );
+
+    void clickInit();
+    void clickUpdate();
+    void clickFinal();
+    void clickDecrypt();
+    void clickClose();
+
+    void keyTypeChanged( int index );
+    void labelChanged( int index );
+
 private:
+    void initialize();
+    void initUI();
 
 };
 
