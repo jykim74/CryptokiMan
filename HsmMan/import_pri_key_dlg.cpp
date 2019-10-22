@@ -143,7 +143,7 @@ void ImportPriKeyDlg::accept()
 
     JS_BIN_fileRead( strPriPath.toStdString().c_str(), &binPri );
 
-//    JS_PKI_getRSAKeyVal( &binPri, &rsaKeyVal );
+    JS_PKI_getRSAKeyVal( &binPri, &rsaKeyVal );
     if( rv == 0 )
     {
         createRSAPrivateKey( &rsaKeyVal );
@@ -151,7 +151,7 @@ void ImportPriKeyDlg::accept()
     }
     else
     {
-//        rv = JS_PKI_getECKeVal( &binPri, &ecKeyVal );
+        rv = JS_PKI_getECKeVal( &binPri, &ecKeyVal );
         if( rv == 0 )
         {
             createECPrivateKey( &ecKeyVal );

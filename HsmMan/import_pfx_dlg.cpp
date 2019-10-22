@@ -164,7 +164,7 @@ void ImportPFXDlg::accept()
     memset( &ecKeyVal, 0x00, sizeof(JSECKeyVal));
 
 
-//    rv = JS_PKI_decodePFX( &binPFX, strPasswd.toStdString().c_str(), &binPri, &binCert );
+    rv = JS_PKI_decodePFX( &binPFX, strPasswd.toStdString().c_str(), &binPri, &binCert );
     if( rv != 0 )
     {
         manApplet->warningBox( tr( "fail to decode PFX"), this );
@@ -174,7 +174,7 @@ void ImportPFXDlg::accept()
     rv = createCert( &binCert );
 
 
-//    rv = JS_PKI_getRSAKeyVal( &binPri, &rsaKeyVal );
+    rv = JS_PKI_getRSAKeyVal( &binPri, &rsaKeyVal );
     if( rv == 0 )
     {
         createRSAPrivateKey( &rsaKeyVal );
@@ -182,7 +182,7 @@ void ImportPFXDlg::accept()
     }
     else
     {
-//        rv = JS_PKI_getECKeVal( &binPri, &ecKeyVal );
+        rv = JS_PKI_getECKeVal( &binPri, &ecKeyVal );
         if( rv == 0 )
         {
             createECPrivateKey( &ecKeyVal );

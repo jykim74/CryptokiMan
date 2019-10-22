@@ -216,7 +216,7 @@ void GenKeyPairDlg::accept()
         memset( sPararmHex, 0x00, sizeof(sPararmHex));
 
         // 아래 함수 시 실행이 안되지? 파악 해야 함
-//        JS_PKI_getHexOIDFromSN( pCurveName, sPararmHex );
+        JS_PKI_getHexOIDFromSN( pCurveName, sPararmHex );
         JS_BIN_decodeHex( sPararmHex, &binECParam );
 
         sPubTemplate[uPubCount].type = CKA_EC_PARAMS;

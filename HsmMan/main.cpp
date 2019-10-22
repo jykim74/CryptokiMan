@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
     parser.addPositionalArgument( "file", "the file to open" );
     parser.process(app);
 
-//    JS_PKI_init();
+    JS_PKI_init();
 
     ManApplet mApplet;
     manApplet = &mApplet;

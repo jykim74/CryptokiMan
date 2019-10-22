@@ -10,12 +10,14 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = HsmMan
 TEMPLATE = app
+PROJECT_VERSION = "0.9.1"
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
+DEFINES += HSMMAN_VERSION=$$PROJECT_VERSION
 
 # You can also make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -106,6 +108,7 @@ HEADERS += \
         settings_dlg.h \
         settings_mgr.h \
         sign_dlg.h \
+        singleton.h \
         slot_info.h \
         temp_array.h \
         unwrap_key_dlg.h \
@@ -157,10 +160,29 @@ RESOURCES += \
 
 TRANSLATIONS += i18n/hsmman_ko_KR.ts
 
+mac {
+    ICON = berviewer.icns
+
+    QMAKE_LFLAGS += -Wl,-rpath,@loader_path/../Frameworks
+    HEADERS += mac_sparkle_support.h
+    OBJECTIVE_SOURCES += mac_sparkle_support.mm
+    LIBS += -framework AppKit
+    LIBS += -framework Carbon
+    LIBS += -framework Foundation
+    LIBS += -framework ApplicationServices
+    LIBS += -framework Sparkle
+    INCLUDEPATH += "/usr/local/Sparkle.framework/Headers"
+
+    LIBS += -L"../../build-PKILib-Desktop_Qt_5_11_3_clang_64bit-Debug" -lPKILib
+    LIBS += -L"../../PKILib/lib/mac/openssl/lib" -lcrypto
+}
+
 win32 {
+    INCLUDEPATH += "../../PKILib/lib/win32/winsparkle/include"
     LIBS += -L"../../build-PKILib-Desktop_Qt_5_12_2_MinGW_32_bit-Debug/debug" -lPKILib
     LIBS += -L"../../PKILib/lib/win32/cmpossl-mingw32/lib" -lcrypto
     LIBS += -L"../../PKILib/lib/win32/ltdl/lib" -lltdl
+    LIBS += -L"../../PKILib/lib/win32/winsparkle/Release" -lWinSparkle
 }
 
 INCLUDEPATH += "../../PKILib"
