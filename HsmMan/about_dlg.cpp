@@ -23,7 +23,7 @@ AboutDlg::AboutDlg(QWidget *parent) :
     }
 #endif
 
-    QString strAbout = tr("This is freeware tool to decode ASN.1 and BER "
+    QString strAbout = tr("This is freeware tool to test cryptoki library "
             "If you do not use this for commercial purposes, "
             "you can use it freely "
             "If you have any opinions on this tool, please send me a mail"
