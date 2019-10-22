@@ -45,7 +45,7 @@ void UnwrapKeyDlg::initUI()
     connect( mFindBtn, SIGNAL(clicked(bool)), this, SLOT(clickFind()));
 
     /* need to check crashing */
-//    setUnwrapLabelList();
+
 }
 
 void UnwrapKeyDlg::slotChanged(int index)
@@ -63,6 +63,7 @@ void UnwrapKeyDlg::slotChanged(int index)
 void UnwrapKeyDlg::showEvent(QShowEvent* event )
 {
     initialize();
+    setUnwrapLabelList();
 }
 
 void UnwrapKeyDlg::initialize()

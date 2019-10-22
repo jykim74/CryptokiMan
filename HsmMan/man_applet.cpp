@@ -42,6 +42,7 @@ ManApplet *manApplet;
 ManApplet::ManApplet( QObject *parent )
 {
     main_win_ = new MainWindow;
+
     open_session_dlg_ = new OpenSessionDlg;
     close_session_dlg_ = new CloseSessionDlg;
     login_dlg_ = new LoginDlg;

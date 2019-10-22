@@ -32,8 +32,6 @@ void WrapKeyDlg::initUI()
     connect( mLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(labelChanged(int)));
     connect( mFindBtn, SIGNAL(clicked(bool)), this, SLOT(clickFind()));
 
-    /* need to check crashing */
-//    setWrapLabelList();
 }
 
 void WrapKeyDlg::slotChanged(int index)
@@ -51,6 +49,7 @@ void WrapKeyDlg::slotChanged(int index)
 void WrapKeyDlg::showEvent(QShowEvent* event )
 {
     initialize();
+    setWrapLabelList();
 }
 
 void WrapKeyDlg::initialize()
