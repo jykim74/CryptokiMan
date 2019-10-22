@@ -37,6 +37,7 @@ class WrapKeyDlg;
 class UnwrapKeyDlg;
 class DeriveKeyDlg;
 class SettingsDlg;
+class SettingsMgr;
 
 class ManApplet : public QObject
 {
@@ -79,6 +80,7 @@ public:
     UnwrapKeyDlg* unwrapKeyDlg() {return unwrap_key_dlg_; };
     DeriveKeyDlg* deriveKeyDlg() {return derive_key_dlg_; };
     SettingsDlg* settingsDlg() { return settings_dlg_; };
+    SettingsMgr* settingsMgr() { return settings_mgr_; };
 
 
     void messageBox(const QString& msg, QWidget *parent=0);
@@ -91,6 +93,7 @@ public:
     bool yesOrCancelBox(const QString& msg, QWidget *parent, bool default_ok);
 
     QString getBrand();
+    void restartApp();
 
 private:
     Q_DISABLE_COPY(ManApplet)
@@ -128,6 +131,9 @@ private:
     UnwrapKeyDlg* unwrap_key_dlg_;
     DeriveKeyDlg* derive_key_dlg_;
     SettingsDlg* settings_dlg_;
+    SettingsMgr* settings_mgr_;
+
+    bool in_exit_;
 };
 
 extern ManApplet *manApplet;

@@ -4,6 +4,7 @@
 #include <QCommandLineParser>
 #include "man_applet.h"
 #include "js_pki.h"
+#include "i18n_helper.h"
 
 int main(int argc, char *argv[])
 {
@@ -18,6 +19,8 @@ int main(int argc, char *argv[])
     parser.addHelpOption();
     parser.addPositionalArgument( "file", "the file to open" );
     parser.process(app);
+
+    I18NHelper::getInstance()->init();
 
     JS_PKI_init();
 

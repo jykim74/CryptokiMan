@@ -1,4 +1,5 @@
 #include <QPushButton>
+#include <QProcess>
 
 #include "man_applet.h"
 #include "mainwindow.h"
@@ -34,6 +35,7 @@
 #include "unwrap_key_dlg.h"
 #include "derive_key_dlg.h"
 #include "settings_dlg.h"
+#include "settings_mgr.h"
 
 ManApplet *manApplet;
 
@@ -72,11 +74,29 @@ ManApplet::ManApplet( QObject *parent )
     unwrap_key_dlg_ = new UnwrapKeyDlg;
     derive_key_dlg_ = new DeriveKeyDlg;
     settings_dlg_ = new SettingsDlg;
+    settings_mgr_ = new SettingsMgr;
+
+    in_exit_ = false;
 }
 
 void ManApplet::start()
 {
     main_win_->show();
+}
+
+void ManApplet::restartApp()
+{
+    if( in_exit_ || QCoreApplication::closingDown() )
+        return;
+
+    in_exit_ = true;
+
+
+    QStringList args = QApplication::arguments();
+    args.removeFirst();
+
+    QProcess::startDetached(QApplication::applicationFilePath(), args);
+    QCoreApplication::quit();
 }
 
 QString ManApplet::getBrand()

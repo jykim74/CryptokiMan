@@ -44,6 +44,7 @@ SOURCES += \
         encrypt_dlg.cpp \
         gen_key_dlg.cpp \
         gen_key_pair_dlg.cpp \
+        i18n_helper.cpp \
         import_cert_dlg.cpp \
         import_pfx_dlg.cpp \
         import_pri_key_dlg.cpp \
@@ -88,6 +89,7 @@ HEADERS += \
         encrypt_dlg.h \
         gen_key_dlg.h \
         gen_key_pair_dlg.h \
+        i18n_helper.h \
         import_cert_dlg.h \
         import_pfx_dlg.h \
         import_pri_key_dlg.h \
@@ -159,6 +161,8 @@ RESOURCES += \
     hsmman.qrc
 
 TRANSLATIONS += i18n/hsmman_ko_KR.ts
+
+DEFINES += _AUTO_UPDATE
 
 mac {
     ICON = berviewer.icns

@@ -16,8 +16,16 @@ public:
     explicit AboutDlg(QWidget *parent = nullptr);
     ~AboutDlg();
 
-private:
 
+#ifdef _AUTO_UPDATE
+private slots:
+    void checkUpdate();
+#endif
+
+private:
+//    Ui::AboutDlg *ui;
+    Q_DISABLE_COPY(AboutDlg)
+    QString version_label_;
 };
 
 #endif // ABOUT_DLG_H
