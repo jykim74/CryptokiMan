@@ -20,6 +20,8 @@ RandDlg::~RandDlg()
 void RandDlg::initUI()
 {
     mSeedCombo->addItems( sSeedList );
+
+    connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
 }
 
 void RandDlg::slotChanged(int index)
@@ -128,8 +130,9 @@ void RandDlg::clickSeed()
 
     if( rv != CKR_OK )
     {
+        manApplet->warningBox( tr("fail to run SeedRandom(%1)").arg(rv), this );
         return;
     }
 
-    QMessageBox::information( this, "Random", "SeedRandom OK." );
+    manApplet->warningBox( tr("SeedRandom is OK"), this );
 }

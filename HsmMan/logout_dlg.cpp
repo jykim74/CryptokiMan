@@ -46,7 +46,7 @@ void LogoutDlg::accept()
     int nFlags = 0;
     CK_SESSION_HANDLE   hSession = -1;
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
+    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
 
     rv = JS_PKCS11_Logout( p11_ctx, slotInfo.getSessionHandle() );
