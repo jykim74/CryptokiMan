@@ -37,6 +37,7 @@ private:
     void initAttributes();
     void setAttributes();
     void connectAttributes();
+    void setDefaults();
 };
 
 #endif // CREATE_KEY_DLG_H
