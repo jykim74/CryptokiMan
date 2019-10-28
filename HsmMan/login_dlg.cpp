@@ -52,6 +52,11 @@ void LoginDlg::accept()
     CK_UTF8CHAR *pPin = (CK_UTF8CHAR *)mPinText->text().toUtf8().toStdString().c_str();
     CK_ULONG uPinLen = mPinText->text().toUtf8().length();
 
+    if( mUserCheck->isChecked() )
+        nType = CKU_USER;
+    else if( mSOCheck->isChecked() )
+        nType = CKU_SO;
+
     rv = JS_PKCS11_Login( p11_ctx, hSession, nType, pPin, uPinLen );
 
     if( rv == CKR_OK )

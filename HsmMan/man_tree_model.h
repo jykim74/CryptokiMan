@@ -21,11 +21,11 @@ public:
     void showMechanismInfo( int index );
     void showSessionInfo( int index );
     void showObjectsInfo( int index );
-    void showCertificateInfo( int index, long hObject );
-    void showPublicKeyInfo( int index, long hObject );
-    void showPrivateKeyInfo( int index, long hObject );
-    void showSecretKeyInfo( int index, long hObject );
-    void showDataInfo( int index, long hObject );
+    void showCertificateInfo( int index, long hObject = -1 );
+    void showPublicKeyInfo( int index, long hObject = -1 );
+    void showPrivateKeyInfo( int index, long hObject = -1 );
+    void showSecretKeyInfo( int index, long hObject = -1 );
+    void showDataInfo( int index, long hObject = -1 );
 
     void setRightTable( QTableWidget *right_table );
     void removeAllRightTable();

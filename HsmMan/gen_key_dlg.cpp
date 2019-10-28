@@ -41,6 +41,7 @@ void GenKeyDlg::slotChanged(int index)
 void GenKeyDlg::showEvent(QShowEvent* event )
 {
     initialize();
+    setDefaults();
 }
 
 void GenKeyDlg::initialize()
@@ -112,7 +113,7 @@ void GenKeyDlg::accept()
     int nFlags = 0;
     CK_SESSION_HANDLE   hSession = -1;
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
+    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
     CK_ATTRIBUTE sTemplate[20];
     CK_ULONG uCount = 0;
@@ -253,10 +254,11 @@ void GenKeyDlg::accept()
     rv = JS_PKCS11_GenerateKey( p11_ctx, hSession, &sMech, sTemplate, uCount, &hObject );
     if( rv != CKR_OK )
     {
+        manApplet->warningBox( tr("fail to generate key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
-
+    manApplet->messageBox( tr( "Success to genereate Key" ), this );
     QDialog::accept();
 }
 
@@ -306,4 +308,27 @@ void GenKeyDlg::clickVerify()
 void GenKeyDlg::clickToken()
 {
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
+}
+
+void GenKeyDlg::setDefaults()
+{
+    mLabelText->setText( "Secret key Label" );
+
+    mPrivateCheck->setChecked(true);
+    mPrivateCombo->setEnabled(true);
+    mPrivateCombo->setCurrentIndex(1);
+
+    mEncryptCheck->setChecked(true);
+    mEncryptCombo->setEnabled(true);
+    mEncryptCombo->setCurrentIndex(1);
+
+    mDecryptCheck->setChecked(true);
+    mDecryptCombo->setEnabled(true);
+    mDecryptCombo->setCurrentIndex(1);
+
+    mTokenCheck->setChecked(true);
+    mTokenCombo->setEnabled(true);
+    mTokenCombo->setCurrentIndex(1);
+
+    mKeySizeText->setText( "16" );
 }

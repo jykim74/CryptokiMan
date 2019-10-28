@@ -35,6 +35,16 @@ void ManTreeView::onItemClicked( const QModelIndex& index )
         tree_model->showSessionInfo( item->getSlotIndex() );
     else if( item->getType() == HM_ITEM_TYPE_OBJECTS )
         tree_model->showObjectsInfo( item->getSlotIndex() );
+    else if( item->getType() == HM_ITEM_TYPE_CERTIFICATE )
+        tree_model->showCertificateInfo( item->getSlotIndex() );
+    else if( item->getType() == HM_ITEM_TYPE_PUBLICKEY )
+        tree_model->showPublicKeyInfo( item->getSlotIndex() );
+    else if( item->getType() == HM_ITEM_TYPE_PRIVATEKEY )
+        tree_model->showPrivateKeyInfo( item->getSlotIndex() );
+    else if( item->getType() == HM_ITEM_TYPE_SECRETKEY )
+        tree_model->showSecretKeyInfo( item->getSlotIndex() );
+    else if( item->getType() == HM_ITEM_TYPE_DATA )
+        tree_model->showDataInfo( item->getSlotIndex() );
     else {
         tree_model->removeAllRightTable();
     }

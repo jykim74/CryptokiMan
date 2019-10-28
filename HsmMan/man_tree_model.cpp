@@ -384,13 +384,13 @@ void ManTreeModel::showSessionInfo(int index)
 
     CK_SESSION_INFO stSessInfo;
 
+    removeAllRightTable();
+
     int rv = JS_PKCS11_GetSessionInfo( p11_ctx, slotInfo.getSessionHandle(), &stSessInfo );
     if( rv != CKR_OK )
     {
         return;
     }
-
-    removeAllRightTable();
 
     int row = 0;
     QString strMsg = "";

@@ -41,6 +41,7 @@ GenKeyPairDlg::~GenKeyPairDlg()
 void GenKeyPairDlg::showEvent(QShowEvent* event )
 {
     initialize();
+    setDefaults();
 }
 
 void GenKeyPairDlg::initialize()
@@ -57,8 +58,6 @@ void GenKeyPairDlg::initialize()
     }
 
     if( slot_infos.size() > 0 ) slotChanged(0);
-
-
 }
 
 void GenKeyPairDlg::initAttributes()
@@ -134,9 +133,10 @@ void GenKeyPairDlg::accept()
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nFlags = 0;
-    CK_SESSION_HANDLE   hSession = -1;
+
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.takeAt(index);
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
     int rv = -1;
 
 
@@ -155,8 +155,6 @@ void GenKeyPairDlg::accept()
 
     CK_OBJECT_HANDLE uPubHandle = -1;
     CK_OBJECT_HANDLE uPriHandle = -1;
-
-    long uSession = slotInfo.getSessionHandle();
 
     memset( &stMech, 0x00, sizeof(stMech) );
 
@@ -414,13 +412,14 @@ void GenKeyPairDlg::accept()
     }
 
 
-    rv = JS_PKCS11_GenerateKeyPair( p11_ctx, uSession, &stMech, sPubTemplate, uPubCount, sPriTemplate, uPriCount, &uPubHandle, &uPriHandle );
+    rv = JS_PKCS11_GenerateKeyPair( p11_ctx, hSession, &stMech, sPubTemplate, uPubCount, sPriTemplate, uPriCount, &uPubHandle, &uPriHandle );
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr( "failed to generate key pairs"), this );
+        manApplet->warningBox( tr( "failure to generate key pairs(rv:%1)").arg(JS_PKCS11_GetErrorMsg( rv )), this );
         return;
     }
 
+    manApplet->messageBox( tr("Success to generate key pairs"), this );
     QDialog::accept();
 }
 
@@ -519,4 +518,47 @@ void GenKeyPairDlg::clickPubModifiable()
 void GenKeyPairDlg::clickPubToken()
 {
     mPubTokenCombo->setEnabled(mPubTokenCheck->isChecked());
+}
+
+void GenKeyPairDlg::setDefaults()
+{
+    mPubLabelText->setText( "Public Label" );
+    mPubExponentText->setText( "010001" );
+    mPubIDText->setText( "Public ID" );
+
+    mPriLabelText->setText( "Private Label" );
+    mPriSubjectText->setText( "CN=SubjectDN" );
+    mPriIDText->setText( "Private ID" );
+
+
+    mPubEncryptCheck->setChecked(true);
+    mPubEncryptCombo->setEnabled(true);
+    mPubEncryptCombo->setCurrentIndex(1);
+
+
+    mPubTokenCheck->setChecked(true);
+    mPubTokenCombo->setEnabled(true);
+    mPubTokenCombo->setCurrentIndex(1);
+
+    mPubVerifyCheck->setChecked(true);
+    mPubVerifyCombo->setEnabled(true);
+    mPubVerifyCombo->setCurrentIndex(1);
+
+
+    mPriPrivateCheck->setChecked(true);
+    mPriPrivateCombo->setEnabled(true);
+    mPriPrivateCombo->setCurrentIndex(1);
+
+
+    mPriSignCheck->setChecked(true);
+    mPriSignCombo->setEnabled(true);
+    mPriSignCombo->setCurrentIndex(1);
+
+    mPriDecryptCheck->setChecked(true);
+    mPriDecryptCombo->setEnabled(true);
+    mPriDecryptCombo->setCurrentIndex(1);
+
+    mPriTokenCheck->setChecked(true);
+    mPriTokenCombo->setEnabled(true);
+    mPriTokenCombo->setCurrentIndex(1);
 }

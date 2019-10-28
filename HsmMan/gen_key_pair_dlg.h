@@ -45,6 +45,7 @@ private:
     void initAttributes();
     void setAttributes();
     void connectAttributes();
+    void setDefaults();
 };
 
 #endif // GEN_KEY_PAIR_DLG_H
