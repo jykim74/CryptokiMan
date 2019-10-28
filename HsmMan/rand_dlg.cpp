@@ -22,6 +22,7 @@ void RandDlg::initUI()
     mSeedCombo->addItems( sSeedList );
 
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
+    connect( mSetSeedBtn, SIGNAL(clicked()), this, SLOT(clickSeed()));
 }
 
 void RandDlg::slotChanged(int index)
@@ -60,20 +61,23 @@ void RandDlg::initialize()
 void RandDlg::accept()
 {
     JSP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    if( p11_ctx == NULL ) return;
+
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
+    if( slot_infos.size() <= 0 ) return;
 
     int nFlags = 0;
-    CK_SESSION_HANDLE   hSession = -1;
+
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
+    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     QString strLen = mLengthText->text();
 
     if( strLen.isEmpty() )
     {
-        QMessageBox::warning( this, "Random", "You have to insert random length" );
+        manApplet->warningBox( tr("You have to insert length value"), this );
         return;
     }
 
@@ -85,6 +89,7 @@ void RandDlg::accept()
     if( rv != CKR_OK )
     {
         if( pRand ) JS_free( pRand );
+        manApplet->warningBox( tr( "fail to generate random(%1)").arg(rv), this );
         return;
     }
 
@@ -105,9 +110,10 @@ void RandDlg::clickSeed()
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nFlags = 0;
-    CK_SESSION_HANDLE   hSession = -1;
+
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
+    SlotInfo slotInfo = slot_infos.at(index);
+    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
     int rv = -1;
 
     QString strSeed = mSeedText->text();

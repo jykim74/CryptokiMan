@@ -7,6 +7,7 @@ InitPinDlg::InitPinDlg(QWidget *parent) :
     QDialog(parent)
 {
     setupUi(this);
+    connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
 }
 
 InitPinDlg::~InitPinDlg()
@@ -56,14 +57,14 @@ void InitPinDlg::accept()
     int nFlags = 0;
     CK_SESSION_HANDLE   hSession = -1;
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
+    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
     hSession = slotInfo.getSessionHandle();
     QString strPin = mPinText->text();
 
     if( strPin.isEmpty() )
     {
-        QMessageBox::warning(this, "InitPIN", "You have to insert pin." );
+        manApplet->warningBox( tr( "Insert pin value"), this );
         mPinText->setFocus();;
 
         return;
@@ -76,8 +77,12 @@ void InitPinDlg::accept()
 
     if( rv != CKR_OK )
     {
+        manApplet->warningBox( tr( "fail to run InitPIN(%1)").arg(rv), this );
+        JS_BIN_reset( &binPin );
         return;
     }
 
+    manApplet->messageBox( tr( "Success to run InitPIN"), this );
+    JS_BIN_reset( &binPin );
     QDialog::accept();
 }

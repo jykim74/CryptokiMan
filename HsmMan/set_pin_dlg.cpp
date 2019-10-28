@@ -7,6 +7,7 @@ SetPinDlg::SetPinDlg(QWidget *parent) :
     QDialog(parent)
 {
     setupUi(this);
+    connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
 }
 
 SetPinDlg::~SetPinDlg()
@@ -56,7 +57,7 @@ void SetPinDlg::accept()
     int nFlags = 0;
     CK_SESSION_HANDLE   hSession = -1;
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
+    SlotInfo slotInfo = slot_infos.at(index);
     hSession = slotInfo.getSessionHandle();
     int rv = -1;
 
@@ -65,7 +66,7 @@ void SetPinDlg::accept()
 
     if( strOldPin.isEmpty() )
     {
-        QMessageBox::warning( this, "SetPIN", "You have to insert old pin." );
+        manApplet->warningBox( tr( "Insert old pin value"), this );
         mOldPinText->setFocus();;
         return;
     }
@@ -73,7 +74,7 @@ void SetPinDlg::accept()
     QString strNewPin = mNewPinText->text();
     if( strNewPin.isEmpty() )
     {
-        QMessageBox::warning( this, "SetPIN", "You have to insert new pin." );
+        manApplet->warningBox( tr(" Insert new pin value"), this );
         mNewPinText->setFocus();;
         return;
     }
@@ -89,8 +90,14 @@ void SetPinDlg::accept()
     rv = JS_PKCS11_SetPIN( p11_ctx, hSession, binOldPin.pVal, binOldPin.nLen, binNewPin.pVal, binNewPin.nLen );
     if( rv != CKR_OK )
     {
+        manApplet->warningBox( tr( "fail to run C_SetPIN(%1)").arg(rv), this );
+        JS_BIN_reset( &binOldPin );
+        JS_BIN_reset( &binNewPin );
         return;
     }
 
+    manApplet->messageBox( tr( "success to run C_SetPIN"), this );
+    JS_BIN_reset( &binNewPin );
+    JS_BIN_reset( &binOldPin );
     QDialog::accept();
 }
