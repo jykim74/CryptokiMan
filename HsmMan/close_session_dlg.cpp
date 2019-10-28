@@ -8,7 +8,7 @@ CloseSessionDlg::CloseSessionDlg(QWidget *parent) :
 {
     all_ = false;
     setupUi(this);
-
+    setWindowTitle( "CloseSession Dialog" );
 
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
 }
@@ -21,6 +21,7 @@ CloseSessionDlg::~CloseSessionDlg()
 void CloseSessionDlg::setAll(bool all)
 {
     all_ = all;
+    setWindowTitle( "CloseAllSession Dialog" );
 }
 
 void CloseSessionDlg::showEvent(QShowEvent* event )

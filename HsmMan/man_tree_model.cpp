@@ -172,6 +172,8 @@ void ManTreeModel::showTokenInfo(int index)
         return;
     }
 
+    removeAllRightTable();
+
     int row = 0;
     QString strMsg = "";
 
@@ -303,6 +305,8 @@ void ManTreeModel::showMechanismInfo(int index)
         return;
     }
 
+    removeAllRightTable();
+
     pMechType = (CK_MECHANISM_TYPE_PTR)JS_calloc( ulMechCnt, sizeof(CK_MECHANISM_TYPE));
     rv = JS_PKCS11_GetMechanismList( p11_ctx, uSlotID, pMechType, &ulMechCnt );
     if( rv != CKR_OK )
@@ -386,6 +390,8 @@ void ManTreeModel::showSessionInfo(int index)
         return;
     }
 
+    removeAllRightTable();
+
     int row = 0;
     QString strMsg = "";
 
@@ -439,6 +445,8 @@ void ManTreeModel::showObjectsInfo(int index)
     long uSession = slotInfo.getSessionHandle();
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[100];
+
+    removeAllRightTable();
 
     int ret = 0;
 
@@ -533,6 +541,8 @@ void ManTreeModel::showCertificateInfo( int index, long hObject )
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[100];
     int rv = 0;
+
+    removeAllRightTable();
 
     if( hObject < 0 )
     {
@@ -671,6 +681,8 @@ void ManTreeModel::showPublicKeyInfo( int index, long hObject )
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[100];
     int rv = 0;
+
+    removeAllRightTable();
 
     if( hObject < 0 )
     {
@@ -911,6 +923,8 @@ void ManTreeModel::showPrivateKeyInfo( int index, long hObject )
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[100];
     int rv = 0;
+
+    removeAllRightTable();
 
     if( hObject < 0 )
     {
@@ -1257,6 +1271,8 @@ void ManTreeModel::showSecretKeyInfo( int index, long hObject )
     CK_OBJECT_HANDLE hObjects[100];
     int rv = 0;
 
+    removeAllRightTable();
+
     if( hObject < 0 )
     {
         CK_OBJECT_CLASS objClass = CKO_SECRET_KEY;
@@ -1509,6 +1525,8 @@ void ManTreeModel::showDataInfo( int index, long hObject )
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[100];
     int rv = 0;
+
+    removeAllRightTable();
 
     if( hObject < 0 )
     {
