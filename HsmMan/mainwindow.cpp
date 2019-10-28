@@ -98,9 +98,9 @@ void MainWindow::initialize()
 
 void MainWindow::createTableMenu()
 {
-    QStringList     labels;
+    QStringList     labels = { tr("Field"), tr("Value") };
 
-    labels << tr("Field") << tr("Value");
+    right_table_->horizontalHeader()->setStretchLastSection(true);
     right_table_->setColumnCount(2);
     right_table_->setColumnWidth(1, 500);
     right_table_->setHorizontalHeaderLabels( labels );

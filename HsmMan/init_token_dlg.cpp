@@ -54,9 +54,10 @@ void InitTokenDlg::accept()
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nFlags = 0;
-    CK_SESSION_HANDLE   hSession = -1;
+
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.takeAt(index);
+    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
     int rv = -1;
 
 
@@ -83,6 +84,7 @@ void InitTokenDlg::accept()
                               strPIN.length(), (CK_UTF8CHAR_PTR)strLabel.toStdString().c_str() );
     if( rv != CKR_OK )
     {
+        manApplet->warningBox( tr( "fail to initialize token(%1)").arg(rv), this );
         return;
     }
 

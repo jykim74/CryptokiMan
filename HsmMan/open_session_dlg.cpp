@@ -44,8 +44,7 @@ void OpenSessionDlg::accept()
     int nFlags = 0;
     CK_SESSION_HANDLE   hSession = -1;
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
-
+    SlotInfo slotInfo = slot_infos.at(index);
 
     if( mRWCheck->isChecked() )
         nFlags |= CKF_RW_SESSION;
@@ -63,5 +62,8 @@ void OpenSessionDlg::accept()
     }
     else {
         manApplet->warningBox( tr("OpenSession is failure"), this );
+        return;
     }
+
+    QDialog::accept();
 }

@@ -8,6 +8,8 @@ LogoutDlg::LogoutDlg(QWidget *parent) :
     QDialog(parent)
 {
     setupUi(this);
+
+    connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
 }
 
 LogoutDlg::~LogoutDlg()
@@ -57,6 +59,8 @@ void LogoutDlg::accept()
     else {
         manApplet->warningBox(tr("Logout is failure"), this );
     }
+
+    QDialog::accept();
 }
 
 void LogoutDlg::slotChanged(int index)

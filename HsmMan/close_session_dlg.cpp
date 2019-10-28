@@ -9,6 +9,7 @@ CloseSessionDlg::CloseSessionDlg(QWidget *parent) :
     all_ = false;
     setupUi(this);
 
+
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
 }
 
@@ -49,35 +50,57 @@ void CloseSessionDlg::accept()
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nFlags = 0;
-    CK_SESSION_HANDLE   hSession = -1;
+    QString strType = "";
+
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
+    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     if( all_ )
     {
         rv = JS_PKCS11_CloseAllSessions( p11_ctx, slotInfo.getSlotID() );
+        strType = "All";
     }
     else {
-        rv = JS_PKCS11_CloseSession( p11_ctx, slotInfo.getSessionHandle() );
+
+        rv = JS_PKCS11_CloseSession( p11_ctx, hSession );
+        strType = "Single";
     }
 
     if( rv == CKR_OK )
     {
-        slotInfo.setSessionHandle(-1);
-        slot_infos.replace( index, slotInfo );
-        manApplet->messageBox( tr("CloseSession is success"), this );
+        if( all_ )
+        {
+            for( int i=0; i < slot_infos.size(); i++ )
+            {
+                SlotInfo tmpInfo = slot_infos.at(i);
+                tmpInfo.setSessionHandle(-1);
+                tmpInfo.setLogin(false);
+                slot_infos.replace( i, tmpInfo );
+            }
+        }
+        else {
+            slotInfo.setSessionHandle(-1);
+            slotInfo.setLogin( false );
+            slot_infos.replace( index, slotInfo );
+        }
+
+        manApplet->messageBox( tr("CloseSession(%1) is success").arg(strType), this );
     }
     else {
-        manApplet->warningBox( tr("CloseSession is failure"), this );
+        manApplet->warningBox( tr("CloseSession(%1) is failure").arg(strType), this );
+        return;
     }
+
+    QDialog::accept();
 }
 
 void CloseSessionDlg::slotChanged(int index)
 {
     if( index < 0 ) return;
 
-    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
+    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
     SlotInfo slotInfo = slot_infos.at(index);
 
     mSlotIDText->setText( QString( "%1").arg(slotInfo.getSlotID()));

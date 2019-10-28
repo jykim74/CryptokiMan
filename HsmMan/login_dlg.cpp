@@ -7,6 +7,8 @@ LoginDlg::LoginDlg(QWidget *parent) :
     QDialog(parent)
 {
     setupUi(this);
+
+    connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
 }
 
 LoginDlg::~LoginDlg()
@@ -42,14 +44,15 @@ void LoginDlg::accept()
 
     int nFlags = 0;
     int nType = 0;
-    CK_SESSION_HANDLE   hSession = -1;
+
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
+    SlotInfo slotInfo = slot_infos.at(index);
+    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
     int rv = -1;
     CK_UTF8CHAR *pPin = (CK_UTF8CHAR *)mPinText->text().toUtf8().toStdString().c_str();
     CK_ULONG uPinLen = mPinText->text().toUtf8().length();
 
-    rv = JS_PKCS11_Login( p11_ctx, slotInfo.getSessionHandle(), nType, pPin, uPinLen );
+    rv = JS_PKCS11_Login( p11_ctx, hSession, nType, pPin, uPinLen );
 
     if( rv == CKR_OK )
     {
@@ -60,6 +63,8 @@ void LoginDlg::accept()
     else {
         manApplet->messageBox( tr("Login is failure"), this);
     }
+
+    QDialog::close();
 }
 
 void LoginDlg::slotChanged(int index)
