@@ -80,7 +80,7 @@ void DecryptDlg::keyTypeChanged( int index )
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(nSlotSel);
+    SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
@@ -143,7 +143,7 @@ void DecryptDlg::clickInit()
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(nSlotSel);
+    SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
@@ -169,6 +169,7 @@ void DecryptDlg::clickInit()
     {
         mOutputText->setPlainText("");
         mStatusLabel->setText("");
+        manApplet->warningBox( tr("fail to run DecryptInit(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
@@ -182,7 +183,7 @@ void DecryptDlg::clickUpdate()
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(nSlotSel);
+    SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
@@ -217,6 +218,7 @@ void DecryptDlg::clickUpdate()
     {
         if( pDecPart ) JS_free( pDecPart );
         mOutputText->setPlainText("");
+        manApplet->warningBox( tr("fail to run DecryptUpdate(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this);
         return;
     }
 
@@ -241,7 +243,7 @@ void DecryptDlg::clickFinal()
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(nSlotSel);
+    SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
@@ -260,6 +262,7 @@ void DecryptDlg::clickFinal()
     {
         if( pDecPart ) JS_free( pDecPart );
         mOutputText->setPlainText("");
+        manApplet->warningBox( tr("fail to run DecryptFinal(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
@@ -287,7 +290,7 @@ void DecryptDlg::clickDecrypt()
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(nSlotSel);
+    SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
@@ -315,7 +318,7 @@ void DecryptDlg::clickDecrypt()
     {
         if( pDecData ) JS_free( pDecData );
         mOutputText->setPlainText( "" );
-
+        manApplet->warningBox( tr("fail to run Decrypt(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 

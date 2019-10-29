@@ -80,7 +80,7 @@ void EncryptDlg::keyTypeChanged( int index )
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(nSlotSel);
+    SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
@@ -142,7 +142,7 @@ void EncryptDlg::clickInit()
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(nSlotSel);
+    SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
@@ -167,6 +167,7 @@ void EncryptDlg::clickInit()
     {
         mStatusLabel->setText("");
         mOutputText->setPlainText("");
+        manApplet->warningBox( tr("fail to run EncryptInit(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
@@ -180,7 +181,7 @@ void EncryptDlg::clickUpdate()
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(nSlotSel);
+    SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
@@ -215,6 +216,7 @@ void EncryptDlg::clickUpdate()
     {
         mOutputText->setPlainText("");
         if( pEncPart ) JS_free( pEncPart );
+        manApplet->warningBox( tr("fail to run EncryptUpdate(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
@@ -239,7 +241,7 @@ void EncryptDlg::clickFinal()
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(nSlotSel);
+    SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
@@ -257,6 +259,7 @@ void EncryptDlg::clickFinal()
     {
         mOutputText->setPlainText( "" );
         if( pEncPart ) JS_free( pEncPart );
+        manApplet->warningBox( tr("fail to run EncryptFinal(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
@@ -280,7 +283,7 @@ void EncryptDlg::clickEncrypt()
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(nSlotSel);
+    SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
@@ -316,6 +319,7 @@ void EncryptDlg::clickEncrypt()
     {
         mOutputText->setPlainText( "" );
         if( pEncData ) JS_free( pEncData );
+        manApplet->warningBox( tr("fail to run Encrypt(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 

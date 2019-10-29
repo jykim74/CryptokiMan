@@ -81,7 +81,7 @@ void SignDlg::keyTypeChanged( int index )
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(nSlotSel);
+    SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
@@ -143,7 +143,7 @@ void SignDlg::clickInit()
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(nSlotSel);
+    SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
@@ -167,6 +167,7 @@ void SignDlg::clickInit()
     {
         mOutputText->setPlainText( "" );
         mStatusLabel->setText( "" );
+        manApplet->warningBox( tr("fail to run SignInit(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
     }
     else
     {
@@ -181,7 +182,7 @@ void SignDlg::clickUpdate()
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(nSlotSel);
+    SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
@@ -205,6 +206,7 @@ void SignDlg::clickUpdate()
     rv = JS_PKCS11_SignUpdate( p11_ctx, hSession, binInput.pVal, binInput.nLen );
     if( rv != CKR_OK )
     {
+        manApplet->warningBox(tr("fail to run SignUpdate(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
@@ -220,7 +222,7 @@ void SignDlg::clickFinal()
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(nSlotSel);
+    SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
@@ -232,6 +234,7 @@ void SignDlg::clickFinal()
 
     if( rv != CKR_OK )
     {
+        manApplet->warningBox( tr("fail to run SignFinal(%1)").arg( JS_PKCS11_GetErrorMsg(rv)), this );
         mOutputText->setPlainText("");
         return;
     }
@@ -256,7 +259,7 @@ void SignDlg::clickSign()
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(nSlotSel);
+    SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
@@ -285,6 +288,7 @@ void SignDlg::clickSign()
     if( rv != CKR_OK )
     {
         mOutputText->setPlainText("");
+        manApplet->warningBox( tr("fail to run Sign(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 

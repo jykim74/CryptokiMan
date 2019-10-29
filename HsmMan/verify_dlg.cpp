@@ -82,7 +82,7 @@ void VerifyDlg::keyTypeChanged( int index )
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(nSlotSel);
+    SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
@@ -144,7 +144,7 @@ void VerifyDlg::clickInit()
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(nSlotSel);
+    SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
@@ -166,6 +166,7 @@ void VerifyDlg::clickInit()
     if( rv != CKR_OK )
     {
         mStatusLabel->setText("");
+        manApplet->warningBox( tr("fail to run VerifyInit(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
@@ -178,7 +179,7 @@ void VerifyDlg::clickUpdate()
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(nSlotSel);
+    SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
@@ -203,6 +204,7 @@ void VerifyDlg::clickUpdate()
     rv = JS_PKCS11_VerifyUpdate(p11_ctx, hSession, binInput.pVal, binInput.nLen );
     if( rv != CKR_OK )
     {
+        manApplet->warningBox( tr("fail to run VerifyUpdate(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
@@ -218,7 +220,7 @@ void VerifyDlg::clickFinal()
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(nSlotSel);
+    SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
@@ -254,7 +256,7 @@ void VerifyDlg::clickVerify()
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(nSlotSel);
+    SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
