@@ -78,7 +78,7 @@ void DigestDlg::clickInit()
     int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
+    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
@@ -106,6 +106,7 @@ void DigestDlg::clickInit()
     }
     else
     {
+        manApplet->warningBox( tr("fail to run DigestInit(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         mStatusLabel->setText("");
         mOutputText->setText("");
     }
@@ -119,12 +120,12 @@ void DigestDlg::clickUpdate()
     int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
+    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
     QString strInput = mInputText->text();
-    if( !strInput.isEmpty() )
+    if( strInput.isEmpty() )
     {
         manApplet->warningBox(tr("Insert input value."), this );
         mInputText->setFocus();
@@ -150,6 +151,7 @@ void DigestDlg::clickUpdate()
     }
     else
     {
+        manApplet->warningBox( tr("fail to run DigestUpdate(%1)").arg( JS_PKCS11_GetErrorMsg(rv)), this );
         mOutputText->setText("");
     }
 }
@@ -162,7 +164,7 @@ void DigestDlg::clickFinal()
     int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
+    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
@@ -188,6 +190,7 @@ void DigestDlg::clickFinal()
     }
     else
     {
+        manApplet->warningBox( tr("fail to run DigestFinal(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         mOutputText->setText("");
     }
 }
@@ -200,12 +203,12 @@ void DigestDlg::clickDigest()
     int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
+    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
     QString strInput = mInputText->text();
-    if( !strInput.isEmpty() )
+    if( strInput.isEmpty() )
     {
         manApplet->warningBox( tr("You have to insert input value"), this );
         return;
@@ -240,6 +243,7 @@ void DigestDlg::clickDigest()
     }
     else
     {
+        manApplet->warningBox( tr("fail run Digest(%1)").arg( JS_PKCS11_GetErrorMsg(rv)), this );
         mOutputText->setText("");
     }
 }
