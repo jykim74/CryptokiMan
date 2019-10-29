@@ -74,14 +74,7 @@ void EditAttributeDlg::initAttributes()
 
 void EditAttributeDlg::accept()
 {
-    JSP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
-    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int nFlags = 0;
-    CK_SESSION_HANDLE   hSession = -1;
-    int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
-    int rv = -1;
+    QDialog::accept();
 }
 
 void EditAttributeDlg::clickClose()
@@ -102,6 +95,12 @@ void EditAttributeDlg::clickGetAttribute()
     hSession = slotInfo.getSessionHandle();
 
     long hObject = mObjectText->text().toLong();
+
+    if( hObject <= 0 )
+    {
+        manApplet->warningBox( tr("insert object handle"), this );
+        return;
+    }
 
     CK_ATTRIBUTE_TYPE attrType = 0;
 
@@ -136,6 +135,12 @@ void EditAttributeDlg::clickSetAttribute()
     int rv = -1;
     hSession = slotInfo.getSessionHandle();
     long hObject = mObjectText->text().toLong();
+
+    if( hObject <= 0 )
+    {
+        manApplet->warningBox( tr("insert object handle"), this );
+        return;
+    }
 
     CK_ATTRIBUTE_TYPE attrType = 0;
 
