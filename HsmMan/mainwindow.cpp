@@ -44,6 +44,7 @@
 #include "about_dlg.h"
 #include "log_view_dlg.h"
 #include "settings_dlg.h"
+#include "settings_mgr.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -278,7 +279,18 @@ void MainWindow::newFile()
 
 void MainWindow::open()
 {
-    QString fileName = QFileDialog::getOpenFileName( this, "/", QDir::currentPath(),
+    bool bSavePath = manApplet->settingsMgr()->saveLibPath();
+    QString strPath = QDir::currentPath();
+
+    if( bSavePath )
+    {
+        QSettings settings;
+        settings.beginGroup( "mainwindow" );
+        strPath = settings.value( "libPath", "" ).toString();
+        settings.endGroup();
+    }
+
+    QString fileName = QFileDialog::getOpenFileName( this, tr("Open cryptoki file"), strPath,
                                                  "All files(*.*);;DLL files(*.dll))");
 
 
@@ -301,6 +313,17 @@ void MainWindow::open()
             pItem->setText( tr("CryptokiToken"));
             pItem->setType( HM_ITEM_TYPE_ROOT );
             left_model_->insertRow(0, pItem );
+
+            if( bSavePath )
+            {
+                QFileInfo fileInfo(fileName);
+                QString strDir = fileInfo.dir().path();
+
+                QSettings settings;
+                settings.beginGroup("mainwindow");
+                settings.setValue( "libPath", strDir );
+                settings.endGroup();
+            }
         }
     }
 }

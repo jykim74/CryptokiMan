@@ -26,6 +26,7 @@ void SettingsDlg::updateSettings()
 {
     SettingsMgr *mgr = manApplet->settingsMgr();
 
+    mgr->setSaveLibPath( mSaveLibPathCheck->checkState() == Qt::Checked );
 
 #ifdef _AUTO_UPDATE
     if( AutoUpdateService::instance()->shouldSupportAutoUpdate() ) {
@@ -49,7 +50,7 @@ void SettingsDlg::updateSettings()
 void SettingsDlg::accept()
 {
     updateSettings();
-    accept();
+    QDialog::accept();
 }
 
 
@@ -64,6 +65,9 @@ void SettingsDlg::showEvent(QShowEvent *event)
     SettingsMgr *mgr = manApplet->settingsMgr();
 
     Qt::CheckState state;
+
+    state = mgr->saveLibPath() ? Qt::Checked : Qt::Unchecked;
+    mSaveLibPathCheck->setCheckState(state);
 
 #ifdef _AUTO_UPDATE
     if( AutoUpdateService::instance()->shouldSupportAutoUpdate()) {
