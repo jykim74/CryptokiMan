@@ -31,7 +31,7 @@ private:
     void initAttributes();
     void setAttributes();
     void connectAttributes();
-
+    void setDefaults();
 };
 
 #endif // IMPORT_CERT_DLG_H

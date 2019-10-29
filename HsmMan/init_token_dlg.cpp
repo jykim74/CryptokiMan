@@ -56,7 +56,7 @@ void InitTokenDlg::accept()
     int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
+    SlotInfo slotInfo = slot_infos.at(index);
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
     int rv = -1;
 

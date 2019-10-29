@@ -58,6 +58,8 @@ private:
     int createRSAPrivateKey( JSRSAKeyVal *pRsaKeyVal );
     int createECPublicKey( JSECKeyVal *pEcKeyVal );
     int createECPrivateKey( JSECKeyVal *pECKeyVal );
+
+    void setDefaults();
 };
 
 #endif // IMPORT_PFX_DLG_H

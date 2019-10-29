@@ -15,6 +15,8 @@ ImportPriKeyDlg::ImportPriKeyDlg(QWidget *parent) :
     initAttributes();
     setAttributes();
     connectAttributes();
+
+    connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT( slotChanged(int) ));
 }
 
 ImportPriKeyDlg::~ImportPriKeyDlg()
@@ -25,6 +27,7 @@ ImportPriKeyDlg::~ImportPriKeyDlg()
 void ImportPriKeyDlg::showEvent(QShowEvent* event )
 {
     initialize();
+    setDefaults();
 }
 
 void ImportPriKeyDlg::initialize()
@@ -121,7 +124,7 @@ void ImportPriKeyDlg::accept()
     int nFlags = 0;
     CK_SESSION_HANDLE   hSession = -1;
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
+    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
 
 
@@ -165,6 +168,7 @@ void ImportPriKeyDlg::accept()
         return;
     }
 
+    manApplet->messageBox( tr("success to import private key"), this );
     QDialog::accept();
 }
 
@@ -277,7 +281,7 @@ int ImportPriKeyDlg::createRSAPublicKey( JSRSAKeyVal *pRsaKeyVal )
     int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
+    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
@@ -391,6 +395,7 @@ int ImportPriKeyDlg::createRSAPublicKey( JSRSAKeyVal *pRsaKeyVal )
     rv = JS_PKCS11_CreateObject( p11_ctx, hSession, sTemplate, uCount, &hObject );
     if( rv != CKR_OK )
     {
+        manApplet->warningBox( tr("fail to create RSA public key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return rv;
     }
 
@@ -405,7 +410,7 @@ int ImportPriKeyDlg::createRSAPrivateKey( JSRSAKeyVal *pRsaKeyVal )
     int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
+    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
@@ -612,6 +617,7 @@ int ImportPriKeyDlg::createRSAPrivateKey( JSRSAKeyVal *pRsaKeyVal )
     rv = JS_PKCS11_CreateObject(p11_ctx, hSession, sTemplate, uCount, &hObject );
     if( rv != CKR_OK )
     {
+        manApplet->warningBox( tr("fail to create RSA private key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return rv;
     }
 
@@ -626,7 +632,7 @@ int ImportPriKeyDlg::createECPublicKey( JSECKeyVal *pEcKeyVal )
     int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
+    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
@@ -740,6 +746,7 @@ int ImportPriKeyDlg::createECPublicKey( JSECKeyVal *pEcKeyVal )
     rv = JS_PKCS11_CreateObject( p11_ctx, hSession, sTemplate, uCount, &hObject );
     if( rv != CKR_OK )
     {
+        manApplet->warningBox( tr("fail to create EC public key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return rv;
     }
 
@@ -754,7 +761,7 @@ int ImportPriKeyDlg::createECPrivateKey( JSECKeyVal *pEcKeyVal )
     int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
+    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
@@ -905,8 +912,51 @@ int ImportPriKeyDlg::createECPrivateKey( JSECKeyVal *pEcKeyVal )
     rv = JS_PKCS11_CreateObject( p11_ctx, hSession, sTemplate, uCount, &hObject );
     if( rv != CKR_OK )
     {
+        manApplet->warningBox( tr("fail to create EC private key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this);
         return rv;
     }
 
     return 0;
+}
+
+void ImportPriKeyDlg::setDefaults()
+{
+    mPubLabelText->setText( "Public Label" );
+    mPubIDText->setText( "Public ID" );
+
+    mPriLabelText->setText( "Private Label" );
+    mPriSubjectText->setText( "CN=SubjectDN" );
+    mPriIDText->setText( "Private ID" );
+
+
+    mPubEncryptCheck->setChecked(true);
+    mPubEncryptCombo->setEnabled(true);
+    mPubEncryptCombo->setCurrentIndex(1);
+
+
+    mPubTokenCheck->setChecked(true);
+    mPubTokenCombo->setEnabled(true);
+    mPubTokenCombo->setCurrentIndex(1);
+
+    mPubVerifyCheck->setChecked(true);
+    mPubVerifyCombo->setEnabled(true);
+    mPubVerifyCombo->setCurrentIndex(1);
+
+
+    mPriPrivateCheck->setChecked(true);
+    mPriPrivateCombo->setEnabled(true);
+    mPriPrivateCombo->setCurrentIndex(1);
+
+
+    mPriSignCheck->setChecked(true);
+    mPriSignCombo->setEnabled(true);
+    mPriSignCombo->setCurrentIndex(1);
+
+    mPriDecryptCheck->setChecked(true);
+    mPriDecryptCombo->setEnabled(true);
+    mPriDecryptCombo->setCurrentIndex(1);
+
+    mPriTokenCheck->setChecked(true);
+    mPriTokenCombo->setEnabled(true);
+    mPriTokenCombo->setCurrentIndex(1);
 }

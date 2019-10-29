@@ -52,6 +52,8 @@ private:
     int createRSAPrivateKey( JSRSAKeyVal *pRsaKeyVal );
     int createECPublicKey( JSECKeyVal *pEcKeyVal );
     int createECPrivateKey( JSECKeyVal *pECKeyVal );
+
+    void setDefaults();
 };
 
 #endif // IMPORT_PRI_KEY_DLG_H

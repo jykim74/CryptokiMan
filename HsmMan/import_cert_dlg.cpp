@@ -15,6 +15,8 @@ ImportCertDlg::ImportCertDlg(QWidget *parent) :
     initAttributes();
     setAttributes();
     connectAttributes();
+
+    connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT( slotChanged(int) ));
 }
 
 ImportCertDlg::~ImportCertDlg()
@@ -37,6 +39,7 @@ void ImportCertDlg::slotChanged(int index)
 void ImportCertDlg::showEvent(QShowEvent* event )
 {
     initialize();
+    setDefaults();
 }
 
 void ImportCertDlg::initialize()
@@ -88,7 +91,7 @@ void ImportCertDlg::accept()
     int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
+    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
@@ -182,9 +185,11 @@ void ImportCertDlg::accept()
     rv = JS_PKCS11_CreateObject( p11_ctx, hSession, sTemplate, uCount, &hObject );
     if( rv != CKR_OK )
     {
+        manApplet->warningBox( tr("fail to create certificate(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
+    manApplet->messageBox(tr("success to create certificate"), this );
     QDialog::accept();
 }
 
@@ -222,4 +227,14 @@ void ImportCertDlg::clickFind()
                                                      options );
 
     mCertPathText->setText( fileName );
+}
+
+void ImportCertDlg::setDefaults()
+{
+    mLabelText->setText( "certificate label" );
+    mIDText->setText( "certificate ID" );
+
+    mTokenCheck->setChecked(true);
+    mTokenCombo->setEnabled(true);
+    mTokenCombo->setCurrentIndex(1);
 }

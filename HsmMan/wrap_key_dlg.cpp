@@ -16,6 +16,8 @@ WrapKeyDlg::WrapKeyDlg(QWidget *parent) :
 {
     setupUi(this);
     initUI();
+
+    connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
 }
 
 WrapKeyDlg::~WrapKeyDlg()
@@ -76,7 +78,7 @@ void WrapKeyDlg::accept()
     int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
+    SlotInfo slotInfo = slot_infos.at(index);
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
     int rv = -1;
@@ -145,7 +147,7 @@ void WrapKeyDlg::setWrapLabelList()
     int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
+    SlotInfo slotInfo = slot_infos.at(index);
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[1];

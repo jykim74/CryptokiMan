@@ -15,6 +15,8 @@ ImportPFXDlg::ImportPFXDlg(QWidget *parent) :
     initAttributes();
     setAttributes();
     connectAttributes();
+
+    connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT( slotChanged(int) ));
 }
 
 ImportPFXDlg::~ImportPFXDlg()
@@ -25,6 +27,7 @@ ImportPFXDlg::~ImportPFXDlg()
 void ImportPFXDlg::showEvent(QShowEvent* event )
 {
     initialize();
+    setDefaults();
 }
 
 void ImportPFXDlg::initialize()
@@ -133,7 +136,7 @@ void ImportPFXDlg::accept()
     int nFlags = 0;
     CK_SESSION_HANDLE   hSession = -1;
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
+    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
 
     QString strPFXPath = mPFXPathText->text();
@@ -196,6 +199,7 @@ void ImportPFXDlg::accept()
         return;
     }
 
+    manApplet->messageBox(tr("success to import pfx file"), this );
     QDialog::accept();
 
 }
@@ -328,7 +332,7 @@ int ImportPFXDlg::createCert( BIN *pCert )
     int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
+    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
@@ -408,6 +412,7 @@ int ImportPFXDlg::createCert( BIN *pCert )
     rv = JS_PKCS11_CreateObject( p11_ctx, hSession, sTemplate, uCount, &hObject );
     if( rv != CKR_OK )
     {
+        manApplet->warningBox( tr("fail to create certificate(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return -1;
     }
 
@@ -422,7 +427,7 @@ int ImportPFXDlg::createRSAPublicKey( JSRSAKeyVal *pRsaKeyVal )
     int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
+    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
@@ -536,6 +541,7 @@ int ImportPFXDlg::createRSAPublicKey( JSRSAKeyVal *pRsaKeyVal )
     rv = JS_PKCS11_CreateObject( p11_ctx, hSession, sTemplate, uCount, &hObject );
     if( rv != CKR_OK )
     {
+        manApplet->warningBox( tr("fail to create RSA public key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return rv;
     }
 
@@ -550,7 +556,7 @@ int ImportPFXDlg::createRSAPrivateKey( JSRSAKeyVal *pRsaKeyVal )
     int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
+    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
@@ -757,6 +763,7 @@ int ImportPFXDlg::createRSAPrivateKey( JSRSAKeyVal *pRsaKeyVal )
     rv = JS_PKCS11_CreateObject(p11_ctx, hSession, sTemplate, uCount, &hObject );
     if( rv != CKR_OK )
     {
+        manApplet->warningBox( tr("fail to create RSA private key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return rv;
     }
 
@@ -771,7 +778,7 @@ int ImportPFXDlg::createECPublicKey( JSECKeyVal *pEcKeyVal )
     int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
+    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
@@ -885,6 +892,7 @@ int ImportPFXDlg::createECPublicKey( JSECKeyVal *pEcKeyVal )
     rv = JS_PKCS11_CreateObject( p11_ctx, hSession, sTemplate, uCount, &hObject );
     if( rv != CKR_OK )
     {
+        manApplet->warningBox( tr("fail to create EC public key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this);
         return rv;
     }
 
@@ -899,7 +907,7 @@ int ImportPFXDlg::createECPrivateKey( JSECKeyVal *pEcKeyVal )
     int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
+    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
@@ -1050,8 +1058,56 @@ int ImportPFXDlg::createECPrivateKey( JSECKeyVal *pEcKeyVal )
     rv = JS_PKCS11_CreateObject( p11_ctx, hSession, sTemplate, uCount, &hObject );
     if( rv != CKR_OK )
     {
+        manApplet->warningBox( tr("fail to create EC private key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this);
         return rv;
     }
 
     return 0;
+}
+
+void ImportPFXDlg::setDefaults()
+{
+    mCertLabelText->setText( "Certificate Label" );
+    mCertIDText->setText( "Certificate ID" );
+
+    mCertTokenCheck->setChecked(true);
+    mCertTokenCombo->setEnabled(true);
+    mCertTokenCombo->setCurrentIndex(1);
+
+    mPubLabelText->setText( "Public Label" );
+    mPubIDText->setText( "Public ID" );
+
+    mPubEncryptCheck->setChecked(true);
+    mPubEncryptCombo->setEnabled(true);
+    mPubEncryptCombo->setCurrentIndex(1);
+
+
+    mPubTokenCheck->setChecked(true);
+    mPubTokenCombo->setEnabled(true);
+    mPubTokenCombo->setCurrentIndex(1);
+
+    mPubVerifyCheck->setChecked(true);
+    mPubVerifyCombo->setEnabled(true);
+    mPubVerifyCombo->setCurrentIndex(1);
+
+    mPriLabelText->setText( "Private Label" );
+    mPriSubjectText->setText( "CN=SubjectDN" );
+    mPriIDText->setText( "Private ID" );
+
+    mPriPrivateCheck->setChecked(true);
+    mPriPrivateCombo->setEnabled(true);
+    mPriPrivateCombo->setCurrentIndex(1);
+
+
+    mPriSignCheck->setChecked(true);
+    mPriSignCombo->setEnabled(true);
+    mPriSignCombo->setCurrentIndex(1);
+
+    mPriDecryptCheck->setChecked(true);
+    mPriDecryptCombo->setEnabled(true);
+    mPriDecryptCombo->setCurrentIndex(1);
+
+    mPriTokenCheck->setChecked(true);
+    mPriTokenCombo->setEnabled(true);
+    mPriTokenCombo->setCurrentIndex(1);
 }
