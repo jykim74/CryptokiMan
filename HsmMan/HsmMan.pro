@@ -165,7 +165,7 @@ TRANSLATIONS += i18n/hsmman_ko_KR.ts
 DEFINES += _AUTO_UPDATE
 
 mac {
-    ICON = berviewer.icns
+    ICON = hsmman.icns
 
     QMAKE_LFLAGS += -Wl,-rpath,@loader_path/../Frameworks
     HEADERS += mac_sparkle_support.h
