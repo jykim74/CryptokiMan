@@ -13,6 +13,8 @@ CreateECPriKeyDlg::CreateECPriKeyDlg(QWidget *parent) :
     initAttributes();
     setAttributes();
     connectAttributes();
+
+    connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
 }
 
 CreateECPriKeyDlg::~CreateECPriKeyDlg()
@@ -35,6 +37,7 @@ void CreateECPriKeyDlg::slotChanged(int index)
 void CreateECPriKeyDlg::showEvent(QShowEvent* event )
 {
     initialize();
+    setDefaults();
 }
 
 void CreateECPriKeyDlg::initialize()
@@ -100,7 +103,7 @@ void CreateECPriKeyDlg::accept()
     int nFlags = 0;
     CK_SESSION_HANDLE   hSession = -1;
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
+    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
 
     hSession = slotInfo.getSessionHandle();
@@ -260,9 +263,11 @@ void CreateECPriKeyDlg::accept()
     rv = JS_PKCS11_CreateObject( p11_ctx, hSession, sTemplate, uCount, &hObject );
     if( rv != CKR_OK )
     {
+        manApplet->warningBox( tr("fail to create EC private key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
+    manApplet->messageBox( tr("success to create EC private key"), this );
     QDialog::accept();
 }
 
@@ -309,4 +314,28 @@ void CreateECPriKeyDlg::clickExtractable()
 void CreateECPriKeyDlg::clickToken()
 {
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
+}
+
+void CreateECPriKeyDlg::setDefaults()
+{
+    mLabelText->setText( "Private Label" );
+    mSubjectText->setText( "CN=SubjectDN" );
+    mIDText->setText( "Private ID" );
+
+    mPrivateCheck->setChecked(true);
+    mPrivateCombo->setEnabled(true);
+    mPrivateCombo->setCurrentIndex(1);
+
+
+    mSignCheck->setChecked(true);
+    mSignCombo->setEnabled(true);
+    mSignCombo->setCurrentIndex(1);
+
+    mDecryptCheck->setChecked(true);
+    mDecryptCombo->setEnabled(true);
+    mDecryptCombo->setCurrentIndex(1);
+
+    mTokenCheck->setChecked(true);
+    mTokenCombo->setEnabled(true);
+    mTokenCombo->setCurrentIndex(1);
 }

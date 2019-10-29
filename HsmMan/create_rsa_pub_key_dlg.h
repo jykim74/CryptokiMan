@@ -34,7 +34,7 @@ private:
     void initAttributes();
     void setAttributes();
     void connectAttributes();
-
+    void setDefaults();
 };
 
 #endif // GEN_RSA_PUB_KEY_DLG_H

@@ -13,6 +13,8 @@ CreateRSAPubKeyDlg::CreateRSAPubKeyDlg(QWidget *parent) :
     initAttributes();
     setAttributes();
     connectAttributes();
+
+    connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
 }
 
 CreateRSAPubKeyDlg::~CreateRSAPubKeyDlg()
@@ -35,6 +37,7 @@ void CreateRSAPubKeyDlg::slotChanged(int index)
 void CreateRSAPubKeyDlg::showEvent(QShowEvent* event )
 {
     initialize();
+    setDefaults();
 }
 
 void CreateRSAPubKeyDlg::initialize()
@@ -94,7 +97,7 @@ void CreateRSAPubKeyDlg::accept()
     int nFlags = 0;
     CK_SESSION_HANDLE   hSession = -1;
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
+    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
 
     hSession = slotInfo.getSessionHandle();
@@ -227,8 +230,11 @@ void CreateRSAPubKeyDlg::accept()
     rv = JS_PKCS11_CreateObject( p11_ctx, hSession, sTemplate, uCount, &hObject );
     if( rv != CKR_OK )
     {
+        manApplet->warningBox( tr("fail to create RSA public key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
+
+    manApplet->messageBox( tr("Success to create RSA public key"), this );
 
     QDialog::accept();
 }
@@ -267,4 +273,24 @@ void CreateRSAPubKeyDlg::clickModifiable()
 void CreateRSAPubKeyDlg::clickToken()
 {
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
+}
+
+void CreateRSAPubKeyDlg::setDefaults()
+{
+    mLabelText->setText( "Publick Key Label" );
+    mExponentText->setText( "010001" );
+    mIDText->setText( "Public Key ID" );
+
+    mEncryptCheck->setChecked(true);
+    mEncryptCombo->setEnabled(true);
+    mEncryptCombo->setCurrentIndex(1);
+
+
+    mTokenCheck->setChecked(true);
+    mTokenCombo->setEnabled(true);
+    mTokenCombo->setCurrentIndex(1);
+
+    mVerifyCheck->setChecked(true);
+    mVerifyCombo->setEnabled(true);
+    mVerifyCombo->setCurrentIndex(1);
 }

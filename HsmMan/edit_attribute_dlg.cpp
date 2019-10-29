@@ -97,7 +97,7 @@ void EditAttributeDlg::clickGetAttribute()
     int nFlags = 0;
     CK_SESSION_HANDLE   hSession = -1;
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
+    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
     hSession = slotInfo.getSessionHandle();
 
@@ -113,6 +113,7 @@ void EditAttributeDlg::clickGetAttribute()
     rv = JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObject, attrType, &binVal );
     if( rv != CKR_OK )
     {
+        manApplet->warningBox( tr("fail to get attributes(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
@@ -131,7 +132,7 @@ void EditAttributeDlg::clickSetAttribute()
     int nFlags = 0;
     CK_SESSION_HANDLE   hSession = -1;
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
+    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
     hSession = slotInfo.getSessionHandle();
     long hObject = mObjectText->text().toLong();
@@ -150,8 +151,10 @@ void EditAttributeDlg::clickSetAttribute()
     rv = JS_PKCS11_SetAttributeValue2( p11_ctx, hSession, hObject, attrType, &binVal );
     if( rv != CKR_OK )
     {
+        manApplet->warningBox( tr("fail to set attributes(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
+    manApplet->messageBox( tr("success to set attributes"), this );
     QMessageBox::information( this ,"EditAttribute", "SetAttribute success" );
 }

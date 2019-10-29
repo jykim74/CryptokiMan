@@ -15,6 +15,8 @@ CreateDataDlg::CreateDataDlg(QWidget *parent) :
     initAttributes();
     setAttributes();
     connectAttributes();
+
+    connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
 }
 
 CreateDataDlg::~CreateDataDlg()
@@ -37,6 +39,7 @@ void CreateDataDlg::slotChanged(int index)
 void CreateDataDlg::showEvent(QShowEvent* event )
 {
     initialize();
+    setDefaults();
 }
 
 void CreateDataDlg::initialize()
@@ -89,7 +92,7 @@ void CreateDataDlg::accept()
     int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
+    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
@@ -171,9 +174,11 @@ void CreateDataDlg::accept()
     rv = JS_PKCS11_CreateObject( p11_ctx, hSession, sTemplate, uCount, &hObject );
     if( rv != CKR_OK )
     {
+        manApplet->warningBox( tr("fail to create data(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
+    manApplet->messageBox( tr("Success to create data"), this );
     QDialog::accept();
 }
 
@@ -195,4 +200,13 @@ void CreateDataDlg::clickModifiable()
 void CreateDataDlg::clickToken()
 {
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
+}
+
+void CreateDataDlg::setDefaults()
+{
+    mLabelText->setText( "Data label" );
+
+    mPrivateCheck->setChecked(true);
+    mPrivateCombo->setEnabled(true);
+    mPrivateCombo->setCurrentIndex(1);
 }

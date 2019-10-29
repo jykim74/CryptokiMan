@@ -31,6 +31,7 @@ private:
     void initAttributes();
     void setAttributes();
     void connectAttributes();
+    void setDefaults();
 };
 
 #endif // GEN_DATA_DLG_H

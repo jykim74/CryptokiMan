@@ -35,7 +35,7 @@ private:
     void setAttributes();
     void connectAttributes();
 
-
+    void setDefaults();
 };
 
 #endif // GEN_EC_PUB_KEY_DLG_H

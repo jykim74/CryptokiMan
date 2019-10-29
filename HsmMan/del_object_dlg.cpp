@@ -67,7 +67,7 @@ void DelObjectDlg::accept()
     int nFlags = 0;
     CK_SESSION_HANDLE   hSession = -1;
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(index);
+    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
     hSession = slotInfo.getSessionHandle();
 
@@ -76,9 +76,11 @@ void DelObjectDlg::accept()
     rv = JS_PKCS11_DestroyObject( p11_ctx, hSession, hObject );
     if( rv != CKR_OK )
     {
+        manApplet->warningBox( tr("fail to delete object(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
+    manApplet->messageBox( tr("success to delete object"), this );
     QDialog::accept();
 }
 
@@ -102,7 +104,7 @@ void DelObjectDlg::objectChanged( int index )
 
     CK_SESSION_HANDLE   hSession = -1;
     int nSlotSel = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.takeAt(nSlotSel);
+    SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
     hSession = slotInfo.getSessionHandle();
 
