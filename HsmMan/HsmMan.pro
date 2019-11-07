@@ -165,7 +165,7 @@ TRANSLATIONS += i18n/hsmman_ko_KR.ts
 DEFINES += _AUTO_UPDATE
 
 mac {
-    ICON = hsmman.icns
+    ICON = images/hsmman.icns
 
     QMAKE_LFLAGS += -Wl,-rpath,@loader_path/../Frameworks
     HEADERS += mac_sparkle_support.h
@@ -177,8 +177,10 @@ mac {
     LIBS += -framework Sparkle
     INCLUDEPATH += "/usr/local/Sparkle.framework/Headers"
 
+    LIBS += -L"/usr/local/lib" -lltdl
     LIBS += -L"../../build-PKILib-Desktop_Qt_5_11_3_clang_64bit-Debug" -lPKILib
     LIBS += -L"../../PKILib/lib/mac/openssl/lib" -lcrypto
+
 }
 
 win32 {
