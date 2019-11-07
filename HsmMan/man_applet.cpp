@@ -36,6 +36,7 @@
 #include "derive_key_dlg.h"
 #include "settings_dlg.h"
 #include "settings_mgr.h"
+#include "auto_update_service.h"
 
 ManApplet *manApplet;
 
@@ -78,6 +79,18 @@ ManApplet::ManApplet( QObject *parent )
     settings_mgr_ = new SettingsMgr;
 
     in_exit_ = false;
+#ifdef _AUTO_UPDATE
+    if( AutoUpdateService::instance()->shouldSupportAutoUpdate() ) {
+        AutoUpdateService::instance()->start();
+    }
+#endif
+}
+
+ManApplet::~ManApplet()
+{
+#ifdef _AUTO_UPDATE
+    AutoUpdateService::instance()->stop();
+#endif
 }
 
 void ManApplet::start()

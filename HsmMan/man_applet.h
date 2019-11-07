@@ -45,6 +45,8 @@ class ManApplet : public QObject
 
 public:
     ManApplet( QObject *parent = nullptr );
+    ~ManApplet();
+
     void start();
 
     MainWindow* mainWindow() { return main_win_; };
