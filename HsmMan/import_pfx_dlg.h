@@ -54,10 +54,10 @@ private:
     void connectAttributes();
 
     int createCert( BIN *pCert );
-    int createRSAPublicKey( JSRSAKeyVal *pRsaKeyVal );
-    int createRSAPrivateKey( JSRSAKeyVal *pRsaKeyVal );
-    int createECPublicKey( JSECKeyVal *pEcKeyVal );
-    int createECPrivateKey( JSECKeyVal *pECKeyVal );
+    int createRSAPublicKey( JRSAKeyVal *pRsaKeyVal );
+    int createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal );
+    int createECPublicKey( JECKeyVal *pEcKeyVal );
+    int createECPrivateKey( JECKeyVal *pECKeyVal );
 
     void setDefaults();
 };

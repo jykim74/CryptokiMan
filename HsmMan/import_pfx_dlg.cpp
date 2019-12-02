@@ -160,11 +160,11 @@ void ImportPFXDlg::accept()
 
     BIN binPri = {0,0};
     BIN binCert = {0,0};
-    JSRSAKeyVal rsaKeyVal;
-    JSECKeyVal ecKeyVal;
+    JRSAKeyVal rsaKeyVal;
+    JECKeyVal ecKeyVal;
 
-    memset( &rsaKeyVal, 0x00, sizeof(JSRSAKeyVal));
-    memset( &ecKeyVal, 0x00, sizeof(JSECKeyVal));
+    memset( &rsaKeyVal, 0x00, sizeof(JRSAKeyVal));
+    memset( &ecKeyVal, 0x00, sizeof(JECKeyVal));
 
 
     rv = JS_PKI_decodePFX( &binPFX, strPasswd.toStdString().c_str(), &binPri, &binCert );
@@ -419,7 +419,7 @@ int ImportPFXDlg::createCert( BIN *pCert )
     return 0;
 }
 
-int ImportPFXDlg::createRSAPublicKey( JSRSAKeyVal *pRsaKeyVal )
+int ImportPFXDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
 {
     JSP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
@@ -548,7 +548,7 @@ int ImportPFXDlg::createRSAPublicKey( JSRSAKeyVal *pRsaKeyVal )
     return 0;
 }
 
-int ImportPFXDlg::createRSAPrivateKey( JSRSAKeyVal *pRsaKeyVal )
+int ImportPFXDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
 {
     JSP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
@@ -770,7 +770,7 @@ int ImportPFXDlg::createRSAPrivateKey( JSRSAKeyVal *pRsaKeyVal )
     return 0;
 }
 
-int ImportPFXDlg::createECPublicKey( JSECKeyVal *pEcKeyVal )
+int ImportPFXDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
 {
     JSP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
@@ -899,7 +899,7 @@ int ImportPFXDlg::createECPublicKey( JSECKeyVal *pEcKeyVal )
     return 0;
 }
 
-int ImportPFXDlg::createECPrivateKey( JSECKeyVal *pEcKeyVal )
+int ImportPFXDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
 {
     JSP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();

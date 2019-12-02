@@ -138,11 +138,11 @@ void ImportPriKeyDlg::accept()
 
 
     BIN binPri = {0,0};
-    JSRSAKeyVal rsaKeyVal;
-    JSECKeyVal ecKeyVal;;
+    JRSAKeyVal rsaKeyVal;
+    JECKeyVal ecKeyVal;;
 
-    memset( &rsaKeyVal, 0x00, sizeof(JSRSAKeyVal));
-    memset( &ecKeyVal, 0x00, sizeof(JSECKeyVal));
+    memset( &rsaKeyVal, 0x00, sizeof(JRSAKeyVal));
+    memset( &ecKeyVal, 0x00, sizeof(JECKeyVal));
 
     JS_BIN_fileRead( strPriPath.toStdString().c_str(), &binPri );
 
@@ -273,7 +273,7 @@ void ImportPriKeyDlg::clickFind()
 
 
 
-int ImportPriKeyDlg::createRSAPublicKey( JSRSAKeyVal *pRsaKeyVal )
+int ImportPriKeyDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
 {
     JSP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
@@ -402,7 +402,7 @@ int ImportPriKeyDlg::createRSAPublicKey( JSRSAKeyVal *pRsaKeyVal )
     return 0;
 }
 
-int ImportPriKeyDlg::createRSAPrivateKey( JSRSAKeyVal *pRsaKeyVal )
+int ImportPriKeyDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
 {
     JSP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
@@ -624,7 +624,7 @@ int ImportPriKeyDlg::createRSAPrivateKey( JSRSAKeyVal *pRsaKeyVal )
     return 0;
 }
 
-int ImportPriKeyDlg::createECPublicKey( JSECKeyVal *pEcKeyVal )
+int ImportPriKeyDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
 {
     JSP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
@@ -753,7 +753,7 @@ int ImportPriKeyDlg::createECPublicKey( JSECKeyVal *pEcKeyVal )
     return 0;
 }
 
-int ImportPriKeyDlg::createECPrivateKey( JSECKeyVal *pEcKeyVal )
+int ImportPriKeyDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
 {
     JSP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
