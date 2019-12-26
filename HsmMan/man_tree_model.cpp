@@ -17,9 +17,9 @@ void ManTreeModel::initialize()
 {
     clear();
 
-    QStringList labels;
-    labels << tr("SLot List");
-    setHorizontalHeaderLabels( labels );
+//    QStringList labels;
+//    labels << tr("SLot List");
+//    setHorizontalHeaderLabels( labels );
 
     ManTreeItem *item_ = new ManTreeItem();
     item_->setText( tr("No slot"));
@@ -53,6 +53,7 @@ void ManTreeModel::showGetInfo()
     removeAllRightTable();
 
     QString strMsg = "";
+    QStringList strList;
 
     int row = 0;
     right_table_->insertRow( row );
@@ -70,7 +71,8 @@ void ManTreeModel::showGetInfo()
     right_table_->insertRow( row );
     right_table_->setItem( row, 0, new QTableWidgetItem(QString("libraryDescription")));
     strMsg = QString( "%1" ).arg( (char *)sInfo.libraryDescription );
-    right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
+    strList = strMsg.split( "  " );
+    if( strList.size() > 0 ) right_table_->setItem( row, 1, new QTableWidgetItem( strList.at(0) ) );
     row++;
 
     right_table_->insertRow( row );
@@ -82,7 +84,8 @@ void ManTreeModel::showGetInfo()
     right_table_->insertRow( row );
     right_table_->setItem( row, 0, new QTableWidgetItem(QString("manufacturerID")));
     strMsg = QString( "%1" ).arg( (char *)sInfo.manufacturerID );
-    right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
+    strList = strMsg.split( "  " );
+    if( strList.size() >0 ) right_table_->setItem( row, 1, new QTableWidgetItem( strList.at(0) ) );
     row++;
 }
 
@@ -109,6 +112,7 @@ void ManTreeModel::showSlotInfo( int index )
 
     int row = 0;
     QString strMsg = "";
+    QStringList strList;
 
     right_table_->insertRow( row );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("Slot ID" )));
@@ -147,13 +151,15 @@ void ManTreeModel::showSlotInfo( int index )
     right_table_->insertRow( row );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("manufacturerID")));
     strMsg = QString( "%1" ).arg( (char *)stSlotInfo.manufacturerID );
-    right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
+    strList = strMsg.split( "  " );
+    if( strList.size() > 0 ) right_table_->setItem( row, 1, new QTableWidgetItem( strList.at(0) ) );
     row++;
 
     right_table_->insertRow( row );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("slotDescription" )));
     strMsg = QString( "%1" ).arg( (char *)stSlotInfo.slotDescription );
-    right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
+    strList = strMsg.split( "  " );
+    if( strList.size() > 0 ) right_table_->setItem( row, 1, new QTableWidgetItem( strList.at(0) ) );
     row++;
 }
 
@@ -176,6 +182,7 @@ void ManTreeModel::showTokenInfo(int index)
 
     int row = 0;
     QString strMsg = "";
+    QStringList strList;
 
     right_table_->insertRow( row );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("firmwareVersion" )));
@@ -210,25 +217,28 @@ void ManTreeModel::showTokenInfo(int index)
     right_table_->insertRow( row );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("label") ));
     strMsg = QString("%1").arg( (char *)sTokenInfo.label );
-    right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
+    strList = strMsg.split( "  " );
+    if( strList.size() > 0 ) right_table_->setItem( row, 1, new QTableWidgetItem( strList.at(0)) );
     row++;
 
     right_table_->insertRow( row );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("manufacturerID") ));
-    strMsg = QString("%1").arg( (char *)sTokenInfo.manufacturerID );
-    right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
+    strMsg = QString("%1").arg( (char *)sTokenInfo.manufacturerID );    strList = strMsg.split( "  " );
+    if( strList.size() > 0 ) right_table_->setItem( row, 1, new QTableWidgetItem( strList.at(0)) );
     row++;
 
     right_table_->insertRow( row );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("model") ));
     strMsg = QString("%1").arg( (char *)sTokenInfo.model );
-    right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
+    strList = strMsg.split( "  " );
+    if( strList.size() > 0 ) right_table_->setItem( row, 1, new QTableWidgetItem( strList.at(0)) );
     row++;
 
     right_table_->insertRow( row );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("serialNumber") ));
     strMsg = QString("%1").arg( (char *)sTokenInfo.serialNumber );
-    right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
+    strList = strMsg.split( "  " );
+    if( strList.size() > 0 ) right_table_->setItem( row, 1, new QTableWidgetItem( strList.at(0)) );
     row++;
 
     right_table_->insertRow( row );

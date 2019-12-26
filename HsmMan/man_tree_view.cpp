@@ -14,6 +14,7 @@ ManTreeView::ManTreeView( QWidget *parent )
     setAcceptDrops(true);
     setContextMenuPolicy(Qt::CustomContextMenu);
 
+
     connect( this, SIGNAL(clicked(const QModelIndex&)), SLOT(onItemClicked(const QModelIndex&)));
     connect( this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 }

@@ -76,6 +76,7 @@ void MainWindow::initialize()
     left_model_ = new ManTreeModel(this);
 
     left_tree_->setModel(left_model_);
+    left_tree_->header()->setVisible(false);
     left_model_->setRightTable( right_table_ );
 
     hsplitter_->addWidget(left_tree_);
@@ -280,7 +281,8 @@ void MainWindow::newFile()
 void MainWindow::open()
 {
     bool bSavePath = manApplet->settingsMgr()->saveLibPath();
-    QString strPath = QDir::currentPath();
+//    QString strPath = QDir::currentPath();
+    QString strPath = QString("/usr");
 
     if( bSavePath )
     {
@@ -305,9 +307,7 @@ void MainWindow::open()
             left_model_->clear();
 
             QStringList labels;
-            labels << tr("SLot List");
-            left_model_->setHorizontalHeaderLabels( labels );
-
+            left_tree_->header()->setVisible(false);
 
             ManTreeItem *pItem = new ManTreeItem();
             pItem->setText( tr("CryptokiToken"));
