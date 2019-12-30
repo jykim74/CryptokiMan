@@ -100,17 +100,24 @@ void ManTreeView::P11Initialize()
             ret = JS_PKCS11_GetSlotInfo( pCTX, sSlotList[i], &sSlotInfo );
             if( ret != 0 ) continue;
 
+//            QString strDesc = QString( "%1 [%2]" ).arg( (char *)sSlotInfo.slotDescription ).arg(i);
+            QString strDesc = (char *)sSlotInfo.slotDescription;
+            QStringList strList = strDesc.split( "  " );
+            QString strName;
 
+            if( strList.size() > 0 )
+                strName = QString( "%1 [%2]" ).arg( strList.at(0) ).arg(i);
+            else
+                strName = QString( "Slot [%1]" ).arg(i);
 
-            QString strDesc = QString( "%1 [%2]" ).arg( (char *)sSlotInfo.slotDescription ).arg(i);
             ManTreeItem *item = new ManTreeItem;
             item->setType( HM_ITEM_TYPE_SLOT );
-            item->setText( strDesc );
+            item->setText( strName );
             item->setSlotIndex( i );
 
             parent_item->appendRow( item );
 
-            slotInfo.setDesc( strDesc );
+            slotInfo.setDesc( strName );
             slotInfo.setLogin( false );
             slotInfo.setSlotID( sSlotList[i]);
             slotInfo.setSessionHandle(-1);

@@ -144,6 +144,30 @@ void CreateKeyDlg::accept()
     sTemplate[uCount].ulValueLen = sizeof(keyType);
     uCount++;
 
+    BIN binLabel = {0,0};
+    QString strLabel = mLabelText->text();
+
+    if( !strLabel.isEmpty() )
+    {
+        JS_BIN_set( &binLabel, (unsigned char *)strLabel.toStdString().c_str(), strLabel.length() );
+        sTemplate[uCount].type = CKA_LABEL;
+        sTemplate[uCount].pValue = binLabel.pVal;
+        sTemplate[uCount].ulValueLen = binLabel.nLen;
+        uCount++;
+    }
+
+    BIN binID = {0,0};
+    QString strID = mIDText->text();
+
+    if( !strID.isEmpty() )
+    {
+        JS_BIN_set( &binID, (unsigned char *)strID.toStdString().c_str(), strID.length() );
+        sTemplate[uCount].type = CKA_ID;
+        sTemplate[uCount].pValue = binID.pVal;
+        sTemplate[uCount].ulValueLen = binID.nLen;
+        uCount++;
+    }
+
     QString strKey = mKeyText->text();
     BIN binKey = {0,0};
 

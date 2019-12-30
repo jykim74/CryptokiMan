@@ -100,10 +100,12 @@ void DelObjectDlg::objectChanged( int index )
     JSP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
     if( p11_ctx == NULL ) return;
 
-    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
+    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     CK_SESSION_HANDLE   hSession = -1;
     int nSlotSel = mSlotsCombo->currentIndex();
+    if( nSlotSel < 0 ) return;
+
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
     hSession = slotInfo.getSessionHandle();

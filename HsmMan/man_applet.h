@@ -5,7 +5,6 @@
 #include <QMessageBox>
 
 class MainWindow;
-class OpenSessionDlg;
 class CloseSessionDlg;
 class LoginDlg;
 class LogoutDlg;
@@ -17,7 +16,6 @@ class CreateRSAPriKeyDlg;
 class CreateECPubKeyDlg;
 class CreateECPriKeyDlg;
 class CreateKeyDlg;
-class DelObjectDlg;
 class EditAttributeDlg;
 class DigestDlg;
 class SignDlg;
@@ -50,7 +48,6 @@ public:
     void start();
 
     MainWindow* mainWindow() { return main_win_; };
-    OpenSessionDlg* openSessionDlg() { return open_session_dlg_; };
     CloseSessionDlg* closeSessionDlg() { return close_session_dlg_; };
     LoginDlg* loginDlg() { return login_dlg_; };
     LogoutDlg* logoutDlg() { return logout_dlg_; };
@@ -62,7 +59,6 @@ public:
     CreateECPubKeyDlg* createECPubKeyDlg() { return create_ec_pub_key_dlg_; };
     CreateECPriKeyDlg* createECPriKeyDlg() { return create_ec_pri_key_dlg_; };
     CreateKeyDlg* createKeyDlg() { return create_key_dlg_; };
-    DelObjectDlg* delObjectDlg() { return del_object_dlg_; };
     EditAttributeDlg* editAttributeDlg() { return edit_attribute_dlg_; };
     DigestDlg* digestDlg() { return digest_dlg_; };
     SignDlg* signDlg() { return sign_dlg_; };
@@ -101,7 +97,6 @@ private:
     Q_DISABLE_COPY(ManApplet)
 
     MainWindow* main_win_;
-    OpenSessionDlg* open_session_dlg_;
     CloseSessionDlg* close_session_dlg_;
     LoginDlg* login_dlg_;
     LogoutDlg* logout_dlg_;
@@ -113,7 +108,6 @@ private:
     CreateECPubKeyDlg* create_ec_pub_key_dlg_;
     CreateECPriKeyDlg* create_ec_pri_key_dlg_;
     CreateKeyDlg* create_key_dlg_;
-    DelObjectDlg* del_object_dlg_;
     EditAttributeDlg* edit_attribute_dlg_;
     DigestDlg* digest_dlg_;
     SignDlg* sign_dlg_;

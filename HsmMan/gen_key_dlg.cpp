@@ -127,9 +127,8 @@ void GenKeyDlg::accept()
 
     hSession = slotInfo.getSessionHandle();
     memset( &sMech, 0x00, sizeof(sMech) );
-    int nMechSel = mMechCombo->currentIndex();
 
-    sMech.mechanism = JS_PKCS11_GetCKMType( sMechList.at(nMechSel).toStdString().c_str() );
+    sMech.mechanism = JS_PKCS11_GetCKMType( mMechCombo->currentText().toStdString().c_str() );
     BIN binParam = {0,0};
 
     QString strParam = mParamText->text();
@@ -152,6 +151,14 @@ void GenKeyDlg::accept()
     sTemplate[uCount].ulValueLen = sizeof(keyClass);
     uCount++;
 
+    /*
+    CK_KEY_TYPE keyType = CKK_GENERIC_SECRET;
+    sTemplate[uCount].type = CKA_KEY_TYPE;
+    sTemplate[uCount].pValue = &keyType;
+    sTemplate[uCount].ulValueLen = sizeof(keyType);
+    uCount++;
+    */
+
     BIN binLabel = {0,0};
     QString strLabel = mLabelText->text();
 
@@ -161,6 +168,18 @@ void GenKeyDlg::accept()
         sTemplate[uCount].type = CKA_LABEL;
         sTemplate[uCount].pValue = binLabel.pVal;
         sTemplate[uCount].ulValueLen = binLabel.nLen;
+        uCount++;
+    }
+
+    BIN binID = {0,0};
+    QString strID = mIDText->text();
+
+    if( !strID.isEmpty() )
+    {
+        JS_BIN_set( &binID, (unsigned char *)strID.toStdString().c_str(), strID.length() );
+        sTemplate[uCount].type = CKA_ID;
+        sTemplate[uCount].pValue = binID.pVal;
+        sTemplate[uCount].ulValueLen = binID.nLen;
         uCount++;
     }
 

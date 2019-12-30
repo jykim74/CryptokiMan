@@ -340,9 +340,8 @@ void MainWindow::unload()
 
 void MainWindow::openSession()
 {
-    manApplet->openSessionDlg()->show();
-    manApplet->openSessionDlg()->raise();
-    manApplet->openSessionDlg()->activateWindow();
+    OpenSessionDlg openSessionDlg;
+    openSessionDlg.exec();
 }
 
 void MainWindow::closeSession()
@@ -435,9 +434,8 @@ void MainWindow::createKey()
 
 void MainWindow::deleteObject()
 {
-    manApplet->delObjectDlg()->show();
-    manApplet->delObjectDlg()->raise();
-    manApplet->delObjectDlg()->activateWindow();
+    DelObjectDlg delObjectDlg;
+    delObjectDlg.exec();
 }
 
 void MainWindow::editAttribute()

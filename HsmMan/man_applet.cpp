@@ -44,7 +44,6 @@ ManApplet::ManApplet( QObject *parent )
 {
     main_win_ = new MainWindow;
 
-    open_session_dlg_ = new OpenSessionDlg;
     close_session_dlg_ = new CloseSessionDlg;
     login_dlg_ = new LoginDlg;
     logout_dlg_ = new LogoutDlg;
@@ -56,7 +55,6 @@ ManApplet::ManApplet( QObject *parent )
     create_ec_pub_key_dlg_ = new CreateECPubKeyDlg;
     create_ec_pri_key_dlg_ = new CreateECPriKeyDlg;
     create_key_dlg_ = new CreateKeyDlg;
-    del_object_dlg_ = new DelObjectDlg;
     edit_attribute_dlg_ = new EditAttributeDlg;
     digest_dlg_ = new DigestDlg;
     sign_dlg_ = new SignDlg;

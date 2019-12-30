@@ -237,8 +237,9 @@ void ManTreeModel::showTokenInfo(int index)
     right_table_->insertRow( row );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("serialNumber") ));
     strMsg = QString("%1").arg( (char *)sTokenInfo.serialNumber );
-    strList = strMsg.split( "  " );
-    if( strList.size() > 0 ) right_table_->setItem( row, 1, new QTableWidgetItem( strList.at(0)) );
+//    strList = strMsg.split( "  " );
+    strMsg.truncate(16);
+    right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
 
     right_table_->insertRow( row );
