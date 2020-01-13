@@ -300,7 +300,7 @@ void MainWindow::open()
     {
         int ret = 0;
         file_path_ = fileName;
-        JS_PKCS11_LoadLibrary( (JSP11_CTX **)&p11_ctx_, file_path_.toLocal8Bit().toStdString().c_str() );
+        JS_PKCS11_LoadLibrary( (JP11_CTX **)&p11_ctx_, file_path_.toLocal8Bit().toStdString().c_str() );
 
         if( ret == 0 )
         {
@@ -335,7 +335,7 @@ void MainWindow::quit()
 
 void MainWindow::unload()
 {
-   if( p11_ctx_ ) JS_PKCS11_ReleaseLibrry( (JSP11_CTX **)&p11_ctx_ );
+   if( p11_ctx_ ) JS_PKCS11_ReleaseLibrry( (JP11_CTX **)&p11_ctx_ );
 }
 
 void MainWindow::openSession()

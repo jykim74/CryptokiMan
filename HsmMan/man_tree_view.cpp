@@ -74,7 +74,7 @@ ManTreeItem* ManTreeView::currentItem()
 void ManTreeView::P11Initialize()
 {
     int     ret = 0;
-    JSP11_CTX *pCTX = NULL;
+    JP11_CTX *pCTX = NULL;
     CK_ULONG uSlotCnt = 0;
     CK_SLOT_ID  sSlotList[10];
 
@@ -180,7 +180,7 @@ void ManTreeView::P11Initialize()
 void ManTreeView::P11Finalize()
 {
     int     ret = 0;
-    JSP11_CTX *pCTX = NULL;
+    JP11_CTX *pCTX = NULL;
 
     ManTreeModel *tree_model = (ManTreeModel *)model();
 
