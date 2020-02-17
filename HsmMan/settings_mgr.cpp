@@ -5,6 +5,8 @@
 namespace  {
     const char *kBehaviorGroup = "HsmMan";
     const char *kSaveLibPath = "saveLibPath";
+    const char *kSlotID = "slotId";
+    const char *kP11LibPath = "p11LibPath";
 }
 
 SettingsMgr::SettingsMgr( QObject *parent) : QObject (parent)
@@ -33,3 +35,4 @@ bool SettingsMgr::saveLibPath()
 
     return val;
 }
+

@@ -73,7 +73,6 @@ ManApplet::ManApplet( QObject *parent )
     wrap_key_dlg_ = new WrapKeyDlg;
     unwrap_key_dlg_ = new UnwrapKeyDlg;
     derive_key_dlg_ = new DeriveKeyDlg;
-    settings_dlg_ = new SettingsDlg;
     settings_mgr_ = new SettingsMgr;
 
     in_exit_ = false;

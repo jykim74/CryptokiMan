@@ -15,6 +15,7 @@ SettingsDlg::SettingsDlg(QWidget *parent) :
 
     mLangCombo->addItems(I18NHelper::getInstance()->getLanguages());
 
+    initialize();
 }
 
 SettingsDlg::~SettingsDlg()
@@ -54,13 +55,7 @@ void SettingsDlg::accept()
 }
 
 
-void SettingsDlg::closeEvent(QCloseEvent *event)
-{
-    event->ignore();
-    hide();
-}
-
-void SettingsDlg::showEvent(QShowEvent *event)
+void SettingsDlg::initialize()
 {
     SettingsMgr *mgr = manApplet->settingsMgr();
 
@@ -77,6 +72,4 @@ void SettingsDlg::showEvent(QShowEvent *event)
 #endif
 
     mLangCombo->setCurrentIndex(I18NHelper::getInstance()->preferredLanguage());
-
-    QDialog::showEvent(event);
 }

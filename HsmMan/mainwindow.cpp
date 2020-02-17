@@ -300,7 +300,7 @@ void MainWindow::open()
     {
         int ret = 0;
         file_path_ = fileName;
-        JS_PKCS11_LoadLibrary( (JP11_CTX **)&p11_ctx_, file_path_.toLocal8Bit().toStdString().c_str() );
+        ret = JS_PKCS11_LoadLibrary( (JP11_CTX **)&p11_ctx_, file_path_.toLocal8Bit().toStdString().c_str() );
 
         if( ret == 0 )
         {
@@ -566,9 +566,8 @@ void MainWindow::deriveKey()
 
 void MainWindow::settings()
 {
-    manApplet->settingsDlg()->show();
-    manApplet->settingsDlg()->raise();
-    manApplet->settingsDlg()->activateWindow();
+    SettingsDlg settingsDlg;
+    settingsDlg.exec();
 }
 
 void MainWindow::rightTableClick(QModelIndex index)

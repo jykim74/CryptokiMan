@@ -87,7 +87,12 @@ void ManTreeView::P11Initialize()
     if( pCTX == NULL ) return;
 
     ret = JS_PKCS11_Initialize(pCTX);
-    if( ret != 0 ) return;
+    if( ret != 0 )
+    {
+        QString msg = JS_PKCS11_GetErrorMsg( ret );
+        manApplet->warningBox( msg );
+        return;
+    }
 
     ret = JS_PKCS11_GetSlotList2( pCTX, CK_TRUE, sSlotList, &uSlotCnt );
     if( ret == 0 )
