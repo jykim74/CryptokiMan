@@ -10,6 +10,8 @@ LogoutDlg::LogoutDlg(QWidget *parent) :
     setupUi(this);
 
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
+
+    initialize();
 }
 
 LogoutDlg::~LogoutDlg()
@@ -17,9 +19,10 @@ LogoutDlg::~LogoutDlg()
 
 }
 
-void LogoutDlg::showEvent(QShowEvent* event )
+void LogoutDlg::setSelectedSlot(int index)
 {
-    initialize();
+    if( index >= 0 )
+        mSlotsCombo->setCurrentIndex(index);
 }
 
 void LogoutDlg::initialize()

@@ -12,6 +12,7 @@
 
 class ManTreeView;
 class ManTreeModel;
+class ManTreeItem;
 
 namespace Ui {
 class MainWindow;
@@ -29,9 +30,9 @@ public:
     void showWindow();
     JP11_CTX* getP11CTX() { return p11_ctx_; };
     QList<SlotInfo>& getSlotInfos() { return slot_infos_; };
+    ManTreeItem* currentItem();
 
-
-private slots:
+public slots:
     void newFile();
     void open();
     void quit();

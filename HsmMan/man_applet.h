@@ -5,9 +5,7 @@
 #include <QMessageBox>
 
 class MainWindow;
-class CloseSessionDlg;
-class LoginDlg;
-class LogoutDlg;
+
 class GenKeyPairDlg;
 class GenKeyDlg;
 class CreateDataDlg;
@@ -47,9 +45,7 @@ public:
     void start();
 
     MainWindow* mainWindow() { return main_win_; };
-    CloseSessionDlg* closeSessionDlg() { return close_session_dlg_; };
-    LoginDlg* loginDlg() { return login_dlg_; };
-    LogoutDlg* logoutDlg() { return logout_dlg_; };
+
     GenKeyPairDlg* genKeyPairDlg() { return gen_key_pair_dlg_; };
     GenKeyDlg* genKeyDlg() { return gen_key_dlg_; };
     CreateDataDlg* createDataDlg() { return create_data_dlg_; };
@@ -95,9 +91,7 @@ private:
     Q_DISABLE_COPY(ManApplet)
 
     MainWindow* main_win_;
-    CloseSessionDlg* close_session_dlg_;
-    LoginDlg* login_dlg_;
-    LogoutDlg* logout_dlg_;
+
     GenKeyPairDlg* gen_key_pair_dlg_;
     GenKeyDlg* gen_key_dlg_;
     CreateDataDlg* create_data_dlg_;

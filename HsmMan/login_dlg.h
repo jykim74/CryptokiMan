@@ -15,9 +15,9 @@ class LoginDlg : public QDialog, public Ui::LoginDlg
 public:
     explicit LoginDlg(QWidget *parent = nullptr);
     ~LoginDlg();
+    void setSelectedSlot( int index );
 
 private slots:
-    void showEvent(QShowEvent *event);
     virtual void accept();
     void slotChanged( int index );
 

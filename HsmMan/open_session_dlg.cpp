@@ -9,17 +9,12 @@ OpenSessionDlg::OpenSessionDlg(QWidget *parent) :
 {
     setupUi(this);
 
-//    initialize();
+    initialize();
 }
 
 OpenSessionDlg::~OpenSessionDlg()
 {
 
-}
-
-void OpenSessionDlg::showEvent(QShowEvent* event )
-{
-    initialize();
 }
 
 void OpenSessionDlg::initialize()
@@ -34,6 +29,12 @@ void OpenSessionDlg::initialize()
 
         mSlotsCombo->addItem( slotInfo.getDesc() );
     }
+}
+
+void OpenSessionDlg::setSelectedSlot(int index)
+{
+    if( index >= 0 )
+        mSlotsCombo->setCurrentIndex(index);
 }
 
 void OpenSessionDlg::accept()

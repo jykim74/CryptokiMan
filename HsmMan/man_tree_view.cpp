@@ -53,10 +53,25 @@ void ManTreeView::onItemClicked( const QModelIndex& index )
 
 void ManTreeView::showContextMenu( QPoint point )
 {
+    ManTreeModel *tree_model = (ManTreeModel *)model();
+    ManTreeItem *item = currentItem();
+
     QMenu menu(this);
 
-    menu.addAction( tr("P11Initialize"), this, SLOT(P11Initialize()));
-    menu.addAction( tr("P11Finalize"), this, SLOT(P11Finalize()));
+    if( item->getType() == HM_ITEM_TYPE_ROOT )
+    {
+        menu.addAction( tr("P11Initialize"), this, SLOT(P11Initialize()));
+        menu.addAction( tr("P11Finalize"), this, SLOT(P11Finalize()));
+    }
+    else if( item->getType() == HM_ITEM_TYPE_SLOT )
+    {
+        menu.addAction( tr("OpenSession"), manApplet->mainWindow(), &MainWindow::openSession );
+        menu.addAction( tr("CloseSession"), manApplet->mainWindow(), &MainWindow::closeSession );
+        menu.addAction( tr("CloseAllSessions"), manApplet->mainWindow(), &MainWindow::closeAllSessions );
+
+        menu.addAction( tr("Login"), manApplet->mainWindow(), &MainWindow::login );
+        menu.addAction( tr("Logout"), manApplet->mainWindow(), &MainWindow::logout );
+    }
 
     menu.exec(QCursor::pos());
 }

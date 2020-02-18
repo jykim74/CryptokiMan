@@ -11,6 +11,7 @@ CloseSessionDlg::CloseSessionDlg(QWidget *parent) :
     setWindowTitle( "CloseSession Dialog" );
 
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
+    initialize();
 }
 
 CloseSessionDlg::~CloseSessionDlg()
@@ -22,11 +23,6 @@ void CloseSessionDlg::setAll(bool all)
 {
     all_ = all;
     setWindowTitle( "CloseAllSession Dialog" );
-}
-
-void CloseSessionDlg::showEvent(QShowEvent* event )
-{
-    initialize();
 }
 
 void CloseSessionDlg::initialize()
@@ -43,6 +39,12 @@ void CloseSessionDlg::initialize()
     }
 
     if( slot_infos.size() > 0 ) slotChanged(0);
+}
+
+void CloseSessionDlg::setSelectedSlot(int index)
+{
+    if( index >= 0 )
+        mSlotsCombo->setCurrentIndex(index);
 }
 
 void CloseSessionDlg::accept()

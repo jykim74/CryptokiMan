@@ -15,9 +15,9 @@ class LogoutDlg : public QDialog, public Ui::LogoutDlg
 public:
     explicit LogoutDlg(QWidget *parent = nullptr);
     ~LogoutDlg();
+    void setSelectedSlot( int index );
 
 private slots:
-    void showEvent(QShowEvent *event);
     virtual void accept();
     void slotChanged( int index );
 

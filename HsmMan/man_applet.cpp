@@ -44,9 +44,6 @@ ManApplet::ManApplet( QObject *parent )
 {
     main_win_ = new MainWindow;
 
-    close_session_dlg_ = new CloseSessionDlg;
-    login_dlg_ = new LoginDlg;
-    logout_dlg_ = new LogoutDlg;
     gen_key_pair_dlg_ = new GenKeyPairDlg;
     gen_key_dlg_ = new GenKeyDlg;
     create_data_dlg_ = new CreateDataDlg;

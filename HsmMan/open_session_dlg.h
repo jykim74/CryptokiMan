@@ -15,9 +15,9 @@ class OpenSessionDlg : public QDialog, public Ui::OpenSessionDlg
 public:
     explicit OpenSessionDlg(QWidget *parent = nullptr);
     ~OpenSessionDlg();
+    void setSelectedSlot( int index );
 
 private slots:
-    void showEvent(QShowEvent *event);
     virtual void accept();
 
 private:

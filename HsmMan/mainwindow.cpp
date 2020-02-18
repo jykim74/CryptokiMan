@@ -340,40 +340,48 @@ void MainWindow::unload()
 
 void MainWindow::openSession()
 {
+    ManTreeItem *pItem = currentItem();
+
     OpenSessionDlg openSessionDlg;
+    if( pItem ) openSessionDlg.setSelectedSlot( pItem->getSlotIndex() );
     openSessionDlg.exec();
 }
 
 void MainWindow::closeSession()
 {
-    manApplet->closeSessionDlg()->setAll(false);
-    manApplet->closeSessionDlg()->show();
-    manApplet->closeSessionDlg()->raise();
-    manApplet->closeSessionDlg()->activateWindow();
+    ManTreeItem *pItem = currentItem();
+
+    CloseSessionDlg closeSessionDlg;
+    closeSessionDlg.setAll(false);
+    if( pItem ) closeSessionDlg.setSelectedSlot( pItem->getSlotIndex() );
+    closeSessionDlg.exec();
 }
 
 
 void MainWindow::closeAllSessions()
 {
-    manApplet->closeSessionDlg()->setAll(true);
-    manApplet->closeSessionDlg()->show();
-    manApplet->closeSessionDlg()->raise();
-    manApplet->closeSessionDlg()->activateWindow();
+    CloseSessionDlg closeSessionDlg;
+    closeSessionDlg.setAll(true);
+    closeSessionDlg.exec();
 }
 
 void MainWindow::login()
 {
-    manApplet->loginDlg()->show();
-    manApplet->loginDlg()->raise();
-    manApplet->loginDlg()->activateWindow();
+    ManTreeItem *pItem = currentItem();
+
+    LoginDlg loginDlg;
+    if( pItem ) loginDlg.setSelectedSlot( pItem->getSlotIndex() );
+    loginDlg.exec();
 }
 
 void MainWindow::logout()
 {
-//    manApplet->yesOrNoBox( tr("Do you want to logout?" ), this );
-    manApplet->logoutDlg()->show();
-    manApplet->logoutDlg()->raise();
-    manApplet->logoutDlg()->activateWindow();
+//    manApplet->yesOrNoBox( tr("Do you want to logout?" ), this );  
+    ManTreeItem *pItem = currentItem();
+
+    LogoutDlg logoutDlg;
+    if( pItem ) logoutDlg.setSelectedSlot( pItem->getSlotIndex() );
+    logoutDlg.exec();
 }
 
 void MainWindow::generateKeyPair()
@@ -594,4 +602,14 @@ void MainWindow::showWindow()
     show();
     raise();
     activateWindow();
+}
+
+ManTreeItem* MainWindow::currentItem()
+{
+    ManTreeItem *item = NULL;
+    QModelIndex index = left_tree_->currentIndex();
+
+    item = (ManTreeItem *)left_model_->itemFromIndex( index );
+
+    return item;
 }
