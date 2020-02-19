@@ -63,12 +63,20 @@ void ManTreeView::showContextMenu( QPoint point )
         menu.addAction( tr("P11Initialize"), this, SLOT(P11Initialize()));
         menu.addAction( tr("P11Finalize"), this, SLOT(P11Finalize()));
     }
+    else if( item->getType() == HM_ITEM_TYPE_TOKEN )
+    {
+        menu.addAction( tr("InitializeToken"), manApplet->mainWindow(), &MainWindow::initToken );
+        menu.addAction( tr("InitPin"), manApplet->mainWindow(), &MainWindow::initPin );
+        menu.addAction( tr("SetPin"), manApplet->mainWindow(), &MainWindow::setPin );
+
+        menu.addAction( tr("Digest"), manApplet->mainWindow(), &MainWindow::digest );
+        menu.addAction( tr("Random"), manApplet->mainWindow(), &MainWindow::rand );
+    }
     else if( item->getType() == HM_ITEM_TYPE_SLOT || item->getType() == HM_ITEM_TYPE_SESSION )
     {
         menu.addAction( tr("OpenSession"), manApplet->mainWindow(), &MainWindow::openSession );
         menu.addAction( tr("CloseSession"), manApplet->mainWindow(), &MainWindow::closeSession );
         menu.addAction( tr("CloseAllSessions"), manApplet->mainWindow(), &MainWindow::closeAllSessions );
-
         menu.addAction( tr("Login"), manApplet->mainWindow(), &MainWindow::login );
         menu.addAction( tr("Logout"), manApplet->mainWindow(), &MainWindow::logout );
     }
@@ -82,6 +90,47 @@ void ManTreeView::showContextMenu( QPoint point )
         menu.addAction( tr("CreateECPublicKey"), manApplet->mainWindow(), &MainWindow::createECPublicKey );
         menu.addAction( tr("CreateECPrivateKey"), manApplet->mainWindow(), &MainWindow::createECPrivateKey );
         menu.addAction( tr("CreateKey"), manApplet->mainWindow(), &MainWindow::createKey );
+        menu.addAction( tr("ImportPFX"), manApplet->mainWindow(), &MainWindow::importPFX );
+        menu.addAction( tr("ImportCert"), manApplet->mainWindow(), &MainWindow::importCert );
+        menu.addAction( tr("ImportPrivateKey"), manApplet->mainWindow(), &MainWindow::improtPrivateKey );
+    }
+    else if( item->getType() == HM_ITEM_TYPE_CERTIFICATE )
+    {
+        menu.addAction( tr( "DeleteObject" ), manApplet->mainWindow(), &MainWindow::deleteObject );
+        menu.addAction( tr("EditAttribute"), manApplet->mainWindow(), &MainWindow::editAttribute );
+
+        menu.addAction( tr("ImportCert" ), manApplet->mainWindow(), &MainWindow::importCert );
+    }
+    else if( item->getType() == HM_ITEM_TYPE_PUBLICKEY )
+    {
+        menu.addAction( tr( "DeleteObject" ), manApplet->mainWindow(), &MainWindow::deleteObject );
+        menu.addAction( tr("EditAttribute"), manApplet->mainWindow(), &MainWindow::editAttribute );
+
+        menu.addAction( tr("Verify"), manApplet->mainWindow(), &MainWindow::verify );
+        menu.addAction( tr("Encrypt"), manApplet->mainWindow(), &MainWindow::encrypt );
+    }
+    else if( item->getType() == HM_ITEM_TYPE_PRIVATEKEY )
+    {
+        menu.addAction( tr( "DeleteObject" ), manApplet->mainWindow(), &MainWindow::deleteObject );
+        menu.addAction( tr("EditAttribute"), manApplet->mainWindow(), &MainWindow::editAttribute );
+
+        menu.addAction( tr( "Sign"), manApplet->mainWindow(), &MainWindow::sign );
+        menu.addAction( tr( "Decrypt" ), manApplet->mainWindow(), &MainWindow::decrypt );
+    }
+    else if( item->getType() == HM_ITEM_TYPE_SECRETKEY )
+    {
+        menu.addAction( tr( "DeleteObject" ), manApplet->mainWindow(), &MainWindow::deleteObject );
+        menu.addAction( tr("EditAttribute"), manApplet->mainWindow(), &MainWindow::editAttribute );
+
+        menu.addAction( tr("Encrypt"), manApplet->mainWindow(), &MainWindow::encrypt );
+        menu.addAction( tr("Decrypt"), manApplet->mainWindow(), &MainWindow::decrypt );
+        menu.addAction(  tr( "WrapKey"), manApplet->mainWindow(), &MainWindow::wrapKey );
+        menu.addAction( tr("UnwrapKey"), manApplet->mainWindow(), &MainWindow::unwrapKey );
+    }
+    else if( item->getType() == HM_ITEM_TYPE_DATA )
+    {
+        menu.addAction( tr( "DeleteObject" ), manApplet->mainWindow(), &MainWindow::deleteObject );
+        menu.addAction( tr("EditAttribute"), manApplet->mainWindow(), &MainWindow::editAttribute );
     }
 
     menu.exec(QCursor::pos());
