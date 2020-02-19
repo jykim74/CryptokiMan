@@ -116,6 +116,7 @@ void ManTreeView::showContextMenu( QPoint point )
 
         menu.addAction( tr( "Sign"), manApplet->mainWindow(), &MainWindow::sign );
         menu.addAction( tr( "Decrypt" ), manApplet->mainWindow(), &MainWindow::decrypt );
+        menu.addAction( tr( "ImportPrivateKey"), manApplet->mainWindow(), &MainWindow::improtPrivateKey );
     }
     else if( item->getType() == HM_ITEM_TYPE_SECRETKEY )
     {

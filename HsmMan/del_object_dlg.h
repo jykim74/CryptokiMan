@@ -16,6 +16,8 @@ public:
     explicit DelObjectDlg(QWidget *parent = nullptr);
     ~DelObjectDlg();
     void setSeletedSlot( int index );
+    void setSelectedObject( int index );
+
 
 private slots:
     virtual void accept();

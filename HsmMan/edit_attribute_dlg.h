@@ -16,10 +16,13 @@ public:
     explicit EditAttributeDlg(QWidget *parent = nullptr);
     ~EditAttributeDlg();
     void setSelectedSlot( int index );
+    void setSelectedObject( int index );
 
 private slots:
     virtual void accept();
     void slotChanged( int index );
+    void labelChanged( int index );
+    void objectChanged( int index );
 
     void clickClose();
     void clickGetAttribute();

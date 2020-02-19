@@ -75,6 +75,7 @@ HEADERS += \
         about_dlg.h \
         auto_update_service.h \
         close_session_dlg.h \
+        common.h \
         create_data_dlg.h \
         create_ec_pri_key_dlg.h \
         create_ec_pub_key_dlg.h \

@@ -4,6 +4,7 @@
 #include <QDir>
 #include <QString>
 
+#include "common.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "man_tree_item.h"
@@ -104,10 +105,9 @@ void MainWindow::createTableMenu()
 
     right_table_->horizontalHeader()->setStretchLastSection(true);
     right_table_->setColumnCount(2);
-    right_table_->setColumnWidth(1, 500);
+    right_table_->setColumnWidth(0, 200);
     right_table_->setHorizontalHeaderLabels( labels );
     right_table_->verticalHeader()->setVisible(false);
-
 }
 
 void MainWindow::createActions()
@@ -458,7 +458,22 @@ void MainWindow::deleteObject()
     ManTreeItem *pItem = currentItem();
 
     DelObjectDlg delObjectDlg;
-    if( pItem ) delObjectDlg.setSeletedSlot(pItem->getSlotIndex());
+    if( pItem )
+    {
+        delObjectDlg.setSeletedSlot(pItem->getSlotIndex());
+
+        if( pItem->getType() == HM_ITEM_TYPE_DATA )
+            delObjectDlg.setSelectedObject( OBJ_DATA_IDX );
+        else if( pItem->getType() == HM_ITEM_TYPE_CERTIFICATE )
+            delObjectDlg.setSelectedObject( OBJ_CERT_IDX );
+        else if( pItem->getType() == HM_ITEM_TYPE_PUBLICKEY )
+            delObjectDlg.setSelectedObject( OBJ_PUBKEY_IDX );
+        else if( pItem->getType() == HM_ITEM_TYPE_PRIVATEKEY )
+            delObjectDlg.setSelectedObject( OBJ_PRIKEY_IDX );
+        else if( pItem->getType() == HM_ITEM_TYPE_SECRETKEY )
+            delObjectDlg.setSelectedObject( OBJ_SECRET_IDX );
+    }
+
     delObjectDlg.exec();
 }
 
@@ -467,7 +482,22 @@ void MainWindow::editAttribute()
     ManTreeItem *pItem = currentItem();
 
     EditAttributeDlg editAttrDlg;
-    if( pItem ) editAttrDlg.setSelectedSlot( pItem->getSlotIndex() );
+    if( pItem )
+    {
+        editAttrDlg.setSelectedSlot( pItem->getSlotIndex() );
+
+        if( pItem->getType() == HM_ITEM_TYPE_DATA )
+            editAttrDlg.setSelectedObject( OBJ_DATA_IDX );
+        else if( pItem->getType() == HM_ITEM_TYPE_CERTIFICATE )
+            editAttrDlg.setSelectedObject( OBJ_CERT_IDX );
+        else if( pItem->getType() == HM_ITEM_TYPE_PUBLICKEY )
+            editAttrDlg.setSelectedObject( OBJ_PUBKEY_IDX );
+        else if( pItem->getType() == HM_ITEM_TYPE_PRIVATEKEY )
+            editAttrDlg.setSelectedObject( OBJ_PRIKEY_IDX );
+        else if( pItem->getType() == HM_ITEM_TYPE_SECRETKEY )
+            editAttrDlg.setSelectedObject( OBJ_SECRET_IDX );
+    }
+
     editAttrDlg.exec();
 }
 

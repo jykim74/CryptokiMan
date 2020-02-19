@@ -3,9 +3,7 @@
 #include "mainwindow.h"
 #include "js_pkcs11.h"
 
-static QStringList sObjectList = {
-    "Data", "Certificate", "PublicKey", "PrivateKey", "SecretKey"
-};
+#include "common.h"
 
 
 DelObjectDlg::DelObjectDlg(QWidget *parent) :
@@ -18,7 +16,7 @@ DelObjectDlg::DelObjectDlg(QWidget *parent) :
     connect( mObjectCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(objectChanged(int)));
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
 
-    mObjectCombo->addItems(sObjectList);
+    mObjectCombo->addItems(kObjectList);
 
     initialize();
 }
@@ -31,6 +29,11 @@ DelObjectDlg::~DelObjectDlg()
 void DelObjectDlg::setSeletedSlot(int index)
 {
     if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
+}
+
+void DelObjectDlg::setSelectedObject(int index)
+{
+    if( index >= 0 ) mObjectCombo->setCurrentIndex(index);
 }
 
 void DelObjectDlg::slotChanged(int index)
@@ -119,15 +122,15 @@ void DelObjectDlg::objectChanged( int index )
     CK_ULONG uMaxObjCnt = 20;
     CK_ULONG uObjCnt = 0;
 
-    if( index == 0 )
+    if( index == OBJ_DATA_IDX )
         objClass = CKO_DATA;
-    else if( index == 1 )
+    else if( index == OBJ_CERT_IDX )
         objClass = CKO_CERTIFICATE;
-    else if( index == 2 )
-        objClass = CKO_PRIVATE_KEY;
-    else if( index == 3 )
+    else if( index == OBJ_PUBKEY_IDX )
         objClass = CKO_PUBLIC_KEY;
-    else if( index == 4 )
+    else if( index == OBJ_PRIKEY_IDX )
+        objClass = CKO_PRIVATE_KEY;
+    else if( index == OBJ_SECRET_IDX )
         objClass = CKO_SECRET_KEY;
 
     sTemplate[uCount].type = CKA_CLASS;
