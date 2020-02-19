@@ -8,6 +8,7 @@ SetPinDlg::SetPinDlg(QWidget *parent) :
 {
     setupUi(this);
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
+    initialize();
 }
 
 SetPinDlg::~SetPinDlg()
@@ -28,9 +29,9 @@ void SetPinDlg::slotChanged(int index)
     mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
 }
 
-void SetPinDlg::showEvent(QShowEvent* event )
+void SetPinDlg::setSelectedSlot(int index)
 {
-    initialize();
+    if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
 }
 
 void SetPinDlg::initialize()

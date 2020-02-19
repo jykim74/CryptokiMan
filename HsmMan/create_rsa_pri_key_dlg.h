@@ -15,9 +15,9 @@ class CreateRSAPriKeyDlg : public QDialog, public Ui::CreateRSAPriKeyDlg
 public:
     explicit CreateRSAPriKeyDlg(QWidget *parent = nullptr);
     ~CreateRSAPriKeyDlg();
+    void setSelectedSlot( int index );
 
 private slots:
-    void showEvent(QShowEvent *event);
     virtual void accept();
     void slotChanged( int index );
 

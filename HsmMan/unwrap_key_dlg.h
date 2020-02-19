@@ -15,9 +15,9 @@ class UnwrapKeyDlg : public QDialog, public Ui::UnwrapKeyDlg
 public:
     explicit UnwrapKeyDlg(QWidget *parent = nullptr);
     ~UnwrapKeyDlg();
+    void setSelectedSlot( int index );
 
 private slots:
-    void showEvent(QShowEvent *event);
     virtual void accept();
     void slotChanged( int index );
 

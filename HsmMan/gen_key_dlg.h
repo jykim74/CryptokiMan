@@ -15,9 +15,9 @@ class GenKeyDlg : public QDialog, public Ui::GenKeyDlg
 public:
     explicit GenKeyDlg(QWidget *parent = nullptr);
     ~GenKeyDlg();
+    void setSelectedSlot( int index );
 
 private slots:
-    void showEvent(QShowEvent *event);
     virtual void accept();
     void slotChanged( int index );
 

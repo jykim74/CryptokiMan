@@ -15,9 +15,9 @@ class DeriveKeyDlg : public QDialog, public Ui::DeriveKeyDlg
 public:
     explicit DeriveKeyDlg(QWidget *parent = nullptr);
     ~DeriveKeyDlg();
+    void setSelectedSlot( int index );
 
 private slots:
-    void showEvent(QShowEvent *event);
     virtual void accept();
     void slotChanged( int index );
 

@@ -17,6 +17,8 @@ ImportPriKeyDlg::ImportPriKeyDlg(QWidget *parent) :
     connectAttributes();
 
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT( slotChanged(int) ));
+    initialize();
+    setDefaults();
 }
 
 ImportPriKeyDlg::~ImportPriKeyDlg()
@@ -24,10 +26,9 @@ ImportPriKeyDlg::~ImportPriKeyDlg()
 
 }
 
-void ImportPriKeyDlg::showEvent(QShowEvent* event )
+void ImportPriKeyDlg::setSelectedSlot(int index)
 {
-    initialize();
-    setDefaults();
+    if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
 }
 
 void ImportPriKeyDlg::initialize()

@@ -15,9 +15,9 @@ class RandDlg : public QDialog, public Ui::RandDlg
 public:
     explicit RandDlg(QWidget *parent = nullptr);
     ~RandDlg();
+    void setSelectedSlot( int index );
 
 private slots:
-    void showEvent(QShowEvent *event);
     virtual void accept();
     void slotChanged( int index );
     void clickSeed();

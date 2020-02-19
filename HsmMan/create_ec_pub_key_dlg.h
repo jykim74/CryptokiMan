@@ -15,9 +15,9 @@ class CreateECPubKeyDlg : public QDialog, public Ui::CreateECPubKeyDlg
 public:
     explicit CreateECPubKeyDlg(QWidget *parent = nullptr);
     ~CreateECPubKeyDlg();
+    void setSelectedSlot( int index );
 
 private slots:
-    void showEvent(QShowEvent *event);
     virtual void accept();
     void slotChanged( int index );
 

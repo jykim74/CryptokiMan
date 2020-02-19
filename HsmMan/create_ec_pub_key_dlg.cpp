@@ -15,11 +15,19 @@ CreateECPubKeyDlg::CreateECPubKeyDlg(QWidget *parent) :
     connectAttributes();
 
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
+
+    initialize();
+    setDefaults();
 }
 
 CreateECPubKeyDlg::~CreateECPubKeyDlg()
 {
 
+}
+
+void CreateECPubKeyDlg::setSelectedSlot(int index)
+{
+    if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
 }
 
 void CreateECPubKeyDlg::slotChanged(int index)
@@ -34,11 +42,6 @@ void CreateECPubKeyDlg::slotChanged(int index)
     mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
 }
 
-void CreateECPubKeyDlg::showEvent(QShowEvent* event )
-{
-    initialize();
-    setDefaults();
-}
 
 void CreateECPubKeyDlg::initialize()
 {

@@ -39,6 +39,8 @@ void EncryptDlg::initUI()
     connect( mFinalBtn, SIGNAL(clicked()), this, SLOT(clickFinal()));
     connect( mEncryptBtn, SIGNAL(clicked()), this, SLOT(clickEncrypt()));
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(clickClose()));
+
+    initialize();
 }
 
 void EncryptDlg::slotChanged(int index)
@@ -53,9 +55,9 @@ void EncryptDlg::slotChanged(int index)
     mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
 }
 
-void EncryptDlg::showEvent(QShowEvent* event )
+void EncryptDlg::setSelectedSlot(int index)
 {
-    initialize();
+    if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
 }
 
 void EncryptDlg::initialize()

@@ -31,6 +31,9 @@ GenKeyPairDlg::GenKeyPairDlg(QWidget *parent) :
 
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
     connect( mMechCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(mechChanged(int)));
+
+    initialize();
+    setDefaults();
 }
 
 GenKeyPairDlg::~GenKeyPairDlg()
@@ -38,11 +41,11 @@ GenKeyPairDlg::~GenKeyPairDlg()
 
 }
 
-void GenKeyPairDlg::showEvent(QShowEvent* event )
+void GenKeyPairDlg::setSelectedSlot(int index)
 {
-    initialize();
-    setDefaults();
+    if( index >= 0 ) mSlotsCombo->setCurrentIndex( index );
 }
+
 
 void GenKeyPairDlg::initialize()
 {

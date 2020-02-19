@@ -15,9 +15,9 @@ class DigestDlg : public QDialog, public Ui::DigestDlg
 public:
     explicit DigestDlg(QWidget *parent = nullptr);
     ~DigestDlg();
+    void setSelectedSlot( int index );
 
 private slots:
-    void showEvent(QShowEvent *event);
     void slotChanged( int index );
 
     void clickInit();

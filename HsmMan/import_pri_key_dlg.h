@@ -16,9 +16,9 @@ class ImportPriKeyDlg : public QDialog, public Ui::ImportPriKeyDlg
 public:
     explicit ImportPriKeyDlg(QWidget *parent = nullptr);
     ~ImportPriKeyDlg();
+    void setSelectedSlot( int index );
 
 private slots:
-    void showEvent(QShowEvent *event);
     virtual void accept();
     void slotChanged( int index );
 

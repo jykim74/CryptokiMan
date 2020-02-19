@@ -15,9 +15,9 @@ class EncryptDlg : public QDialog, public Ui::EncryptDlg
 public:
     explicit EncryptDlg(QWidget *parent = nullptr);
     ~EncryptDlg();
+    void setSelectedSlot( int index );
 
 private slots:
-    void showEvent(QShowEvent *event);
     void slotChanged( int index );
 
     void clickInit();

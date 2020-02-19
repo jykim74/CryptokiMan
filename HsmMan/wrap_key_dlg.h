@@ -15,9 +15,9 @@ class WrapKeyDlg : public QDialog, public Ui::WrapKeyDlg
 public:
     explicit WrapKeyDlg(QWidget *parent = nullptr);
     ~WrapKeyDlg();
+    void setSelectedSlot( int index );
 
 private slots:
-    void showEvent(QShowEvent *event);
     virtual void accept();
     void slotChanged( int index );
 

@@ -15,9 +15,9 @@ class SetPinDlg : public QDialog, public Ui::SetPinDlg
 public:
     explicit SetPinDlg(QWidget *parent = nullptr);
     ~SetPinDlg();
+    void setSelectedSlot( int index );
 
 private slots:
-    void showEvent(QShowEvent *event);
     virtual void accept();
     void slotChanged( int index );
 

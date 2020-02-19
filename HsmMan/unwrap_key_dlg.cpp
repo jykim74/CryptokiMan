@@ -47,7 +47,8 @@ void UnwrapKeyDlg::initUI()
     connect( mFindBtn, SIGNAL(clicked(bool)), this, SLOT(clickFind()));
 
     /* need to check crashing */
-
+    initialize();
+    setUnwrapLabelList();
 }
 
 void UnwrapKeyDlg::slotChanged(int index)
@@ -62,10 +63,9 @@ void UnwrapKeyDlg::slotChanged(int index)
     mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
 }
 
-void UnwrapKeyDlg::showEvent(QShowEvent* event )
+void UnwrapKeyDlg::setSelectedSlot(int index)
 {
-    initialize();
-    setUnwrapLabelList();
+    if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
 }
 
 void UnwrapKeyDlg::initialize()

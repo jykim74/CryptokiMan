@@ -15,9 +15,9 @@ class DecryptDlg : public QDialog, public Ui::DecryptDlg
 public:
     explicit DecryptDlg(QWidget *parent = nullptr);
     ~DecryptDlg();
+    void setSelectedSlot( int index );
 
 private slots:
-    void showEvent(QShowEvent *event);
     void slotChanged( int index );
 
     void clickInit();

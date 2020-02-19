@@ -17,11 +17,19 @@ CreateDataDlg::CreateDataDlg(QWidget *parent) :
     connectAttributes();
 
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
+
+    initialize();
+    setDefaults();
 }
 
 CreateDataDlg::~CreateDataDlg()
 {
 
+}
+
+void CreateDataDlg::setSelectedSlot(int index)
+{
+    if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
 }
 
 void CreateDataDlg::slotChanged(int index)
@@ -36,11 +44,6 @@ void CreateDataDlg::slotChanged(int index)
     mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
 }
 
-void CreateDataDlg::showEvent(QShowEvent* event )
-{
-    initialize();
-    setDefaults();
-}
 
 void CreateDataDlg::initialize()
 {

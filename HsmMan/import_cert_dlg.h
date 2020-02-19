@@ -15,9 +15,9 @@ class ImportCertDlg : public QDialog, public Ui::ImportCertDlg
 public:
     explicit ImportCertDlg(QWidget *parent = nullptr);
     ~ImportCertDlg();
+    void setSelectedSlot( int index );
 
 private slots:
-    void showEvent(QShowEvent *event);
     void slotChanged( int index );
     virtual void accept();
     void clickPrivate();

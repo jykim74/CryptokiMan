@@ -15,9 +15,9 @@ class CreateDataDlg : public QDialog, public Ui::CreateDataDlg
 public:
     explicit CreateDataDlg(QWidget *parent = nullptr);
     ~CreateDataDlg();
+    void setSelectedSlot( int index );
 
 private slots:
-    void showEvent(QShowEvent *event);
     virtual void accept();
     void slotChanged( int index );
 

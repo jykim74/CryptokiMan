@@ -63,7 +63,7 @@ void ManTreeView::showContextMenu( QPoint point )
         menu.addAction( tr("P11Initialize"), this, SLOT(P11Initialize()));
         menu.addAction( tr("P11Finalize"), this, SLOT(P11Finalize()));
     }
-    else if( item->getType() == HM_ITEM_TYPE_SLOT )
+    else if( item->getType() == HM_ITEM_TYPE_SLOT || item->getType() == HM_ITEM_TYPE_SESSION )
     {
         menu.addAction( tr("OpenSession"), manApplet->mainWindow(), &MainWindow::openSession );
         menu.addAction( tr("CloseSession"), manApplet->mainWindow(), &MainWindow::closeSession );
@@ -71,6 +71,17 @@ void ManTreeView::showContextMenu( QPoint point )
 
         menu.addAction( tr("Login"), manApplet->mainWindow(), &MainWindow::login );
         menu.addAction( tr("Logout"), manApplet->mainWindow(), &MainWindow::logout );
+    }
+    else if( item->getType() == HM_ITEM_TYPE_OBJECTS )
+    {
+        menu.addAction( tr("GenerateKeyPair"), manApplet->mainWindow(), &MainWindow::generateKeyPair );
+        menu.addAction( tr("GenerateKey"), manApplet->mainWindow(), &MainWindow::generateKey );
+        menu.addAction( tr("CreateData"), manApplet->mainWindow(), &MainWindow::createData );
+        menu.addAction( tr("CreateRSAPublicKey"), manApplet->mainWindow(), &MainWindow::createRSAPublicKey );
+        menu.addAction( tr("CreateRSAPrivateKey"), manApplet->mainWindow(), &MainWindow::createRSAPrivateKey );
+        menu.addAction( tr("CreateECPublicKey"), manApplet->mainWindow(), &MainWindow::createECPublicKey );
+        menu.addAction( tr("CreateECPrivateKey"), manApplet->mainWindow(), &MainWindow::createECPrivateKey );
+        menu.addAction( tr("CreateKey"), manApplet->mainWindow(), &MainWindow::createKey );
     }
 
     menu.exec(QCursor::pos());

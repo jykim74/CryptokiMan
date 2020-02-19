@@ -17,6 +17,8 @@ ImportPFXDlg::ImportPFXDlg(QWidget *parent) :
     connectAttributes();
 
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT( slotChanged(int) ));
+    initialize();
+    setDefaults();
 }
 
 ImportPFXDlg::~ImportPFXDlg()
@@ -24,10 +26,9 @@ ImportPFXDlg::~ImportPFXDlg()
 
 }
 
-void ImportPFXDlg::showEvent(QShowEvent* event )
+void ImportPFXDlg::setSelectedSlot(int index)
 {
-    initialize();
-    setDefaults();
+    if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
 }
 
 void ImportPFXDlg::initialize()

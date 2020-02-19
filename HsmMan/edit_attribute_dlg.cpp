@@ -27,11 +27,18 @@ EditAttributeDlg::EditAttributeDlg(QWidget *parent) :
     connect( mGetAttrBtn, SIGNAL(clicked(bool)), this, SLOT(clickGetAttribute()));
     connect( mSetAttrBtn, SIGNAL(clicked(bool)), this, SLOT(clickSetAttribute()));
 
+    initialize();
+
 }
 
 EditAttributeDlg::~EditAttributeDlg()
 {
 
+}
+
+void EditAttributeDlg::setSelectedSlot(int index)
+{
+    if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
 }
 
 void EditAttributeDlg::slotChanged(int index)
@@ -46,10 +53,6 @@ void EditAttributeDlg::slotChanged(int index)
     mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
 }
 
-void EditAttributeDlg::showEvent(QShowEvent* event )
-{
-    initialize();
-}
 
 void EditAttributeDlg::initialize()
 {

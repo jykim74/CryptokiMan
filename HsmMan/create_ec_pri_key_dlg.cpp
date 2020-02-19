@@ -15,11 +15,19 @@ CreateECPriKeyDlg::CreateECPriKeyDlg(QWidget *parent) :
     connectAttributes();
 
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
+
+    initialize();
+    setDefaults();
 }
 
 CreateECPriKeyDlg::~CreateECPriKeyDlg()
 {
 
+}
+
+void CreateECPriKeyDlg::setSelectedSlot(int index)
+{
+    if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
 }
 
 void CreateECPriKeyDlg::slotChanged(int index)
@@ -34,11 +42,6 @@ void CreateECPriKeyDlg::slotChanged(int index)
     mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
 }
 
-void CreateECPriKeyDlg::showEvent(QShowEvent* event )
-{
-    initialize();
-    setDefaults();
-}
 
 void CreateECPriKeyDlg::initialize()
 {

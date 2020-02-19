@@ -44,32 +44,8 @@ ManApplet::ManApplet( QObject *parent )
 {
     main_win_ = new MainWindow;
 
-    gen_key_pair_dlg_ = new GenKeyPairDlg;
-    gen_key_dlg_ = new GenKeyDlg;
-    create_data_dlg_ = new CreateDataDlg;
-    create_rsa_pub_key_dlg_ = new CreateRSAPubKeyDlg;
-    create_rsa_pri_key_dlg_ = new CreateRSAPriKeyDlg;
-    create_ec_pub_key_dlg_ = new CreateECPubKeyDlg;
-    create_ec_pri_key_dlg_ = new CreateECPriKeyDlg;
-    create_key_dlg_ = new CreateKeyDlg;
-    edit_attribute_dlg_ = new EditAttributeDlg;
-    digest_dlg_ = new DigestDlg;
-    sign_dlg_ = new SignDlg;
-    verify_dlg_ = new VerifyDlg;
-    encrypt_dlg_ = new EncryptDlg;
-    decrypt_dlg_ = new DecryptDlg;
-    import_cert_dlg_ = new ImportCertDlg;
-    import_pfx_dlg_ = new ImportPFXDlg;
-    import_pri_key_dlg_ = new ImportPriKeyDlg;
     about_dlg_ = new AboutDlg;
     log_view_dlg_ = new LogViewDlg;
-    init_token_dlg_ = new InitTokenDlg;
-    rand_dlg_ = new RandDlg;
-    set_pin_dlg_ = new SetPinDlg;
-    init_pin_dlg_ = new InitPinDlg;
-    wrap_key_dlg_ = new WrapKeyDlg;
-    unwrap_key_dlg_ = new UnwrapKeyDlg;
-    derive_key_dlg_ = new DeriveKeyDlg;
     settings_mgr_ = new SettingsMgr;
 
     in_exit_ = false;

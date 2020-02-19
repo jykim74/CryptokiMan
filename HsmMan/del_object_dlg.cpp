@@ -19,11 +19,18 @@ DelObjectDlg::DelObjectDlg(QWidget *parent) :
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
 
     mObjectCombo->addItems(sObjectList);
+
+    initialize();
 }
 
 DelObjectDlg::~DelObjectDlg()
 {
 
+}
+
+void DelObjectDlg::setSeletedSlot(int index)
+{
+    if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
 }
 
 void DelObjectDlg::slotChanged(int index)
@@ -36,11 +43,6 @@ void DelObjectDlg::slotChanged(int index)
     mSlotIDText->setText( QString( "%1").arg(slotInfo.getSlotID()));
     mSessionText->setText( QString("%1").arg(slotInfo.getSessionHandle()));
     mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
-}
-
-void DelObjectDlg::showEvent(QShowEvent* event )
-{
-    initialize();
 }
 
 void DelObjectDlg::initialize()

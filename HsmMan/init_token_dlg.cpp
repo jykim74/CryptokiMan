@@ -7,6 +7,7 @@ InitTokenDlg::InitTokenDlg(QWidget *parent) :
     QDialog(parent)
 {
     setupUi(this);
+    initialize();
 }
 
 InitTokenDlg::~InitTokenDlg()
@@ -27,9 +28,9 @@ void InitTokenDlg::slotChanged(int index)
     mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
 }
 
-void InitTokenDlg::showEvent(QShowEvent* event )
+void InitTokenDlg::setSelectedSlot(int index)
 {
-    initialize();
+    if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
 }
 
 void InitTokenDlg::initialize()

@@ -15,9 +15,9 @@ class CreateKeyDlg : public QDialog, public Ui::CreateKeyDlg
 public:
     explicit CreateKeyDlg(QWidget *parent = nullptr);
     ~CreateKeyDlg();
+    void setSelectedSlot( int index );
 
 private slots:
-    void showEvent(QShowEvent *event);
     virtual void accept();
     void slotChanged( int index );
 

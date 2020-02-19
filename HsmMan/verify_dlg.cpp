@@ -41,6 +41,8 @@ void VerifyDlg::initUI()
     connect( mFinalBtn, SIGNAL(clicked()), this, SLOT(clickFinal()));
     connect( mVerifyBtn, SIGNAL(clicked()), this, SLOT(clickVerify()));
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(clickClose()));
+
+    initialize();
 }
 
 void VerifyDlg::slotChanged(int index)
@@ -55,9 +57,9 @@ void VerifyDlg::slotChanged(int index)
     mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
 }
 
-void VerifyDlg::showEvent(QShowEvent* event )
+void VerifyDlg::setSelectedSlot(int index)
 {
-    initialize();
+    if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
 }
 
 void VerifyDlg::initialize()

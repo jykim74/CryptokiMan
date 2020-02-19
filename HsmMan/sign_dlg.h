@@ -15,9 +15,9 @@ class SignDlg : public QDialog, public Ui::SignDlg
 public:
     explicit SignDlg(QWidget *parent = nullptr);
     ~SignDlg();
+    void setSelectedSlot( int index );
 
 private slots:
-    void showEvent(QShowEvent *event);
     void slotChanged( int index );
 
     void clickInit();

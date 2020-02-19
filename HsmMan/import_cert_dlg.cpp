@@ -17,6 +17,8 @@ ImportCertDlg::ImportCertDlg(QWidget *parent) :
     connectAttributes();
 
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT( slotChanged(int) ));
+    initialize();
+    setDefaults();
 }
 
 ImportCertDlg::~ImportCertDlg()
@@ -36,10 +38,9 @@ void ImportCertDlg::slotChanged(int index)
     mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
 }
 
-void ImportCertDlg::showEvent(QShowEvent* event )
+void ImportCertDlg::setSelectedSlot(int index)
 {
-    initialize();
-    setDefaults();
+    if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
 }
 
 void ImportCertDlg::initialize()

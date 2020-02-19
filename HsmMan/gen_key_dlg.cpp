@@ -21,11 +21,19 @@ GenKeyDlg::GenKeyDlg(QWidget *parent) :
     connectAttributes();
 
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
+
+    initialize();
+    setDefaults();
 }
 
 GenKeyDlg::~GenKeyDlg()
 {
 
+}
+
+void GenKeyDlg::setSelectedSlot(int index)
+{
+    if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
 }
 
 void GenKeyDlg::slotChanged(int index)
@@ -40,11 +48,6 @@ void GenKeyDlg::slotChanged(int index)
     mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
 }
 
-void GenKeyDlg::showEvent(QShowEvent* event )
-{
-    initialize();
-    setDefaults();
-}
 
 void GenKeyDlg::initialize()
 {

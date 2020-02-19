@@ -15,9 +15,9 @@ class InitTokenDlg : public QDialog, public Ui::InitTokenDlg
 public:
     explicit InitTokenDlg(QWidget *parent = nullptr);
     ~InitTokenDlg();
+    void setSelectedSlot( int index );
 
 private slots:
-    void showEvent(QShowEvent *event);
     virtual void accept();
     void slotChanged( int index );
 

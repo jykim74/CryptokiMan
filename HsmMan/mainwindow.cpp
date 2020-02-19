@@ -386,127 +386,161 @@ void MainWindow::logout()
 
 void MainWindow::generateKeyPair()
 {
-    manApplet->genKeyPairDlg()->show();
-    manApplet->genKeyPairDlg()->raise();
-    manApplet->genKeyPairDlg()->activateWindow();
+    ManTreeItem *pItem = currentItem();
+    GenKeyPairDlg genKeyPairDlg;
+    if( pItem ) genKeyPairDlg.setSelectedSlot( pItem->getSlotIndex() );
+    genKeyPairDlg.exec();
 }
 
 void MainWindow::generateKey()
 {
-    manApplet->genKeyDlg()->show();
-    manApplet->genKeyDlg()->raise();
-    manApplet->genKeyDlg()->activateWindow();
+    ManTreeItem *pItem = currentItem();
+    GenKeyDlg genKeyDlg;
+    if( pItem ) genKeyDlg.setSelectedSlot(pItem->getSlotIndex());
+    genKeyDlg.exec();
 }
 
 void MainWindow::createData()
 {
-    manApplet->createDataDlg()->show();
-    manApplet->createDataDlg()->raise();
-    manApplet->createDataDlg()->activateWindow();
+    ManTreeItem *pItem = currentItem();
+    CreateDataDlg createDataDlg;
+    if( pItem ) createDataDlg.setSelectedSlot( pItem->getSlotIndex() );
+    createDataDlg.exec();
 }
 
 void MainWindow::createRSAPublicKey()
 {
-    manApplet->createRSAPubKeyDlg()->show();
-    manApplet->createRSAPubKeyDlg()->raise();
-    manApplet->createRSAPubKeyDlg()->activateWindow();
+    ManTreeItem *pItem = currentItem();
+
+    CreateRSAPubKeyDlg createRSAPubKeyDlg;
+    if( pItem ) createRSAPubKeyDlg.setSelectedSlot(pItem->getSlotIndex());
+    createRSAPubKeyDlg.exec();
 }
 
 void MainWindow::createRSAPrivateKey()
 {
-    manApplet->createRSAPriKeyDlg()->show();
-    manApplet->createRSAPriKeyDlg()->raise();
-    manApplet->createRSAPriKeyDlg()->activateWindow();
+    ManTreeItem *pItem = currentItem();
+
+    CreateRSAPriKeyDlg createRSAPriKeyDlg;
+    if( pItem ) createRSAPriKeyDlg.setSelectedSlot(pItem->getSlotIndex());
+    createRSAPriKeyDlg.exec();
 }
 
 void MainWindow::createECPublicKey()
 {
-    manApplet->createECPubKeyDlg()->show();
-    manApplet->createECPubKeyDlg()->raise();
-    manApplet->createECPubKeyDlg()->activateWindow();
+    ManTreeItem *pItem = currentItem();
+
+    CreateECPubKeyDlg createECPubKeyDlg;
+    if( pItem ) createECPubKeyDlg.setSelectedSlot( pItem->getSlotIndex() );
+    createECPubKeyDlg.exec();
 }
 
 void MainWindow::createECPrivateKey()
 {
-    manApplet->createECPriKeyDlg()->show();
-    manApplet->createECPriKeyDlg()->raise();
-    manApplet->createECPriKeyDlg()->activateWindow();
+    ManTreeItem *pItem = currentItem();
+
+    CreateECPriKeyDlg createECPriKeyDlg;
+    if( pItem ) createECPriKeyDlg.setSelectedSlot( pItem->getSlotIndex() );
+    createECPriKeyDlg.exec();
 }
 
 void MainWindow::createKey()
 {
-    manApplet->createKeyDlg()->show();
-    manApplet->createKeyDlg()->raise();
-    manApplet->createKeyDlg()->activateWindow();
+    ManTreeItem *pItem = currentItem();
+
+    CreateKeyDlg createKeyDlg;
+    if( pItem ) createKeyDlg.setSelectedSlot( pItem->getSlotIndex() );
+    createKeyDlg.exec();
 }
 
 void MainWindow::deleteObject()
 {
+    ManTreeItem *pItem = currentItem();
+
     DelObjectDlg delObjectDlg;
+    if( pItem ) delObjectDlg.setSeletedSlot(pItem->getSlotIndex());
     delObjectDlg.exec();
 }
 
 void MainWindow::editAttribute()
 {
-    manApplet->editAttributeDlg()->show();
-    manApplet->editAttributeDlg()->raise();
-    manApplet->editAttributeDlg()->activateWindow();
+    ManTreeItem *pItem = currentItem();
+
+    EditAttributeDlg editAttrDlg;
+    if( pItem ) editAttrDlg.setSelectedSlot( pItem->getSlotIndex() );
+    editAttrDlg.exec();
 }
 
 void MainWindow::digest()
 {
-    manApplet->digestDlg()->show();
-    manApplet->digestDlg()->raise();
-    manApplet->digestDlg()->activateWindow();
+    ManTreeItem *pItem = currentItem();
+
+    DigestDlg digestDlg;
+    if( pItem ) digestDlg.setSelectedSlot(pItem->getSlotIndex());
+    digestDlg.exec();
 }
 
 void MainWindow::sign()
 {
-    manApplet->signDlg()->show();
-    manApplet->signDlg()->raise();
-    manApplet->signDlg()->activateWindow();
+    ManTreeItem *pItem = currentItem();
+
+    SignDlg signDlg;
+    if( pItem ) signDlg.setSelectedSlot( pItem->getSlotIndex() );
+    signDlg.exec();
 }
 
 void MainWindow::verify()
 {
-    manApplet->verifyDlg()->show();
-    manApplet->verifyDlg()->raise();
-    manApplet->verifyDlg()->activateWindow();
+    ManTreeItem *pItem = currentItem();
+
+    VerifyDlg verifyDlg;
+    if( pItem ) verifyDlg.setSelectedSlot( pItem->getSlotIndex() );
+    verifyDlg.exec();
 }
 
 void MainWindow::encrypt()
 {
-    manApplet->encryptDlg()->show();
-    manApplet->encryptDlg()->raise();
-    manApplet->encryptDlg()->activateWindow();
+    ManTreeItem *pItem = currentItem();
+
+    EncryptDlg encryptDlg;
+    if( pItem ) encryptDlg.setSelectedSlot(pItem->getSlotIndex());
+    encryptDlg.exec();
 }
 
 void MainWindow::decrypt()
 {
-    manApplet->decryptDlg()->show();
-    manApplet->decryptDlg()->raise();
-    manApplet->decryptDlg()->activateWindow();
+    ManTreeItem *pItem = currentItem();
+
+    DecryptDlg decryptDlg;
+    if( pItem ) decryptDlg.setSelectedSlot(pItem->getSlotIndex());
+    decryptDlg.exec();
 }
 
 void MainWindow::importCert()
 {
-    manApplet->importCertDlg()->show();
-    manApplet->importCertDlg()->raise();
-    manApplet->importCertDlg()->activateWindow();
+    ManTreeItem *pItem = currentItem();
+
+    ImportCertDlg importCertDlg;
+    if( pItem ) importCertDlg.setSelectedSlot( pItem->getSlotIndex() );
+    importCertDlg.exec();
 }
 
 void MainWindow::importPFX()
 {
-    manApplet->importPFXDlg()->show();
-    manApplet->importPFXDlg()->raise();
-    manApplet->importPFXDlg()->activateWindow();
+    ManTreeItem *pItem = currentItem();
+
+    ImportPFXDlg importPFXDlg;
+    if( pItem ) importPFXDlg.setSelectedSlot( pItem->getSlotIndex() );
+    importPFXDlg.exec();
 }
 
 void MainWindow::improtPrivateKey()
 {
-    manApplet->importPriKeyDlg()->show();
-    manApplet->importPriKeyDlg()->raise();
-    manApplet->importPriKeyDlg()->activateWindow();
+    ManTreeItem *pItem = currentItem();
+
+    ImportPriKeyDlg importPriKeyDlg;
+    if( pItem ) importPriKeyDlg.setSelectedSlot( pItem->getSlotIndex() );
+    importPriKeyDlg.exec();
 }
 
 void MainWindow::about()
@@ -518,6 +552,7 @@ void MainWindow::about()
 
 void MainWindow::logView()
 {
+
     manApplet->logViewDlg()->show();
     manApplet->logViewDlg()->raise();
     manApplet->logViewDlg()->activateWindow();
@@ -525,51 +560,65 @@ void MainWindow::logView()
 
 void MainWindow::initToken()
 {
-    manApplet->initTokenDlg()->show();
-    manApplet->initTokenDlg()->raise();
-    manApplet->initTokenDlg()->activateWindow();
+    ManTreeItem *pItem = currentItem();
+
+    InitTokenDlg initTokenDlg;
+    if( pItem ) initTokenDlg.setSelectedSlot( pItem->getSlotIndex() );
+    initTokenDlg.exec();
 }
 
 void MainWindow::rand()
 {
-    manApplet->randDlg()->show();
-    manApplet->randDlg()->raise();
-    manApplet->randDlg()->activateWindow();
+    ManTreeItem *pItem = currentItem();
+
+    RandDlg randDlg;
+    if( pItem ) randDlg.setSelectedSlot( pItem->getSlotIndex() );
+    randDlg.exec();
 }
 
 void MainWindow::setPin()
 {
-    manApplet->setPinDlg()->show();
-    manApplet->setPinDlg()->raise();
-    manApplet->setPinDlg()->activateWindow();
+    ManTreeItem *pItem = currentItem();
+
+    SetPinDlg setPinDlg;
+    if( pItem ) setPinDlg.setSelectedSlot( pItem->getSlotIndex() );
+    setPinDlg.exec();
 }
 
 void MainWindow::initPin()
 {
-    manApplet->initPinDlg()->show();
-    manApplet->initPinDlg()->raise();
-    manApplet->initPinDlg()->activateWindow();
+    ManTreeItem *pItem = currentItem();
+
+    InitPinDlg initPinDlg;
+    if( pItem ) initPinDlg.setSelectedSlot( pItem->getSlotIndex() );
+    initPinDlg.exec();
 }
 
 void MainWindow::wrapKey()
 {
-    manApplet->wrapKeyDlg()->show();
-    manApplet->wrapKeyDlg()->raise();
-    manApplet->wrapKeyDlg()->activateWindow();
+    ManTreeItem *pItem = currentItem();
+
+    WrapKeyDlg wrapKeyDlg;
+    if( pItem ) wrapKeyDlg.setSelectedSlot( pItem->getSlotIndex() );
+    wrapKeyDlg.exec();
 }
 
 void MainWindow::unwrapKey()
 {
-    manApplet->unwrapKeyDlg()->show();
-    manApplet->unwrapKeyDlg()->raise();
-    manApplet->unwrapKeyDlg()->activateWindow();
+    ManTreeItem *pItem = currentItem();
+
+    UnwrapKeyDlg unwrapKeyDlg;
+    if( pItem ) unwrapKeyDlg.setSelectedSlot( pItem->getSlotIndex() );
+    unwrapKeyDlg.exec();
 }
 
 void MainWindow::deriveKey()
 {
-    manApplet->deriveKeyDlg()->show();
-    manApplet->deriveKeyDlg()->raise();
-    manApplet->deriveKeyDlg()->activateWindow();
+    ManTreeItem *pItem = currentItem();
+
+    DeriveKeyDlg deriveKeyDlg;
+    if( pItem ) deriveKeyDlg.setSelectedSlot( pItem->getSlotIndex() );
+    deriveKeyDlg.exec();
 }
 
 void MainWindow::settings()

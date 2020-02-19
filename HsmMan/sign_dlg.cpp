@@ -40,6 +40,8 @@ void SignDlg::initUI()
     connect( mFinalBtn, SIGNAL(clicked()), this, SLOT(clickFinal()));
     connect( mSignBtn, SIGNAL(clicked()), this, SLOT(clickSign()));
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(clickClose()));
+
+    initialize();
 }
 
 void SignDlg::slotChanged(int index)
@@ -54,9 +56,9 @@ void SignDlg::slotChanged(int index)
     mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
 }
 
-void SignDlg::showEvent(QShowEvent* event )
+void SignDlg::setSelectedSlot(int index)
 {
-    initialize();
+    if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
 }
 
 void SignDlg::initialize()

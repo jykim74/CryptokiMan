@@ -23,6 +23,8 @@ void RandDlg::initUI()
 
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
     connect( mSetSeedBtn, SIGNAL(clicked()), this, SLOT(clickSeed()));
+
+    initialize();
 }
 
 void RandDlg::slotChanged(int index)
@@ -37,9 +39,9 @@ void RandDlg::slotChanged(int index)
     mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
 }
 
-void RandDlg::showEvent(QShowEvent* event )
+void RandDlg::setSelectedSlot(int index)
 {
-    initialize();
+    if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
 }
 
 void RandDlg::initialize()

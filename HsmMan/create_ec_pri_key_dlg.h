@@ -15,9 +15,9 @@ class CreateECPriKeyDlg : public QDialog, public Ui::CreateECPriKeyDlg
 public:
     explicit CreateECPriKeyDlg(QWidget *parent = nullptr);
     ~CreateECPriKeyDlg();
+    void setSelectedSlot( int index );
 
 private slots:
-    void showEvent(QShowEvent *event);
     virtual void accept();
     void slotChanged( int index );
 

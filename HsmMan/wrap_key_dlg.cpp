@@ -34,6 +34,8 @@ void WrapKeyDlg::initUI()
     connect( mLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(labelChanged(int)));
     connect( mFindBtn, SIGNAL(clicked(bool)), this, SLOT(clickFind()));
 
+    initialize();
+    setWrapLabelList();
 }
 
 void WrapKeyDlg::slotChanged(int index)
@@ -48,10 +50,9 @@ void WrapKeyDlg::slotChanged(int index)
     mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
 }
 
-void WrapKeyDlg::showEvent(QShowEvent* event )
+void WrapKeyDlg::setSelectedSlot(int index)
 {
-    initialize();
-    setWrapLabelList();
+    if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
 }
 
 void WrapKeyDlg::initialize()

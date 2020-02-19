@@ -15,6 +15,9 @@ CreateRSAPriKeyDlg::CreateRSAPriKeyDlg(QWidget *parent) :
     connectAttributes();
 
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
+
+    initialize();
+    setDefaults();
 }
 
 CreateRSAPriKeyDlg::~CreateRSAPriKeyDlg()
@@ -34,11 +37,11 @@ void CreateRSAPriKeyDlg::slotChanged(int index)
     mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
 }
 
-void CreateRSAPriKeyDlg::showEvent(QShowEvent* event )
+void CreateRSAPriKeyDlg::setSelectedSlot(int index)
 {
-    initialize();
-    setDefaults();
+    if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
 }
+
 
 void CreateRSAPriKeyDlg::initialize()
 {

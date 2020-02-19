@@ -15,6 +15,9 @@ CreateRSAPubKeyDlg::CreateRSAPubKeyDlg(QWidget *parent) :
     connectAttributes();
 
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
+
+    initialize();
+    setDefaults();
 }
 
 CreateRSAPubKeyDlg::~CreateRSAPubKeyDlg()
@@ -34,10 +37,9 @@ void CreateRSAPubKeyDlg::slotChanged(int index)
     mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
 }
 
-void CreateRSAPubKeyDlg::showEvent(QShowEvent* event )
+void CreateRSAPubKeyDlg::setSelectedSlot(int index)
 {
-    initialize();
-    setDefaults();
+    if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
 }
 
 void CreateRSAPubKeyDlg::initialize()

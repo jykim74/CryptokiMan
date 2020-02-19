@@ -37,6 +37,10 @@ DeriveKeyDlg::DeriveKeyDlg(QWidget *parent) :
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
     connect( mSrcLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(srcLabelChanged(int)));
     connect( mClassCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(classChanged(int)));
+
+    initialize();
+    setDefaults();
+    setSrcLabelList();
 }
 
 DeriveKeyDlg::~DeriveKeyDlg()
@@ -76,11 +80,9 @@ void DeriveKeyDlg::slotChanged(int index)
     mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
 }
 
-void DeriveKeyDlg::showEvent(QShowEvent* event )
+void DeriveKeyDlg::setSelectedSlot(int index)
 {
-    initialize();
-    setDefaults();
-    setSrcLabelList();
+    if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
 }
 
 void DeriveKeyDlg::initialize()

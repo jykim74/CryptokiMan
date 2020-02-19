@@ -15,9 +15,9 @@ class EditAttributeDlg : public QDialog, public Ui::EditAttributeDlg
 public:
     explicit EditAttributeDlg(QWidget *parent = nullptr);
     ~EditAttributeDlg();
+    void setSelectedSlot( int index );
 
 private slots:
-    void showEvent(QShowEvent *event);
     virtual void accept();
     void slotChanged( int index );
 

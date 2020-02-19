@@ -16,9 +16,9 @@ class ImportPFXDlg : public QDialog, public Ui::ImportPFXDlg
 public:
     explicit ImportPFXDlg(QWidget *parent = nullptr);
     ~ImportPFXDlg();
+    void setSelectedSlot( int index );
 
 private slots:
-    void showEvent(QShowEvent *event);
     virtual void accept();
     void slotChanged( int index );
 

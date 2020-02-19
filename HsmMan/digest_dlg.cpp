@@ -17,6 +17,7 @@ DigestDlg::DigestDlg(QWidget *parent) :
     setupUi(this);
 
     initUI();
+    initialize();
 }
 
 DigestDlg::~DigestDlg()
@@ -49,10 +50,11 @@ void DigestDlg::slotChanged(int index)
     mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
 }
 
-void DigestDlg::showEvent(QShowEvent* event )
+void DigestDlg::setSelectedSlot(int index)
 {
-    initialize();
+    if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
 }
+
 
 void DigestDlg::initialize()
 {

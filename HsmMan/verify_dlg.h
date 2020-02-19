@@ -15,9 +15,9 @@ class VerifyDlg : public QDialog, public Ui::VerifyDlg
 public:
     explicit VerifyDlg(QWidget *parent = nullptr);
     ~VerifyDlg();
+    void setSelectedSlot( int index );
 
 private slots:
-    void showEvent(QShowEvent *event);
     void slotChanged( int index );
 
     void clickInit();
