@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>493</width>
-    <height>300</height>
+    <width>553</width>
+    <height>378</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Import certificate</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="6" column="0">

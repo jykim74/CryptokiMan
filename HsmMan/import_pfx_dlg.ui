@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>517</width>
-    <height>300</height>
+    <width>589</width>
+    <height>342</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Import PFX</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
