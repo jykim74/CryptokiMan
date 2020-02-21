@@ -1009,7 +1009,7 @@ void ManTreeModel::showPrivateKeyInfo( int index, long hObject )
         }
 
         right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("label")));
+        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_LABEL")));
         right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
         row++;
 
@@ -1354,7 +1354,7 @@ void ManTreeModel::showSecretKeyInfo( int index, long hObject )
         }
 
         right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("label")));
+        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_LABEL")));
         right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
         row++;
 
