@@ -8,9 +8,14 @@ static QStringList sMechList = {
     "CKM_SHA512_RSA_PKCS"
 };
 
+static QStringList sSecretMechList = {
+    "CKM_SHA1_HMAC", "CKM_SHA256_HMAC", "CKM_SHA384_HMAC", "CKM_SHA512_HMAC"
+};
+
+
 static QStringList sInputList = { "String", "Hex", "Base64" };
 
-static QStringList sKeyList = { "SECRET", "PUBLIC" };
+static QStringList sKeyList = { "PUBLIC", "SECRET" };
 
 
 VerifyDlg::VerifyDlg(QWidget *parent) :
@@ -96,10 +101,18 @@ void VerifyDlg::keyTypeChanged( int index )
 
     CK_OBJECT_CLASS objClass = 0;
 
+    mMechCombo->clear();
+
     if( index == 0 )
-        objClass = CKO_SECRET_KEY;
-    else if( index == 1 )
+    {
         objClass = CKO_PUBLIC_KEY;
+        mMechCombo->addItems( sMechList );
+    }
+    else if( index == 1 )
+    {
+        objClass = CKO_SECRET_KEY;
+        mMechCombo->addItems( sSecretMechList );
+    }
 
     sTemplate[uCnt].type = CKA_CLASS;
     sTemplate[uCnt].pValue = &objClass;
