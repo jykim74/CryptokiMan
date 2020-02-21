@@ -113,10 +113,16 @@ void ImportCertDlg::accept()
     CK_OBJECT_CLASS objClass = CKO_CERTIFICATE;
     CK_BBOOL bTrue = CK_TRUE;
     CK_BBOOL bFalse = CK_FALSE;
+    CK_CERTIFICATE_TYPE certType = CKC_X_509;
 
     sTemplate[uCount].type = CKA_CLASS;
     sTemplate[uCount].pValue = &objClass;
     sTemplate[uCount].ulValueLen = sizeof(objClass);
+    uCount++;
+
+    sTemplate[uCount].type = CKA_CERTIFICATE_TYPE;
+    sTemplate[uCount].pValue = &certType;
+    sTemplate[uCount].ulValueLen = sizeof(certType);
     uCount++;
 
     sTemplate[uCount].type = CKA_VALUE;
@@ -129,7 +135,7 @@ void ImportCertDlg::accept()
 
     if( !strLabel.isEmpty() )
     {
-        JS_BIN_decodeHex( strLabel.toStdString().c_str(), &binLabel );
+        JS_BIN_set( &binLabel, (unsigned char *)strLabel.toStdString().c_str(), strLabel.length() );
 
         sTemplate[uCount].type = CKA_LABEL;
         sTemplate[uCount].pValue = binLabel.pVal;
@@ -147,6 +153,19 @@ void ImportCertDlg::accept()
         sTemplate[uCount].type = CKA_ID;
         sTemplate[uCount].pValue = binID.pVal;
         sTemplate[uCount].ulValueLen = binID.nLen;
+        uCount++;
+    }
+
+    QString strSubject = mSubjectText->text();
+    BIN binSubject = {0,0};
+
+    if( !strSubject.isEmpty() )
+    {
+        JS_BIN_set( &binSubject, (unsigned char *)strSubject.toStdString().c_str(), strSubject.length() );
+
+        sTemplate[uCount].type = CKA_SUBJECT;
+        sTemplate[uCount].pValue = binSubject.pVal;
+        sTemplate[uCount].ulValueLen = binSubject.nLen;
         uCount++;
     }
 
@@ -222,8 +241,8 @@ void ImportCertDlg::clickFind()
     QString selectedFilter;
     QString fileName = QFileDialog::getOpenFileName( this,
                                                      tr("QFileDialog::getOpenFileName()"),
-                                                     "D:/test",
-                                                     tr("DLL Files (*.dll);;All Files (*.*)"),
+                                                     QDir::currentPath(),
+                                                     tr("DER Files (*.der);;BER Files (*.ber);;All Files (*.*)"),
                                                      &selectedFilter,
                                                      options );
 
@@ -233,7 +252,8 @@ void ImportCertDlg::clickFind()
 void ImportCertDlg::setDefaults()
 {
     mLabelText->setText( "certificate label" );
-    mIDText->setText( "certificate ID" );
+    mIDText->setText( "01020304" );
+    mSubjectText->setText( "CN=Subject" );
 
     mTokenCheck->setChecked(true);
     mTokenCombo->setEnabled(true);

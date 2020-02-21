@@ -602,7 +602,7 @@ void ManTreeModel::showCertificateInfo( int index, long hObject )
         JS_BIN_string( &binVal, &pStr );
         strMsg = pStr;
         right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("label")));
+        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_LABEL")));
         right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
 
         JS_BIN_reset(&binVal);
@@ -616,10 +616,26 @@ void ManTreeModel::showCertificateInfo( int index, long hObject )
         attrType = CKA_ID;
 
         JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
+        JS_BIN_encodeHex( &binVal, &pStr );
+        strMsg = pStr;
+        right_table_->insertRow( row );
+        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_ID")));
+        right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
+        JS_BIN_reset(&binVal);
+        if( pStr )
+        {
+            JS_free(pStr);
+            pStr = NULL;
+        }
+        row++;
+
+        attrType = CKA_SUBJECT;
+
+        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
         JS_BIN_string( &binVal, &pStr );
         strMsg = pStr;
         right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("label")));
+        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_SUBJECT")));
         right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
         JS_BIN_reset(&binVal);
         if( pStr )
@@ -631,10 +647,10 @@ void ManTreeModel::showCertificateInfo( int index, long hObject )
 
         attrType = CKA_VALUE;
         JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        JS_BIN_string( &binVal, &pStr );
+        JS_BIN_encodeHex( &binVal, &pStr );
         strMsg = pStr;
         right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("label")));
+        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_VALUE")));
         right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
         JS_BIN_reset(&binVal);
         if( pStr )
@@ -650,7 +666,7 @@ void ManTreeModel::showCertificateInfo( int index, long hObject )
         strMsg = getBool( &binVal );
         JS_BIN_reset( &binVal );
         right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("label")));
+        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_MODIFIABLE")));
         right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
 
         row++;
@@ -660,7 +676,7 @@ void ManTreeModel::showCertificateInfo( int index, long hObject )
         strMsg = getBool( &binVal );
         JS_BIN_reset( &binVal );
         right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("label")));
+        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_TRUSTED")));
         right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
         row++;
 
@@ -669,7 +685,7 @@ void ManTreeModel::showCertificateInfo( int index, long hObject )
         strMsg = getBool( &binVal );
         JS_BIN_reset( &binVal );
         right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("label")));
+        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_PRIVATE")));
         right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
         row++;
 
@@ -749,7 +765,7 @@ void ManTreeModel::showPublicKeyInfo( int index, long hObject )
         }
 
         right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("label")));
+        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_LABEL")));
         right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
         row++;
 
