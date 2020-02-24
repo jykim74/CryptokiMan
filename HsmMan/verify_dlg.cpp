@@ -4,7 +4,7 @@
 #include "js_pkcs11.h"
 
 static QStringList sMechList = {
-    "CKM_RSA_PKCS", "CKM_SHA1_RSA_PKCS", "CKM_SHA256_RSA_PKCS", "CKM_SHA384_RSA_PKCS",
+    "CKM_SHA1_RSA_PKCS", "CKM_SHA256_RSA_PKCS", "CKM_SHA384_RSA_PKCS",
     "CKM_SHA512_RSA_PKCS"
 };
 

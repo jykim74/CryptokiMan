@@ -4,7 +4,7 @@
 #include "js_pkcs11.h"
 
 static QStringList sMechList = {
-    "CKM_RSA_PKCS", "CKM_SHA1_RSA_PKCS", "CKM_SHA256_RSA_PKCS", "CKM_SHA384_RSA_PKCS",
+    "CKM_SHA1_RSA_PKCS", "CKM_SHA256_RSA_PKCS", "CKM_SHA384_RSA_PKCS",
     "CKM_SHA512_RSA_PKCS"
 };
 
@@ -46,6 +46,7 @@ void SignDlg::initUI()
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(clickClose()));
 
     initialize();
+    keyTypeChanged(0);
 }
 
 void SignDlg::slotChanged(int index)
@@ -175,7 +176,7 @@ void SignDlg::clickInit()
         sMech.ulParameterLen = binParam.nLen;
     }
 
-    long uObject = mObjectText->text().toLong();
+    CK_OBJECT_HANDLE uObject = mObjectText->text().toLong();
     rv = JS_PKCS11_SignInit( p11_ctx, hSession, &sMech, uObject );
 
     if( rv != CKR_OK )
@@ -242,7 +243,7 @@ void SignDlg::clickFinal()
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
 
     unsigned char sSign[1024];
-    long uSignLen = 0;
+    long uSignLen = 1024;
 
 
     rv = JS_PKCS11_SignFinal( p11_ctx, hSession, sSign, (CK_ULONG_PTR)&uSignLen );

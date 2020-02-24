@@ -125,8 +125,10 @@ void ManTreeView::showContextMenu( QPoint point )
 
         menu.addAction( tr("Encrypt"), manApplet->mainWindow(), &MainWindow::encrypt );
         menu.addAction( tr("Decrypt"), manApplet->mainWindow(), &MainWindow::decrypt );
-        menu.addAction(  tr( "WrapKey"), manApplet->mainWindow(), &MainWindow::wrapKey );
+        menu.addAction(  tr("WrapKey"), manApplet->mainWindow(), &MainWindow::wrapKey );
         menu.addAction( tr("UnwrapKey"), manApplet->mainWindow(), &MainWindow::unwrapKey );
+        menu.addAction( tr("Sign"), manApplet->mainWindow(), &MainWindow::sign );
+        menu.addAction( tr("Verify"), manApplet->mainWindow(), &MainWindow::verify );
     }
     else if( item->getType() == HM_ITEM_TYPE_DATA )
     {

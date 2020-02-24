@@ -999,7 +999,7 @@ void ManTreeModel::showPrivateKeyInfo( int index, long hObject )
         BIN binVal = {0,0};
 
         JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        JS_BIN_encodeHex( &binVal, &pStr );
+        JS_BIN_string( &binVal, &pStr );
         strMsg = pStr;
         JS_BIN_reset(&binVal);
         if( pStr )

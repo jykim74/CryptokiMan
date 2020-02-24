@@ -14,36 +14,32 @@
    <string>Sign</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="3" column="1">
-    <widget class="QComboBox" name="mKeyTypeCombo"/>
-   </item>
-   <item row="4" column="5">
-    <widget class="QLineEdit" name="mObjectText"/>
-   </item>
-   <item row="7" column="0">
-    <widget class="QLabel" name="label_5">
-     <property name="text">
-      <string>Input</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Mechanism</string>
-     </property>
-    </widget>
-   </item>
    <item row="6" column="1">
     <widget class="QComboBox" name="mMechCombo"/>
    </item>
-   <item row="6" column="3" colspan="3">
-    <widget class="QLineEdit" name="mParamText"/>
+   <item row="4" column="1" colspan="2">
+    <widget class="QComboBox" name="mLabelCombo"/>
+   </item>
+   <item row="1" column="0" colspan="6">
+    <widget class="QComboBox" name="mSlotsCombo"/>
+   </item>
+   <item row="4" column="5">
+    <widget class="QLineEdit" name="mObjectText"/>
    </item>
    <item row="3" column="0">
     <widget class="QLabel" name="label_3">
      <property name="text">
       <string>Key Type</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="0" colspan="6">
+    <widget class="QTextBrowser" name="mOutputText"/>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Label</string>
      </property>
     </widget>
    </item>
@@ -54,22 +50,6 @@
      </property>
     </widget>
    </item>
-   <item row="8" column="0" colspan="6">
-    <widget class="QTextBrowser" name="mOutputText"/>
-   </item>
-   <item row="10" column="5">
-    <widget class="QPushButton" name="mCloseBtn">
-     <property name="text">
-      <string>Close</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="2" colspan="4">
-    <widget class="QLineEdit" name="mInputText"/>
-   </item>
-   <item row="1" column="0" colspan="6">
-    <widget class="QComboBox" name="mSlotsCombo"/>
-   </item>
    <item row="4" column="3">
     <widget class="QLabel" name="label_6">
      <property name="text">
@@ -77,50 +57,24 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0" colspan="6">
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <property name="bottomMargin">
-      <number>0</number>
-     </property>
-     <item>
-      <widget class="QLabel" name="label_8">
-       <property name="text">
-        <string>Slot ID</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="mSlotIDText"/>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_9">
-       <property name="text">
-        <string>Session</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="mSessionText"/>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_10">
-       <property name="text">
-        <string>Login</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="mLoginText"/>
-     </item>
-    </layout>
-   </item>
-   <item row="4" column="1" colspan="2">
-    <widget class="QComboBox" name="mLabelCombo"/>
-   </item>
-   <item row="4" column="0">
-    <widget class="QLabel" name="label_2">
+   <item row="11" column="5">
+    <widget class="QPushButton" name="mCloseBtn">
      <property name="text">
-      <string>Label</string>
+      <string>Close</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>Input</string>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="0" colspan="4">
+    <widget class="QLabel" name="mStatusLabel">
+     <property name="text">
+      <string>Status</string>
      </property>
     </widget>
    </item>
@@ -131,10 +85,20 @@
      </property>
     </widget>
    </item>
-   <item row="7" column="1">
-    <widget class="QComboBox" name="mInputCombo"/>
+   <item row="6" column="0">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Mechanism</string>
+     </property>
+    </widget>
    </item>
-   <item row="9" column="0" colspan="6">
+   <item row="3" column="1">
+    <widget class="QComboBox" name="mKeyTypeCombo"/>
+   </item>
+   <item row="6" column="3" colspan="3">
+    <widget class="QLineEdit" name="mParamText"/>
+   </item>
+   <item row="10" column="0" colspan="6">
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <property name="bottomMargin">
       <number>0</number>
@@ -182,12 +146,48 @@
      </item>
     </layout>
    </item>
-   <item row="10" column="0" colspan="4">
-    <widget class="QLabel" name="mStatusLabel">
-     <property name="text">
-      <string>Status</string>
+   <item row="2" column="0" colspan="6">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="bottomMargin">
+      <number>0</number>
      </property>
-    </widget>
+     <item>
+      <widget class="QLabel" name="label_8">
+       <property name="text">
+        <string>Slot ID</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="mSlotIDText"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_9">
+       <property name="text">
+        <string>Session</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="mSessionText"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_10">
+       <property name="text">
+        <string>Login</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="mLoginText"/>
+     </item>
+    </layout>
+   </item>
+   <item row="8" column="0">
+    <widget class="QComboBox" name="mInputCombo"/>
+   </item>
+   <item row="8" column="1" colspan="5">
+    <widget class="QLineEdit" name="mInputText"/>
    </item>
   </layout>
  </widget>
