@@ -185,7 +185,7 @@ void WrapKeyDlg::setWrapLabelList()
         JS_BIN_string( &binLabel, &pLabel );
 
         mLabelCombo->addItem( pLabel, objVal );
-        mWrappingMechCombo->addItem( pLabel, objVal );
+        mWrappingLabelCombo->addItem( pLabel, objVal );
 
         if( pLabel ) JS_free( pLabel );
         JS_BIN_reset( &binLabel );
@@ -213,7 +213,7 @@ void WrapKeyDlg::setWrapLabelList()
         JS_BIN_string( &binLabel, &pLabel );
 
         mLabelCombo->addItem( pLabel, objVal );
-        mWrappingMechCombo->addItem( pLabel, objVal );
+        mWrappingLabelCombo->addItem( pLabel, objVal );
 
         if( pLabel ) JS_free( pLabel );
         JS_BIN_reset( &binLabel );
@@ -258,8 +258,8 @@ void WrapKeyDlg::clickFind()
     QString selectedFilter;
     QString fileName = QFileDialog::getOpenFileName( this,
                                                      tr("QFileDialog::getOpenFileName()"),
-                                                     "D:/test",
-                                                     tr("DLL Files (*.dll);;All Files (*.*)"),
+                                                     QDir::currentPath(),
+                                                     tr("BIN Files (*.bin);;All Files (*.*)"),
                                                      &selectedFilter,
                                                      options );
 
