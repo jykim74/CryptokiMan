@@ -111,11 +111,11 @@ void WrapKeyDlg::accept()
 
     CK_BYTE_PTR pData = NULL;
     CK_ULONG uDataLen = 0;
-;
 
     rv = JS_PKCS11_WrapKey( p11_ctx, hSession, &sMech, hWrappingKey, hKey, pData, &uDataLen );
     if( rv != CKR_OK )
     {
+        manApplet->warningBox( tr("fail to wrap key(%1)").arg( JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
@@ -126,6 +126,7 @@ void WrapKeyDlg::accept()
     if( rv != CKR_OK )
     {
         if( pData ) JS_free( pData );
+        manApplet->warningBox( tr("fail to wrap key(%1)").arg( JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
@@ -256,7 +257,7 @@ void WrapKeyDlg::clickFind()
     options |= QFileDialog::DontUseNativeDialog;
 
     QString selectedFilter;
-    QString fileName = QFileDialog::getOpenFileName( this,
+    QString fileName = QFileDialog::getSaveFileName( this,
                                                      tr("QFileDialog::getOpenFileName()"),
                                                      QDir::currentPath(),
                                                      tr("BIN Files (*.bin);;All Files (*.*)"),
