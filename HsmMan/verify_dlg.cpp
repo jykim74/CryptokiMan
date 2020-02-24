@@ -9,7 +9,7 @@ static QStringList sMechList = {
 };
 
 static QStringList sSecretMechList = {
-    "CKM_SHA1_HMAC", "CKM_SHA256_HMAC", "CKM_SHA384_HMAC", "CKM_SHA512_HMAC"
+    "CKM_SHA_1_HMAC", "CKM_SHA256_HMAC", "CKM_SHA384_HMAC", "CKM_SHA512_HMAC"
 };
 
 
@@ -48,6 +48,7 @@ void VerifyDlg::initUI()
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(clickClose()));
 
     initialize();
+    keyTypeChanged(0);
 }
 
 void VerifyDlg::slotChanged(int index)
@@ -253,7 +254,7 @@ void VerifyDlg::clickFinal()
     rv = JS_PKCS11_VerifyFinal( p11_ctx, hSession, binSign.pVal, binSign.nLen );
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr("Verify", "Signature is bad."), this );
+        manApplet->warningBox( tr("Signature is bad(%1).").arg(JS_PKCS11_GetErrorMsg(rv)), this );
     }
     else
     {
@@ -305,7 +306,7 @@ void VerifyDlg::clickVerify()
 
     rv = JS_PKCS11_Verify( p11_ctx, hSession, binInput.pVal, binInput.nLen, binSign.pVal, binSign.nLen );
     if( rv != CKR_OK )
-        manApplet->warningBox( tr( "Signature is bad." ), this );
+        manApplet->warningBox( tr( "Signature is bad(%1)." ).arg(JS_PKCS11_GetErrorMsg(rv)), this );
     else
         manApplet->messageBox( tr( "Signature is good." ), this );
 

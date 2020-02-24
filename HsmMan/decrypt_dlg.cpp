@@ -4,7 +4,10 @@
 #include "js_pkcs11.h"
 
 static QStringList sMechList = {
-    "CKM_DES3_ECB", "CKM_DES3_CBC", "CKM_AES_ECB", "CKM_AES_CBC",
+    "CKM_DES3_ECB", "CKM_DES3_CBC", "CKM_AES_ECB", "CKM_AES_CBC"
+};
+
+static QStringList sPrivateMechList = {
     "CKM_RSA_PKCS"
 };
 
@@ -41,6 +44,7 @@ void DecryptDlg::initUI()
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(clickClose()));
 
     initialize();
+    keyTypeChanged(0);
 }
 
 void DecryptDlg::slotChanged(int index)
@@ -94,10 +98,18 @@ void DecryptDlg::keyTypeChanged( int index )
 
     CK_OBJECT_CLASS objClass = 0;
 
+    mMechCombo->clear();
+
     if( index == 0 )
+    {
         objClass = CKO_SECRET_KEY;
+        mMechCombo->addItems(sMechList);
+    }
     else if( index == 1 )
+    {
         objClass = CKO_PRIVATE_KEY;
+        mMechCombo->addItems(sPrivateMechList);
+    }
 
     sTemplate[uCnt].type = CKA_CLASS;
     sTemplate[uCnt].pValue = &objClass;
@@ -207,7 +219,7 @@ void DecryptDlg::clickUpdate()
 
 
     unsigned char *pDecPart = NULL;
-    long uDecPartLen = 0;
+    long uDecPartLen = binInput.nLen;
 
     pDecPart = (unsigned char *)JS_malloc( binInput.nLen );
     if( pDecPart == NULL ) return;
@@ -251,7 +263,7 @@ void DecryptDlg::clickFinal()
 
 
     unsigned char *pDecPart = NULL;
-    long uDecPartLen = 0;
+    long uDecPartLen = mInputText->text().length();
 
     BIN binDecPart = {0,0};
 
@@ -312,7 +324,8 @@ void DecryptDlg::clickDecrypt()
         JS_BIN_decodeBase64( strInput.toStdString().c_str(), &binInput );
 
     unsigned char *pDecData = NULL;
-    long uDecDataLen = 0;
+    long uDecDataLen = mInputText->text().length();
+    pDecData = (unsigned char *)JS_malloc( mInputText->text().length() );
 
     rv = JS_PKCS11_Decrypt( p11_ctx, hSession, binInput.pVal, binInput.nLen, pDecData, (CK_ULONG_PTR)&uDecDataLen );
 

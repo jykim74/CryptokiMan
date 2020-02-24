@@ -5,6 +5,9 @@
 
 static QStringList sMechList = {
     "CKM_DES3_ECB", "CKM_DES3_CBC", "CKM_AES_ECB", "CKM_AES_CBC",
+};
+
+static QStringList sPublicMechList = {
     "CKM_RSA_PKCS"
 };
 
@@ -41,6 +44,7 @@ void EncryptDlg::initUI()
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(clickClose()));
 
     initialize();
+    keyTypeChanged(0);
 }
 
 void EncryptDlg::slotChanged(int index)
@@ -93,11 +97,18 @@ void EncryptDlg::keyTypeChanged( int index )
     CK_ULONG uObjCnt = 0;
 
     CK_OBJECT_CLASS objClass = 0;
+    mMechCombo->clear();
 
     if( index == 0 )
+    {
         objClass = CKO_SECRET_KEY;
+        mMechCombo->addItems(sMechList);
+    }
     else if( index == 1 )
+    {
         objClass = CKO_PUBLIC_KEY;
+        mMechCombo->addItems(sPublicMechList);
+    }
 
     sTemplate[uCnt].type = CKA_CLASS;
     sTemplate[uCnt].pValue = &objClass;
@@ -206,7 +217,7 @@ void EncryptDlg::clickUpdate()
         JS_BIN_decodeBase64( strInput.toStdString().c_str(), &binInput );
 
     unsigned char *pEncPart = NULL;
-    long uEncPartLen = 0;
+    long uEncPartLen = binInput.nLen + 64;
 
     pEncPart = (unsigned char *)JS_malloc( binInput.nLen + 64 );
     if( pEncPart == NULL ) return;
@@ -214,7 +225,7 @@ void EncryptDlg::clickUpdate()
 
     rv = JS_PKCS11_EncryptUpdate( p11_ctx, hSession, binInput.pVal, binInput.nLen, pEncPart, (CK_ULONG_PTR)&uEncPartLen );
 
-    if( rv != 0 )
+    if( rv != CKR_OK )
     {
         mOutputText->setPlainText("");
         if( pEncPart ) JS_free( pEncPart );
@@ -232,6 +243,9 @@ void EncryptDlg::clickUpdate()
 
     strRes += "|Update";
     strOutput += pHex;
+
+    mStatusLabel->setText( strRes );
+    mOutputText->setPlainText( strOutput );
 
     if( pEncPart ) JS_free( pEncPart );
     if( pHex ) JS_free( pHex );
@@ -271,8 +285,10 @@ void EncryptDlg::clickFinal()
 
     QString strRes = mStatusLabel->text();
     strRes += "|Final";
+    QString strOutput = mOutputText->toPlainText();
+    strOutput += pHex;
 
-    mOutputText->setPlainText( pHex );
+    mOutputText->setPlainText( strOutput );
     mStatusLabel->setText( strRes );
     if( pEncPart ) JS_free( pEncPart );
     if( pHex ) JS_free(pHex);
@@ -308,7 +324,7 @@ void EncryptDlg::clickEncrypt()
         JS_BIN_decodeBase64( strInput.toStdString().c_str(), &binInput );
 
     unsigned char *pEncData = NULL;
-    long uEncDataLen = 0;
+    long uEncDataLen = binInput.nLen + 64;
     BIN binEncData = {0,0};
 
     pEncData = (unsigned char *)JS_malloc( binInput.nLen + 64 );

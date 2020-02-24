@@ -9,7 +9,7 @@ static QStringList sMechList = {
 };
 
 static QStringList sSecretMechList = {
-    "CKM_SHA1_HMAC", "CKM_SHA256_HMAC", "CKM_SHA384_HMAC", "CKM_SHA512_HMAC"
+    "CKM_SHA_1_HMAC", "CKM_SHA256_HMAC", "CKM_SHA384_HMAC", "CKM_SHA512_HMAC"
 };
 
 static QStringList sInputList = { "String", "Hex", "Base64" };
@@ -172,6 +172,7 @@ void SignDlg::clickInit()
     if( !strParam.isEmpty() )
     {
         JS_BIN_decodeHex( strParam.toStdString().c_str(), &binParam );
+
         sMech.pParameter = binParam.pVal;
         sMech.ulParameterLen = binParam.nLen;
     }
@@ -298,7 +299,7 @@ void SignDlg::clickSign()
         JS_BIN_decodeBase64( strInput.toStdString().c_str(), &binInput );
 
     unsigned char sSign[1024];
-    long uSignLen = 0;
+    long uSignLen = 1024;
 
     rv = JS_PKCS11_Sign( p11_ctx, hSession, binInput.pVal, binInput.nLen, sSign, (CK_ULONG_PTR)&uSignLen );
     if( rv != CKR_OK )
