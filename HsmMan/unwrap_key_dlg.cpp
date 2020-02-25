@@ -183,6 +183,7 @@ void UnwrapKeyDlg::accept()
     BIN binWrappedKey = {0,0};
     JS_BIN_fileRead( strWrapPath.toStdString().c_str(), &binWrappedKey );
 
+    memset( &sMech, 0x00, sizeof(sMech));
     sMech.mechanism = JS_PKCS11_GetCKMType( mUnwrapMechCombo->currentText().toStdString().c_str());
 
     BIN binParam = {0,0};
@@ -211,12 +212,33 @@ void UnwrapKeyDlg::accept()
     QString strLabel = mLabelText->text();
     BIN binLabel = {0,0};
 
-    if( strLabel.isEmpty() )
+    if( !strLabel.isEmpty() )
     {
         JS_BIN_set( &binLabel, (unsigned char *)strLabel.toStdString().c_str(), strLabel.length() );
         sTemplate[uCount].type = CKA_LABEL;
         sTemplate[uCount].pValue = binLabel.pVal;
         sTemplate[uCount].ulValueLen = binLabel.nLen;
+        uCount++;
+    }
+
+    BIN binID = {0,0};
+    QString strID = mIDText->text();
+
+    if( !strID.isEmpty() )
+    {
+        JS_BIN_set( &binID, (unsigned char *)strID.toStdString().c_str(), strID.length() );
+        sTemplate[uCount].type = CKA_ID;
+        sTemplate[uCount].pValue = binID.pVal;
+        sTemplate[uCount].ulValueLen = binID.nLen;
+        uCount++;
+    }
+
+    CK_ULONG modBits = mKeySizeText->text().toLong();
+    if( modBits > 0 )
+    {
+        sTemplate[uCount].type = CKA_VALUE_LEN;
+        sTemplate[uCount].pValue = &modBits;
+        sTemplate[uCount].ulValueLen = sizeof(modBits);
         uCount++;
     }
 
@@ -306,12 +328,13 @@ void UnwrapKeyDlg::accept()
 
     if( rv != CKR_OK )
     {
+        manApplet->warningBox( tr( "fail to unwrapkey(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
     QString strObject = QString("%1").arg( uObj );
-    mObjectText->setText(strObject);
 
+    manApplet->messageBox( tr("UnwrapKey is success(Object Handle:%1)").arg( strObject), this );
     QDialog::accept();
 }
 
