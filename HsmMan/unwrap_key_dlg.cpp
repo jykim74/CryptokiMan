@@ -5,10 +5,11 @@
 #include "man_applet.h"
 #include "js_pkcs11.h"
 
+static QStringList sFalseTrue = { "false", "true" };
+
 static QStringList sUnwrapMechList = {
     "CKM_RSA_PKCS", "CKM_RSA_PKCS_OAEP",
-    "CKM_DES3_ECB", "CKM_DES3_CBC", "CKM_DES3_CBC_PAD",
-    "CKM_AES_ECB", "CKM_AES_CBC", "CKM_AES_CBC_PAD"
+    "CKM_AES_KEY_WRAP", "CKM_AES_KEY_WRAP_PAD"
 };
 
 
@@ -26,9 +27,17 @@ UnwrapKeyDlg::UnwrapKeyDlg(QWidget *parent) :
     QDialog(parent)
 {
     setupUi(this);
-    initUI();
+    initAttributes();
+    setAttributes();
+    connectAttributes();
 
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
+    connect( mUnwrapLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(unwrapLabelChanged(int)));
+    connect( mFindBtn, SIGNAL(clicked(bool)), this, SLOT(clickFind()));
+
+    initialize();
+    setDefaults();
+    setUnwrapLabelList();
 }
 
 UnwrapKeyDlg::~UnwrapKeyDlg()
@@ -36,19 +45,72 @@ UnwrapKeyDlg::~UnwrapKeyDlg()
 
 }
 
-void UnwrapKeyDlg::initUI()
+void UnwrapKeyDlg::initAttributes()
 {
     mUnwrapMechCombo->addItems(sUnwrapMechList);
     mClassCombo->addItems(sClassList);
     mTypeCombo->addItems(sTypeList);
 
-    connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
-    connect( mUnwrapLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(unwrapLabelChanged(int)));
-    connect( mFindBtn, SIGNAL(clicked(bool)), this, SLOT(clickFind()));
+    mPrivateCombo->addItems(sFalseTrue);
+    mSensitiveCombo->addItems(sFalseTrue);
+    mWrapCombo->addItems(sFalseTrue);
+    mUnwrapCombo->addItems(sFalseTrue);
+    mEncryptCombo->addItems(sFalseTrue);
+    mDecryptCombo->addItems(sFalseTrue);
+    mModifiableCombo->addItems(sFalseTrue);
+    mSignCombo->addItems(sFalseTrue);
+    mVerifyCombo->addItems(sFalseTrue);
+    mTokenCombo->addItems(sFalseTrue);
+    mExtractableCombo->addItems(sFalseTrue);
+}
 
-    /* need to check crashing */
-    initialize();
-    setUnwrapLabelList();
+void UnwrapKeyDlg::setAttributes()
+{
+    mPrivateCombo->setEnabled(mPrivateCheck->isChecked());
+    mSensitiveCombo->setEnabled(mSensitiveCheck->isChecked());
+    mWrapCombo->setEnabled(mWrapCheck->isChecked());
+    mUnwrapCombo->setEnabled(mUnwrapCheck->isChecked());
+    mEncryptCombo->setEnabled(mEncryptCheck->isChecked());
+    mDecryptCombo->setEnabled(mDecryptCheck->isChecked());
+    mModifiableCombo->setEnabled(mModifiableCheck->isChecked());
+    mSignCombo->setEnabled(mSignCheck->isChecked());
+    mVerifyCombo->setEnabled(mVerifyCheck->isChecked());
+    mTokenCombo->setEnabled(mTokenCheck->isChecked());
+    mExtractableCombo->setEnabled(mExtractableCheck->isChecked());
+}
+
+void UnwrapKeyDlg::connectAttributes()
+{
+    connect( mPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPrivate()));
+    connect( mSensitiveCheck, SIGNAL(clicked()), this, SLOT(clickSensitive()));
+    connect( mWrapCheck, SIGNAL(clicked()), this, SLOT(clickWrap()));
+    connect( mUnwrapCheck, SIGNAL(clicked()), this, SLOT(clickUnwrap()));
+    connect( mEncryptCheck, SIGNAL(clicked()), this, SLOT(clickEncrypt()));
+    connect( mDecryptCheck, SIGNAL(clicked()), this, SLOT(clickDecrypt()));
+    connect( mModifiableCheck, SIGNAL(clicked()), this, SLOT(clickModifiable()));
+    connect( mSignCheck, SIGNAL(clicked()), this, SLOT(clickSign()));
+    connect( mVerifyCheck, SIGNAL(clicked()), this, SLOT(clickVerify()));
+    connect( mTokenCheck, SIGNAL(clicked()), this, SLOT(clickToken()));
+    connect( mExtractableCheck, SIGNAL(clicked()), this, SLOT(clickExtractable()));
+}
+
+void UnwrapKeyDlg::setDefaults()
+{
+    mPrivateCheck->setChecked(true);
+    mPrivateCombo->setEnabled(true);
+    mPrivateCombo->setCurrentIndex(1);
+
+    mEncryptCheck->setChecked(true);
+    mEncryptCombo->setEnabled(true);
+    mEncryptCombo->setCurrentIndex(1);
+
+    mDecryptCheck->setChecked(true);
+    mDecryptCombo->setEnabled(true);
+    mDecryptCombo->setCurrentIndex(1);
+
+    mTokenCheck->setChecked(true);
+    mTokenCombo->setEnabled(true);
+    mTokenCombo->setCurrentIndex(1);
 }
 
 void UnwrapKeyDlg::slotChanged(int index)
@@ -360,4 +422,58 @@ void UnwrapKeyDlg::setUnwrapLabelList()
         QString strObject = QString("%1").arg( objVal.toInt() );
         mUnwrapObjectText->setText(strObject);
     }
+}
+
+
+void UnwrapKeyDlg::clickPrivate()
+{
+    mPrivateCombo->setEnabled(mPrivateCheck->isChecked());
+}
+
+void UnwrapKeyDlg::clickSensitive()
+{
+    mSensitiveCombo->setEnabled(mSensitiveCheck->isChecked());
+}
+
+void UnwrapKeyDlg::clickWrap()
+{
+    mWrapCombo->setEnabled(mWrapCheck->isChecked());
+}
+
+void UnwrapKeyDlg::clickUnwrap()
+{
+    mUnwrapCombo->setEnabled(mUnwrapCheck->isChecked());
+}
+
+void UnwrapKeyDlg::clickEncrypt()
+{
+    mEncryptCombo->setEnabled(mEncryptCheck->isChecked());
+}
+
+void UnwrapKeyDlg::clickDecrypt()
+{
+    mDecryptCombo->setEnabled(mDecryptCheck->isChecked());
+}
+
+void UnwrapKeyDlg::clickModifiable()
+{
+    mModifiableCombo->setEnabled(mModifiableCheck->isChecked());
+}
+
+void UnwrapKeyDlg::clickSign()
+{
+    mSignCombo->setEnabled(mSignCheck->isChecked());
+}
+void UnwrapKeyDlg::clickVerify()
+{
+    mVerifyCombo->setEnabled(mVerifyCheck->isChecked());
+}
+void UnwrapKeyDlg::clickToken()
+{
+    mTokenCombo->setEnabled(mTokenCheck->isChecked());
+}
+
+void UnwrapKeyDlg::clickExtractable()
+{
+    mExtractableCombo->setEnabled(mExtractableCheck->isChecked());
 }

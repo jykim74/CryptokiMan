@@ -24,9 +24,24 @@ private slots:
     void unwrapLabelChanged(int index);
     void clickFind();
 
+    void clickPrivate();
+    void clickSensitive();
+    void clickWrap();
+    void clickUnwrap();
+    void clickEncrypt();
+    void clickDecrypt();
+    void clickModifiable();
+    void clickSign();
+    void clickVerify();
+    void clickToken();
+    void clickExtractable();
+
 private:
     void initialize();
-    void initUI();
+    void initAttributes();
+    void setAttributes();
+    void connectAttributes();
+    void setDefaults();
     void setUnwrapLabelList();
 
 };

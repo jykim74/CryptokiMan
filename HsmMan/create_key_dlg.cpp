@@ -82,6 +82,7 @@ void CreateKeyDlg::initAttributes()
     mSignCombo->addItems(sFalseTrue);
     mVerifyCombo->addItems(sFalseTrue);
     mTokenCombo->addItems(sFalseTrue);
+    mExtractableCombo->addItems(sFalseTrue);
 }
 
 void CreateKeyDlg::setAttributes()
@@ -96,6 +97,7 @@ void CreateKeyDlg::setAttributes()
     mSignCombo->setEnabled(mSignCheck->isChecked());
     mVerifyCombo->setEnabled(mVerifyCheck->isChecked());
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
+    mExtractableCombo->setEnabled(mExtractableCheck->isChecked());
 }
 
 void CreateKeyDlg::connectAttributes()
@@ -110,6 +112,7 @@ void CreateKeyDlg::connectAttributes()
     connect( mSignCheck, SIGNAL(clicked()), this, SLOT(clickSign()));
     connect( mVerifyCheck, SIGNAL(clicked()), this, SLOT(clickVerify()));
     connect( mTokenCheck, SIGNAL(clicked()), this, SLOT(clickToken()));
+    connect( mExtractableCheck, SIGNAL(clicked()), this, SLOT(clickExtractable()));
 }
 
 void CreateKeyDlg::accept()
@@ -265,6 +268,13 @@ void CreateKeyDlg::accept()
         uCount++;
     }
 
+    if( mExtractableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_EXTRACTABLE;
+        sTemplate[uCount].pValue = ( mExtractableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
 
     CK_OBJECT_CLASS hObject = 0;
 
@@ -325,6 +335,11 @@ void CreateKeyDlg::clickVerify()
 void CreateKeyDlg::clickToken()
 {
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
+}
+
+void CreateKeyDlg::clickExtractable()
+{
+    mExtractableCombo->setEnabled(mExtractableCheck->isChecked());
 }
 
 void CreateKeyDlg::setDefaults()

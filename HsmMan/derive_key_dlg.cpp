@@ -245,6 +245,13 @@ void DeriveKeyDlg::accept()
         uCount++;
     }
 
+    if( mExtractableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_EXTRACTABLE;
+        sTemplate[uCount].pValue = ( mExtractableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
 
     rv = JS_PKCS11_DeriveKey( p11_ctx, hSession, &sMech, hSrcKey, sTemplate, uCount, &uObj );
     if( rv != CKR_OK )
@@ -276,6 +283,7 @@ void DeriveKeyDlg::initAttributes()
     mModifiableCombo->addItems(sFalseTrue);
     mEncryptCombo->addItems(sFalseTrue);
     mTokenCombo->addItems(sFalseTrue);
+    mExtractableCombo->addItems(sFalseTrue);
 }
 
 void DeriveKeyDlg::setAttributes()
@@ -290,6 +298,7 @@ void DeriveKeyDlg::setAttributes()
     mModifiableCombo->setEnabled(mModifiableCheck->isChecked());
     mEncryptCombo->setEnabled(mEncryptCheck->isChecked());
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
+    mExtractableCombo->setEnabled(mExtractableCheck->isChecked());
 }
 
 void DeriveKeyDlg::connectAttributes()
@@ -304,6 +313,7 @@ void DeriveKeyDlg::connectAttributes()
     connect( mEncryptCheck, SIGNAL(clicked()), this, SLOT(clickEncrypt()));
     connect( mTokenCheck, SIGNAL(clicked()), this, SLOT(clickToken()));
     connect( mVerifyCheck, SIGNAL(clicked()), this, SLOT(clickVerify()));
+    connect( mExtractableCheck, SIGNAL(clicked()), this, SLOT(clickExtractable()));
 }
 
 void DeriveKeyDlg::clickPrivate()
@@ -354,6 +364,11 @@ void DeriveKeyDlg::clickVerify()
 void DeriveKeyDlg::clickToken()
 {
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
+}
+
+void DeriveKeyDlg::clickExtractable()
+{
+    mExtractableCombo->setEnabled(mExtractableCheck->isChecked());
 }
 
 void DeriveKeyDlg::setSrcLabelList()

@@ -31,6 +31,7 @@ private slots:
     void clickSign();
     void clickVerify();
     void clickToken();
+    void clickExtractable();
 
 private:
     void initialize();

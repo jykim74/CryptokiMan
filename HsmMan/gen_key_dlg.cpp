@@ -80,6 +80,7 @@ void GenKeyDlg::initAttributes()
     mSignCombo->addItems(sFalseTrue);
     mVerifyCombo->addItems(sFalseTrue);
     mTokenCombo->addItems(sFalseTrue);
+    mExtractableCombo->addItems(sFalseTrue);
 }
 
 void GenKeyDlg::setAttributes()
@@ -94,6 +95,7 @@ void GenKeyDlg::setAttributes()
     mSignCombo->setEnabled(mSignCheck->isChecked());
     mVerifyCombo->setEnabled(mVerifyCheck->isChecked());
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
+    mExtractableCombo->setEnabled(mExtractableCheck->isChecked());
 }
 
 void GenKeyDlg::connectAttributes()
@@ -108,6 +110,7 @@ void GenKeyDlg::connectAttributes()
     connect( mSignCheck, SIGNAL(clicked()), this, SLOT(clickSign()));
     connect( mVerifyCheck, SIGNAL(clicked()), this, SLOT(clickVerify()));
     connect( mTokenCheck, SIGNAL(clicked()), this, SLOT(clickToken()));
+    connect( mExtractableCheck, SIGNAL(clicked()), this, SLOT(clickExtractable()));
 }
 
 void GenKeyDlg::accept()
@@ -275,6 +278,14 @@ void GenKeyDlg::accept()
         uCount++;
     }
 
+    if( mExtractableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_EXTRACTABLE;
+        sTemplate[uCount].pValue = ( mExtractableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
     rv = JS_PKCS11_GenerateKey( p11_ctx, hSession, &sMech, sTemplate, uCount, &hObject );
     if( rv != CKR_OK )
     {
@@ -332,6 +343,11 @@ void GenKeyDlg::clickVerify()
 void GenKeyDlg::clickToken()
 {
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
+}
+
+void GenKeyDlg::clickExtractable()
+{
+    mExtractableCombo->setEnabled(mExtractableCheck->isChecked());
 }
 
 void GenKeyDlg::setDefaults()

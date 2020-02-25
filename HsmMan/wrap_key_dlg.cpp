@@ -7,8 +7,7 @@
 
 static QStringList sWrappingMechList = {
     "CKM_RSA_PKCS", "CKM_RSA_PKCS_OAEP",
-    "CKM_DES3_ECB", "CKM_DES3_CBC", "CKM_DES3_CBC_PAD",
-    "CKM_AES_ECB", "CKM_AES_CBC", "CKM_AES_CBC_PAD"
+    "CKM_AES_KEY_WRAP", "CKM_AES_KEY_WRAP_PAD"
 };
 
 WrapKeyDlg::WrapKeyDlg(QWidget *parent) :
@@ -139,6 +138,7 @@ void WrapKeyDlg::accept()
     if( pData ) JS_free( pData );
     JS_BIN_reset( &binWrapped );
 
+    manApplet->messageBox( "WrapKey is success", this );
     QDialog::accept();
 }
 
