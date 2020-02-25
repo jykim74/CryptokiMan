@@ -6,15 +6,13 @@
 static QStringList sFalseTrue = { "false", "true" };
 
 static QStringList sMechList = {
-    "CKM_CONCATENATE_BASE_AND_KEY", "CKM_CONCATENATE_BASE_AND_DATA", "CKM_CONCATENATE_DATA_AND_BASE",
-    "CKM_XOR_BASE_AND_DATA", "CKM_EXTRACT_KEY_FROM_KEY", "CKM_SHA1_KEY_DERIVATION",
+    "CKM_DH_PKCS_DERIVE", "CKM_ECDH1_DERIVE", "CKM_SHA1_KEY_DERIVATION",
     "CKM_SHA256_KEY_DERIVATION", "CKM_SHA384_KEY_DERIVATION", "CKM_SHA512_KEY_DERIVATION",
-    "CKM_SHA224_KEY_DERIVATION", "CKM_DH_PKCS_DERIVE"
+    "CKM_SHA224_KEY_DERIVATION"
 };
 
-
 static QStringList sKeyClassList = {
-    "CKO_PRIVATE_KEY", "CKO_SECRET_KEY"
+    "CKO_SECRET_KEY", "CKO_PRIVATE_KEY"
 };
 
 static QStringList sPriKeyTypeList = {
@@ -22,7 +20,7 @@ static QStringList sPriKeyTypeList = {
 };
 
 static QStringList sSecKeyTypeList = {
-    "CKK_DES", "CKK_DES3", "CKK_AES"
+    "CKK_GENERIC_SECRET", "CKK_DES", "CKK_DES3", "CKK_AES"
 };
 
 DeriveKeyDlg::DeriveKeyDlg(QWidget *parent) :
@@ -62,9 +60,9 @@ void DeriveKeyDlg::classChanged( int index )
     mTypeCombo->clear();
 
     if( mClassCombo->currentIndex() == 0 )
-        mTypeCombo->addItems( sPriKeyTypeList );
-    else {
         mTypeCombo->addItems( sSecKeyTypeList );
+    else {
+        mTypeCombo->addItems( sPriKeyTypeList );
     }
 }
 
@@ -126,6 +124,7 @@ void DeriveKeyDlg::accept()
     CK_KEY_TYPE keyType = 0;
     CK_OBJECT_HANDLE hSrcKey = -1;
 
+    memset( &sMech, 0x00, sizeof(sMech));
     sMech.mechanism = JS_PKCS11_GetCKMType( mSrcMethodCombo->currentText().toStdString().c_str());
 
     hSrcKey = mSrcObjectText->text().toLong();
@@ -156,12 +155,33 @@ void DeriveKeyDlg::accept()
     QString strLabel = mLabelText->text();
     BIN binLabel = {0,0};
 
-    if( strLabel.isEmpty() )
+    if( !strLabel.isEmpty() )
     {
         JS_BIN_set( &binLabel, (unsigned char *)strLabel.toStdString().c_str(), strLabel.length() );
         sTemplate[uCount].type = CKA_LABEL;
         sTemplate[uCount].pValue = binLabel.pVal;
         sTemplate[uCount].ulValueLen = binLabel.nLen;
+        uCount++;
+    }
+
+    BIN binID = {0,0};
+    QString strID = mIDText->text();
+
+    if( !strID.isEmpty() )
+    {
+        JS_BIN_set( &binID, (unsigned char *)strID.toStdString().c_str(), strID.length() );
+        sTemplate[uCount].type = CKA_ID;
+        sTemplate[uCount].pValue = binID.pVal;
+        sTemplate[uCount].ulValueLen = binID.nLen;
+        uCount++;
+    }
+
+    CK_ULONG modBits = mKeySizeText->text().toLong();
+    if( modBits > 0 )
+    {
+        sTemplate[uCount].type = CKA_VALUE_LEN;
+        sTemplate[uCount].pValue = &modBits;
+        sTemplate[uCount].ulValueLen = sizeof(modBits);
         uCount++;
     }
 
@@ -261,9 +281,8 @@ void DeriveKeyDlg::accept()
     }
 
     QString strHandle = QString("%1").arg( uObj );
-    mObjectText->setText(strHandle);
 
-    manApplet->messageBox(tr("success to derive key"), this );
+    manApplet->messageBox(tr("success to derive key(%1)").arg(strHandle), this );
     QDialog::accept();
 }
 
@@ -271,7 +290,7 @@ void DeriveKeyDlg::initAttributes()
 {
     mSrcMethodCombo->addItems(sMechList);
     mClassCombo->addItems( sKeyClassList );
-    mTypeCombo->addItems( sPriKeyTypeList );
+    mTypeCombo->addItems( sSecKeyTypeList );
 
     mPrivateCombo->addItems(sFalseTrue);
     mDecryptCombo->addItems(sFalseTrue);
@@ -458,5 +477,19 @@ void DeriveKeyDlg::setSrcLabelList()
 
 void DeriveKeyDlg::setDefaults()
 {
+    mPrivateCheck->setChecked(true);
+    mPrivateCombo->setEnabled(true);
+    mPrivateCombo->setCurrentIndex(1);
 
+    mEncryptCheck->setChecked(true);
+    mEncryptCombo->setEnabled(true);
+    mEncryptCombo->setCurrentIndex(1);
+
+    mDecryptCheck->setChecked(true);
+    mDecryptCombo->setEnabled(true);
+    mDecryptCombo->setCurrentIndex(1);
+
+    mTokenCheck->setChecked(true);
+    mTokenCombo->setEnabled(true);
+    mTokenCombo->setCurrentIndex(1);
 }
