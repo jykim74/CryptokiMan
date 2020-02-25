@@ -97,6 +97,7 @@ void WrapKeyDlg::accept()
 
     CK_MECHANISM sMech;
 
+    memset( &sMech, 0x00, sizeof(sMech));
     sMech.mechanism = JS_PKCS11_GetCKMType( mWrappingMechCombo->currentText().toStdString().c_str());
 
     QString strParam = mWrappingParamText->text();

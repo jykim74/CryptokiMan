@@ -271,8 +271,8 @@ void UnwrapKeyDlg::clickFind()
     QString selectedFilter;
     QString fileName = QFileDialog::getOpenFileName( this,
                                                      tr("QFileDialog::getOpenFileName()"),
-                                                     "D:/test",
-                                                     tr("DLL Files (*.dll);;All Files (*.*)"),
+                                                     QDir::currentPath(),
+                                                     tr("BIN Files (*.bin);;All Files (*.*)"),
                                                      &selectedFilter,
                                                      options );
 
