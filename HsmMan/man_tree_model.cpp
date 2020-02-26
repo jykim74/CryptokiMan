@@ -539,6 +539,56 @@ QString getBool( const BIN *pBin )
     return strOut;
 }
 
+void ManTreeModel::showAttribute( int nSlotIdx, int nValType, CK_ATTRIBUTE_TYPE uAttribute, CK_OBJECT_HANDLE hObj )
+{
+    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
+
+    CK_TOKEN_INFO sTokenInfo;
+    SlotInfo slotInfo = slot_infos.at( nSlotIdx );
+
+    long hSession = slotInfo.getSessionHandle();
+
+    char    *pStr = NULL;
+    QString strMsg;
+    BIN     binVal = {0,0};
+    int nRow = right_table_->rowCount();
+
+    JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObj, uAttribute, &binVal );
+
+    if( nValType == ATTR_VAL_BOOL )
+    {
+        strMsg = getBool( &binVal );
+    }
+    else if( nValType == ATTR_VAL_STRING )
+    {
+        JS_BIN_string( &binVal, &pStr );
+        strMsg = pStr;
+    }
+    else if( nValType == ATTR_VAL_HEX )
+    {
+        JS_BIN_encodeHex( &binVal, &pStr );
+        strMsg = pStr;
+    }
+    else if( nValType == ATTR_VAL_KEY_NAME )
+    {
+        strMsg = JS_PKCS11_GetCKKName( JS_BIN_long(&binVal));
+    }
+    else if( nValType == ATTR_VAL_LEN )
+    {
+        strMsg = QString("%1").arg( JS_BIN_long(&binVal));
+    }
+
+    QString strName = JS_PKCS11_GetCKAName( uAttribute );
+
+    right_table_->insertRow( nRow );
+    right_table_->setItem( nRow, 0, new QTableWidgetItem( strName ) );
+    right_table_->setItem( nRow, 1, new QTableWidgetItem( strMsg ) );
+
+    JS_BIN_reset( &binVal );
+    if( pStr ) JS_free( pStr );
+}
+
 void ManTreeModel::showCertificateInfo( int index, long hObject )
 {
     JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
@@ -572,127 +622,38 @@ void ManTreeModel::showCertificateInfo( int index, long hObject )
         hObjects[0] = hObject;
     }
 
-    int row = 0;
     QString strMsg = "";
 
-    right_table_->insertRow( row );
-    right_table_->setItem( row, 0, new QTableWidgetItem( QString("Certificate count" ) ) );
+    right_table_->insertRow( 0 );
+    right_table_->setItem( 0, 0, new QTableWidgetItem( QString("Certificate count" ) ) );
     strMsg = QString("%1").arg( uObjCnt );
-    right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
-    row++;
+    right_table_->setItem( 0, 1, new QTableWidgetItem( strMsg ) );
 
-    right_table_->insertRow( row );
-    right_table_->setItem( row, 0, new QTableWidgetItem(QString("")));
-    right_table_->setItem( row, 1, new QTableWidgetItem(QString("")));
-    row++;
+    right_table_->insertRow( 1 );
+    right_table_->setItem( 1, 0, new QTableWidgetItem(QString("")));
+    right_table_->setItem( 1, 1, new QTableWidgetItem(QString("")));
 
     for( int i=0; i < uObjCnt; i++ )
     {
-        char    *pStr = NULL;
+        int     row = right_table_->rowCount();
+
         right_table_->insertRow( row );
         right_table_->setItem( row, 0, new QTableWidgetItem(QString("Handle")));
         strMsg = QString("%1").arg( hObjects[i] );
         right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
-        row++;
 
-        CK_ATTRIBUTE_TYPE attrType = CKA_LABEL;
-        BIN binVal = {0,0};
+        showAttribute( index, ATTR_VAL_STRING, CKA_LABEL, hObjects[i] );
+        showAttribute( index, ATTR_VAL_HEX, CKA_ID, hObjects[i] );
+        showAttribute( index, ATTR_VAL_STRING, CKA_SUBJECT, hObjects[i] );
+        showAttribute( index, ATTR_VAL_HEX, CKA_VALUE, hObjects[i] );
+        showAttribute( index, ATTR_VAL_BOOL, CKA_MODIFIABLE, hObjects[i] );
+        showAttribute( index, ATTR_VAL_BOOL, CKA_TRUSTED, hObjects[i]);
+        showAttribute( index, ATTR_VAL_BOOL, CKA_PRIVATE, hObjects[i]);
 
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        JS_BIN_string( &binVal, &pStr );
-        strMsg = pStr;
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_LABEL")));
-        right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
-
-        JS_BIN_reset(&binVal);
-        if( pStr )
-        {
-            JS_free(pStr);
-            pStr = NULL;
-        }
-        row++;
-
-        attrType = CKA_ID;
-
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        JS_BIN_encodeHex( &binVal, &pStr );
-        strMsg = pStr;
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_ID")));
-        right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
-        JS_BIN_reset(&binVal);
-        if( pStr )
-        {
-            JS_free(pStr);
-            pStr = NULL;
-        }
-        row++;
-
-        attrType = CKA_SUBJECT;
-
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        JS_BIN_string( &binVal, &pStr );
-        strMsg = pStr;
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_SUBJECT")));
-        right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
-        JS_BIN_reset(&binVal);
-        if( pStr )
-        {
-            JS_free(pStr);
-            pStr = NULL;
-        }
-        row++;
-
-        attrType = CKA_VALUE;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        JS_BIN_encodeHex( &binVal, &pStr );
-        strMsg = pStr;
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_VALUE")));
-        right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
-        JS_BIN_reset(&binVal);
-        if( pStr )
-        {
-            JS_free(pStr);
-            pStr = NULL;
-        }
-        row++;
-
-        attrType = CKA_MODIFIABLE;
-
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = getBool( &binVal );
-        JS_BIN_reset( &binVal );
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_MODIFIABLE")));
-        right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
-
-        row++;
-
-        attrType = CKA_TRUSTED;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = getBool( &binVal );
-        JS_BIN_reset( &binVal );
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_TRUSTED")));
-        right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
-        row++;
-
-        attrType = CKA_PRIVATE;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = getBool( &binVal );
-        JS_BIN_reset( &binVal );
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_PRIVATE")));
-        right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
-        row++;
-
+        row = right_table_->rowCount();
         right_table_->insertRow( row );
         right_table_->setItem( row, 0, new QTableWidgetItem(QString("")));
         right_table_->setItem( row, 1, new QTableWidgetItem(QString("")));
-        row++;
     }
 }
 
@@ -728,212 +689,46 @@ void ManTreeModel::showPublicKeyInfo( int index, long hObject )
         hObjects[0] = hObject;
     }
 
-    int row = 0;
     QString strMsg = "";
 
     strMsg = QString("%1").arg( uObjCnt );
-    right_table_->insertRow( row );
-    right_table_->setItem( row, 0, new QTableWidgetItem(QString("PublicKey Count")));
-    right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-    row++;
+    right_table_->insertRow( 0 );
+    right_table_->setItem( 0, 0, new QTableWidgetItem(QString("PublicKey Count")));
+    right_table_->setItem( 0, 1, new QTableWidgetItem(strMsg));
 
-    right_table_->insertRow( row );
-    right_table_->setItem( row, 0, new QTableWidgetItem(QString("")));
-    right_table_->setItem( row, 1, new QTableWidgetItem(QString("")));
-    row++;
+    right_table_->insertRow( 1 );
+    right_table_->setItem( 1, 0, new QTableWidgetItem(QString("")));
+    right_table_->setItem( 1, 1, new QTableWidgetItem(QString("")));
+
 
     for( int i=0; i < uObjCnt; i++ )
     {
-        char *pStr = NULL;
+        int row = right_table_->rowCount();
+
         strMsg = QString("%1").arg( hObjects[i] );
         right_table_->insertRow( row );
         right_table_->setItem( row, 0, new QTableWidgetItem(QString("Handle")));
         right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
-        row++;
 
-        CK_ATTRIBUTE_TYPE attrType = CKA_LABEL;
-        BIN binVal = {0,0};
+        showAttribute( index, ATTR_VAL_STRING, CKA_LABEL, hObjects[i]);
+        showAttribute( index, ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, hObjects[i] );
+        showAttribute( index, ATTR_VAL_HEX, CKA_ID, hObjects[i] );
+        showAttribute( index, ATTR_VAL_HEX, CKA_MODULUS, hObjects[i]);
+        showAttribute( index, ATTR_VAL_HEX, CKA_PUBLIC_EXPONENT, hObjects[i] );
+        showAttribute( index, ATTR_VAL_HEX, CKA_EC_PARAMS, hObjects[i]);
+        showAttribute( index, ATTR_VAL_HEX, CKA_EC_POINT, hObjects[i]);
+        showAttribute( index, ATTR_VAL_BOOL, CKA_TOKEN, hObjects[i]);
+        showAttribute( index, ATTR_VAL_BOOL, CKA_WRAP, hObjects[i]);
+        showAttribute( index, ATTR_VAL_BOOL, CKA_ENCRYPT, hObjects[i]);
+        showAttribute( index, ATTR_VAL_BOOL, CKA_VERIFY, hObjects[i]);
+        showAttribute( index, ATTR_VAL_BOOL, CKA_PRIVATE, hObjects[i]);
+        showAttribute( index, ATTR_VAL_BOOL, CKA_MODIFIABLE, hObjects[i]);
+        showAttribute( index, ATTR_VAL_BOOL, CKA_DERIVE, hObjects[i]);
 
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        JS_BIN_string( &binVal, &pStr );
-        strMsg = pStr;
-        JS_BIN_reset(&binVal);
-        if( pStr )
-        {
-            JS_free(pStr);
-            pStr = NULL;
-        }
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_LABEL")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
-        row++;
-
-        attrType = CKA_KEY_TYPE;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = JS_PKCS11_GetCKKName( JS_BIN_long(&binVal));
-        JS_BIN_reset(&binVal);
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_KEY_TYPE")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_ID;
-
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        JS_BIN_encodeHex( &binVal, &pStr );
-        strMsg = pStr;
-        JS_BIN_reset(&binVal);
-        if( pStr )
-        {
-            JS_free(pStr);
-            pStr = NULL;
-        }
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_ID")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_MODULUS;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        JS_BIN_encodeHex( &binVal, &pStr );
-        strMsg = pStr;
-        JS_BIN_reset(&binVal);
-        if( pStr )
-        {
-            JS_free(pStr);
-            pStr = NULL;
-        }
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_MODULUS")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_PUBLIC_EXPONENT;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        JS_BIN_encodeHex( &binVal, &pStr );
-        strMsg = pStr;
-        JS_BIN_reset(&binVal);
-        if( pStr )
-        {
-            JS_free(pStr);
-            pStr = NULL;
-        }
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_PUBLIC_EXPONENT")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_EC_PARAMS;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        JS_BIN_encodeHex( &binVal, &pStr );
-        strMsg = pStr;
-        JS_BIN_reset(&binVal);
-        if( pStr )
-        {
-            JS_free(pStr);
-            pStr = NULL;
-        }
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_EC_PARAMS")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_EC_POINT;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        JS_BIN_encodeHex( &binVal, &pStr );
-        strMsg = pStr;
-        JS_BIN_reset(&binVal);
-        if( pStr )
-        {
-            JS_free(pStr);
-            pStr = NULL;
-        }
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_EC_POINT")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_TOKEN;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = getBool( &binVal );
-        JS_BIN_reset( &binVal );
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_TOKEN")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_WRAP;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = getBool( &binVal );
-        JS_BIN_reset( &binVal );
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_WRAP")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_ENCRYPT;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = getBool( &binVal );
-        JS_BIN_reset( &binVal );
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_ENCRYPT")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_VERIFY;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = getBool( &binVal );
-        JS_BIN_reset( &binVal );
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_VERIFY")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_PRIVATE;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = getBool( &binVal );
-        JS_BIN_reset( &binVal );
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_PRIVATE")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_MODIFIABLE;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = getBool( &binVal );
-        JS_BIN_reset( &binVal );
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_MODIFIABLE")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_DERIVE;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = getBool( &binVal );
-        JS_BIN_reset( &binVal );
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_DERIVE")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
+        row = right_table_->rowCount();
         right_table_->insertRow( row );
         right_table_->setItem( row, 0, new QTableWidgetItem(QString("")));
         right_table_->setItem( row, 1, new QTableWidgetItem(QString("")));
-        row++;
-
     }
 }
 
@@ -970,327 +765,55 @@ void ManTreeModel::showPrivateKeyInfo( int index, long hObject )
         hObjects[0] = hObject;
     }
 
-    int row = 0;
     QString strMsg = "";
 
     strMsg = QString("%1").arg( uObjCnt );
 
-    right_table_->insertRow( row );
-    right_table_->setItem( row, 0, new QTableWidgetItem(QString("PrivateKey Count")));
-    right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ));
-    row++;
+    right_table_->insertRow( 0 );
+    right_table_->setItem( 0, 0, new QTableWidgetItem(QString("PrivateKey Count")));
+    right_table_->setItem( 0, 1, new QTableWidgetItem( strMsg ));
 
-    right_table_->insertRow( row );
-    right_table_->setItem( row, 0, new QTableWidgetItem(QString("")));
-    right_table_->setItem( row, 1, new QTableWidgetItem(QString("")));
-    row++;
+
+    right_table_->insertRow( 1 );
+    right_table_->setItem( 1, 0, new QTableWidgetItem(QString("")));
+    right_table_->setItem( 1, 1, new QTableWidgetItem(QString("")));
+
 
     for( int i=0; i < uObjCnt; i++ )
     {
-        char *pStr = NULL;
+        int row = right_table_->rowCount();
         strMsg = QString("%1").arg( hObjects[i] );
 
         right_table_->insertRow( row );
         right_table_->setItem( row, 0, new QTableWidgetItem(QString("Handle")));
         right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
-        row++;
 
-        CK_ATTRIBUTE_TYPE attrType = CKA_LABEL;
-        BIN binVal = {0,0};
+        showAttribute( index, ATTR_VAL_STRING, CKA_LABEL, hObjects[i]);
+        showAttribute( index, ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, hObjects[i] );
+        showAttribute( index, ATTR_VAL_HEX, CKA_ID, hObjects[i] );
+        showAttribute( index, ATTR_VAL_HEX, CKA_SUBJECT, hObjects[i]);
+        showAttribute( index, ATTR_VAL_HEX, CKA_MODULUS, hObjects[i]);
+        showAttribute( index, ATTR_VAL_HEX, CKA_PUBLIC_EXPONENT, hObjects[i]);
+        showAttribute( index, ATTR_VAL_HEX, CKA_PRIVATE_EXPONENT, hObjects[i]);
+        showAttribute( index, ATTR_VAL_HEX, CKA_PRIME_1, hObjects[i]);
+        showAttribute( index, ATTR_VAL_HEX, CKA_PRIME_2, hObjects[i]);
+        showAttribute( index, ATTR_VAL_HEX, CKA_EXPONENT_1, hObjects[i]);
+        showAttribute( index, ATTR_VAL_HEX, CKA_EXPONENT_2, hObjects[i]);
+        showAttribute( index, ATTR_VAL_HEX, CKA_EC_PARAMS, hObjects[i]);
+        showAttribute( index, ATTR_VAL_HEX, CKA_VALUE, hObjects[i]);
+        showAttribute( index, ATTR_VAL_BOOL, CKA_TOKEN, hObjects[i]);
+        showAttribute( index, ATTR_VAL_BOOL, CKA_SENSITIVE, hObjects[i]);
+        showAttribute( index, ATTR_VAL_BOOL, CKA_UNWRAP, hObjects[i]);
+        showAttribute( index, ATTR_VAL_BOOL, CKA_SIGN, hObjects[i]);
+        showAttribute( index, ATTR_VAL_BOOL, CKA_DECRYPT, hObjects[i]);
+        showAttribute( index, ATTR_VAL_BOOL, CKA_MODIFIABLE, hObjects[i]);
+        showAttribute( index, ATTR_VAL_BOOL, CKA_DERIVE, hObjects[i]);
+        showAttribute( index, ATTR_VAL_BOOL, CKA_EXTRACTABLE, hObjects[i]);
 
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        JS_BIN_string( &binVal, &pStr );
-        strMsg = pStr;
-        JS_BIN_reset(&binVal);
-        if( pStr )
-        {
-            JS_free(pStr);
-            pStr = NULL;
-        }
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_LABEL")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_KEY_TYPE;
-
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = JS_PKCS11_GetCKKName( JS_BIN_long( &binVal ) );
-        JS_BIN_reset(&binVal);
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_KEY_TYPE")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_ID;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        JS_BIN_encodeHex( &binVal, &pStr );
-        strMsg = pStr;
-        JS_BIN_reset(&binVal);
-        if( pStr )
-        {
-            JS_free(pStr);
-            pStr = NULL;
-        }
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_ID")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_SUBJECT;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        JS_BIN_encodeHex( &binVal, &pStr );
-        strMsg = pStr;
-        JS_BIN_reset(&binVal);
-        if( pStr )
-        {
-            JS_free(pStr);
-            pStr = NULL;
-        }
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_SUBJECT")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_MODULUS;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        JS_BIN_encodeHex( &binVal, &pStr );
-        strMsg = pStr;
-        JS_BIN_reset(&binVal);
-        if( pStr )
-        {
-            JS_free(pStr);
-            pStr = NULL;
-        }
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_MODULUS")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_PUBLIC_EXPONENT;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        JS_BIN_encodeHex( &binVal, &pStr );
-        strMsg = pStr;
-        JS_BIN_reset(&binVal);
-        if( pStr )
-        {
-            JS_free(pStr);
-            pStr = NULL;
-        }
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_PUBLIC_EXPONENT")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-
-        attrType = CKA_PRIVATE_EXPONENT;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        JS_BIN_encodeHex( &binVal, &pStr );
-        strMsg = pStr;
-        JS_BIN_reset(&binVal);
-        if( pStr )
-        {
-            JS_free(pStr);
-            pStr = NULL;
-        }
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_PRIVATE_EXPONENT")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-
-        attrType = CKA_PRIME_1;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        JS_BIN_encodeHex( &binVal, &pStr );
-        strMsg = pStr;
-        JS_BIN_reset(&binVal);
-        if( pStr )
-        {
-            JS_free(pStr);
-            pStr = NULL;
-        }
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_PRIME_1")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-
-        attrType = CKA_PRIME_2;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        JS_BIN_encodeHex( &binVal, &pStr );
-        strMsg = pStr;
-        JS_BIN_reset(&binVal);
-        if( pStr )
-        {
-            JS_free(pStr);
-            pStr = NULL;
-        }
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_PRIME_2")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-
-        attrType = CKA_EXPONENT_1;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        JS_BIN_encodeHex( &binVal, &pStr );
-        strMsg = pStr;
-        JS_BIN_reset(&binVal);
-        if( pStr )
-        {
-            JS_free(pStr);
-            pStr = NULL;
-        }
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_EXPONENT_1")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-
-        attrType = CKA_EXPONENT_2;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        JS_BIN_encodeHex( &binVal, &pStr );
-        strMsg = pStr;
-        JS_BIN_reset(&binVal);
-        if( pStr )
-        {
-            JS_free(pStr);
-            pStr = NULL;
-        }
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_EXPONENT_2")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-
-        attrType = CKA_EC_PARAMS;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        JS_BIN_encodeHex( &binVal, &pStr );
-        strMsg = pStr;
-        JS_BIN_reset(&binVal);
-        if( pStr )
-        {
-            JS_free(pStr);
-            pStr = NULL;
-        }
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_EC_PARAMS")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_VALUE;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        JS_BIN_encodeHex( &binVal, &pStr );
-        strMsg = pStr;
-        JS_BIN_reset(&binVal);
-        if( pStr )
-        {
-            JS_free(pStr);
-            pStr = NULL;
-        }
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_VALUE")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_TOKEN;
-
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = getBool(&binVal);
-        JS_BIN_reset(&binVal);
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_TOKEN")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_SENSITIVE;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = getBool(&binVal);
-        JS_BIN_reset(&binVal);
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_SENSITIVE")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_UNWRAP;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = getBool(&binVal);
-        JS_BIN_reset(&binVal);
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_UNWRAP")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_SIGN;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = getBool(&binVal);
-        JS_BIN_reset(&binVal);
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_SIGN")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_DECRYPT;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = getBool(&binVal);
-        JS_BIN_reset(&binVal);
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_DECRYPT")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_MODIFIABLE;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = getBool(&binVal);
-        JS_BIN_reset(&binVal);
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_MODIFIABLE")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_DERIVE;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = getBool(&binVal);
-        JS_BIN_reset(&binVal);
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_DERIVE")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_EXTRACTABLE;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = getBool(&binVal);
-        JS_BIN_reset(&binVal);
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_EXTRACTABLE")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
+        row = right_table_->rowCount();
         right_table_->insertRow( row );
         right_table_->setItem( row, 0, new QTableWidgetItem(QString("")));
         right_table_->setItem( row, 1, new QTableWidgetItem(QString("")));
-        row++;
     }
 }
 
@@ -1327,235 +850,48 @@ void ManTreeModel::showSecretKeyInfo( int index, long hObject )
         hObjects[0] = hObject;
     }
 
-    int row = 0;
     QString strMsg = "";
 
     strMsg = QString("%1").arg( uObjCnt );
-    right_table_->insertRow( row );
-    right_table_->setItem( row, 0, new QTableWidgetItem(QString("SecretKey Count")));
-    right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
-    row++;
+    right_table_->insertRow( 0 );
+    right_table_->setItem( 0, 0, new QTableWidgetItem(QString("SecretKey Count")));
+    right_table_->setItem( 0, 1, new QTableWidgetItem(strMsg) );
 
-    right_table_->insertRow( row );
-    right_table_->setItem( row, 0, new QTableWidgetItem(QString("")));
-    right_table_->setItem( row, 1, new QTableWidgetItem(QString("")));
-    row++;
+    right_table_->insertRow( 1 );
+    right_table_->setItem( 1, 0, new QTableWidgetItem(QString("")));
+    right_table_->setItem( 1, 1, new QTableWidgetItem(QString("")));
 
     for( int i=0; i < uObjCnt; i++ )
     {
-        char *pStr = NULL;
+        int row = right_table_->rowCount();
         strMsg = QString("%1").arg( hObjects[i] );
+
         right_table_->insertRow( row );
         right_table_->setItem( row, 0, new QTableWidgetItem(QString("Handle")));
         right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
 
-        CK_ATTRIBUTE_TYPE attrType = CKA_LABEL;
-        BIN binVal = {0,0};
+        showAttribute( index, ATTR_VAL_STRING, CKA_LABEL, hObjects[i]);
+        showAttribute( index, ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, hObjects[i]);
+        showAttribute( index, ATTR_VAL_HEX, CKA_ID, hObjects[i]);
+        showAttribute( index, ATTR_VAL_HEX, CKA_VALUE, hObjects[i]);
+        showAttribute( index, ATTR_VAL_LEN, CKA_VALUE_LEN, hObjects[i]);
+        showAttribute( index, ATTR_VAL_BOOL, CKA_TOKEN, hObjects[i]);
+        showAttribute( index, ATTR_VAL_BOOL, CKA_PRIVATE, hObjects[i]);
+        showAttribute( index, ATTR_VAL_BOOL, CKA_SENSITIVE, hObjects[i]);
+        showAttribute( index, ATTR_VAL_BOOL, CKA_ENCRYPT, hObjects[i]);
+        showAttribute( index, ATTR_VAL_BOOL, CKA_DECRYPT, hObjects[i]);
+        showAttribute( index, ATTR_VAL_BOOL, CKA_SIGN, hObjects[i]);
+        showAttribute( index, ATTR_VAL_BOOL, CKA_VERIFY, hObjects[i]);
+        showAttribute( index, ATTR_VAL_BOOL, CKA_WRAP, hObjects[i]);
+        showAttribute( index, ATTR_VAL_BOOL, CKA_UNWRAP, hObjects[i]);
+        showAttribute( index, ATTR_VAL_BOOL, CKA_MODIFIABLE, hObjects[i]);
+        showAttribute( index, ATTR_VAL_BOOL, CKA_DERIVE, hObjects[i]);
+        showAttribute( index, ATTR_VAL_BOOL, CKA_EXTRACTABLE, hObjects[i]);
 
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        JS_BIN_string( &binVal, &pStr );
-        strMsg = pStr;
-        JS_BIN_reset(&binVal);
-        if( pStr )
-        {
-            JS_free(pStr);
-            pStr = NULL;
-        }
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_LABEL")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_KEY_TYPE;
-
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = JS_PKCS11_GetCKKName( JS_BIN_long(&binVal) );
-        JS_BIN_reset(&binVal);
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_KEY_TYPE")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_ID;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        JS_BIN_encodeHex( &binVal, &pStr );
-        strMsg = pStr;
-        JS_BIN_reset(&binVal);
-        if( pStr )
-        {
-            JS_free(pStr);
-            pStr = NULL;
-        }
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_ID")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_VALUE;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        JS_BIN_encodeHex( &binVal, &pStr );
-        strMsg = pStr;
-        JS_BIN_reset(&binVal);
-        if( pStr )
-        {
-            JS_free(pStr);
-            pStr = NULL;
-        }
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_VALUE")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_VALUE_LEN;
-
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = QString("%1").arg( JS_BIN_long(&binVal));
-        JS_BIN_reset(&binVal);
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_VALUE_LEN")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_TOKEN;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = getBool(&binVal);
-        JS_BIN_reset(&binVal);
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_TOKEN")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-
-        attrType = CKA_PRIVATE;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = getBool(&binVal);
-        JS_BIN_reset(&binVal);
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_PRIVATE")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-
-        attrType = CKA_SENSITIVE;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = getBool(&binVal);
-        JS_BIN_reset(&binVal);
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_SENSITIVE")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-
-        attrType = CKA_ENCRYPT;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = getBool(&binVal);
-        JS_BIN_reset(&binVal);
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_ENCRYPT")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-
-        attrType = CKA_DECRYPT;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = getBool(&binVal);
-        JS_BIN_reset(&binVal);
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_DECRYPT")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-
-        attrType = CKA_SIGN;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = getBool(&binVal);
-        JS_BIN_reset(&binVal);
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_SIGN")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-
-        attrType = CKA_VERIFY;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = getBool(&binVal);
-        JS_BIN_reset(&binVal);
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_VERIFY")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-
-        attrType = CKA_WRAP;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = getBool(&binVal);
-        JS_BIN_reset(&binVal);
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_WRAP")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-
-        attrType = CKA_UNWRAP;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = getBool(&binVal);
-        JS_BIN_reset(&binVal);
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_UNWRAP")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-
-        attrType = CKA_MODIFIABLE;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = getBool(&binVal);
-        JS_BIN_reset(&binVal);
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_MODIFIABLE")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-
-        attrType = CKA_DERIVE;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = getBool(&binVal);
-        JS_BIN_reset(&binVal);
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_DERIVE")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_EXTRACTABLE;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = getBool(&binVal);
-        JS_BIN_reset(&binVal);
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_EXTRACTABLE")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
+        row = right_table_->rowCount();
         right_table_->insertRow( row );
         right_table_->setItem( row, 0, new QTableWidgetItem(QString("")));
         right_table_->setItem( row, 1, new QTableWidgetItem(QString("")));
-        row++;
     }
 }
 
@@ -1592,97 +928,37 @@ void ManTreeModel::showDataInfo( int index, long hObject )
         hObjects[0] = hObject;
     }
 
-    int row = 0;
     QString strMsg = "";
 
     strMsg = QString("%1").arg( uObjCnt );
-    right_table_->insertRow( row );
-    right_table_->setItem( row, 0, new QTableWidgetItem(QString("Data Count")));
-    right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
-    row++;
+    right_table_->insertRow( 0 );
+    right_table_->setItem( 0, 0, new QTableWidgetItem(QString("Data Count")));
+    right_table_->setItem( 0, 1, new QTableWidgetItem( strMsg ) );
 
-    right_table_->insertRow( row );
-    right_table_->setItem( row, 0, new QTableWidgetItem(QString("")));
-    right_table_->setItem( row, 1, new QTableWidgetItem(QString("")));
-    row++;
+    right_table_->insertRow( 1 );
+    right_table_->setItem( 1, 0, new QTableWidgetItem(QString("")));
+    right_table_->setItem( 1, 1, new QTableWidgetItem(QString("")));
+
 
     for( int i=0; i < uObjCnt; i++ )
     {
-        char *pStr = NULL;
+        int row = right_table_->rowCount();
         strMsg = QString("%1").arg( hObjects[0] );
         right_table_->insertRow( row );
         right_table_->setItem( row, 0, new QTableWidgetItem(QString("Handle")));
         right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
 
-        CK_ATTRIBUTE_TYPE attrType = CKA_LABEL;
-        BIN binVal = {0,0};
 
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        JS_BIN_string( &binVal, &pStr );
-        strMsg = pStr;
-        JS_BIN_reset(&binVal);
-        if( pStr )
-        {
-            JS_free(pStr);
-            pStr = NULL;
-        }
+        showAttribute( index, ATTR_VAL_STRING, CKA_LABEL, hObjects[i]);
+        showAttribute( index, ATTR_VAL_HEX, CKA_VALUE, hObjects[i]);
+        showAttribute( index, ATTR_VAL_BOOL, CKA_TOKEN, hObjects[i]);
+        showAttribute( index, ATTR_VAL_BOOL, CKA_PRIVATE, hObjects[i]);
+        showAttribute( index, ATTR_VAL_BOOL, CKA_MODIFIABLE, hObjects[i]);
 
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_LABEL")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_VALUE;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        JS_BIN_encodeHex( &binVal, &pStr );
-        strMsg = pStr;
-        JS_BIN_reset(&binVal);
-        if( pStr )
-        {
-            JS_free(pStr);
-            pStr = NULL;
-        }
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_VALUE")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_TOKEN;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = getBool(&binVal);
-        JS_BIN_reset(&binVal);
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_TOKEN")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_PRIVATE;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = getBool(&binVal);
-        JS_BIN_reset(&binVal);
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_PRIVATE")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
-        attrType = CKA_MODIFIABLE;
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObjects[i], attrType, &binVal );
-        strMsg = getBool(&binVal);
-        JS_BIN_reset(&binVal);
-
-        right_table_->insertRow( row );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("CKA_MODIFIABLE")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
-        row++;
-
+        row = right_table_->rowCount();
         right_table_->insertRow( row );
         right_table_->setItem( row, 0, new QTableWidgetItem(QString("")));
         right_table_->setItem( row, 1, new QTableWidgetItem(QString("")));
-        row++;
     }
 }
 

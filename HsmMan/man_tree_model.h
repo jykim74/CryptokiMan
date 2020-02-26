@@ -6,6 +6,7 @@
 #include <QStandardItemModel>
 #include <QTableWidget>
 
+enum { ATTR_VAL_BOOL, ATTR_VAL_STRING, ATTR_VAL_HEX, ATTR_VAL_KEY_NAME, ATTR_VAL_LEN };
 
 class ManTreeItem;
 
@@ -32,6 +33,7 @@ public:
 
 private:
     void initialize();
+    void showAttribute( int nSlotIdx, int nValType, CK_ATTRIBUTE_TYPE uAttribute, CK_OBJECT_HANDLE hObj );
 
     QTableWidget    *right_table_;
 
