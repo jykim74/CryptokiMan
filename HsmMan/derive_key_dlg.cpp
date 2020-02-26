@@ -441,7 +441,7 @@ void DeriveKeyDlg::setSrcLabelList()
 
     uCnt = 0;
     uObjCnt = 0;
-    objClass = CKO_PUBLIC_KEY;
+    objClass = CKO_PRIVATE_KEY;
     sTemplate[uCnt].type = CKA_CLASS;
     sTemplate[uCnt].pValue = &objClass;
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
