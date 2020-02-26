@@ -67,6 +67,23 @@ MainWindow::~MainWindow()
 
 }
 
+void MainWindow::dragEnterEvent(QDragEnterEvent *event)
+{
+    if (event->mimeData()->hasUrls()) {
+        event->acceptProposedAction();
+    }
+}
+
+void MainWindow::dropEvent(QDropEvent *event)
+{
+    foreach (const QUrl &url, event->mimeData()->urls()) {
+        QString fileName = url.toLocalFile();
+        qDebug() << "Dropped file:" << fileName;
+        openLibrary( fileName );
+        return;
+    }
+}
+
 void MainWindow::initialize()
 {
     hsplitter_ = new QSplitter(Qt::Horizontal);
@@ -278,6 +295,28 @@ void MainWindow::newFile()
 
 }
 
+int MainWindow::openLibrary(const QString libPath)
+{
+    int ret = 0;
+    file_path_ = libPath;
+    ret = JS_PKCS11_LoadLibrary( (JP11_CTX **)&p11_ctx_, file_path_.toLocal8Bit().toStdString().c_str() );
+
+    if( ret == 0 )
+    {
+        left_model_->clear();
+
+        QStringList labels;
+        left_tree_->header()->setVisible(false);
+
+        ManTreeItem *pItem = new ManTreeItem();
+        pItem->setText( tr("CryptokiToken"));
+        pItem->setType( HM_ITEM_TYPE_ROOT );
+        left_model_->insertRow(0, pItem );
+    }
+
+    return 0;
+}
+
 void MainWindow::open()
 {
     bool bSavePath = manApplet->settingsMgr()->saveLibPath();
@@ -298,32 +337,18 @@ void MainWindow::open()
 
     if( !fileName.isEmpty() )
     {
-        int ret = 0;
-        file_path_ = fileName;
-        ret = JS_PKCS11_LoadLibrary( (JP11_CTX **)&p11_ctx_, file_path_.toLocal8Bit().toStdString().c_str() );
+        int ret = openLibrary( fileName );
+        if( ret != 0 ) return;
 
-        if( ret == 0 )
+        if( bSavePath )
         {
-            left_model_->clear();
+            QFileInfo fileInfo(fileName);
+            QString strDir = fileInfo.dir().path();
 
-            QStringList labels;
-            left_tree_->header()->setVisible(false);
-
-            ManTreeItem *pItem = new ManTreeItem();
-            pItem->setText( tr("CryptokiToken"));
-            pItem->setType( HM_ITEM_TYPE_ROOT );
-            left_model_->insertRow(0, pItem );
-
-            if( bSavePath )
-            {
-                QFileInfo fileInfo(fileName);
-                QString strDir = fileInfo.dir().path();
-
-                QSettings settings;
-                settings.beginGroup("mainwindow");
-                settings.setValue( "libPath", strDir );
-                settings.endGroup();
-            }
+            QSettings settings;
+            settings.beginGroup("mainwindow");
+            settings.setValue( "libPath", strDir );
+            settings.endGroup();
         }
     }
 }

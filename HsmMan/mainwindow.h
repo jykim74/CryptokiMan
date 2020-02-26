@@ -73,12 +73,14 @@ public slots:
 
     void rightTableClick( QModelIndex index );
 
-
+    virtual void dragEnterEvent(QDragEnterEvent *event );
+    virtual void dropEvent(QDropEvent *event );
 
 private:
     void createTableMenu();
     void createActions();
     void createStatusBar();
+    int openLibrary( const QString libPath );
 
     QSplitter       *hsplitter_;
     QSplitter       *vsplitter_;
