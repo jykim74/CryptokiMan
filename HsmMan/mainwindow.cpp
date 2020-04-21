@@ -121,6 +121,9 @@ void MainWindow::createTableMenu()
     QStringList     labels = { tr("Field"), tr("Value") };
 
     right_table_->horizontalHeader()->setStretchLastSection(true);
+    QString style = "QHeaderView::section {background-color:#404040;color:#FFFFFF;}";
+    right_table_->horizontalHeader()->setStyleSheet( style );
+
     right_table_->setColumnCount(2);
     right_table_->setColumnWidth(0, 200);
     right_table_->setHorizontalHeaderLabels( labels );

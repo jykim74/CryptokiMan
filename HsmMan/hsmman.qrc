@@ -14,5 +14,6 @@
         <file>images/save.png</file>
         <file>images/trash.png</file>
         <file>i18n/hsmman_ko_KR.ts</file>
+        <file>images/penguin_key.jpg</file>
     </qresource>
 </RCC>
