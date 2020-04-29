@@ -163,9 +163,10 @@ RESOURCES += \
 
 TRANSLATIONS += i18n/hsmman_ko_KR.ts
 
-DEFINES += _AUTO_UPDATE
+
 
 mac {
+    DEFINES += _AUTO_UPDATE
     ICON = images/hsmman.icns
 
     QMAKE_LFLAGS += -Wl,-rpath,@loader_path/../Frameworks
@@ -186,6 +187,7 @@ mac {
 }
 
 win32 {
+    DEFINES += _AUTO_UPDATE
     RC_ICONS = hsmman.ico
     INCLUDEPATH += "../../PKILib/lib/win32/winsparkle/include"
     INCLUDEPATH += "C:\msys64\mingw32\include"
@@ -195,6 +197,12 @@ win32 {
 #    LIBS += -L"../../PKILib/lib/win32/ltdl/lib" -lltdl
     LIBS += -L"C:\msys64\mingw32\lib" -lltdl
     LIBS += -L"../../PKILib/lib/win32/winsparkle/Release" -lWinSparkle
+}
+
+linux {
+    LIBS += -L"../../build-PKILib-Desktop_Qt_5_13_2_GCC_64bit-Debug" -lPKILib
+    LIBS += -L"../../PKILib/lib/linux/debug/cmpossl/lib" -lcrypto
+    LIBS += -lltdl
 }
 
 INCLUDEPATH += "../../PKILib"
