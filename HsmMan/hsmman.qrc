@@ -18,5 +18,11 @@
         <file>i18n/hsmman_ko_KR.qm</file>
         <file>images/hsmman.png</file>
         <file>images/init.png</file>
+        <file>hsmman.qss</file>
+        <file>images/branch-closed.png</file>
+        <file>images/branch-end.png</file>
+        <file>images/branch-more.png</file>
+        <file>images/branch-open.png</file>
+        <file>images/vline.png</file>
     </qresource>
 </RCC>

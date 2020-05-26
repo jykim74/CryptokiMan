@@ -14,6 +14,11 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationDomain( "jssoft.com" );
     QCoreApplication::setApplicationName( "HsmMan" );
 
+    QFile qss(":/hsmman.qss");
+    qss.open( QFile::ReadOnly );
+    app.setStyleSheet(qss.readAll());
+
+
     QCommandLineParser parser;
     parser.setApplicationDescription( QCoreApplication::applicationName() );
     parser.addHelpOption();
