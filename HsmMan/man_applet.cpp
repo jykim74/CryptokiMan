@@ -83,6 +83,11 @@ void ManApplet::restartApp()
     QCoreApplication::quit();
 }
 
+void ManApplet::setCmd(QString cmd)
+{
+    cmd_ = cmd;
+}
+
 QString ManApplet::getBrand()
 {
     return QString::fromUtf8( "HsmMan" );

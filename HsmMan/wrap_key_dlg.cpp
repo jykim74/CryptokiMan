@@ -259,7 +259,7 @@ void WrapKeyDlg::clickFind()
 
     QString selectedFilter;
     QString fileName = QFileDialog::getSaveFileName( this,
-                                                     tr("QFileDialog::getOpenFileName()"),
+                                                     tr("Wrap Key"),
                                                      QDir::currentPath(),
                                                      tr("BIN Files (*.bin);;All Files (*.*)"),
                                                      &selectedFilter,

@@ -263,7 +263,7 @@ void ImportPriKeyDlg::clickFind()
 
     QString selectedFilter;
     QString fileName = QFileDialog::getOpenFileName( this,
-                                                     tr("QFileDialog::getOpenFileName()"),
+                                                     tr("Private Key"),
                                                      "D:/test",
                                                      tr("DLL Files (*.dll);;All Files (*.*)"),
                                                      &selectedFilter,

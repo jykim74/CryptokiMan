@@ -26,6 +26,7 @@ int main(int argc, char *argv[])
 
     ManApplet mApplet;
     manApplet = &mApplet;
+    manApplet->setCmd( argv[0]);
     manApplet->start();
 
 //    MainWindow w;

@@ -166,8 +166,12 @@ void MainWindow::createActions()
     QMenu *moduleMenu = menuBar()->addMenu(tr("&Module"));
     QToolBar *moduleToolBar = addToolBar(tr("Module"));
 
-    QAction *initAct = moduleMenu->addAction(tr("P11Initialize"), left_tree_, &ManTreeView::P11Initialize );
+    const QIcon initIcon = QIcon::fromTheme("document-init", QIcon(":/images/init.png"));
+    QAction *initAct = new QAction( initIcon, tr("P11Initialize"), this );
+    connect( initAct, &QAction::triggered, left_tree_, &ManTreeView::P11Initialize );
     initAct->setStatusTip(tr("PKCS11 initialize"));
+    moduleMenu->addAction( initAct );
+    moduleToolBar->addAction( initAct );
 
     QAction *finalAct = moduleMenu->addAction(tr("P11Finalize"), left_tree_, &ManTreeView::P11Finalize);
     finalAct->setStatusTip(tr("PKCS11 finalize"));
@@ -277,8 +281,12 @@ void MainWindow::createActions()
     QMenu *helpMenu = menuBar()->addMenu(tr("&Help"));
     QToolBar *helpToolBar = addToolBar(tr("Help"));
 
-    QAction *aboutAct = helpMenu->addAction(tr("About"), this, &MainWindow::about );
+    const QIcon hsmManIcon = QIcon::fromTheme("hsmman", QIcon(":/images/hsmman.png"));
+    QAction *aboutAct = new QAction( hsmManIcon, tr("About HsmMan"), this );
+    connect( aboutAct, &QAction::triggered, this, &MainWindow::about);
     aboutAct->setStatusTip(tr("About HsmMan"));
+    helpMenu->addAction( aboutAct );
+    helpToolBar->addAction( aboutAct );
 
     QAction *logViewAct = helpMenu->addAction(tr("Log View"), this, &MainWindow::logView);
     logViewAct->setStatusTip(tr("view log for PKCS11"));
@@ -295,7 +303,10 @@ void MainWindow::createStatusBar()
 
 void MainWindow::newFile()
 {
-
+    QString cmd = manApplet->cmd();
+    QProcess *process = new QProcess();
+    process->setProgram( cmd );
+    process->start();
 }
 
 int MainWindow::openLibrary(const QString libPath)
@@ -322,6 +333,12 @@ int MainWindow::openLibrary(const QString libPath)
 
 void MainWindow::open()
 {
+    if( p11_ctx_ != NULL )
+    {
+        manApplet->warningBox( tr("Cryptoki library has already loaded"), this );
+        return;
+    }
+
     bool bSavePath = manApplet->settingsMgr()->saveLibPath();
 //    QString strPath = QDir::currentPath();
     QString strPath = QString("/usr");

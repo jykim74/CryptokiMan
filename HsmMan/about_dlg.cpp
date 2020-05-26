@@ -26,7 +26,7 @@ AboutDlg::AboutDlg(QWidget *parent) :
     QString strAbout = tr("This is freeware tool to test cryptoki library "
             "If you do not use this for commercial purposes, "
             "you can use it freely "
-            "If you have any opinions on this tool, please send me a mail\r\n" );
+            "If you have any opinions on this tool, please send me a mail." );
 
 
 
@@ -36,7 +36,7 @@ AboutDlg::AboutDlg(QWidget *parent) :
     strAbout += "\r\nLibrary: ";
     strAbout += strLibVersion;
 
-    strAbout += "\r\nBuild Date: ";
+    strAbout += "\r\n";
     strAbout += getBuild();
     strAbout += "\r\n";
 

@@ -5,2740 +5,3115 @@
     <name>AboutDlg</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">대화창</translation>
     </message>
     <message>
         <source>Current Version</source>
-        <translation type="unfinished"></translation>
+        <translation>현재 버전</translation>
     </message>
     <message>
         <source>Check For Update</source>
-        <translation type="unfinished"></translation>
+        <translation>업데이트 체크</translation>
     </message>
     <message>
         <source>About %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 에 대해서</translation>
     </message>
     <message>
         <source>About %1 (%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1(%2) 에 대해서</translation>
     </message>
     <message>
-        <source>This is freeware tool to test cryptoki library If you do not use this for commercial purposes, you can use it freely If you have any opinions on this tool, please send me a mail
-
-Copyright (C) 2019 ~ 2020 JongYeob Kim
+        <source>About HsmMan</source>
+        <translation>HsmMan 에 대해서</translation>
+    </message>
+    <message>
+        <source>This is freeware tool to test cryptoki library If you do not use this for commercial purposes, you can use it freely If you have any opinions on this tool, please send me a mail<byte value="xd"/>
+</source>
+        <translation type="vanished">이 프로그램은 상업적으로 이용하지 않는다면 cryptoki 모듈 테스트를 자유롭게 사용하는 프리웨어 소프트웨어이다. 요구 사항이나 의견이 있으면 메일로 연락주세요.</translation>
+    </message>
+    <message>
+        <source><byte value="xd"/>
+Copyright (C) 2019 ~ 2020 JongYeob Kim<byte value="xd"/>
 mailto : jykim74@gmail.com</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
+    </message>
+    <message>
+        <source>This is freeware tool to test cryptoki library If you do not use this for commercial purposes, you can use it freely If you have any opinions on this tool, please send me a mail.</source>
+        <translation>이 프로그램은 상업적으로 이용하지 않는다면 cryptoki 모듈 테스트를 자유롭게 사용하는 프리웨어 소프트웨어이다. 요구 사항이나 의견이 있으면 메일로 연락주세요.</translation>
     </message>
 </context>
 <context>
     <name>CloseSessionDlg</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Slot list</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 목록</translation>
     </message>
     <message>
         <source>Slot status</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 상태</translation>
     </message>
     <message>
         <source>Slot ID</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 ID</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>로그인</translation>
     </message>
     <message>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>세션</translation>
     </message>
     <message>
         <source>CloseSession(%1) is success</source>
-        <translation type="unfinished"></translation>
+        <translation>CloseSession(%1) 성공</translation>
     </message>
     <message>
         <source>CloseSession(%1) is failure</source>
-        <translation type="unfinished"></translation>
+        <translation>CloseSession(%1) 실패</translation>
+    </message>
+    <message>
+        <source>Close session</source>
+        <translation>세션 닫기</translation>
     </message>
 </context>
 <context>
     <name>CreateDataDlg</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>로그인</translation>
     </message>
     <message>
         <source>Token</source>
-        <translation type="unfinished"></translation>
+        <translation>토큰</translation>
     </message>
     <message>
         <source>Data</source>
-        <translation type="unfinished"></translation>
+        <translation>데이타</translation>
     </message>
     <message>
         <source>Slot ID</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 ID</translation>
     </message>
     <message>
         <source>Slot list</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 목록</translation>
     </message>
     <message>
         <source>Slot status</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 상태</translation>
     </message>
     <message>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>세션</translation>
     </message>
     <message>
         <source>Sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>민감한</translation>
     </message>
     <message>
         <source>Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>속성</translation>
     </message>
     <message>
         <source>Modifiable</source>
-        <translation type="unfinished"></translation>
+        <translation>변경가능한</translation>
     </message>
     <message>
         <source>Label</source>
-        <translation type="unfinished"></translation>
+        <translation>라벨</translation>
     </message>
     <message>
         <source>Private</source>
-        <translation type="unfinished"></translation>
+        <translation>개인적</translation>
+    </message>
+    <message>
+        <source>Create data</source>
+        <translation>데이타 생성</translation>
+    </message>
+    <message>
+        <source>fail to create data(%1)</source>
+        <translation>데이타 생성 실패(%1)</translation>
+    </message>
+    <message>
+        <source>Success to create data</source>
+        <translation>데이타 생성 성공</translation>
     </message>
 </context>
 <context>
     <name>CreateECPriKeyDlg</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>일반</translation>
     </message>
     <message>
         <source>Slot ID</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 ID</translation>
     </message>
     <message>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
         <source>Slot status</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 상태</translation>
     </message>
     <message>
         <source>Subject</source>
-        <translation type="unfinished"></translation>
+        <translation>주체</translation>
     </message>
     <message>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>세션</translation>
     </message>
     <message>
         <source>Slot list</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 목록</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>로그인</translation>
     </message>
     <message>
         <source>Label</source>
-        <translation type="unfinished"></translation>
+        <translation>라벨</translation>
     </message>
     <message>
         <source>Private Key</source>
-        <translation type="unfinished"></translation>
+        <translation>개인 키</translation>
     </message>
     <message>
         <source>Key Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>키 속성</translation>
     </message>
     <message>
         <source>EC Params</source>
-        <translation type="unfinished"></translation>
+        <translation>EC 파라미터</translation>
     </message>
     <message>
         <source>Extractable</source>
-        <translation type="unfinished"></translation>
+        <translation>추출가능한</translation>
     </message>
     <message>
         <source>Private</source>
-        <translation type="unfinished"></translation>
+        <translation>개인적인</translation>
     </message>
     <message>
         <source>Token</source>
-        <translation type="unfinished"></translation>
+        <translation>토큰</translation>
     </message>
     <message>
         <source>Derive</source>
-        <translation type="unfinished"></translation>
+        <translation>유도</translation>
     </message>
     <message>
         <source>Sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>민감한</translation>
     </message>
     <message>
         <source>Key value</source>
-        <translation type="unfinished"></translation>
+        <translation>키 값</translation>
     </message>
     <message>
         <source>Modifiable</source>
-        <translation type="unfinished"></translation>
+        <translation>변경 가능한</translation>
     </message>
     <message>
         <source>Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>속성</translation>
     </message>
     <message>
         <source>Sign</source>
-        <translation type="unfinished"></translation>
+        <translation>서명</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation type="unfinished"></translation>
+        <translation>복호화</translation>
     </message>
     <message>
         <source>Unwrap</source>
-        <translation type="unfinished"></translation>
+        <translation>풀기</translation>
+    </message>
+    <message>
+        <source>Create ec private key</source>
+        <translation>EC 개인키 생성</translation>
+    </message>
+    <message>
+        <source>fail to create EC private key(%1)</source>
+        <translation>EC 개인키 생성 실패(%1)</translation>
+    </message>
+    <message>
+        <source>success to create EC private key</source>
+        <translation>EC 개인키 생성 성공</translation>
     </message>
 </context>
 <context>
     <name>CreateECPubKeyDlg</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>일반</translation>
     </message>
     <message>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>세션</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>로그인</translation>
     </message>
     <message>
         <source>Slot ID</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 ID</translation>
     </message>
     <message>
         <source>Slot list</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 목록</translation>
     </message>
     <message>
         <source>Slot status</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 상태</translation>
     </message>
     <message>
         <source>Public Key</source>
-        <translation type="unfinished"></translation>
+        <translation>공개 키</translation>
     </message>
     <message>
         <source>EC Points</source>
-        <translation type="unfinished"></translation>
+        <translation>EC 공개키</translation>
     </message>
     <message>
         <source>Derive</source>
-        <translation type="unfinished"></translation>
+        <translation>유도</translation>
     </message>
     <message>
         <source>Encrypt</source>
-        <translation type="unfinished"></translation>
+        <translation>암호화</translation>
     </message>
     <message>
         <source>Label</source>
-        <translation type="unfinished"></translation>
+        <translation>라벨</translation>
     </message>
     <message>
         <source>EC Params</source>
-        <translation type="unfinished"></translation>
+        <translation>EC 파라미터</translation>
     </message>
     <message>
         <source>Verify</source>
-        <translation type="unfinished"></translation>
+        <translation>검증</translation>
     </message>
     <message>
         <source>Modifiable</source>
-        <translation type="unfinished"></translation>
+        <translation>변경가능한</translation>
     </message>
     <message>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
         <source>Token</source>
-        <translation type="unfinished"></translation>
+        <translation>토큰</translation>
     </message>
     <message>
         <source>Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>속성</translation>
     </message>
     <message>
         <source>Private</source>
-        <translation type="unfinished"></translation>
+        <translation>개인적</translation>
     </message>
     <message>
         <source>Wrap</source>
-        <translation type="unfinished"></translation>
+        <translation>감싸기</translation>
+    </message>
+    <message>
+        <source>Create ec public key</source>
+        <translation>EC 공개키 생성</translation>
+    </message>
+    <message>
+        <source>fail to create EC public key(%1)</source>
+        <translation>EC 공개키 생성 실패(%1)</translation>
+    </message>
+    <message>
+        <source>success to create EC public key</source>
+        <translation>EC 공개키 생성 성공</translation>
     </message>
 </context>
 <context>
     <name>CreateKeyDlg</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>일반</translation>
     </message>
     <message>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>세션</translation>
     </message>
     <message>
         <source>Slot ID</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 ID</translation>
     </message>
     <message>
         <source>Slot status</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 상태</translation>
     </message>
     <message>
         <source>Slot list</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 목록</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>로그인</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation type="unfinished"></translation>
+        <translation>키</translation>
     </message>
     <message>
         <source>Private</source>
-        <translation type="unfinished"></translation>
+        <translation>개인적</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation type="unfinished"></translation>
+        <translation>복호화</translation>
     </message>
     <message>
         <source>Verify</source>
-        <translation type="unfinished"></translation>
+        <translation>검증</translation>
     </message>
     <message>
         <source>Modifiable</source>
-        <translation type="unfinished"></translation>
+        <translation>변경가능한</translation>
     </message>
     <message>
         <source>Token</source>
-        <translation type="unfinished"></translation>
+        <translation>토큰</translation>
     </message>
     <message>
         <source>Sign</source>
-        <translation type="unfinished"></translation>
+        <translation>서명</translation>
     </message>
     <message>
         <source>Label</source>
-        <translation type="unfinished"></translation>
+        <translation>라벨</translation>
     </message>
     <message>
         <source>Wrap</source>
-        <translation type="unfinished"></translation>
+        <translation>감싸기</translation>
     </message>
     <message>
         <source>Unwrap</source>
-        <translation type="unfinished"></translation>
+        <translation>풀기</translation>
     </message>
     <message>
         <source>Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>속성</translation>
     </message>
     <message>
         <source>Encrypt</source>
-        <translation type="unfinished"></translation>
+        <translation>암호화</translation>
     </message>
     <message>
         <source>Sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>민감한</translation>
     </message>
     <message>
         <source>Mechanism</source>
-        <translation type="unfinished"></translation>
+        <translation>알고리즘</translation>
+    </message>
+    <message>
+        <source>Create key</source>
+        <translation>키 생성</translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <translation>ID</translation>
+    </message>
+    <message>
+        <source>Extractable</source>
+        <translation>추출가능한</translation>
+    </message>
+    <message>
+        <source>fail to create key(%1)</source>
+        <translation>키 생성 실패(%1)</translation>
+    </message>
+    <message>
+        <source>Success to create key</source>
+        <translation>키 생성 성공</translation>
     </message>
 </context>
 <context>
     <name>CreateRSAPriKeyDlg</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>일반</translation>
     </message>
     <message>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>세션</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>로그인</translation>
     </message>
     <message>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
         <source>Subject</source>
-        <translation type="unfinished"></translation>
+        <translation>주체</translation>
     </message>
     <message>
         <source>Slot ID</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 ID</translation>
     </message>
     <message>
         <source>Slot list</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 목록</translation>
     </message>
     <message>
         <source>Slot status</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 상태</translation>
     </message>
     <message>
         <source>Label</source>
-        <translation type="unfinished"></translation>
+        <translation>라벨</translation>
     </message>
     <message>
         <source>Private Key</source>
-        <translation type="unfinished"></translation>
+        <translation>개인 키</translation>
     </message>
     <message>
         <source>Modifiable</source>
-        <translation type="unfinished"></translation>
+        <translation>변경가능한</translation>
     </message>
     <message>
         <source>Public Exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>공개 Exponent</translation>
     </message>
     <message>
         <source>Token</source>
-        <translation type="unfinished"></translation>
+        <translation>토큰</translation>
     </message>
     <message>
         <source>Exponent2</source>
-        <translation type="unfinished"></translation>
+        <translation>Exponent2</translation>
     </message>
     <message>
         <source>Key value</source>
-        <translation type="unfinished"></translation>
+        <translation>키 값</translation>
     </message>
     <message>
         <source>Private Exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>Private Exponent</translation>
     </message>
     <message>
         <source>Unwrap</source>
-        <translation type="unfinished"></translation>
+        <translation>풀기</translation>
     </message>
     <message>
         <source>Coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Coefficient</translation>
     </message>
     <message>
         <source>Prime2</source>
-        <translation type="unfinished"></translation>
+        <translation>Prime2</translation>
     </message>
     <message>
         <source>Extractable</source>
-        <translation type="unfinished"></translation>
+        <translation>추출가능한</translation>
     </message>
     <message>
         <source>Exponent1</source>
-        <translation type="unfinished"></translation>
+        <translation>Exponent1</translation>
     </message>
     <message>
         <source>Prime1</source>
-        <translation type="unfinished"></translation>
+        <translation>Prime1</translation>
     </message>
     <message>
         <source>Derive</source>
-        <translation type="unfinished"></translation>
+        <translation>유도</translation>
     </message>
     <message>
         <source>Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>속성</translation>
     </message>
     <message>
         <source>Modules</source>
-        <translation type="unfinished"></translation>
+        <translation>모듈</translation>
     </message>
     <message>
         <source>Sign</source>
-        <translation type="unfinished"></translation>
+        <translation>서명</translation>
     </message>
     <message>
         <source>Sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>민감한</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation type="unfinished"></translation>
+        <translation>복호화</translation>
     </message>
     <message>
         <source>Private</source>
-        <translation type="unfinished"></translation>
+        <translation>개인적</translation>
+    </message>
+    <message>
+        <source>Create RSA private key</source>
+        <translation>RSA 개인키 생성</translation>
+    </message>
+    <message>
+        <source>fail to create RSA private key(%1)</source>
+        <translation>RSA 개인키 생성 실패(%1)</translation>
+    </message>
+    <message>
+        <source>success to create RSA private key</source>
+        <translation>RSA 개인키 생성 성공</translation>
     </message>
 </context>
 <context>
     <name>CreateRSAPubKeyDlg</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>일반</translation>
     </message>
     <message>
         <source>Slot ID</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 ID</translation>
     </message>
     <message>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>세션</translation>
     </message>
     <message>
         <source>Slot status</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 상태</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>로그인</translation>
     </message>
     <message>
         <source>Slot list</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 목록</translation>
     </message>
     <message>
         <source>Public Key</source>
-        <translation type="unfinished"></translation>
+        <translation>공개 키</translation>
     </message>
     <message>
         <source>Exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>Exponent</translation>
     </message>
     <message>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
         <source>Modules</source>
-        <translation type="unfinished"></translation>
+        <translation>모듈</translation>
     </message>
     <message>
         <source>Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>속성</translation>
     </message>
     <message>
         <source>Label</source>
-        <translation type="unfinished"></translation>
+        <translation>라벨</translation>
     </message>
     <message>
         <source>Derive</source>
-        <translation type="unfinished"></translation>
+        <translation>유도</translation>
     </message>
     <message>
         <source>Verify</source>
-        <translation type="unfinished"></translation>
+        <translation>검증</translation>
     </message>
     <message>
         <source>Token</source>
-        <translation type="unfinished"></translation>
+        <translation>토큰</translation>
     </message>
     <message>
         <source>Encrypt</source>
-        <translation type="unfinished"></translation>
+        <translation>암호화</translation>
     </message>
     <message>
         <source>Private</source>
-        <translation type="unfinished"></translation>
+        <translation>개인적</translation>
     </message>
     <message>
         <source>Wrap</source>
-        <translation type="unfinished"></translation>
+        <translation>감싸기</translation>
     </message>
     <message>
         <source>Modifiable</source>
-        <translation type="unfinished"></translation>
+        <translation>변경가능한</translation>
+    </message>
+    <message>
+        <source>Create RSA public key</source>
+        <translation>RSA 공개키 생성</translation>
+    </message>
+    <message>
+        <source>fail to create RSA public key(%1)</source>
+        <translation>RSA 공개키 생성 실패(%1)</translation>
+    </message>
+    <message>
+        <source>Success to create RSA public key</source>
+        <translation>RSA 공개키 생성 성공</translation>
     </message>
 </context>
 <context>
     <name>DecryptDlg</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Key Type</source>
-        <translation type="unfinished"></translation>
+        <translation>키 타입</translation>
     </message>
     <message>
         <source>Slot list</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 목록</translation>
     </message>
     <message>
         <source>Mechanism</source>
-        <translation type="unfinished"></translation>
+        <translation>알고리즘</translation>
     </message>
     <message>
         <source>Label</source>
-        <translation type="unfinished"></translation>
+        <translation>라벨</translation>
     </message>
     <message>
         <source>Slot ID</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 ID</translation>
     </message>
     <message>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>세션</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>로그인</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>닫기</translation>
     </message>
     <message>
         <source>Param</source>
-        <translation type="unfinished"></translation>
+        <translation>파라미터</translation>
     </message>
     <message>
         <source>Input</source>
-        <translation type="unfinished"></translation>
+        <translation>입력</translation>
     </message>
     <message>
         <source>Object</source>
-        <translation type="unfinished"></translation>
+        <translation>대상</translation>
     </message>
     <message>
         <source>Init</source>
-        <translation type="unfinished"></translation>
+        <translation>Init</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Update</translation>
     </message>
     <message>
         <source>Final</source>
-        <translation type="unfinished"></translation>
+        <translation>Final</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation type="unfinished"></translation>
+        <translation>복호화</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished"></translation>
+        <translation>상태</translation>
     </message>
     <message>
         <source>You have to insert data.</source>
-        <translation type="unfinished"></translation>
+        <translation>데이타를 입력하세요</translation>
     </message>
     <message>
         <source>You have to insert data</source>
-        <translation type="unfinished"></translation>
+        <translation>데이타를 입력하세요</translation>
+    </message>
+    <message>
+        <source>fail to run DecryptInit(%1)</source>
+        <translation>DecryptInit 실패(%1)</translation>
+    </message>
+    <message>
+        <source>fail to run DecryptUpdate(%1)</source>
+        <translation>DecryptUpdate 실패(%1)</translation>
+    </message>
+    <message>
+        <source>fail to run DecryptFinal(%1)</source>
+        <translation>DecryptFinal 실패(%1)</translation>
+    </message>
+    <message>
+        <source>fail to run Decrypt(%1)</source>
+        <translation>Decrypt 실패(%1)</translation>
     </message>
 </context>
 <context>
     <name>DelObjectDlg</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Slot ID</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 ID</translation>
     </message>
     <message>
         <source>Slot status</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 상태</translation>
     </message>
     <message>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>세션</translation>
     </message>
     <message>
         <source>Slot list</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 목록</translation>
     </message>
     <message>
         <source>Target Object</source>
-        <translation type="unfinished"></translation>
+        <translation>대상 타겟</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>로그인</translation>
+    </message>
+    <message>
+        <source>Delete object</source>
+        <translation>대상 삭제</translation>
+    </message>
+    <message>
+        <source>fail to delete object(%1)</source>
+        <translation>대상 삭제 실패(%1)</translation>
+    </message>
+    <message>
+        <source>success to delete object</source>
+        <translation>대상 삭제 성공</translation>
     </message>
 </context>
 <context>
     <name>DeriveKeyDlg</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>일반</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>로그인</translation>
     </message>
     <message>
         <source>Label</source>
-        <translation type="unfinished"></translation>
+        <translation>라벨</translation>
     </message>
     <message>
         <source>Param</source>
-        <translation type="unfinished"></translation>
+        <translation>파라미터</translation>
     </message>
     <message>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>세션</translation>
     </message>
     <message>
         <source>Slot ID</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 ID</translation>
     </message>
     <message>
         <source>Slot list</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 목록</translation>
     </message>
     <message>
         <source>Slot status</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 상태</translation>
     </message>
     <message>
         <source>Method</source>
-        <translation type="unfinished"></translation>
+        <translation>방법</translation>
     </message>
     <message>
         <source>Object</source>
-        <translation type="unfinished"></translation>
+        <translation>대상</translation>
     </message>
     <message>
         <source>Source Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>소스 속성</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation type="unfinished"></translation>
+        <translation>키</translation>
     </message>
     <message>
         <source>Private</source>
-        <translation type="unfinished"></translation>
+        <translation>개인적</translation>
     </message>
     <message>
         <source>Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>속성</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>타입</translation>
     </message>
     <message>
         <source>Derived Key</source>
-        <translation type="unfinished"></translation>
+        <translation>유도 키</translation>
     </message>
     <message>
         <source>Modifiable</source>
-        <translation type="unfinished"></translation>
+        <translation>변경가능한</translation>
     </message>
     <message>
         <source>Class</source>
-        <translation type="unfinished"></translation>
+        <translation>클래스</translation>
     </message>
     <message>
         <source>Unwrap</source>
-        <translation type="unfinished"></translation>
+        <translation>풀기</translation>
     </message>
     <message>
         <source>Token</source>
-        <translation type="unfinished"></translation>
+        <translation>토큰</translation>
     </message>
     <message>
         <source>Sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>민감한</translation>
     </message>
     <message>
         <source>Wrap</source>
-        <translation type="unfinished"></translation>
+        <translation>감싸기</translation>
     </message>
     <message>
         <source>Encrypt</source>
-        <translation type="unfinished"></translation>
+        <translation>암호화</translation>
     </message>
     <message>
         <source>Sign</source>
-        <translation type="unfinished"></translation>
+        <translation>서명</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation type="unfinished"></translation>
+        <translation>복호화</translation>
     </message>
     <message>
         <source>Verify</source>
-        <translation type="unfinished"></translation>
+        <translation>검증</translation>
+    </message>
+    <message>
+        <source>Derive key</source>
+        <translation>유도 키</translation>
+    </message>
+    <message>
+        <source>Extractable</source>
+        <translation>추출가능한</translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <translation>ID</translation>
+    </message>
+    <message>
+        <source>KeySize</source>
+        <translation>키 길이</translation>
+    </message>
+    <message>
+        <source>fail to run DeriveKey(%1)</source>
+        <translation>키 유도에 실패(%1)</translation>
+    </message>
+    <message>
+        <source>success to derive key(%1)</source>
+        <translation>키 유도에 성공(%1)</translation>
     </message>
 </context>
 <context>
     <name>DigestDlg</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Mechanism</source>
-        <translation type="unfinished"></translation>
+        <translation>알고리즘</translation>
     </message>
     <message>
         <source>Init</source>
-        <translation type="unfinished"></translation>
+        <translation>Init</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Update</translation>
     </message>
     <message>
         <source>Final</source>
-        <translation type="unfinished"></translation>
+        <translation>Final</translation>
     </message>
     <message>
         <source>Digest</source>
-        <translation type="unfinished"></translation>
+        <translation>Digest</translation>
     </message>
     <message>
         <source>Slot list</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 목록</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>닫기</translation>
     </message>
     <message>
         <source>Slot status</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 상태</translation>
     </message>
     <message>
         <source>Input</source>
-        <translation type="unfinished"></translation>
+        <translation>입력</translation>
     </message>
     <message>
         <source>Slot ID</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 ID</translation>
     </message>
     <message>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>세션</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>로그인</translation>
     </message>
     <message>
         <source>Param</source>
-        <translation type="unfinished"></translation>
+        <translation>파라미터</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished"></translation>
+        <translation>상태</translation>
     </message>
     <message>
         <source>Insert input value.</source>
-        <translation type="unfinished"></translation>
+        <translation>데이타를 입력하세요</translation>
     </message>
     <message>
         <source>You have to insert input value</source>
-        <translation type="unfinished"></translation>
+        <translation>데이타를 입력하세요</translation>
+    </message>
+    <message>
+        <source>fail to run DigestInit(%1)</source>
+        <translation>DigestInit 실패(%1)</translation>
+    </message>
+    <message>
+        <source>fail to run DigestUpdate(%1)</source>
+        <translation>DigestUpdate 실패(%1)</translation>
+    </message>
+    <message>
+        <source>fail to run DigestFinal(%1)</source>
+        <translation>DigestInit 실패(%1)</translation>
+    </message>
+    <message>
+        <source>fail run Digest(%1)</source>
+        <translation>Digest 실패(%1)</translation>
     </message>
 </context>
 <context>
     <name>EditAttributeDlg</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Slot list</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 목록</translation>
     </message>
     <message>
         <source>Attribute</source>
-        <translation type="unfinished"></translation>
+        <translation>속성</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>로그인</translation>
     </message>
     <message>
         <source>Slot ID</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 ID</translation>
     </message>
     <message>
         <source>Slot status</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 상태</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>타입</translation>
     </message>
     <message>
         <source>Session</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Object</source>
-        <translation type="unfinished"></translation>
+        <translation>세션</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>닫기</translation>
     </message>
     <message>
         <source>Get Attribute</source>
-        <translation type="unfinished"></translation>
+        <translation>속성 얻기</translation>
     </message>
     <message>
         <source>Set Attribute</source>
-        <translation type="unfinished"></translation>
+        <translation>속성 설정</translation>
+    </message>
+    <message>
+        <source>Edit attribute</source>
+        <translation>속성 편집</translation>
+    </message>
+    <message>
+        <source>insert object handle</source>
+        <translation>대상 핸들을 입력하세요</translation>
+    </message>
+    <message>
+        <source>fail to get attributes(%1)</source>
+        <translation>속성 가져오기 실패(%1)</translation>
+    </message>
+    <message>
+        <source>fail to set attributes(%1)</source>
+        <translation>속성 설정 실패(%1)</translation>
+    </message>
+    <message>
+        <source>success to set attributes</source>
+        <translation>속성 설정 성공</translation>
     </message>
 </context>
 <context>
     <name>EncryptDlg</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Label</source>
-        <translation type="unfinished"></translation>
+        <translation>라벨</translation>
     </message>
     <message>
         <source>Param</source>
-        <translation type="unfinished"></translation>
+        <translation>파라미터</translation>
     </message>
     <message>
         <source>Key Type</source>
-        <translation type="unfinished"></translation>
+        <translation>키 타입</translation>
     </message>
     <message>
         <source>Input</source>
-        <translation type="unfinished"></translation>
+        <translation>입력</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>닫기</translation>
     </message>
     <message>
         <source>Object</source>
-        <translation type="unfinished"></translation>
+        <translation>대상</translation>
     </message>
     <message>
         <source>Slot list</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 목록</translation>
     </message>
     <message>
         <source>Slot ID</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 ID</translation>
     </message>
     <message>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>세션</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>로그인</translation>
     </message>
     <message>
         <source>Mechanism</source>
-        <translation type="unfinished"></translation>
+        <translation>알고리즘</translation>
     </message>
     <message>
         <source>Init</source>
-        <translation type="unfinished"></translation>
+        <translation>Init</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Update</translation>
     </message>
     <message>
         <source>Final</source>
-        <translation type="unfinished"></translation>
+        <translation>Final</translation>
     </message>
     <message>
         <source>Encrypt</source>
-        <translation type="unfinished"></translation>
+        <translation>암호화</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished"></translation>
+        <translation>상태</translation>
     </message>
     <message>
         <source>You have to insert data.</source>
-        <translation type="unfinished"></translation>
+        <translation>데이타를 입력하세요</translation>
+    </message>
+    <message>
+        <source>fail to run EncryptInit(%1)</source>
+        <translation>EncryptInit 실패(%1)</translation>
+    </message>
+    <message>
+        <source>fail to run EncryptUpdate(%1)</source>
+        <translation>EncryptUpdate 실패(%1)</translation>
+    </message>
+    <message>
+        <source>fail to run EncryptFinal(%1)</source>
+        <translation>EncryptFinal 실패(%1)</translation>
+    </message>
+    <message>
+        <source>fail to run Encrypt(%1)</source>
+        <translation>Encrypt 실패(%1)</translation>
     </message>
 </context>
 <context>
     <name>GenKeyDlg</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>일반</translation>
     </message>
     <message>
         <source>Slot list</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 목록</translation>
     </message>
     <message>
         <source>Slot ID</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 ID</translation>
     </message>
     <message>
         <source>Slot status</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 상태</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>로그인</translation>
     </message>
     <message>
         <source>Mechanism</source>
-        <translation type="unfinished"></translation>
+        <translation>알고리즘</translation>
     </message>
     <message>
         <source>Parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>파라미터</translation>
     </message>
     <message>
         <source>Secret Key</source>
-        <translation type="unfinished"></translation>
+        <translation>비밀 키</translation>
     </message>
     <message>
         <source>Label</source>
-        <translation type="unfinished"></translation>
+        <translation>라벨</translation>
     </message>
     <message>
         <source>Token</source>
-        <translation type="unfinished"></translation>
+        <translation>토큰</translation>
     </message>
     <message>
         <source>Wrap</source>
-        <translation type="unfinished"></translation>
+        <translation>감싸기</translation>
     </message>
     <message>
         <source>Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>속성</translation>
     </message>
     <message>
         <source>Modifiable</source>
-        <translation type="unfinished"></translation>
+        <translation>변경가능한</translation>
     </message>
     <message>
         <source>Sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>민감한</translation>
     </message>
     <message>
         <source>Unwrap</source>
-        <translation type="unfinished"></translation>
+        <translation>풀기</translation>
     </message>
     <message>
         <source>Private</source>
-        <translation type="unfinished"></translation>
+        <translation>개인적</translation>
     </message>
     <message>
         <source>Encrypt</source>
-        <translation type="unfinished"></translation>
+        <translation>암호화</translation>
     </message>
     <message>
         <source>Sign</source>
-        <translation type="unfinished"></translation>
+        <translation>서명</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation type="unfinished"></translation>
+        <translation>복호화</translation>
     </message>
     <message>
         <source>Verify</source>
-        <translation type="unfinished"></translation>
+        <translation>검증</translation>
     </message>
     <message>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>세션</translation>
     </message>
     <message>
         <source>Key size</source>
-        <translation type="unfinished"></translation>
+        <translation>키 길이</translation>
+    </message>
+    <message>
+        <source>Generate key</source>
+        <translation>키 생성</translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <translation>ID</translation>
+    </message>
+    <message>
+        <source>Extractable</source>
+        <translation>추출가능한</translation>
+    </message>
+    <message>
+        <source>fail to generate key(%1)</source>
+        <translation>키 생성 실패(%1)</translation>
+    </message>
+    <message>
+        <source>Success to genereate Key</source>
+        <translation>키 생성 성공</translation>
     </message>
 </context>
 <context>
     <name>GenKeyPairDlg</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>일반</translation>
     </message>
     <message>
         <source>Slot status</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 상태</translation>
     </message>
     <message>
         <source>Slot ID</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 ID</translation>
     </message>
     <message>
         <source>Mechanism</source>
-        <translation type="unfinished"></translation>
+        <translation>알고리즘</translation>
     </message>
     <message>
         <source>Key size</source>
-        <translation type="unfinished"></translation>
+        <translation>키 길이</translation>
     </message>
     <message>
         <source>Slot list</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 목록</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>로그인</translation>
     </message>
     <message>
         <source>Private Key</source>
-        <translation type="unfinished"></translation>
+        <translation>개인 키</translation>
     </message>
     <message>
         <source>Sign</source>
-        <translation type="unfinished"></translation>
+        <translation>서명</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation type="unfinished"></translation>
+        <translation>복호화</translation>
     </message>
     <message>
         <source>Label</source>
-        <translation type="unfinished"></translation>
+        <translation>라벨</translation>
     </message>
     <message>
         <source>Unwrap</source>
-        <translation type="unfinished"></translation>
+        <translation>풀기</translation>
     </message>
     <message>
         <source>Private</source>
-        <translation type="unfinished"></translation>
+        <translation>개인적</translation>
     </message>
     <message>
         <source>Subject</source>
-        <translation type="unfinished"></translation>
+        <translation>주체</translation>
     </message>
     <message>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
         <source>Derive</source>
-        <translation type="unfinished"></translation>
+        <translation>유도</translation>
     </message>
     <message>
         <source>Modifiable</source>
-        <translation type="unfinished"></translation>
+        <translation>변경가능한</translation>
     </message>
     <message>
         <source>Extractable</source>
-        <translation type="unfinished"></translation>
+        <translation>추출가능한</translation>
     </message>
     <message>
         <source>Sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>민감한</translation>
     </message>
     <message>
         <source>Token</source>
-        <translation type="unfinished"></translation>
+        <translation>토큰</translation>
     </message>
     <message>
         <source>Public Key</source>
-        <translation type="unfinished"></translation>
+        <translation>공개 키</translation>
     </message>
     <message>
         <source>Exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>Exponent</translation>
     </message>
     <message>
         <source>Encrypt</source>
-        <translation type="unfinished"></translation>
+        <translation>암호화</translation>
     </message>
     <message>
         <source>Verify</source>
-        <translation type="unfinished"></translation>
+        <translation>검증</translation>
     </message>
     <message>
         <source>Wrap</source>
-        <translation type="unfinished"></translation>
+        <translation>감싸기</translation>
     </message>
     <message>
         <source>Key Information</source>
-        <translation type="unfinished"></translation>
+        <translation>키 정보</translation>
     </message>
     <message>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>세션</translation>
     </message>
     <message>
         <source>Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>속성</translation>
     </message>
     <message>
-        <source>failed to generate key pairs</source>
-        <translation type="unfinished"></translation>
+        <source>Generate key pair</source>
+        <translation>키 쌍 생성</translation>
+    </message>
+    <message>
+        <source>failure to generate key pairs(rv:%1)</source>
+        <translation>키 쌍 생성 실패(rv:%1)</translation>
+    </message>
+    <message>
+        <source>Success to generate key pairs</source>
+        <translation>키 쌍 생성 성공</translation>
     </message>
 </context>
 <context>
     <name>ImportCertDlg</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cert Path</source>
-        <translation type="unfinished"></translation>
+        <translation>인증서 경로</translation>
     </message>
     <message>
         <source>Slot status</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 상태</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>로그인</translation>
     </message>
     <message>
         <source>Slot list</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 목록</translation>
     </message>
     <message>
         <source>Private</source>
-        <translation type="unfinished"></translation>
+        <translation>개인적</translation>
     </message>
     <message>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
         <source>Token</source>
-        <translation type="unfinished"></translation>
+        <translation>토큰</translation>
     </message>
     <message>
         <source>Modifiable</source>
-        <translation type="unfinished"></translation>
+        <translation>변경가능한</translation>
     </message>
     <message>
         <source>Sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>민감한</translation>
     </message>
     <message>
         <source>Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>속성</translation>
     </message>
     <message>
         <source>Find</source>
-        <translation type="unfinished"></translation>
+        <translation>찾기</translation>
     </message>
     <message>
         <source>Slot ID</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 ID</translation>
     </message>
     <message>
         <source>Label</source>
-        <translation type="unfinished"></translation>
+        <translation>라벨</translation>
     </message>
     <message>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>세션</translation>
     </message>
     <message>
         <source>You have to select certificate file.</source>
-        <translation type="unfinished"></translation>
+        <translation>인증서를 선택 하세요</translation>
     </message>
     <message>
-        <source>QFileDialog::getOpenFileName()</source>
-        <translation type="unfinished"></translation>
+        <source>Import certificate</source>
+        <translation>인증서 가져오기</translation>
     </message>
     <message>
-        <source>DLL Files (*.dll);;All Files (*.*)</source>
-        <translation type="unfinished"></translation>
+        <source>Subject</source>
+        <translation>주체</translation>
+    </message>
+    <message>
+        <source>fail to create certificate(%1)</source>
+        <translation>인증서 생성 실패(%1)</translation>
+    </message>
+    <message>
+        <source>success to create certificate</source>
+        <translation>인증서 생성 성공</translation>
+    </message>
+    <message>
+        <source>DER Files (*.der);;BER Files (*.ber);;All Files (*.*)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Certificate</source>
+        <translation>인증서</translation>
     </message>
 </context>
 <context>
     <name>ImportPFXDlg</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>일반</translation>
     </message>
     <message>
         <source>Slot list</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 목록</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>로그인</translation>
     </message>
     <message>
         <source>Slot status</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 상태</translation>
     </message>
     <message>
         <source>Slot ID</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 ID</translation>
     </message>
     <message>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>세션</translation>
     </message>
     <message>
         <source>PFX Path</source>
-        <translation type="unfinished"></translation>
+        <translation>PFX 경로</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>암호</translation>
     </message>
     <message>
         <source>Find</source>
-        <translation type="unfinished"></translation>
+        <translation>찾기</translation>
     </message>
     <message>
         <source>Certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>인증서</translation>
     </message>
     <message>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
         <source>Label</source>
-        <translation type="unfinished"></translation>
+        <translation>라벨</translation>
     </message>
     <message>
         <source>Sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>민감한</translation>
     </message>
     <message>
         <source>Token</source>
-        <translation type="unfinished"></translation>
+        <translation>토큰</translation>
     </message>
     <message>
         <source>Private</source>
-        <translation type="unfinished"></translation>
+        <translation>개인적</translation>
     </message>
     <message>
         <source>Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>속성</translation>
     </message>
     <message>
         <source>Modifiable</source>
-        <translation type="unfinished"></translation>
+        <translation>변경가능한</translation>
     </message>
     <message>
         <source>Private Key</source>
-        <translation type="unfinished"></translation>
+        <translation>개인 키</translation>
     </message>
     <message>
         <source>Unwrap</source>
-        <translation type="unfinished"></translation>
+        <translation>풀기</translation>
     </message>
     <message>
         <source>Derive</source>
-        <translation type="unfinished"></translation>
+        <translation>유도</translation>
     </message>
     <message>
         <source>Sign</source>
-        <translation type="unfinished"></translation>
+        <translation>서명</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation type="unfinished"></translation>
+        <translation>복호화</translation>
     </message>
     <message>
         <source>Subject</source>
-        <translation type="unfinished"></translation>
+        <translation>주체</translation>
     </message>
     <message>
         <source>Extractable</source>
-        <translation type="unfinished"></translation>
+        <translation>추출가능한</translation>
     </message>
     <message>
         <source>Public Key</source>
-        <translation type="unfinished"></translation>
+        <translation>공개 키</translation>
     </message>
     <message>
         <source>Wrap</source>
-        <translation type="unfinished"></translation>
+        <translation>감싸기</translation>
     </message>
     <message>
         <source>Verify</source>
-        <translation type="unfinished"></translation>
+        <translation>검증</translation>
     </message>
     <message>
         <source>Encrypt</source>
-        <translation type="unfinished"></translation>
+        <translation>암호화</translation>
     </message>
     <message>
         <source>You have to select pfx file.</source>
-        <translation type="unfinished"></translation>
+        <translation>pfx 파일을 선택하세요</translation>
     </message>
     <message>
         <source>You have to insert password.</source>
-        <translation type="unfinished"></translation>
+        <translation>암호를 입력하세요</translation>
     </message>
     <message>
         <source>fail to decode PFX</source>
-        <translation type="unfinished"></translation>
+        <translation>PFX 파일 디코딩 실패</translation>
     </message>
     <message>
         <source>fail to get key information</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>QFileDialog::getOpenFileName()</source>
-        <translation type="unfinished"></translation>
+        <translation>키 정보 가져오기 실패</translation>
     </message>
     <message>
         <source>DLL Files (*.dll);;All Files (*.*)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Import PFX</source>
+        <translation>PFX 가져오기</translation>
+    </message>
+    <message>
+        <source>success to import pfx file</source>
+        <translation>pfx 파일 가져오기 성공</translation>
+    </message>
+    <message>
+        <source>fail to create certificate(%1)</source>
+        <translation>인증서 생성 실패(%1)</translation>
+    </message>
+    <message>
+        <source>fail to create RSA public key(%1)</source>
+        <translation>RSA 공개키 생성 실패(%1)</translation>
+    </message>
+    <message>
+        <source>fail to create RSA private key(%1)</source>
+        <translation>RSA 개인키 생성 실패(%1)</translation>
+    </message>
+    <message>
+        <source>fail to create EC public key(%1)</source>
+        <translation>EC 공개키 생성 실패(%1)</translation>
+    </message>
+    <message>
+        <source>fail to create EC private key(%1)</source>
+        <translation>EC 개인키 생성 실패(%1)</translation>
+    </message>
+    <message>
+        <source>PFX</source>
+        <translation>PFX</translation>
     </message>
 </context>
 <context>
     <name>ImportPriKeyDlg</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>일반</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>로그인</translation>
     </message>
     <message>
         <source>Slot ID</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 ID</translation>
     </message>
     <message>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>세션</translation>
     </message>
     <message>
         <source>Slot list</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 목록</translation>
     </message>
     <message>
         <source>Slot status</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 상태</translation>
     </message>
     <message>
         <source>Find</source>
-        <translation type="unfinished"></translation>
+        <translation>찾기</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation>경로</translation>
     </message>
     <message>
         <source>Private Key</source>
-        <translation type="unfinished"></translation>
+        <translation>개인 키</translation>
     </message>
     <message>
         <source>Private</source>
-        <translation type="unfinished"></translation>
+        <translation>개인적</translation>
     </message>
     <message>
         <source>Unwrap</source>
-        <translation type="unfinished"></translation>
+        <translation>풀기</translation>
     </message>
     <message>
         <source>Sign</source>
-        <translation type="unfinished"></translation>
+        <translation>서명</translation>
     </message>
     <message>
         <source>Subject</source>
-        <translation type="unfinished"></translation>
+        <translation>주체</translation>
     </message>
     <message>
         <source>Label</source>
-        <translation type="unfinished"></translation>
+        <translation>라벨</translation>
     </message>
     <message>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation type="unfinished"></translation>
+        <translation>복호화</translation>
     </message>
     <message>
         <source>Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>속성</translation>
     </message>
     <message>
         <source>Derive</source>
-        <translation type="unfinished"></translation>
+        <translation>유도</translation>
     </message>
     <message>
         <source>Modifiable</source>
-        <translation type="unfinished"></translation>
+        <translation>변경가능한</translation>
     </message>
     <message>
         <source>Extractable</source>
-        <translation type="unfinished"></translation>
+        <translation>추출가능한</translation>
     </message>
     <message>
         <source>Sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>민감한</translation>
     </message>
     <message>
         <source>Token</source>
-        <translation type="unfinished"></translation>
+        <translation>토큰</translation>
     </message>
     <message>
         <source>Public Key</source>
-        <translation type="unfinished"></translation>
+        <translation>공개 키</translation>
     </message>
     <message>
         <source>Verify</source>
-        <translation type="unfinished"></translation>
+        <translation>검증</translation>
     </message>
     <message>
         <source>Wrap</source>
-        <translation type="unfinished"></translation>
+        <translation>감싸기</translation>
     </message>
     <message>
         <source>Encrypt</source>
-        <translation type="unfinished"></translation>
+        <translation>암호화</translation>
     </message>
     <message>
         <source>You have to select private key file.</source>
-        <translation type="unfinished"></translation>
+        <translation>개인키 파일을 선택하세요</translation>
     </message>
     <message>
         <source>fail to get key information.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>QFileDialog::getOpenFileName()</source>
-        <translation type="unfinished"></translation>
+        <translation>키 정보 가져오기 실패</translation>
     </message>
     <message>
         <source>DLL Files (*.dll);;All Files (*.*)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Import private key</source>
+        <translation>개인키 가져오기</translation>
+    </message>
+    <message>
+        <source>success to import private key</source>
+        <translation>개인키 가져오기 성공</translation>
+    </message>
+    <message>
+        <source>fail to create RSA public key(%1)</source>
+        <translation>RSA 공개키 생성 실패(%1)</translation>
+    </message>
+    <message>
+        <source>fail to create RSA private key(%1)</source>
+        <translation>RSA 개인키 생성 실패(%1)</translation>
+    </message>
+    <message>
+        <source>fail to create EC public key(%1)</source>
+        <translation>EC 공개키 생성 실패(%1)</translation>
+    </message>
+    <message>
+        <source>fail to create EC private key(%1)</source>
+        <translation>EC 개인키 생성 실패(%1)</translation>
     </message>
 </context>
 <context>
     <name>InitPinDlg</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>PIN number</source>
-        <translation type="unfinished"></translation>
+        <translation>PIN 번호</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>로그인</translation>
     </message>
     <message>
         <source>Slot status</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 상태</translation>
     </message>
     <message>
         <source>Slot ID</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 ID</translation>
     </message>
     <message>
         <source>Slot list</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 목록</translation>
     </message>
     <message>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>세션</translation>
     </message>
     <message>
         <source>Insert pin value</source>
-        <translation type="unfinished"></translation>
+        <translation>핀 값을 입력하세요</translation>
     </message>
     <message>
         <source>fail to run InitPIN(%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>InitPIN 실패(%1)</translation>
     </message>
     <message>
         <source>Success to run InitPIN</source>
-        <translation type="unfinished"></translation>
+        <translation>InitPIN 성공</translation>
+    </message>
+    <message>
+        <source>Initialize pin</source>
+        <translation>핀 초기화</translation>
     </message>
 </context>
 <context>
     <name>InitTokenDlg</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Slot ID</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 ID</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>로그인</translation>
     </message>
     <message>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>세션</translation>
     </message>
     <message>
         <source>Slot list</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 목록</translation>
     </message>
     <message>
         <source>PIN</source>
-        <translation type="unfinished"></translation>
+        <translation>핀</translation>
     </message>
     <message>
         <source>Label</source>
-        <translation type="unfinished"></translation>
+        <translation>라벨</translation>
     </message>
     <message>
         <source>Slot status</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 상태</translation>
     </message>
     <message>
         <source>Token properties</source>
-        <translation type="unfinished"></translation>
+        <translation>토큰 속성</translation>
     </message>
     <message>
         <source>You have to insert PIN.</source>
-        <translation type="unfinished"></translation>
+        <translation>핀을 입력하세요</translation>
     </message>
     <message>
         <source>You have to insert label.</source>
-        <translation type="unfinished"></translation>
+        <translation>라벨을 입력하세요</translation>
     </message>
     <message>
         <source>fail to initialize token(%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>토큰 초기화 실패(%1)</translation>
+    </message>
+    <message>
+        <source>Initialize token</source>
+        <translation>토큰 초기화</translation>
     </message>
 </context>
 <context>
     <name>LogViewDlg</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>다시 불러오기</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>저장</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>지우기</translation>
+    </message>
+    <message>
+        <source>view log</source>
+        <translation>로그 보기</translation>
     </message>
 </context>
 <context>
     <name>LoginDlg</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Slot list</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 목록</translation>
     </message>
     <message>
         <source>Slot &amp; Session</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 및 세션</translation>
     </message>
     <message>
         <source>Slot ID</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 ID</translation>
     </message>
     <message>
         <source>Session Handle</source>
-        <translation type="unfinished"></translation>
+        <translation>세션 핸들</translation>
     </message>
     <message>
         <source>Login Type and PIN</source>
-        <translation type="unfinished"></translation>
+        <translation>로그인 타입 및 핀</translation>
     </message>
     <message>
         <source>User</source>
-        <translation type="unfinished"></translation>
+        <translation>사용자</translation>
     </message>
     <message>
         <source>SO</source>
-        <translation type="unfinished"></translation>
+        <translation>SO</translation>
     </message>
     <message>
         <source>PIN</source>
-        <translation type="unfinished"></translation>
+        <translation>핀</translation>
     </message>
     <message>
         <source>Login is success</source>
-        <translation type="unfinished"></translation>
+        <translation>로그인 성공</translation>
     </message>
     <message>
         <source>Login is failure</source>
-        <translation type="unfinished"></translation>
+        <translation>로그인 실패</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translation>로그인</translation>
     </message>
 </context>
 <context>
     <name>LogoutDlg</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>로그인</translation>
     </message>
     <message>
         <source>Slot status</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 상태</translation>
     </message>
     <message>
         <source>Slot ID</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 ID</translation>
     </message>
     <message>
         <source>Slot list</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 목록</translation>
     </message>
     <message>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>세션</translation>
     </message>
     <message>
         <source>Logout is success</source>
-        <translation type="unfinished"></translation>
+        <translation>로그 아웃 성공</translation>
     </message>
     <message>
         <source>Logout is failure</source>
-        <translation type="unfinished"></translation>
+        <translation>로그 아웃 실패</translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <translation>로그 아웃</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <source>MainWindow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Field</source>
-        <translation type="unfinished"></translation>
+        <translation>필드</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>값</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>파일(&amp;F)</translation>
     </message>
     <message>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>파일</translation>
     </message>
     <message>
         <source>&amp;New</source>
-        <translation type="unfinished"></translation>
+        <translation>새로 불러오기(&amp;N)</translation>
     </message>
     <message>
         <source>Create a new file</source>
-        <translation type="unfinished"></translation>
+        <translation>새 파일 만들기</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
-        <translation type="unfinished"></translation>
+        <translation>열기(&amp;O)</translation>
     </message>
     <message>
         <source>Open an existing file</source>
-        <translation type="unfinished"></translation>
+        <translation>존재 하는 파일 열기</translation>
     </message>
     <message>
         <source>Unload</source>
-        <translation type="unfinished"></translation>
+        <translation>내리기</translation>
     </message>
     <message>
         <source>Unload cryptoki library</source>
-        <translation type="unfinished"></translation>
+        <translation>cryptoki 라이브러리 내리기</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>끝내기(&amp;Q)</translation>
     </message>
     <message>
         <source>Quit HsmMan</source>
-        <translation type="unfinished"></translation>
+        <translation>HsmMan 끝내기</translation>
     </message>
     <message>
         <source>&amp;Module</source>
-        <translation type="unfinished"></translation>
+        <translation>모듈(&amp;M)</translation>
     </message>
     <message>
         <source>Module</source>
-        <translation type="unfinished"></translation>
+        <translation>모듈</translation>
     </message>
     <message>
         <source>P11Initialize</source>
-        <translation type="unfinished"></translation>
+        <translation>P11 Initialize</translation>
     </message>
     <message>
         <source>PKCS11 initialize</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS11 initialize</translation>
     </message>
     <message>
         <source>P11Finalize</source>
-        <translation type="unfinished"></translation>
+        <translation>P11 Finalize</translation>
     </message>
     <message>
         <source>PKCS11 finalize</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS11 finalize</translation>
     </message>
     <message>
         <source>Open Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Open Session</translation>
     </message>
     <message>
         <source>PKCS11 Open Session</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS11 Open Session</translation>
     </message>
     <message>
         <source>Close Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Close Session</translation>
     </message>
     <message>
         <source>PKCS11 Close Session</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS11 Close Session</translation>
     </message>
     <message>
         <source>Close All Sessions</source>
-        <translation type="unfinished"></translation>
+        <translation>Close All Sessions</translation>
     </message>
     <message>
         <source>PKCS11 Close All Sessions</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS11 Close All Sessions</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>로그인</translation>
     </message>
     <message>
         <source>PKCS11 Login</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS11 Loging</translation>
     </message>
     <message>
         <source>Logout</source>
-        <translation type="unfinished"></translation>
+        <translation>로그 아웃</translation>
     </message>
     <message>
         <source>&amp;Objects</source>
-        <translation type="unfinished"></translation>
+        <translation>오브젝트(&amp;O)</translation>
     </message>
     <message>
         <source>Objects</source>
-        <translation type="unfinished"></translation>
+        <translation>대상</translation>
     </message>
     <message>
         <source>Generate Key Pair</source>
-        <translation type="unfinished"></translation>
+        <translation>키 쌍 생성</translation>
     </message>
     <message>
         <source>PKCS11 Generate KeyPair</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS11 키 쌍 생성</translation>
     </message>
     <message>
         <source>Generate Key</source>
-        <translation type="unfinished"></translation>
+        <translation>키 생성</translation>
     </message>
     <message>
         <source>PKCS11 Generate Key</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS11 키 생성</translation>
     </message>
     <message>
         <source>Ready</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>SLot List</source>
-        <translation type="unfinished"></translation>
+        <translation>준비</translation>
     </message>
     <message>
         <source>CryptokiToken</source>
-        <translation type="unfinished"></translation>
+        <translation>CryptokiToken</translation>
     </message>
     <message>
         <source>Create Data</source>
-        <translation type="unfinished"></translation>
+        <translation>데이타 생성</translation>
     </message>
     <message>
         <source>PKCS11 Create Data</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS11 데이타 생성</translation>
     </message>
     <message>
         <source>Create RSA Public Key</source>
-        <translation type="unfinished"></translation>
+        <translation>RSA 공개키 생성</translation>
     </message>
     <message>
         <source>PKCS11 Create RSA Public key</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS11 RSA 공개키 생성</translation>
     </message>
     <message>
         <source>Create RSA Private Key</source>
-        <translation type="unfinished"></translation>
+        <translation>RSA 개인 키 생성</translation>
     </message>
     <message>
         <source>PKCS11 Create RSA Private key</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS11 RSA 개인 키 생성</translation>
     </message>
     <message>
         <source>Create EC Public Key</source>
-        <translation type="unfinished"></translation>
+        <translation>EC 공개 키 생성</translation>
     </message>
     <message>
         <source>PKCS11 Create EC Public key</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS11 EC 공개 키 생성</translation>
     </message>
     <message>
         <source>Create EC Private Key</source>
-        <translation type="unfinished"></translation>
+        <translation>EC 개인 키 생성</translation>
     </message>
     <message>
         <source>PKCS11 Create EC Private key</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS11 EC 개인 키 생성</translation>
     </message>
     <message>
         <source>Create Key</source>
-        <translation type="unfinished"></translation>
+        <translation>키 생성</translation>
     </message>
     <message>
         <source>PKCS11 Create Key</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS11 키 생성</translation>
     </message>
     <message>
         <source>Delete Object</source>
-        <translation type="unfinished"></translation>
+        <translation>대상 삭제</translation>
     </message>
     <message>
         <source>PKCS11 Delete Object</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS11 대상 삭제</translation>
     </message>
     <message>
         <source>Edit Attribute</source>
-        <translation type="unfinished"></translation>
+        <translation>속성 편집</translation>
     </message>
     <message>
         <source>PKCS11 Edit Attribute</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS11 속성 편집</translation>
     </message>
     <message>
         <source>&amp;Crypt</source>
-        <translation type="unfinished"></translation>
+        <translation>암호(&amp;C)</translation>
     </message>
     <message>
         <source>Crypt</source>
-        <translation type="unfinished"></translation>
+        <translation>암호</translation>
     </message>
     <message>
         <source>Digest</source>
-        <translation type="unfinished"></translation>
+        <translation>Digest</translation>
     </message>
     <message>
         <source>PKCS11 Digest</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS11 Digest</translation>
     </message>
     <message>
         <source>Signature</source>
-        <translation type="unfinished"></translation>
+        <translation>서명</translation>
     </message>
     <message>
         <source>PKCS11 Signature</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS11 서명</translation>
     </message>
     <message>
         <source>Verify</source>
-        <translation type="unfinished"></translation>
+        <translation>검증</translation>
     </message>
     <message>
         <source>PKCS11 Verify</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS11 검증</translation>
     </message>
     <message>
         <source>Encrypt</source>
-        <translation type="unfinished"></translation>
+        <translation>암호화</translation>
     </message>
     <message>
         <source>PKCS11 Encrypt</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS11 암호화</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation type="unfinished"></translation>
+        <translation>복호화</translation>
     </message>
     <message>
         <source>PKCS11 Decrypt</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS11 복호화</translation>
     </message>
     <message>
         <source>&amp;Import</source>
-        <translation type="unfinished"></translation>
+        <translation>가져오기(&amp;I)</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>가져오기</translation>
     </message>
     <message>
         <source>Import certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>인증서 가져오기</translation>
     </message>
     <message>
         <source>PKCS11 import certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>PCS11 인증서 가져오기</translation>
     </message>
     <message>
         <source>Import PFX</source>
-        <translation type="unfinished"></translation>
+        <translation>PFX 가져오기</translation>
     </message>
     <message>
         <source>PKCS11 import PFX</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS11 PFX 가져오기</translation>
     </message>
     <message>
         <source>Import Private Key</source>
-        <translation type="unfinished"></translation>
+        <translation>개인키 가져오기</translation>
     </message>
     <message>
         <source>PKCS11 import private key</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS11 개인키 가져오기</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>도구(&amp;T)</translation>
     </message>
     <message>
         <source>Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>도구</translation>
     </message>
     <message>
         <source>Initialize Token</source>
-        <translation type="unfinished"></translation>
+        <translation>토큰 초기화</translation>
     </message>
     <message>
         <source>PKCS11 Initialize token</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS11 토큰 초기화</translation>
     </message>
     <message>
         <source>Random</source>
-        <translation type="unfinished"></translation>
+        <translation>랜덤</translation>
     </message>
     <message>
         <source>PKCS11 Random</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS11 랜덤</translation>
     </message>
     <message>
         <source>Set PIN</source>
-        <translation type="unfinished"></translation>
+        <translation>Set PIN</translation>
     </message>
     <message>
         <source>PKCS11 set PIN</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS11 Set PIN</translation>
     </message>
     <message>
         <source>Init PIN</source>
-        <translation type="unfinished"></translation>
+        <translation>Init PIN</translation>
     </message>
     <message>
         <source>PKCS11 init PIN</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS11 Init PIN</translation>
     </message>
     <message>
         <source>Wrap Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Wrap Key</translation>
     </message>
     <message>
         <source>PKCS11 wrap key</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS11 WrapKey</translation>
     </message>
     <message>
         <source>Unwrap Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Unwrap Key</translation>
     </message>
     <message>
         <source>PKCS11 unwrap key</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS11 Unwrap Key</translation>
     </message>
     <message>
         <source>Derive Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Derive Key</translation>
     </message>
     <message>
         <source>PKCS11 derive key</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS11 derive key</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>도움말(&amp;H)</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>도움말</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>에 대해</translation>
     </message>
     <message>
         <source>About HsmMan</source>
-        <translation type="unfinished"></translation>
+        <translation>HsmMan 에 대해서</translation>
     </message>
     <message>
         <source>Log View</source>
-        <translation type="unfinished"></translation>
+        <translation>로그 보기</translation>
     </message>
     <message>
         <source>view log for PKCS11</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS11 에 대한 로그 보기</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>설정</translation>
     </message>
     <message>
         <source>Settings HsmMan</source>
-        <translation type="unfinished"></translation>
+        <translation>HsmMan 설정</translation>
+    </message>
+    <message>
+        <source>HsmMan</source>
+        <translation>HsmMan</translation>
+    </message>
+    <message>
+        <source>Open cryptoki file</source>
+        <translation>cryptoki 파일 열기</translation>
     </message>
 </context>
 <context>
     <name>ManApplet</name>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>확인</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>예</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>아니오</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>취소</translation>
     </message>
 </context>
 <context>
     <name>ManTreeModel</name>
     <message>
-        <source>SLot List</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>No slot</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 없음</translation>
     </message>
 </context>
 <context>
     <name>ManTreeView</name>
     <message>
         <source>P11Initialize</source>
-        <translation type="unfinished"></translation>
+        <translation>P11Initialize</translation>
     </message>
     <message>
         <source>P11Finalize</source>
-        <translation type="unfinished"></translation>
+        <translation>P11Finalize</translation>
+    </message>
+    <message>
+        <source>InitializeToken</source>
+        <translation>InitializeToken</translation>
+    </message>
+    <message>
+        <source>InitPin</source>
+        <translation>InitPin</translation>
+    </message>
+    <message>
+        <source>SetPin</source>
+        <translation>SetPin</translation>
+    </message>
+    <message>
+        <source>Digest</source>
+        <translation>Digest</translation>
+    </message>
+    <message>
+        <source>Random</source>
+        <translation>Random</translation>
+    </message>
+    <message>
+        <source>OpenSession</source>
+        <translation>OpenSession</translation>
+    </message>
+    <message>
+        <source>CloseSession</source>
+        <translation>CloseSession</translation>
+    </message>
+    <message>
+        <source>CloseAllSessions</source>
+        <translation>CloseAllSessions</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translation>로그인</translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <translation>Logout</translation>
+    </message>
+    <message>
+        <source>GenerateKeyPair</source>
+        <translation>키 쌍 생성</translation>
+    </message>
+    <message>
+        <source>GenerateKey</source>
+        <translation>키 생성</translation>
+    </message>
+    <message>
+        <source>CreateData</source>
+        <translation>데이타 생성</translation>
+    </message>
+    <message>
+        <source>CreateRSAPublicKey</source>
+        <translation>RSA 공개키 생성</translation>
+    </message>
+    <message>
+        <source>CreateRSAPrivateKey</source>
+        <translation>RSA 개인키 생성</translation>
+    </message>
+    <message>
+        <source>CreateECPublicKey</source>
+        <translation>RSA 공개키 생성</translation>
+    </message>
+    <message>
+        <source>CreateECPrivateKey</source>
+        <translation>RSA 개인키 생성</translation>
+    </message>
+    <message>
+        <source>CreateKey</source>
+        <translation>키 생성</translation>
+    </message>
+    <message>
+        <source>ImportPFX</source>
+        <translation>PFX 가져오기</translation>
+    </message>
+    <message>
+        <source>ImportCert</source>
+        <translation>인증서 가져오기</translation>
+    </message>
+    <message>
+        <source>ImportPrivateKey</source>
+        <translation>개인키 가져오기</translation>
+    </message>
+    <message>
+        <source>DeleteObject</source>
+        <translation>대상 삭제</translation>
+    </message>
+    <message>
+        <source>EditAttribute</source>
+        <translation>속성 편집</translation>
+    </message>
+    <message>
+        <source>Verify</source>
+        <translation>검증</translation>
+    </message>
+    <message>
+        <source>Encrypt</source>
+        <translation>암호화</translation>
+    </message>
+    <message>
+        <source>Sign</source>
+        <translation>서명</translation>
+    </message>
+    <message>
+        <source>Decrypt</source>
+        <translation>복호화</translation>
+    </message>
+    <message>
+        <source>WrapKey</source>
+        <translation>Wrap Key</translation>
+    </message>
+    <message>
+        <source>UnwrapKey</source>
+        <translation>Unwrap Key</translation>
+    </message>
+    <message>
+        <source>DeriveKey</source>
+        <translation>Derive Key</translation>
     </message>
 </context>
 <context>
     <name>OpenSessionDlg</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Select slot</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 선택</translation>
     </message>
     <message>
         <source>Check flags</source>
-        <translation type="unfinished"></translation>
+        <translation>플래그 체크</translation>
     </message>
     <message>
         <source>CKF_SERIAL_SESSION</source>
-        <translation type="unfinished"></translation>
+        <translation>CKF_SERIAL_SESSION</translation>
     </message>
     <message>
         <source>CKF_RW_SESSION</source>
-        <translation type="unfinished"></translation>
+        <translation>CKF_RW_SESSION</translation>
     </message>
     <message>
         <source>OpenSession is success</source>
-        <translation type="unfinished"></translation>
+        <translation>OpenSession 성공</translation>
     </message>
     <message>
         <source>OpenSession is failure</source>
-        <translation type="unfinished"></translation>
+        <translation>OpenSession 실패</translation>
+    </message>
+    <message>
+        <source>Open session</source>
+        <translation>Open Session</translation>
     </message>
 </context>
 <context>
     <name>RandDlg</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Slot status</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 상태</translation>
     </message>
     <message>
         <source>Slot list</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 목록</translation>
     </message>
     <message>
         <source>Set Seed</source>
-        <translation type="unfinished"></translation>
+        <translation>Seed 설정</translation>
     </message>
     <message>
         <source>Seed value</source>
-        <translation type="unfinished"></translation>
+        <translation>Seed 값</translation>
     </message>
     <message>
         <source>Random length</source>
-        <translation type="unfinished"></translation>
+        <translation>랜덤 길이</translation>
     </message>
     <message>
         <source>Slot ID</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 ID</translation>
     </message>
     <message>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>세션</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>로그인</translation>
     </message>
     <message>
         <source>You have to insert length value</source>
-        <translation type="unfinished"></translation>
+        <translation>길이 값을 입력하세요</translation>
     </message>
     <message>
         <source>fail to generate random(%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>랜덤 값 생성 실패(%1)</translation>
     </message>
     <message>
         <source>You have to insert seed value.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seed 값을 입력하세요</translation>
     </message>
     <message>
         <source>fail to run SeedRandom(%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>SeedRandom 실패(%1)</translation>
     </message>
     <message>
         <source>SeedRandom is OK</source>
-        <translation type="unfinished"></translation>
+        <translation>SeedRandom 성공</translation>
+    </message>
+    <message>
+        <source>Random</source>
+        <translation>랜덤</translation>
     </message>
 </context>
 <context>
     <name>SetPinDlg</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Slot list</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 목록</translation>
     </message>
     <message>
         <source>Old Pin</source>
-        <translation type="unfinished"></translation>
+        <translation>이전 Pin</translation>
     </message>
     <message>
         <source>PIN</source>
-        <translation type="unfinished"></translation>
+        <translation>핀</translation>
     </message>
     <message>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>세션</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>로그인</translation>
     </message>
     <message>
         <source>Slot ID</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 ID</translation>
     </message>
     <message>
         <source>Slot status</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 상태</translation>
     </message>
     <message>
         <source>New Pin</source>
-        <translation type="unfinished"></translation>
+        <translation>새로운 Pin</translation>
     </message>
     <message>
         <source>Insert old pin value</source>
-        <translation type="unfinished"></translation>
+        <translation>핀 값을 입력하세요</translation>
     </message>
     <message>
         <source> Insert new pin value</source>
-        <translation type="unfinished"></translation>
+        <translation>새로운 핀 값을 입력하세요</translation>
     </message>
     <message>
         <source>fail to run C_SetPIN(%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>C_SetPIN 실패(%1)</translation>
     </message>
     <message>
         <source>success to run C_SetPIN</source>
-        <translation type="unfinished"></translation>
+        <translation>C_SetPIN 성공</translation>
+    </message>
+    <message>
+        <source>Set pin</source>
+        <translation>Set PIN</translation>
     </message>
 </context>
 <context>
     <name>SettingsDlg</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Base</source>
-        <translation type="unfinished"></translation>
+        <translation>기본</translation>
     </message>
     <message>
         <source>Check for updates automatically</source>
-        <translation type="unfinished"></translation>
+        <translation>자동 업데이트 체크</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>고급</translation>
     </message>
     <message>
         <source>Language (need restart )</source>
-        <translation type="unfinished"></translation>
+        <translation>언어(재시동 필요함)</translation>
     </message>
     <message>
         <source>You have changed language. Restart to apply it?</source>
-        <translation type="unfinished"></translation>
+        <translation>언어가 바꼈습니다. 다시 시작 하겠습니까?</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation>설정</translation>
+    </message>
+    <message>
+        <source>Save cryptoki library path</source>
+        <translation>cryptoki 라이브러리 경로 저장</translation>
     </message>
 </context>
 <context>
     <name>SignDlg</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Input</source>
-        <translation type="unfinished"></translation>
+        <translation>입력</translation>
     </message>
     <message>
         <source>Mechanism</source>
-        <translation type="unfinished"></translation>
+        <translation>알고리즘</translation>
     </message>
     <message>
         <source>Key Type</source>
-        <translation type="unfinished"></translation>
+        <translation>키 타입</translation>
     </message>
     <message>
         <source>Slot List</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 목록</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>닫기</translation>
     </message>
     <message>
         <source>Object</source>
-        <translation type="unfinished"></translation>
+        <translation>대상</translation>
     </message>
     <message>
         <source>Slot ID</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 ID</translation>
     </message>
     <message>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>세션</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>로그인</translation>
     </message>
     <message>
         <source>Label</source>
-        <translation type="unfinished"></translation>
+        <translation>라벨</translation>
     </message>
     <message>
         <source>Param</source>
-        <translation type="unfinished"></translation>
+        <translation>파라미터</translation>
     </message>
     <message>
         <source>Init</source>
-        <translation type="unfinished"></translation>
+        <translation>Init</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Update</translation>
     </message>
     <message>
         <source>Final</source>
-        <translation type="unfinished"></translation>
+        <translation>Final</translation>
     </message>
     <message>
         <source>Signature</source>
-        <translation type="unfinished"></translation>
+        <translation>서명</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished"></translation>
+        <translation>상태</translation>
     </message>
     <message>
         <source>You have to insert data.</source>
-        <translation type="unfinished"></translation>
+        <translation>데이타를 입력하세요</translation>
+    </message>
+    <message>
+        <source>Sign</source>
+        <translation>서명</translation>
+    </message>
+    <message>
+        <source>fail to run SignInit(%1)</source>
+        <translation>SignInit 실패(%1)</translation>
+    </message>
+    <message>
+        <source>fail to run SignUpdate(%1)</source>
+        <translation>SignUpdate 실패(%1)</translation>
+    </message>
+    <message>
+        <source>fail to run SignFinal(%1)</source>
+        <translation>SignFinal 실패(%1)</translation>
+    </message>
+    <message>
+        <source>fail to run Sign(%1)</source>
+        <translation>Sign 실패(%1)</translation>
     </message>
 </context>
 <context>
     <name>UnwrapKeyDlg</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>일반</translation>
     </message>
     <message>
         <source>Mechanism</source>
-        <translation type="unfinished"></translation>
+        <translation>알고리즘</translation>
     </message>
     <message>
         <source>Slot status</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 상태</translation>
     </message>
     <message>
         <source>Slot ID</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 ID</translation>
     </message>
     <message>
         <source>Slot list</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 목록</translation>
     </message>
     <message>
         <source>Label</source>
-        <translation type="unfinished"></translation>
+        <translation>라벨</translation>
     </message>
     <message>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>세션</translation>
     </message>
     <message>
         <source>Wrapped Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Wrapped Key</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>로그인</translation>
     </message>
     <message>
         <source>Find</source>
-        <translation type="unfinished"></translation>
+        <translation>찾기</translation>
     </message>
     <message>
         <source>Unwrap Key properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Unwrap 키 속성</translation>
     </message>
     <message>
         <source>Object</source>
-        <translation type="unfinished"></translation>
+        <translation>대상</translation>
     </message>
     <message>
         <source>Param</source>
-        <translation type="unfinished"></translation>
+        <translation>파라미터</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation type="unfinished"></translation>
+        <translation>키</translation>
     </message>
     <message>
         <source>Private</source>
-        <translation type="unfinished"></translation>
+        <translation>개인적</translation>
     </message>
     <message>
         <source>Unwrap</source>
-        <translation type="unfinished"></translation>
+        <translation>Unwrap</translation>
     </message>
     <message>
         <source>Class</source>
-        <translation type="unfinished"></translation>
+        <translation>클래스</translation>
     </message>
     <message>
         <source>Modifiable</source>
-        <translation type="unfinished"></translation>
+        <translation>변경가능한</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>타입</translation>
     </message>
     <message>
         <source>Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>속성</translation>
     </message>
     <message>
         <source>Token</source>
-        <translation type="unfinished"></translation>
+        <translation>토큰</translation>
     </message>
     <message>
         <source>Key Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>키 속성</translation>
     </message>
     <message>
         <source>Sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>민감한</translation>
     </message>
     <message>
         <source>Wrap</source>
-        <translation type="unfinished"></translation>
+        <translation>Wrap</translation>
     </message>
     <message>
         <source>Encrypt</source>
-        <translation type="unfinished"></translation>
+        <translation>암호화</translation>
     </message>
     <message>
         <source>Sign</source>
-        <translation type="unfinished"></translation>
+        <translation>서명</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation type="unfinished"></translation>
+        <translation>복호화</translation>
     </message>
     <message>
         <source>Verify</source>
-        <translation type="unfinished"></translation>
+        <translation>검증</translation>
     </message>
     <message>
-        <source>QFileDialog::getOpenFileName()</source>
-        <translation type="unfinished"></translation>
+        <source>Unwrap key</source>
+        <translation>Unwrap key</translation>
     </message>
     <message>
-        <source>DLL Files (*.dll);;All Files (*.*)</source>
-        <translation type="unfinished"></translation>
+        <source>Extractable</source>
+        <translation>추출가능한</translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <translation>ID</translation>
+    </message>
+    <message>
+        <source>KeySize</source>
+        <translation>키 길이</translation>
+    </message>
+    <message>
+        <source>fail to unwrapkey(%1)</source>
+        <translation>UnwrapKey 실패(%1)</translation>
+    </message>
+    <message>
+        <source>UnwrapKey is success(Object Handle:%1)</source>
+        <translation>UnwapKey 성공(대상 핸들:%1)</translation>
+    </message>
+    <message>
+        <source>BIN Files (*.bin);;All Files (*.*)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Unwrap Key</source>
+        <translation>Unwrap Key</translation>
     </message>
 </context>
 <context>
     <name>VerifyDlg</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Init</source>
-        <translation type="unfinished"></translation>
+        <translation>Init</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Update</translation>
     </message>
     <message>
         <source>Final</source>
-        <translation type="unfinished"></translation>
+        <translation>Final</translation>
     </message>
     <message>
         <source>Verify</source>
-        <translation type="unfinished"></translation>
+        <translation>검증</translation>
     </message>
     <message>
         <source>Slot list</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 목록</translation>
     </message>
     <message>
         <source>Param</source>
-        <translation type="unfinished"></translation>
+        <translation>파라미터</translation>
     </message>
     <message>
         <source>Label</source>
-        <translation type="unfinished"></translation>
+        <translation>라벨</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>닫기</translation>
     </message>
     <message>
         <source>Mechanism</source>
-        <translation type="unfinished"></translation>
+        <translation>알고리즘</translation>
     </message>
     <message>
         <source>Key Type</source>
-        <translation type="unfinished"></translation>
+        <translation>키 타입</translation>
     </message>
     <message>
         <source>Input</source>
-        <translation type="unfinished"></translation>
+        <translation>입력</translation>
     </message>
     <message>
         <source>Signature</source>
-        <translation type="unfinished"></translation>
+        <translation>서명</translation>
     </message>
     <message>
         <source>Object</source>
-        <translation type="unfinished"></translation>
+        <translation>대상</translation>
     </message>
     <message>
         <source>Slot ID</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 ID</translation>
     </message>
     <message>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>세션</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>로그인</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished"></translation>
+        <translation>상태</translation>
     </message>
     <message>
         <source>You have to insert data.</source>
-        <translation type="unfinished"></translation>
+        <translation>데이타를 입력하세요</translation>
     </message>
     <message>
         <source>You have to insert signature.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Verify</source>
-        <comment>Signature is bad.</comment>
-        <translation type="unfinished"></translation>
+        <translation>서명 값을 입력하세요</translation>
     </message>
     <message>
         <source>Signature is good.</source>
-        <translation type="unfinished"></translation>
+        <translation>서명 성공</translation>
     </message>
     <message>
-        <source>Signature is bad.</source>
-        <translation type="unfinished"></translation>
+        <source>fail to run VerifyInit(%1)</source>
+        <translation>VerifyInit 실패(%1)</translation>
+    </message>
+    <message>
+        <source>fail to run VerifyUpdate(%1)</source>
+        <translation>VerifyUpdate 실패(%1)</translation>
+    </message>
+    <message>
+        <source>Signature is bad(%1).</source>
+        <translation>잘못된 서명(%1)</translation>
     </message>
 </context>
 <context>
     <name>WrapKeyDlg</name>
     <message>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Slot ID</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 ID</translation>
     </message>
     <message>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>세션</translation>
     </message>
     <message>
         <source>Slot status</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 상태</translation>
     </message>
     <message>
         <source>Label</source>
-        <translation type="unfinished"></translation>
+        <translation>라벨</translation>
     </message>
     <message>
         <source>Param</source>
-        <translation type="unfinished"></translation>
+        <translation>파라미터</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>로그인</translation>
     </message>
     <message>
         <source>Wrapped Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Wrapped Key</translation>
     </message>
     <message>
         <source>Slot list</source>
-        <translation type="unfinished"></translation>
+        <translation>슬롯 목록</translation>
     </message>
     <message>
         <source>Mechanism</source>
-        <translation type="unfinished"></translation>
+        <translation>알고리즘</translation>
     </message>
     <message>
         <source>Wrapping Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Wrapping Key</translation>
     </message>
     <message>
         <source>Wrapped Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Wrapped 경로</translation>
     </message>
     <message>
         <source>Find</source>
-        <translation type="unfinished"></translation>
+        <translation>찾기</translation>
     </message>
     <message>
         <source>Object</source>
-        <translation type="unfinished"></translation>
+        <translation>대상</translation>
     </message>
     <message>
-        <source>QFileDialog::getOpenFileName()</source>
-        <translation type="unfinished"></translation>
+        <source>Wrap key</source>
+        <translation>Wrap key</translation>
     </message>
     <message>
-        <source>DLL Files (*.dll);;All Files (*.*)</source>
-        <translation type="unfinished"></translation>
+        <source>fail to wrap key(%1)</source>
+        <translation>wrap key 실패(%1)</translation>
+    </message>
+    <message>
+        <source>BIN Files (*.bin);;All Files (*.*)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Wrap Key</source>
+        <translation>Wrap Key</translation>
     </message>
 </context>
 </TS>

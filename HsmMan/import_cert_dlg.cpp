@@ -240,7 +240,7 @@ void ImportCertDlg::clickFind()
 
     QString selectedFilter;
     QString fileName = QFileDialog::getOpenFileName( this,
-                                                     tr("QFileDialog::getOpenFileName()"),
+                                                     tr("Certificate"),
                                                      QDir::currentPath(),
                                                      tr("DER Files (*.der);;BER Files (*.ber);;All Files (*.*)"),
                                                      &selectedFilter,

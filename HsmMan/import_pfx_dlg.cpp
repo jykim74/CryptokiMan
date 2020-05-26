@@ -314,7 +314,7 @@ void ImportPFXDlg::clickFind()
 
     QString selectedFilter;
     QString fileName = QFileDialog::getOpenFileName( this,
-                                                     tr("QFileDialog::getOpenFileName()"),
+                                                     tr("PFX"),
                                                      "D:/test",
                                                      tr("DLL Files (*.dll);;All Files (*.*)"),
                                                      &selectedFilter,

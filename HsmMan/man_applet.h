@@ -26,6 +26,7 @@ public:
     AboutDlg* aboutDlg() { return about_dlg_; };
     LogViewDlg* logViewDlg() { return log_view_dlg_; };
     SettingsMgr* settingsMgr() { return settings_mgr_; };
+    QString cmd() { return cmd_; };
 
 
     void messageBox(const QString& msg, QWidget *parent=0);
@@ -39,6 +40,7 @@ public:
 
     QString getBrand();
     void restartApp();
+    void setCmd( QString cmd );
 
 private:
     Q_DISABLE_COPY(ManApplet)
@@ -50,6 +52,7 @@ private:
     SettingsMgr* settings_mgr_;
 
     bool in_exit_;
+    QString cmd_;
 };
 
 extern ManApplet *manApplet;
