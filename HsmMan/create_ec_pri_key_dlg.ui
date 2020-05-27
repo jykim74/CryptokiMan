@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -147,7 +147,7 @@
        <item row="6" column="2">
         <widget class="QCheckBox" name="mExtractableCheck">
          <property name="text">
-          <string>Extractable</string>
+          <string notr="true">Extractable</string>
          </property>
         </widget>
        </item>
@@ -157,21 +157,21 @@
        <item row="4" column="0">
         <widget class="QCheckBox" name="mPrivateCheck">
          <property name="text">
-          <string>Private</string>
+          <string notr="true">Private</string>
          </property>
         </widget>
        </item>
        <item row="6" column="4">
         <widget class="QCheckBox" name="mTokenCheck">
          <property name="text">
-          <string>Token</string>
+          <string notr="true">Token</string>
          </property>
         </widget>
        </item>
        <item row="6" column="0">
         <widget class="QCheckBox" name="mDeriveCheck">
          <property name="text">
-          <string>Derive</string>
+          <string notr="true">Derive</string>
          </property>
         </widget>
        </item>
@@ -181,7 +181,7 @@
        <item row="5" column="4">
         <widget class="QCheckBox" name="mSensitiveCheck">
          <property name="text">
-          <string>Sensitive</string>
+          <string notr="true">Sensitive</string>
          </property>
         </widget>
        </item>
@@ -195,7 +195,7 @@
        <item row="5" column="2">
         <widget class="QCheckBox" name="mModifiableCheck">
          <property name="text">
-          <string>Modifiable</string>
+          <string notr="true">Modifiable</string>
          </property>
         </widget>
        </item>
@@ -221,7 +221,7 @@
        <item row="4" column="4">
         <widget class="QCheckBox" name="mSignCheck">
          <property name="text">
-          <string>Sign</string>
+          <string notr="true">Sign</string>
          </property>
         </widget>
        </item>
@@ -234,14 +234,14 @@
        <item row="4" column="2">
         <widget class="QCheckBox" name="mDecryptCheck">
          <property name="text">
-          <string>Decrypt</string>
+          <string notr="true">Decrypt</string>
          </property>
         </widget>
        </item>
        <item row="5" column="0">
         <widget class="QCheckBox" name="mUnwrapCheck">
          <property name="text">
-          <string>Unwrap</string>
+          <string notr="true">Unwrap</string>
          </property>
         </widget>
        </item>

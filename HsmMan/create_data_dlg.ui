@@ -24,7 +24,7 @@
    <item row="8" column="0">
     <widget class="QCheckBox" name="mTokenCheck">
      <property name="text">
-      <string>Token</string>
+      <string notr="true">Token</string>
      </property>
     </widget>
    </item>
@@ -75,7 +75,7 @@
    <item row="7" column="2">
     <widget class="QCheckBox" name="mSensitiveCheck">
      <property name="text">
-      <string>Sensitive</string>
+      <string notr="true">Sensitive</string>
      </property>
     </widget>
    </item>
@@ -108,7 +108,7 @@
    <item row="7" column="4">
     <widget class="QCheckBox" name="mModifiableCheck">
      <property name="text">
-      <string>Modifiable</string>
+      <string notr="true">Modifiable</string>
      </property>
     </widget>
    </item>
@@ -122,7 +122,7 @@
    <item row="7" column="0">
     <widget class="QCheckBox" name="mPrivateCheck">
      <property name="text">
-      <string>Private</string>
+      <string notr="true">Private</string>
      </property>
     </widget>
    </item>

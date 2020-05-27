@@ -81,6 +81,7 @@ private:
     void createActions();
     void createStatusBar();
     int openLibrary( const QString libPath );
+    void setTitle(const QString strName);
 
     QSplitter       *hsplitter_;
     QSplitter       *vsplitter_;

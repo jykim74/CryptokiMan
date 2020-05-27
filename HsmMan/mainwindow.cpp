@@ -80,6 +80,7 @@ void MainWindow::dropEvent(QDropEvent *event)
         QString fileName = url.toLocalFile();
         qDebug() << "Dropped file:" << fileName;
         openLibrary( fileName );
+        setTitle( fileName );
         return;
     }
 }
@@ -173,22 +174,22 @@ void MainWindow::createActions()
     moduleMenu->addAction( initAct );
     moduleToolBar->addAction( initAct );
 
-    QAction *finalAct = moduleMenu->addAction(tr("P11Finalize"), left_tree_, &ManTreeView::P11Finalize);
+    QAction *finalAct = moduleMenu->addAction("P11Finalize", left_tree_, &ManTreeView::P11Finalize);
     finalAct->setStatusTip(tr("PKCS11 finalize"));
 
-    QAction *openSessAct = moduleMenu->addAction(tr("Open Session"), this, &MainWindow::openSession );
+    QAction *openSessAct = moduleMenu->addAction("Open Session", this, &MainWindow::openSession );
     openSessAct->setStatusTip(tr("PKCS11 Open Session" ));
 
-    QAction *closeSessAct = moduleMenu->addAction(tr("Close Session"), this, &MainWindow::closeSession );
+    QAction *closeSessAct = moduleMenu->addAction("Close Session", this, &MainWindow::closeSession );
     closeSessAct->setStatusTip(tr("PKCS11 Close Session"));
 
-    QAction *closeAllSessAct = moduleMenu->addAction(tr("Close All Sessions"), this, &MainWindow::closeAllSessions );
+    QAction *closeAllSessAct = moduleMenu->addAction("Close All Sessions", this, &MainWindow::closeAllSessions );
     closeAllSessAct->setStatusTip(tr("PKCS11 Close All Sessions"));
 
-    QAction *loginAct = moduleMenu->addAction(tr("Login"), this, &MainWindow::login );
+    QAction *loginAct = moduleMenu->addAction("Login", this, &MainWindow::login );
     loginAct->setStatusTip(tr( "PKCS11 Login" ));
 
-    QAction *logoutAct = moduleMenu->addAction(tr("Logout"), this, &MainWindow::logout );
+    QAction *logoutAct = moduleMenu->addAction("Logout", this, &MainWindow::logout );
     logoutAct->setStatusTip(tr( "PKCS11 Login" ));
 
     QMenu *objectsMenu = menuBar()->addMenu(tr("&Objects"));
@@ -257,25 +258,25 @@ void MainWindow::createActions()
     QMenu *toolsMenu = menuBar()->addMenu(tr("&Tools"));
     QToolBar *toolsToolBar = addToolBar(tr("Tools"));
 
-    QAction *initTokenAct = toolsMenu->addAction(tr("Initialize Token"), this, &MainWindow::initToken );
+    QAction *initTokenAct = toolsMenu->addAction("Initialize Token", this, &MainWindow::initToken );
     initTokenAct->setStatusTip(tr("PKCS11 Initialize token"));
 
-    QAction *randAct = toolsMenu->addAction(tr("Random"), this, &MainWindow::rand);
+    QAction *randAct = toolsMenu->addAction("Random", this, &MainWindow::rand);
     randAct->setStatusTip(tr("PKCS11 Random"));
 
-    QAction *setPinAct = toolsMenu->addAction(tr("Set PIN"), this, &MainWindow::setPin);
+    QAction *setPinAct = toolsMenu->addAction("Set PIN", this, &MainWindow::setPin);
     setPinAct->setStatusTip(tr("PKCS11 set PIN"));
 
-    QAction *initPinAct = toolsMenu->addAction(tr("Init PIN"), this, &MainWindow::initPin);
+    QAction *initPinAct = toolsMenu->addAction("Init PIN", this, &MainWindow::initPin);
     initPinAct->setStatusTip(tr("PKCS11 init PIN"));
 
-    QAction *wrapKeyAct = toolsMenu->addAction(tr("Wrap Key"), this, &MainWindow::wrapKey);
+    QAction *wrapKeyAct = toolsMenu->addAction("Wrap Key", this, &MainWindow::wrapKey);
     wrapKeyAct->setStatusTip(tr("PKCS11 wrap key"));
 
-    QAction *unwrapKeyAct = toolsMenu->addAction(tr("Unwrap Key"), this, &MainWindow::unwrapKey);
+    QAction *unwrapKeyAct = toolsMenu->addAction("Unwrap Key", this, &MainWindow::unwrapKey);
     unwrapKeyAct->setStatusTip(tr("PKCS11 unwrap key"));
 
-    QAction *deriveKeyAct = toolsMenu->addAction(tr("Derive Key"), this, &MainWindow::deriveKey);
+    QAction *deriveKeyAct = toolsMenu->addAction("Derive Key", this, &MainWindow::deriveKey);
     deriveKeyAct->setStatusTip(tr("PKCS11 derive key"));
 
     QMenu *helpMenu = menuBar()->addMenu(tr("&Help"));
@@ -359,6 +360,8 @@ void MainWindow::open()
     {
         int ret = openLibrary( fileName );
         if( ret != 0 ) return;
+
+        setTitle( fileName );
 
         if( bSavePath )
         {
@@ -736,4 +739,10 @@ ManTreeItem* MainWindow::currentItem()
     item = (ManTreeItem *)left_model_->itemFromIndex( index );
 
     return item;
+}
+
+void MainWindow::setTitle(const QString strName)
+{
+    QString strWinTitle = QString( "%1 - %2").arg( manApplet->getBrand() ).arg( strName );
+    setWindowTitle(strWinTitle);
 }
