@@ -28,19 +28,19 @@
         <translation>HsmMan 에 대해서</translation>
     </message>
     <message>
-        <source>This is freeware tool to test cryptoki library If you do not use this for commercial purposes, you can use it freely If you have any opinions on this tool, please send me a mail<byte value="xd"/>
+        <source>This is freeware tool to test cryptoki library If you do not use this for commercial purposes, you can use it freely If you have any opinions on this tool, please send me a mail
 </source>
         <translation type="vanished">이 프로그램은 상업적으로 이용하지 않는다면 cryptoki 모듈 테스트를 자유롭게 사용하는 프리웨어 소프트웨어이다. 요구 사항이나 의견이 있으면 메일로 연락주세요.</translation>
     </message>
     <message>
-        <source><byte value="xd"/>
-Copyright (C) 2019 ~ 2020 JongYeob Kim<byte value="xd"/>
-mailto : jykim74@gmail.com</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>This is freeware tool to test cryptoki library If you do not use this for commercial purposes, you can use it freely If you have any opinions on this tool, please send me a mail.</source>
         <translation>이 프로그램은 상업적으로 이용하지 않는다면 cryptoki 모듈 테스트를 자유롭게 사용하는 프리웨어 소프트웨어이다. 요구 사항이나 의견이 있으면 메일로 연락주세요.</translation>
+    </message>
+    <message>
+        <source>
+Copyright (C) 2019 ~ 2020 JongYeob Kim
+mailto : jykim74@gmail.com</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -86,7 +86,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Token</source>
-        <translation>토큰</translation>
+        <translation type="vanished">토큰</translation>
     </message>
     <message>
         <source>Data</source>
@@ -110,7 +110,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Sensitive</source>
-        <translation>민감한</translation>
+        <translation type="vanished">민감한</translation>
     </message>
     <message>
         <source>Attributes</source>
@@ -118,7 +118,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Modifiable</source>
-        <translation>변경가능한</translation>
+        <translation type="vanished">변경가능한</translation>
     </message>
     <message>
         <source>Label</source>
@@ -126,7 +126,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Private</source>
-        <translation>개인적</translation>
+        <translation type="vanished">개인적</translation>
     </message>
     <message>
         <source>Create data</source>
@@ -193,23 +193,23 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Extractable</source>
-        <translation>추출가능한</translation>
+        <translation type="vanished">추출가능한</translation>
     </message>
     <message>
         <source>Private</source>
-        <translation>개인적인</translation>
+        <translation type="vanished">개인적인</translation>
     </message>
     <message>
         <source>Token</source>
-        <translation>토큰</translation>
+        <translation type="vanished">토큰</translation>
     </message>
     <message>
         <source>Derive</source>
-        <translation>유도</translation>
+        <translation type="vanished">유도</translation>
     </message>
     <message>
         <source>Sensitive</source>
-        <translation>민감한</translation>
+        <translation type="vanished">민감한</translation>
     </message>
     <message>
         <source>Key value</source>
@@ -217,7 +217,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Modifiable</source>
-        <translation>변경 가능한</translation>
+        <translation type="vanished">변경 가능한</translation>
     </message>
     <message>
         <source>Attributes</source>
@@ -225,15 +225,15 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Sign</source>
-        <translation>서명</translation>
+        <translation type="vanished">서명</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation>복호화</translation>
+        <translation type="vanished">복호화</translation>
     </message>
     <message>
         <source>Unwrap</source>
-        <translation>풀기</translation>
+        <translation type="vanished">풀기</translation>
     </message>
     <message>
         <source>Create ec private key</source>
@@ -284,11 +284,11 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Derive</source>
-        <translation>유도</translation>
+        <translation type="vanished">유도</translation>
     </message>
     <message>
         <source>Encrypt</source>
-        <translation>암호화</translation>
+        <translation type="vanished">암호화</translation>
     </message>
     <message>
         <source>Label</source>
@@ -300,11 +300,11 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Verify</source>
-        <translation>검증</translation>
+        <translation type="vanished">검증</translation>
     </message>
     <message>
         <source>Modifiable</source>
-        <translation>변경가능한</translation>
+        <translation type="vanished">변경가능한</translation>
     </message>
     <message>
         <source>ID</source>
@@ -312,7 +312,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Token</source>
-        <translation>토큰</translation>
+        <translation type="vanished">토큰</translation>
     </message>
     <message>
         <source>Attributes</source>
@@ -320,11 +320,11 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Private</source>
-        <translation>개인적</translation>
+        <translation type="vanished">개인적</translation>
     </message>
     <message>
         <source>Wrap</source>
-        <translation>감싸기</translation>
+        <translation type="vanished">감싸기</translation>
     </message>
     <message>
         <source>Create ec public key</source>
@@ -371,27 +371,27 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Private</source>
-        <translation>개인적</translation>
+        <translation type="vanished">개인적</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation>복호화</translation>
+        <translation type="vanished">복호화</translation>
     </message>
     <message>
         <source>Verify</source>
-        <translation>검증</translation>
+        <translation type="vanished">검증</translation>
     </message>
     <message>
         <source>Modifiable</source>
-        <translation>변경가능한</translation>
+        <translation type="vanished">변경가능한</translation>
     </message>
     <message>
         <source>Token</source>
-        <translation>토큰</translation>
+        <translation type="vanished">토큰</translation>
     </message>
     <message>
         <source>Sign</source>
-        <translation>서명</translation>
+        <translation type="vanished">서명</translation>
     </message>
     <message>
         <source>Label</source>
@@ -399,11 +399,11 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Wrap</source>
-        <translation>감싸기</translation>
+        <translation type="vanished">감싸기</translation>
     </message>
     <message>
         <source>Unwrap</source>
-        <translation>풀기</translation>
+        <translation type="vanished">풀기</translation>
     </message>
     <message>
         <source>Attributes</source>
@@ -411,11 +411,11 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Encrypt</source>
-        <translation>암호화</translation>
+        <translation type="vanished">암호화</translation>
     </message>
     <message>
         <source>Sensitive</source>
-        <translation>민감한</translation>
+        <translation type="vanished">민감한</translation>
     </message>
     <message>
         <source>Mechanism</source>
@@ -431,7 +431,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Extractable</source>
-        <translation>추출가능한</translation>
+        <translation type="vanished">추출가능한</translation>
     </message>
     <message>
         <source>fail to create key(%1)</source>
@@ -486,7 +486,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Modifiable</source>
-        <translation>변경가능한</translation>
+        <translation type="vanished">변경가능한</translation>
     </message>
     <message>
         <source>Public Exponent</source>
@@ -494,7 +494,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Token</source>
-        <translation>토큰</translation>
+        <translation type="vanished">토큰</translation>
     </message>
     <message>
         <source>Exponent2</source>
@@ -510,7 +510,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Unwrap</source>
-        <translation>풀기</translation>
+        <translation type="vanished">풀기</translation>
     </message>
     <message>
         <source>Coefficient</source>
@@ -522,7 +522,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Extractable</source>
-        <translation>추출가능한</translation>
+        <translation type="vanished">추출가능한</translation>
     </message>
     <message>
         <source>Exponent1</source>
@@ -534,7 +534,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Derive</source>
-        <translation>유도</translation>
+        <translation type="vanished">유도</translation>
     </message>
     <message>
         <source>Attributes</source>
@@ -546,19 +546,19 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Sign</source>
-        <translation>서명</translation>
+        <translation type="vanished">서명</translation>
     </message>
     <message>
         <source>Sensitive</source>
-        <translation>민감한</translation>
+        <translation type="vanished">민감한</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation>복호화</translation>
+        <translation type="vanished">복호화</translation>
     </message>
     <message>
         <source>Private</source>
-        <translation>개인적</translation>
+        <translation type="vanished">개인적</translation>
     </message>
     <message>
         <source>Create RSA private key</source>
@@ -625,31 +625,31 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Derive</source>
-        <translation>유도</translation>
+        <translation type="vanished">유도</translation>
     </message>
     <message>
         <source>Verify</source>
-        <translation>검증</translation>
+        <translation type="vanished">검증</translation>
     </message>
     <message>
         <source>Token</source>
-        <translation>토큰</translation>
+        <translation type="vanished">토큰</translation>
     </message>
     <message>
         <source>Encrypt</source>
-        <translation>암호화</translation>
+        <translation type="vanished">암호화</translation>
     </message>
     <message>
         <source>Private</source>
-        <translation>개인적</translation>
+        <translation type="vanished">개인적</translation>
     </message>
     <message>
         <source>Wrap</source>
-        <translation>감싸기</translation>
+        <translation type="vanished">감싸기</translation>
     </message>
     <message>
         <source>Modifiable</source>
-        <translation>변경가능한</translation>
+        <translation type="vanished">변경가능한</translation>
     </message>
     <message>
         <source>Create RSA public key</source>
@@ -846,7 +846,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Private</source>
-        <translation>개인적</translation>
+        <translation type="vanished">개인적</translation>
     </message>
     <message>
         <source>Attributes</source>
@@ -862,7 +862,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Modifiable</source>
-        <translation>변경가능한</translation>
+        <translation type="vanished">변경가능한</translation>
     </message>
     <message>
         <source>Class</source>
@@ -870,35 +870,35 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Unwrap</source>
-        <translation>풀기</translation>
+        <translation type="vanished">풀기</translation>
     </message>
     <message>
         <source>Token</source>
-        <translation>토큰</translation>
+        <translation type="vanished">토큰</translation>
     </message>
     <message>
         <source>Sensitive</source>
-        <translation>민감한</translation>
+        <translation type="vanished">민감한</translation>
     </message>
     <message>
         <source>Wrap</source>
-        <translation>감싸기</translation>
+        <translation type="vanished">감싸기</translation>
     </message>
     <message>
         <source>Encrypt</source>
-        <translation>암호화</translation>
+        <translation type="vanished">암호화</translation>
     </message>
     <message>
         <source>Sign</source>
-        <translation>서명</translation>
+        <translation type="vanished">서명</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation>복호화</translation>
+        <translation type="vanished">복호화</translation>
     </message>
     <message>
         <source>Verify</source>
-        <translation>검증</translation>
+        <translation type="vanished">검증</translation>
     </message>
     <message>
         <source>Derive key</source>
@@ -906,7 +906,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Extractable</source>
-        <translation>추출가능한</translation>
+        <translation type="vanished">추출가능한</translation>
     </message>
     <message>
         <source>ID</source>
@@ -1198,11 +1198,11 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Token</source>
-        <translation>토큰</translation>
+        <translation type="vanished">토큰</translation>
     </message>
     <message>
         <source>Wrap</source>
-        <translation>감싸기</translation>
+        <translation type="vanished">감싸기</translation>
     </message>
     <message>
         <source>Attributes</source>
@@ -1210,35 +1210,35 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Modifiable</source>
-        <translation>변경가능한</translation>
+        <translation type="vanished">변경가능한</translation>
     </message>
     <message>
         <source>Sensitive</source>
-        <translation>민감한</translation>
+        <translation type="vanished">민감한</translation>
     </message>
     <message>
         <source>Unwrap</source>
-        <translation>풀기</translation>
+        <translation type="vanished">풀기</translation>
     </message>
     <message>
         <source>Private</source>
-        <translation>개인적</translation>
+        <translation type="vanished">개인적</translation>
     </message>
     <message>
         <source>Encrypt</source>
-        <translation>암호화</translation>
+        <translation type="vanished">암호화</translation>
     </message>
     <message>
         <source>Sign</source>
-        <translation>서명</translation>
+        <translation type="vanished">서명</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation>복호화</translation>
+        <translation type="vanished">복호화</translation>
     </message>
     <message>
         <source>Verify</source>
-        <translation>검증</translation>
+        <translation type="vanished">검증</translation>
     </message>
     <message>
         <source>Session</source>
@@ -1258,7 +1258,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Extractable</source>
-        <translation>추출가능한</translation>
+        <translation type="vanished">추출가능한</translation>
     </message>
     <message>
         <source>fail to generate key(%1)</source>
@@ -1305,11 +1305,11 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Sign</source>
-        <translation>서명</translation>
+        <translation type="vanished">서명</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation>복호화</translation>
+        <translation type="vanished">복호화</translation>
     </message>
     <message>
         <source>Label</source>
@@ -1317,11 +1317,11 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Unwrap</source>
-        <translation>풀기</translation>
+        <translation type="vanished">풀기</translation>
     </message>
     <message>
         <source>Private</source>
-        <translation>개인적</translation>
+        <translation type="vanished">개인적</translation>
     </message>
     <message>
         <source>Subject</source>
@@ -1333,23 +1333,23 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Derive</source>
-        <translation>유도</translation>
+        <translation type="vanished">유도</translation>
     </message>
     <message>
         <source>Modifiable</source>
-        <translation>변경가능한</translation>
+        <translation type="vanished">변경가능한</translation>
     </message>
     <message>
         <source>Extractable</source>
-        <translation>추출가능한</translation>
+        <translation type="vanished">추출가능한</translation>
     </message>
     <message>
         <source>Sensitive</source>
-        <translation>민감한</translation>
+        <translation type="vanished">민감한</translation>
     </message>
     <message>
         <source>Token</source>
-        <translation>토큰</translation>
+        <translation type="vanished">토큰</translation>
     </message>
     <message>
         <source>Public Key</source>
@@ -1361,15 +1361,15 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Encrypt</source>
-        <translation>암호화</translation>
+        <translation type="vanished">암호화</translation>
     </message>
     <message>
         <source>Verify</source>
-        <translation>검증</translation>
+        <translation type="vanished">검증</translation>
     </message>
     <message>
         <source>Wrap</source>
-        <translation>감싸기</translation>
+        <translation type="vanished">감싸기</translation>
     </message>
     <message>
         <source>Key Information</source>
@@ -1416,7 +1416,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Private</source>
-        <translation>개인적</translation>
+        <translation type="vanished">개인적</translation>
     </message>
     <message>
         <source>ID</source>
@@ -1424,15 +1424,15 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Token</source>
-        <translation>토큰</translation>
+        <translation type="vanished">토큰</translation>
     </message>
     <message>
         <source>Modifiable</source>
-        <translation>변경가능한</translation>
+        <translation type="vanished">변경가능한</translation>
     </message>
     <message>
         <source>Sensitive</source>
-        <translation>민감한</translation>
+        <translation type="vanished">민감한</translation>
     </message>
     <message>
         <source>Attributes</source>
@@ -1535,15 +1535,15 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Sensitive</source>
-        <translation>민감한</translation>
+        <translation type="vanished">민감한</translation>
     </message>
     <message>
         <source>Token</source>
-        <translation>토큰</translation>
+        <translation type="vanished">토큰</translation>
     </message>
     <message>
         <source>Private</source>
-        <translation>개인적</translation>
+        <translation type="vanished">개인적</translation>
     </message>
     <message>
         <source>Attributes</source>
@@ -1551,7 +1551,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Modifiable</source>
-        <translation>변경가능한</translation>
+        <translation type="vanished">변경가능한</translation>
     </message>
     <message>
         <source>Private Key</source>
@@ -1559,19 +1559,19 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Unwrap</source>
-        <translation>풀기</translation>
+        <translation type="vanished">풀기</translation>
     </message>
     <message>
         <source>Derive</source>
-        <translation>유도</translation>
+        <translation type="vanished">유도</translation>
     </message>
     <message>
         <source>Sign</source>
-        <translation>서명</translation>
+        <translation type="vanished">서명</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation>복호화</translation>
+        <translation type="vanished">복호화</translation>
     </message>
     <message>
         <source>Subject</source>
@@ -1579,7 +1579,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Extractable</source>
-        <translation>추출가능한</translation>
+        <translation type="vanished">추출가능한</translation>
     </message>
     <message>
         <source>Public Key</source>
@@ -1587,15 +1587,15 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Wrap</source>
-        <translation>감싸기</translation>
+        <translation type="vanished">감싸기</translation>
     </message>
     <message>
         <source>Verify</source>
-        <translation>검증</translation>
+        <translation type="vanished">검증</translation>
     </message>
     <message>
         <source>Encrypt</source>
-        <translation>암호화</translation>
+        <translation type="vanished">암호화</translation>
     </message>
     <message>
         <source>You have to select pfx file.</source>
@@ -1690,15 +1690,15 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Private</source>
-        <translation>개인적</translation>
+        <translation type="vanished">개인적</translation>
     </message>
     <message>
         <source>Unwrap</source>
-        <translation>풀기</translation>
+        <translation type="vanished">풀기</translation>
     </message>
     <message>
         <source>Sign</source>
-        <translation>서명</translation>
+        <translation type="vanished">서명</translation>
     </message>
     <message>
         <source>Subject</source>
@@ -1714,7 +1714,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation>복호화</translation>
+        <translation type="vanished">복호화</translation>
     </message>
     <message>
         <source>Attributes</source>
@@ -1722,23 +1722,23 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Derive</source>
-        <translation>유도</translation>
+        <translation type="vanished">유도</translation>
     </message>
     <message>
         <source>Modifiable</source>
-        <translation>변경가능한</translation>
+        <translation type="vanished">변경가능한</translation>
     </message>
     <message>
         <source>Extractable</source>
-        <translation>추출가능한</translation>
+        <translation type="vanished">추출가능한</translation>
     </message>
     <message>
         <source>Sensitive</source>
-        <translation>민감한</translation>
+        <translation type="vanished">민감한</translation>
     </message>
     <message>
         <source>Token</source>
-        <translation>토큰</translation>
+        <translation type="vanished">토큰</translation>
     </message>
     <message>
         <source>Public Key</source>
@@ -1746,15 +1746,15 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Verify</source>
-        <translation>검증</translation>
+        <translation type="vanished">검증</translation>
     </message>
     <message>
         <source>Wrap</source>
-        <translation>감싸기</translation>
+        <translation type="vanished">감싸기</translation>
     </message>
     <message>
         <source>Encrypt</source>
-        <translation>암호화</translation>
+        <translation type="vanished">암호화</translation>
     </message>
     <message>
         <source>You have to select private key file.</source>
@@ -2056,7 +2056,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>P11Finalize</source>
-        <translation>P11 Finalize</translation>
+        <translation type="vanished">P11 Finalize</translation>
     </message>
     <message>
         <source>PKCS11 finalize</source>
@@ -2064,7 +2064,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Open Session</source>
-        <translation>Open Session</translation>
+        <translation type="vanished">Open Session</translation>
     </message>
     <message>
         <source>PKCS11 Open Session</source>
@@ -2072,7 +2072,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Close Session</source>
-        <translation>Close Session</translation>
+        <translation type="vanished">Close Session</translation>
     </message>
     <message>
         <source>PKCS11 Close Session</source>
@@ -2080,7 +2080,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Close All Sessions</source>
-        <translation>Close All Sessions</translation>
+        <translation type="vanished">Close All Sessions</translation>
     </message>
     <message>
         <source>PKCS11 Close All Sessions</source>
@@ -2088,7 +2088,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Login</source>
-        <translation>로그인</translation>
+        <translation type="vanished">로그인</translation>
     </message>
     <message>
         <source>PKCS11 Login</source>
@@ -2096,7 +2096,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Logout</source>
-        <translation>로그 아웃</translation>
+        <translation type="vanished">로그 아웃</translation>
     </message>
     <message>
         <source>&amp;Objects</source>
@@ -2284,7 +2284,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Initialize Token</source>
-        <translation>토큰 초기화</translation>
+        <translation type="vanished">토큰 초기화</translation>
     </message>
     <message>
         <source>PKCS11 Initialize token</source>
@@ -2292,7 +2292,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Random</source>
-        <translation>랜덤</translation>
+        <translation type="vanished">랜덤</translation>
     </message>
     <message>
         <source>PKCS11 Random</source>
@@ -2300,7 +2300,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Set PIN</source>
-        <translation>Set PIN</translation>
+        <translation type="vanished">Set PIN</translation>
     </message>
     <message>
         <source>PKCS11 set PIN</source>
@@ -2308,7 +2308,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Init PIN</source>
-        <translation>Init PIN</translation>
+        <translation type="vanished">Init PIN</translation>
     </message>
     <message>
         <source>PKCS11 init PIN</source>
@@ -2316,7 +2316,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Wrap Key</source>
-        <translation>Wrap Key</translation>
+        <translation type="vanished">Wrap Key</translation>
     </message>
     <message>
         <source>PKCS11 wrap key</source>
@@ -2324,7 +2324,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Unwrap Key</source>
-        <translation>Unwrap Key</translation>
+        <translation type="vanished">Unwrap Key</translation>
     </message>
     <message>
         <source>PKCS11 unwrap key</source>
@@ -2332,7 +2332,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Derive Key</source>
-        <translation>Derive Key</translation>
+        <translation type="vanished">Derive Key</translation>
     </message>
     <message>
         <source>PKCS11 derive key</source>
@@ -2348,7 +2348,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>About</source>
-        <translation>에 대해</translation>
+        <translation type="vanished">에 대해</translation>
     </message>
     <message>
         <source>About HsmMan</source>
@@ -2377,6 +2377,10 @@ mailto : jykim74@gmail.com</source>
     <message>
         <source>Open cryptoki file</source>
         <translation>cryptoki 파일 열기</translation>
+    </message>
+    <message>
+        <source>Cryptoki library has already loaded</source>
+        <translation>Cryptoki 라이브러리가 이미 불러왔습니다</translation>
     </message>
 </context>
 <context>
@@ -2863,11 +2867,11 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Private</source>
-        <translation>개인적</translation>
+        <translation type="vanished">개인적</translation>
     </message>
     <message>
         <source>Unwrap</source>
-        <translation>Unwrap</translation>
+        <translation type="vanished">Unwrap</translation>
     </message>
     <message>
         <source>Class</source>
@@ -2875,7 +2879,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Modifiable</source>
-        <translation>변경가능한</translation>
+        <translation type="vanished">변경가능한</translation>
     </message>
     <message>
         <source>Type</source>
@@ -2887,7 +2891,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Token</source>
-        <translation>토큰</translation>
+        <translation type="vanished">토큰</translation>
     </message>
     <message>
         <source>Key Properties</source>
@@ -2895,27 +2899,27 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Sensitive</source>
-        <translation>민감한</translation>
+        <translation type="vanished">민감한</translation>
     </message>
     <message>
         <source>Wrap</source>
-        <translation>Wrap</translation>
+        <translation type="vanished">Wrap</translation>
     </message>
     <message>
         <source>Encrypt</source>
-        <translation>암호화</translation>
+        <translation type="vanished">암호화</translation>
     </message>
     <message>
         <source>Sign</source>
-        <translation>서명</translation>
+        <translation type="vanished">서명</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation>복호화</translation>
+        <translation type="vanished">복호화</translation>
     </message>
     <message>
         <source>Verify</source>
-        <translation>검증</translation>
+        <translation type="vanished">검증</translation>
     </message>
     <message>
         <source>Unwrap key</source>
@@ -2923,7 +2927,7 @@ mailto : jykim74@gmail.com</source>
     </message>
     <message>
         <source>Extractable</source>
-        <translation>추출가능한</translation>
+        <translation type="vanished">추출가능한</translation>
     </message>
     <message>
         <source>ID</source>
