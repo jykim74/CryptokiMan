@@ -384,7 +384,7 @@ void GenKeyPairDlg::accept()
 
     if( mPriSensitiveCheck->isChecked() )
     {
-        sPriTemplate[uPriCount].type = CKA_MODIFIABLE;
+        sPriTemplate[uPriCount].type = CKA_SENSITIVE;
         sPriTemplate[uPriCount].pValue = (mPriSensitiveCombo->currentIndex() ? &bTrue : &bFalse );
         sPriTemplate[uPriCount].ulValueLen = sizeof( CK_BBOOL );
         uPriCount++;
@@ -392,7 +392,7 @@ void GenKeyPairDlg::accept()
 
     if( mPriDeriveCheck->isChecked() )
     {
-        sPriTemplate[uPriCount].type = CKA_MODIFIABLE;
+        sPriTemplate[uPriCount].type = CKA_DERIVE;
         sPriTemplate[uPriCount].pValue = (mPriDeriveCombo->currentIndex() ? &bTrue : &bFalse );
         sPriTemplate[uPriCount].ulValueLen = sizeof( CK_BBOOL );
         uPriCount++;
@@ -400,7 +400,7 @@ void GenKeyPairDlg::accept()
 
     if( mPriExtractableCheck->isChecked() )
     {
-        sPriTemplate[uPriCount].type = CKA_MODIFIABLE;
+        sPriTemplate[uPriCount].type = CKA_EXTRACTABLE;
         sPriTemplate[uPriCount].pValue = (mPriExtractableCombo->currentIndex() ? &bTrue : &bFalse );
         sPriTemplate[uPriCount].ulValueLen = sizeof( CK_BBOOL );
         uPriCount++;
@@ -408,7 +408,7 @@ void GenKeyPairDlg::accept()
 
     if( mPriSignCheck->isChecked() )
     {
-        sPriTemplate[uPriCount].type = CKA_MODIFIABLE;
+        sPriTemplate[uPriCount].type = CKA_SIGN;
         sPriTemplate[uPriCount].pValue = (mPriSignCombo->currentIndex() ? &bTrue : &bFalse );
         sPriTemplate[uPriCount].ulValueLen = sizeof( CK_BBOOL );
         uPriCount++;

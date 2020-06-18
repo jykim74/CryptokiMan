@@ -585,7 +585,7 @@ int ImportPriKeyDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
 
     if( mPriSensitiveCheck->isChecked() )
     {
-        sTemplate[uCount].type = CKA_MODIFIABLE;
+        sTemplate[uCount].type = CKA_SENSITIVE;
         sTemplate[uCount].pValue = (mPriSensitiveCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
         uCount++;
@@ -593,7 +593,7 @@ int ImportPriKeyDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
 
     if( mPriDeriveCheck->isChecked() )
     {
-        sTemplate[uCount].type = CKA_MODIFIABLE;
+        sTemplate[uCount].type = CKA_DERIVE;
         sTemplate[uCount].pValue = (mPriDeriveCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
         uCount++;
@@ -601,7 +601,7 @@ int ImportPriKeyDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
 
     if( mPriExtractableCheck->isChecked() )
     {
-        sTemplate[uCount].type = CKA_MODIFIABLE;
+        sTemplate[uCount].type = CKA_EXTRACTABLE;
         sTemplate[uCount].pValue = (mPriExtractableCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
         uCount++;
@@ -609,7 +609,7 @@ int ImportPriKeyDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
 
     if( mPriSignCheck->isChecked() )
     {
-        sTemplate[uCount].type = CKA_MODIFIABLE;
+        sTemplate[uCount].type = CKA_SIGN;
         sTemplate[uCount].pValue = (mPriSignCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
         uCount++;

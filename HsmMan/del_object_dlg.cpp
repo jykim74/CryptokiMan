@@ -16,6 +16,10 @@ DelObjectDlg::DelObjectDlg(QWidget *parent) :
     connect( mObjectCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(objectChanged(int)));
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
 
+    connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(close()));
+    connect( mDeleteBtn, SIGNAL(clicked()), this, SLOT(deleteObj()));
+    connect( mDeleteAllBtn, SIGNAL(clicked()), this, SLOT(deleteAllObj()));
+
     mObjectCombo->addItems(kObjectList);
 
     initialize();
@@ -64,7 +68,7 @@ void DelObjectDlg::initialize()
     if( slot_infos.size() > 0 ) slotChanged(0);
 }
 
-void DelObjectDlg::accept()
+void DelObjectDlg::deleteObj()
 {
     JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
@@ -88,6 +92,62 @@ void DelObjectDlg::accept()
     manApplet->messageBox( tr("success to delete object"), this );
     QDialog::accept();
 }
+
+void DelObjectDlg::deleteAllObj()
+{
+    if( manApplet == NULL ) return;
+    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    if( p11_ctx == NULL ) return;
+
+    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
+
+    CK_SESSION_HANDLE   hSession = -1;
+    int nSlotSel = mSlotsCombo->currentIndex();
+    if( nSlotSel < 0 ) return;
+
+    SlotInfo slotInfo = slot_infos.at(nSlotSel);
+    int rv = -1;
+    hSession = slotInfo.getSessionHandle();
+
+    CK_ATTRIBUTE sTemplate[1];
+    long uCount = 0;
+    CK_OBJECT_CLASS objClass = 0;
+    CK_OBJECT_HANDLE sObjects[20];
+    CK_ULONG uMaxObjCnt = 20;
+    CK_ULONG uObjCnt = 0;
+
+    int type = mObjectCombo->currentIndex();
+
+    if( type == OBJ_DATA_IDX )
+        objClass = CKO_DATA;
+    else if( type == OBJ_CERT_IDX )
+        objClass = CKO_CERTIFICATE;
+    else if( type == OBJ_PUBKEY_IDX )
+        objClass = CKO_PUBLIC_KEY;
+    else if( type == OBJ_PRIKEY_IDX )
+        objClass = CKO_PRIVATE_KEY;
+    else if( type == OBJ_SECRET_IDX )
+        objClass = CKO_SECRET_KEY;
+
+    sTemplate[uCount].type = CKA_CLASS;
+    sTemplate[uCount].pValue = &objClass;
+    sTemplate[uCount].ulValueLen = sizeof(objClass);
+    uCount++;
+
+    JS_PKCS11_FindObjectsInit( p11_ctx, hSession, sTemplate, uCount );
+    JS_PKCS11_FindObjects( p11_ctx, hSession, sObjects, uMaxObjCnt, &uObjCnt );
+    JS_PKCS11_FindObjectsFinal( p11_ctx, hSession );
+
+    mLabelCombo->clear();
+
+    for( int i=0; i < uObjCnt; i++ )
+    {
+        JS_PKCS11_DestroyObject( p11_ctx, hSession, sObjects[i] );
+    }
+
+    QDialog::accept();
+}
+
 
 void DelObjectDlg::labelChanged( int index )
 {

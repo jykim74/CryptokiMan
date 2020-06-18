@@ -20,7 +20,8 @@ public:
 
 
 private slots:
-    virtual void accept();
+    void deleteObj();
+    void deleteAllObj();
     void slotChanged( int index );
 
     void labelChanged( int index );
