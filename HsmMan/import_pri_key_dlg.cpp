@@ -147,7 +147,7 @@ void ImportPriKeyDlg::accept()
 
     JS_BIN_fileRead( strPriPath.toStdString().c_str(), &binPri );
 
-    JS_PKI_getRSAKeyVal( &binPri, &rsaKeyVal );
+    rv = JS_PKI_getRSAKeyVal( &binPri, &rsaKeyVal );
     if( rv == 0 )
     {
         createRSAPrivateKey( &rsaKeyVal );
@@ -261,11 +261,13 @@ void ImportPriKeyDlg::clickFind()
     QFileDialog::Options options;
     options |= QFileDialog::DontUseNativeDialog;
 
+    QString strPath = QDir::currentPath();
+
     QString selectedFilter;
     QString fileName = QFileDialog::getOpenFileName( this,
                                                      tr("Private Key"),
-                                                     "D:/test",
-                                                     tr("DLL Files (*.dll);;All Files (*.*)"),
+                                                     strPath,
+                                                     tr("DER Files (*.der);;Key Files (*.key);;All Files (*.*)"),
                                                      &selectedFilter,
                                                      options );
 
@@ -306,14 +308,12 @@ int ImportPriKeyDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
     uCount++;
 
     QString strLabel = mPubLabelText->text();
-    BIN binLabel = {0,0};
 
     if( !strLabel.isEmpty() )
     {
-        JS_BIN_decodeHex( strLabel.toStdString().c_str(), &binLabel );
         sTemplate[uCount].type = CKA_LABEL;
-        sTemplate[uCount].pValue = binLabel.pVal;
-        sTemplate[uCount].ulValueLen = binLabel.nLen;
+        sTemplate[uCount].pValue = (unsigned char *)strLabel.toStdString().c_str();
+        sTemplate[uCount].ulValueLen = strLabel.length();
         uCount++;
     }
 
@@ -435,15 +435,12 @@ int ImportPriKeyDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
     uCount++;
 
     QString strLabel = mPriLabelText->text();
-    BIN binLabel = {0,0};
 
     if( !strLabel.isEmpty() )
-    {
-        JS_BIN_decodeHex( strLabel.toStdString().c_str(), &binLabel );
-
+    {   
         sTemplate[uCount].type = CKA_LABEL;
-        sTemplate[uCount].pValue = binLabel.pVal;
-        sTemplate[uCount].ulValueLen = binLabel.nLen;
+        sTemplate[uCount].pValue = (unsigned char *)strLabel.toStdString().c_str();
+        sTemplate[uCount].ulValueLen = strLabel.length();
         uCount++;
     }
 
@@ -657,14 +654,12 @@ int ImportPriKeyDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
     uCount++;
 
     QString strLabel = mPubLabelText->text();
-    BIN binLabel = {0,0};
 
     if( !strLabel.isEmpty() )
     {
-        JS_BIN_decodeHex( strLabel.toStdString().c_str(), &binLabel );
         sTemplate[uCount].type = CKA_LABEL;
-        sTemplate[uCount].pValue = binLabel.pVal;
-        sTemplate[uCount].ulValueLen = binLabel.nLen;
+        sTemplate[uCount].pValue = (unsigned char *)strLabel.toStdString().c_str();
+        sTemplate[uCount].ulValueLen = strLabel.length();
         uCount++;
     }
 
@@ -787,14 +782,12 @@ int ImportPriKeyDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
     uCount++;
 
     QString strLabel = mPriLabelText->text();
-    BIN binLabel = {0,0};
 
     if( !strLabel.isEmpty() )
     {
-        JS_BIN_decodeHex( strLabel.toStdString().c_str(), &binLabel );
         sTemplate[uCount].type = CKA_LABEL;
-        sTemplate[uCount].pValue = binLabel.pVal;
-        sTemplate[uCount].ulValueLen = binLabel.nLen;
+        sTemplate[uCount].pValue = (unsigned char *)strLabel.toStdString().c_str();
+        sTemplate[uCount].ulValueLen = strLabel.length();
         uCount++;
     }
 
