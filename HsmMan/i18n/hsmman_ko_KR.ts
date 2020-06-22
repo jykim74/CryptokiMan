@@ -37,10 +37,12 @@
         <translation>이 프로그램은 상업적으로 이용하지 않는다면 cryptoki 모듈 테스트를 자유롭게 사용하는 프리웨어 소프트웨어이다. 요구 사항이나 의견이 있으면 메일로 연락주세요.</translation>
     </message>
     <message>
-        <source>
-Copyright (C) 2019 ~ 2020 JongYeob Kim
+        <source><byte value="xd"/>
+Copyright (C) 2019 ~ 2020 JongYeob Kim<byte value="xd"/>
 mailto : jykim74@gmail.com</source>
-        <translation type="unfinished"></translation>
+        <translation>
+Copyright (C) 2019 ~ 2020 JongYeob Kim
+메일: jykim74@gmail.com</translation>
     </message>
 </context>
 <context>
@@ -792,6 +794,18 @@ mailto : jykim74@gmail.com</source>
     <message>
         <source>success to delete object</source>
         <translation>대상 삭제 성공</translation>
+    </message>
+    <message>
+        <source>DeleteAll</source>
+        <translation>모두 삭제</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>닫기</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>삭제</translation>
     </message>
 </context>
 <context>
@@ -1765,10 +1779,6 @@ mailto : jykim74@gmail.com</source>
         <translation>키 정보 가져오기 실패</translation>
     </message>
     <message>
-        <source>DLL Files (*.dll);;All Files (*.*)</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Import private key</source>
         <translation>개인키 가져오기</translation>
     </message>
@@ -1791,6 +1801,14 @@ mailto : jykim74@gmail.com</source>
     <message>
         <source>fail to create EC private key(%1)</source>
         <translation>EC 개인키 생성 실패(%1)</translation>
+    </message>
+    <message>
+        <source>Public Key Import</source>
+        <translation>공개키 가져오기</translation>
+    </message>
+    <message>
+        <source>DER Files (*.der);;Key Files (*.key);;All Files (*.*)</source>
+        <translation>DER 파일들 (*.der);; 키 파일들 (*.key);;모든 파일들 (*.*)</translation>
     </message>
 </context>
 <context>

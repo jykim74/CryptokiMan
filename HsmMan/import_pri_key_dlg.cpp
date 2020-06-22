@@ -46,7 +46,7 @@ void ImportPriKeyDlg::initialize()
 
     if( slot_infos.size() > 0 ) slotChanged(0);
 
-
+    clickPubImport();
 }
 
 void ImportPriKeyDlg::initAttributes()
@@ -95,6 +95,8 @@ void ImportPriKeyDlg::setAttributes()
 
 void ImportPriKeyDlg::connectAttributes()
 {
+    connect( mPubImportCheck, SIGNAL(clicked()), this, SLOT(clickPubImport()));
+
     connect( mPriPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPriPrivate()));
     connect( mPriDecryptCheck, SIGNAL(clicked()), this, SLOT(clickPriDecrypt()));
     connect( mPriSignCheck, SIGNAL(clicked()), this, SLOT(clickPriSign()));
@@ -150,18 +152,26 @@ void ImportPriKeyDlg::accept()
     rv = JS_PKI_getRSAKeyVal( &binPri, &rsaKeyVal );
     if( rv == 0 )
     {
-        createRSAPrivateKey( &rsaKeyVal );
-        createRSAPublicKey( &rsaKeyVal );
+        rv = createRSAPrivateKey( &rsaKeyVal );
+        if( rv != 0 ) goto end;
+
+        if( mPubImportCheck->isChecked() )
+            rv = createRSAPublicKey( &rsaKeyVal );
     }
     else
     {
         rv = JS_PKI_getECKeVal( &binPri, &ecKeyVal );
         if( rv == 0 )
         {
-            createECPrivateKey( &ecKeyVal );
-            createECPublicKey( &ecKeyVal );
+            rv = createECPrivateKey( &ecKeyVal );
+            if( rv != 0 ) goto end;
+
+            if( mPubImportCheck->isChecked() )
+                rv = createECPublicKey( &ecKeyVal );
         }
     }
+
+end :
 
     if( rv != 0 )
     {
@@ -185,6 +195,12 @@ void ImportPriKeyDlg::slotChanged(int index)
     mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
 }
 
+void ImportPriKeyDlg::clickPubImport()
+{
+    bool bVal = mPubImportCheck->isChecked();
+
+    mTabWidget->setTabEnabled( 2, bVal );
+}
 
 void ImportPriKeyDlg::clickPriPrivate()
 {
@@ -479,6 +495,16 @@ int ImportPriKeyDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
         uCount++;
     }
 
+    BIN binModules = {0,0};
+    if( pRsaKeyVal->pN )
+    {
+        JS_BIN_decodeHex( pRsaKeyVal->pN, &binModules );
+        sTemplate[uCount].type = CKA_MODULUS;
+        sTemplate[uCount].pValue = binModules.pVal;
+        sTemplate[uCount].ulValueLen = binModules.nLen;
+        uCount++;
+    }
+
     BIN binPrivateExponent = {0,0};
     if( pRsaKeyVal->pD )
     {
@@ -488,6 +514,7 @@ int ImportPriKeyDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
         sTemplate[uCount].ulValueLen = binPrivateExponent.nLen;
         uCount++;
     }
+
 
     BIN binPrime1 = {0,0};
     if( pRsaKeyVal->pP )

@@ -22,6 +22,8 @@ private slots:
     virtual void accept();
     void slotChanged( int index );
 
+    void clickPubImport();
+
     void clickPriPrivate();
     void clickPriDecrypt();
     void clickPriSign();
