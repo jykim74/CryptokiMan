@@ -2190,7 +2190,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Create Key</source>
-        <translation>키 생성</translation>
+        <translation>키 만들기</translation>
     </message>
     <message>
         <source>PKCS11 Create Key</source>

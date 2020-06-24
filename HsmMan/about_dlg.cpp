@@ -33,15 +33,17 @@ AboutDlg::AboutDlg(QWidget *parent) :
 
     QString strLibVersion = JS_GEN_getBuildInfo();
 
-    strAbout += "\r\nLibrary: ";
+    strAbout += "\r\n\r\n";
+    strAbout += tr("Library:");
     strAbout += strLibVersion;
 
-    strAbout += "\r\n";
+    strAbout += " \r\n";
     strAbout += getBuild();
-    strAbout += "\r\n";
+    strAbout += "\r\n\r\n";
 
-    QString strAppend = tr( "\r\nCopyright (C) 2019 ~ 2020 JongYeob Kim\r\n"
-            "mailto : jykim74@gmail.com");
+    QString strAppend = tr( "Copyright (C) 2019 ~ 2020 JongYeob Kim" );
+    strAbout += "\r\n";
+    strAbout += tr("mailto : jykim74@gmail.com");
 
     strAbout += strAppend;
 

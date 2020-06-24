@@ -216,3 +216,6 @@ linux {
 }
 
 INCLUDEPATH += "../../PKILib"
+
+DISTFILES += \
+    i18n/hsmman_ko_KR.qm
