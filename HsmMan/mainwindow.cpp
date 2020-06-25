@@ -47,6 +47,8 @@
 #include "settings_dlg.h"
 #include "settings_mgr.h"
 
+const int kMaxRecentFiles = 10;
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
@@ -156,6 +158,24 @@ void MainWindow::createActions()
     unloadAct->setStatusTip(tr("Unload cryptoki library"));
     connect( unloadAct, &QAction::triggered, this, &MainWindow::unload );
     fileMenu->addAction(unloadAct);
+
+    QAction* recentFileAct = NULL;
+    for( auto i = 0; i < kMaxRecentFiles; ++i )
+    {
+        recentFileAct = new QAction(this);
+        recentFileAct->setVisible(false);
+
+        QObject::connect( recentFileAct, &QAction::triggered, this, &MainWindow::openRecent );
+        recent_file_list_.append( recentFileAct );
+    }
+
+    QMenu* recentMenu = fileMenu->addMenu( tr("Recent Files" ) );
+    for( int i = 0; i < kMaxRecentFiles; i++ )
+    {
+        recentMenu->addAction( recent_file_list_.at(i) );
+    }
+
+    updateRecentActionList();
 
     fileMenu->addSeparator();
 
@@ -327,6 +347,9 @@ int MainWindow::openLibrary(const QString libPath)
         pItem->setText( tr("CryptokiToken"));
         pItem->setType( HM_ITEM_TYPE_ROOT );
         left_model_->insertRow(0, pItem );
+
+        setTitle( libPath );
+        adjustForCurrentFile( libPath );
     }
 
     return 0;
@@ -361,8 +384,6 @@ void MainWindow::open()
         int ret = openLibrary( fileName );
         if( ret != 0 ) return;
 
-        setTitle( fileName );
-
         if( bSavePath )
         {
             QFileInfo fileInfo(fileName);
@@ -374,6 +395,13 @@ void MainWindow::open()
             settings.endGroup();
         }
     }
+}
+
+void MainWindow::openRecent()
+{
+    QAction *action = qobject_cast<QAction *>(sender());
+    if( action )
+        openLibrary( action->data().toString() );
 }
 
 void MainWindow::quit()
@@ -729,6 +757,46 @@ void MainWindow::showWindow()
     show();
     raise();
     activateWindow();
+}
+
+void MainWindow::adjustForCurrentFile( const QString& filePath )
+{
+    QSettings settings;
+    QStringList recentFilePaths = settings.value( "recentFiles" ).toStringList();
+
+    recentFilePaths.removeAll( filePath );
+    recentFilePaths.prepend( filePath );
+
+    while( recentFilePaths.size() > kMaxRecentFiles )
+        recentFilePaths.removeLast();
+
+    settings.setValue( "recentFiles", recentFilePaths );
+
+    updateRecentActionList();
+}
+
+void MainWindow::updateRecentActionList()
+{
+    QSettings settings;
+    QStringList recentFilePaths = settings.value( "recentFiles" ).toStringList();
+
+    auto itEnd = 0u;
+
+    if( recentFilePaths.size() <= kMaxRecentFiles )
+        itEnd = recentFilePaths.size();
+    else
+        itEnd = kMaxRecentFiles;
+
+    for( auto i = 0u; i < itEnd; ++i )
+    {
+        QString strippedName = QFileInfo(recentFilePaths.at(i)).fileName();
+        recent_file_list_.at(i)->setText(strippedName);
+        recent_file_list_.at(i)->setData( recentFilePaths.at(i));
+        recent_file_list_.at(i)->setVisible(true);
+    }
+
+    for( auto i = itEnd; i < kMaxRecentFiles; ++i )
+        recent_file_list_.at(i)->setVisible(false);
 }
 
 ManTreeItem* MainWindow::currentItem()

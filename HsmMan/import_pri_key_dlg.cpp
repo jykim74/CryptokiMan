@@ -160,7 +160,7 @@ void ImportPriKeyDlg::accept()
     }
     else
     {
-        rv = JS_PKI_getECKeVal( &binPri, &ecKeyVal );
+        rv = JS_PKI_getECKeyVal( &binPri, &ecKeyVal );
         if( rv == 0 )
         {
             rv = createECPrivateKey( &ecKeyVal );

@@ -35,6 +35,7 @@ public:
 public slots:
     void newFile();
     void open();
+    void openRecent();
     void quit();
     void unload();
     void openSession();
@@ -82,6 +83,11 @@ private:
     void createStatusBar();
     int openLibrary( const QString libPath );
     void setTitle(const QString strName);
+
+    void adjustForCurrentFile( const QString& filePath );
+    void updateRecentActionList();
+
+    QList<QAction *>  recent_file_list_;
 
     QSplitter       *hsplitter_;
     QSplitter       *vsplitter_;
