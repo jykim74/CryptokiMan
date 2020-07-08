@@ -88,7 +88,7 @@ void EncryptDlg::keyTypeChanged( int index )
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[1];
     CK_ULONG uCnt = 0;
@@ -115,9 +115,9 @@ void EncryptDlg::keyTypeChanged( int index )
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
     uCnt++;
 
-    JS_PKCS11_FindObjectsInit( p11_ctx, hSession, sTemplate, uCnt );
-    JS_PKCS11_FindObjects( p11_ctx, hSession, sObjects, uMaxObjCnt, &uObjCnt );
-    JS_PKCS11_FindObjectsFinal( p11_ctx, hSession );
+    JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
+    JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
+    JS_PKCS11_FindObjectsFinal( p11_ctx );
 
     mLabelCombo->clear();
 
@@ -125,7 +125,7 @@ void EncryptDlg::keyTypeChanged( int index )
     {
         char    *pStr = NULL;
         BIN binLabel = {0,0};
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, sObjects[i], CKA_LABEL, &binLabel );
+        JS_PKCS11_GetAtrributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
         QVariant objVal = QVariant((int)sObjects[i]);
         JS_BIN_string( &binLabel, &pStr );
         mLabelCombo->addItem( pStr, objVal );
@@ -157,7 +157,7 @@ void EncryptDlg::clickInit()
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     CK_MECHANISM sMech;
     BIN binParam = {0,0};
@@ -174,7 +174,7 @@ void EncryptDlg::clickInit()
         sMech.ulParameterLen = binParam.nLen;
     }
 
-    rv = JS_PKCS11_EncryptInit( p11_ctx, hSession, &sMech, hObject );
+    rv = JS_PKCS11_EncryptInit( p11_ctx, &sMech, hObject );
 
     if( rv != CKR_OK )
     {
@@ -196,7 +196,7 @@ void EncryptDlg::clickUpdate()
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     QString strInput = mInputText->text();
 
@@ -223,7 +223,7 @@ void EncryptDlg::clickUpdate()
     if( pEncPart == NULL ) return;
 
 
-    rv = JS_PKCS11_EncryptUpdate( p11_ctx, hSession, binInput.pVal, binInput.nLen, pEncPart, (CK_ULONG_PTR)&uEncPartLen );
+    rv = JS_PKCS11_EncryptUpdate( p11_ctx, binInput.pVal, binInput.nLen, pEncPart, (CK_ULONG_PTR)&uEncPartLen );
 
     if( rv != CKR_OK )
     {
@@ -259,7 +259,7 @@ void EncryptDlg::clickFinal()
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     unsigned char *pEncPart = NULL;
     long uEncPartLen = 0;
@@ -270,7 +270,7 @@ void EncryptDlg::clickFinal()
     BIN binEncPart = {0,0};
     char *pHex = NULL;
 
-    rv = JS_PKCS11_EncryptFinal( p11_ctx, hSession, pEncPart, (CK_ULONG_PTR)&uEncPartLen);
+    rv = JS_PKCS11_EncryptFinal( p11_ctx, pEncPart, (CK_ULONG_PTR)&uEncPartLen);
     if( rv != CKR_OK )
     {
         mOutputText->setPlainText( "" );
@@ -303,7 +303,7 @@ void EncryptDlg::clickEncrypt()
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     QString strInput = mInputText->text();
 
@@ -331,7 +331,7 @@ void EncryptDlg::clickEncrypt()
     if( pEncData == NULL ) return;
 
 
-    rv = JS_PKCS11_Encrypt( p11_ctx, hSession, binInput.pVal, binInput.nLen, pEncData, (CK_ULONG_PTR)&uEncDataLen);
+    rv = JS_PKCS11_Encrypt( p11_ctx, binInput.pVal, binInput.nLen, pEncData, (CK_ULONG_PTR)&uEncDataLen);
 
     if( rv != CKR_OK )
     {

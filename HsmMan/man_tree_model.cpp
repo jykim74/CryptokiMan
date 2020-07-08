@@ -394,10 +394,11 @@ void ManTreeModel::showSessionInfo(int index)
     long uSlotID = slotInfo.getSlotID();
 
     CK_SESSION_INFO stSessInfo;
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     removeAllRightTable();
 
-    int rv = JS_PKCS11_GetSessionInfo( p11_ctx, slotInfo.getSessionHandle(), &stSessInfo );
+    int rv = JS_PKCS11_GetSessionInfo( p11_ctx, &stSessInfo );
     if( rv != CKR_OK )
     {
         return;
@@ -453,7 +454,7 @@ void ManTreeModel::showObjectsInfo(int index)
     SlotInfo slotInfo = slot_infos.at(index);
 
 
-    long uSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[100];
 
@@ -461,9 +462,9 @@ void ManTreeModel::showObjectsInfo(int index)
 
     int ret = 0;
 
-    ret = JS_PKCS11_FindObjectsInit( p11_ctx, uSession, NULL, 0 );
-    ret = JS_PKCS11_FindObjects( p11_ctx, uSession, hObjects, 100, &uObjCnt );
-    ret = JS_PKCS11_FindObjectsFinal( p11_ctx, uSession );
+    ret = JS_PKCS11_FindObjectsInit( p11_ctx, NULL, 0 );
+    ret = JS_PKCS11_FindObjects( p11_ctx, hObjects, 100, &uObjCnt );
+    ret = JS_PKCS11_FindObjectsFinal( p11_ctx );
 
 
     int row = 0;
@@ -492,7 +493,7 @@ void ManTreeModel::showObjectsInfo(int index)
         row++;
 
 
-        JS_PKCS11_GetObjectSize( p11_ctx, uSession, hObjects[i], &uSize );
+        JS_PKCS11_GetObjectSize( p11_ctx, hObjects[i], &uSize );
         right_table_->insertRow( row );
         right_table_->setItem( row, 0, new QTableWidgetItem( QString("Size")));
         strVal = QString("%1").arg( hObjects[i] );
@@ -505,7 +506,7 @@ void ManTreeModel::showObjectsInfo(int index)
 
         right_table_->insertRow( row );
         right_table_->setItem( row, 0, new QTableWidgetItem( QString("Class")));
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, uSession, hObjects[i], attrType, &binVal );
+        JS_PKCS11_GetAtrributeValue2( p11_ctx, hObjects[i], attrType, &binVal );
         strVal = JS_PKCS11_GetCKOName( JS_BIN_long( &binVal ) );
         JS_BIN_reset( &binVal );
         right_table_->setItem( row, 1, new QTableWidgetItem( strVal ));
@@ -547,14 +548,14 @@ void ManTreeModel::showAttribute( int nSlotIdx, int nValType, CK_ATTRIBUTE_TYPE 
     CK_TOKEN_INFO sTokenInfo;
     SlotInfo slotInfo = slot_infos.at( nSlotIdx );
 
-    long hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     char    *pStr = NULL;
     QString strMsg;
     BIN     binVal = {0,0};
     int nRow = right_table_->rowCount();
 
-    JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, hObj, uAttribute, &binVal );
+    JS_PKCS11_GetAtrributeValue2( p11_ctx, hObj, uAttribute, &binVal );
 
     if( nValType == ATTR_VAL_BOOL )
     {
@@ -597,7 +598,7 @@ void ManTreeModel::showCertificateInfo( int index, long hObject )
     CK_TOKEN_INFO sTokenInfo;
     SlotInfo slotInfo = slot_infos.at(index);
 
-    long hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[100];
@@ -612,9 +613,9 @@ void ManTreeModel::showCertificateInfo( int index, long hObject )
             { CKA_CLASS, &objClass, sizeof(objClass) }
         };
 
-        rv = JS_PKCS11_FindObjectsInit( p11_ctx, hSession, sTemplate, 1 );
-        rv = JS_PKCS11_FindObjects( p11_ctx, hSession, hObjects, 100, &uObjCnt );
-        rv = JS_PKCS11_FindObjectsFinal( p11_ctx, hSession );
+        rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, 1 );
+        rv = JS_PKCS11_FindObjects( p11_ctx, hObjects, 100, &uObjCnt );
+        rv = JS_PKCS11_FindObjectsFinal( p11_ctx );
     }
     else
     {
@@ -665,7 +666,7 @@ void ManTreeModel::showPublicKeyInfo( int index, long hObject )
     CK_TOKEN_INFO sTokenInfo;
     SlotInfo slotInfo = slot_infos.at(index);
 
-    long hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[100];
     int rv = 0;
@@ -679,9 +680,9 @@ void ManTreeModel::showPublicKeyInfo( int index, long hObject )
             { CKA_CLASS, &objClass, sizeof(objClass) }
         };
 
-        rv = JS_PKCS11_FindObjectsInit( p11_ctx, hSession, sTemplate, 1 );
-        rv = JS_PKCS11_FindObjects( p11_ctx, hSession, hObjects, 100, &uObjCnt );
-        rv = JS_PKCS11_FindObjectsFinal( p11_ctx, hSession );
+        rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, 1 );
+        rv = JS_PKCS11_FindObjects( p11_ctx, hObjects, 100, &uObjCnt );
+        rv = JS_PKCS11_FindObjectsFinal( p11_ctx );
     }
     else
     {
@@ -740,7 +741,7 @@ void ManTreeModel::showPrivateKeyInfo( int index, long hObject )
     CK_TOKEN_INFO sTokenInfo;
     SlotInfo slotInfo = slot_infos.at(index);
 
-    long hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[100];
@@ -755,9 +756,9 @@ void ManTreeModel::showPrivateKeyInfo( int index, long hObject )
             { CKA_CLASS, &objClass, sizeof(objClass) }
         };
 
-        rv = JS_PKCS11_FindObjectsInit( p11_ctx, hSession, sTemplate, 1 );
-        rv = JS_PKCS11_FindObjects( p11_ctx, hSession, hObjects, 100, &uObjCnt );
-        rv = JS_PKCS11_FindObjectsFinal( p11_ctx, hSession );
+        rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, 1 );
+        rv = JS_PKCS11_FindObjects( p11_ctx, hObjects, 100, &uObjCnt );
+        rv = JS_PKCS11_FindObjectsFinal( p11_ctx );
     }
     else
     {
@@ -825,7 +826,7 @@ void ManTreeModel::showSecretKeyInfo( int index, long hObject )
     CK_TOKEN_INFO sTokenInfo;
     SlotInfo slotInfo = slot_infos.at(index);
 
-    long hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[100];
@@ -840,9 +841,9 @@ void ManTreeModel::showSecretKeyInfo( int index, long hObject )
             { CKA_CLASS, &objClass, sizeof(objClass) }
         };
 
-        rv = JS_PKCS11_FindObjectsInit( p11_ctx, hSession, sTemplate, 1 );
-        rv = JS_PKCS11_FindObjects( p11_ctx, hSession, hObjects, 100, &uObjCnt );
-        rv = JS_PKCS11_FindObjectsFinal( p11_ctx, hSession );
+        rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, 1 );
+        rv = JS_PKCS11_FindObjects( p11_ctx, hObjects, 100, &uObjCnt );
+        rv = JS_PKCS11_FindObjectsFinal( p11_ctx );
     }
     else
     {
@@ -903,7 +904,7 @@ void ManTreeModel::showDataInfo( int index, long hObject )
     CK_TOKEN_INFO sTokenInfo;
     SlotInfo slotInfo = slot_infos.at(index);
 
-    long hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[100];
@@ -918,9 +919,9 @@ void ManTreeModel::showDataInfo( int index, long hObject )
             { CKA_CLASS, &objClass, sizeof(objClass) }
         };
 
-        rv = JS_PKCS11_FindObjectsInit( p11_ctx, hSession, sTemplate, 1 );
-        rv = JS_PKCS11_FindObjects( p11_ctx, hSession, hObjects, 100, &uObjCnt );
-        rv = JS_PKCS11_FindObjectsFinal( p11_ctx, hSession );
+        rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, 1 );
+        rv = JS_PKCS11_FindObjects( p11_ctx, hObjects, 100, &uObjCnt );
+        rv = JS_PKCS11_FindObjectsFinal( p11_ctx);
     }
     else
     {

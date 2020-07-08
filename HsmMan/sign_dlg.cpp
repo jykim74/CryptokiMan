@@ -90,7 +90,7 @@ void SignDlg::keyTypeChanged( int index )
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[1];
     CK_ULONG uCnt = 0;
@@ -119,9 +119,9 @@ void SignDlg::keyTypeChanged( int index )
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
     uCnt++;
 
-    JS_PKCS11_FindObjectsInit( p11_ctx, hSession, sTemplate, uCnt );
-    JS_PKCS11_FindObjects( p11_ctx, hSession, sObjects, uMaxObjCnt, &uObjCnt );
-    JS_PKCS11_FindObjectsFinal( p11_ctx, hSession );
+    JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
+    JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
+    JS_PKCS11_FindObjectsFinal( p11_ctx );
 
     mLabelCombo->clear();
 
@@ -129,7 +129,7 @@ void SignDlg::keyTypeChanged( int index )
     {
         char    *pStr = NULL;
         BIN binLabel = {0,0};
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, sObjects[i], CKA_LABEL, &binLabel );
+        JS_PKCS11_GetAtrributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
         QVariant objVal = QVariant((int)sObjects[i]);
         JS_BIN_string( &binLabel, &pStr );
         mLabelCombo->addItem( pStr, objVal );
@@ -161,7 +161,7 @@ void SignDlg::clickInit()
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     CK_MECHANISM sMech;
     BIN binParam = {0,0};
@@ -178,7 +178,7 @@ void SignDlg::clickInit()
     }
 
     CK_OBJECT_HANDLE uObject = mObjectText->text().toLong();
-    rv = JS_PKCS11_SignInit( p11_ctx, hSession, &sMech, uObject );
+    rv = JS_PKCS11_SignInit( p11_ctx, &sMech, uObject );
 
     if( rv != CKR_OK )
     {
@@ -201,7 +201,7 @@ void SignDlg::clickUpdate()
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     QString strInput = mInputText->text();
 
@@ -220,7 +220,7 @@ void SignDlg::clickUpdate()
     else if( mInputCombo->currentIndex() == 2 )
         JS_BIN_decodeBase64( strInput.toStdString().c_str(), &binInput );
 
-    rv = JS_PKCS11_SignUpdate( p11_ctx, hSession, binInput.pVal, binInput.nLen );
+    rv = JS_PKCS11_SignUpdate( p11_ctx, binInput.pVal, binInput.nLen );
     if( rv != CKR_OK )
     {
         manApplet->warningBox(tr("fail to run SignUpdate(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
@@ -241,13 +241,13 @@ void SignDlg::clickFinal()
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     unsigned char sSign[1024];
     long uSignLen = 1024;
 
 
-    rv = JS_PKCS11_SignFinal( p11_ctx, hSession, sSign, (CK_ULONG_PTR)&uSignLen );
+    rv = JS_PKCS11_SignFinal( p11_ctx, sSign, (CK_ULONG_PTR)&uSignLen );
 
     if( rv != CKR_OK )
     {
@@ -278,7 +278,7 @@ void SignDlg::clickSign()
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
 
     QString strInput = mInputText->text();
@@ -301,7 +301,7 @@ void SignDlg::clickSign()
     unsigned char sSign[1024];
     long uSignLen = 1024;
 
-    rv = JS_PKCS11_Sign( p11_ctx, hSession, binInput.pVal, binInput.nLen, sSign, (CK_ULONG_PTR)&uSignLen );
+    rv = JS_PKCS11_Sign( p11_ctx, binInput.pVal, binInput.nLen, sSign, (CK_ULONG_PTR)&uSignLen );
     if( rv != CKR_OK )
     {
         mOutputText->setPlainText("");

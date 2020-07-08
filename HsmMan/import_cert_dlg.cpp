@@ -94,7 +94,7 @@ void ImportCertDlg::accept()
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     QString strCertPath = mCertPathText->text();
 
@@ -202,7 +202,7 @@ void ImportCertDlg::accept()
     }
 
 
-    rv = JS_PKCS11_CreateObject( p11_ctx, hSession, sTemplate, uCount, &hObject );
+    rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to create certificate(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );

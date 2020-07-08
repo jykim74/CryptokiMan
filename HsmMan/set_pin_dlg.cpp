@@ -56,10 +56,10 @@ void SetPinDlg::accept()
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nFlags = 0;
-    CK_SESSION_HANDLE   hSession = -1;
+
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
-    hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
     int rv = -1;
 
 
@@ -88,7 +88,7 @@ void SetPinDlg::accept()
     JS_BIN_set( &binNewPin, (unsigned char *)strNewPin.toStdString().c_str(), strNewPin.length() );
 
 
-    rv = JS_PKCS11_SetPIN( p11_ctx, hSession, binOldPin.pVal, binOldPin.nLen, binNewPin.pVal, binNewPin.nLen );
+    rv = JS_PKCS11_SetPIN( p11_ctx, binOldPin.pVal, binOldPin.nLen, binNewPin.pVal, binNewPin.nLen );
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr( "fail to run C_SetPIN(%1)").arg(rv), this );

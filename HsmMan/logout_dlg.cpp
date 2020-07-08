@@ -51,8 +51,9 @@ void LogoutDlg::accept()
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
-    rv = JS_PKCS11_Logout( p11_ctx, slotInfo.getSessionHandle() );
+    rv = JS_PKCS11_Logout( p11_ctx );
     if( rv == CKR_OK )
     {
         slotInfo.setLogin(false);

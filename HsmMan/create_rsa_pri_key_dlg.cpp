@@ -104,12 +104,12 @@ void CreateRSAPriKeyDlg::accept()
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nFlags = 0;
-    CK_SESSION_HANDLE   hSession = -1;
+
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
 
-    hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[20];
     long uCount = 0;
@@ -335,7 +335,7 @@ void CreateRSAPriKeyDlg::accept()
 
     CK_OBJECT_CLASS hObject = 0;
 
-    rv = JS_PKCS11_CreateObject( p11_ctx, hSession, sTemplate, uCount, &hObject );
+    rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to create RSA private key(%1)").arg( JS_PKCS11_GetErrorMsg(rv)), this );

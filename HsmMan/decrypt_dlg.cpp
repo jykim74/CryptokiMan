@@ -88,7 +88,7 @@ void DecryptDlg::keyTypeChanged( int index )
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[1];
     CK_ULONG uCnt = 0;
@@ -116,9 +116,9 @@ void DecryptDlg::keyTypeChanged( int index )
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
     uCnt++;
 
-    JS_PKCS11_FindObjectsInit( p11_ctx, hSession, sTemplate, uCnt );
-    JS_PKCS11_FindObjects( p11_ctx, hSession, sObjects, uMaxObjCnt, &uObjCnt );
-    JS_PKCS11_FindObjectsFinal( p11_ctx, hSession );
+    JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
+    JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
+    JS_PKCS11_FindObjectsFinal( p11_ctx );
 
     mLabelCombo->clear();
 
@@ -126,7 +126,7 @@ void DecryptDlg::keyTypeChanged( int index )
     {
         char    *pStr = NULL;
         BIN binLabel = {0,0};
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, sObjects[i], CKA_LABEL, &binLabel );
+        JS_PKCS11_GetAtrributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
         QVariant objVal = QVariant((int)sObjects[i]);
         JS_BIN_string( &binLabel, &pStr );
         mLabelCombo->addItem( pStr, objVal );
@@ -159,7 +159,7 @@ void DecryptDlg::clickInit()
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     long hObject = mObjectText->text().toLong();
 
@@ -177,7 +177,7 @@ void DecryptDlg::clickInit()
         sMech.ulParameterLen = binParam.nLen;
     }
 
-    rv = JS_PKCS11_DecryptInit( p11_ctx, hSession, &sMech, hObject );
+    rv = JS_PKCS11_DecryptInit( p11_ctx, &sMech, hObject );
 
     if( rv != CKR_OK )
     {
@@ -199,7 +199,7 @@ void DecryptDlg::clickUpdate()
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     QString strInput = mInputText->text();
 
@@ -226,7 +226,7 @@ void DecryptDlg::clickUpdate()
 
     BIN binDecPart = {0,0};
 
-    rv = JS_PKCS11_DecryptUpdate( p11_ctx, hSession, binInput.pVal, binInput.nLen, pDecPart, (CK_ULONG_PTR)&uDecPartLen );
+    rv = JS_PKCS11_DecryptUpdate( p11_ctx, binInput.pVal, binInput.nLen, pDecPart, (CK_ULONG_PTR)&uDecPartLen );
 
     if( rv != CKR_OK )
     {
@@ -259,7 +259,7 @@ void DecryptDlg::clickFinal()
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
 
     unsigned char *pDecPart = NULL;
@@ -271,7 +271,7 @@ void DecryptDlg::clickFinal()
     if( pDecPart == NULL )return;
 
 
-    rv = JS_PKCS11_DecryptFinal( p11_ctx, hSession, pDecPart, (CK_ULONG_PTR)&uDecPartLen );
+    rv = JS_PKCS11_DecryptFinal( p11_ctx, pDecPart, (CK_ULONG_PTR)&uDecPartLen );
     if( rv != CKR_OK )
     {
         if( pDecPart ) JS_free( pDecPart );
@@ -306,7 +306,7 @@ void DecryptDlg::clickDecrypt()
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     QString strInput = mInputText->text();
     if( strInput.isEmpty() )
@@ -327,7 +327,7 @@ void DecryptDlg::clickDecrypt()
     long uDecDataLen = mInputText->text().length();
     pDecData = (unsigned char *)JS_malloc( mInputText->text().length() );
 
-    rv = JS_PKCS11_Decrypt( p11_ctx, hSession, binInput.pVal, binInput.nLen, pDecData, (CK_ULONG_PTR)&uDecDataLen );
+    rv = JS_PKCS11_Decrypt( p11_ctx, binInput.pVal, binInput.nLen, pDecData, (CK_ULONG_PTR)&uDecDataLen );
 
     if( rv != CKR_OK )
     {

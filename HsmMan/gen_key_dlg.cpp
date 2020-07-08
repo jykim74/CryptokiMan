@@ -119,7 +119,7 @@ void GenKeyDlg::accept()
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nFlags = 0;
-    CK_SESSION_HANDLE   hSession = -1;
+
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
@@ -131,7 +131,7 @@ void GenKeyDlg::accept()
     CK_BBOOL bTrue = CK_TRUE;
     CK_BBOOL bFalse = CK_FALSE;
 
-    hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
     memset( &sMech, 0x00, sizeof(sMech) );
 
     sMech.mechanism = JS_PKCS11_GetCKMType( mMechCombo->currentText().toStdString().c_str() );
@@ -286,7 +286,7 @@ void GenKeyDlg::accept()
         uCount++;
     }
 
-    rv = JS_PKCS11_GenerateKey( p11_ctx, hSession, &sMech, sTemplate, uCount, &hObject );
+    rv = JS_PKCS11_GenerateKey( p11_ctx, &sMech, sTemplate, uCount, &hObject );
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to generate key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );

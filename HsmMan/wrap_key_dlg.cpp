@@ -79,7 +79,7 @@ void WrapKeyDlg::accept()
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     int rv = -1;
     QString strPath = mPathText->text();
@@ -112,7 +112,7 @@ void WrapKeyDlg::accept()
     CK_BYTE_PTR pData = NULL;
     CK_ULONG uDataLen = 0;
 
-    rv = JS_PKCS11_WrapKey( p11_ctx, hSession, &sMech, hWrappingKey, hKey, pData, &uDataLen );
+    rv = JS_PKCS11_WrapKey( p11_ctx, &sMech, hWrappingKey, hKey, pData, &uDataLen );
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to wrap key(%1)").arg( JS_PKCS11_GetErrorMsg(rv)), this );
@@ -122,7 +122,7 @@ void WrapKeyDlg::accept()
     pData = (CK_BYTE_PTR)JS_malloc( uDataLen );
     if( pData == NULL ) return;
 
-    rv = JS_PKCS11_WrapKey( p11_ctx, hSession, &sMech, hWrappingKey, hKey, pData, &uDataLen );
+    rv = JS_PKCS11_WrapKey( p11_ctx, &sMech, hWrappingKey, hKey, pData, &uDataLen );
     if( rv != CKR_OK )
     {
         if( pData ) JS_free( pData );
@@ -151,7 +151,7 @@ void WrapKeyDlg::setWrapLabelList()
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[1];
     CK_ULONG uCnt = 0;
@@ -169,9 +169,9 @@ void WrapKeyDlg::setWrapLabelList()
     uCnt++;
 
 
-    JS_PKCS11_FindObjectsInit( p11_ctx, hSession, sTemplate, uCnt );
-    JS_PKCS11_FindObjects( p11_ctx, hSession, sObjects, uMaxObjCnt, &uObjCnt );
-    JS_PKCS11_FindObjectsFinal( p11_ctx, hSession );
+    JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
+    JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
+    JS_PKCS11_FindObjectsFinal( p11_ctx );
 
     mLabelCombo->clear();
     mWrappingLabelCombo->clear();
@@ -183,7 +183,7 @@ void WrapKeyDlg::setWrapLabelList()
         BIN binLabel = {0,0};
         QVariant objVal = QVariant( (int)sObjects[i] );
 
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, sObjects[i], CKA_LABEL, &binLabel );
+        JS_PKCS11_GetAtrributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
         JS_BIN_string( &binLabel, &pLabel );
 
         mLabelCombo->addItem( pLabel, objVal );
@@ -201,9 +201,9 @@ void WrapKeyDlg::setWrapLabelList()
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
     uCnt++;
 
-    JS_PKCS11_FindObjectsInit( p11_ctx, hSession, sTemplate, uCnt );
-    JS_PKCS11_FindObjects( p11_ctx, hSession, sObjects, uMaxObjCnt, &uObjCnt );
-    JS_PKCS11_FindObjectsFinal( p11_ctx, hSession );
+    JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
+    JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
+    JS_PKCS11_FindObjectsFinal( p11_ctx );
 
     for( int i=0; i < uObjCnt; i++ )
     {
@@ -211,7 +211,7 @@ void WrapKeyDlg::setWrapLabelList()
         BIN binLabel = {0,0};
         QVariant objVal = QVariant( (int)sObjects[i] );
 
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, sObjects[i], CKA_LABEL, &binLabel );
+        JS_PKCS11_GetAtrributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
         JS_BIN_string( &binLabel, &pLabel );
 
         mLabelCombo->addItem( pLabel, objVal );

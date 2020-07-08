@@ -58,7 +58,7 @@ void CloseSessionDlg::accept()
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     if( all_ )
     {
@@ -67,7 +67,7 @@ void CloseSessionDlg::accept()
     }
     else {
 
-        rv = JS_PKCS11_CloseSession( p11_ctx, hSession );
+        rv = JS_PKCS11_CloseSession( p11_ctx );
         strType = "Single";
     }
 

@@ -82,7 +82,7 @@ void DigestDlg::clickInit()
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     BIN binParam = {0,0};
     CK_MECHANISM stMech;
@@ -100,7 +100,7 @@ void DigestDlg::clickInit()
         stMech.ulParameterLen = binParam.nLen;
     }
 
-    rv = JS_PKCS11_DigestInit( p11_ctx, hSession, &stMech );
+    rv = JS_PKCS11_DigestInit( p11_ctx, &stMech );
     if( rv == CKR_OK )
     {
         mStatusLabel->setText( "Init" );
@@ -124,7 +124,7 @@ void DigestDlg::clickUpdate()
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     QString strInput = mInputText->text();
     if( strInput.isEmpty() )
@@ -143,7 +143,7 @@ void DigestDlg::clickUpdate()
     else if( mInputCombo->currentIndex() == 2 )
         JS_BIN_decodeBase64( strInput.toStdString().c_str(), &binInput );
 
-    rv = JS_PKCS11_DigestUpdate( p11_ctx, hSession, binInput.pVal, binInput.nLen );
+    rv = JS_PKCS11_DigestUpdate( p11_ctx, binInput.pVal, binInput.nLen );
     if( rv == CKR_OK )
     {
         QString strMsg = mStatusLabel->text();
@@ -168,7 +168,7 @@ void DigestDlg::clickFinal()
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
 
     unsigned char sDigest[512];
@@ -177,7 +177,7 @@ void DigestDlg::clickFinal()
 
     memset( sDigest, 0x00, sizeof(sDigest) );
 
-    rv = JS_PKCS11_DigestFinal( p11_ctx, hSession, sDigest, &uDigestLen );
+    rv = JS_PKCS11_DigestFinal( p11_ctx, sDigest, &uDigestLen );
 
     if( rv == CKR_OK )
     {
@@ -207,7 +207,7 @@ void DigestDlg::clickDigest()
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     QString strInput = mInputText->text();
     if( strInput.isEmpty() )
@@ -231,7 +231,7 @@ void DigestDlg::clickDigest()
 
     memset( sDigest, 0x00, sizeof(sDigest) );
 
-    rv = JS_PKCS11_Digest( p11_ctx, hSession, binInput.pVal, binInput.nLen, sDigest, &uDigestLen );
+    rv = JS_PKCS11_Digest( p11_ctx, binInput.pVal, binInput.nLen, sDigest, &uDigestLen );
     if( rv == CKR_OK )
     {
         char *pHex = NULL;

@@ -335,7 +335,7 @@ int ImportPFXDlg::createCert( BIN *pCert )
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[20];
     CK_ULONG uCount = 0;
@@ -410,7 +410,7 @@ int ImportPFXDlg::createCert( BIN *pCert )
         uCount++;
     }
 
-    rv = JS_PKCS11_CreateObject( p11_ctx, hSession, sTemplate, uCount, &hObject );
+    rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to create certificate(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
@@ -430,7 +430,7 @@ int ImportPFXDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[20];
     CK_ULONG uCount = 0;
@@ -539,7 +539,7 @@ int ImportPFXDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
         uCount++;
     }
 
-    rv = JS_PKCS11_CreateObject( p11_ctx, hSession, sTemplate, uCount, &hObject );
+    rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to create RSA public key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
@@ -559,7 +559,7 @@ int ImportPFXDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[20];
     CK_ULONG uCount = 0;
@@ -761,7 +761,7 @@ int ImportPFXDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
         uCount++;
     }
 
-    rv = JS_PKCS11_CreateObject(p11_ctx, hSession, sTemplate, uCount, &hObject );
+    rv = JS_PKCS11_CreateObject(p11_ctx, sTemplate, uCount, &hObject );
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to create RSA private key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
@@ -781,7 +781,7 @@ int ImportPFXDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[20];
     CK_ULONG uCount = 0;
@@ -890,7 +890,7 @@ int ImportPFXDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
         uCount++;
     }
 
-    rv = JS_PKCS11_CreateObject( p11_ctx, hSession, sTemplate, uCount, &hObject );
+    rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to create EC public key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this);
@@ -910,7 +910,7 @@ int ImportPFXDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
 
     CK_ATTRIBUTE sTemplate[20];
@@ -1056,7 +1056,7 @@ int ImportPFXDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
         uCount++;
     }
 
-    rv = JS_PKCS11_CreateObject( p11_ctx, hSession, sTemplate, uCount, &hObject );
+    rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to create EC private key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this);

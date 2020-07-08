@@ -155,7 +155,7 @@ void UnwrapKeyDlg::accept()
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     int rv = -1;
 
@@ -323,7 +323,7 @@ void UnwrapKeyDlg::accept()
     }
 
 
-    rv = JS_PKCS11_UnwrapKey( p11_ctx, hSession, &sMech, hUnwrappingKey,
+    rv = JS_PKCS11_UnwrapKey( p11_ctx, &sMech, hUnwrappingKey,
                               binWrappedKey.pVal, binWrappedKey.nLen, sTemplate, uCount, &uObj );
 
     if( rv != CKR_OK )
@@ -373,7 +373,7 @@ void UnwrapKeyDlg::setUnwrapLabelList()
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[1];
     CK_ULONG uCnt = 0;
@@ -390,9 +390,9 @@ void UnwrapKeyDlg::setUnwrapLabelList()
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
     uCnt++;
 
-    JS_PKCS11_FindObjectsInit( p11_ctx, hSession, sTemplate, uCnt );
-    JS_PKCS11_FindObjects( p11_ctx, hSession, sObjects, uMaxObjCnt, &uObjCnt );
-    JS_PKCS11_FindObjectsFinal( p11_ctx, hSession );
+    JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
+    JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
+    JS_PKCS11_FindObjectsFinal( p11_ctx );
 
 
     mUnwrapLabelCombo->clear();
@@ -403,7 +403,7 @@ void UnwrapKeyDlg::setUnwrapLabelList()
         BIN binLabel = {0,0};
         QVariant objVal = QVariant( (int)sObjects[i] );
 
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, sObjects[i], CKA_LABEL, &binLabel );
+        JS_PKCS11_GetAtrributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
         JS_BIN_string( &binLabel, &pLabel );
 
        mUnwrapLabelCombo->addItem( pLabel, objVal );
@@ -419,9 +419,9 @@ void UnwrapKeyDlg::setUnwrapLabelList()
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
     uCnt++;
 
-    JS_PKCS11_FindObjectsInit( p11_ctx, hSession, sTemplate, uCnt );
-    JS_PKCS11_FindObjects( p11_ctx, hSession, sObjects, uMaxObjCnt, &uObjCnt );
-    JS_PKCS11_FindObjectsFinal( p11_ctx, hSession );
+    JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
+    JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
+    JS_PKCS11_FindObjectsFinal( p11_ctx );
 
     for( int i=0; i < uObjCnt; i++ )
     {
@@ -429,7 +429,7 @@ void UnwrapKeyDlg::setUnwrapLabelList()
         BIN binLabel = {0,0};
         QVariant objVal = QVariant( (int)sObjects[i] );
 
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, sObjects[i], CKA_LABEL, &binLabel );
+        JS_PKCS11_GetAtrributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
         JS_BIN_string( &binLabel, &pLabel );
 
        mUnwrapLabelCombo->addItem( pLabel, objVal );

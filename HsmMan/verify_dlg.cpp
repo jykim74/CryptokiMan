@@ -92,7 +92,7 @@ void VerifyDlg::keyTypeChanged( int index )
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[1];
     CK_ULONG uCnt = 0;
@@ -120,9 +120,9 @@ void VerifyDlg::keyTypeChanged( int index )
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
     uCnt++;
 
-    JS_PKCS11_FindObjectsInit( p11_ctx, hSession, sTemplate, uCnt );
-    JS_PKCS11_FindObjects( p11_ctx, hSession, sObjects, uMaxObjCnt, &uObjCnt );
-    JS_PKCS11_FindObjectsFinal( p11_ctx, hSession );
+    JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
+    JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
+    JS_PKCS11_FindObjectsFinal( p11_ctx );
 
     mLabelCombo->clear();
 
@@ -130,7 +130,7 @@ void VerifyDlg::keyTypeChanged( int index )
     {
         char    *pStr = NULL;
         BIN binLabel = {0,0};
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, sObjects[i], CKA_LABEL, &binLabel );
+        JS_PKCS11_GetAtrributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
         QVariant objVal = QVariant((int)sObjects[i]);
         JS_BIN_string( &binLabel, &pStr );
         mLabelCombo->addItem( pStr, objVal );
@@ -162,7 +162,7 @@ void VerifyDlg::clickInit()
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     CK_MECHANISM sMech;
     BIN binParam = {0,0};
@@ -178,7 +178,7 @@ void VerifyDlg::clickInit()
         sMech.ulParameterLen = binParam.nLen;
     }
 
-    rv = JS_PKCS11_VerifyInit( p11_ctx, hSession, &sMech, uObject );
+    rv = JS_PKCS11_VerifyInit( p11_ctx, &sMech, uObject );
     if( rv != CKR_OK )
     {
         mStatusLabel->setText("");
@@ -197,7 +197,7 @@ void VerifyDlg::clickUpdate()
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     QString strInput = mInputText->text();
 
@@ -217,7 +217,7 @@ void VerifyDlg::clickUpdate()
         JS_BIN_decodeBase64( strInput.toStdString().c_str(), &binInput );
 
 
-    rv = JS_PKCS11_VerifyUpdate(p11_ctx, hSession, binInput.pVal, binInput.nLen );
+    rv = JS_PKCS11_VerifyUpdate(p11_ctx, binInput.pVal, binInput.nLen );
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to run VerifyUpdate(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
@@ -238,7 +238,7 @@ void VerifyDlg::clickFinal()
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     QString strSign = mSignText->toPlainText();
 
@@ -251,7 +251,7 @@ void VerifyDlg::clickFinal()
     BIN binSign = {0,0};
     JS_BIN_decodeHex( strSign.toStdString().c_str(), &binSign );
 
-    rv = JS_PKCS11_VerifyFinal( p11_ctx, hSession, binSign.pVal, binSign.nLen );
+    rv = JS_PKCS11_VerifyFinal( p11_ctx, binSign.pVal, binSign.nLen );
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("Signature is bad(%1).").arg(JS_PKCS11_GetErrorMsg(rv)), this );
@@ -274,7 +274,7 @@ void VerifyDlg::clickVerify()
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     QString strInput = mInputText->text();
 
@@ -304,7 +304,7 @@ void VerifyDlg::clickVerify()
     JS_BIN_decodeHex( strSign.toStdString().c_str(), &binSign );
 
 
-    rv = JS_PKCS11_Verify( p11_ctx, hSession, binInput.pVal, binInput.nLen, binSign.pVal, binSign.nLen );
+    rv = JS_PKCS11_Verify( p11_ctx, binInput.pVal, binInput.nLen, binSign.pVal, binSign.nLen );
     if( rv != CKR_OK )
         manApplet->warningBox( tr( "Signature is bad(%1)." ).arg(JS_PKCS11_GetErrorMsg(rv)), this );
     else

@@ -140,7 +140,7 @@ void GenKeyPairDlg::accept()
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
     int rv = -1;
 
 
@@ -416,7 +416,7 @@ void GenKeyPairDlg::accept()
     }
 
 
-    rv = JS_PKCS11_GenerateKeyPair( p11_ctx, hSession, &stMech, sPubTemplate, uPubCount, sPriTemplate, uPriCount, &uPubHandle, &uPriHandle );
+    rv = JS_PKCS11_GenerateKeyPair( p11_ctx, &stMech, sPubTemplate, uPubCount, sPriTemplate, uPriCount, &uPubHandle, &uPriHandle );
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr( "failure to generate key pairs(rv:%1)").arg(JS_PKCS11_GetErrorMsg( rv )), this );

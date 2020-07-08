@@ -50,7 +50,8 @@ void LoginDlg::accept()
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
+
     int rv = -1;
     CK_UTF8CHAR *pPin = (CK_UTF8CHAR *)mPinText->text().toUtf8().toStdString().c_str();
     CK_ULONG uPinLen = mPinText->text().toUtf8().length();
@@ -60,7 +61,7 @@ void LoginDlg::accept()
     else if( mSOCheck->isChecked() )
         nType = CKU_SO;
 
-    rv = JS_PKCS11_Login( p11_ctx, hSession, nType, pPin, uPinLen );
+    rv = JS_PKCS11_Login( p11_ctx, nType, pPin, uPinLen );
 
     if( rv == CKR_OK )
     {

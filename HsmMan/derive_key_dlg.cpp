@@ -108,7 +108,7 @@ void DeriveKeyDlg::accept()
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     int rv = -1;
 
@@ -273,7 +273,7 @@ void DeriveKeyDlg::accept()
         uCount++;
     }
 
-    rv = JS_PKCS11_DeriveKey( p11_ctx, hSession, &sMech, hSrcKey, sTemplate, uCount, &uObj );
+    rv = JS_PKCS11_DeriveKey( p11_ctx, &sMech, hSrcKey, sTemplate, uCount, &uObj );
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to run DeriveKey(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this);
@@ -399,7 +399,7 @@ void DeriveKeyDlg::setSrcLabelList()
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     int rv = -1;
 
@@ -419,9 +419,9 @@ void DeriveKeyDlg::setSrcLabelList()
     uCnt++;
 
 
-    JS_PKCS11_FindObjectsInit( p11_ctx, hSession, sTemplate, uCnt );
-    JS_PKCS11_FindObjects( p11_ctx, hSession, sObjects, uMaxObjCnt, &uObjCnt );
-    JS_PKCS11_FindObjectsFinal( p11_ctx, hSession );
+    JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
+    JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
+    JS_PKCS11_FindObjectsFinal( p11_ctx );
 
     mSrcLabelCombo->clear();
 
@@ -431,7 +431,7 @@ void DeriveKeyDlg::setSrcLabelList()
         BIN binLabel = {0,0};
         QVariant objVal = QVariant( (int)sObjects[i] );
 
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, sObjects[i], CKA_LABEL, &binLabel );
+        JS_PKCS11_GetAtrributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
         JS_BIN_string( &binLabel, &pStr );
 
         mSrcLabelCombo->addItem( pStr, objVal );
@@ -447,9 +447,9 @@ void DeriveKeyDlg::setSrcLabelList()
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
     uCnt++;
 
-    JS_PKCS11_FindObjectsInit( p11_ctx, hSession, sTemplate, uCnt );
-    JS_PKCS11_FindObjects( p11_ctx, hSession, sObjects, uMaxObjCnt, &uObjCnt );
-    JS_PKCS11_FindObjectsFinal( p11_ctx, hSession );
+    JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
+    JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
+    JS_PKCS11_FindObjectsFinal( p11_ctx );
 
     for( int i=0; i < uObjCnt; i++ )
     {
@@ -457,7 +457,7 @@ void DeriveKeyDlg::setSrcLabelList()
         BIN binLabel = {0,0};
         QVariant objVal = QVariant( (int)sObjects[i] );
 
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, hSession, sObjects[i], CKA_LABEL, &binLabel );
+        JS_PKCS11_GetAtrributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
         JS_BIN_string( &binLabel, &pStr );
 
         mSrcLabelCombo->addItem( pStr, objVal );

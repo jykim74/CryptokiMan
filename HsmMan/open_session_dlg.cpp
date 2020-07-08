@@ -43,7 +43,7 @@ void OpenSessionDlg::accept()
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nFlags = 0;
-    CK_SESSION_HANDLE   hSession = -1;
+
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
 
@@ -53,11 +53,11 @@ void OpenSessionDlg::accept()
     if( mSerialCheck->isChecked() )
         nFlags |= CKF_SERIAL_SESSION;
 
-    int rv = JS_PKCS11_OpenSession( p11_ctx, slotInfo.getSlotID(), nFlags, &hSession );
+    int rv = JS_PKCS11_OpenSession( p11_ctx, slotInfo.getSlotID(), nFlags );
 
     if( rv == CKR_OK )
     {
-        slotInfo.setSessionHandle( hSession );
+        slotInfo.setSessionHandle( p11_ctx->hSession );
         slot_infos.replace(index, slotInfo);
         manApplet->messageBox( tr("OpenSession is success"), this );
     }

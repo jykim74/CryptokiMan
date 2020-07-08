@@ -56,11 +56,11 @@ void InitPinDlg::accept()
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nFlags = 0;
-    CK_SESSION_HANDLE   hSession = -1;
+
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
     QString strPin = mPinText->text();
 
     if( strPin.isEmpty() )
@@ -74,7 +74,7 @@ void InitPinDlg::accept()
     BIN binPin = {0,0};
     JS_BIN_set( &binPin, (unsigned char *)strPin.toStdString().c_str(), strPin.length() );
 
-    rv = JS_PKCS11_InitPIN( p11_ctx, hSession, binPin.pVal, binPin.nLen );
+    rv = JS_PKCS11_InitPIN( p11_ctx, binPin.pVal, binPin.nLen );
 
     if( rv != CKR_OK )
     {

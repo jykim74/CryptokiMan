@@ -73,7 +73,7 @@ void RandDlg::accept()
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
 
     QString strLen = mLengthText->text();
 
@@ -87,7 +87,7 @@ void RandDlg::accept()
 
     pRand = (CK_BYTE_PTR)JS_malloc( strLen.toInt() );
 
-    rv = JS_PKCS11_GenerateRandom( p11_ctx, hSession, pRand, strLen.toInt());
+    rv = JS_PKCS11_GenerateRandom( p11_ctx, pRand, strLen.toInt());
     if( rv != CKR_OK )
     {
         if( pRand ) JS_free( pRand );
@@ -115,7 +115,7 @@ void RandDlg::clickSeed()
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+    p11_ctx->hSession = slotInfo.getSessionHandle();
     int rv = -1;
 
     QString strSeed = mSeedText->text();
@@ -134,7 +134,7 @@ void RandDlg::clickSeed()
     else if( mSeedCombo->currentIndex() == 2 )
         JS_BIN_decodeBase64( strSeed.toStdString().c_str(), &binSeed );
 
-    rv = JS_PKCS11_SeedRandom( p11_ctx, hSession, binSeed.pVal, binSeed.nLen );
+    rv = JS_PKCS11_SeedRandom( p11_ctx, binSeed.pVal, binSeed.nLen );
 
     if( rv != CKR_OK )
     {
