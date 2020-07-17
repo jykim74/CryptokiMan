@@ -199,13 +199,13 @@ win32 {
 
     Debug {
         LIBS += -L"../../build-PKILib-Desktop_Qt_5_13_2_MinGW_32_bit-Debug/debug" -lPKILib
-        LIBS += -L"../../PKILib/lib/win32/debug/cmpossl/lib" -lcrypto
+        LIBS += -L"../../PKILib/lib/win32/debug/cmpossl/lib" -lcrypto -lssl
     } else {
         LIBS += -L"../../build-PKILib-Desktop_Qt_5_13_2_MinGW_32_bit-Release/release" -lPKILib
-        LIBS += -L"../../PKILib/lib/win32/cmpossl/lib" -lcrypto
+        LIBS += -L"../../PKILib/lib/win32/cmpossl/lib" -lcrypto -lssl
     }
 
-    LIBS += -L"C:\msys64\mingw32\lib" -lltdl
+    LIBS += -L"C:\msys64\mingw32\lib" -lltdl -lws2_32
     LIBS += -L"../../PKILib/lib/win32/winsparkle/Release" -lWinSparkle
 }
 
