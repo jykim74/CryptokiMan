@@ -573,7 +573,9 @@ void ManTreeModel::showAttribute( int nSlotIdx, int nValType, CK_ATTRIBUTE_TYPE 
     }
     else if( nValType == ATTR_VAL_KEY_NAME )
     {
-        strMsg = JS_PKCS11_GetCKKName( JS_BIN_long(&binVal));
+        long uVal = 0;
+        memcpy( &uVal, binVal.pVal, binVal.nLen );
+        strMsg = JS_PKCS11_GetCKKName( uVal );
     }
     else if( nValType == ATTR_VAL_LEN )
     {
