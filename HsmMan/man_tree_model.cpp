@@ -496,7 +496,7 @@ void ManTreeModel::showObjectsInfo(int index)
         JS_PKCS11_GetObjectSize( p11_ctx, hObjects[i], &uSize );
         right_table_->insertRow( row );
         right_table_->setItem( row, 0, new QTableWidgetItem( QString("Size")));
-        strVal = QString("%1").arg( hObjects[i] );
+        strVal = QString("%1").arg( uSize );
         right_table_->setItem( row, 1, new QTableWidgetItem( QString(strVal) ));
         row++;
 
@@ -507,7 +507,9 @@ void ManTreeModel::showObjectsInfo(int index)
         right_table_->insertRow( row );
         right_table_->setItem( row, 0, new QTableWidgetItem( QString("Class")));
         JS_PKCS11_GetAtrributeValue2( p11_ctx, hObjects[i], attrType, &binVal );
-        strVal = JS_PKCS11_GetCKOName( JS_BIN_long( &binVal ) );
+        long uVal = 0;
+        memcpy( &uVal, binVal.pVal, binVal.nLen );
+        strVal = JS_PKCS11_GetCKOName( uVal );
         JS_BIN_reset( &binVal );
         right_table_->setItem( row, 1, new QTableWidgetItem( strVal ));
         row++;
