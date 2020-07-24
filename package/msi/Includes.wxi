@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Include Id="HsmManInclude">
-  <?define CurrentHsmManVersion="0.9.3" ?>
+  <?define CurrentHsmManVersion="0.9.4" ?>
 
   <!-- BerViewer Product Guid  -->
-  <?define ProductGuid="b1d66312-957e-43d6-b5da-3394437350fd" ?> <!-- Version 0.9.3 -->
+  <?define ProductGuid="50b420f2-aea4-414d-9bf7-58f3d0f0b267" ?> <!-- Version 0.9.3 -->
+  <!-- ?define ProductGuid="b1d66312-957e-43d6-b5da-3394437350fd" ?> Version 0.9.3 -->
   <!-- ?define ProductGuid="a1e80b71-4ffc-4761-9a1e-041984fe08b7" ?> Version 0.9.2 -->
   <!-- ?define ProductGuid="f88c8d1c-c39c-4b6d-bd40-68837f2fbf39" ?> Version 0.9.1 -->
 
