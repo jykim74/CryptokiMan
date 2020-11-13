@@ -4,6 +4,7 @@
 #include "mainwindow.h"
 #include "man_applet.h"
 #include "js_pkcs11.h"
+#include "common.h"
 
 static QStringList sWrappingMechList = {
     "CKM_RSA_PKCS", "CKM_RSA_PKCS_OAEP",
@@ -254,16 +255,9 @@ void WrapKeyDlg::wrappingLabelChanged(int index )
 
 void WrapKeyDlg::clickFind()
 {
-    QFileDialog::Options options;
-    options |= QFileDialog::DontUseNativeDialog;
-
-    QString selectedFilter;
-    QString fileName = QFileDialog::getSaveFileName( this,
-                                                     tr("Wrap Key"),
-                                                     QDir::currentPath(),
-                                                     tr("BIN Files (*.bin);;All Files (*.*)"),
-                                                     &selectedFilter,
-                                                     options );
+    QString strPath = manApplet->getSetPath();
+    QString fileName = findFile( this, JS_FILE_TYPE_PRIKEY, strPath );
+    if( fileName.isEmpty() ) return;
 
     mPathText->setText( fileName );
 }

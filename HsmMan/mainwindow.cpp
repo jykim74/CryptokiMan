@@ -364,20 +364,8 @@ void MainWindow::open()
     }
 
     bool bSavePath = manApplet->settingsMgr()->saveLibPath();
-//    QString strPath = QDir::currentPath();
-    QString strPath = QString("/usr");
-
-    if( bSavePath )
-    {
-        QSettings settings;
-        settings.beginGroup( "mainwindow" );
-        strPath = settings.value( "libPath", "" ).toString();
-        settings.endGroup();
-    }
-
-    QString fileName = QFileDialog::getOpenFileName( this, tr("Open cryptoki file"), strPath,
-                                                 "All files(*.*);;DLL files(*.dll))");
-
+    QString strPath = manApplet->getSetPath();
+    QString fileName = findFile( this, JS_FILE_TYPE_DLL, strPath );
 
     if( !fileName.isEmpty() )
     {

@@ -39,6 +39,8 @@ public:
     bool yesOrCancelBox(const QString& msg, QWidget *parent, bool default_ok);
 
     QString getBrand();
+    QString getSetPath();
+
     void restartApp();
     void setCmd( QString cmd );
 

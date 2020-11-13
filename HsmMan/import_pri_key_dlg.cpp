@@ -4,6 +4,7 @@
 #include "man_applet.h"
 #include "mainwindow.h"
 #include "js_pkcs11.h"
+#include "common.h"
 
 static QStringList sFalseTrue = { "false", "true" };
 
@@ -274,18 +275,9 @@ void ImportPriKeyDlg::clickPubToken()
 
 void ImportPriKeyDlg::clickFind()
 {
-    QFileDialog::Options options;
-    options |= QFileDialog::DontUseNativeDialog;
-
-    QString strPath = QDir::currentPath();
-
-    QString selectedFilter;
-    QString fileName = QFileDialog::getOpenFileName( this,
-                                                     tr("Private Key"),
-                                                     strPath,
-                                                     tr("DER Files (*.der);;Key Files (*.key);;All Files (*.*)"),
-                                                     &selectedFilter,
-                                                     options );
+    QString strPath = manApplet->getSetPath();
+    QString fileName = findFile( this, JS_FILE_TYPE_PRIKEY, strPath );
+    if( fileName.isEmpty() ) return;
 
     mPathText->setText( fileName );
 }

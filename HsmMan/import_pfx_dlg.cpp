@@ -4,6 +4,7 @@
 #include "man_applet.h"
 #include "mainwindow.h"
 #include "js_pkcs11.h"
+#include "common.h"
 
 static QStringList sFalseTrue = { "false", "true" };
 
@@ -309,16 +310,9 @@ void ImportPFXDlg::clickCertToken()
 
 void ImportPFXDlg::clickFind()
 {
-    QFileDialog::Options options;
-    options |= QFileDialog::DontUseNativeDialog;
-
-    QString selectedFilter;
-    QString fileName = QFileDialog::getOpenFileName( this,
-                                                     tr("PFX"),
-                                                     "D:/test",
-                                                     tr("DLL Files (*.dll);;All Files (*.*)"),
-                                                     &selectedFilter,
-                                                     options );
+    QString strPath = manApplet->getSetPath();
+    QString fileName = findFile( this, JS_FILE_TYPE_PFX, strPath );
+    if( fileName.isEmpty() ) return;
 
     mPFXPathText->setText( fileName );
 }

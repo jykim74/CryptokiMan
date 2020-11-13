@@ -4,6 +4,7 @@
 #include "man_applet.h"
 #include "mainwindow.h"
 #include "js_pkcs11.h"
+#include "common.h"
 
 static QStringList sFalseTrue = { "false", "true" };
 
@@ -234,17 +235,10 @@ void ImportCertDlg::clickToken()
 }
 
 void ImportCertDlg::clickFind()
-{
-    QFileDialog::Options options;
-    options |= QFileDialog::DontUseNativeDialog;
-
-    QString selectedFilter;
-    QString fileName = QFileDialog::getOpenFileName( this,
-                                                     tr("Certificate"),
-                                                     QDir::currentPath(),
-                                                     tr("DER Files (*.der);;BER Files (*.ber);;All Files (*.*)"),
-                                                     &selectedFilter,
-                                                     options );
+{  
+    QString strPath = manApplet->getSetPath();
+    QString fileName = findFile( this, JS_FILE_TYPE_CERT, strPath );
+    if( fileName.isEmpty() ) return;
 
     mCertPathText->setText( fileName );
 }

@@ -1,5 +1,7 @@
 #include <QPushButton>
 #include <QProcess>
+#include <QSettings>
+#include <QFileDialog>
 
 #include "man_applet.h"
 #include "mainwindow.h"
@@ -91,6 +93,22 @@ void ManApplet::setCmd(QString cmd)
 QString ManApplet::getBrand()
 {
     return QString::fromUtf8( "HsmMan" );
+}
+
+QString ManApplet::getSetPath()
+{
+    bool bSavePath = settings_mgr_->saveLibPath();
+    QString strPath = QDir::currentPath();
+
+    if( bSavePath )
+    {
+        QSettings settings;
+        settings.beginGroup( "mainwindow" );
+        strPath = settings.value( "libPath", "" ).toString();
+        settings.endGroup();
+    }
+
+    return strPath;
 }
 
 void ManApplet::warningBox(const QString& msg, QWidget *parent)

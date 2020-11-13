@@ -30,6 +30,7 @@ SOURCES += \
         about_dlg.cpp \
         auto_update_service.cpp \
         close_session_dlg.cpp \
+        common.cpp \
         create_data_dlg.cpp \
         create_ec_pri_key_dlg.cpp \
         create_ec_pub_key_dlg.cpp \
