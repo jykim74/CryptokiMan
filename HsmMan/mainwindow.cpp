@@ -382,6 +382,8 @@ void MainWindow::open()
             settings.setValue( "libPath", strDir );
             settings.endGroup();
         }
+
+        manApplet->log( "Cryptoki open successfully" );
     }
 }
 
@@ -408,6 +410,8 @@ void MainWindow::openSession()
 
     OpenSessionDlg openSessionDlg;
     if( pItem ) openSessionDlg.setSelectedSlot( pItem->getSlotIndex() );
+
+
     openSessionDlg.exec();
 }
 

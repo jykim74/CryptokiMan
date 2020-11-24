@@ -90,6 +90,37 @@ void ManApplet::setCmd(QString cmd)
     cmd_ = cmd;
 }
 
+void ManApplet::log( const QString strLog )
+{
+    log_view_dlg_->log( strLog );
+}
+
+void ManApplet::ilog( const QString strLog )
+{
+    log_view_dlg_->ilog( strLog );
+}
+
+void ManApplet::elog( const QString strLog )
+{
+    log_view_dlg_->elog( strLog );
+}
+
+void ManApplet::wlog( const QString strLog )
+{
+    log_view_dlg_->wlog( strLog );
+}
+
+void ManApplet::dlog( const QString strLog )
+{
+    log_view_dlg_->dlog( strLog );
+}
+
+void ManApplet::write( const QString strLog )
+{
+    log_view_dlg_->write( strLog );
+}
+
+
 QString ManApplet::getBrand()
 {
     return QString::fromUtf8( "HsmMan" );

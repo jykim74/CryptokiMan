@@ -44,6 +44,13 @@ public:
     void restartApp();
     void setCmd( QString cmd );
 
+    void log( const QString strLog );
+    void ilog( const QString strLog );
+    void elog( const QString strLog );
+    void wlog( const QString strLog );
+    void dlog( const QString strLog );
+    void write( const QString strLog );
+
 private:
     Q_DISABLE_COPY(ManApplet)
 
