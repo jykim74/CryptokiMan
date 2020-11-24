@@ -3,6 +3,7 @@
 
 #include <QStringList>
 #include <QWidget>
+#include "js_pkcs11.h"
 
 enum {
     OBJ_DATA_IDX = 0,
@@ -24,5 +25,6 @@ enum { JS_FILE_TYPE_CERT,
        JS_FILE_TYPE_PFX };
 
 QString findFile( QWidget *parent, int nType, const QString strPath );
+void getCKDate( const QDate date, CK_DATE *pCKDate );
 
 #endif // COMMON_H

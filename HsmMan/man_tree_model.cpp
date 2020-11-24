@@ -544,6 +544,8 @@ QString getBool( const BIN *pBin )
 
 void ManTreeModel::showAttribute( int nSlotIdx, int nValType, CK_ATTRIBUTE_TYPE uAttribute, CK_OBJECT_HANDLE hObj )
 {
+    int ret = 0;
+
     JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
@@ -557,7 +559,8 @@ void ManTreeModel::showAttribute( int nSlotIdx, int nValType, CK_ATTRIBUTE_TYPE 
     BIN     binVal = {0,0};
     int nRow = right_table_->rowCount();
 
-    JS_PKCS11_GetAtrributeValue2( p11_ctx, hObj, uAttribute, &binVal );
+    ret = JS_PKCS11_GetAtrributeValue2( p11_ctx, hObj, uAttribute, &binVal );
+    if( ret != CKR_OK ) return;
 
     if( nValType == ATTR_VAL_BOOL )
     {
@@ -582,6 +585,33 @@ void ManTreeModel::showAttribute( int nSlotIdx, int nValType, CK_ATTRIBUTE_TYPE 
     else if( nValType == ATTR_VAL_LEN )
     {
         strMsg = QString("%1").arg( JS_BIN_long(&binVal));
+    }
+    else if( nValType == ATTR_VAL_DATE )
+    {
+
+        if( binVal.nLen >= 8 )
+        {
+            char    sYear[5];
+            char    sMonth[3];
+            char    sDay[3];
+            CK_DATE *pDate = (CK_DATE *)binVal.pVal;
+
+            memset( sYear, 0x00, sizeof(sYear));
+            memset( sMonth, 0x00, sizeof(sMonth));
+            memset( sDay, 0x00, sizeof(sDay));
+
+            memcpy( sYear, pDate->year, 4 );
+            memcpy( sMonth, pDate->month, 2 );
+            memcpy( sDay, pDate->day, 2 );
+
+            strMsg = QString( "%1-%2-%3").arg( sYear ).arg( sMonth ).arg(sDay);
+        }
+        else
+        {
+            JS_BIN_encodeHex( &binVal, &pStr );
+            strMsg = pStr;
+        }
+
     }
 
     QString strName = JS_PKCS11_GetCKAName( uAttribute );
@@ -654,6 +684,8 @@ void ManTreeModel::showCertificateInfo( int index, long hObject )
         showAttribute( index, ATTR_VAL_BOOL, CKA_MODIFIABLE, hObjects[i] );
         showAttribute( index, ATTR_VAL_BOOL, CKA_TRUSTED, hObjects[i]);
         showAttribute( index, ATTR_VAL_BOOL, CKA_PRIVATE, hObjects[i]);
+        showAttribute( index, ATTR_VAL_DATE, CKA_START_DATE, hObjects[i]);
+        showAttribute( index, ATTR_VAL_DATE, CKA_END_DATE, hObjects[i] );
 
         row = right_table_->rowCount();
         right_table_->insertRow( row );
@@ -729,6 +761,8 @@ void ManTreeModel::showPublicKeyInfo( int index, long hObject )
         showAttribute( index, ATTR_VAL_BOOL, CKA_PRIVATE, hObjects[i]);
         showAttribute( index, ATTR_VAL_BOOL, CKA_MODIFIABLE, hObjects[i]);
         showAttribute( index, ATTR_VAL_BOOL, CKA_DERIVE, hObjects[i]);
+        showAttribute( index, ATTR_VAL_DATE, CKA_START_DATE, hObjects[i]);
+        showAttribute( index, ATTR_VAL_DATE, CKA_END_DATE, hObjects[i] );
 
         row = right_table_->rowCount();
         right_table_->insertRow( row );
@@ -814,6 +848,9 @@ void ManTreeModel::showPrivateKeyInfo( int index, long hObject )
         showAttribute( index, ATTR_VAL_BOOL, CKA_MODIFIABLE, hObjects[i]);
         showAttribute( index, ATTR_VAL_BOOL, CKA_DERIVE, hObjects[i]);
         showAttribute( index, ATTR_VAL_BOOL, CKA_EXTRACTABLE, hObjects[i]);
+        showAttribute( index, ATTR_VAL_DATE, CKA_START_DATE, hObjects[i]);
+        showAttribute( index, ATTR_VAL_DATE, CKA_END_DATE, hObjects[i] );
+
 
         row = right_table_->rowCount();
         right_table_->insertRow( row );
@@ -892,6 +929,8 @@ void ManTreeModel::showSecretKeyInfo( int index, long hObject )
         showAttribute( index, ATTR_VAL_BOOL, CKA_MODIFIABLE, hObjects[i]);
         showAttribute( index, ATTR_VAL_BOOL, CKA_DERIVE, hObjects[i]);
         showAttribute( index, ATTR_VAL_BOOL, CKA_EXTRACTABLE, hObjects[i]);
+        showAttribute( index, ATTR_VAL_DATE, CKA_START_DATE, hObjects[i]);
+        showAttribute( index, ATTR_VAL_DATE, CKA_END_DATE, hObjects[i] );
 
         row = right_table_->rowCount();
         right_table_->insertRow( row );

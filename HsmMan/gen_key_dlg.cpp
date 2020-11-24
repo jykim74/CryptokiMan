@@ -2,6 +2,7 @@
 #include "man_applet.h"
 #include "mainwindow.h"
 #include "js_pkcs11.h"
+#include "common.h"
 
 static QStringList sMechList = {
     "CKM_AES_KEY_GEN", "CKM_DES_KEY_GEN", "CKM_DES3_KEY_GEN", "CKM_GENERIC_SECRET_KEY_GEN"
@@ -96,6 +97,8 @@ void GenKeyDlg::setAttributes()
     mVerifyCombo->setEnabled(mVerifyCheck->isChecked());
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
     mExtractableCombo->setEnabled(mExtractableCheck->isChecked());
+    mStartDateEdit->setEnabled(mStartDateCheck->isChecked());
+    mEndDateEdit->setEnabled(mEndDateCheck->isChecked());
 }
 
 void GenKeyDlg::connectAttributes()
@@ -111,6 +114,8 @@ void GenKeyDlg::connectAttributes()
     connect( mVerifyCheck, SIGNAL(clicked()), this, SLOT(clickVerify()));
     connect( mTokenCheck, SIGNAL(clicked()), this, SLOT(clickToken()));
     connect( mExtractableCheck, SIGNAL(clicked()), this, SLOT(clickExtractable()));
+    connect( mStartDateCheck, SIGNAL(clicked()), this, SLOT(clickStartDate()));
+    connect( mEndDateCheck, SIGNAL(clicked()), this, SLOT(clickEndDate()));
 }
 
 void GenKeyDlg::accept()
@@ -131,8 +136,13 @@ void GenKeyDlg::accept()
     CK_BBOOL bTrue = CK_TRUE;
     CK_BBOOL bFalse = CK_FALSE;
 
+    CK_DATE sSDate;
+    CK_DATE sEDate;
+
     p11_ctx->hSession = slotInfo.getSessionHandle();
     memset( &sMech, 0x00, sizeof(sMech) );
+    memset( &sSDate, 0x00, sizeof(sSDate));
+    memset( &sEDate, 0x00, sizeof(sEDate));
 
     sMech.mechanism = JS_PKCS11_GetCKMType( mMechCombo->currentText().toStdString().c_str() );
     BIN binParam = {0,0};
@@ -286,6 +296,24 @@ void GenKeyDlg::accept()
         uCount++;
     }
 
+    if( mStartDateCheck->isChecked() )
+    {
+        getCKDate( mStartDateEdit->date(), &sSDate );
+        sTemplate[uCount].type = CKA_START_DATE;
+        sTemplate[uCount].pValue = &sSDate;
+        sTemplate[uCount].ulValueLen = sizeof(sSDate);
+        uCount++;
+    }
+
+    if( mEndDateCheck->isChecked() )
+    {
+        getCKDate( mEndDateEdit->date(), &sEDate );
+        sTemplate[uCount].type = CKA_END_DATE;
+        sTemplate[uCount].pValue = &sEDate;
+        sTemplate[uCount].ulValueLen = sizeof(sEDate);
+        uCount++;
+    }
+
     rv = JS_PKCS11_GenerateKey( p11_ctx, &sMech, sTemplate, uCount, &hObject );
     if( rv != CKR_OK )
     {
@@ -350,6 +378,16 @@ void GenKeyDlg::clickExtractable()
     mExtractableCombo->setEnabled(mExtractableCheck->isChecked());
 }
 
+void GenKeyDlg::clickStartDate()
+{
+    mStartDateEdit->setEnabled(mStartDateCheck->isChecked());
+}
+
+void GenKeyDlg::clickEndDate()
+{
+    mEndDateEdit->setEnabled(mEndDateCheck->isChecked());
+}
+
 void GenKeyDlg::setDefaults()
 {
     mLabelText->setText( "Secret key Label" );
@@ -371,4 +409,10 @@ void GenKeyDlg::setDefaults()
     mTokenCombo->setCurrentIndex(1);
 
     mKeySizeText->setText( "16" );
+
+    QDateTime nowTime;
+    nowTime.setTime_t( time(NULL) );
+
+    mStartDateEdit->setDate( nowTime.date() );
+    mEndDateEdit->setDate( nowTime.date() );
 }

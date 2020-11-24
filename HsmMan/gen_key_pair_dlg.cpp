@@ -4,6 +4,7 @@
 #include "js_pkcs11.h"
 #include "js_pki.h"
 #include "js_pki_tools.h"
+#include "common.h"
 
 static QStringList sMechList = { "RSA", "ECC" };
 static QStringList sRSAOptionList = { "1024", "2048", "3096", "4082" };
@@ -100,6 +101,8 @@ void GenKeyPairDlg::setAttributes()
     mPriDeriveCombo->setEnabled( mPriDeriveCheck->isChecked() );
     mPriExtractableCombo->setEnabled( mPriExtractableCheck->isChecked() );
     mPriTokenCombo->setEnabled( mPriTokenCheck->isChecked() );
+    mPriStartDateEdit->setEnabled( mPriStartDateCheck->isChecked() );
+    mPriEndDateEdit->setEnabled( mPriEndDateCheck->isChecked() );
 
     mPubPrivateCombo->setEnabled( mPubPrivateCheck->isChecked() );
     mPubEncryptCombo->setEnabled( mPubEncryptCheck->isChecked() );
@@ -108,6 +111,8 @@ void GenKeyPairDlg::setAttributes()
     mPubDeriveCombo->setEnabled( mPubDeriveCheck->isChecked() );
     mPubModifiableCombo->setEnabled( mPubModifiableCheck->isChecked() );
     mPubTokenCombo->setEnabled( mPubTokenCheck->isChecked() );
+    mPubStartDateEdit->setEnabled( mPubStartDateCheck->isChecked() );
+    mPubEndDateEdit->setEnabled( mPubEndDateCheck->isChecked() );
 }
 
 void GenKeyPairDlg::connectAttributes()
@@ -121,6 +126,8 @@ void GenKeyPairDlg::connectAttributes()
     connect( mPriDeriveCheck, SIGNAL(clicked()), this, SLOT(clickPriDerive()));
     connect( mPriExtractableCheck, SIGNAL(clicked()), this, SLOT(clickPriExtractable()));
     connect( mPriTokenCheck, SIGNAL(clicked()), this, SLOT(clickPriToken()));
+    connect( mPriStartDateCheck, SIGNAL(clicked()), this, SLOT(clickPriStartDate()));
+    connect( mPriEndDateCheck, SIGNAL(clicked()), this, SLOT(clickPriEndDate()));
 
     connect( mPubPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPubPrivate()));
     connect( mPubEncryptCheck, SIGNAL(clicked()), this, SLOT(clickPubEncrypt()));
@@ -129,6 +136,8 @@ void GenKeyPairDlg::connectAttributes()
     connect( mPubDeriveCheck, SIGNAL(clicked()), this, SLOT(clickPubDerive()));
     connect( mPubModifiableCheck, SIGNAL(clicked()), this, SLOT(clickPubModifiable()));
     connect( mPubTokenCheck, SIGNAL(clicked()), this, SLOT(clickPubToken()));
+    connect( mPubStartDateCheck, SIGNAL(clicked()), this, SLOT(clickPubStartDate()));
+    connect( mPubEndDateCheck, SIGNAL(clicked()), this, SLOT(clickPubEndDate()));
 }
 
 void GenKeyPairDlg::accept()
@@ -157,10 +166,19 @@ void GenKeyPairDlg::accept()
     CK_BBOOL bTrue = CK_TRUE;
     CK_BBOOL bFalse = CK_FALSE;
 
+    CK_DATE sPriStart;
+    CK_DATE sPriEnd;
+    CK_DATE sPubStart;
+    CK_DATE sPubEnd;
+
     CK_OBJECT_HANDLE uPubHandle = -1;
     CK_OBJECT_HANDLE uPriHandle = -1;
 
     memset( &stMech, 0x00, sizeof(stMech) );
+    memset( &sPriStart, 0x00, sizeof(sPriStart));
+    memset( &sPriEnd, 0x00, sizeof(sPriEnd));
+    memset( &sPubStart, 0x00, sizeof(sPubStart));
+    memset( &sPubEnd, 0x00, sizeof(sPubEnd));
 
     int iSelMech = mMechCombo->currentIndex();
 
@@ -298,6 +316,24 @@ void GenKeyPairDlg::accept()
         uPubCount++;
     }
 
+    if( mPubStartDateCheck->isChecked() )
+    {
+        getCKDate( mPubStartDateEdit->date(), &sPubStart );
+        sPubTemplate[uPubCount].type = CKA_START_DATE;
+        sPubTemplate[uPubCount].pValue = &sPubStart;
+        sPubTemplate[uPubCount].ulValueLen = sizeof(sPubStart);
+        uPubCount++;
+    }
+
+    if( mPubEndDateCheck->isChecked() )
+    {
+        getCKDate( mPubEndDateEdit->date(), &sPubEnd );
+        sPubTemplate[uPubCount].type = CKA_END_DATE;
+        sPubTemplate[uPubCount].pValue = &sPubEnd;
+        sPubTemplate[uPubCount].ulValueLen = sizeof(sPubEnd);
+        uPubCount++;
+    }
+
     sPriTemplate[uPriCount].type = CKA_CLASS;
     sPriTemplate[uPriCount].pValue = &priClass;
     sPriTemplate[uPriCount].ulValueLen = sizeof(priClass);
@@ -415,6 +451,24 @@ void GenKeyPairDlg::accept()
         uPriCount++;
     }
 
+    if( mPriStartDateCheck->isChecked() )
+    {
+        getCKDate( mPriStartDateEdit->date(), &sPriStart );
+        sPriTemplate[uPriCount].type = CKA_START_DATE;
+        sPriTemplate[uPriCount].pValue = &sPriStart;
+        sPriTemplate[uPriCount].ulValueLen = sizeof(sPriStart);
+        uPriCount++;
+    }
+
+    if( mPriEndDateCheck->isChecked() )
+    {
+        getCKDate( mPriEndDateEdit->date(), &sPriEnd );
+        sPriTemplate[uPriCount].type = CKA_END_DATE;
+        sPriTemplate[uPriCount].pValue = &sPriEnd;
+        sPriTemplate[uPriCount].ulValueLen = sizeof(sPriEnd);
+        uPriCount++;
+    }
+
 
     rv = JS_PKCS11_GenerateKeyPair( p11_ctx, &stMech, sPubTemplate, uPubCount, sPriTemplate, uPriCount, &uPubHandle, &uPriHandle );
     if( rv != CKR_OK )
@@ -495,6 +549,16 @@ void GenKeyPairDlg::clickPriToken()
     mPriTokenCombo->setEnabled(mPriTokenCheck->isChecked());
 }
 
+void GenKeyPairDlg::clickPriStartDate()
+{
+    mPriStartDateEdit->setEnabled( mPriStartDateCheck->isChecked() );
+}
+
+void GenKeyPairDlg::clickPriEndDate()
+{
+    mPriEndDateEdit->setEnabled( mPriEndDateCheck->isChecked() );
+}
+
 void GenKeyPairDlg::clickPubPrivate()
 {
     mPubPrivateCombo->setEnabled(mPubPrivateCheck->isChecked());
@@ -522,6 +586,16 @@ void GenKeyPairDlg::clickPubModifiable()
 void GenKeyPairDlg::clickPubToken()
 {
     mPubTokenCombo->setEnabled(mPubTokenCheck->isChecked());
+}
+
+void GenKeyPairDlg::clickPubStartDate()
+{
+    mPubStartDateEdit->setEnabled( mPubStartDateCheck->isChecked());
+}
+
+void GenKeyPairDlg::clickPubEndDate()
+{
+    mPubEndDateEdit->setEnabled( mPubEncryptCheck->isChecked() );
 }
 
 void GenKeyPairDlg::setDefaults()
@@ -565,4 +639,13 @@ void GenKeyPairDlg::setDefaults()
     mPriTokenCheck->setChecked(true);
     mPriTokenCombo->setEnabled(true);
     mPriTokenCombo->setCurrentIndex(1);
+
+    QDateTime nowTime;
+    nowTime.setTime_t( time(NULL) );
+
+    mPriStartDateEdit->setDate( nowTime.date() );
+    mPriEndDateEdit->setDate( nowTime.date() );
+
+    mPubStartDateEdit->setDate( nowTime.date() );
+    mPubEndDateEdit->setDate( nowTime.date() );
 }

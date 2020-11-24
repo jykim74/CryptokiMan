@@ -1,4 +1,5 @@
 #include <QFileDialog>
+#include <QDate>
 
 #include "common.h"
 
@@ -42,3 +43,24 @@ QString findFile( QWidget *parent, int nType, const QString strPath )
 
     return fileName;
 };
+
+void getCKDate( const QDate date, CK_DATE *pCKDate )
+{
+    if( pCKDate == NULL ) return;
+
+    char    sYear[5];
+    char    sMonth[3];
+    char    sDay[3];
+
+    memset( sYear, 0x00, sizeof(sYear));
+    memset( sMonth, 0x00, sizeof(sMonth));
+    memset( sDay, 0x00, sizeof(sDay));
+
+    sprintf( sYear, "%04d", date.year() );
+    sprintf( sMonth, "%02d", date.month() );
+    sprintf( sDay, "%02d", date.day() );
+
+    memcpy( pCKDate->year, sYear, 4 );
+    memcpy( pCKDate->month, sMonth, 2 );
+    memcpy( pCKDate->day, sDay, 2 );
+}
