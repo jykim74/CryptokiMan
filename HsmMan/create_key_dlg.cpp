@@ -84,6 +84,7 @@ void CreateKeyDlg::initAttributes()
     mVerifyCombo->addItems(sFalseTrue);
     mTokenCombo->addItems(sFalseTrue);
     mExtractableCombo->addItems(sFalseTrue);
+    mDeriveCombo->addItems(sFalseTrue);
 }
 
 void CreateKeyDlg::setAttributes()
@@ -99,6 +100,7 @@ void CreateKeyDlg::setAttributes()
     mVerifyCombo->setEnabled(mVerifyCheck->isChecked());
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
     mExtractableCombo->setEnabled(mExtractableCheck->isChecked());
+    clickDerive();
     mStartDateEdit->setEnabled(mStartDateCheck->isChecked());
     mEndDateEdit->setEnabled(mEndDateCheck->isChecked());
 }
@@ -116,6 +118,7 @@ void CreateKeyDlg::connectAttributes()
     connect( mVerifyCheck, SIGNAL(clicked()), this, SLOT(clickVerify()));
     connect( mTokenCheck, SIGNAL(clicked()), this, SLOT(clickToken()));
     connect( mExtractableCheck, SIGNAL(clicked()), this, SLOT(clickExtractable()));
+    connect( mDeriveCheck, SIGNAL(clicked()), this, SLOT(clickDerive()));
     connect( mStartDateCheck, SIGNAL(clicked()), this, SLOT(clickStartDate()));
     connect( mEndDateCheck, SIGNAL(clicked()), this, SLOT(clickEndDate()));
 }
@@ -287,6 +290,14 @@ void CreateKeyDlg::accept()
         uCount++;
     }
 
+    if( mDeriveCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_DERIVE;
+        sTemplate[uCount].pValue = ( mDeriveCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
     if( mStartDateCheck->isChecked() )
     {
         getCKDate( mStartDateEdit->date(), &sSDate );
@@ -369,6 +380,11 @@ void CreateKeyDlg::clickToken()
 void CreateKeyDlg::clickExtractable()
 {
     mExtractableCombo->setEnabled(mExtractableCheck->isChecked());
+}
+
+void CreateKeyDlg::clickDerive()
+{
+    mDeriveCombo->setEnabled(mDeriveCheck->isChecked());
 }
 
 void CreateKeyDlg::clickStartDate()

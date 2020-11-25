@@ -280,6 +280,14 @@ void DeriveKeyDlg::accept()
         uCount++;
     }
 
+    if( mDeriveCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_DERIVE;
+        sTemplate[uCount].pValue = ( mDeriveCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
     if( mStartDateCheck->isChecked() )
     {
         getCKDate( mStartDateEdit->date(), &sSDate );
@@ -326,6 +334,7 @@ void DeriveKeyDlg::initAttributes()
     mWrapCombo->addItems(sFalseTrue);
     mModifiableCombo->addItems(sFalseTrue);
     mEncryptCombo->addItems(sFalseTrue);
+    mDeriveCombo->addItems(sFalseTrue);
     mTokenCombo->addItems(sFalseTrue);
     mExtractableCombo->addItems(sFalseTrue);
 }
@@ -343,6 +352,7 @@ void DeriveKeyDlg::setAttributes()
     mEncryptCombo->setEnabled(mEncryptCheck->isChecked());
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
     mExtractableCombo->setEnabled(mExtractableCheck->isChecked());
+    clickDerive();
     mStartDateEdit->setEnabled(mStartDateCheck->isChecked());
     mEndDateEdit->setEnabled(mEndDateCheck->isChecked());
 
@@ -361,6 +371,7 @@ void DeriveKeyDlg::connectAttributes()
     connect( mTokenCheck, SIGNAL(clicked()), this, SLOT(clickToken()));
     connect( mVerifyCheck, SIGNAL(clicked()), this, SLOT(clickVerify()));
     connect( mExtractableCheck, SIGNAL(clicked()), this, SLOT(clickExtractable()));
+    connect( mDeriveCheck, SIGNAL(clicked()), this, SLOT(clickDerive()));
     connect( mStartDateCheck, SIGNAL(clicked()), this, SLOT(clickStartDate()));
     connect( mEndDateCheck, SIGNAL(clicked()), this, SLOT(clickEndDate()));
 }
@@ -418,6 +429,11 @@ void DeriveKeyDlg::clickToken()
 void DeriveKeyDlg::clickExtractable()
 {
     mExtractableCombo->setEnabled(mExtractableCheck->isChecked());
+}
+
+void DeriveKeyDlg::clickDerive()
+{
+    mDeriveCombo->setEnabled(mDeriveCheck->isChecked());
 }
 
 void DeriveKeyDlg::clickStartDate()
