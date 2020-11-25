@@ -2,6 +2,7 @@
 #include "man_applet.h"
 #include "mainwindow.h"
 #include "js_pkcs11.h"
+#include "common.h"
 
 static QStringList sFalseTrue = { "false", "true" };
 
@@ -79,6 +80,8 @@ void CreateECPubKeyDlg::setAttributes()
     mDeriveCombo->setEnabled(mDeriveCheck->isChecked());
     mModifiableCombo->setEnabled(mModifiableCheck->isChecked());
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
+    mStartDateEdit->setEnabled(mStartDateCheck->isChecked());
+    mEndDateEdit->setEnabled(mEndDateCheck->isChecked());
 }
 
 void CreateECPubKeyDlg::connectAttributes()
@@ -90,6 +93,8 @@ void CreateECPubKeyDlg::connectAttributes()
     connect( mDeriveCheck, SIGNAL(clicked()), this, SLOT(clickDerive()));
     connect( mModifiableCheck, SIGNAL(clicked()), this, SLOT(clickModifiable()));
     connect( mTokenCheck, SIGNAL(clicked()), this, SLOT(clickToken()));
+    connect( mStartDateCheck, SIGNAL(clicked()), this, SLOT(clickStartDate()));
+    connect( mEndDateCheck, SIGNAL(clicked()), this, SLOT(clickEndDate()));
 }
 
 void CreateECPubKeyDlg::accept()
@@ -113,6 +118,12 @@ void CreateECPubKeyDlg::accept()
 
     CK_OBJECT_CLASS objClass = CKO_PUBLIC_KEY;
     CK_KEY_TYPE keyType = CKK_EC;
+
+    CK_DATE sSDate;
+    CK_DATE sEDate;
+
+    memset( &sSDate, 0x00, sizeof(sSDate));
+    memset( &sEDate, 0x00, sizeof(sEDate));
 
     sTemplate[uCount].type = CKA_CLASS;
     sTemplate[uCount].pValue = &objClass;
@@ -228,6 +239,24 @@ void CreateECPubKeyDlg::accept()
         uCount++;
     }
 
+    if( mStartDateCheck->isChecked() )
+    {
+        getCKDate( mStartDateEdit->date(), &sSDate );
+        sTemplate[uCount].type = CKA_START_DATE;
+        sTemplate[uCount].pValue = &sSDate;
+        sTemplate[uCount].ulValueLen = sizeof(sSDate);
+        uCount++;
+    }
+
+    if( mEndDateCheck->isChecked() )
+    {
+        getCKDate( mEndDateEdit->date(), &sEDate );
+        sTemplate[uCount].type = CKA_END_DATE;
+        sTemplate[uCount].pValue = &sEDate;
+        sTemplate[uCount].ulValueLen = sizeof(sEDate);
+        uCount++;
+    }
+
     rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
     if( rv != CKR_OK )
     {
@@ -275,6 +304,18 @@ void CreateECPubKeyDlg::clickToken()
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
 }
 
+
+void CreateECPubKeyDlg::clickStartDate()
+{
+    mStartDateEdit->setEnabled(mStartDateCheck->isChecked());
+}
+
+void CreateECPubKeyDlg::clickEndDate()
+{
+    mEndDateEdit->setEnabled(mEndDateCheck->isChecked());
+}
+
+
 void CreateECPubKeyDlg::setDefaults()
 {
     mLabelText->setText( "Publick Key Label" );
@@ -292,4 +333,10 @@ void CreateECPubKeyDlg::setDefaults()
     mVerifyCheck->setChecked(true);
     mVerifyCombo->setEnabled(true);
     mVerifyCombo->setCurrentIndex(1);
+
+    QDateTime nowTime;
+    nowTime.setTime_t( time(NULL) );
+
+    mStartDateEdit->setDate( nowTime.date() );
+    mEndDateEdit->setDate( nowTime.date() );
 }

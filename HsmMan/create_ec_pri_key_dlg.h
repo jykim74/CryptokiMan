@@ -30,6 +30,8 @@ private slots:
     void clickDerive();
     void clickExtractable();
     void clickToken();
+    void clickStartDate();
+    void clickEndDate();
 
 private:
     void initialize();

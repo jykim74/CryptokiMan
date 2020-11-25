@@ -78,6 +78,8 @@ void UnwrapKeyDlg::setAttributes()
     mVerifyCombo->setEnabled(mVerifyCheck->isChecked());
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
     mExtractableCombo->setEnabled(mExtractableCheck->isChecked());
+    mStartDateEdit->setEnabled(mStartDateCheck->isChecked());
+    mEndDateEdit->setEnabled(mEndDateCheck->isChecked());
 }
 
 void UnwrapKeyDlg::connectAttributes()
@@ -93,6 +95,8 @@ void UnwrapKeyDlg::connectAttributes()
     connect( mVerifyCheck, SIGNAL(clicked()), this, SLOT(clickVerify()));
     connect( mTokenCheck, SIGNAL(clicked()), this, SLOT(clickToken()));
     connect( mExtractableCheck, SIGNAL(clicked()), this, SLOT(clickExtractable()));
+    connect( mStartDateCheck, SIGNAL(clicked()), this, SLOT(clickStartDate()));
+    connect( mEndDateCheck, SIGNAL(clicked()), this, SLOT(clickEndDate()));
 }
 
 void UnwrapKeyDlg::setDefaults()
@@ -112,6 +116,12 @@ void UnwrapKeyDlg::setDefaults()
     mTokenCheck->setChecked(true);
     mTokenCombo->setEnabled(true);
     mTokenCombo->setCurrentIndex(1);
+
+    QDateTime nowTime;
+    nowTime.setTime_t( time(NULL) );
+
+    mStartDateEdit->setDate( nowTime.date() );
+    mEndDateEdit->setDate( nowTime.date() );
 }
 
 void UnwrapKeyDlg::slotChanged(int index)
@@ -178,6 +188,12 @@ void UnwrapKeyDlg::accept()
     CK_OBJECT_CLASS objClass = 0;
     CK_KEY_TYPE keyType = 0;
     CK_OBJECT_HANDLE hUnwrappingKey = -1;
+
+    CK_DATE sSDate;
+    CK_DATE sEDate;
+
+    memset( &sSDate, 0x00, sizeof(sSDate));
+    memset( &sEDate, 0x00, sizeof(sEDate));
 
     hUnwrappingKey = mUnwrapObjectText->text().toLong();
 
@@ -320,6 +336,24 @@ void UnwrapKeyDlg::accept()
         sTemplate[uCount].type = CKA_WRAP;
         sTemplate[uCount].pValue = ( mWrapCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mStartDateCheck->isChecked() )
+    {
+        getCKDate( mStartDateEdit->date(), &sSDate );
+        sTemplate[uCount].type = CKA_START_DATE;
+        sTemplate[uCount].pValue = &sSDate;
+        sTemplate[uCount].ulValueLen = sizeof(sSDate);
+        uCount++;
+    }
+
+    if( mEndDateCheck->isChecked() )
+    {
+        getCKDate( mEndDateEdit->date(), &sEDate );
+        sTemplate[uCount].type = CKA_END_DATE;
+        sTemplate[uCount].pValue = &sEDate;
+        sTemplate[uCount].ulValueLen = sizeof(sEDate);
         uCount++;
     }
 
@@ -493,4 +527,14 @@ void UnwrapKeyDlg::clickToken()
 void UnwrapKeyDlg::clickExtractable()
 {
     mExtractableCombo->setEnabled(mExtractableCheck->isChecked());
+}
+
+void UnwrapKeyDlg::clickStartDate()
+{
+    mStartDateEdit->setEnabled(mStartDateCheck->isChecked());
+}
+
+void UnwrapKeyDlg::clickEndDate()
+{
+    mEndDateEdit->setEnabled(mEndDateCheck->isChecked());
 }

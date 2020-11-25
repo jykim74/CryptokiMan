@@ -33,6 +33,8 @@ private slots:
     void clickPriDerive();
     void clickPriExtractable();
     void clickPriToken();
+    void clickPriStartDate();
+    void clickPriEndDate();
 
     void clickPubPrivate();
     void clickPubEncrypt();
@@ -41,6 +43,8 @@ private slots:
     void clickPubDerive();
     void clickPubModifiable();
     void clickPubToken();
+    void clickPubStartDate();
+    void clickPubEndDate();
 
     void clickFind();
 

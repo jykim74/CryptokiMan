@@ -2,6 +2,7 @@
 #include "mainwindow.h"
 #include "man_applet.h"
 #include "js_pkcs11.h"
+#include "common.h"
 
 static QStringList sFalseTrue = { "false", "true" };
 
@@ -123,6 +124,12 @@ void DeriveKeyDlg::accept()
     CK_OBJECT_CLASS objClass = 0;
     CK_KEY_TYPE keyType = 0;
     CK_OBJECT_HANDLE hSrcKey = -1;
+
+    CK_DATE sSDate;
+    CK_DATE sEDate;
+
+    memset( &sSDate, 0x00, sizeof(sSDate));
+    memset( &sEDate, 0x00, sizeof(sEDate));
 
     memset( &sMech, 0x00, sizeof(sMech));
     sMech.mechanism = JS_PKCS11_GetCKMType( mSrcMethodCombo->currentText().toStdString().c_str());
@@ -273,6 +280,24 @@ void DeriveKeyDlg::accept()
         uCount++;
     }
 
+    if( mStartDateCheck->isChecked() )
+    {
+        getCKDate( mStartDateEdit->date(), &sSDate );
+        sTemplate[uCount].type = CKA_START_DATE;
+        sTemplate[uCount].pValue = &sSDate;
+        sTemplate[uCount].ulValueLen = sizeof(sSDate);
+        uCount++;
+    }
+
+    if( mEndDateCheck->isChecked() )
+    {
+        getCKDate( mEndDateEdit->date(), &sEDate );
+        sTemplate[uCount].type = CKA_END_DATE;
+        sTemplate[uCount].pValue = &sEDate;
+        sTemplate[uCount].ulValueLen = sizeof(sEDate);
+        uCount++;
+    }
+
     rv = JS_PKCS11_DeriveKey( p11_ctx, &sMech, hSrcKey, sTemplate, uCount, &uObj );
     if( rv != CKR_OK )
     {
@@ -318,6 +343,9 @@ void DeriveKeyDlg::setAttributes()
     mEncryptCombo->setEnabled(mEncryptCheck->isChecked());
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
     mExtractableCombo->setEnabled(mExtractableCheck->isChecked());
+    mStartDateEdit->setEnabled(mStartDateCheck->isChecked());
+    mEndDateEdit->setEnabled(mEndDateCheck->isChecked());
+
 }
 
 void DeriveKeyDlg::connectAttributes()
@@ -333,6 +361,8 @@ void DeriveKeyDlg::connectAttributes()
     connect( mTokenCheck, SIGNAL(clicked()), this, SLOT(clickToken()));
     connect( mVerifyCheck, SIGNAL(clicked()), this, SLOT(clickVerify()));
     connect( mExtractableCheck, SIGNAL(clicked()), this, SLOT(clickExtractable()));
+    connect( mStartDateCheck, SIGNAL(clicked()), this, SLOT(clickStartDate()));
+    connect( mEndDateCheck, SIGNAL(clicked()), this, SLOT(clickEndDate()));
 }
 
 void DeriveKeyDlg::clickPrivate()
@@ -390,6 +420,16 @@ void DeriveKeyDlg::clickExtractable()
     mExtractableCombo->setEnabled(mExtractableCheck->isChecked());
 }
 
+void DeriveKeyDlg::clickStartDate()
+{
+    mStartDateEdit->setEnabled(mStartDateCheck->isChecked());
+}
+
+void DeriveKeyDlg::clickEndDate()
+{
+    mEndDateEdit->setEnabled(mEndDateCheck->isChecked());
+}
+
 void DeriveKeyDlg::setSrcLabelList()
 {
     JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
@@ -410,6 +450,7 @@ void DeriveKeyDlg::setSrcLabelList()
     CK_ULONG uObjCnt = 0;
 
     CK_OBJECT_CLASS objClass = 0;
+
 
     objClass = CKO_SECRET_KEY;
 
@@ -492,4 +533,10 @@ void DeriveKeyDlg::setDefaults()
     mTokenCheck->setChecked(true);
     mTokenCombo->setEnabled(true);
     mTokenCombo->setCurrentIndex(1);
+
+    QDateTime nowTime;
+    nowTime.setTime_t( time(NULL) );
+
+    mStartDateEdit->setDate( nowTime.date() );
+    mEndDateEdit->setDate( nowTime.date() );
 }

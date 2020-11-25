@@ -24,6 +24,9 @@ private slots:
     void clickSensitive();
     void clickModifiable();
     void clickToken();
+    void clickStartDate();
+    void clickEndDate();
+
     void clickFind();
 
 private:

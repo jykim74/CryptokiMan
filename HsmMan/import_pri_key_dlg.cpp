@@ -83,6 +83,8 @@ void ImportPriKeyDlg::setAttributes()
     mPriDeriveCombo->setEnabled( mPriDeriveCheck->isChecked() );
     mPriExtractableCombo->setEnabled( mPriExtractableCheck->isChecked() );
     mPriTokenCombo->setEnabled( mPriTokenCheck->isChecked() );
+    mPriStartDateEdit->setEnabled( mPriStartDateCheck->isChecked() );
+    mPriEndDateEdit->setEnabled( mPriEndDateCheck->isChecked() );
 
     mPubPrivateCombo->setEnabled( mPubPrivateCheck->isChecked() );
     mPubEncryptCombo->setEnabled( mPubEncryptCheck->isChecked() );
@@ -91,6 +93,8 @@ void ImportPriKeyDlg::setAttributes()
     mPubDeriveCombo->setEnabled( mPubDeriveCheck->isChecked() );
     mPubModifiableCombo->setEnabled( mPubModifiableCheck->isChecked() );
     mPubTokenCombo->setEnabled( mPubTokenCheck->isChecked() );
+    mPubStartDateEdit->setEnabled( mPubStartDateCheck->isChecked() );
+    mPubEndDateEdit->setEnabled( mPubEndDateCheck->isChecked() );
 
 }
 
@@ -107,6 +111,9 @@ void ImportPriKeyDlg::connectAttributes()
     connect( mPriDeriveCheck, SIGNAL(clicked()), this, SLOT(clickPriDerive()));
     connect( mPriExtractableCheck, SIGNAL(clicked()), this, SLOT(clickPriExtractable()));
     connect( mPriTokenCheck, SIGNAL(clicked()), this, SLOT(clickPriToken()));
+    connect( mPriStartDateCheck, SIGNAL(clicked()), this, SLOT(clickPriStartDate()));
+    connect( mPriEndDateCheck, SIGNAL(clicked()), this, SLOT(clickPriEndDate()));
+
 
     connect( mPubPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPubPrivate()));
     connect( mPubEncryptCheck, SIGNAL(clicked()), this, SLOT(clickPubEncrypt()));
@@ -115,6 +122,8 @@ void ImportPriKeyDlg::connectAttributes()
     connect( mPubDeriveCheck, SIGNAL(clicked()), this, SLOT(clickPubDerive()));
     connect( mPubModifiableCheck, SIGNAL(clicked()), this, SLOT(clickPubModifiable()));
     connect( mPubTokenCheck, SIGNAL(clicked()), this, SLOT(clickPubToken()));
+    connect( mPubStartDateCheck, SIGNAL(clicked()), this, SLOT(clickPubStartDate()));
+    connect( mPubEndDateCheck, SIGNAL(clicked()), this, SLOT(clickPubEndDate()));
 
 
     connect( mFindBtn, SIGNAL(clicked()), this, SLOT(clickFind()));
@@ -243,6 +252,15 @@ void ImportPriKeyDlg::clickPriToken()
     mPriTokenCombo->setEnabled(mPriTokenCheck->isChecked());
 }
 
+void ImportPriKeyDlg::clickPriStartDate()
+{
+    mPriStartDateEdit->setEnabled( mPriStartDateCheck->isChecked() );
+}
+void ImportPriKeyDlg::clickPriEndDate()
+{
+    mPriEndDateEdit->setEnabled( mPriEndDateCheck->isChecked());
+}
+
 void ImportPriKeyDlg::clickPubPrivate()
 {
     mPubPrivateCombo->setEnabled(mPubPrivateCheck->isChecked());
@@ -272,6 +290,15 @@ void ImportPriKeyDlg::clickPubToken()
     mPubTokenCombo->setEnabled(mPubTokenCheck->isChecked());
 }
 
+void ImportPriKeyDlg::clickPubStartDate()
+{
+    mPubStartDateEdit->setEnabled( mPubStartDateCheck->isChecked());
+}
+
+void ImportPriKeyDlg::clickPubEndDate()
+{
+    mPubEndDateEdit->setEnabled( mPubEndDateCheck->isChecked() );
+}
 
 void ImportPriKeyDlg::clickFind()
 {
@@ -304,6 +331,12 @@ int ImportPriKeyDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
 
     CK_OBJECT_CLASS objClass = CKO_PUBLIC_KEY;
     CK_KEY_TYPE keyType = CKK_RSA;
+
+    CK_DATE sSDate;
+    CK_DATE sEDate;
+
+    memset( &sSDate, 0x00, sizeof(sSDate));
+    memset( &sEDate, 0x00, sizeof(sEDate));
 
     sTemplate[uCount].type = CKA_CLASS;
     sTemplate[uCount].pValue = &objClass;
@@ -401,6 +434,24 @@ int ImportPriKeyDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
         uCount++;
     }
 
+    if( mPubStartDateCheck->isChecked() )
+    {
+        getCKDate( mPubStartDateEdit->date(), &sSDate );
+        sTemplate[uCount].type = CKA_START_DATE;
+        sTemplate[uCount].pValue = &sSDate;
+        sTemplate[uCount].ulValueLen = sizeof(sSDate);
+        uCount++;
+    }
+
+    if( mPubEndDateCheck->isChecked() )
+    {
+        getCKDate( mPubEndDateEdit->date(), &sEDate );
+        sTemplate[uCount].type = CKA_END_DATE;
+        sTemplate[uCount].pValue = &sEDate;
+        sTemplate[uCount].ulValueLen = sizeof(sEDate);
+        uCount++;
+    }
+
     rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
     if( rv != CKR_OK )
     {
@@ -431,6 +482,12 @@ int ImportPriKeyDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
 
     CK_OBJECT_CLASS objClass = CKO_PRIVATE_KEY;
     CK_KEY_TYPE keyType = CKK_RSA;
+
+    CK_DATE sSDate;
+    CK_DATE sEDate;
+
+    memset( &sSDate, 0x00, sizeof(sSDate));
+    memset( &sEDate, 0x00, sizeof(sEDate));
 
     sTemplate[uCount].type = CKA_CLASS;
     sTemplate[uCount].pValue = &objClass;
@@ -631,6 +688,24 @@ int ImportPriKeyDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
         uCount++;
     }
 
+    if( mPriStartDateCheck->isChecked() )
+    {
+        getCKDate( mPriStartDateEdit->date(), &sSDate );
+        sTemplate[uCount].type = CKA_START_DATE;
+        sTemplate[uCount].pValue = &sSDate;
+        sTemplate[uCount].ulValueLen = sizeof(sSDate);
+        uCount++;
+    }
+
+    if( mPriEndDateCheck->isChecked() )
+    {
+        getCKDate( mPriEndDateEdit->date(), &sEDate );
+        sTemplate[uCount].type = CKA_END_DATE;
+        sTemplate[uCount].pValue = &sEDate;
+        sTemplate[uCount].ulValueLen = sizeof(sEDate);
+        uCount++;
+    }
+
     rv = JS_PKCS11_CreateObject(p11_ctx, sTemplate, uCount, &hObject );
     if( rv != CKR_OK )
     {
@@ -661,6 +736,12 @@ int ImportPriKeyDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
 
     CK_OBJECT_CLASS objClass = CKO_PUBLIC_KEY;
     CK_KEY_TYPE keyType = CKK_EC;
+
+    CK_DATE sSDate;
+    CK_DATE sEDate;
+
+    memset( &sSDate, 0x00, sizeof(sSDate));
+    memset( &sEDate, 0x00, sizeof(sEDate));
 
     sTemplate[uCount].type = CKA_CLASS;
     sTemplate[uCount].pValue = &objClass;
@@ -758,6 +839,24 @@ int ImportPriKeyDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
         uCount++;
     }
 
+    if( mPubStartDateCheck->isChecked() )
+    {
+        getCKDate( mPubStartDateEdit->date(), &sSDate );
+        sTemplate[uCount].type = CKA_START_DATE;
+        sTemplate[uCount].pValue = &sSDate;
+        sTemplate[uCount].ulValueLen = sizeof(sSDate);
+        uCount++;
+    }
+
+    if( mPubEndDateCheck->isChecked() )
+    {
+        getCKDate( mPubEndDateEdit->date(), &sEDate );
+        sTemplate[uCount].type = CKA_END_DATE;
+        sTemplate[uCount].pValue = &sEDate;
+        sTemplate[uCount].ulValueLen = sizeof(sEDate);
+        uCount++;
+    }
+
     rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
     if( rv != CKR_OK )
     {
@@ -789,6 +888,12 @@ int ImportPriKeyDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
 
     CK_OBJECT_CLASS objClass = CKO_PRIVATE_KEY;
     CK_KEY_TYPE keyType = CKK_EC;
+
+    CK_DATE sSDate;
+    CK_DATE sEDate;
+
+    memset( &sSDate, 0x00, sizeof(sSDate));
+    memset( &sEDate, 0x00, sizeof(sEDate));
 
     sTemplate[uCount].type = CKA_CLASS;
     sTemplate[uCount].pValue = &objClass;
@@ -922,6 +1027,24 @@ int ImportPriKeyDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
         uCount++;
     }
 
+    if( mPriStartDateCheck->isChecked() )
+    {
+        getCKDate( mPriStartDateEdit->date(), &sSDate );
+        sTemplate[uCount].type = CKA_START_DATE;
+        sTemplate[uCount].pValue = &sSDate;
+        sTemplate[uCount].ulValueLen = sizeof(sSDate);
+        uCount++;
+    }
+
+    if( mPriEndDateCheck->isChecked() )
+    {
+        getCKDate( mPriEndDateEdit->date(), &sEDate );
+        sTemplate[uCount].type = CKA_END_DATE;
+        sTemplate[uCount].pValue = &sEDate;
+        sTemplate[uCount].ulValueLen = sizeof(sEDate);
+        uCount++;
+    }
+
     rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
     if( rv != CKR_OK )
     {
@@ -972,4 +1095,13 @@ void ImportPriKeyDlg::setDefaults()
     mPriTokenCheck->setChecked(true);
     mPriTokenCombo->setEnabled(true);
     mPriTokenCombo->setCurrentIndex(1);
+
+    QDateTime nowTime;
+    nowTime.setTime_t( time(NULL) );
+
+    mPriStartDateEdit->setDate( nowTime.date() );
+    mPriEndDateEdit->setDate( nowTime.date() );
+
+    mPubStartDateEdit->setDate( nowTime.date() );
+    mPubEndDateEdit->setDate( nowTime.date() );
 }

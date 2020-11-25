@@ -74,6 +74,9 @@ void ImportCertDlg::setAttributes()
     mSensitiveCombo->setEnabled(mSensitiveCheck->isChecked());
     mModifiableCombo->setEnabled(mModifiableCheck->isChecked());
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
+    mStartDateEdit->setEnabled(mStartDateCheck->isChecked());
+    mEndDateEdit->setEnabled(mEndDateCheck->isChecked());
+
 }
 
 void ImportCertDlg::connectAttributes()
@@ -83,6 +86,8 @@ void ImportCertDlg::connectAttributes()
     connect( mModifiableCheck, SIGNAL(clicked()), this, SLOT(clickModifiable()));
     connect( mTokenCheck, SIGNAL(clicked()), this, SLOT(clickToken()));
     connect( mFindBtn, SIGNAL(clicked()), this, SLOT(clickFind()));
+    connect( mStartDateCheck, SIGNAL(clicked()), this, SLOT(clickStartDate()));
+    connect( mEndDateCheck, SIGNAL(clicked()), this, SLOT(clickEndDate()));
 }
 
 void ImportCertDlg::accept()
@@ -234,6 +239,17 @@ void ImportCertDlg::clickToken()
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
 }
 
+void ImportCertDlg::clickStartDate()
+{
+    mStartDateEdit->setEnabled(mStartDateCheck->isChecked());
+}
+
+void ImportCertDlg::clickEndDate()
+{
+    mEndDateEdit->setEnabled(mEndDateCheck->isChecked());
+}
+
+
 void ImportCertDlg::clickFind()
 {  
     QString strPath = manApplet->getSetPath();
@@ -252,4 +268,10 @@ void ImportCertDlg::setDefaults()
     mTokenCheck->setChecked(true);
     mTokenCombo->setEnabled(true);
     mTokenCombo->setCurrentIndex(1);
+
+    QDateTime nowTime;
+    nowTime.setTime_t( time(NULL) );
+
+    mStartDateEdit->setDate( nowTime.date() );
+    mEndDateEdit->setDate( nowTime.date() );
 }

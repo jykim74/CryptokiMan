@@ -2,6 +2,7 @@
 #include "man_applet.h"
 #include "mainwindow.h"
 #include "js_pkcs11.h"
+#include "common.h"
 
 static QStringList sFalseTrue = { "false", "true" };
 
@@ -83,6 +84,8 @@ void CreateECPriKeyDlg::setAttributes()
     mModifiableCombo->setEnabled(mModifiableCheck->isChecked());
     mExtractableCombo->setEnabled(mExtractableCheck->isChecked());
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
+    mStartDateEdit->setEnabled(mStartDateCheck->isChecked());
+    mEndDateEdit->setEnabled(mEndDateCheck->isChecked());
 }
 
 void CreateECPriKeyDlg::connectAttributes()
@@ -96,6 +99,8 @@ void CreateECPriKeyDlg::connectAttributes()
     connect( mSensitiveCheck, SIGNAL(clicked()), this, SLOT(clickSensitive()));
     connect( mExtractableCheck, SIGNAL(clicked()), this, SLOT(clickExtractable()));
     connect( mTokenCheck, SIGNAL(clicked()), this, SLOT(clickToken()));
+    connect( mStartDateCheck, SIGNAL(clicked()), this, SLOT(clickStartDate()));
+    connect( mEndDateCheck, SIGNAL(clicked()), this, SLOT(clickEndDate()));
 }
 
 void CreateECPriKeyDlg::accept()
@@ -115,6 +120,12 @@ void CreateECPriKeyDlg::accept()
     long uCount = 0;
     CK_BBOOL bTrue = CK_TRUE;
     CK_BBOOL bFalse = CK_FALSE;
+
+    CK_DATE sSDate;
+    CK_DATE sEDate;
+
+    memset( &sSDate, 0x00, sizeof(sSDate));
+    memset( &sEDate, 0x00, sizeof(sEDate));
 
     CK_OBJECT_CLASS objClass = CKO_PRIVATE_KEY;
     CK_KEY_TYPE keyType = CKK_EC;
@@ -261,6 +272,24 @@ void CreateECPriKeyDlg::accept()
         uCount++;
     }
 
+    if( mStartDateCheck->isChecked() )
+    {
+        getCKDate( mStartDateEdit->date(), &sSDate );
+        sTemplate[uCount].type = CKA_START_DATE;
+        sTemplate[uCount].pValue = &sSDate;
+        sTemplate[uCount].ulValueLen = sizeof(sSDate);
+        uCount++;
+    }
+
+    if( mEndDateCheck->isChecked() )
+    {
+        getCKDate( mEndDateEdit->date(), &sEDate );
+        sTemplate[uCount].type = CKA_END_DATE;
+        sTemplate[uCount].pValue = &sEDate;
+        sTemplate[uCount].ulValueLen = sizeof(sEDate);
+        uCount++;
+    }
+
     CK_OBJECT_CLASS hObject = 0;
 
     rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
@@ -319,6 +348,16 @@ void CreateECPriKeyDlg::clickToken()
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
 }
 
+void CreateECPriKeyDlg::clickStartDate()
+{
+    mStartDateEdit->setEnabled(mStartDateCheck->isChecked());
+}
+
+void CreateECPriKeyDlg::clickEndDate()
+{
+    mEndDateEdit->setEnabled(mEndDateCheck->isChecked());
+}
+
 void CreateECPriKeyDlg::setDefaults()
 {
     mLabelText->setText( "Private Label" );
@@ -341,4 +380,10 @@ void CreateECPriKeyDlg::setDefaults()
     mTokenCheck->setChecked(true);
     mTokenCombo->setEnabled(true);
     mTokenCombo->setCurrentIndex(1);
+
+    QDateTime nowTime;
+    nowTime.setTime_t( time(NULL) );
+
+    mStartDateEdit->setDate( nowTime.date() );
+    mEndDateEdit->setDate( nowTime.date() );
 }

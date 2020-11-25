@@ -2,6 +2,7 @@
 #include "man_applet.h"
 #include "mainwindow.h"
 #include "js_pkcs11.h"
+#include "common.h"
 
 static QStringList sFalseTrue = { "false", "true" };
 
@@ -83,6 +84,8 @@ void CreateRSAPriKeyDlg::setAttributes()
     mModifiableCombo->setEnabled(mModifiableCheck->isChecked());
     mExtractableCombo->setEnabled(mExtractableCheck->isChecked());
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
+    mStartDateEdit->setEnabled(mStartDateCheck->isChecked());
+    mEndDateEdit->setEnabled(mEndDateCheck->isChecked());
 }
 
 void CreateRSAPriKeyDlg::connectAttributes()
@@ -96,6 +99,8 @@ void CreateRSAPriKeyDlg::connectAttributes()
     connect( mSensitiveCheck, SIGNAL(clicked()), this, SLOT(clickSensitive()));
     connect( mExtractableCheck, SIGNAL(clicked()), this, SLOT(clickExtractable()));
     connect( mTokenCheck, SIGNAL(clicked()), this, SLOT(clickToken()));
+    connect( mStartDateCheck, SIGNAL(clicked()), this, SLOT(clickStartDate()));
+    connect( mEndDateCheck, SIGNAL(clicked()), this, SLOT(clickEndDate()));
 }
 
 void CreateRSAPriKeyDlg::accept()
@@ -118,6 +123,12 @@ void CreateRSAPriKeyDlg::accept()
 
     CK_OBJECT_CLASS objClass = CKO_PRIVATE_KEY;
     CK_KEY_TYPE keyType = CKK_RSA;
+
+    CK_DATE sSDate;
+    CK_DATE sEDate;
+
+    memset( &sSDate, 0x00, sizeof(sSDate));
+    memset( &sEDate, 0x00, sizeof(sEDate));
 
     sTemplate[uCount].type = CKA_CLASS;
     sTemplate[uCount].pValue = &objClass;
@@ -333,6 +344,24 @@ void CreateRSAPriKeyDlg::accept()
         uCount++;
     }
 
+    if( mStartDateCheck->isChecked() )
+    {
+        getCKDate( mStartDateEdit->date(), &sSDate );
+        sTemplate[uCount].type = CKA_START_DATE;
+        sTemplate[uCount].pValue = &sSDate;
+        sTemplate[uCount].ulValueLen = sizeof(sSDate);
+        uCount++;
+    }
+
+    if( mEndDateCheck->isChecked() )
+    {
+        getCKDate( mEndDateEdit->date(), &sEDate );
+        sTemplate[uCount].type = CKA_END_DATE;
+        sTemplate[uCount].pValue = &sEDate;
+        sTemplate[uCount].ulValueLen = sizeof(sEDate);
+        uCount++;
+    }
+
     CK_OBJECT_CLASS hObject = 0;
 
     rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
@@ -391,6 +420,16 @@ void CreateRSAPriKeyDlg::clickToken()
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
 }
 
+void CreateRSAPriKeyDlg::clickStartDate()
+{
+    mStartDateEdit->setEnabled(mStartDateCheck->isChecked());
+}
+
+void CreateRSAPriKeyDlg::clickEndDate()
+{
+    mEndDateEdit->setEnabled(mEndDateCheck->isChecked());
+}
+
 void CreateRSAPriKeyDlg::setDefaults()
 {
     mLabelText->setText( "Private Label" );
@@ -413,4 +452,10 @@ void CreateRSAPriKeyDlg::setDefaults()
     mTokenCheck->setChecked(true);
     mTokenCombo->setEnabled(true);
     mTokenCombo->setCurrentIndex(1);
+
+    QDateTime nowTime;
+    nowTime.setTime_t( time(NULL) );
+
+    mStartDateEdit->setDate( nowTime.date() );
+    mEndDateEdit->setDate( nowTime.date() );
 }
