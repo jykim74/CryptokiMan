@@ -91,72 +91,8 @@
        <string>Public Key</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="0" column="1" colspan="5">
-        <widget class="QLineEdit" name="mLabelText"/>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_5">
-         <property name="text">
-          <string>EC Points</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="3">
-        <widget class="QComboBox" name="mEncryptCombo"/>
-       </item>
-       <item row="6" column="2">
-        <widget class="QCheckBox" name="mDeriveCheck">
-         <property name="text">
-          <string notr="true">Derive</string>
-         </property>
-        </widget>
-       </item>
        <item row="5" column="1">
         <widget class="QComboBox" name="mPrivateCombo"/>
-       </item>
-       <item row="5" column="2">
-        <widget class="QCheckBox" name="mEncryptCheck">
-         <property name="text">
-          <string notr="true">Encrypt</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>Label</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <widget class="QComboBox" name="mVerifyCombo"/>
-       </item>
-       <item row="5" column="5">
-        <widget class="QComboBox" name="mWrapCombo"/>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_6">
-         <property name="text">
-          <string>EC Params</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <widget class="QCheckBox" name="mVerifyCheck">
-         <property name="text">
-          <string notr="true">Verify</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="3">
-        <widget class="QComboBox" name="mDeriveCombo"/>
-       </item>
-       <item row="6" column="4">
-        <widget class="QCheckBox" name="mModifiableCheck">
-         <property name="text">
-          <string notr="true">Modifiable</string>
-         </property>
-        </widget>
        </item>
        <item row="3" column="0">
         <widget class="QLabel" name="label_7">
@@ -165,43 +101,24 @@
          </property>
         </widget>
        </item>
-       <item row="7" column="0">
-        <widget class="QCheckBox" name="mTokenCheck">
+       <item row="5" column="3">
+        <widget class="QComboBox" name="mEncryptCombo"/>
+       </item>
+       <item row="5" column="2">
+        <widget class="QCheckBox" name="mEncryptCheck">
          <property name="text">
-          <string notr="true">Token</string>
+          <string notr="true">Encrypt</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_8">
+       <item row="6" column="4">
+        <widget class="QCheckBox" name="mModifiableCheck">
          <property name="text">
-          <string>Attributes</string>
+          <string notr="true">Modifiable</string>
          </property>
         </widget>
        </item>
-       <item row="6" column="5">
-        <widget class="QComboBox" name="mModifiableCombo"/>
-       </item>
-       <item row="1" column="1" colspan="5">
-        <widget class="QLineEdit" name="mECPointsText"/>
-       </item>
-       <item row="5" column="0">
-        <widget class="QCheckBox" name="mPrivateCheck">
-         <property name="text">
-          <string notr="true">Private</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1" colspan="5">
-        <widget class="QLineEdit" name="mIDText"/>
-       </item>
-       <item row="2" column="1" colspan="5">
-        <widget class="QLineEdit" name="mECParamsText"/>
-       </item>
-       <item row="7" column="1">
-        <widget class="QComboBox" name="mTokenCombo"/>
-       </item>
-       <item row="8" column="1">
+       <item row="9" column="1">
         <spacer name="verticalSpacer_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -214,12 +131,115 @@
          </property>
         </spacer>
        </item>
+       <item row="7" column="1">
+        <widget class="QComboBox" name="mTokenCombo"/>
+       </item>
+       <item row="3" column="1" colspan="5">
+        <widget class="QLineEdit" name="mIDText"/>
+       </item>
+       <item row="6" column="3">
+        <widget class="QComboBox" name="mDeriveCombo"/>
+       </item>
+       <item row="7" column="0">
+        <widget class="QCheckBox" name="mTokenCheck">
+         <property name="text">
+          <string notr="true">Token</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="5">
+        <widget class="QComboBox" name="mModifiableCombo"/>
+       </item>
+       <item row="6" column="1">
+        <widget class="QComboBox" name="mVerifyCombo"/>
+       </item>
+       <item row="5" column="5">
+        <widget class="QComboBox" name="mWrapCombo"/>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>EC Points</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QCheckBox" name="mPrivateCheck">
+         <property name="text">
+          <string notr="true">Private</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1" colspan="5">
+        <widget class="QLineEdit" name="mECParamsText"/>
+       </item>
+       <item row="6" column="2">
+        <widget class="QCheckBox" name="mDeriveCheck">
+         <property name="text">
+          <string notr="true">Derive</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>EC Params</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1" colspan="5">
+        <widget class="QLineEdit" name="mECPointsText"/>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>Label</string>
+         </property>
+        </widget>
+       </item>
        <item row="5" column="4">
         <widget class="QCheckBox" name="mWrapCheck">
          <property name="text">
           <string notr="true">Wrap</string>
          </property>
         </widget>
+       </item>
+       <item row="0" column="1" colspan="5">
+        <widget class="QLineEdit" name="mLabelText"/>
+       </item>
+       <item row="6" column="0">
+        <widget class="QCheckBox" name="mVerifyCheck">
+         <property name="text">
+          <string notr="true">Verify</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_8">
+         <property name="text">
+          <string>Attributes</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <widget class="QCheckBox" name="mStartDateCheck">
+         <property name="text">
+          <string>StartDate</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="2">
+        <widget class="QCheckBox" name="mEndDateCheck">
+         <property name="text">
+          <string>EndDate</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QDateEdit" name="mStartDateEdit"/>
+       </item>
+       <item row="8" column="3">
+        <widget class="QDateEdit" name="mEndDateEdit"/>
        </item>
       </layout>
      </widget>
