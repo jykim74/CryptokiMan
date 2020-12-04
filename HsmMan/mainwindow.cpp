@@ -751,6 +751,11 @@ void MainWindow::showWindow()
     activateWindow();
 }
 
+void MainWindow::showTypeData( int nSlotIndex, int nType )
+{
+    left_tree_->showTypeData( nSlotIndex, nType );
+}
+
 void MainWindow::adjustForCurrentFile( const QString& filePath )
 {
     QSettings settings;

@@ -28,6 +28,8 @@ public:
     SettingsMgr* settingsMgr() { return settings_mgr_; };
     QString cmd() { return cmd_; };
 
+    void showTypeData( int nSlotIndex, int nType );
+
 
     void messageBox(const QString& msg, QWidget *parent=0);
     void warningBox(const QString& msg, QWidget *parent=0);

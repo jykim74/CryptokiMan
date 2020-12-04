@@ -70,6 +70,11 @@ void ManApplet::start()
     main_win_->show();
 }
 
+void ManApplet::showTypeData( int nSlotIndex, int nType )
+{
+    main_win_->showTypeData( nSlotIndex, nType );
+}
+
 void ManApplet::restartApp()
 {
     if( in_exit_ || QCoreApplication::closingDown() )

@@ -21,31 +21,38 @@ ManTreeView::ManTreeView( QWidget *parent )
 
 void ManTreeView::onItemClicked( const QModelIndex& index )
 {
-    ManTreeModel *tree_model = (ManTreeModel *)model();
+
     ManTreeItem *item = currentItem();
 
-    if( item->getType() == HM_ITEM_TYPE_ROOT )
+    showTypeData( item->getSlotIndex(), item->getType() );
+}
+
+int ManTreeView::showTypeData( int nSlotIndex, int nType )
+{
+    ManTreeModel *tree_model = (ManTreeModel *)model();
+
+    if( nType == HM_ITEM_TYPE_ROOT )
         tree_model->showGetInfo();
-    else if( item->getType() == HM_ITEM_TYPE_SLOT )
-        tree_model->showSlotInfo( item->getSlotIndex() );
-    else if( item->getType() == HM_ITEM_TYPE_TOKEN )
-        tree_model->showTokenInfo( item->getSlotIndex() );
-    else if( item->getType() == HM_ITEM_TYPE_MECHANISM )
-        tree_model->showMechanismInfo( item->getSlotIndex() );
-    else if( item->getType() == HM_ITEM_TYPE_SESSION )
-        tree_model->showSessionInfo( item->getSlotIndex() );
-    else if( item->getType() == HM_ITEM_TYPE_OBJECTS )
-        tree_model->showObjectsInfo( item->getSlotIndex() );
-    else if( item->getType() == HM_ITEM_TYPE_CERTIFICATE )
-        tree_model->showCertificateInfo( item->getSlotIndex() );
-    else if( item->getType() == HM_ITEM_TYPE_PUBLICKEY )
-        tree_model->showPublicKeyInfo( item->getSlotIndex() );
-    else if( item->getType() == HM_ITEM_TYPE_PRIVATEKEY )
-        tree_model->showPrivateKeyInfo( item->getSlotIndex() );
-    else if( item->getType() == HM_ITEM_TYPE_SECRETKEY )
-        tree_model->showSecretKeyInfo( item->getSlotIndex() );
-    else if( item->getType() == HM_ITEM_TYPE_DATA )
-        tree_model->showDataInfo( item->getSlotIndex() );
+    else if( nType == HM_ITEM_TYPE_SLOT )
+        tree_model->showSlotInfo( nSlotIndex );
+    else if( nType == HM_ITEM_TYPE_TOKEN )
+        tree_model->showTokenInfo( nSlotIndex );
+    else if( nType == HM_ITEM_TYPE_MECHANISM )
+        tree_model->showMechanismInfo( nSlotIndex );
+    else if( nType == HM_ITEM_TYPE_SESSION )
+        tree_model->showSessionInfo( nSlotIndex );
+    else if( nType == HM_ITEM_TYPE_OBJECTS )
+        tree_model->showObjectsInfo( nSlotIndex );
+    else if( nType == HM_ITEM_TYPE_CERTIFICATE )
+        tree_model->showCertificateInfo( nSlotIndex );
+    else if( nType == HM_ITEM_TYPE_PUBLICKEY )
+        tree_model->showPublicKeyInfo( nSlotIndex );
+    else if( nType == HM_ITEM_TYPE_PRIVATEKEY )
+        tree_model->showPrivateKeyInfo( nSlotIndex );
+    else if( nType == HM_ITEM_TYPE_SECRETKEY )
+        tree_model->showSecretKeyInfo( nSlotIndex );
+    else if( nType == HM_ITEM_TYPE_DATA )
+        tree_model->showDataInfo( nSlotIndex );
     else {
         tree_model->removeAllRightTable();
     }

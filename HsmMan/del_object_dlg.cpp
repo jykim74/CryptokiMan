@@ -4,7 +4,7 @@
 #include "js_pkcs11.h"
 
 #include "common.h"
-
+#include "man_tree_item.h"
 
 DelObjectDlg::DelObjectDlg(QWidget *parent) :
     QDialog(parent)
@@ -115,19 +115,35 @@ void DelObjectDlg::deleteAllObj()
     CK_OBJECT_HANDLE sObjects[20];
     CK_ULONG uMaxObjCnt = 20;
     CK_ULONG uObjCnt = 0;
+    int nDataType = -1;
 
     int type = mObjectCombo->currentIndex();
 
     if( type == OBJ_DATA_IDX )
+    {
         objClass = CKO_DATA;
+        nDataType = HM_ITEM_TYPE_DATA;
+    }
     else if( type == OBJ_CERT_IDX )
+    {
         objClass = CKO_CERTIFICATE;
+        nDataType = HM_ITEM_TYPE_CERTIFICATE;
+    }
     else if( type == OBJ_PUBKEY_IDX )
+    {
         objClass = CKO_PUBLIC_KEY;
+        nDataType = HM_ITEM_TYPE_PUBLICKEY;
+    }
     else if( type == OBJ_PRIKEY_IDX )
+    {
         objClass = CKO_PRIVATE_KEY;
+        nDataType = HM_ITEM_TYPE_PRIVATEKEY;
+    }
     else if( type == OBJ_SECRET_IDX )
+    {
         objClass = CKO_SECRET_KEY;
+        nDataType = HM_ITEM_TYPE_SECRETKEY;
+    }
 
     sTemplate[uCount].type = CKA_CLASS;
     sTemplate[uCount].pValue = &objClass;
@@ -144,6 +160,8 @@ void DelObjectDlg::deleteAllObj()
     {
         JS_PKCS11_DestroyObject( p11_ctx, sObjects[i] );
     }
+
+    manApplet->showTypeData( nSlotSel, nDataType );
 
     QDialog::accept();
 }

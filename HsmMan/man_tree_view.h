@@ -19,6 +19,7 @@ private slots:
 public slots:
     void P11Initialize();
     void P11Finalize();
+    int showTypeData( int nSlotIndex, int nType );
 
 private:
     ManTreeItem* currentItem();

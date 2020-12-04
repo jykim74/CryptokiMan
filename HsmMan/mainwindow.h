@@ -32,6 +32,8 @@ public:
     QList<SlotInfo>& getSlotInfos() { return slot_infos_; };
     ManTreeItem* currentItem();
 
+    void showTypeData( int nSlotIndex, int nType );
+
 public slots:
     void newFile();
     void open();

@@ -98,6 +98,7 @@ void DeriveKeyDlg::initialize()
     }
 
     if( slot_infos.size() > 0 ) slotChanged(0);
+    tabWidget->setCurrentIndex(0);
 }
 
 void DeriveKeyDlg::accept()
