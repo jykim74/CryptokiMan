@@ -85,6 +85,11 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>mSlotsCombo</tabstop>
+  <tabstop>mSerialCheck</tabstop>
+  <tabstop>mRWCheck</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

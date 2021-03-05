@@ -191,6 +191,25 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>mSlotsCombo</tabstop>
+  <tabstop>mSlotIDText</tabstop>
+  <tabstop>mSessionText</tabstop>
+  <tabstop>mLoginText</tabstop>
+  <tabstop>mKeyTypeCombo</tabstop>
+  <tabstop>mMechCombo</tabstop>
+  <tabstop>mLabelCombo</tabstop>
+  <tabstop>mObjectText</tabstop>
+  <tabstop>mParamText</tabstop>
+  <tabstop>mInputCombo</tabstop>
+  <tabstop>mInputText</tabstop>
+  <tabstop>mOutputText</tabstop>
+  <tabstop>mInitBtn</tabstop>
+  <tabstop>mUpdateBtn</tabstop>
+  <tabstop>mFinalBtn</tabstop>
+  <tabstop>mSignBtn</tabstop>
+  <tabstop>mCloseBtn</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

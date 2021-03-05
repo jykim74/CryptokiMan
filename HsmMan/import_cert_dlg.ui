@@ -200,6 +200,29 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>mSlotsCombo</tabstop>
+  <tabstop>mSlotIDText</tabstop>
+  <tabstop>mSessionText</tabstop>
+  <tabstop>mLoginText</tabstop>
+  <tabstop>mLabelText</tabstop>
+  <tabstop>mIDText</tabstop>
+  <tabstop>mSubjectText</tabstop>
+  <tabstop>mCertPathText</tabstop>
+  <tabstop>mFindBtn</tabstop>
+  <tabstop>mPrivateCheck</tabstop>
+  <tabstop>mPrivateCombo</tabstop>
+  <tabstop>mSensitiveCheck</tabstop>
+  <tabstop>mSensitiveCombo</tabstop>
+  <tabstop>mModifiableCheck</tabstop>
+  <tabstop>mModifiableCombo</tabstop>
+  <tabstop>mTokenCheck</tabstop>
+  <tabstop>mTokenCombo</tabstop>
+  <tabstop>mStartDateCheck</tabstop>
+  <tabstop>mStartDateEdit</tabstop>
+  <tabstop>mEndDateCheck</tabstop>
+  <tabstop>mEndDateEdit</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

@@ -97,6 +97,12 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>mCheckLatestVersionCheck</tabstop>
+  <tabstop>mSaveLibPathCheck</tabstop>
+  <tabstop>mLangCombo</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

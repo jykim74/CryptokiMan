@@ -96,6 +96,13 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>mSlotsCombo</tabstop>
+  <tabstop>mSlotIDText</tabstop>
+  <tabstop>mSessionText</tabstop>
+  <tabstop>mLoginText</tabstop>
+  <tabstop>mPinText</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

@@ -117,6 +117,20 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>mSlotsCombo</tabstop>
+  <tabstop>mSlotIDText</tabstop>
+  <tabstop>mSessionText</tabstop>
+  <tabstop>mLoginText</tabstop>
+  <tabstop>mObjectCombo</tabstop>
+  <tabstop>mLabelCombo</tabstop>
+  <tabstop>mObjectText</tabstop>
+  <tabstop>mAttributeCombo</tabstop>
+  <tabstop>mValueText</tabstop>
+  <tabstop>mGetAttrBtn</tabstop>
+  <tabstop>mSetAttrBtn</tabstop>
+  <tabstop>mCloseBtn</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

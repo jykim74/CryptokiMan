@@ -24,5 +24,38 @@
         <file>images/branch-more.png</file>
         <file>images/branch-open.png</file>
         <file>images/vline.png</file>
+        <file>images/setting.png</file>
+        <file>images/log.png</file>
+        <file>images/token.png</file>
+        <file>images/dice.png</file>
+        <file>images/cert.png</file>
+        <file>images/hash.png</file>
+        <file>images/keypair.png</file>
+        <file>images/close_s.png</file>
+        <file>images/open_s.png</file>
+        <file>images/close_all.png</file>
+        <file>images/login.png</file>
+        <file>images/logout.png</file>
+        <file>images/final.png</file>
+        <file>images/key_add.png</file>
+        <file>images/data_add.png</file>
+        <file>images/sign.png</file>
+        <file>images/pfx.png</file>
+        <file>images/prikey.png</file>
+        <file>images/pin1.png</file>
+        <file>images/pin2.png</file>
+        <file>images/dk.png</file>
+        <file>images/uk.jpg</file>
+        <file>images/wk.png</file>
+        <file>images/decrypt.png</file>
+        <file>images/encrypt.png</file>
+        <file>images/verify.png</file>
+        <file>images/delete.png</file>
+        <file>images/edit.png</file>
+        <file>images/key_gen.png</file>
+        <file>images/ep1.jpg</file>
+        <file>images/ep2.jpg</file>
+        <file>images/rp1.png</file>
+        <file>images/rp2.png</file>
     </qresource>
 </RCC>

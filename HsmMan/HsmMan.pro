@@ -10,7 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = HsmMan
 TEMPLATE = app
-PROJECT_VERSION = "0.9.4"
+PROJECT_VERSION = "0.9.5"
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -219,4 +219,5 @@ linux {
 INCLUDEPATH += "../../PKILib"
 
 DISTFILES += \
-    i18n/hsmman_ko_KR.qm
+    i18n/hsmman_ko_KR.qm \
+    images/setting.png
