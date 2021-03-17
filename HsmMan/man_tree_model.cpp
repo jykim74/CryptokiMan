@@ -57,6 +57,7 @@ void ManTreeModel::showGetInfo()
 
     int row = 0;
     right_table_->insertRow( row );
+
     right_table_->setItem( row, 0, new QTableWidgetItem(QString( "cryptokiVersion")));
     strMsg = QString( "V%1.%2" ).arg( sInfo.cryptokiVersion.major ).arg( sInfo.cryptokiVersion.minor );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
@@ -115,18 +116,21 @@ void ManTreeModel::showSlotInfo( int index )
     QStringList strList;
 
     right_table_->insertRow( row );
+    right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("Slot ID" )));
     strMsg = QString("%1").arg(uSlotID);
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
 
     right_table_->insertRow( row );
+    right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("firmwareVersion" )));
     strMsg = QString( "V%1.%2").arg( stSlotInfo.firmwareVersion.major ).arg( stSlotInfo.firmwareVersion.minor );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ));
     row++;
 
     right_table_->insertRow( row );
+    right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("flags" )));
     strMsg = QString( "%1" ).arg( stSlotInfo.flags );
     if( stSlotInfo.flags & CKF_TOKEN_PRESENT )
@@ -143,12 +147,14 @@ void ManTreeModel::showSlotInfo( int index )
     row++;
 
     right_table_->insertRow( row );
+    right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("hardwareVersion") ));
     strMsg = QString( "V%1.%2").arg( stSlotInfo.hardwareVersion.major ).arg( stSlotInfo.hardwareVersion.minor );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
 
     right_table_->insertRow( row );
+    right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("manufacturerID")));
     strMsg = QString( "%1" ).arg( (char *)stSlotInfo.manufacturerID );
     strList = strMsg.split( "  " );
@@ -156,6 +162,7 @@ void ManTreeModel::showSlotInfo( int index )
     row++;
 
     right_table_->insertRow( row );
+    right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("slotDescription" )));
     strMsg = QString( "%1" ).arg( (char *)stSlotInfo.slotDescription );
     strList = strMsg.split( "  " );
@@ -191,6 +198,7 @@ void ManTreeModel::showTokenInfo(int index)
     row++;
 
     right_table_->insertRow( row );
+    right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("flags" )));
     strMsg = QString( "%1" ).arg( sTokenInfo.flags );
 
@@ -209,12 +217,14 @@ void ManTreeModel::showTokenInfo(int index)
     row++;
 
     right_table_->insertRow( row );
+    right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("hardwareVersion" )));
     strMsg = QString( "V%1.%2").arg( sTokenInfo.hardwareVersion.major ).arg( sTokenInfo.hardwareVersion.minor );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
 
     right_table_->insertRow( row );
+    right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("label") ));
     strMsg = QString("%1").arg( (char *)sTokenInfo.label );
     strList = strMsg.split( "  " );
@@ -222,12 +232,14 @@ void ManTreeModel::showTokenInfo(int index)
     row++;
 
     right_table_->insertRow( row );
+    right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("manufacturerID") ));
     strMsg = QString("%1").arg( (char *)sTokenInfo.manufacturerID );    strList = strMsg.split( "  " );
     if( strList.size() > 0 ) right_table_->setItem( row, 1, new QTableWidgetItem( strList.at(0)) );
     row++;
 
     right_table_->insertRow( row );
+    right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("model") ));
     strMsg = QString("%1").arg( (char *)sTokenInfo.model );
     strList = strMsg.split( "  " );
@@ -235,6 +247,7 @@ void ManTreeModel::showTokenInfo(int index)
     row++;
 
     right_table_->insertRow( row );
+    right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("serialNumber") ));
     strMsg = QString("%1").arg( (char *)sTokenInfo.serialNumber );
 //    strList = strMsg.split( "  " );
@@ -243,54 +256,63 @@ void ManTreeModel::showTokenInfo(int index)
     row++;
 
     right_table_->insertRow( row );
+    right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("ulFreePrivateMemory") ));
     strMsg = QString("%1").arg( sTokenInfo.ulFreePrivateMemory );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
 
     right_table_->insertRow( row );
+    right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("ulFreePublicMemory") ));
     strMsg = QString("%1").arg( sTokenInfo.ulFreePublicMemory );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
 
     right_table_->insertRow( row );
+    right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("ulMaxPinLen") ));
     strMsg = QString("%1").arg( sTokenInfo.ulMaxPinLen );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
 
     right_table_->insertRow( row );
+    right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("ulMaxRwSessionCount") ));
     strMsg = QString("%1").arg( sTokenInfo.ulMaxRwSessionCount );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
 
     right_table_->insertRow( row );
+    right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("ulMaxSessionCount") ));
     strMsg = QString("%1").arg( sTokenInfo.ulMaxSessionCount );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
 
     right_table_->insertRow( row );
+    right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("ulMinPinLen") ));
     strMsg = QString("%1").arg( sTokenInfo.ulMinPinLen );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
 
     right_table_->insertRow( row );
+    right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("ulSessionCount") ));
     strMsg = QString("%1").arg( sTokenInfo.ulSessionCount );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
 
     right_table_->insertRow( row );
+    right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("ulTotalPrivateMemory") ));
     strMsg = QString("%1").arg( sTokenInfo.ulTotalPrivateMemory );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
 
     right_table_->insertRow( row );
+    right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("ulTotalPublicMemory") ));
     strMsg = QString("%1").arg( sTokenInfo.ulTotalPublicMemory );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
@@ -336,12 +358,14 @@ void ManTreeModel::showMechanismInfo(int index)
         if( rv != CKR_OK ) continue;
 
         right_table_->insertRow( row );
+        right_table_->setRowHeight( row, 10 );
         right_table_->setItem( row, 0, new QTableWidgetItem( QString("Type")));
         strMsg = JS_PKCS11_GetCKMName( pMechType[i] );
         right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
         row++;
 
         right_table_->insertRow( row );
+        right_table_->setRowHeight( row, 10 );
         right_table_->setItem( row, 0, new QTableWidgetItem( QString("flags" )));
         strMsg = QString( "%1" ).arg( stMechInfo.flags );
 
@@ -364,18 +388,21 @@ void ManTreeModel::showMechanismInfo(int index)
         row++;
 
         right_table_->insertRow( row );
+        right_table_->setRowHeight( row, 10 );
         right_table_->setItem( row, 0, new QTableWidgetItem( QString( "ulMaxKeySize" )));
         strMsg = QString("%1").arg( stMechInfo.ulMaxKeySize );
         right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
         row++;
 
         right_table_->insertRow( row );
+        right_table_->setRowHeight( row, 10 );
         right_table_->setItem( row, 0, new QTableWidgetItem( QString( "ulMinKeySize" )));
         strMsg = QString("%1").arg( stMechInfo.ulMinKeySize );
         right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
         row++;
 
         right_table_->insertRow( row );
+        right_table_->setRowHeight( row, 10 );
         right_table_->setItem( row, 0, new QTableWidgetItem( QString("") ));
         right_table_->setItem( row, 1, new QTableWidgetItem( QString("") ));
         row++;
@@ -408,6 +435,7 @@ void ManTreeModel::showSessionInfo(int index)
     QString strMsg = "";
 
     right_table_->insertRow( row );
+    right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem(QString("flags") ));
     strMsg = QString("%1").arg( stSessInfo.flags );
 
@@ -418,12 +446,14 @@ void ManTreeModel::showSessionInfo(int index)
     row++;
 
     right_table_->insertRow( row );
+    right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem(QString("slotID" )));
     strMsg = QString("%1").arg( stSessInfo.slotID );
     right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
     row++;
 
     right_table_->insertRow( row );
+    right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem(QString("state")));
     strMsg = QString("%1").arg( stSessInfo.state );
 
@@ -437,6 +467,7 @@ void ManTreeModel::showSessionInfo(int index)
     row++;
 
     right_table_->insertRow( row );
+    right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("ulDeviceError" )));
     strMsg = QString("%1 | " ).arg( stSessInfo.ulDeviceError );
     strMsg += JS_PKCS11_GetErrorMsg( stSessInfo.ulDeviceError );
@@ -471,12 +502,14 @@ void ManTreeModel::showObjectsInfo(int index)
     QString strMsg = "";
 
     right_table_->insertRow( row );
+    right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString( "Object Count" ) ) );
     strMsg = QString( "%1" ).arg( uObjCnt );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
 
     right_table_->insertRow( row );
+    right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("") ));
     right_table_->setItem( row, 1, new QTableWidgetItem( QString("") ));
     row++;
@@ -487,6 +520,7 @@ void ManTreeModel::showObjectsInfo(int index)
         QString strVal = "";
 
         right_table_->insertRow( row );
+        right_table_->setRowHeight( row, 10 );
         right_table_->setItem( row, 0, new QTableWidgetItem( QString("Handle" )));
         strVal = QString("%1").arg( hObjects[i] );
         right_table_->setItem( row, 1, new QTableWidgetItem( QString( strVal) ));
@@ -495,6 +529,7 @@ void ManTreeModel::showObjectsInfo(int index)
 
         JS_PKCS11_GetObjectSize( p11_ctx, hObjects[i], &uSize );
         right_table_->insertRow( row );
+        right_table_->setRowHeight( row, 10 );
         right_table_->setItem( row, 0, new QTableWidgetItem( QString("Size")));
         strVal = QString("%1").arg( uSize );
         right_table_->setItem( row, 1, new QTableWidgetItem( QString(strVal) ));
@@ -505,6 +540,7 @@ void ManTreeModel::showObjectsInfo(int index)
 \
 
         right_table_->insertRow( row );
+        right_table_->setRowHeight( row, 10 );
         right_table_->setItem( row, 0, new QTableWidgetItem( QString("Class")));
         JS_PKCS11_GetAtrributeValue2( p11_ctx, hObjects[i], attrType, &binVal );
         long uVal = 0;
@@ -515,6 +551,7 @@ void ManTreeModel::showObjectsInfo(int index)
         row++;
 
         right_table_->insertRow( row );
+        right_table_->setRowHeight( row, 10 );
         right_table_->setItem( row, 0, new QTableWidgetItem(QString("")));
         right_table_->setItem( row, 1, new QTableWidgetItem(QString("")));
         row++;
@@ -660,11 +697,13 @@ void ManTreeModel::showCertificateInfo( int index, long hObject )
     QString strMsg = "";
 
     right_table_->insertRow( 0 );
+    right_table_->setRowHeight( 0, 10 );
     right_table_->setItem( 0, 0, new QTableWidgetItem( QString("Certificate count" ) ) );
     strMsg = QString("%1").arg( uObjCnt );
     right_table_->setItem( 0, 1, new QTableWidgetItem( strMsg ) );
 
     right_table_->insertRow( 1 );
+    right_table_->setRowHeight( 1, 10 );
     right_table_->setItem( 1, 0, new QTableWidgetItem(QString("")));
     right_table_->setItem( 1, 1, new QTableWidgetItem(QString("")));
 
@@ -673,6 +712,7 @@ void ManTreeModel::showCertificateInfo( int index, long hObject )
         int     row = right_table_->rowCount();
 
         right_table_->insertRow( row );
+        right_table_->setRowHeight( row, 10 );
         right_table_->setItem( row, 0, new QTableWidgetItem(QString("Handle")));
         strMsg = QString("%1").arg( hObjects[i] );
         right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
@@ -730,10 +770,12 @@ void ManTreeModel::showPublicKeyInfo( int index, long hObject )
 
     strMsg = QString("%1").arg( uObjCnt );
     right_table_->insertRow( 0 );
+    right_table_->setRowHeight( 0, 10 );
     right_table_->setItem( 0, 0, new QTableWidgetItem(QString("PublicKey Count")));
     right_table_->setItem( 0, 1, new QTableWidgetItem(strMsg));
 
     right_table_->insertRow( 1 );
+    right_table_->setRowHeight( 1, 10 );
     right_table_->setItem( 1, 0, new QTableWidgetItem(QString("")));
     right_table_->setItem( 1, 1, new QTableWidgetItem(QString("")));
 
@@ -744,6 +786,7 @@ void ManTreeModel::showPublicKeyInfo( int index, long hObject )
 
         strMsg = QString("%1").arg( hObjects[i] );
         right_table_->insertRow( row );
+        right_table_->setRowHeight( row, 10 );
         right_table_->setItem( row, 0, new QTableWidgetItem(QString("Handle")));
         right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
 
@@ -809,11 +852,13 @@ void ManTreeModel::showPrivateKeyInfo( int index, long hObject )
     strMsg = QString("%1").arg( uObjCnt );
 
     right_table_->insertRow( 0 );
+    right_table_->setRowHeight( 0, 10 );
     right_table_->setItem( 0, 0, new QTableWidgetItem(QString("PrivateKey Count")));
     right_table_->setItem( 0, 1, new QTableWidgetItem( strMsg ));
 
 
     right_table_->insertRow( 1 );
+    right_table_->setRowHeight( 1, 10 );
     right_table_->setItem( 1, 0, new QTableWidgetItem(QString("")));
     right_table_->setItem( 1, 1, new QTableWidgetItem(QString("")));
 
@@ -824,6 +869,7 @@ void ManTreeModel::showPrivateKeyInfo( int index, long hObject )
         strMsg = QString("%1").arg( hObjects[i] );
 
         right_table_->insertRow( row );
+        right_table_->setRowHeight( row, 10 );
         right_table_->setItem( row, 0, new QTableWidgetItem(QString("Handle")));
         right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
 
@@ -896,10 +942,12 @@ void ManTreeModel::showSecretKeyInfo( int index, long hObject )
 
     strMsg = QString("%1").arg( uObjCnt );
     right_table_->insertRow( 0 );
+    right_table_->setRowHeight( 0, 10 );
     right_table_->setItem( 0, 0, new QTableWidgetItem(QString("SecretKey Count")));
     right_table_->setItem( 0, 1, new QTableWidgetItem(strMsg) );
 
     right_table_->insertRow( 1 );
+    right_table_->setRowHeight( 1, 10 );
     right_table_->setItem( 1, 0, new QTableWidgetItem(QString("")));
     right_table_->setItem( 1, 1, new QTableWidgetItem(QString("")));
 
@@ -909,6 +957,7 @@ void ManTreeModel::showSecretKeyInfo( int index, long hObject )
         strMsg = QString("%1").arg( hObjects[i] );
 
         right_table_->insertRow( row );
+        right_table_->setRowHeight( row, 10 );
         right_table_->setItem( row, 0, new QTableWidgetItem(QString("Handle")));
         right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
 
@@ -976,10 +1025,12 @@ void ManTreeModel::showDataInfo( int index, long hObject )
 
     strMsg = QString("%1").arg( uObjCnt );
     right_table_->insertRow( 0 );
+    right_table_->setRowHeight( 0, 10 );
     right_table_->setItem( 0, 0, new QTableWidgetItem(QString("Data Count")));
     right_table_->setItem( 0, 1, new QTableWidgetItem( strMsg ) );
 
     right_table_->insertRow( 1 );
+    right_table_->setRowHeight( 1, 10 );
     right_table_->setItem( 1, 0, new QTableWidgetItem(QString("")));
     right_table_->setItem( 1, 1, new QTableWidgetItem(QString("")));
 
@@ -989,6 +1040,7 @@ void ManTreeModel::showDataInfo( int index, long hObject )
         int row = right_table_->rowCount();
         strMsg = QString("%1").arg( hObjects[0] );
         right_table_->insertRow( row );
+        right_table_->setRowHeight( row, 10 );
         right_table_->setItem( row, 0, new QTableWidgetItem(QString("Handle")));
         right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
 

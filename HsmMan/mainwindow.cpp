@@ -105,6 +105,9 @@ void MainWindow::initialize()
     vsplitter_->addWidget(right_table_);
     vsplitter_->addWidget(right_text_);
 
+    right_table_->setSelectionBehavior(QAbstractItemView::SelectRows);
+    right_table_->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
     QList <int> vsizes;
     vsizes << 1200 << 500;
     vsplitter_->setSizes(vsizes);
