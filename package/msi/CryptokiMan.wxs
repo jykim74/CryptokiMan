@@ -2,9 +2,9 @@
 <Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
 	<?include Includes.wxi?>
 	<Product Id="$(var.ProductGuid)"
-			Name='!(loc.AppName) $(var.CurrentHsmManVersion)'
+			Name='!(loc.AppName) $(var.CurrentCryptokiManVersion)'
 			Language='1033'
-			Version='$(var.CurrentHsmManVersion)'
+			Version='$(var.CurrentCryptokiManVersion)'
 			Manufacturer='!(loc.Manufacturer)'
 			UpgradeCode="$(var.CurrentUpdateGuid)" >
 
@@ -16,32 +16,32 @@
 				Compressed='yes' />
 
 		<!-- http://wixtoolset.org/documentation/manual/v3/howtos/ui_and_localization/configure_arp_appearance.html -->
-		<Icon Id="icon.ico" SourceFile="hsmman.ico"/>
+		<Icon Id="icon.ico" SourceFile="cryptokiman.ico"/>
 		<Property Id="ARPPRODUCTICON" Value="icon.ico" />
 
 		<!-- Don't allow downgrade. -->
 		<MajorUpgrade DowngradeErrorMessage='!(loc.DowngradeErrorMessage)' />
 
 		<Property Id="SUPPRESS_LAUNCH_BERVIEWER_AFTER_INSTALL_FINISH">
-			<RegistrySearch Id="SuppressLaunchHsmManHKCU"
+			<RegistrySearch Id="SuppressLaunchCryptokiManHKCU"
 							Root="HKCU"
 							Key="SOFTWARE\!(loc.AppName)"
 							Name="PreconfigureSuppressLaunchAfterInstall"
 							Type="raw" />
 
-			<RegistrySearch Id="SuppressLaunchHsmManHKLM"
+			<RegistrySearch Id="SuppressLaunchCryptokiManHKLM"
 							Root="HKLM"
 							Key="SOFTWARE\!(loc.AppName)"
 							Name="PreconfigureSuppressLaunchAfterInstall"
 							Type="raw" />
 		</Property>
 
-		<Media Id='1' Cabinet='hsmman.cab' EmbedCab='yes' />
+		<Media Id='1' Cabinet='cryptokiman.cab' EmbedCab='yes' />
 	
 		<Directory Id='TARGETDIR' Name='SourceDir'>
 			<Directory Id='DesktopFolder' Name="DesktopFolder" />
 			<Directory Id="ProgramMenuFolder">
-				<Directory Id="HsmManStartMenuFolder" Name='!(loc.AppName)' />
+				<Directory Id="CryptokiManStartMenuFolder" Name='!(loc.AppName)' />
 			</Directory>
 
 			<Directory Id='ProgramFilesFolder' Name='PFiles'>
@@ -56,33 +56,33 @@
 
 		<!-- Auto-start via REgistry -->
 		<DirectoryRef Id="INSTALLDIR">
-			<Component Id="HsmManAutoStart" Guid="$(var.GuidOfAutoStartComponent)">
+			<Component Id="CryptokiManAutoStart" Guid="$(var.GuidOfAutoStartComponent)">
 				<RegistryKey Root="HKCU"
 							Key="Software\Microsoft\Windows\CurrentVersion\Run"
 							Action="create">
-					<RegistryValue Name='!(loc.AppName)' Value="[#hsmman.exe]" Type="string" KeyPath="yes" />
+					<RegistryValue Name='!(loc.AppName)' Value="[#cryptokiman.exe]" Type="string" KeyPath="yes" />
 				</RegistryKey>
 
 				<Condition>HSMMAN_AUTO_START</Condition>
 			</Component>
 		</DirectoryRef>
 
-		<DirectoryRef Id="HsmManStartMenuFolder">
-			<Component Id="HsmMan_StartMenuShortCut" Guid="$(var.GuidOfStartMenuShortCutComponent)" >
-				<RemoveFolder Id="HsmManStartMenuFolder" On="uninstall" />
+		<DirectoryRef Id="CryptokiManStartMenuFolder">
+			<Component Id="CryptokiMan_StartMenuShortCut" Guid="$(var.GuidOfStartMenuShortCutComponent)" >
+				<RemoveFolder Id="CryptokiManStartMenuFolder" On="uninstall" />
 				<RegistryValue Root="HKCU" Key="Software\[Manufacturer]\[ProductName]"
 						Name="Installed" Type="integer" Value="1" KeyPath='yes' />
 
-				<!-- shortcut to 'start hsmman' -->
-				<Shortcut Id="ApplicationStartMenuShortCut" Directory="HsmManStartMenuFolder"
-							Name="!(loc.AppName)" Target="[#hsmman.exe]"
+				<!-- shortcut to 'start cryptokiman' -->
+				<Shortcut Id="ApplicationStartMenuShortCut" Directory="CryptokiManStartMenuFolder"
+							Name="!(loc.AppName)" Target="[#cryptokiman.exe]"
 							Hotkey="0" IconIndex="0" Show="normal"
 							WorkingDirectory="bin" />
 
 				<!-- shortcut to 'Uninstall' -->
-				<Shortcut Id="UninstallProduct" Name="!(loc.UninstallHsmMan)"
+				<Shortcut Id="UninstallProduct" Name="!(loc.UninstallCryptokiMan)"
 							Target="[SystemFolder]msiexec.exe" IconIndex="0"
-							Arguments="/x [ProductCode]" Description="!(loc.UninstallHsmMan)" />
+							Arguments="/x [ProductCode]" Description="!(loc.UninstallCryptokiMan)" />
 			</Component>
 		</DirectoryRef>
 
@@ -99,20 +99,20 @@
 		</UI>
 
 		<!--
-		<Property Id="WixShellExecTarget" Value="[#hsmman.exe]" />
+		<Property Id="WixShellExecTarget" Value="[#cryptokiman.exe]" />
 		<CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
 		-->
 
 		<Feature Id='Main' Level='1'>
-			<ComponentRef Id='HsmMan_StartMenuShortCut' />
-			<ComponentRef Id='HsmManAutoStart' />
+			<ComponentRef Id='CryptokiMan_StartMenuShortCut' />
+			<ComponentRef Id='CryptokiManAutoStart' />
 			<!-- defined in fragment.wxs -->
 			<ComponentGroupRef Id='group_bin' />
 		</Feature>
 
 		<Property Id="CHECKBOX_DEL_BERVIEWER_DATA" Secure="yes" />
-		<WixVariable Id="WixUIBannerBmp" Value="hsmman-top-banner.bmp" />
-		<WixVariable Id="WixUIDialogBmp" Value="hsmman-background.bmp" />
+		<WixVariable Id="WixUIBannerBmp" Value="cryptokiman-top-banner.bmp" />
+		<WixVariable Id="WixUIDialogBmp" Value="cryptokiman-background.bmp" />
 
 	</Product>
 </Wix>

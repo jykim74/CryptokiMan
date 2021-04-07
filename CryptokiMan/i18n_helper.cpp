@@ -104,9 +104,9 @@ bool I18NHelper::setLanguage(int langIndex) {
 
     if( lang != "English" )
     {
-        if( !my_translator_->load(locale, ":/i18n/hsmman_"))
+        if( !my_translator_->load(locale, ":/i18n/cryptokiman_"))
         {
-            my_translator_->load(QString(":/i18n/hsmman_%1.qm").arg(locale.name()));
+            my_translator_->load(QString(":/i18n/cryptokiman_%1.qm").arg(locale.name()));
         }
     }
 

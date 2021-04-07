@@ -24,8 +24,8 @@
         <translation>%1(%2) 에 대해서</translation>
     </message>
     <message>
-        <source>About HsmMan</source>
-        <translation>HsmMan 에 대해서</translation>
+        <source>About CryptokiMan</source>
+        <translation>CryptokiMan 에 대해서</translation>
     </message>
     <message>
         <source>This is freeware tool to test cryptoki library If you do not use this for commercial purposes, you can use it freely If you have any opinions on this tool, please send me a mail
@@ -2053,8 +2053,8 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation>끝내기(&amp;Q)</translation>
     </message>
     <message>
-        <source>Quit HsmMan</source>
-        <translation>HsmMan 끝내기</translation>
+        <source>Quit CryptokiMan</source>
+        <translation>CryptokiMan 끝내기</translation>
     </message>
     <message>
         <source>&amp;Module</source>
@@ -2369,8 +2369,8 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation type="vanished">에 대해</translation>
     </message>
     <message>
-        <source>About HsmMan</source>
-        <translation>HsmMan 에 대해서</translation>
+        <source>About CryptokiMan</source>
+        <translation>CryptokiMan 에 대해서</translation>
     </message>
     <message>
         <source>Log View</source>
@@ -2385,12 +2385,12 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation>설정</translation>
     </message>
     <message>
-        <source>Settings HsmMan</source>
-        <translation>HsmMan 설정</translation>
+        <source>Settings CryptokiMan</source>
+        <translation>CryptokiMan 설정</translation>
     </message>
     <message>
-        <source>HsmMan</source>
-        <translation>HsmMan</translation>
+        <source>CryptokiMan</source>
+        <translation>CryptokiMan</translation>
     </message>
     <message>
         <source>Open cryptoki file</source>

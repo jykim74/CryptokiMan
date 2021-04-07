@@ -128,7 +128,7 @@ void ManApplet::write( const QString strLog )
 
 QString ManApplet::getBrand()
 {
-    return QString::fromUtf8( "HsmMan" );
+    return QString::fromUtf8( "CryptokiMan" );
 }
 
 QString ManApplet::getSetPath()

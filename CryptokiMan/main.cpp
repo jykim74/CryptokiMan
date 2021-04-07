@@ -12,9 +12,9 @@ int main(int argc, char *argv[])
 
     QCoreApplication::setOrganizationName( "JS" );
     QCoreApplication::setOrganizationDomain( "jssoft.com" );
-    QCoreApplication::setApplicationName( "HsmMan" );
+    QCoreApplication::setApplicationName( "CryptokiMan" );
 
-    QFile qss(":/hsmman.qss");
+    QFile qss(":/cryptokiman.qss");
     qss.open( QFile::ReadOnly );
     app.setStyleSheet(qss.readAll());
 

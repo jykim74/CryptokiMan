@@ -8,9 +8,9 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = HsmMan
+TARGET = CryptokiMan
 TEMPLATE = app
-PROJECT_VERSION = "0.9.5"
+PROJECT_VERSION = "0.9.1"
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -160,15 +160,15 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    hsmman.qrc
+    cryptokiman.qrc
 
-TRANSLATIONS += i18n/hsmman_ko_KR.ts
+TRANSLATIONS += i18n/cryptokiman_ko_KR.ts
 
 
 
 mac {
     DEFINES += _AUTO_UPDATE
-    ICON = images/hsmman.icns
+    ICON = images/cryptokiman.icns
 
     QMAKE_LFLAGS += -Wl,-rpath,@loader_path/../Frameworks
     HEADERS += mac_sparkle_support.h
@@ -194,7 +194,7 @@ mac {
 
 win32 {
     DEFINES += _AUTO_UPDATE
-    RC_ICONS = hsmman.ico
+    RC_ICONS = cryptokiman.ico
     INCLUDEPATH += "../../PKILib/lib/win32/winsparkle/include"
     INCLUDEPATH += "C:\msys64\mingw32\include"
 
@@ -219,5 +219,5 @@ linux {
 INCLUDEPATH += "../../PKILib"
 
 DISTFILES += \
-    i18n/hsmman_ko_KR.qm \
+    i18n/cryptokiman_ko_KR.qm \
     images/setting.png

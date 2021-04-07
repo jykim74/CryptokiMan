@@ -3,7 +3,7 @@
 #include "settings_mgr.h"
 
 namespace  {
-    const char *kBehaviorGroup = "HsmMan";
+    const char *kBehaviorGroup = "CryptokiMan";
     const char *kSaveLibPath = "saveLibPath";
     const char *kSlotID = "slotId";
     const char *kP11LibPath = "p11LibPath";

@@ -13,7 +13,7 @@ SINGLETON_IMPL(AutoUpdateService)
 namespace  {
 #ifdef Q_OS_WIN32
     const char *kSparkleAppcastURI = "https://www.aaa.bbb/update/win_appcast.xml";
-    const char *kWinSparkleRegPath = "SOFTWARE\\HsmMan\\WinSparkle";
+    const char *kWinSparkleRegPath = "SOFTWARE\\CryptokiMan\\WinSparkle";
 #else
     const char *kSparkleAppcastURI = "https://www.aaa.bbb/update/mac_appcast.xml";
 #endif
@@ -53,8 +53,8 @@ public:
         win_sparkle_set_registry_path(kWinSparkleRegPath);
         win_sparkle_set_appcast_url(getAppcastURI().toUtf8().data());
         win_sparkle_set_app_details(
-                    L"HsmMan",
-                    L"HsmMan",
+                    L"CryptokiMan",
+                    L"CryptokiMan",
                     QString(STRINGIZE(HSMMAN_VERSION)).toStdWString().c_str() );
     }
 

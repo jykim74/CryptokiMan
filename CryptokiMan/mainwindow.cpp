@@ -183,7 +183,7 @@ void MainWindow::createActions()
     fileMenu->addSeparator();
 
     QAction *quitAct = new QAction( tr("&Quit"), this );
-    quitAct->setStatusTip( tr( "Quit HsmMan" ) );
+    quitAct->setStatusTip( tr( "Quit CryptokiMan" ) );
     connect( quitAct, &QAction::triggered, this, &MainWindow::quit );
     fileMenu->addAction(quitAct);
 
@@ -446,14 +446,14 @@ void MainWindow::createActions()
     const QIcon settingIcon = QIcon::fromTheme("setting", QIcon(":/images/setting.png"));
     QAction *settingsAct = new QAction( settingIcon, tr("&Settings"), this);
     connect( settingsAct, &QAction::triggered, this, &MainWindow::settings);
-    settingsAct->setStatusTip(tr("Settings HsmMan"));
+    settingsAct->setStatusTip(tr("Settings CryptokiMan"));
     helpMenu->addAction( settingsAct );
     helpToolBar->addAction( settingsAct );
 
-    const QIcon hsmManIcon = QIcon::fromTheme("hsmman", QIcon(":/images/hsmman.png"));
-    QAction *aboutAct = new QAction( hsmManIcon, tr("About HsmMan"), this );
+    const QIcon cryptokiManIcon = QIcon::fromTheme("cryptokiman", QIcon(":/images/cryptokiman.png"));
+    QAction *aboutAct = new QAction( cryptokiManIcon, tr("About CryptokiMan"), this );
     connect( aboutAct, &QAction::triggered, this, &MainWindow::about);
-    aboutAct->setStatusTip(tr("About HsmMan"));
+    aboutAct->setStatusTip(tr("About CryptokiMan"));
     helpMenu->addAction( aboutAct );
     helpToolBar->addAction( aboutAct );
 }

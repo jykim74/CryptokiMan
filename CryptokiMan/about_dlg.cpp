@@ -11,7 +11,7 @@ AboutDlg::AboutDlg(QWidget *parent) :
     setWindowTitle(tr("About %1").arg(manApplet->getBrand()));
     setWindowFlags( (windowFlags() & ~Qt::WindowContextHelpButtonHint) | Qt::WindowStaysOnTopHint );
 
-    version_label_ = tr( "About %1 (%2)").arg( "HsmMan").arg(STRINGIZE(HSMMAN_VERSION));
+    version_label_ = tr( "About %1 (%2)").arg( "CryptokiMan").arg(STRINGIZE(HSMMAN_VERSION));
     mVersionLabel->setText( version_label_ );
 
 

@@ -45,8 +45,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="hsmman.qrc">
-         <normaloff>:/images/hsmman.icns</normaloff>:/images/hsmman.icns</iconset>
+        <iconset resource="cryptokiman.qrc">
+         <normaloff>:/images/cryptokiman.png</normaloff>:/images/cryptokiman.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -97,7 +97,7 @@
   <tabstop>mCheckUpdateBtn</tabstop>
  </tabstops>
  <resources>
-  <include location="hsmman.qrc"/>
+  <include location="cryptokiman.qrc"/>
  </resources>
  <connections>
   <connection>
