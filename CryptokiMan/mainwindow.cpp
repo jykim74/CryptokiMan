@@ -113,8 +113,8 @@ void MainWindow::initialize()
     vsplitter_->setSizes(vsizes);
 
     QList <int> sizes;
-    sizes << 500 << 1200;
-    resize(1024,768);
+    sizes << 300 << 500;
+    resize(800,800);
 
     hsplitter_->setSizes(sizes);
     setCentralWidget(hsplitter_);
@@ -354,6 +354,8 @@ void MainWindow::createActions()
     decryptAct->setStatusTip(tr("PKCS11 Decrypt"));
     cryptMenu->addAction( decryptAct );
     cryptToolBar->addAction( decryptAct );
+
+    addToolBarBreak();
 
     QMenu *importMenu = menuBar()->addMenu(tr("&Import"));
     QToolBar *importToolBar = addToolBar(tr("Import"));
@@ -792,10 +794,19 @@ void MainWindow::about()
 
 void MainWindow::logView()
 {
+    QPoint sp;
+    QPoint mp;
+    this->update();
+    mp = this->pos();
+    int width = this->width();
+
+    sp.setY( mp.ry() );
+    sp.setX( mp.rx() + width );
 
     manApplet->logViewDlg()->show();
     manApplet->logViewDlg()->raise();
     manApplet->logViewDlg()->activateWindow();
+    manApplet->logViewDlg()->move(sp);
 }
 
 void MainWindow::initToken()
