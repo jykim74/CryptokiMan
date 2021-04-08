@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>About HsmMan</string>
+   <string>About CryptokiMan</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="3" column="0">

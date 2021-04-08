@@ -40,9 +40,21 @@
         <source><byte value="xd"/>
 Copyright (C) 2019 ~ 2020 JongYeob Kim<byte value="xd"/>
 mailto : jykim74@gmail.com</source>
-        <translation>
+        <translation type="vanished">
 Copyright (C) 2019 ~ 2020 JongYeob Kim
 메일: jykim74@gmail.com</translation>
+    </message>
+    <message>
+        <source>Library:</source>
+        <translation>라이브러리:</translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2019 ~ 2020 JongYeob Kim</source>
+        <translation>Copyright (C) 2019 ~ 2020 JongYeob Kim</translation>
+    </message>
+    <message>
+        <source>mailto : jykim74@gmail.com</source>
+        <translation>메일: jykim74@gmail.com</translation>
     </message>
 </context>
 <context>
@@ -249,6 +261,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>success to create EC private key</source>
         <translation>EC 개인키 생성 성공</translation>
     </message>
+    <message>
+        <source>StartDate</source>
+        <translation>시작 일자</translation>
+    </message>
+    <message>
+        <source>EndDate</source>
+        <translation>종료 일자</translation>
+    </message>
 </context>
 <context>
     <name>CreateECPubKeyDlg</name>
@@ -339,6 +359,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>success to create EC public key</source>
         <translation>EC 공개키 생성 성공</translation>
+    </message>
+    <message>
+        <source>StartDate</source>
+        <translation>시작 일자</translation>
+    </message>
+    <message>
+        <source>EndDate</source>
+        <translation>종료 일자</translation>
     </message>
 </context>
 <context>
@@ -442,6 +470,18 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Success to create key</source>
         <translation>키 생성 성공</translation>
+    </message>
+    <message>
+        <source>StartDate</source>
+        <translation>시작 일자</translation>
+    </message>
+    <message>
+        <source>EndDate</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Derive</source>
+        <translation>유도</translation>
     </message>
 </context>
 <context>
@@ -574,6 +614,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>success to create RSA private key</source>
         <translation>RSA 개인키 생성 성공</translation>
     </message>
+    <message>
+        <source>StartDate</source>
+        <translation>시작 일자</translation>
+    </message>
+    <message>
+        <source>EndDate</source>
+        <translation>종료 일자</translation>
+    </message>
 </context>
 <context>
     <name>CreateRSAPubKeyDlg</name>
@@ -664,6 +712,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Success to create RSA public key</source>
         <translation>RSA 공개키 생성 성공</translation>
+    </message>
+    <message>
+        <source>StartDate</source>
+        <translation>시작 일자</translation>
+    </message>
+    <message>
+        <source>EndDate</source>
+        <translation>종료 일자</translation>
     </message>
 </context>
 <context>
@@ -937,6 +993,18 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>success to derive key(%1)</source>
         <translation>키 유도에 성공(%1)</translation>
+    </message>
+    <message>
+        <source>StartDate</source>
+        <translation>시작 일자</translation>
+    </message>
+    <message>
+        <source>EndDate</source>
+        <translation>종료 일자</translation>
+    </message>
+    <message>
+        <source>Derive</source>
+        <translation>유도</translation>
     </message>
 </context>
 <context>
@@ -1282,6 +1350,18 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>Success to genereate Key</source>
         <translation>키 생성 성공</translation>
     </message>
+    <message>
+        <source>StartDate</source>
+        <translation>시작 일자</translation>
+    </message>
+    <message>
+        <source>EndDate</source>
+        <translation>종료 일자</translation>
+    </message>
+    <message>
+        <source>Derive</source>
+        <translation>유도</translation>
+    </message>
 </context>
 <context>
     <name>GenKeyPairDlg</name>
@@ -1409,6 +1489,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>Success to generate key pairs</source>
         <translation>키 쌍 생성 성공</translation>
     </message>
+    <message>
+        <source>StartDate</source>
+        <translation>시작 일자</translation>
+    </message>
+    <message>
+        <source>EndDate</source>
+        <translation>종료 일자</translation>
+    </message>
 </context>
 <context>
     <name>ImportCertDlg</name>
@@ -1489,12 +1577,16 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation>인증서 생성 성공</translation>
     </message>
     <message>
-        <source>DER Files (*.der);;BER Files (*.ber);;All Files (*.*)</source>
-        <translation></translation>
+        <source>Certificate</source>
+        <translation type="vanished">인증서</translation>
     </message>
     <message>
-        <source>Certificate</source>
-        <translation>인증서</translation>
+        <source>StartDate</source>
+        <translation>시작 일자</translation>
+    </message>
+    <message>
+        <source>EndDate</source>
+        <translation>종료 일자</translation>
     </message>
 </context>
 <context>
@@ -1628,10 +1720,6 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation>키 정보 가져오기 실패</translation>
     </message>
     <message>
-        <source>DLL Files (*.dll);;All Files (*.*)</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Import PFX</source>
         <translation>PFX 가져오기</translation>
     </message>
@@ -1661,7 +1749,15 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>PFX</source>
-        <translation>PFX</translation>
+        <translation type="vanished">PFX</translation>
+    </message>
+    <message>
+        <source>StartDate</source>
+        <translation>시작 일자</translation>
+    </message>
+    <message>
+        <source>EndDate</source>
+        <translation>종료 일자</translation>
     </message>
 </context>
 <context>
@@ -1808,7 +1904,15 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>DER Files (*.der);;Key Files (*.key);;All Files (*.*)</source>
-        <translation>DER 파일들 (*.der);; 키 파일들 (*.key);;모든 파일들 (*.*)</translation>
+        <translation type="vanished">DER 파일들 (*.der);; 키 파일들 (*.key);;모든 파일들 (*.*)</translation>
+    </message>
+    <message>
+        <source>StartDate</source>
+        <translation>시작 일자</translation>
+    </message>
+    <message>
+        <source>EndDate</source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1909,7 +2013,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <name>LogViewDlg</name>
     <message>
         <source>Refresh</source>
-        <translation>다시 불러오기</translation>
+        <translation type="vanished">다시 불러오기</translation>
     </message>
     <message>
         <source>Save</source>
@@ -1922,6 +2026,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>view log</source>
         <translation>로그 보기</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>닫기</translation>
     </message>
 </context>
 <context>
@@ -2074,7 +2182,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>P11Finalize</source>
-        <translation type="vanished">P11 Finalize</translation>
+        <translation>P11 Finalize</translation>
     </message>
     <message>
         <source>PKCS11 finalize</source>
@@ -2082,7 +2190,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Open Session</source>
-        <translation type="vanished">Open Session</translation>
+        <translation>Open Session</translation>
     </message>
     <message>
         <source>PKCS11 Open Session</source>
@@ -2090,7 +2198,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Close Session</source>
-        <translation type="vanished">Close Session</translation>
+        <translation>Close Session</translation>
     </message>
     <message>
         <source>PKCS11 Close Session</source>
@@ -2098,7 +2206,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Close All Sessions</source>
-        <translation type="vanished">Close All Sessions</translation>
+        <translation>Close All Sessions</translation>
     </message>
     <message>
         <source>PKCS11 Close All Sessions</source>
@@ -2106,7 +2214,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Login</source>
-        <translation type="vanished">로그인</translation>
+        <translation>로그인</translation>
     </message>
     <message>
         <source>PKCS11 Login</source>
@@ -2302,7 +2410,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Initialize Token</source>
-        <translation type="vanished">토큰 초기화</translation>
+        <translation>토큰 초기화</translation>
     </message>
     <message>
         <source>PKCS11 Initialize token</source>
@@ -2310,7 +2418,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Random</source>
-        <translation type="vanished">랜덤</translation>
+        <translation>랜덤</translation>
     </message>
     <message>
         <source>PKCS11 Random</source>
@@ -2318,7 +2426,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Set PIN</source>
-        <translation type="vanished">Set PIN</translation>
+        <translation>Set PIN</translation>
     </message>
     <message>
         <source>PKCS11 set PIN</source>
@@ -2326,7 +2434,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Init PIN</source>
-        <translation type="vanished">Init PIN</translation>
+        <translation>Init PIN</translation>
     </message>
     <message>
         <source>PKCS11 init PIN</source>
@@ -2334,7 +2442,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Wrap Key</source>
-        <translation type="vanished">Wrap Key</translation>
+        <translation>Wrap Key</translation>
     </message>
     <message>
         <source>PKCS11 wrap key</source>
@@ -2342,7 +2450,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Unwrap Key</source>
-        <translation type="vanished">Unwrap Key</translation>
+        <translation>Unwrap Key</translation>
     </message>
     <message>
         <source>PKCS11 unwrap key</source>
@@ -2350,7 +2458,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Derive Key</source>
-        <translation type="vanished">Derive Key</translation>
+        <translation>Derive Key</translation>
     </message>
     <message>
         <source>PKCS11 derive key</source>
@@ -2382,7 +2490,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Settings</source>
-        <translation>설정</translation>
+        <translation type="vanished">설정</translation>
     </message>
     <message>
         <source>Settings CryptokiMan</source>
@@ -2394,11 +2502,23 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Open cryptoki file</source>
-        <translation>cryptoki 파일 열기</translation>
+        <translation type="vanished">cryptoki 파일 열기</translation>
     </message>
     <message>
         <source>Cryptoki library has already loaded</source>
         <translation>Cryptoki 라이브러리가 이미 불러왔습니다</translation>
+    </message>
+    <message>
+        <source>Recent Files</source>
+        <translation>최근 파일들</translation>
+    </message>
+    <message>
+        <source>PKCS11 Logout</source>
+        <translation>PKCS11 로그아웃</translation>
+    </message>
+    <message>
+        <source>&amp;Settings</source>
+        <translation>설정(&amp;S)</translation>
     </message>
 </context>
 <context>
@@ -2587,6 +2707,37 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Open session</source>
         <translation>Open Session</translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <source>Cert Files (*.crt *.der *.pem);;All Files(*.*)</source>
+        <translation>Cert 파일들 (*.crt *.der *.pem);;모든 파일들 (*.*)</translation>
+    </message>
+    <message>
+        <source>Key Files (*.key *.der *.pem);;All Files(*.*)</source>
+        <translation>키 파일들 (*.key *.der *.pem);;모든 파일들(*.*)</translation>
+    </message>
+    <message>
+        <source>TXT Files (*.txt *.log);;All Files(*.*)</source>
+        <translation>텍스트 파일들 (*.txt *.log);;모든 파일들(*.*)</translation>
+    </message>
+    <message>
+        <source>BER Files (*.ber *.der *.pem);;All Files(*.*)</source>
+        <translation>BER 파일들 (*.ber *.der *.pem);;모든 파일들(*.*)</translation>
+    </message>
+    <message>
+        <source>DLL Files (*.dll);;SO Files (*.so);;All Files (*.*)</source>
+        <translation>DLL 파일들 (*.dll);;SO 파일들 (*.so);; 모든 파일들 (*.*)</translation>
+    </message>
+    <message>
+        <source>PFX Files (*.pfx *.p12 *.pem);;All Files(*.*)</source>
+        <translation>PFX 파일들 (*.pfx *.p12 *.pem);;모든 파일들 (*.*)</translation>
+    </message>
+    <message>
+        <source>Open File</source>
+        <translation>파일 열기</translation>
     </message>
 </context>
 <context>
@@ -2964,12 +3115,20 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation>UnwapKey 성공(대상 핸들:%1)</translation>
     </message>
     <message>
-        <source>BIN Files (*.bin);;All Files (*.*)</source>
-        <translation></translation>
+        <source>Unwrap Key</source>
+        <translation type="vanished">Unwrap Key</translation>
     </message>
     <message>
-        <source>Unwrap Key</source>
-        <translation>Unwrap Key</translation>
+        <source>StartDate</source>
+        <translation>시작 일자</translation>
+    </message>
+    <message>
+        <source>EndDate</source>
+        <translation>종료 일자</translation>
+    </message>
+    <message>
+        <source>Derive</source>
+        <translation>유도</translation>
     </message>
 </context>
 <context>
@@ -3130,12 +3289,8 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation>wrap key 실패(%1)</translation>
     </message>
     <message>
-        <source>BIN Files (*.bin);;All Files (*.*)</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Wrap Key</source>
-        <translation>Wrap Key</translation>
+        <translation type="vanished">Wrap Key</translation>
     </message>
 </context>
 </TS>
