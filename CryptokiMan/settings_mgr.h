@@ -13,7 +13,8 @@ public:
     void setSaveLibPath( bool val );
     bool saveLibPath();
 
-
+    void setShowLogWindow( bool bVal );
+    bool showLogWindow();
 signals:
 
 public slots:

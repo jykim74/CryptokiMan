@@ -167,7 +167,7 @@ void ManTreeView::P11Initialize()
     ManTreeModel *tree_model = (ManTreeModel *)model();
     ManTreeItem *parent_item = currentItem();
 
-    pCTX = manApplet->mainWindow()->getP11CTX();
+    pCTX = manApplet->getP11CTX();
     QList<SlotInfo>& slotInfos = manApplet->mainWindow()->getSlotInfos();
 
     if( pCTX == NULL ) return;
@@ -176,22 +176,32 @@ void ManTreeView::P11Initialize()
     if( ret != 0 )
     {
         QString msg = JS_PKCS11_GetErrorMsg( ret );
+        manApplet->elog( QString( "C_Initialize fail[%1]").arg(msg));
         manApplet->warningBox( msg );
         return;
     }
 
+    manApplet->log( "C_Initialize OK" );
+
     ret = JS_PKCS11_GetSlotList2( pCTX, CK_TRUE, sSlotList, &uSlotCnt );
     if( ret == 0 )
     {
+        manApplet->log( "C_GetSlotList OK" );
+
         for( int i=0; i < uSlotCnt; i++ )
         {
             CK_SLOT_INFO    sSlotInfo;
             SlotInfo    slotInfo;
 
             ret = JS_PKCS11_GetSlotInfo( pCTX, sSlotList[i], &sSlotInfo );
-            if( ret != 0 ) continue;
+            if( ret != 0 )
+            {
+                manApplet->elog( QString("C_GetSlotInfo fail:%1").arg(pCTX->sLastLog));
+                continue;
+            }
 
-//            QString strDesc = QString( "%1 [%2]" ).arg( (char *)sSlotInfo.slotDescription ).arg(i);
+            manApplet->log( "C_GetSlotInfo OK" );
+
             QString strDesc = (char *)sSlotInfo.slotDescription;
             QStringList strList = strDesc.split( "  " );
             QString strName;
@@ -263,8 +273,11 @@ void ManTreeView::P11Initialize()
             pItemObjects->appendRow( pItemData );
         }
 
-
         expand( parent_item->index() );
+    }
+    else
+    {
+        manApplet->elog( QString("C_GetSlotList fail:%1").arg(pCTX->sLastLog));
     }
 }
 
@@ -275,7 +288,7 @@ void ManTreeView::P11Finalize()
 
     ManTreeModel *tree_model = (ManTreeModel *)model();
 
-    pCTX = manApplet->mainWindow()->getP11CTX();
+    pCTX = manApplet->getP11CTX();
 
     if( pCTX == NULL ) return;
 

@@ -28,11 +28,14 @@ public:
 
     void initialize();
     void showWindow();
-    JP11_CTX* getP11CTX() { return p11_ctx_; };
+//    JP11_CTX* getP11CTX() { return p11_ctx_; };
     QList<SlotInfo>& getSlotInfos() { return slot_infos_; };
     ManTreeItem* currentItem();
 
     void showTypeData( int nSlotIndex, int nType );
+
+private slots:
+    void closeEvent(QCloseEvent *event);
 
 public slots:
     void newFile();
@@ -99,7 +102,7 @@ private:
     QTableWidget    *right_table_;
     QTextEdit       *right_text_;
 
-    JP11_CTX       *p11_ctx_;
+//    JP11_CTX       *p11_ctx_;
     QString         file_path_;
 
     QList<SlotInfo> slot_infos_;

@@ -78,7 +78,7 @@ void EditAttributeDlg::labelChanged( int index )
 void EditAttributeDlg::objectChanged( int index )
 {
     if( manApplet == NULL ) return;
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     if( p11_ctx == NULL ) return;
 
     QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
@@ -173,7 +173,7 @@ void EditAttributeDlg::clickClose()
 
 void EditAttributeDlg::clickGetAttribute()
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nFlags = 0;
@@ -214,7 +214,7 @@ void EditAttributeDlg::clickGetAttribute()
 
 void EditAttributeDlg::clickSetAttribute()
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nFlags = 0;

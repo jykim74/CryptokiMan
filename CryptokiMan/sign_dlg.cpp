@@ -84,7 +84,7 @@ void SignDlg::initialize()
 
 void SignDlg::keyTypeChanged( int index )
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
@@ -155,7 +155,7 @@ void SignDlg::labelChanged( int index )
 
 void SignDlg::clickInit()
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
@@ -195,7 +195,7 @@ void SignDlg::clickInit()
 
 void SignDlg::clickUpdate()
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
@@ -235,7 +235,7 @@ void SignDlg::clickUpdate()
 
 void SignDlg::clickFinal()
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
@@ -272,7 +272,7 @@ void SignDlg::clickFinal()
 
 void SignDlg::clickSign()
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();

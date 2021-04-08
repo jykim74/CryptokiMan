@@ -82,7 +82,7 @@ void DecryptDlg::initialize()
 
 void DecryptDlg::keyTypeChanged( int index )
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
@@ -153,7 +153,7 @@ void DecryptDlg::labelChanged( int index )
 
 void DecryptDlg::clickInit()
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
@@ -193,7 +193,7 @@ void DecryptDlg::clickInit()
 
 void DecryptDlg::clickUpdate()
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
@@ -253,7 +253,7 @@ void DecryptDlg::clickUpdate()
 
 void DecryptDlg::clickFinal()
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
@@ -300,7 +300,7 @@ void DecryptDlg::clickFinal()
 
 void DecryptDlg::clickDecrypt()
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();

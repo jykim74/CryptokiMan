@@ -74,7 +74,7 @@ void DigestDlg::initialize()
 
 void DigestDlg::clickInit()
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nFlags = 0;
@@ -116,7 +116,7 @@ void DigestDlg::clickInit()
 
 void DigestDlg::clickUpdate()
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nFlags = 0;
@@ -160,7 +160,7 @@ void DigestDlg::clickUpdate()
 
 void DigestDlg::clickFinal()
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nFlags = 0;
@@ -199,7 +199,7 @@ void DigestDlg::clickFinal()
 
 void DigestDlg::clickDigest()
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nFlags = 0;

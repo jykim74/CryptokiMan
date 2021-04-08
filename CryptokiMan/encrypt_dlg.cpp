@@ -82,7 +82,7 @@ void EncryptDlg::initialize()
 
 void EncryptDlg::keyTypeChanged( int index )
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
@@ -151,7 +151,7 @@ void EncryptDlg::labelChanged( int index )
 
 void EncryptDlg::clickInit()
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
@@ -190,7 +190,7 @@ void EncryptDlg::clickInit()
 
 void EncryptDlg::clickUpdate()
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
@@ -253,7 +253,7 @@ void EncryptDlg::clickUpdate()
 
 void EncryptDlg::clickFinal()
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
@@ -297,7 +297,7 @@ void EncryptDlg::clickFinal()
 
 void EncryptDlg::clickEncrypt()
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();

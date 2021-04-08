@@ -70,7 +70,7 @@ void DelObjectDlg::initialize()
 
 void DelObjectDlg::deleteObj()
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nFlags = 0;
@@ -96,7 +96,7 @@ void DelObjectDlg::deleteObj()
 void DelObjectDlg::deleteAllObj()
 {
     if( manApplet == NULL ) return;
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     if( p11_ctx == NULL ) return;
 
     QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
@@ -180,7 +180,7 @@ void DelObjectDlg::labelChanged( int index )
 void DelObjectDlg::objectChanged( int index )
 {
     if( manApplet == NULL ) return;
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     if( p11_ctx == NULL ) return;
 
     QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();

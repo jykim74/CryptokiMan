@@ -17,10 +17,6 @@ void ManTreeModel::initialize()
 {
     clear();
 
-//    QStringList labels;
-//    labels << tr("SLot List");
-//    setHorizontalHeaderLabels( labels );
-
     ManTreeItem *item_ = new ManTreeItem();
     item_->setText( tr("No slot"));
     insertRow( 0, item_ );
@@ -45,7 +41,7 @@ void ManTreeModel::showGetInfo()
 
     memset( &sInfo, 0x00, sizeof(sInfo));
 
-    p11_ctx = manApplet->mainWindow()->getP11CTX();
+    p11_ctx = manApplet->getP11CTX();
 
     ret = JS_PKCS11_GetInfo( p11_ctx, &sInfo );
     if( ret != CKR_OK ) return;
@@ -101,7 +97,7 @@ void ManTreeModel::showSlotInfo( int index )
     SlotInfo slotInfo = slotInfos.at(index);
     uSlotID = slotInfo.getSlotID();
 
-    p11_ctx = manApplet->mainWindow()->getP11CTX();
+    p11_ctx = manApplet->getP11CTX();
     int rv = JS_PKCS11_GetSlotInfo( p11_ctx, uSlotID, &stSlotInfo );
 
     if( rv != CKR_OK )
@@ -172,7 +168,7 @@ void ManTreeModel::showSlotInfo( int index )
 
 void ManTreeModel::showTokenInfo(int index)
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     CK_TOKEN_INFO sTokenInfo;
@@ -321,7 +317,7 @@ void ManTreeModel::showTokenInfo(int index)
 
 void ManTreeModel::showMechanismInfo(int index)
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     CK_TOKEN_INFO sTokenInfo;
@@ -413,7 +409,7 @@ void ManTreeModel::showMechanismInfo(int index)
 
 void ManTreeModel::showSessionInfo(int index)
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     CK_TOKEN_INFO sTokenInfo;
@@ -478,7 +474,7 @@ void ManTreeModel::showSessionInfo(int index)
 
 void ManTreeModel::showObjectsInfo(int index)
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     CK_TOKEN_INFO sTokenInfo;
@@ -583,7 +579,7 @@ void ManTreeModel::showAttribute( int nSlotIdx, int nValType, CK_ATTRIBUTE_TYPE 
 {
     int ret = 0;
 
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     CK_TOKEN_INFO sTokenInfo;
@@ -663,7 +659,7 @@ void ManTreeModel::showAttribute( int nSlotIdx, int nValType, CK_ATTRIBUTE_TYPE 
 
 void ManTreeModel::showCertificateInfo( int index, long hObject )
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     CK_TOKEN_INFO sTokenInfo;
@@ -736,7 +732,7 @@ void ManTreeModel::showCertificateInfo( int index, long hObject )
 
 void ManTreeModel::showPublicKeyInfo( int index, long hObject )
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     CK_TOKEN_INFO sTokenInfo;
@@ -816,7 +812,7 @@ void ManTreeModel::showPublicKeyInfo( int index, long hObject )
 
 void ManTreeModel::showPrivateKeyInfo( int index, long hObject )
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     CK_TOKEN_INFO sTokenInfo;
@@ -907,7 +903,7 @@ void ManTreeModel::showPrivateKeyInfo( int index, long hObject )
 
 void ManTreeModel::showSecretKeyInfo( int index, long hObject )
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     CK_TOKEN_INFO sTokenInfo;
@@ -990,7 +986,7 @@ void ManTreeModel::showSecretKeyInfo( int index, long hObject )
 
 void ManTreeModel::showDataInfo( int index, long hObject )
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     CK_TOKEN_INFO sTokenInfo;

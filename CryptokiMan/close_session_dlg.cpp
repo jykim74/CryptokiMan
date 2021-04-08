@@ -49,7 +49,7 @@ void CloseSessionDlg::setSelectedSlot(int index)
 
 void CloseSessionDlg::accept()
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nFlags = 0;
@@ -75,6 +75,7 @@ void CloseSessionDlg::accept()
     {
         if( all_ )
         {
+            manApplet->log( "C_CloseAllSessions OK" );
             for( int i=0; i < slot_infos.size(); i++ )
             {
                 SlotInfo tmpInfo = slot_infos.at(i);
@@ -84,6 +85,7 @@ void CloseSessionDlg::accept()
             }
         }
         else {
+            manApplet->log( "C_CloseSession OK" );
             slotInfo.setSessionHandle(-1);
             slotInfo.setLogin( false );
             slot_infos.replace( index, slotInfo );
@@ -92,7 +94,17 @@ void CloseSessionDlg::accept()
         manApplet->messageBox( tr("CloseSession(%1) is success").arg(strType), this );
     }
     else {
-        manApplet->warningBox( tr("CloseSession(%1) is failure").arg(strType), this );
+        if( all_ )
+        {
+            manApplet->elog( QString("C_CloseAllSessions fail:%1").arg(p11_ctx->sLastLog));
+            manApplet->warningBox( tr("CloseAllSessions(%1) is failure").arg(strType), this );
+        }
+        else
+        {
+            manApplet->elog( QString("C_CloseSession fail:%1").arg(p11_ctx->sLastLog));
+            manApplet->warningBox( tr("CloseSession(%1) is failure").arg(strType), this );
+        }
+
         return;
     }
 

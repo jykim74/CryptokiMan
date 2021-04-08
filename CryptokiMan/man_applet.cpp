@@ -56,6 +56,7 @@ ManApplet::ManApplet( QObject *parent )
         AutoUpdateService::instance()->start();
     }
 #endif
+    p11_ctx_ = NULL;
 }
 
 ManApplet::~ManApplet()
@@ -68,6 +69,9 @@ ManApplet::~ManApplet()
 void ManApplet::start()
 {
     main_win_->show();
+
+    if( settings_mgr_->showLogWindow() )
+        main_win_->logView();
 }
 
 void ManApplet::showTypeData( int nSlotIndex, int nType )
@@ -93,6 +97,22 @@ void ManApplet::restartApp()
 void ManApplet::setCmd(QString cmd)
 {
     cmd_ = cmd;
+}
+
+int ManApplet::openLibrary( const QString strPath )
+{
+    int ret = 0;
+
+    ret = JS_PKCS11_LoadLibrary( (JP11_CTX **)&p11_ctx_, strPath.toLocal8Bit().toStdString().c_str() );
+
+    return ret;
+}
+
+int ManApplet::unloadLibrary()
+{
+    if( p11_ctx_ ) JS_PKCS11_ReleaseLibrry( (JP11_CTX **)&p11_ctx_ );
+    manApplet->log( "library is released" );
+    return 0;
 }
 
 void ManApplet::log( const QString strLog )

@@ -60,7 +60,7 @@ void LogViewDlg::log( QString strLog )
     date.setTime_t( time(NULL));
     QString strMsg;
 
-    strMsg = QString("[I][%1] %2\n" ).arg( date.toString( "yyyy-MM-dd HH:mm:ss") ).arg( strLog );
+    strMsg = QString("[I][%1] %2\n" ).arg( date.toString( "HH:mm:ss") ).arg( strLog );
 
     QTextCursor cursor = mLogText->textCursor();
 
@@ -88,7 +88,7 @@ void LogViewDlg::elog( const QString strLog )
     date.setTime_t( time(NULL));
     QString strMsg;
 
-    strMsg = QString("[E][%1] %2\n" ).arg( date.toString( "yyyy-MM-dd HH:mm:ss") ).arg( strLog );
+    strMsg = QString("[E][%1] %2\n" ).arg( date.toString( "HH:mm:ss") ).arg( strLog );
 
     QTextCursor cursor = mLogText->textCursor();
     QTextCharFormat format;
@@ -110,7 +110,7 @@ void LogViewDlg::wlog( const QString strLog )
     date.setTime_t( time(NULL));
     QString strMsg;
 
-    strMsg = QString("[W][%1] %2\n" ).arg( date.toString( "yyyy-MM-dd HH:mm:ss") ).arg( strLog );
+    strMsg = QString("[W][%1] %2\n" ).arg( date.toString( "HH:mm:ss") ).arg( strLog );
 
     QTextCursor cursor = mLogText->textCursor();
 
@@ -133,7 +133,7 @@ void LogViewDlg::dlog( const QString strLog )
     date.setTime_t( time(NULL));
     QString strMsg;
 
-    strMsg = QString("[D][%1] %2\n" ).arg( date.toString( "yyyy-MM-dd HH:mm:ss") ).arg( strLog );
+    strMsg = QString("[D][%1] %2\n" ).arg( date.toString( "HH:mm:ss") ).arg( strLog );
 
     QTextCursor cursor = mLogText->textCursor();
 

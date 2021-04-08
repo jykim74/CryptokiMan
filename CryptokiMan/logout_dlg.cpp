@@ -43,7 +43,7 @@ void LogoutDlg::initialize()
 
 void LogoutDlg::accept()
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nFlags = 0;
@@ -58,9 +58,11 @@ void LogoutDlg::accept()
     {
         slotInfo.setLogin(false);
         slot_infos.replace(index, slotInfo);
-        manApplet->messageBox(tr("Logout is success"), this );
+ //       manApplet->messageBox(tr("Logout is success"), this );
+        manApplet->log( "C_Logout OK" );
     }
     else {
+        manApplet->elog( QString("C_Logout fail:%1").arg(p11_ctx->sLastLog));
         manApplet->warningBox(tr("Logout is failure"), this );
     }
 

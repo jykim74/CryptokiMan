@@ -62,7 +62,7 @@ void RandDlg::initialize()
 
 void RandDlg::accept()
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     if( p11_ctx == NULL ) return;
 
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
@@ -108,7 +108,7 @@ void RandDlg::accept()
 
 void RandDlg::clickSeed()
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nFlags = 0;

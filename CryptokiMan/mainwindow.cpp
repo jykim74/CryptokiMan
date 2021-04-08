@@ -61,7 +61,7 @@ MainWindow::MainWindow(QWidget *parent) :
     setUnifiedTitleAndToolBarOnMac(true);
 
     setAcceptDrops(true);
-    p11_ctx_ = NULL;
+//    p11_ctx_ = NULL;
 }
 
 MainWindow::~MainWindow()
@@ -74,6 +74,12 @@ void MainWindow::dragEnterEvent(QDragEnterEvent *event)
     if (event->mimeData()->hasUrls()) {
         event->acceptProposedAction();
     }
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    manApplet->log( "Close CryptokiMan" );
+    exit(0);
 }
 
 void MainWindow::dropEvent(QDropEvent *event)
@@ -477,12 +483,13 @@ void MainWindow::newFile()
 int MainWindow::openLibrary(const QString libPath)
 {
     int ret = 0;
-    file_path_ = libPath;
-    ret = JS_PKCS11_LoadLibrary( (JP11_CTX **)&p11_ctx_, file_path_.toLocal8Bit().toStdString().c_str() );
+
+    ret = manApplet->openLibrary( libPath );
 
     if( ret == 0 )
     {
         left_model_->clear();
+        file_path_ = libPath;
 
         QStringList labels;
         left_tree_->header()->setVisible(false);
@@ -495,13 +502,17 @@ int MainWindow::openLibrary(const QString libPath)
         setTitle( libPath );
         adjustForCurrentFile( libPath );
     }
+    else
+    {
+        manApplet->elog( QString("fail to open cryptoki library ret:%1").arg(ret));
+    }
 
-    return 0;
+    return ret;
 }
 
 void MainWindow::open()
 {
-    if( p11_ctx_ != NULL )
+    if( manApplet->getP11CTX() != NULL )
     {
         manApplet->warningBox( tr("Cryptoki library has already loaded"), this );
         return;
@@ -527,7 +538,7 @@ void MainWindow::open()
             settings.endGroup();
         }
 
-        manApplet->log( "Cryptoki open successfully" );
+        manApplet->log( QString("Cryptoki open successfully[%1]").arg( fileName) );
     }
 }
 
@@ -545,7 +556,7 @@ void MainWindow::quit()
 
 void MainWindow::unload()
 {
-   if( p11_ctx_ ) JS_PKCS11_ReleaseLibrry( (JP11_CTX **)&p11_ctx_ );
+    manApplet->unloadLibrary();
 }
 
 void MainWindow::openSession()

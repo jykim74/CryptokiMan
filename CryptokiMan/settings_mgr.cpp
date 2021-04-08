@@ -7,6 +7,7 @@ namespace  {
     const char *kSaveLibPath = "saveLibPath";
     const char *kSlotID = "slotId";
     const char *kP11LibPath = "p11LibPath";
+    const char *kShowLogWindow = "showLogWindow";
 }
 
 SettingsMgr::SettingsMgr( QObject *parent) : QObject (parent)
@@ -36,3 +37,24 @@ bool SettingsMgr::saveLibPath()
     return val;
 }
 
+void SettingsMgr::setShowLogWindow( bool bVal )
+{
+    QSettings settings;
+
+    settings.beginGroup( kBehaviorGroup );
+    settings.setValue( kShowLogWindow, bVal );
+    settings.endGroup();
+}
+
+bool SettingsMgr::showLogWindow()
+{
+    QSettings settings;
+
+    bool val;
+
+    settings.beginGroup(kBehaviorGroup);
+    val = settings.value( kShowLogWindow, false).toBool();
+    settings.endGroup();
+
+    return val;
+}

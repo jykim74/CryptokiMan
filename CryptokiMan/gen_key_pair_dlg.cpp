@@ -36,6 +36,7 @@ GenKeyPairDlg::GenKeyPairDlg(QWidget *parent) :
 
     initialize();
     setDefaults();
+    tabWidget->setCurrentIndex(0);
 }
 
 GenKeyPairDlg::~GenKeyPairDlg()
@@ -142,7 +143,7 @@ void GenKeyPairDlg::connectAttributes()
 
 void GenKeyPairDlg::accept()
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nFlags = 0;

@@ -28,6 +28,7 @@ void SettingsDlg::updateSettings()
     SettingsMgr *mgr = manApplet->settingsMgr();
 
     mgr->setSaveLibPath( mSaveLibPathCheck->checkState() == Qt::Checked );
+    mgr->setShowLogWindow( mShowLogWindowCheck->checkState() == Qt::Checked );
 
 #ifdef _AUTO_UPDATE
     if( AutoUpdateService::instance()->shouldSupportAutoUpdate() ) {
@@ -63,6 +64,9 @@ void SettingsDlg::initialize()
 
     state = mgr->saveLibPath() ? Qt::Checked : Qt::Unchecked;
     mSaveLibPathCheck->setCheckState(state);
+
+    state = mgr->showLogWindow() ? Qt::Checked : Qt::Unchecked;
+    mShowLogWindowCheck->setCheckState(state);
 
 #ifdef _AUTO_UPDATE
     if( AutoUpdateService::instance()->shouldSupportAutoUpdate()) {

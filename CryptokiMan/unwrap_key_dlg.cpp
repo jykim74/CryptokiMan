@@ -162,7 +162,7 @@ void UnwrapKeyDlg::initialize()
 
 void UnwrapKeyDlg::accept()
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nFlags = 0;
@@ -405,7 +405,7 @@ void UnwrapKeyDlg::clickFind()
 
 void UnwrapKeyDlg::setUnwrapLabelList()
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nFlags = 0;

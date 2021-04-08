@@ -39,7 +39,7 @@ void OpenSessionDlg::setSelectedSlot(int index)
 
 void OpenSessionDlg::accept()
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nFlags = 0;
@@ -59,10 +59,11 @@ void OpenSessionDlg::accept()
     {
         slotInfo.setSessionHandle( p11_ctx->hSession );
         slot_infos.replace(index, slotInfo);
-        manApplet->messageBox( tr("OpenSession is success"), this );
+        manApplet->log( "C_OpenSession OK" );
     }
     else {
         manApplet->warningBox( tr("OpenSession is failure"), this );
+        manApplet->elog( QString( "C_OpenSession fail:%1").arg(p11_ctx->sLastLog));
         return;
     }
 

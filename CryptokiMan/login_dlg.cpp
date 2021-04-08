@@ -42,7 +42,7 @@ void LoginDlg::initialize()
 
 void LoginDlg::accept()
 {
-    JP11_CTX* p11_ctx = manApplet->mainWindow()->getP11CTX();
+    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nFlags = 0;
@@ -67,9 +67,11 @@ void LoginDlg::accept()
     {
         slotInfo.setLogin(true);
         slot_infos.replace( index, slotInfo );
-        manApplet->messageBox( tr("Login is success"), this);
+  //      manApplet->messageBox( tr("Login is success"), this);
+        manApplet->log( "C_Login OK" );
     }
     else {
+        manApplet->elog( QString("C_Login fail:%1").arg(p11_ctx->sLastLog));
         manApplet->messageBox( tr("Login is failure"), this);
     }
 
