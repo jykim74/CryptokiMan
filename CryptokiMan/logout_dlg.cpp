@@ -54,15 +54,14 @@ void LogoutDlg::accept()
     p11_ctx->hSession = slotInfo.getSessionHandle();
 
     rv = JS_PKCS11_Logout( p11_ctx );
+    manApplet->logP11Result( "C_Logout", rv );
+
     if( rv == CKR_OK )
     {
         slotInfo.setLogin(false);
         slot_infos.replace(index, slotInfo);
- //       manApplet->messageBox(tr("Logout is success"), this );
-        manApplet->log( "C_Logout OK" );
     }
     else {
-        manApplet->elog( QString("C_Logout fail:%1").arg(p11_ctx->sLastLog));
         manApplet->warningBox(tr("Logout is failure"), this );
     }
 

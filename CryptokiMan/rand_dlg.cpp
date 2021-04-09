@@ -88,6 +88,8 @@ void RandDlg::accept()
     pRand = (CK_BYTE_PTR)JS_malloc( strLen.toInt() );
 
     rv = JS_PKCS11_GenerateRandom( p11_ctx, pRand, strLen.toInt());
+    manApplet->logP11Result( "C_GenerateRandom", rv );
+
     if( rv != CKR_OK )
     {
         if( pRand ) JS_free( pRand );
@@ -135,6 +137,7 @@ void RandDlg::clickSeed()
         JS_BIN_decodeBase64( strSeed.toStdString().c_str(), &binSeed );
 
     rv = JS_PKCS11_SeedRandom( p11_ctx, binSeed.pVal, binSeed.nLen );
+    manApplet->logP11Result( "C_SeedRandom", rv );
 
     if( rv != CKR_OK )
     {

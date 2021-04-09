@@ -62,17 +62,15 @@ void LoginDlg::accept()
         nType = CKU_SO;
 
     rv = JS_PKCS11_Login( p11_ctx, nType, pPin, uPinLen );
+    manApplet->logP11Result( "C_Login", rv );
 
     if( rv == CKR_OK )
     {
         slotInfo.setLogin(true);
         slot_infos.replace( index, slotInfo );
-  //      manApplet->messageBox( tr("Login is success"), this);
-        manApplet->log( "C_Login OK" );
     }
     else {
         manApplet->elog( QString("C_Login fail:%1").arg(p11_ctx->sLastLog));
-        manApplet->messageBox( tr("Login is failure"), this);
     }
 
     QDialog::close();

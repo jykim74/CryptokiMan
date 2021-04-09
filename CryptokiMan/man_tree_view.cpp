@@ -29,32 +29,30 @@ void ManTreeView::onItemClicked( const QModelIndex& index )
 
 int ManTreeView::showTypeData( int nSlotIndex, int nType )
 {
-    ManTreeModel *tree_model = (ManTreeModel *)model();
-
     if( nType == HM_ITEM_TYPE_ROOT )
-        tree_model->showGetInfo();
+        manApplet->mainWindow()->showGetInfo();
     else if( nType == HM_ITEM_TYPE_SLOT )
-        tree_model->showSlotInfo( nSlotIndex );
+        manApplet->mainWindow()->showSlotInfo( nSlotIndex );
     else if( nType == HM_ITEM_TYPE_TOKEN )
-        tree_model->showTokenInfo( nSlotIndex );
+        manApplet->mainWindow()->showTokenInfo( nSlotIndex );
     else if( nType == HM_ITEM_TYPE_MECHANISM )
-        tree_model->showMechanismInfo( nSlotIndex );
+        manApplet->mainWindow()->showMechanismInfo( nSlotIndex );
     else if( nType == HM_ITEM_TYPE_SESSION )
-        tree_model->showSessionInfo( nSlotIndex );
+        manApplet->mainWindow()->showSessionInfo( nSlotIndex );
     else if( nType == HM_ITEM_TYPE_OBJECTS )
-        tree_model->showObjectsInfo( nSlotIndex );
+        manApplet->mainWindow()->showObjectsInfo( nSlotIndex );
     else if( nType == HM_ITEM_TYPE_CERTIFICATE )
-        tree_model->showCertificateInfo( nSlotIndex );
+        manApplet->mainWindow()->showCertificateInfo( nSlotIndex );
     else if( nType == HM_ITEM_TYPE_PUBLICKEY )
-        tree_model->showPublicKeyInfo( nSlotIndex );
+        manApplet->mainWindow()->showPublicKeyInfo( nSlotIndex );
     else if( nType == HM_ITEM_TYPE_PRIVATEKEY )
-        tree_model->showPrivateKeyInfo( nSlotIndex );
+        manApplet->mainWindow()->showPrivateKeyInfo( nSlotIndex );
     else if( nType == HM_ITEM_TYPE_SECRETKEY )
-        tree_model->showSecretKeyInfo( nSlotIndex );
+        manApplet->mainWindow()->showSecretKeyInfo( nSlotIndex );
     else if( nType == HM_ITEM_TYPE_DATA )
-        tree_model->showDataInfo( nSlotIndex );
+        manApplet->mainWindow()->showDataInfo( nSlotIndex );
     else {
-        tree_model->removeAllRightTable();
+        manApplet->mainWindow()->removeAllRightTable();
     }
 }
 
@@ -173,34 +171,32 @@ void ManTreeView::P11Initialize()
     if( pCTX == NULL ) return;
 
     ret = JS_PKCS11_Initialize(pCTX);
+    manApplet->logP11Result( "C_Initialize", ret );
+
     if( ret != 0 )
     {
         QString msg = JS_PKCS11_GetErrorMsg( ret );
-        manApplet->elog( QString( "C_Initialize fail[%1]").arg(msg));
         manApplet->warningBox( msg );
         return;
     }
 
-    manApplet->log( "C_Initialize OK" );
-
     ret = JS_PKCS11_GetSlotList2( pCTX, CK_TRUE, sSlotList, &uSlotCnt );
+    manApplet->logP11Result( "C_GetSlotList", ret );
+
     if( ret == 0 )
     {
-        manApplet->log( "C_GetSlotList OK" );
-
         for( int i=0; i < uSlotCnt; i++ )
         {
             CK_SLOT_INFO    sSlotInfo;
             SlotInfo    slotInfo;
 
             ret = JS_PKCS11_GetSlotInfo( pCTX, sSlotList[i], &sSlotInfo );
+            manApplet->logP11Result( "C_GetSlotInfo", ret );
+
             if( ret != 0 )
             {
-                manApplet->elog( QString("C_GetSlotInfo fail:%1").arg(pCTX->sLastLog));
                 continue;
             }
-
-            manApplet->log( "C_GetSlotInfo OK" );
 
             QString strDesc = (char *)sSlotInfo.slotDescription;
             QStringList strList = strDesc.split( "  " );
@@ -275,10 +271,6 @@ void ManTreeView::P11Initialize()
 
         expand( parent_item->index() );
     }
-    else
-    {
-        manApplet->elog( QString("C_GetSlotList fail:%1").arg(pCTX->sLastLog));
-    }
 }
 
 void ManTreeView::P11Finalize()
@@ -292,7 +284,8 @@ void ManTreeView::P11Finalize()
 
     if( pCTX == NULL ) return;
 
-    JS_PKCS11_Finalize( pCTX );
+    ret = JS_PKCS11_Finalize( pCTX );
+    manApplet->logP11Result( "C_Finalize", ret );
 
 //    tree_model->clear();
 }

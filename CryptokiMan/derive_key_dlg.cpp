@@ -477,9 +477,14 @@ void DeriveKeyDlg::setSrcLabelList()
     uCnt++;
 
 
-    JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
-    JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
-    JS_PKCS11_FindObjectsFinal( p11_ctx );
+    rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
+    manApplet->logP11Result( "C_FindObjectsInit", rv );
+
+    rv = JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
+    manApplet->logP11Result( "C_FindObjects", rv );
+
+    rv = JS_PKCS11_FindObjectsFinal( p11_ctx );
+    manApplet->logP11Result( "C_FindObjectsFinal", rv );
 
     mSrcLabelCombo->clear();
 
@@ -489,7 +494,9 @@ void DeriveKeyDlg::setSrcLabelList()
         BIN binLabel = {0,0};
         QVariant objVal = QVariant( (int)sObjects[i] );
 
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
+        rv = JS_PKCS11_GetAttributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
+        manApplet->logP11Result( "C_GetAttributeValue2", rv );
+
         JS_BIN_string( &binLabel, &pStr );
 
         mSrcLabelCombo->addItem( pStr, objVal );
@@ -505,9 +512,14 @@ void DeriveKeyDlg::setSrcLabelList()
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
     uCnt++;
 
-    JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
-    JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
-    JS_PKCS11_FindObjectsFinal( p11_ctx );
+    rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
+    manApplet->logP11Result( "C_FindObjectsInit", rv );
+
+    rv = JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
+    manApplet->logP11Result( "C_FindObjects", rv );
+
+    rv = JS_PKCS11_FindObjectsFinal( p11_ctx );
+    manApplet->logP11Result( "C_FindObjectsFinal", rv );
 
     for( int i=0; i < uObjCnt; i++ )
     {
@@ -515,7 +527,9 @@ void DeriveKeyDlg::setSrcLabelList()
         BIN binLabel = {0,0};
         QVariant objVal = QVariant( (int)sObjects[i] );
 
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
+        rv = JS_PKCS11_GetAttributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
+        manApplet->logP11Result( "C_GetAttributeValue2", rv );
+
         JS_BIN_string( &binLabel, &pStr );
 
         mSrcLabelCombo->addItem( pStr, objVal );

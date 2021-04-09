@@ -75,6 +75,7 @@ void InitPinDlg::accept()
     JS_BIN_set( &binPin, (unsigned char *)strPin.toStdString().c_str(), strPin.length() );
 
     rv = JS_PKCS11_InitPIN( p11_ctx, binPin.pVal, binPin.nLen );
+    manApplet->logP11Result( "C_InitPIN", rv );
 
     if( rv != CKR_OK )
     {

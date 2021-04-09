@@ -83,6 +83,8 @@ void DelObjectDlg::deleteObj()
     long hObject = mObjectText->text().toLong();
 
     rv = JS_PKCS11_DestroyObject( p11_ctx, hObject );
+    manApplet->logP11Result( "C_DestroyObject", rv );
+
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to delete object(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
@@ -150,15 +152,21 @@ void DelObjectDlg::deleteAllObj()
     sTemplate[uCount].ulValueLen = sizeof(objClass);
     uCount++;
 
-    JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCount );
-    JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
-    JS_PKCS11_FindObjectsFinal( p11_ctx );
+    rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCount );
+    manApplet->logP11Result( "C_FindObjectsInit", rv );
+
+    rv = JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
+    manApplet->logP11Result( "C_FindObjects", rv );
+
+    rv = JS_PKCS11_FindObjectsFinal( p11_ctx );
+    manApplet->logP11Result( "C_FindObjectsFinal", rv );
 
     mLabelCombo->clear();
 
     for( int i=0; i < uObjCnt; i++ )
     {
-        JS_PKCS11_DestroyObject( p11_ctx, sObjects[i] );
+        rv = JS_PKCS11_DestroyObject( p11_ctx, sObjects[i] );
+        manApplet->logP11Result( "C_DestroyObject", rv );
     }
 
     manApplet->showTypeData( nSlotSel, nDataType );
@@ -216,9 +224,14 @@ void DelObjectDlg::objectChanged( int index )
     sTemplate[uCount].ulValueLen = sizeof(objClass);
     uCount++;
 
-    JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCount );
-    JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
-    JS_PKCS11_FindObjectsFinal( p11_ctx );
+    rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCount );
+    manApplet->logP11Result( "C_FindObjectsInit", rv );
+
+    rv = JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
+    manApplet->logP11Result( "C_FindObjects", rv );
+
+    rv = JS_PKCS11_FindObjectsFinal( p11_ctx );
+    manApplet->logP11Result( "C_FindObjectsFinal", rv );
 
     mLabelCombo->clear();
 
@@ -227,7 +240,9 @@ void DelObjectDlg::objectChanged( int index )
         BIN binLabel = {0,0};
         char *pHex = NULL;
 
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
+        rv = JS_PKCS11_GetAttributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
+        manApplet->logP11Result( "C_GetAttribute2", rv );
+
         const QVariant objVal =  QVariant( (int)sObjects[i] );
 
         JS_BIN_string( &binLabel, &pHex );

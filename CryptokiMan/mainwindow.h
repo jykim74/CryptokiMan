@@ -34,6 +34,22 @@ public:
 
     void showTypeData( int nSlotIndex, int nType );
 
+    void showGetInfo();
+    void showSlotInfo( int index );
+    void showTokenInfo( int index );
+    void showMechanismInfo( int index );
+    void showSessionInfo( int index );
+    void showObjectsInfo( int index );
+    void showCertificateInfo( int index, long hObject = -1 );
+    void showPublicKeyInfo( int index, long hObject = -1 );
+    void showPrivateKeyInfo( int index, long hObject = -1 );
+    void showSecretKeyInfo( int index, long hObject = -1 );
+    void showDataInfo( int index, long hObject = -1 );
+
+    void setRightTable( QTableWidget *right_table );
+    void removeAllRightTable();
+    void addEmptyLine( int row );
+
 private slots:
     void closeEvent(QCloseEvent *event);
 
@@ -91,6 +107,7 @@ private:
 
     void adjustForCurrentFile( const QString& filePath );
     void updateRecentActionList();
+    void showAttribute( int nSlotIdx, int nValType, CK_ATTRIBUTE_TYPE uAttribute, CK_OBJECT_HANDLE hObj );
 
     QList<QAction *>  recent_file_list_;
 

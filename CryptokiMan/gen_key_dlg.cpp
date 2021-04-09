@@ -326,6 +326,8 @@ void GenKeyDlg::accept()
     }
 
     rv = JS_PKCS11_GenerateKey( p11_ctx, &sMech, sTemplate, uCount, &hObject );
+    manApplet->logP11Result( "C_GenerateKey", rv );
+
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to generate key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );

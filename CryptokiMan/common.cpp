@@ -64,3 +64,24 @@ void getCKDate( const QDate date, CK_DATE *pCKDate )
     memcpy( pCKDate->month, sMonth, 2 );
     memcpy( pCKDate->day, sDay, 2 );
 }
+
+QString getBool( const BIN *pBin )
+{
+    QString strOut = "";
+    if( pBin == NULL ) return "None";
+
+
+    if( pBin->nLen == 0 )
+        strOut = "None";
+    else if( pBin->nLen > 1 )
+        strOut = "Invalid";
+    else
+    {
+        if( pBin->pVal[0] == 0x00 )
+            strOut = "FALSE";
+        else
+            strOut = "TRUE";
+    }
+
+    return strOut;
+}

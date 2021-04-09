@@ -120,9 +120,14 @@ void VerifyDlg::keyTypeChanged( int index )
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
     uCnt++;
 
-    JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
-    JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
-    JS_PKCS11_FindObjectsFinal( p11_ctx );
+    rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
+    manApplet->logP11Result( "C_FindObjectsInit", rv );
+
+    rv = JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
+    manApplet->logP11Result( "C_FindObjects", rv );
+
+    rv = JS_PKCS11_FindObjectsFinal( p11_ctx );
+    manApplet->logP11Result( "C_FindObjectsFinal", rv );
 
     mLabelCombo->clear();
 
@@ -130,7 +135,9 @@ void VerifyDlg::keyTypeChanged( int index )
     {
         char    *pStr = NULL;
         BIN binLabel = {0,0};
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
+        rv = JS_PKCS11_GetAttributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
+        manApplet->logP11Result( "C_GetAttributeValue2", rv );
+
         QVariant objVal = QVariant((int)sObjects[i]);
         JS_BIN_string( &binLabel, &pStr );
         mLabelCombo->addItem( pStr, objVal );
@@ -179,6 +186,8 @@ void VerifyDlg::clickInit()
     }
 
     rv = JS_PKCS11_VerifyInit( p11_ctx, &sMech, uObject );
+    manApplet->logP11Result( "C_VerifyInit", rv );
+
     if( rv != CKR_OK )
     {
         mStatusLabel->setText("");
@@ -218,6 +227,8 @@ void VerifyDlg::clickUpdate()
 
 
     rv = JS_PKCS11_VerifyUpdate(p11_ctx, binInput.pVal, binInput.nLen );
+    manApplet->logP11Result( "C_VerifyUpdate", rv );
+
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to run VerifyUpdate(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
@@ -252,6 +263,8 @@ void VerifyDlg::clickFinal()
     JS_BIN_decodeHex( strSign.toStdString().c_str(), &binSign );
 
     rv = JS_PKCS11_VerifyFinal( p11_ctx, binSign.pVal, binSign.nLen );
+    manApplet->logP11Result( "C_VerifyFinal", rv );
+
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("Signature is bad(%1).").arg(JS_PKCS11_GetErrorMsg(rv)), this );
@@ -305,6 +318,8 @@ void VerifyDlg::clickVerify()
 
 
     rv = JS_PKCS11_Verify( p11_ctx, binInput.pVal, binInput.nLen, binSign.pVal, binSign.nLen );
+    manApplet->logP11Result( "C_Verify", rv );
+
     if( rv != CKR_OK )
         manApplet->warningBox( tr( "Signature is bad(%1)." ).arg(JS_PKCS11_GetErrorMsg(rv)), this );
     else

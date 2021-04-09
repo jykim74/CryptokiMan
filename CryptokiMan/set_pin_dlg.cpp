@@ -89,6 +89,8 @@ void SetPinDlg::accept()
 
 
     rv = JS_PKCS11_SetPIN( p11_ctx, binOldPin.pVal, binOldPin.nLen, binNewPin.pVal, binNewPin.nLen );
+    manApplet->logP11Result( "C_SetPIN", rv );
+
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr( "fail to run C_SetPIN(%1)").arg(rv), this );

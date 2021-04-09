@@ -116,9 +116,14 @@ void DecryptDlg::keyTypeChanged( int index )
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
     uCnt++;
 
-    JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
-    JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
-    JS_PKCS11_FindObjectsFinal( p11_ctx );
+    rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
+    manApplet->logP11Result( "C_FindObjectsInit", rv );
+
+    rv = JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
+    manApplet->logP11Result( "C_FindObjects", rv );
+
+    rv = JS_PKCS11_FindObjectsFinal( p11_ctx );
+    manApplet->logP11Result( "C_FindObjectsFinal", rv );
 
     mLabelCombo->clear();
 
@@ -126,7 +131,9 @@ void DecryptDlg::keyTypeChanged( int index )
     {
         char    *pStr = NULL;
         BIN binLabel = {0,0};
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
+        rv = JS_PKCS11_GetAttributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
+        manApplet->logP11Result( "C_GetAttribute2", rv );
+
         QVariant objVal = QVariant((int)sObjects[i]);
         JS_BIN_string( &binLabel, &pStr );
         mLabelCombo->addItem( pStr, objVal );
@@ -178,6 +185,7 @@ void DecryptDlg::clickInit()
     }
 
     rv = JS_PKCS11_DecryptInit( p11_ctx, &sMech, hObject );
+    manApplet->logP11Result( "C_DecryptInit", rv );
 
     if( rv != CKR_OK )
     {
@@ -227,6 +235,7 @@ void DecryptDlg::clickUpdate()
     BIN binDecPart = {0,0};
 
     rv = JS_PKCS11_DecryptUpdate( p11_ctx, binInput.pVal, binInput.nLen, pDecPart, (CK_ULONG_PTR)&uDecPartLen );
+    manApplet->logP11Result( "C_DecryptUpdate", rv );
 
     if( rv != CKR_OK )
     {
@@ -272,6 +281,8 @@ void DecryptDlg::clickFinal()
 
 
     rv = JS_PKCS11_DecryptFinal( p11_ctx, pDecPart, (CK_ULONG_PTR)&uDecPartLen );
+    manApplet->logP11Result( "C_DecryptFinal", rv );
+
     if( rv != CKR_OK )
     {
         if( pDecPart ) JS_free( pDecPart );
@@ -328,6 +339,7 @@ void DecryptDlg::clickDecrypt()
     pDecData = (unsigned char *)JS_malloc( mInputText->text().length() );
 
     rv = JS_PKCS11_Decrypt( p11_ctx, binInput.pVal, binInput.nLen, pDecData, (CK_ULONG_PTR)&uDecDataLen );
+    manApplet->logP11Result( "C_Decrypt", rv );
 
     if( rv != CKR_OK )
     {

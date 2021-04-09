@@ -83,6 +83,8 @@ void InitTokenDlg::accept()
 
     rv = JS_PKCS11_InitToken( p11_ctx, slotInfo.getSlotID(), (CK_UTF8CHAR_PTR)strPIN.toStdString().c_str(),
                               strPIN.length(), (CK_UTF8CHAR_PTR)strLabel.toStdString().c_str() );
+    manApplet->logP11Result( "C_InitToken", rv );
+
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr( "fail to initialize token(%1)").arg(rv), this );

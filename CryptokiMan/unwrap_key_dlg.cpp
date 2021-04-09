@@ -371,6 +371,7 @@ void UnwrapKeyDlg::accept()
 
     rv = JS_PKCS11_UnwrapKey( p11_ctx, &sMech, hUnwrappingKey,
                               binWrappedKey.pVal, binWrappedKey.nLen, sTemplate, uCount, &uObj );
+    manApplet->logP11Result( "C_UnwrapKey", rv );
 
     if( rv != CKR_OK )
     {
@@ -409,6 +410,7 @@ void UnwrapKeyDlg::setUnwrapLabelList()
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nFlags = 0;
+    int rv = -1;
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
@@ -429,9 +431,14 @@ void UnwrapKeyDlg::setUnwrapLabelList()
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
     uCnt++;
 
-    JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
-    JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
-    JS_PKCS11_FindObjectsFinal( p11_ctx );
+    rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
+    manApplet->logP11Result( "C_FindObjectsInit", rv );
+
+    rv = JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
+    manApplet->logP11Result( "C_FindObjects", rv );
+
+    rv = JS_PKCS11_FindObjectsFinal( p11_ctx );
+    manApplet->logP11Result( "C_FindObjectsFinal", rv );
 
 
     mUnwrapLabelCombo->clear();
@@ -442,7 +449,9 @@ void UnwrapKeyDlg::setUnwrapLabelList()
         BIN binLabel = {0,0};
         QVariant objVal = QVariant( (int)sObjects[i] );
 
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
+        rv = JS_PKCS11_GetAttributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
+        manApplet->logP11Result( "C_GetAttributeValue2", rv );
+
         JS_BIN_string( &binLabel, &pLabel );
 
        mUnwrapLabelCombo->addItem( pLabel, objVal );
@@ -458,9 +467,14 @@ void UnwrapKeyDlg::setUnwrapLabelList()
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
     uCnt++;
 
-    JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
-    JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
-    JS_PKCS11_FindObjectsFinal( p11_ctx );
+    rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
+    manApplet->logP11Result( "C_FindObjectsInit", rv );
+
+    rv = JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
+    manApplet->logP11Result( "C_FindObjects", rv );
+
+    rv = JS_PKCS11_FindObjectsFinal( p11_ctx );
+    manApplet->logP11Result( "C_FindObjectsFinal", rv );
 
     for( int i=0; i < uObjCnt; i++ )
     {
@@ -468,7 +482,9 @@ void UnwrapKeyDlg::setUnwrapLabelList()
         BIN binLabel = {0,0};
         QVariant objVal = QVariant( (int)sObjects[i] );
 
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
+        rv = JS_PKCS11_GetAttributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
+        manApplet->logP11Result( "C_GetAttributeValue2", rv );
+
         JS_BIN_string( &binLabel, &pLabel );
 
        mUnwrapLabelCombo->addItem( pLabel, objVal );

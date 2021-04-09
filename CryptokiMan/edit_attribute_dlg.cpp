@@ -113,9 +113,14 @@ void EditAttributeDlg::objectChanged( int index )
     sTemplate[uCount].ulValueLen = sizeof(objClass);
     uCount++;
 
-    JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCount );
-    JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
-    JS_PKCS11_FindObjectsFinal( p11_ctx );
+    rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCount );
+    manApplet->logP11Result( "C_FindObjectsInit", rv );
+
+    rv = JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
+    manApplet->logP11Result( "C_FindObjects", rv );
+
+    rv = JS_PKCS11_FindObjectsFinal( p11_ctx );
+    manApplet->logP11Result( "C_FindObjectsFinal", rv );
 
     mLabelCombo->clear();
 
@@ -124,7 +129,9 @@ void EditAttributeDlg::objectChanged( int index )
         BIN binLabel = {0,0};
         char *pHex = NULL;
 
-        JS_PKCS11_GetAtrributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
+        JS_PKCS11_GetAttributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
+        manApplet->logP11Result( "C_GetAttributeValue2", rv );
+
         const QVariant objVal =  QVariant( (int)sObjects[i] );
 
         JS_BIN_string( &binLabel, &pHex );
@@ -198,7 +205,9 @@ void EditAttributeDlg::clickGetAttribute()
 
     BIN binVal = {0,0};
     char *pHex = NULL;
-    rv = JS_PKCS11_GetAtrributeValue2( p11_ctx, hObject, attrType, &binVal );
+    rv = JS_PKCS11_GetAttributeValue2( p11_ctx, hObject, attrType, &binVal );
+    manApplet->logP11Result( "C_GetAttributeValue2", rv );
+
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to get attributes(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
@@ -243,6 +252,8 @@ void EditAttributeDlg::clickSetAttribute()
     JS_BIN_decodeHex( strValue.toStdString().c_str(), &binVal );
 
     rv = JS_PKCS11_SetAttributeValue2( p11_ctx, hObject, attrType, &binVal );
+    manApplet->logP11Result( "C_SetAttributeValue2", rv );
+
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to set attributes(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );

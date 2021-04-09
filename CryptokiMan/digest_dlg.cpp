@@ -101,6 +101,8 @@ void DigestDlg::clickInit()
     }
 
     rv = JS_PKCS11_DigestInit( p11_ctx, &stMech );
+    manApplet->logP11Result( "C_DigestInit", rv );
+
     if( rv == CKR_OK )
     {
         mStatusLabel->setText( "Init" );
@@ -144,6 +146,8 @@ void DigestDlg::clickUpdate()
         JS_BIN_decodeBase64( strInput.toStdString().c_str(), &binInput );
 
     rv = JS_PKCS11_DigestUpdate( p11_ctx, binInput.pVal, binInput.nLen );
+    manApplet->logP11Result( "C_DigestUpdate", rv );
+
     if( rv == CKR_OK )
     {
         QString strMsg = mStatusLabel->text();
@@ -178,6 +182,7 @@ void DigestDlg::clickFinal()
     memset( sDigest, 0x00, sizeof(sDigest) );
 
     rv = JS_PKCS11_DigestFinal( p11_ctx, sDigest, &uDigestLen );
+    manApplet->logP11Result( "C_DigestFinal", rv );
 
     if( rv == CKR_OK )
     {
@@ -232,6 +237,8 @@ void DigestDlg::clickDigest()
     memset( sDigest, 0x00, sizeof(sDigest) );
 
     rv = JS_PKCS11_Digest( p11_ctx, binInput.pVal, binInput.nLen, sDigest, &uDigestLen );
+    manApplet->logP11Result( "C_Digest", rv );
+
     if( rv == CKR_OK )
     {
         char *pHex = NULL;

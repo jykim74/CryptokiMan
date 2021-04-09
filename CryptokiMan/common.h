@@ -26,5 +26,6 @@ enum { JS_FILE_TYPE_CERT,
 
 QString findFile( QWidget *parent, int nType, const QString strPath );
 void getCKDate( const QDate date, CK_DATE *pCKDate );
+QString getBool( const BIN *pBin );
 
 #endif // COMMON_H

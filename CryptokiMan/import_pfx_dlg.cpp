@@ -471,6 +471,8 @@ int ImportPFXDlg::createCert( BIN *pCert )
     }
 
     rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
+    manApplet->logP11Result( "C_CreateObject", rv );
+
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to create certificate(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
@@ -624,6 +626,8 @@ int ImportPFXDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
     }
 
     rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
+    manApplet->logP11Result( "C_CreateObject", rv );
+
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to create RSA public key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
@@ -870,6 +874,8 @@ int ImportPFXDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
     }
 
     rv = JS_PKCS11_CreateObject(p11_ctx, sTemplate, uCount, &hObject );
+    manApplet->logP11Result( "C_CreateObject", rv );
+
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to create RSA private key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
@@ -1023,6 +1029,8 @@ int ImportPFXDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
     }
 
     rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
+    manApplet->logP11Result( "C_CreateObject", rv );
+
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to create EC public key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this);
@@ -1213,6 +1221,8 @@ int ImportPFXDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
     }
 
     rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
+    manApplet->logP11Result( "C_CreateObject", rv );
+
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to create EC private key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this);

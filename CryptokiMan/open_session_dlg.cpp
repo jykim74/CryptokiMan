@@ -54,16 +54,15 @@ void OpenSessionDlg::accept()
         nFlags |= CKF_SERIAL_SESSION;
 
     int rv = JS_PKCS11_OpenSession( p11_ctx, slotInfo.getSlotID(), nFlags );
+    manApplet->logP11Result( "C_OpenSession", rv );
 
     if( rv == CKR_OK )
     {
         slotInfo.setSessionHandle( p11_ctx->hSession );
         slot_infos.replace(index, slotInfo);
-        manApplet->log( "C_OpenSession OK" );
     }
     else {
         manApplet->warningBox( tr("OpenSession is failure"), this );
-        manApplet->elog( QString( "C_OpenSession fail:%1").arg(p11_ctx->sLastLog));
         return;
     }
 

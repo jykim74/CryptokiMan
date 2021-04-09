@@ -259,6 +259,8 @@ void CreateRSAPubKeyDlg::accept()
     }
 
     rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
+    manApplet->logP11Result( "C_CreateObject", rv );
+
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to create RSA public key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );

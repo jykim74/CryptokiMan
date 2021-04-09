@@ -29,6 +29,7 @@ public:
     SettingsMgr* settingsMgr() { return settings_mgr_; };
     JP11_CTX* getP11CTX() { return p11_ctx_; };
     QString cmd() { return cmd_; };
+    void logP11Result( const QString strName, int rv );
 
     void showTypeData( int nSlotIndex, int nType );
 

@@ -79,6 +79,22 @@ void ManApplet::showTypeData( int nSlotIndex, int nType )
     main_win_->showTypeData( nSlotIndex, nType );
 }
 
+void ManApplet::logP11Result( const QString strName, int rv )
+{
+    QString strLog;
+
+    if( rv == CKR_OK )
+    {
+        strLog = QString( "%1 ok" ).arg(strName );
+        log( strLog );
+    }
+    else
+    {
+        strLog = QString( "%1 error[%2:%3]" ).arg( strName ).arg(rv).arg( JS_PKCS11_GetErrorMsg(rv));
+        elog( strLog );
+    }
+}
+
 void ManApplet::restartApp()
 {
     if( in_exit_ || QCoreApplication::closingDown() )

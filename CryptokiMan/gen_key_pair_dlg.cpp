@@ -472,6 +472,8 @@ void GenKeyPairDlg::accept()
 
 
     rv = JS_PKCS11_GenerateKeyPair( p11_ctx, &stMech, sPubTemplate, uPubCount, sPriTemplate, uPriCount, &uPubHandle, &uPriHandle );
+    manApplet->logP11Result( "C_GenerateKeyPair", rv );
+
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr( "failure to generate key pairs(rv:%1)").arg(JS_PKCS11_GetErrorMsg( rv )), this );
