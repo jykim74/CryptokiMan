@@ -91,6 +91,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>Close session</source>
         <translation>세션 닫기</translation>
     </message>
+    <message>
+        <source>CloseAllSessions(%1) is failure</source>
+        <translation>CloseAllSessions 실패(%1)</translation>
+    </message>
 </context>
 <context>
     <name>CreateDataDlg</name>
@@ -2068,11 +2072,11 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Login is success</source>
-        <translation>로그인 성공</translation>
+        <translation type="vanished">로그인 성공</translation>
     </message>
     <message>
         <source>Login is failure</source>
-        <translation>로그인 실패</translation>
+        <translation type="vanished">로그인 실패</translation>
     </message>
     <message>
         <source>Login</source>
@@ -2087,7 +2091,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Slot status</source>
-        <translation>슬롯 상태</translation>
+        <translation type="vanished">슬롯 상태</translation>
     </message>
     <message>
         <source>Slot ID</source>
@@ -2095,7 +2099,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Slot list</source>
-        <translation>슬롯 목록</translation>
+        <translation type="vanished">슬롯 목록</translation>
     </message>
     <message>
         <source>Session</source>
@@ -2103,7 +2107,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Logout is success</source>
-        <translation>로그 아웃 성공</translation>
+        <translation type="vanished">로그 아웃 성공</translation>
     </message>
     <message>
         <source>Logout is failure</source>
@@ -2112,6 +2116,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Logout</source>
         <translation>로그 아웃</translation>
+    </message>
+    <message>
+        <source>Slot Status</source>
+        <translation>슬롯 상태</translation>
+    </message>
+    <message>
+        <source>Slot List</source>
+        <translation>슬롯 목록</translation>
     </message>
 </context>
 <context>
@@ -2698,7 +2710,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>OpenSession is success</source>
-        <translation>OpenSession 성공</translation>
+        <translation type="vanished">OpenSession 성공</translation>
     </message>
     <message>
         <source>OpenSession is failure</source>
@@ -2883,6 +2895,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Save cryptoki library path</source>
         <translation>cryptoki 라이브러리 경로 저장</translation>
+    </message>
+    <message>
+        <source>Show log view window at startup</source>
+        <translation>시작 시 로그 보기 뛰우기</translation>
     </message>
 </context>
 <context>

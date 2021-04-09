@@ -290,6 +290,8 @@ void CreateECPriKeyDlg::accept()
         uCount++;
     }
 
+    manApplet->logTemplate( sTemplate, uCount );
+
     CK_OBJECT_CLASS hObject = 0;
 
     rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );

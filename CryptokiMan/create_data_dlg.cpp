@@ -174,6 +174,8 @@ void CreateDataDlg::accept()
         uCount++;
     }
 
+    manApplet->logTemplate( sTemplate, uCount );
+
     rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
     manApplet->logP11Result( "C_CreateObject", rv );
 

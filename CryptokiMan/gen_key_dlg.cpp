@@ -325,6 +325,8 @@ void GenKeyDlg::accept()
         uCount++;
     }
 
+    manApplet->logTemplate( sTemplate, uCount );
+
     rv = JS_PKCS11_GenerateKey( p11_ctx, &sMech, sTemplate, uCount, &hObject );
     manApplet->logP11Result( "C_GenerateKey", rv );
 

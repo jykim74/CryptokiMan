@@ -1022,6 +1022,7 @@ void MainWindow::showGetInfo()
 
     int row = 0;
     right_table_->insertRow( row );
+    right_table_->setRowHeight( row, 10 );
 
     right_table_->setItem( row, 0, new QTableWidgetItem(QString( "cryptokiVersion")));
     strMsg = QString( "V%1.%2" ).arg( sInfo.cryptokiVersion.major ).arg( sInfo.cryptokiVersion.minor );
@@ -1029,12 +1030,14 @@ void MainWindow::showGetInfo()
     row++;
 
     right_table_->insertRow( row );
+    right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem(QString("flags")));
     strMsg = QString( "%1" ).arg( sInfo.flags );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
 
     right_table_->insertRow( row );
+    right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem(QString("libraryDescription")));
     strMsg = QString( "%1" ).arg( (char *)sInfo.libraryDescription );
     strList = strMsg.split( "  " );
@@ -1042,12 +1045,14 @@ void MainWindow::showGetInfo()
     row++;
 
     right_table_->insertRow( row );
+    right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem(QString("libraryVersion")));
     strMsg = QString( "V%1.%2" ).arg( sInfo.libraryVersion.major).arg( sInfo.libraryVersion.minor );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
 
     right_table_->insertRow( row );
+    right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem(QString("manufacturerID")));
     strMsg = QString( "%1" ).arg( (char *)sInfo.manufacturerID );
     strList = strMsg.split( "  " );
@@ -1451,7 +1456,6 @@ void MainWindow::showObjectsInfo(int index)
     JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
-    CK_TOKEN_INFO sTokenInfo;
     SlotInfo slotInfo = slot_infos.at(index);
 
 
@@ -1623,7 +1627,6 @@ void MainWindow::showCertificateInfo( int index, long hObject )
     JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
-    CK_TOKEN_INFO sTokenInfo;
     SlotInfo slotInfo = slot_infos.at(index);
 
     p11_ctx->hSession = slotInfo.getSessionHandle();
@@ -1640,6 +1643,8 @@ void MainWindow::showCertificateInfo( int index, long hObject )
         CK_ATTRIBUTE sTemplate[1] = {
             { CKA_CLASS, &objClass, sizeof(objClass) }
         };
+
+        manApplet->logTemplate( sTemplate, 1 );
 
         rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, 1 );
         manApplet->logP11Result( "C_FindObjectsInit", rv );
@@ -1696,7 +1701,6 @@ void MainWindow::showPublicKeyInfo( int index, long hObject )
     JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
-    CK_TOKEN_INFO sTokenInfo;
     SlotInfo slotInfo = slot_infos.at(index);
 
     p11_ctx->hSession = slotInfo.getSessionHandle();
@@ -1712,6 +1716,8 @@ void MainWindow::showPublicKeyInfo( int index, long hObject )
         CK_ATTRIBUTE sTemplate[1] = {
             { CKA_CLASS, &objClass, sizeof(objClass) }
         };
+
+        manApplet->logTemplate( sTemplate, 1 );
 
         rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, 1 );
         manApplet->logP11Result( "C_FindObjectsInit", rv );
@@ -1775,7 +1781,6 @@ void MainWindow::showPrivateKeyInfo( int index, long hObject )
     JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
-    CK_TOKEN_INFO sTokenInfo;
     SlotInfo slotInfo = slot_infos.at(index);
 
     p11_ctx->hSession = slotInfo.getSessionHandle();
@@ -1792,6 +1797,8 @@ void MainWindow::showPrivateKeyInfo( int index, long hObject )
         CK_ATTRIBUTE sTemplate[1] = {
             { CKA_CLASS, &objClass, sizeof(objClass) }
         };
+
+        manApplet->logTemplate( sTemplate, 1 );
 
         rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, 1 );
         manApplet->logP11Result( "C_FindObjectsInit", rv );
@@ -1864,7 +1871,6 @@ void MainWindow::showSecretKeyInfo( int index, long hObject )
     JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
-    CK_TOKEN_INFO sTokenInfo;
     SlotInfo slotInfo = slot_infos.at(index);
 
     p11_ctx->hSession = slotInfo.getSessionHandle();
@@ -1881,6 +1887,8 @@ void MainWindow::showSecretKeyInfo( int index, long hObject )
         CK_ATTRIBUTE sTemplate[1] = {
             { CKA_CLASS, &objClass, sizeof(objClass) }
         };
+
+        manApplet->logTemplate( sTemplate, 1 );
 
         rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, 1 );
         manApplet->logP11Result( "C_FindObjectsInit", rv );
@@ -1947,7 +1955,6 @@ void MainWindow::showDataInfo( int index, long hObject )
     JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
-    CK_TOKEN_INFO sTokenInfo;
     SlotInfo slotInfo = slot_infos.at(index);
 
     p11_ctx->hSession = slotInfo.getSessionHandle();
@@ -1964,6 +1971,8 @@ void MainWindow::showDataInfo( int index, long hObject )
         CK_ATTRIBUTE sTemplate[1] = {
             { CKA_CLASS, &objClass, sizeof(objClass) }
         };
+
+        manApplet->logTemplate( sTemplate, 1 );
 
         rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, 1 );
         manApplet->logP11Result( "C_FindObjectsInit", rv );

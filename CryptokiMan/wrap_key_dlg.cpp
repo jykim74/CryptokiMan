@@ -174,6 +174,7 @@ void WrapKeyDlg::setWrapLabelList()
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
     uCnt++;
 
+    manApplet->logTemplate( sTemplate, uCnt );
 
     rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
     manApplet->logP11Result( "C_FindObjectsInit", rv );
@@ -213,6 +214,8 @@ void WrapKeyDlg::setWrapLabelList()
     sTemplate[uCnt].pValue = &objClass;
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
     uCnt++;
+
+    manApplet->logTemplate( sTemplate, uCnt );
 
     rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
     manApplet->logP11Result( "C_FindObjectsInit", rv );

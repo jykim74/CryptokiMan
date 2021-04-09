@@ -452,6 +452,7 @@ int ImportPriKeyDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
         uCount++;
     }
 
+    manApplet->logTemplate( sTemplate, uCount );
     rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
     manApplet->logP11Result( "C_CreateObject", rv );
 
@@ -708,6 +709,7 @@ int ImportPriKeyDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
         uCount++;
     }
 
+    manApplet->logTemplate( sTemplate, uCount );
     rv = JS_PKCS11_CreateObject(p11_ctx, sTemplate, uCount, &hObject );
     manApplet->logP11Result( "C_CreateObject", rv );
 
@@ -861,6 +863,7 @@ int ImportPriKeyDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
         uCount++;
     }
 
+    manApplet->logTemplate( sTemplate, uCount );
     rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
     manApplet->logP11Result( "C_CreateObject", rv );
 
@@ -1051,6 +1054,7 @@ int ImportPriKeyDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
         uCount++;
     }
 
+    manApplet->logTemplate( sTemplate, uCount );
     rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
     manApplet->logP11Result( "C_CreateObject", rv );
 

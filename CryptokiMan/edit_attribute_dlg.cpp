@@ -113,6 +113,8 @@ void EditAttributeDlg::objectChanged( int index )
     sTemplate[uCount].ulValueLen = sizeof(objClass);
     uCount++;
 
+    manApplet->logTemplate( sTemplate, uCount );
+
     rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCount );
     manApplet->logP11Result( "C_FindObjectsInit", rv );
 

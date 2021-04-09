@@ -307,6 +307,8 @@ void DeriveKeyDlg::accept()
         uCount++;
     }
 
+    manApplet->logTemplate( sTemplate, uCount );
+
     rv = JS_PKCS11_DeriveKey( p11_ctx, &sMech, hSrcKey, sTemplate, uCount, &uObj );
     if( rv != CKR_OK )
     {
@@ -476,6 +478,7 @@ void DeriveKeyDlg::setSrcLabelList()
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
     uCnt++;
 
+    manApplet->logTemplate( sTemplate, uCnt );
 
     rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
     manApplet->logP11Result( "C_FindObjectsInit", rv );
@@ -511,6 +514,8 @@ void DeriveKeyDlg::setSrcLabelList()
     sTemplate[uCnt].pValue = &objClass;
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
     uCnt++;
+
+    manApplet->logTemplate( sTemplate, uCnt );
 
     rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
     manApplet->logP11Result( "C_FindObjectsInit", rv );

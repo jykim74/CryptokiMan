@@ -369,6 +369,7 @@ void UnwrapKeyDlg::accept()
     }
 
 
+    manApplet->logTemplate( sTemplate, uCount );
     rv = JS_PKCS11_UnwrapKey( p11_ctx, &sMech, hUnwrappingKey,
                               binWrappedKey.pVal, binWrappedKey.nLen, sTemplate, uCount, &uObj );
     manApplet->logP11Result( "C_UnwrapKey", rv );
@@ -431,6 +432,8 @@ void UnwrapKeyDlg::setUnwrapLabelList()
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
     uCnt++;
 
+    manApplet->logTemplate( sTemplate, uCnt );
+
     rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
     manApplet->logP11Result( "C_FindObjectsInit", rv );
 
@@ -466,6 +469,8 @@ void UnwrapKeyDlg::setUnwrapLabelList()
     sTemplate[uCnt].pValue = &objClass;
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
     uCnt++;
+
+    manApplet->logTemplate( sTemplate, uCnt );
 
     rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
     manApplet->logP11Result( "C_FindObjectsInit", rv );

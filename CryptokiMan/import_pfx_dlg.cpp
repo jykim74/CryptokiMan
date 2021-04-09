@@ -470,6 +470,7 @@ int ImportPFXDlg::createCert( BIN *pCert )
         uCount++;
     }
 
+    manApplet->logTemplate( sTemplate, uCount );
     rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
     manApplet->logP11Result( "C_CreateObject", rv );
 
@@ -625,6 +626,7 @@ int ImportPFXDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
         uCount++;
     }
 
+    manApplet->logTemplate( sTemplate, uCount );
     rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
     manApplet->logP11Result( "C_CreateObject", rv );
 
@@ -873,6 +875,7 @@ int ImportPFXDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
         uCount++;
     }
 
+    manApplet->logTemplate( sTemplate, uCount );
     rv = JS_PKCS11_CreateObject(p11_ctx, sTemplate, uCount, &hObject );
     manApplet->logP11Result( "C_CreateObject", rv );
 
@@ -1028,6 +1031,7 @@ int ImportPFXDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
         uCount++;
     }
 
+    manApplet->logTemplate( sTemplate, uCount );
     rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
     manApplet->logP11Result( "C_CreateObject", rv );
 
@@ -1220,6 +1224,7 @@ int ImportPFXDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
         uCount++;
     }
 
+    manApplet->logTemplate( sTemplate, uCount );
     rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
     manApplet->logP11Result( "C_CreateObject", rv );
 

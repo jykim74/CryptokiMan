@@ -39,6 +39,7 @@
 #include "settings_dlg.h"
 #include "settings_mgr.h"
 #include "auto_update_service.h"
+#include "common.h"
 
 ManApplet *manApplet;
 
@@ -92,6 +93,26 @@ void ManApplet::logP11Result( const QString strName, int rv )
     {
         strLog = QString( "%1 error[%2:%3]" ).arg( strName ).arg(rv).arg( JS_PKCS11_GetErrorMsg(rv));
         elog( strLog );
+    }
+}
+
+void ManApplet::logTemplate( const CK_ATTRIBUTE sTemplate[], int nCount )
+{
+    if( nCount <= 0 ) dlog( "Template is empty" );
+
+    for( int i = 0; i < nCount; i++ )
+    {
+        QString strLog = QString( "%1 Type : %2 %3")
+                .arg(i).arg(sTemplate[i].type)
+                .arg(JS_PKCS11_GetCKAName(sTemplate[i].type));
+
+        manApplet->dlog( strLog );
+
+        strLog = QString( "%1 Value[%2] : %3" )
+                .arg(i).arg(sTemplate[i].ulValueLen)
+                .arg( getHexString((unsigned char *)sTemplate[i].pValue, sTemplate[i].ulValueLen));
+
+        manApplet->dlog( strLog );
     }
 }
 

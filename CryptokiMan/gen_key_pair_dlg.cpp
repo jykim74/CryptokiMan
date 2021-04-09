@@ -470,6 +470,8 @@ void GenKeyPairDlg::accept()
         uPriCount++;
     }
 
+    manApplet->logTemplate( sPubTemplate, uPubCount );
+    manApplet->logTemplate( sPriTemplate, uPriCount );
 
     rv = JS_PKCS11_GenerateKeyPair( p11_ctx, &stMech, sPubTemplate, uPubCount, sPriTemplate, uPriCount, &uPubHandle, &uPriHandle );
     manApplet->logP11Result( "C_GenerateKeyPair", rv );
