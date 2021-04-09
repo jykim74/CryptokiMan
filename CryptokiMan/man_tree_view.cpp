@@ -162,7 +162,6 @@ void ManTreeView::P11Initialize()
     CK_ULONG uSlotCnt = 0;
     CK_SLOT_ID  sSlotList[10];
 
-    ManTreeModel *tree_model = (ManTreeModel *)model();
     ManTreeItem *parent_item = currentItem();
 
     pCTX = manApplet->getP11CTX();
@@ -170,7 +169,8 @@ void ManTreeView::P11Initialize()
 
     if( pCTX == NULL ) return;
 
-    ret = JS_PKCS11_Initialize(pCTX);
+    manApplet->dlog( "C_Initialize( pReserved = NULL )" );
+    ret = JS_PKCS11_Initialize(pCTX, NULL);
     manApplet->logP11Result( "C_Initialize", ret );
 
     if( ret != 0 )
@@ -181,7 +181,7 @@ void ManTreeView::P11Initialize()
     }
 
     ret = JS_PKCS11_GetSlotList2( pCTX, CK_TRUE, sSlotList, &uSlotCnt );
-    manApplet->logP11Result( "C_GetSlotList", ret );
+    manApplet->logP11Result( "C_GetSlotList2", ret );
 
     if( ret == 0 )
     {
@@ -278,14 +278,11 @@ void ManTreeView::P11Finalize()
     int     ret = 0;
     JP11_CTX *pCTX = NULL;
 
-    ManTreeModel *tree_model = (ManTreeModel *)model();
-
     pCTX = manApplet->getP11CTX();
 
     if( pCTX == NULL ) return;
 
-    ret = JS_PKCS11_Finalize( pCTX );
+    manApplet->dlog( "C_Finalize( pReserved = NULL )" );
+    ret = JS_PKCS11_Finalize( pCTX, NULL );
     manApplet->logP11Result( "C_Finalize", ret );
-
-//    tree_model->clear();
 }
