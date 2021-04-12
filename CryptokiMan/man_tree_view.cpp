@@ -159,24 +159,14 @@ ManTreeItem* ManTreeView::currentItem()
 void ManTreeView::P11Initialize()
 {
     int     ret = 0;
-    JP11_CTX *pCTX = NULL;
+
     CK_ULONG uSlotCnt = 0;
     CK_SLOT_ID  sSlotList[10];
 
     ManTreeItem *parent_item = currentItem();
-
-    pCTX = manApplet->getP11CTX();
     QList<SlotInfo>& slotInfos = manApplet->mainWindow()->getSlotInfos();
-
-    if( pCTX == NULL ) return;
-
-    /*
-    manApplet->dlog( "C_Initialize( pReserved = NULL )" );
-    ret = JS_PKCS11_Initialize(pCTX, NULL);
-    manApplet->logP11Result( "C_Initialize", ret );
-    */
 \
-    ret = manApplet->cryptokiAPI()->initialize( NULL );
+    ret = manApplet->cryptokiAPI()->Initialize( NULL );
 
     if( ret != 0 )
     {
@@ -185,8 +175,7 @@ void ManTreeView::P11Initialize()
         return;
     }
 
-    ret = JS_PKCS11_GetSlotList2( pCTX, CK_TRUE, sSlotList, &uSlotCnt );
-    manApplet->logP11Result( "C_GetSlotList2", ret );
+    ret = manApplet->cryptokiAPI()->GetSlotList2( CK_TRUE, sSlotList, &uSlotCnt );
 
     if( ret == 0 )
     {
@@ -195,8 +184,7 @@ void ManTreeView::P11Initialize()
             CK_SLOT_INFO    sSlotInfo;
             SlotInfo    slotInfo;
 
-            ret = JS_PKCS11_GetSlotInfo( pCTX, sSlotList[i], &sSlotInfo );
-            manApplet->logP11Result( "C_GetSlotInfo", ret );
+            ret =manApplet->cryptokiAPI()->GetSlotInfo( sSlotList[i], &sSlotInfo );
 
             if( ret != 0 )
             {
@@ -281,17 +269,6 @@ void ManTreeView::P11Initialize()
 void ManTreeView::P11Finalize()
 {
     int     ret = 0;
-    JP11_CTX *pCTX = NULL;
 
-    pCTX = manApplet->getP11CTX();
-
-    if( pCTX == NULL ) return;
-
-    /*
-    manApplet->dlog( "C_Finalize( pReserved = NULL )" );
-    ret = JS_PKCS11_Finalize( pCTX, NULL );
-    manApplet->logP11Result( "C_Finalize", ret );
-    */
-
-    ret = manApplet->cryptokiAPI()->finalize( NULL );
+    ret = manApplet->cryptokiAPI()->Finalize( NULL );
 }

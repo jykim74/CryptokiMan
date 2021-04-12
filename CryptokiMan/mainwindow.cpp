@@ -46,6 +46,7 @@
 #include "log_view_dlg.h"
 #include "settings_dlg.h"
 #include "settings_mgr.h"
+#include "cryptoki_api.h"
 
 const int kMaxRecentFiles = 10;
 
@@ -1002,14 +1003,10 @@ void MainWindow::showGetInfo()
 {
     int ret = 0;
     CK_INFO     sInfo;
-    JP11_CTX*  p11_ctx = NULL;
-
     memset( &sInfo, 0x00, sizeof(sInfo));
 
-    p11_ctx = manApplet->getP11CTX();
+    ret = manApplet->cryptokiAPI()->GetInfo( &sInfo );
 
-    ret = JS_PKCS11_GetInfo( p11_ctx, &sInfo );
-    manApplet->logP11Result( "C_GetInfo", ret );
     if( ret != CKR_OK )
     {
         return;
@@ -1064,17 +1061,13 @@ void MainWindow::showSlotInfo( int index )
 {
     long uSlotID = -1;
 
-    JP11_CTX* p11_ctx = NULL;
     CK_SLOT_INFO stSlotInfo;
 
     QList<SlotInfo>& slotInfos = manApplet->mainWindow()->getSlotInfos();
     SlotInfo slotInfo = slotInfos.at(index);
     uSlotID = slotInfo.getSlotID();
 
-    p11_ctx = manApplet->getP11CTX();
-    int rv = JS_PKCS11_GetSlotInfo( p11_ctx, uSlotID, &stSlotInfo );
-    manApplet->logP11Result( "C_GetSlotInfo", rv );
-
+    int rv = manApplet->cryptokiAPI()->GetSlotInfo( uSlotID, &stSlotInfo );
     if( rv != CKR_OK )
     {
         return;
@@ -1143,15 +1136,13 @@ void MainWindow::showSlotInfo( int index )
 
 void MainWindow::showTokenInfo(int index)
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     CK_TOKEN_INFO sTokenInfo;
     SlotInfo slotInfo = slot_infos.at(index);
     long uSlotID = slotInfo.getSlotID();
 
-    int rv = JS_PKCS11_GetTokenInfo( p11_ctx, uSlotID, &sTokenInfo );
-    manApplet->logP11Result( "C_GetTokenInfo", rv );
+    int rv = manApplet->cryptokiAPI()->GetTokenInfo( uSlotID, &sTokenInfo );
 
     if( rv != CKR_OK )
     {
@@ -1295,20 +1286,15 @@ void MainWindow::showTokenInfo(int index)
 
 void MainWindow::showMechanismInfo(int index)
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
-    CK_TOKEN_INFO sTokenInfo;
     SlotInfo slotInfo = slot_infos.at(index);
     long uSlotID = slotInfo.getSlotID();
 
     CK_MECHANISM_TYPE_PTR   pMechType = NULL;
     CK_ULONG ulMechCnt = 0;
 
-
-    int rv = JS_PKCS11_GetMechanismList( p11_ctx, uSlotID, pMechType, &ulMechCnt );
-    manApplet->logP11Result( "C_GetMechanismList", rv );
-
+    int rv = manApplet->cryptokiAPI()->GetMechanismList( uSlotID, pMechType, &ulMechCnt );
     if( rv != CKR_OK )
     {
         return;
@@ -1317,7 +1303,8 @@ void MainWindow::showMechanismInfo(int index)
     removeAllRightTable();
 
     pMechType = (CK_MECHANISM_TYPE_PTR)JS_calloc( ulMechCnt, sizeof(CK_MECHANISM_TYPE));
-    rv = JS_PKCS11_GetMechanismList( p11_ctx, uSlotID, pMechType, &ulMechCnt );
+    rv = manApplet->cryptokiAPI()->GetMechanismList( uSlotID, pMechType, &ulMechCnt );
+
     if( rv != CKR_OK )
     {
         return;
@@ -1330,7 +1317,7 @@ void MainWindow::showMechanismInfo(int index)
     {
         CK_MECHANISM_INFO   stMechInfo;
 
-        rv = JS_PKCS11_GetMechanismInfo( p11_ctx, uSlotID, pMechType[i], &stMechInfo );
+        rv = manApplet->cryptokiAPI()->GetMechanismInfo( uSlotID, pMechType[i], &stMechInfo );
         if( rv != CKR_OK ) continue;
 
         right_table_->insertRow( row );
@@ -1386,20 +1373,16 @@ void MainWindow::showMechanismInfo(int index)
 
 void MainWindow::showSessionInfo(int index)
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
-    CK_TOKEN_INFO sTokenInfo;
     SlotInfo slotInfo = slot_infos.at(index);
-    long uSlotID = slotInfo.getSlotID();
 
     CK_SESSION_INFO stSessInfo;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     removeAllRightTable();
 
-    int rv = JS_PKCS11_GetSessionInfo( p11_ctx, &stSessInfo );
-    manApplet->logP11Result( "C_GetSessionInfo", rv );
+    int rv = manApplet->cryptokiAPI()->GetSessionInfo( hSession, &stSessInfo );
 
     if( rv != CKR_OK )
     {
@@ -1462,11 +1445,22 @@ void MainWindow::showObjectsInfo(int index)
     p11_ctx->hSession = slotInfo.getSessionHandle();
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[100];
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     removeAllRightTable();
 
     int ret = 0;
 
+    ret = manApplet->cryptokiAPI()->FindObjectsInit( hSession, NULL, 0 );
+    if( ret != CKR_OK ) return;
+
+    ret = manApplet->cryptokiAPI()->FindObjects( hSession, hObjects, 100, &uObjCnt );
+    if( ret != CKR_OK ) return;
+
+    ret = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
+    if( ret != CKR_OK ) return;
+
+    /*
     ret = JS_PKCS11_FindObjectsInit( p11_ctx, NULL, 0 );
     manApplet->logP11Result( "C_FindObjectsInit", ret );
 
@@ -1475,6 +1469,7 @@ void MainWindow::showObjectsInfo(int index)
 
     ret = JS_PKCS11_FindObjectsFinal( p11_ctx );
     manApplet->logP11Result( "C_FindObjectsFinal", ret );
+    */
 
 
     int row = 0;
