@@ -39,7 +39,13 @@
     <widget class="QComboBox" name="mLogLevelCombo"/>
    </item>
    <item row="1" column="0" colspan="4">
-    <widget class="QTextBrowser" name="mLogText"/>
+    <widget class="QTextBrowser" name="mLogText">
+     <property name="font">
+      <font>
+       <family>굴림체</family>
+      </font>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

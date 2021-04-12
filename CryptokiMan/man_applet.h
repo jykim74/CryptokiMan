@@ -11,6 +11,7 @@ class MainWindow;
 class AboutDlg;
 class LogViewDlg;
 class SettingsMgr;
+class CryptokiAPI;
 
 class ManApplet : public QObject
 {
@@ -28,6 +29,7 @@ public:
     LogViewDlg* logViewDlg() { return log_view_dlg_; };
     SettingsMgr* settingsMgr() { return settings_mgr_; };
     JP11_CTX* getP11CTX() { return p11_ctx_; };
+    CryptokiAPI* cryptokiAPI() { return cryptoki_api_; };
     QString cmd() { return cmd_; };
     void logP11Result( const QString strName, int rv );
     void logTemplate( const CK_ATTRIBUTE sTemplate[], int nCount );
@@ -72,6 +74,7 @@ private:
     bool in_exit_;
     QString cmd_;
     JP11_CTX       *p11_ctx_;
+    CryptokiAPI     *cryptoki_api_;
 };
 
 extern ManApplet *manApplet;

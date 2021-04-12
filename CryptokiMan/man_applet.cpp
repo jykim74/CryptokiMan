@@ -40,6 +40,7 @@
 #include "settings_mgr.h"
 #include "auto_update_service.h"
 #include "common.h"
+#include "cryptoki_api.h"
 
 ManApplet *manApplet;
 
@@ -50,6 +51,7 @@ ManApplet::ManApplet( QObject *parent )
     about_dlg_ = new AboutDlg;
     log_view_dlg_ = new LogViewDlg;
     settings_mgr_ = new SettingsMgr;
+    cryptoki_api_ = new CryptokiAPI;
 
     in_exit_ = false;
 #ifdef _AUTO_UPDATE
@@ -73,6 +75,8 @@ void ManApplet::start()
 
     if( settings_mgr_->showLogWindow() )
         main_win_->logView();
+
+    main_win_->activateWindow();
 }
 
 void ManApplet::showTypeData( int nSlotIndex, int nType )
@@ -141,6 +145,8 @@ int ManApplet::openLibrary( const QString strPath )
     int ret = 0;
 
     ret = JS_PKCS11_LoadLibrary( (JP11_CTX **)&p11_ctx_, strPath.toLocal8Bit().toStdString().c_str() );
+
+    cryptoki_api_->setCTX( p11_ctx_ );
 
     return ret;
 }

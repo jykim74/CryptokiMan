@@ -10,7 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = CryptokiMan
 TEMPLATE = app
-PROJECT_VERSION = "0.9.1"
+PROJECT_VERSION = "0.9.2"
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -37,6 +37,7 @@ SOURCES += \
         create_key_dlg.cpp \
         create_rsa_pri_key_dlg.cpp \
         create_rsa_pub_key_dlg.cpp \
+        cryptoki_api.cpp \
         decrypt_dlg.cpp \
         del_object_dlg.cpp \
         derive_key_dlg.cpp \
@@ -83,6 +84,7 @@ HEADERS += \
         create_key_dlg.h \
         create_rsa_pri_key_dlg.h \
         create_rsa_pub_key_dlg.h \
+        cryptoki_api.h \
         decrypt_dlg.h \
         del_object_dlg.h \
         derive_key_dlg.h \

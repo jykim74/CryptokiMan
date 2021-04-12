@@ -7,6 +7,7 @@
 #include "man_tree_item.h"
 #include "man_applet.h"
 #include "mainwindow.h"
+#include "cryptoki_api.h"
 
 ManTreeView::ManTreeView( QWidget *parent )
     : QTreeView (parent)
@@ -169,9 +170,13 @@ void ManTreeView::P11Initialize()
 
     if( pCTX == NULL ) return;
 
+    /*
     manApplet->dlog( "C_Initialize( pReserved = NULL )" );
     ret = JS_PKCS11_Initialize(pCTX, NULL);
     manApplet->logP11Result( "C_Initialize", ret );
+    */
+\
+    ret = manApplet->cryptokiAPI()->initialize( NULL );
 
     if( ret != 0 )
     {
@@ -282,7 +287,11 @@ void ManTreeView::P11Finalize()
 
     if( pCTX == NULL ) return;
 
+    /*
     manApplet->dlog( "C_Finalize( pReserved = NULL )" );
     ret = JS_PKCS11_Finalize( pCTX, NULL );
     manApplet->logP11Result( "C_Finalize", ret );
+    */
+
+    ret = manApplet->cryptokiAPI()->finalize( NULL );
 }
