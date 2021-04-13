@@ -2,6 +2,7 @@
 #include "man_applet.h"
 #include "mainwindow.h"
 #include "js_pkcs11.h"
+#include "cryptoki_api.h"
 
 static QStringList sMechList = {
     "CKM_DES3_ECB", "CKM_DES3_CBC", "CKM_AES_ECB", "CKM_AES_CBC",
@@ -82,13 +83,12 @@ void EncryptDlg::initialize()
 
 void EncryptDlg::keyTypeChanged( int index )
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[1];
     CK_ULONG uCnt = 0;
@@ -115,16 +115,14 @@ void EncryptDlg::keyTypeChanged( int index )
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
     uCnt++;
 
-    manApplet->logTemplate( sTemplate, uCnt );
+    rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, uCnt );
+    if( rv != CKR_OK ) return;
 
-    rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
-    manApplet->logP11Result( "C_FindObjectsInit", rv );
+    rv = manApplet->cryptokiAPI()->FindObjects( hSession, sObjects, uMaxObjCnt, &uObjCnt );
+    if( rv != CKR_OK ) return;
 
-    rv = JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
-    manApplet->logP11Result( "C_FindObjects", rv );
-
-    rv = JS_PKCS11_FindObjectsFinal( p11_ctx );
-    manApplet->logP11Result( "C_FindObjectsFinal", rv );
+    rv = manApplet->cryptokiAPI()->FindObjectsFinal(hSession);
+    if( rv != CKR_OK ) return;
 
     mLabelCombo->clear();
 
@@ -132,8 +130,8 @@ void EncryptDlg::keyTypeChanged( int index )
     {
         char    *pStr = NULL;
         BIN binLabel = {0,0};
-        JS_PKCS11_GetAttributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
-        manApplet->logP11Result( "C_GetAttributeValue2", rv );
+
+        rv = manApplet->cryptokiAPI()->GetAttributeValue2( hSession, sObjects[i], CKA_LABEL, &binLabel );
 
         QVariant objVal = QVariant((int)sObjects[i]);
         JS_BIN_string( &binLabel, &pStr );
@@ -160,13 +158,12 @@ void EncryptDlg::labelChanged( int index )
 
 void EncryptDlg::clickInit()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     CK_MECHANISM sMech;
     BIN binParam = {0,0};
@@ -183,8 +180,7 @@ void EncryptDlg::clickInit()
         sMech.ulParameterLen = binParam.nLen;
     }
 
-    rv = JS_PKCS11_EncryptInit( p11_ctx, &sMech, hObject );
-    manApplet->logP11Result( "C_EncryptInit", rv );
+    rv = manApplet->cryptokiAPI()->EncryptInit( hSession, &sMech, hObject );
 
     if( rv != CKR_OK )
     {
@@ -200,13 +196,12 @@ void EncryptDlg::clickInit()
 
 void EncryptDlg::clickUpdate()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     QString strInput = mInputText->text();
 
@@ -232,9 +227,7 @@ void EncryptDlg::clickUpdate()
     pEncPart = (unsigned char *)JS_malloc( binInput.nLen + 64 );
     if( pEncPart == NULL ) return;
 
-
-    rv = JS_PKCS11_EncryptUpdate( p11_ctx, binInput.pVal, binInput.nLen, pEncPart, (CK_ULONG_PTR)&uEncPartLen );
-    manApplet->logP11Result( "C_EncryptUpdate", rv );
+    rv = manApplet->cryptokiAPI()->EncryptUpdate( hSession, binInput.pVal, binInput.nLen, pEncPart, (CK_ULONG_PTR)&uEncPartLen );
 
     if( rv != CKR_OK )
     {
@@ -264,13 +257,12 @@ void EncryptDlg::clickUpdate()
 
 void EncryptDlg::clickFinal()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     unsigned char *pEncPart = NULL;
     long uEncPartLen = 0;
@@ -281,8 +273,7 @@ void EncryptDlg::clickFinal()
     BIN binEncPart = {0,0};
     char *pHex = NULL;
 
-    rv = JS_PKCS11_EncryptFinal( p11_ctx, pEncPart, (CK_ULONG_PTR)&uEncPartLen);
-    manApplet->logP11Result( "C_EncryptFinal", rv );
+    rv = manApplet->cryptokiAPI()->EncryptFinal( hSession, pEncPart, (CK_ULONG_PTR)&uEncPartLen );
 
     if( rv != CKR_OK )
     {
@@ -310,13 +301,12 @@ void EncryptDlg::clickFinal()
 
 void EncryptDlg::clickEncrypt()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     QString strInput = mInputText->text();
 
@@ -343,9 +333,7 @@ void EncryptDlg::clickEncrypt()
     pEncData = (unsigned char *)JS_malloc( binInput.nLen + 64 );
     if( pEncData == NULL ) return;
 
-
-    rv = JS_PKCS11_Encrypt( p11_ctx, binInput.pVal, binInput.nLen, pEncData, (CK_ULONG_PTR)&uEncDataLen);
-    manApplet->logP11Result( "C_Encrypt", rv );
+    rv = manApplet->cryptokiAPI()->Encrypt( hSession, binInput.pVal, binInput.nLen, pEncData, (CK_ULONG_PTR)&uEncDataLen );
 
     if( rv != CKR_OK )
     {

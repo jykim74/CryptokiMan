@@ -2,6 +2,7 @@
 #include "mainwindow.h"
 #include "man_applet.h"
 #include "js_pkcs11.h"
+#include "cryptoki_api.h"
 
 SetPinDlg::SetPinDlg(QWidget *parent) :
     QDialog(parent)
@@ -52,14 +53,11 @@ void SetPinDlg::initialize()
 
 void SetPinDlg::accept()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
     int rv = -1;
 
 
@@ -87,9 +85,7 @@ void SetPinDlg::accept()
     JS_BIN_set( &binOldPin, (unsigned char *)strOldPin.toStdString().c_str(), strOldPin.length() );
     JS_BIN_set( &binNewPin, (unsigned char *)strNewPin.toStdString().c_str(), strNewPin.length() );
 
-
-    rv = JS_PKCS11_SetPIN( p11_ctx, binOldPin.pVal, binOldPin.nLen, binNewPin.pVal, binNewPin.nLen );
-    manApplet->logP11Result( "C_SetPIN", rv );
+    rv = manApplet->cryptokiAPI()->SetPIN( hSession, binOldPin.pVal, binOldPin.nLen, binNewPin.pVal, binNewPin.nLen );
 
     if( rv != CKR_OK )
     {

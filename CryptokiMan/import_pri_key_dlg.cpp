@@ -5,6 +5,7 @@
 #include "mainwindow.h"
 #include "js_pkcs11.h"
 #include "common.h"
+#include "cryptoki_api.h"
 
 static QStringList sFalseTrue = { "false", "true" };
 
@@ -131,10 +132,8 @@ void ImportPriKeyDlg::connectAttributes()
 
 void ImportPriKeyDlg::accept()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
-    int nFlags = 0;
     CK_SESSION_HANDLE   hSession = -1;
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
@@ -313,15 +312,12 @@ void ImportPriKeyDlg::clickFind()
 
 int ImportPriKeyDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[20];
     CK_ULONG uCount = 0;
@@ -452,9 +448,7 @@ int ImportPriKeyDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
         uCount++;
     }
 
-    manApplet->logTemplate( sTemplate, uCount );
-    rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
-    manApplet->logP11Result( "C_CreateObject", rv );
+    rv = manApplet->cryptokiAPI()->CreateObject( hSession, sTemplate, uCount, &hObject );
 
     if( rv != CKR_OK )
     {
@@ -467,15 +461,12 @@ int ImportPriKeyDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
 
 int ImportPriKeyDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[20];
     CK_ULONG uCount = 0;
@@ -709,9 +700,7 @@ int ImportPriKeyDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
         uCount++;
     }
 
-    manApplet->logTemplate( sTemplate, uCount );
-    rv = JS_PKCS11_CreateObject(p11_ctx, sTemplate, uCount, &hObject );
-    manApplet->logP11Result( "C_CreateObject", rv );
+    rv = manApplet->cryptokiAPI()->CreateObject( hSession, sTemplate, uCount, &hObject );
 
     if( rv != CKR_OK )
     {
@@ -724,15 +713,12 @@ int ImportPriKeyDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
 
 int ImportPriKeyDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[20];
     CK_ULONG uCount = 0;
@@ -863,9 +849,7 @@ int ImportPriKeyDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
         uCount++;
     }
 
-    manApplet->logTemplate( sTemplate, uCount );
-    rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
-    manApplet->logP11Result( "C_CreateObject", rv );
+    rv = manApplet->cryptokiAPI()->CreateObject( hSession, sTemplate, uCount, &hObject );
 
     if( rv != CKR_OK )
     {
@@ -878,15 +862,12 @@ int ImportPriKeyDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
 
 int ImportPriKeyDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
 
     CK_ATTRIBUTE sTemplate[20];
@@ -1054,9 +1035,7 @@ int ImportPriKeyDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
         uCount++;
     }
 
-    manApplet->logTemplate( sTemplate, uCount );
-    rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
-    manApplet->logP11Result( "C_CreateObject", rv );
+    rv = manApplet->cryptokiAPI()->CreateObject( hSession, sTemplate, uCount, &hObject );
 
     if( rv != CKR_OK )
     {

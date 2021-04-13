@@ -3,6 +3,7 @@
 #include "mainwindow.h"
 #include "js_pkcs11.h"
 #include "common.h"
+#include "cryptoki_api.h"
 
 static QStringList sFalseTrue = { "false", "true" };
 
@@ -99,16 +100,13 @@ void CreateECPubKeyDlg::connectAttributes()
 
 void CreateECPubKeyDlg::accept()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
 
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[20];
     long uCount = 0;
@@ -257,10 +255,7 @@ void CreateECPubKeyDlg::accept()
         uCount++;
     }
 
-    manApplet->logTemplate( sTemplate, uCount );
-
-    rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
-    manApplet->logP11Result( "C_CreateObject", rv );
+    rv = manApplet->cryptokiAPI()->CreateObject( hSession, sTemplate, uCount, &hObject );
 
     if( rv != CKR_OK )
     {

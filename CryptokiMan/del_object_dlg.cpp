@@ -5,6 +5,7 @@
 
 #include "common.h"
 #include "man_tree_item.h"
+#include "cryptoki_api.h"
 
 DelObjectDlg::DelObjectDlg(QWidget *parent) :
     QDialog(parent)
@@ -70,20 +71,16 @@ void DelObjectDlg::initialize()
 
 void DelObjectDlg::deleteObj()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     long hObject = mObjectText->text().toLong();
 
-    rv = JS_PKCS11_DestroyObject( p11_ctx, hObject );
-    manApplet->logP11Result( "C_DestroyObject", rv );
+    rv = manApplet->cryptokiAPI()->DestroyObject( hSession, hObject );
 
     if( rv != CKR_OK )
     {
@@ -98,9 +95,6 @@ void DelObjectDlg::deleteObj()
 void DelObjectDlg::deleteAllObj()
 {
     if( manApplet == NULL ) return;
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
-    if( p11_ctx == NULL ) return;
-
     QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
 
 
@@ -109,7 +103,7 @@ void DelObjectDlg::deleteAllObj()
 
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[1];
     long uCount = 0;
@@ -152,23 +146,20 @@ void DelObjectDlg::deleteAllObj()
     sTemplate[uCount].ulValueLen = sizeof(objClass);
     uCount++;
 
-    manApplet->logTemplate( sTemplate, uCount );
+    rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, uCount );
+    if( rv != CKR_OK ) return;
 
-    rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCount );
-    manApplet->logP11Result( "C_FindObjectsInit", rv );
+    rv = manApplet->cryptokiAPI()->FindObjects( hSession, sObjects, uMaxObjCnt, &uObjCnt );
+    if( rv != CKR_OK ) return;
 
-    rv = JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
-    manApplet->logP11Result( "C_FindObjects", rv );
-
-    rv = JS_PKCS11_FindObjectsFinal( p11_ctx );
-    manApplet->logP11Result( "C_FindObjectsFinal", rv );
+    rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
+    if( rv != CKR_OK ) return;
 
     mLabelCombo->clear();
 
     for( int i=0; i < uObjCnt; i++ )
     {
-        rv = JS_PKCS11_DestroyObject( p11_ctx, sObjects[i] );
-        manApplet->logP11Result( "C_DestroyObject", rv );
+        rv = manApplet->cryptokiAPI()->DestroyObject( hSession, sObjects[i] );
     }
 
     manApplet->showTypeData( nSlotSel, nDataType );
@@ -190,8 +181,6 @@ void DelObjectDlg::labelChanged( int index )
 void DelObjectDlg::objectChanged( int index )
 {
     if( manApplet == NULL ) return;
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
-    if( p11_ctx == NULL ) return;
 
     QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
 
@@ -201,7 +190,7 @@ void DelObjectDlg::objectChanged( int index )
 
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[1];
     long uCount = 0;
@@ -226,16 +215,14 @@ void DelObjectDlg::objectChanged( int index )
     sTemplate[uCount].ulValueLen = sizeof(objClass);
     uCount++;
 
-    manApplet->logTemplate( sTemplate, uCount );
+    rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, uCount );
+    if( rv != CKR_OK ) return;
 
-    rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCount );
-    manApplet->logP11Result( "C_FindObjectsInit", rv );
+    rv = manApplet->cryptokiAPI()->FindObjects( hSession, sObjects, uMaxObjCnt, &uObjCnt );
+    if( rv != CKR_OK ) return;
 
-    rv = JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
-    manApplet->logP11Result( "C_FindObjects", rv );
-
-    rv = JS_PKCS11_FindObjectsFinal( p11_ctx );
-    manApplet->logP11Result( "C_FindObjectsFinal", rv );
+    rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
+    if( rv != CKR_OK ) return;
 
     mLabelCombo->clear();
 
@@ -244,8 +231,7 @@ void DelObjectDlg::objectChanged( int index )
         BIN binLabel = {0,0};
         char *pHex = NULL;
 
-        rv = JS_PKCS11_GetAttributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
-        manApplet->logP11Result( "C_GetAttribute2", rv );
+        rv = manApplet->cryptokiAPI()->GetAttributeValue2( hSession, sObjects[i], CKA_LABEL, &binLabel );
 
         const QVariant objVal =  QVariant( (int)sObjects[i] );
 

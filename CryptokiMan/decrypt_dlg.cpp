@@ -2,6 +2,7 @@
 #include "man_applet.h"
 #include "mainwindow.h"
 #include "js_pkcs11.h"
+#include "cryptoki_api.h"
 
 static QStringList sMechList = {
     "CKM_DES3_ECB", "CKM_DES3_CBC", "CKM_AES_ECB", "CKM_AES_CBC"
@@ -82,13 +83,12 @@ void DecryptDlg::initialize()
 
 void DecryptDlg::keyTypeChanged( int index )
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[1];
     CK_ULONG uCnt = 0;
@@ -116,16 +116,14 @@ void DecryptDlg::keyTypeChanged( int index )
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
     uCnt++;
 
-    manApplet->logTemplate( sTemplate, uCnt );
+    rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, uCnt );
+    if( rv != CKR_OK ) return;
 
-    rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
-    manApplet->logP11Result( "C_FindObjectsInit", rv );
+    rv = manApplet->cryptokiAPI()->FindObjects( hSession, sObjects, uMaxObjCnt, &uObjCnt );
+    if( rv != CKR_OK ) return;
 
-    rv = JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
-    manApplet->logP11Result( "C_FindObjects", rv );
-
-    rv = JS_PKCS11_FindObjectsFinal( p11_ctx );
-    manApplet->logP11Result( "C_FindObjectsFinal", rv );
+    rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
+    if( rv != CKR_OK ) return;
 
     mLabelCombo->clear();
 
@@ -133,8 +131,8 @@ void DecryptDlg::keyTypeChanged( int index )
     {
         char    *pStr = NULL;
         BIN binLabel = {0,0};
-        rv = JS_PKCS11_GetAttributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
-        manApplet->logP11Result( "C_GetAttribute2", rv );
+
+        rv = manApplet->cryptokiAPI()->GetAttributeValue2( hSession, sObjects[i], CKA_LABEL, &binLabel );
 
         QVariant objVal = QVariant((int)sObjects[i]);
         JS_BIN_string( &binLabel, &pStr );
@@ -162,13 +160,12 @@ void DecryptDlg::labelChanged( int index )
 
 void DecryptDlg::clickInit()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     long hObject = mObjectText->text().toLong();
 
@@ -186,8 +183,7 @@ void DecryptDlg::clickInit()
         sMech.ulParameterLen = binParam.nLen;
     }
 
-    rv = JS_PKCS11_DecryptInit( p11_ctx, &sMech, hObject );
-    manApplet->logP11Result( "C_DecryptInit", rv );
+    rv = manApplet->cryptokiAPI()->DecryptInit( hSession, &sMech, hObject );
 
     if( rv != CKR_OK )
     {
@@ -203,13 +199,12 @@ void DecryptDlg::clickInit()
 
 void DecryptDlg::clickUpdate()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     QString strInput = mInputText->text();
 
@@ -236,8 +231,7 @@ void DecryptDlg::clickUpdate()
 
     BIN binDecPart = {0,0};
 
-    rv = JS_PKCS11_DecryptUpdate( p11_ctx, binInput.pVal, binInput.nLen, pDecPart, (CK_ULONG_PTR)&uDecPartLen );
-    manApplet->logP11Result( "C_DecryptUpdate", rv );
+    rv = manApplet->cryptokiAPI()->DecryptUpdate( hSession, binInput.pVal, binInput.nLen, pDecPart, (CK_ULONG_PTR)&uDecPartLen );
 
     if( rv != CKR_OK )
     {
@@ -264,13 +258,12 @@ void DecryptDlg::clickUpdate()
 
 void DecryptDlg::clickFinal()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
 
     unsigned char *pDecPart = NULL;
@@ -281,9 +274,7 @@ void DecryptDlg::clickFinal()
     pDecPart = (unsigned char *)JS_malloc( mInputText->text().length() );
     if( pDecPart == NULL )return;
 
-
-    rv = JS_PKCS11_DecryptFinal( p11_ctx, pDecPart, (CK_ULONG_PTR)&uDecPartLen );
-    manApplet->logP11Result( "C_DecryptFinal", rv );
+    rv = manApplet->cryptokiAPI()->DecryptFinal( hSession, pDecPart, (CK_ULONG_PTR)&uDecPartLen );
 
     if( rv != CKR_OK )
     {
@@ -313,13 +304,12 @@ void DecryptDlg::clickFinal()
 
 void DecryptDlg::clickDecrypt()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     QString strInput = mInputText->text();
     if( strInput.isEmpty() )
@@ -340,8 +330,7 @@ void DecryptDlg::clickDecrypt()
     long uDecDataLen = mInputText->text().length();
     pDecData = (unsigned char *)JS_malloc( mInputText->text().length() );
 
-    rv = JS_PKCS11_Decrypt( p11_ctx, binInput.pVal, binInput.nLen, pDecData, (CK_ULONG_PTR)&uDecDataLen );
-    manApplet->logP11Result( "C_Decrypt", rv );
+    rv = manApplet->cryptokiAPI()->Decrypt( hSession, binInput.pVal, binInput.nLen, pDecData, (CK_ULONG_PTR)&uDecDataLen );
 
     if( rv != CKR_OK )
     {
@@ -365,6 +354,7 @@ void DecryptDlg::clickDecrypt()
     if( pHex ) JS_free(pHex);
     JS_BIN_reset( &binDecData );
 }
+
 void DecryptDlg::clickClose()
 {
     this->hide();

@@ -3,6 +3,7 @@
 #include "man_applet.h"
 #include "js_pkcs11.h"
 #include "common.h"
+#include "cryptoki_api.h"
 
 static QStringList sFalseTrue = { "false", "true" };
 
@@ -103,14 +104,11 @@ void DeriveKeyDlg::initialize()
 
 void DeriveKeyDlg::accept()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     int rv = -1;
 
@@ -307,9 +305,7 @@ void DeriveKeyDlg::accept()
         uCount++;
     }
 
-    manApplet->logTemplate( sTemplate, uCount );
-
-    rv = JS_PKCS11_DeriveKey( p11_ctx, &sMech, hSrcKey, sTemplate, uCount, &uObj );
+    rv = manApplet->cryptokiAPI()->DeriveKey( hSession, &sMech, hSrcKey, sTemplate, uCount, &uObj );
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to run DeriveKey(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this);
@@ -451,14 +447,13 @@ void DeriveKeyDlg::clickEndDate()
 
 void DeriveKeyDlg::setSrcLabelList()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     int rv = -1;
 
@@ -478,16 +473,14 @@ void DeriveKeyDlg::setSrcLabelList()
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
     uCnt++;
 
-    manApplet->logTemplate( sTemplate, uCnt );
+    rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, uCnt );
+    if( rv != CKR_OK ) return;
 
-    rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
-    manApplet->logP11Result( "C_FindObjectsInit", rv );
+    rv = manApplet->cryptokiAPI()->FindObjects( hSession, sObjects, uMaxObjCnt, &uObjCnt );
+    if( rv != CKR_OK ) return;
 
-    rv = JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
-    manApplet->logP11Result( "C_FindObjects", rv );
-
-    rv = JS_PKCS11_FindObjectsFinal( p11_ctx );
-    manApplet->logP11Result( "C_FindObjectsFinal", rv );
+    rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
+    if( rv != CKR_OK ) return;
 
     mSrcLabelCombo->clear();
 
@@ -497,8 +490,7 @@ void DeriveKeyDlg::setSrcLabelList()
         BIN binLabel = {0,0};
         QVariant objVal = QVariant( (int)sObjects[i] );
 
-        rv = JS_PKCS11_GetAttributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
-        manApplet->logP11Result( "C_GetAttributeValue2", rv );
+        rv = manApplet->cryptokiAPI()->GetAttributeValue2( hSession, sObjects[i], CKA_LABEL, &binLabel );
 
         JS_BIN_string( &binLabel, &pStr );
 
@@ -515,16 +507,14 @@ void DeriveKeyDlg::setSrcLabelList()
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
     uCnt++;
 
-    manApplet->logTemplate( sTemplate, uCnt );
+    rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, uCnt );
+    if( rv != CKR_OK ) return;
 
-    rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
-    manApplet->logP11Result( "C_FindObjectsInit", rv );
+    rv = manApplet->cryptokiAPI()->FindObjects( hSession, sObjects, uMaxObjCnt, &uObjCnt );
+    if( rv != CKR_OK ) return;
 
-    rv = JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
-    manApplet->logP11Result( "C_FindObjects", rv );
-
-    rv = JS_PKCS11_FindObjectsFinal( p11_ctx );
-    manApplet->logP11Result( "C_FindObjectsFinal", rv );
+    rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
+    if( rv != CKR_OK ) return;
 
     for( int i=0; i < uObjCnt; i++ )
     {
@@ -532,8 +522,7 @@ void DeriveKeyDlg::setSrcLabelList()
         BIN binLabel = {0,0};
         QVariant objVal = QVariant( (int)sObjects[i] );
 
-        rv = JS_PKCS11_GetAttributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
-        manApplet->logP11Result( "C_GetAttributeValue2", rv );
+        rv = manApplet->cryptokiAPI()->GetAttributeValue2( hSession, sObjects[i], CKA_LABEL, &binLabel );
 
         JS_BIN_string( &binLabel, &pStr );
 

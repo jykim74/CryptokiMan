@@ -2,6 +2,7 @@
 #include "mainwindow.h"
 #include "man_applet.h"
 #include "js_pkcs11.h"
+#include "cryptoki_api.h"
 
 InitPinDlg::InitPinDlg(QWidget *parent) :
     QDialog(parent)
@@ -52,15 +53,12 @@ void InitPinDlg::initialize()
 
 void InitPinDlg::accept()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
     QString strPin = mPinText->text();
 
     if( strPin.isEmpty() )
@@ -74,8 +72,7 @@ void InitPinDlg::accept()
     BIN binPin = {0,0};
     JS_BIN_set( &binPin, (unsigned char *)strPin.toStdString().c_str(), strPin.length() );
 
-    rv = JS_PKCS11_InitPIN( p11_ctx, binPin.pVal, binPin.nLen );
-    manApplet->logP11Result( "C_InitPIN", rv );
+    rv = manApplet->cryptokiAPI()->InitPIN( hSession, binPin.pVal, binPin.nLen );
 
     if( rv != CKR_OK )
     {

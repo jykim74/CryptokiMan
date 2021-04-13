@@ -3,6 +3,7 @@
 #include "man_applet.h"
 #include "mainwindow.h"
 #include "js_pkcs11.h"
+#include "cryptoki_api.h"
 
 static QStringList sAttributeList = {
     "CKA_LABEL", "CKA_APPLICATION", "CKA_VALUE", "CKA_OBJECT_ID",
@@ -78,8 +79,6 @@ void EditAttributeDlg::labelChanged( int index )
 void EditAttributeDlg::objectChanged( int index )
 {
     if( manApplet == NULL ) return;
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
-    if( p11_ctx == NULL ) return;
 
     QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
 
@@ -88,7 +87,7 @@ void EditAttributeDlg::objectChanged( int index )
 
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[1];
     long uCount = 0;
@@ -113,16 +112,15 @@ void EditAttributeDlg::objectChanged( int index )
     sTemplate[uCount].ulValueLen = sizeof(objClass);
     uCount++;
 
-    manApplet->logTemplate( sTemplate, uCount );
+    rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, uCount );
+    if( rv != CKR_OK ) return;
 
-    rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCount );
-    manApplet->logP11Result( "C_FindObjectsInit", rv );
+    rv = manApplet->cryptokiAPI()->FindObjects( hSession, sObjects, uMaxObjCnt, &uObjCnt );
+    if( rv != CKR_OK ) return;
 
-    rv = JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
-    manApplet->logP11Result( "C_FindObjects", rv );
+    rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
+    if( rv != CKR_OK ) return;
 
-    rv = JS_PKCS11_FindObjectsFinal( p11_ctx );
-    manApplet->logP11Result( "C_FindObjectsFinal", rv );
 
     mLabelCombo->clear();
 
@@ -131,8 +129,7 @@ void EditAttributeDlg::objectChanged( int index )
         BIN binLabel = {0,0};
         char *pHex = NULL;
 
-        JS_PKCS11_GetAttributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
-        manApplet->logP11Result( "C_GetAttributeValue2", rv );
+        manApplet->cryptokiAPI()->GetAttributeValue2( hSession, sObjects[i], CKA_LABEL, &binLabel );
 
         const QVariant objVal =  QVariant( (int)sObjects[i] );
 
@@ -182,15 +179,12 @@ void EditAttributeDlg::clickClose()
 
 void EditAttributeDlg::clickGetAttribute()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     long hObject = mObjectText->text().toLong();
 
@@ -207,8 +201,8 @@ void EditAttributeDlg::clickGetAttribute()
 
     BIN binVal = {0,0};
     char *pHex = NULL;
-    rv = JS_PKCS11_GetAttributeValue2( p11_ctx, hObject, attrType, &binVal );
-    manApplet->logP11Result( "C_GetAttributeValue2", rv );
+
+    rv = manApplet->cryptokiAPI()->GetAttributeValue2( hSession, hObject, attrType, &binVal );
 
     if( rv != CKR_OK )
     {
@@ -225,15 +219,13 @@ void EditAttributeDlg::clickGetAttribute()
 
 void EditAttributeDlg::clickSetAttribute()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
-    int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
     long hObject = mObjectText->text().toLong();
 
     if( hObject <= 0 )
@@ -253,8 +245,7 @@ void EditAttributeDlg::clickSetAttribute()
 
     JS_BIN_decodeHex( strValue.toStdString().c_str(), &binVal );
 
-    rv = JS_PKCS11_SetAttributeValue2( p11_ctx, hObject, attrType, &binVal );
-    manApplet->logP11Result( "C_SetAttributeValue2", rv );
+    rv = manApplet->cryptokiAPI()->SetAttributeValue2( hSession, hObject, attrType, &binVal );
 
     if( rv != CKR_OK )
     {

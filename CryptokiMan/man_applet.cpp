@@ -59,7 +59,6 @@ ManApplet::ManApplet( QObject *parent )
         AutoUpdateService::instance()->start();
     }
 #endif
-    p11_ctx_ = NULL;
 }
 
 ManApplet::~ManApplet()
@@ -84,42 +83,6 @@ void ManApplet::showTypeData( int nSlotIndex, int nType )
     main_win_->showTypeData( nSlotIndex, nType );
 }
 
-void ManApplet::logP11Result( const QString strName, int rv )
-{
-    QString strLog;
-
-    if( rv == CKR_OK )
-    {
-        strLog = QString( "%1 ok" ).arg(strName );
-        log( strLog );
-    }
-    else
-    {
-        strLog = QString( "%1 error[%2:%3]" ).arg( strName ).arg(rv).arg( JS_PKCS11_GetErrorMsg(rv));
-        elog( strLog );
-    }
-}
-
-void ManApplet::logTemplate( const CK_ATTRIBUTE sTemplate[], int nCount )
-{
-    if( nCount <= 0 ) dlog( "Template is empty" );
-
-    for( int i = 0; i < nCount; i++ )
-    {
-        QString strLog = QString( "%1 Type : %2 %3")
-                .arg(i).arg(sTemplate[i].type)
-                .arg(JS_PKCS11_GetCKAName(sTemplate[i].type));
-
-        manApplet->dlog( strLog );
-
-        strLog = QString( "%1 Value[%2] : %3" )
-                .arg(i).arg(sTemplate[i].ulValueLen)
-                .arg( getHexString((unsigned char *)sTemplate[i].pValue, sTemplate[i].ulValueLen));
-
-        manApplet->dlog( strLog );
-    }
-}
-
 void ManApplet::restartApp()
 {
     if( in_exit_ || QCoreApplication::closingDown() )
@@ -138,24 +101,6 @@ void ManApplet::restartApp()
 void ManApplet::setCmd(QString cmd)
 {
     cmd_ = cmd;
-}
-
-int ManApplet::openLibrary( const QString strPath )
-{
-    int ret = 0;
-
-    ret = JS_PKCS11_LoadLibrary( (JP11_CTX **)&p11_ctx_, strPath.toLocal8Bit().toStdString().c_str() );
-
-    cryptoki_api_->setCTX( p11_ctx_ );
-
-    return ret;
-}
-
-int ManApplet::unloadLibrary()
-{
-    if( p11_ctx_ ) JS_PKCS11_ReleaseLibrry( (JP11_CTX **)&p11_ctx_ );
-    manApplet->log( "library is released" );
-    return 0;
 }
 
 void ManApplet::log( const QString strLog )

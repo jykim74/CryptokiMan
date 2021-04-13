@@ -484,7 +484,7 @@ int MainWindow::openLibrary(const QString libPath)
 {
     int ret = 0;
 
-    ret = manApplet->openLibrary( libPath );
+    ret = manApplet->cryptokiAPI()->openLibrary( libPath );
 
     if( ret == 0 )
     {
@@ -512,7 +512,7 @@ int MainWindow::openLibrary(const QString libPath)
 
 void MainWindow::open()
 {
-    if( manApplet->getP11CTX() != NULL )
+    if( manApplet->cryptokiAPI()->getCTX() != NULL )
     {
         manApplet->warningBox( tr("Cryptoki library has already loaded"), this );
         return;
@@ -556,7 +556,7 @@ void MainWindow::quit()
 
 void MainWindow::unload()
 {
-    manApplet->unloadLibrary();
+    manApplet->cryptokiAPI()->unloadLibrary();
 }
 
 void MainWindow::openSession()
@@ -1436,13 +1436,10 @@ void MainWindow::showSessionInfo(int index)
 
 void MainWindow::showObjectsInfo(int index)
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     SlotInfo slotInfo = slot_infos.at(index);
 
-
-    p11_ctx->hSession = slotInfo.getSessionHandle();
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[100];
     CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
@@ -1602,7 +1599,6 @@ void MainWindow::showAttribute( int nSlotIdx, int nValType, CK_ATTRIBUTE_TYPE uA
 
 void MainWindow::showCertificateInfo( int index, long hObject )
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     SlotInfo slotInfo = slot_infos.at(index);

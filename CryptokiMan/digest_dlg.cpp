@@ -2,6 +2,7 @@
 #include "mainwindow.h"
 #include "man_applet.h"
 #include "js_pkcs11.h"
+#include "cryptoki_api.h"
 
 static QStringList sMechList = {
     "CKM_MD5", "CKM_SHA_1", "CKM_SHA256", "CKM_SHA512"
@@ -74,15 +75,12 @@ void DigestDlg::initialize()
 
 void DigestDlg::clickInit()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     BIN binParam = {0,0};
     CK_MECHANISM stMech;
@@ -100,8 +98,7 @@ void DigestDlg::clickInit()
         stMech.ulParameterLen = binParam.nLen;
     }
 
-    rv = JS_PKCS11_DigestInit( p11_ctx, &stMech );
-    manApplet->logP11Result( "C_DigestInit", rv );
+    rv = manApplet->cryptokiAPI()->DigestInit( hSession, &stMech );
 
     if( rv == CKR_OK )
     {
@@ -118,15 +115,12 @@ void DigestDlg::clickInit()
 
 void DigestDlg::clickUpdate()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     QString strInput = mInputText->text();
     if( strInput.isEmpty() )
@@ -145,8 +139,7 @@ void DigestDlg::clickUpdate()
     else if( mInputCombo->currentIndex() == 2 )
         JS_BIN_decodeBase64( strInput.toStdString().c_str(), &binInput );
 
-    rv = JS_PKCS11_DigestUpdate( p11_ctx, binInput.pVal, binInput.nLen );
-    manApplet->logP11Result( "C_DigestUpdate", rv );
+    rv = manApplet->cryptokiAPI()->DigestUpdate( hSession, binInput.pVal, binInput.nLen );
 
     if( rv == CKR_OK )
     {
@@ -164,15 +157,13 @@ void DigestDlg::clickUpdate()
 
 void DigestDlg::clickFinal()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
-    int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
 
     unsigned char sDigest[512];
@@ -181,8 +172,7 @@ void DigestDlg::clickFinal()
 
     memset( sDigest, 0x00, sizeof(sDigest) );
 
-    rv = JS_PKCS11_DigestFinal( p11_ctx, sDigest, &uDigestLen );
-    manApplet->logP11Result( "C_DigestFinal", rv );
+    rv = manApplet->cryptokiAPI()->DigestFinal( hSession, sDigest, &uDigestLen );
 
     if( rv == CKR_OK )
     {
@@ -204,15 +194,12 @@ void DigestDlg::clickFinal()
 
 void DigestDlg::clickDigest()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     QString strInput = mInputText->text();
     if( strInput.isEmpty() )
@@ -236,8 +223,7 @@ void DigestDlg::clickDigest()
 
     memset( sDigest, 0x00, sizeof(sDigest) );
 
-    rv = JS_PKCS11_Digest( p11_ctx, binInput.pVal, binInput.nLen, sDigest, &uDigestLen );
-    manApplet->logP11Result( "C_Digest", rv );
+    rv = manApplet->cryptokiAPI()->Digest( hSession, binInput.pVal, binInput.nLen, sDigest, &uDigestLen );
 
     if( rv == CKR_OK )
     {

@@ -3,7 +3,6 @@
 
 #include <QObject>
 #include <QMessageBox>
-#include "js_pkcs11.h"
 
 class MainWindow;
 
@@ -28,11 +27,8 @@ public:
     AboutDlg* aboutDlg() { return about_dlg_; };
     LogViewDlg* logViewDlg() { return log_view_dlg_; };
     SettingsMgr* settingsMgr() { return settings_mgr_; };
-    JP11_CTX* getP11CTX() { return p11_ctx_; };
     CryptokiAPI* cryptokiAPI() { return cryptoki_api_; };
     QString cmd() { return cmd_; };
-    void logP11Result( const QString strName, int rv );
-    void logTemplate( const CK_ATTRIBUTE sTemplate[], int nCount );
 
     void showTypeData( int nSlotIndex, int nType );
 
@@ -48,9 +44,6 @@ public:
 
     QString getBrand();
     QString getSetPath();
-
-    int openLibrary( const QString strPath );
-    int unloadLibrary();
 
     void restartApp();
     void setCmd( QString cmd );
@@ -73,7 +66,6 @@ private:
 
     bool in_exit_;
     QString cmd_;
-    JP11_CTX       *p11_ctx_;
     CryptokiAPI     *cryptoki_api_;
 };
 

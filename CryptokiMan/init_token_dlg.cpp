@@ -2,6 +2,7 @@
 #include "man_applet.h"
 #include "mainwindow.h"
 #include "js_pkcs11.h"
+#include "cryptoki_api.h"
 
 InitTokenDlg::InitTokenDlg(QWidget *parent) :
     QDialog(parent)
@@ -51,10 +52,7 @@ void InitTokenDlg::initialize()
 
 void InitTokenDlg::accept()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
@@ -81,9 +79,11 @@ void InitTokenDlg::accept()
         return;
     }
 
-    rv = JS_PKCS11_InitToken( p11_ctx, slotInfo.getSlotID(), (CK_UTF8CHAR_PTR)strPIN.toStdString().c_str(),
-                              strPIN.length(), (CK_UTF8CHAR_PTR)strLabel.toStdString().c_str() );
-    manApplet->logP11Result( "C_InitToken", rv );
+    rv = manApplet->cryptokiAPI()->InitToken(
+                slotInfo.getSlotID(),
+                (CK_UTF8CHAR_PTR)strPIN.toStdString().c_str(),
+                strPIN.length(),
+                (CK_UTF8CHAR_PTR)strLabel.toStdString().c_str() );
 
     if( rv != CKR_OK )
     {

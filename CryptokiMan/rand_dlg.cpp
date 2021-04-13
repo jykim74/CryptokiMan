@@ -2,6 +2,7 @@
 #include "mainwindow.h"
 #include "man_applet.h"
 #include "js_pkcs11.h"
+#include "cryptoki_api.h"
 
 static QStringList sSeedList = { "String", "Hex", "Base64" };
 
@@ -62,9 +63,6 @@ void RandDlg::initialize()
 
 void RandDlg::accept()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
-    if( p11_ctx == NULL ) return;
-
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
     if( slot_infos.size() <= 0 ) return;
 
@@ -73,7 +71,7 @@ void RandDlg::accept()
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     QString strLen = mLengthText->text();
 
@@ -87,8 +85,7 @@ void RandDlg::accept()
 
     pRand = (CK_BYTE_PTR)JS_malloc( strLen.toInt() );
 
-    rv = JS_PKCS11_GenerateRandom( p11_ctx, pRand, strLen.toInt());
-    manApplet->logP11Result( "C_GenerateRandom", rv );
+    rv = manApplet->cryptokiAPI()->GenerateRandom( hSession, pRand, strLen.toInt());
 
     if( rv != CKR_OK )
     {
@@ -110,14 +107,11 @@ void RandDlg::accept()
 
 void RandDlg::clickSeed()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
     int rv = -1;
 
     QString strSeed = mSeedText->text();
@@ -136,8 +130,7 @@ void RandDlg::clickSeed()
     else if( mSeedCombo->currentIndex() == 2 )
         JS_BIN_decodeBase64( strSeed.toStdString().c_str(), &binSeed );
 
-    rv = JS_PKCS11_SeedRandom( p11_ctx, binSeed.pVal, binSeed.nLen );
-    manApplet->logP11Result( "C_SeedRandom", rv );
+    rv = manApplet->cryptokiAPI()->SeedRandom( hSession, binSeed.pVal, binSeed.nLen );
 
     if( rv != CKR_OK )
     {

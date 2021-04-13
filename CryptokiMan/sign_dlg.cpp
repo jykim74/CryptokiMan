@@ -2,6 +2,7 @@
 #include "man_applet.h"
 #include "mainwindow.h"
 #include "js_pkcs11.h"
+#include "cryptoki_api.h"
 
 static QStringList sMechList = {
     "CKM_RSA_PKCS", "CKM_SHA1_RSA_PKCS", "CKM_SHA256_RSA_PKCS", "CKM_SHA384_RSA_PKCS", "CKM_SHA512_RSA_PKCS",
@@ -84,13 +85,12 @@ void SignDlg::initialize()
 
 void SignDlg::keyTypeChanged( int index )
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[1];
     CK_ULONG uCnt = 0;
@@ -119,15 +119,14 @@ void SignDlg::keyTypeChanged( int index )
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
     uCnt++;
 
-    manApplet->logTemplate( sTemplate, uCnt );
-    rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
-    manApplet->logP11Result( "C_FindObjectsInit", rv );
+    rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, uCnt );
+    if( rv != CKR_OK ) return;
 
-    rv = JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
-    manApplet->logP11Result( "C_FindObjects", rv );
+    rv = manApplet->cryptokiAPI()->FindObjects( hSession, sObjects, uMaxObjCnt, &uObjCnt );
+    if( rv != CKR_OK ) return;
 
-    rv = JS_PKCS11_FindObjectsFinal( p11_ctx );
-    manApplet->logP11Result( "C_FindObjectsFinal", rv );
+    rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
+    if( rv != CKR_OK ) return;
 
     mLabelCombo->clear();
 
@@ -135,8 +134,8 @@ void SignDlg::keyTypeChanged( int index )
     {
         char    *pStr = NULL;
         BIN binLabel = {0,0};
-        rv = JS_PKCS11_GetAttributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
-        manApplet->logP11Result( "C_GetAttributeValue2", rv );
+
+        rv = manApplet->cryptokiAPI()->GetAttributeValue2( hSession, sObjects[i], CKA_LABEL, &binLabel );
 
         QVariant objVal = QVariant((int)sObjects[i]);
         JS_BIN_string( &binLabel, &pStr );
@@ -163,13 +162,12 @@ void SignDlg::labelChanged( int index )
 
 void SignDlg::clickInit()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     CK_MECHANISM sMech;
     BIN binParam = {0,0};
@@ -186,8 +184,7 @@ void SignDlg::clickInit()
     }
 
     CK_OBJECT_HANDLE uObject = mObjectText->text().toLong();
-    rv = JS_PKCS11_SignInit( p11_ctx, &sMech, uObject );
-    manApplet->logP11Result( "C_SignInit", rv );
+    rv = manApplet->cryptokiAPI()->SignInit( hSession, &sMech, uObject );
 
     if( rv != CKR_OK )
     {
@@ -204,13 +201,12 @@ void SignDlg::clickInit()
 
 void SignDlg::clickUpdate()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     QString strInput = mInputText->text();
 
@@ -229,8 +225,7 @@ void SignDlg::clickUpdate()
     else if( mInputCombo->currentIndex() == 2 )
         JS_BIN_decodeBase64( strInput.toStdString().c_str(), &binInput );
 
-    rv = JS_PKCS11_SignUpdate( p11_ctx, binInput.pVal, binInput.nLen );
-    manApplet->logP11Result( "C_SignUpdate", rv );
+    rv = manApplet->cryptokiAPI()->SignUpdate( hSession, binInput.pVal, binInput.nLen );
 
     if( rv != CKR_OK )
     {
@@ -246,20 +241,17 @@ void SignDlg::clickUpdate()
 
 void SignDlg::clickFinal()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     unsigned char sSign[1024];
     long uSignLen = 1024;
 
-
-    rv = JS_PKCS11_SignFinal( p11_ctx, sSign, (CK_ULONG_PTR)&uSignLen );
-    manApplet->logP11Result( "C_SignFinal", rv );
+    rv = manApplet->cryptokiAPI()->SignFinal( hSession, sSign, (CK_ULONG_PTR)&uSignLen );
 
     if( rv != CKR_OK )
     {
@@ -284,13 +276,12 @@ void SignDlg::clickFinal()
 
 void SignDlg::clickSign()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nSlotSel = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
 
     QString strInput = mInputText->text();
@@ -313,8 +304,7 @@ void SignDlg::clickSign()
     unsigned char sSign[1024];
     long uSignLen = 1024;
 
-    rv = JS_PKCS11_Sign( p11_ctx, binInput.pVal, binInput.nLen, sSign, (CK_ULONG_PTR)&uSignLen );
-    manApplet->logP11Result( "C_Sign", rv );
+    rv = manApplet->cryptokiAPI()->Sign( hSession, binInput.pVal, binInput.nLen, sSign, (CK_ULONG_PTR)&uSignLen );
 
     if( rv != CKR_OK )
     {

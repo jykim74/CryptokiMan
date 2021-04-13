@@ -3,7 +3,7 @@
 #include "mainwindow.h"
 #include "js_pkcs11.h"
 #include "common.h"
-
+#include "cryptoki_api.h"
 
 static QStringList sMechList = {
     "CKK_AES", "CKK_DES", "CKK_DES3", "CKK_GENERIC_SECRET"
@@ -125,10 +125,7 @@ void CreateKeyDlg::connectAttributes()
 
 void CreateKeyDlg::accept()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
@@ -147,7 +144,7 @@ void CreateKeyDlg::accept()
     memset( &sSDate, 0x00, sizeof(sSDate));
     memset( &sEDate, 0x00, sizeof(sEDate));
 
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     int nKeyPos = mMechCombo->currentIndex();
     keyType = JS_PKCS11_GetCKKType( sMechList.at(nKeyPos).toStdString().c_str());
@@ -316,12 +313,9 @@ void CreateKeyDlg::accept()
         uCount++;
     }
 
-    manApplet->logTemplate( sTemplate, uCount );
+    CK_OBJECT_HANDLE hObject = 0;
 
-    CK_OBJECT_CLASS hObject = 0;
-
-    rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
-    manApplet->logP11Result( "C_CreateObject", rv );
+    rv = manApplet->cryptokiAPI()->CreateObject( hSession, sTemplate, uCount, &hObject );
 
     if( rv != CKR_OK )
     {

@@ -14,7 +14,10 @@ public:
     CryptokiAPI();
     void setCTX( JP11_CTX *pCTX );
     CK_SESSION_HANDLE getSessionHandle();
+    JP11_CTX* getCTX() { return p11_ctx_; };
 
+    int openLibrary( const QString strPath );
+    int unloadLibrary();
     int Initialize( void *pReserved );
     int Finalize( void *pReserved );
     int GetSlotList( CK_BBOOL bVal, CK_SLOT_ID_PTR pSlotList, CK_ULONG_PTR pSlotCnt );
@@ -31,6 +34,9 @@ public:
     int GetObjectSize( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject, CK_ULONG_PTR puSize );
     int GetAttributeValue( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject, CK_ATTRIBUTE_PTR pAttribute, CK_ULONG uAttributeCnt );
     int GetAttributeValue2( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject, CK_ATTRIBUTE_TYPE attrType, BIN *pBinVal );
+    int SetAttributeValue( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject, CK_ATTRIBUTE_PTR pAttribute, CK_ULONG uAttributeCnt );
+    int SetAttributeValue2( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject, CK_ATTRIBUTE_TYPE attrType, BIN *pBinVal );
+
     int OpenSession( CK_SLOT_ID slotID, CK_FLAGS flags, CK_VOID_PTR pApplication, CK_NOTIFY Notify, CK_SESSION_HANDLE_PTR phSession );
     int CloseSession( CK_SESSION_HANDLE hSession );
     int CloseAllSession( CK_SLOT_ID slotID );
@@ -58,6 +64,63 @@ public:
             CK_ATTRIBUTE_PTR pTemplate,
             CK_ULONG ulTemplateCnt,
             CK_OBJECT_HANDLE_PTR phObject );
+
+    int DestroyObject( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject );
+
+    int DigestInit( CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism );
+    int DigestUpdate( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen );
+    int DigestFinal( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pDigest, CK_ULONG_PTR pulDigestLen );
+    int Digest( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDataLen, CK_BYTE_PTR pDigest, CK_ULONG_PTR pulDigestLen );
+
+    int SignInit( CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hKey );
+    int SignUpdate( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen );
+    int SignFinal( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pSign, CK_ULONG_PTR pulSignLen );
+    int Sign( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDataLen, CK_BYTE_PTR pSign, CK_ULONG_PTR pulSignLen );
+
+    int VerifyInit( CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hKey );
+    int VerifyUpdate( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen );
+    int VerifyFinal( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pSign, CK_ULONG ulSignLen );
+    int Verify( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDataLen, CK_BYTE_PTR pSign, CK_ULONG ulSignLen );
+
+    int EncryptInit( CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hKey );
+    int EncryptUpdate( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen, CK_BYTE_PTR pEncPart, CK_ULONG_PTR pulEncPartLen );
+    int EncryptFinal( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pLastEncPart, CK_ULONG_PTR pulLastEncPartLen );
+    int Encrypt( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDataLen, CK_BYTE_PTR pEncData, CK_ULONG_PTR pulEncDataLen );
+
+    int DecryptInit( CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hKey );
+    int DecryptUpdate( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pEncPart, CK_ULONG ulEncPartLen, CK_BYTE_PTR pPart, CK_ULONG_PTR pulPartLen );
+    int DecryptFinal( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pLastPart, CK_ULONG_PTR pulLastPartLen );
+    int Decrypt( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pEncData, CK_ULONG ulEncDataLen, CK_BYTE_PTR pData, CK_ULONG_PTR pulDataLen );
+
+    int InitPIN( CK_SESSION_HANDLE hSession, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinLen );
+    int SetPIN( CK_SESSION_HANDLE hSession, CK_UTF8CHAR_PTR pOldPin, CK_ULONG ulOldLen, CK_UTF8CHAR_PTR pNewPin, CK_ULONG ulNewLen );
+    int InitToken( CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinLen, CK_UTF8CHAR_PTR pLabel );
+
+    int SeedRandom( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pSeed, CK_ULONG ulSeedLen );
+    int GenerateRandom( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pRandomData, CK_ULONG ulRandomLen );
+
+    int DeriveKey( CK_SESSION_HANDLE hSession,
+                   CK_MECHANISM_PTR pMechanism,
+                   CK_OBJECT_HANDLE hBaseKey,
+                   CK_ATTRIBUTE_PTR pTemplate,
+                   CK_ULONG ulTemplateCnt,
+                   CK_OBJECT_HANDLE_PTR phKey );
+
+    int WrapKey( CK_SESSION_HANDLE hSession,
+                 CK_MECHANISM_PTR pMechanism,
+                 CK_OBJECT_HANDLE hWrappingKey,
+                 CK_OBJECT_HANDLE hKey,
+                 CK_BYTE_PTR pWrappedKey,
+                 CK_ULONG_PTR pulWrappedKeyLen );
+
+    int UnwrapKey( CK_SESSION_HANDLE hSession,
+                   CK_MECHANISM_PTR pMechanism,
+                   CK_OBJECT_HANDLE hUnwrappingKey,
+                   CK_BYTE_PTR pWrappedKey,
+                   CK_ULONG ulWrappedKeyLen,
+                   CK_ATTRIBUTE_PTR pTemplate,
+                   CK_ULONG ulTemplateCnt,
+                   CK_OBJECT_HANDLE_PTR phKey );
 
 private:
     void logResult( const QString strName, int rv, qint64 ms = -1 );

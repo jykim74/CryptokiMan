@@ -5,6 +5,7 @@
 #include "mainwindow.h"
 #include "js_pkcs11.h"
 #include "common.h"
+#include "cryptoki_api.h"
 
 static QStringList sFalseTrue = { "false", "true" };
 
@@ -144,11 +145,8 @@ void ImportPFXDlg::connectAttributes()
 
 void ImportPFXDlg::accept()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
-    int nFlags = 0;
-    CK_SESSION_HANDLE   hSession = -1;
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
@@ -363,15 +361,12 @@ void ImportPFXDlg::clickFind()
 
 int ImportPFXDlg::createCert( BIN *pCert )
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[20];
     CK_ULONG uCount = 0;
@@ -470,9 +465,7 @@ int ImportPFXDlg::createCert( BIN *pCert )
         uCount++;
     }
 
-    manApplet->logTemplate( sTemplate, uCount );
-    rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
-    manApplet->logP11Result( "C_CreateObject", rv );
+    rv = manApplet->cryptokiAPI()->CreateObject( hSession, sTemplate, uCount, &hObject );
 
     if( rv != CKR_OK )
     {
@@ -485,15 +478,12 @@ int ImportPFXDlg::createCert( BIN *pCert )
 
 int ImportPFXDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[20];
     CK_ULONG uCount = 0;
@@ -626,9 +616,7 @@ int ImportPFXDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
         uCount++;
     }
 
-    manApplet->logTemplate( sTemplate, uCount );
-    rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
-    manApplet->logP11Result( "C_CreateObject", rv );
+    rv = manApplet->cryptokiAPI()->CreateObject( hSession, sTemplate, uCount, &hObject );
 
     if( rv != CKR_OK )
     {
@@ -641,15 +629,12 @@ int ImportPFXDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
 
 int ImportPFXDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[20];
     CK_ULONG uCount = 0;
@@ -875,9 +860,7 @@ int ImportPFXDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
         uCount++;
     }
 
-    manApplet->logTemplate( sTemplate, uCount );
-    rv = JS_PKCS11_CreateObject(p11_ctx, sTemplate, uCount, &hObject );
-    manApplet->logP11Result( "C_CreateObject", rv );
+    rv = manApplet->cryptokiAPI()->CreateObject( hSession, sTemplate, uCount, &hObject );
 
     if( rv != CKR_OK )
     {
@@ -890,15 +873,12 @@ int ImportPFXDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
 
 int ImportPFXDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[20];
     CK_ULONG uCount = 0;
@@ -1031,9 +1011,7 @@ int ImportPFXDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
         uCount++;
     }
 
-    manApplet->logTemplate( sTemplate, uCount );
-    rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
-    manApplet->logP11Result( "C_CreateObject", rv );
+    rv = manApplet->cryptokiAPI()->CreateObject( hSession, sTemplate, uCount, &hObject );
 
     if( rv != CKR_OK )
     {
@@ -1046,15 +1024,12 @@ int ImportPFXDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
 
 int ImportPFXDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
 
     CK_ATTRIBUTE sTemplate[20];
@@ -1224,9 +1199,7 @@ int ImportPFXDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
         uCount++;
     }
 
-    manApplet->logTemplate( sTemplate, uCount );
-    rv = JS_PKCS11_CreateObject( p11_ctx, sTemplate, uCount, &hObject );
-    manApplet->logP11Result( "C_CreateObject", rv );
+    rv = manApplet->cryptokiAPI()->CreateObject( hSession, sTemplate, uCount, &hObject );
 
     if( rv != CKR_OK )
     {

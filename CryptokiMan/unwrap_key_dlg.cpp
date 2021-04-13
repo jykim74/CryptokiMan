@@ -5,6 +5,7 @@
 #include "man_applet.h"
 #include "js_pkcs11.h"
 #include "common.h"
+#include "cryptoki_api.h"
 
 static QStringList sFalseTrue = { "false", "true" };
 
@@ -162,14 +163,11 @@ void UnwrapKeyDlg::initialize()
 
 void UnwrapKeyDlg::accept()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     int rv = -1;
 
@@ -368,11 +366,15 @@ void UnwrapKeyDlg::accept()
         uCount++;
     }
 
-
-    manApplet->logTemplate( sTemplate, uCount );
-    rv = JS_PKCS11_UnwrapKey( p11_ctx, &sMech, hUnwrappingKey,
-                              binWrappedKey.pVal, binWrappedKey.nLen, sTemplate, uCount, &uObj );
-    manApplet->logP11Result( "C_UnwrapKey", rv );
+    rv = manApplet->cryptokiAPI()->UnwrapKey(
+                hSession,
+                &sMech,
+                hUnwrappingKey,
+                binWrappedKey.pVal,
+                binWrappedKey.nLen,
+                sTemplate,
+                uCount,
+                &uObj );
 
     if( rv != CKR_OK )
     {
@@ -407,15 +409,13 @@ void UnwrapKeyDlg::clickFind()
 
 void UnwrapKeyDlg::setUnwrapLabelList()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
-    int nFlags = 0;
     int rv = -1;
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[1];
     CK_ULONG uCnt = 0;
@@ -432,17 +432,14 @@ void UnwrapKeyDlg::setUnwrapLabelList()
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
     uCnt++;
 
-    manApplet->logTemplate( sTemplate, uCnt );
+    rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, uCnt );
+    if( rv != CKR_OK ) return;
 
-    rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
-    manApplet->logP11Result( "C_FindObjectsInit", rv );
+    rv = manApplet->cryptokiAPI()->FindObjects( hSession, sObjects, uMaxObjCnt, &uObjCnt );
+    if( rv != CKR_OK ) return;
 
-    rv = JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
-    manApplet->logP11Result( "C_FindObjects", rv );
-
-    rv = JS_PKCS11_FindObjectsFinal( p11_ctx );
-    manApplet->logP11Result( "C_FindObjectsFinal", rv );
-
+    rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
+    if( rv != CKR_OK ) return;
 
     mUnwrapLabelCombo->clear();
 
@@ -452,8 +449,7 @@ void UnwrapKeyDlg::setUnwrapLabelList()
         BIN binLabel = {0,0};
         QVariant objVal = QVariant( (int)sObjects[i] );
 
-        rv = JS_PKCS11_GetAttributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
-        manApplet->logP11Result( "C_GetAttributeValue2", rv );
+        rv = manApplet->cryptokiAPI()->GetAttributeValue2( hSession, sObjects[i], CKA_LABEL, &binLabel );
 
         JS_BIN_string( &binLabel, &pLabel );
 
@@ -470,16 +466,14 @@ void UnwrapKeyDlg::setUnwrapLabelList()
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
     uCnt++;
 
-    manApplet->logTemplate( sTemplate, uCnt );
+    rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, uCnt );
+    if( rv != CKR_OK ) return;
 
-    rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, uCnt );
-    manApplet->logP11Result( "C_FindObjectsInit", rv );
+    rv = manApplet->cryptokiAPI()->FindObjects( hSession, sObjects, uMaxObjCnt, &uObjCnt );
+    if( rv != CKR_OK ) return;
 
-    rv = JS_PKCS11_FindObjects( p11_ctx, sObjects, uMaxObjCnt, &uObjCnt );
-    manApplet->logP11Result( "C_FindObjects", rv );
-
-    rv = JS_PKCS11_FindObjectsFinal( p11_ctx );
-    manApplet->logP11Result( "C_FindObjectsFinal", rv );
+    rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
+    if( rv != CKR_OK ) return;
 
     for( int i=0; i < uObjCnt; i++ )
     {
@@ -487,8 +481,7 @@ void UnwrapKeyDlg::setUnwrapLabelList()
         BIN binLabel = {0,0};
         QVariant objVal = QVariant( (int)sObjects[i] );
 
-        rv = JS_PKCS11_GetAttributeValue2( p11_ctx, sObjects[i], CKA_LABEL, &binLabel );
-        manApplet->logP11Result( "C_GetAttributeValue2", rv );
+        rv = manApplet->cryptokiAPI()->GetAttributeValue2( hSession, sObjects[i], CKA_LABEL, &binLabel );
 
         JS_BIN_string( &binLabel, &pLabel );
 
