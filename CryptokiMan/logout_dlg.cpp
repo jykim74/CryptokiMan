@@ -2,6 +2,7 @@
 #include "man_applet.h"
 #include "mainwindow.h"
 #include "js_pkcs11.h"
+#include "cryptoki_api.h"
 
 
 LogoutDlg::LogoutDlg(QWidget *parent) :
@@ -43,18 +44,15 @@ void LogoutDlg::initialize()
 
 void LogoutDlg::accept()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
-    int nFlags = 0;
     CK_SESSION_HANDLE   hSession = -1;
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    hSession = slotInfo.getSessionHandle();
 
-    rv = JS_PKCS11_Logout( p11_ctx );
-    manApplet->logP11Result( "C_Logout", rv );
+    rv = manApplet->cryptokiAPI()->Logout( hSession );
 
     if( rv == CKR_OK )
     {

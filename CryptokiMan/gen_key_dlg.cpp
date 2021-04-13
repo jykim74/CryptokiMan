@@ -3,6 +3,7 @@
 #include "mainwindow.h"
 #include "js_pkcs11.h"
 #include "common.h"
+#include "cryptoki_api.h"
 
 static QStringList sMechList = {
     "CKM_AES_KEY_GEN", "CKM_DES_KEY_GEN", "CKM_DES3_KEY_GEN", "CKM_GENERIC_SECRET_KEY_GEN"
@@ -123,10 +124,7 @@ void GenKeyDlg::connectAttributes()
 
 void GenKeyDlg::accept()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
@@ -142,7 +140,7 @@ void GenKeyDlg::accept()
     CK_DATE sSDate;
     CK_DATE sEDate;
 
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
     memset( &sMech, 0x00, sizeof(sMech) );
     memset( &sSDate, 0x00, sizeof(sSDate));
     memset( &sEDate, 0x00, sizeof(sEDate));
@@ -325,10 +323,7 @@ void GenKeyDlg::accept()
         uCount++;
     }
 
-    manApplet->logTemplate( sTemplate, uCount );
-
-    rv = JS_PKCS11_GenerateKey( p11_ctx, &sMech, sTemplate, uCount, &hObject );
-    manApplet->logP11Result( "C_GenerateKey", rv );
+    rv = manApplet->cryptokiAPI()->GenerateKey( hSession, &sMech, sTemplate, uCount, &hObject );
 
     if( rv != CKR_OK )
     {

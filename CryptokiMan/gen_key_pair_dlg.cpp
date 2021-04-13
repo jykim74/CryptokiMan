@@ -5,6 +5,7 @@
 #include "js_pki.h"
 #include "js_pki_tools.h"
 #include "common.h"
+#include "cryptoki_api.h"
 
 static QStringList sMechList = { "RSA", "ECC" };
 static QStringList sRSAOptionList = { "1024", "2048", "3096", "4082" };
@@ -143,14 +144,11 @@ void GenKeyPairDlg::connectAttributes()
 
 void GenKeyPairDlg::accept()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
     int rv = -1;
 
 
@@ -470,11 +468,7 @@ void GenKeyPairDlg::accept()
         uPriCount++;
     }
 
-    manApplet->logTemplate( sPubTemplate, uPubCount );
-    manApplet->logTemplate( sPriTemplate, uPriCount );
-
-    rv = JS_PKCS11_GenerateKeyPair( p11_ctx, &stMech, sPubTemplate, uPubCount, sPriTemplate, uPriCount, &uPubHandle, &uPriHandle );
-    manApplet->logP11Result( "C_GenerateKeyPair", rv );
+    rv = manApplet->cryptokiAPI()->GenerateKeyPair( hSession, &stMech, sPubTemplate, uPubCount, sPriTemplate, uPriCount, &uPubHandle, &uPriHandle );
 
     if( rv != CKR_OK )
     {

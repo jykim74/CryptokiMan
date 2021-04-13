@@ -2,6 +2,7 @@
 #include "man_applet.h"
 #include "mainwindow.h"
 #include "js_pkcs11.h"
+#include "cryptoki_api.h"
 
 LoginDlg::LoginDlg(QWidget *parent) :
     QDialog(parent)
@@ -42,15 +43,13 @@ void LoginDlg::initialize()
 
 void LoginDlg::accept()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
-    int nFlags = 0;
     int nType = 0;
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     int rv = -1;
     CK_UTF8CHAR *pPin = (CK_UTF8CHAR *)mPinText->text().toUtf8().toStdString().c_str();
@@ -61,8 +60,7 @@ void LoginDlg::accept()
     else if( mSOCheck->isChecked() )
         nType = CKU_SO;
 
-    rv = JS_PKCS11_Login( p11_ctx, nType, pPin, uPinLen );
-    manApplet->logP11Result( "C_Login", rv );
+    rv = manApplet->cryptokiAPI()->Login( hSession, nType, pPin, uPinLen );
 
     if( rv == CKR_OK )
     {
@@ -70,7 +68,7 @@ void LoginDlg::accept()
         slot_infos.replace( index, slotInfo );
     }
     else {
-        manApplet->elog( QString("C_Login fail:%1").arg(p11_ctx->sLastLog));
+        manApplet->elog( QString("C_Login fail:%1").arg(rv));
     }
 
     QDialog::close();

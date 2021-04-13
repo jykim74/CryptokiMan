@@ -1460,17 +1460,6 @@ void MainWindow::showObjectsInfo(int index)
     ret = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
     if( ret != CKR_OK ) return;
 
-    /*
-    ret = JS_PKCS11_FindObjectsInit( p11_ctx, NULL, 0 );
-    manApplet->logP11Result( "C_FindObjectsInit", ret );
-
-    ret = JS_PKCS11_FindObjects( p11_ctx, hObjects, 100, &uObjCnt );
-    manApplet->logP11Result( "C_FindObjects", ret );
-
-    ret = JS_PKCS11_FindObjectsFinal( p11_ctx );
-    manApplet->logP11Result( "C_FindObjectsFinal", ret );
-    */
-
 
     int row = 0;
     QString strMsg = "";
@@ -1497,9 +1486,7 @@ void MainWindow::showObjectsInfo(int index)
         right_table_->setItem( row, 1, new QTableWidgetItem( QString( strVal) ));
         row++;
 
-
-        ret = JS_PKCS11_GetObjectSize( p11_ctx, hObjects[i], &uSize );
-        manApplet->logP11Result( "C_GetObjectSize", ret );
+        ret = manApplet->cryptokiAPI()->GetObjectSize( hSession, hObjects[i], &uSize );
 
         right_table_->insertRow( row );
         right_table_->setRowHeight( row, 10 );
@@ -1516,8 +1503,7 @@ void MainWindow::showObjectsInfo(int index)
         right_table_->setRowHeight( row, 10 );
         right_table_->setItem( row, 0, new QTableWidgetItem( QString("Class")));
 
-        ret = JS_PKCS11_GetAttributeValue2( p11_ctx, hObjects[i], attrType, &binVal );
-        manApplet->logP11Result( "C_GetAttributeValue2", ret );
+        ret = manApplet->cryptokiAPI()->GetAttributeValue2( hSession, hObjects[i], attrType, &binVal );
 
         long uVal = 0;
         memcpy( &uVal, binVal.pVal, binVal.nLen );
@@ -1536,21 +1522,18 @@ void MainWindow::showAttribute( int nSlotIdx, int nValType, CK_ATTRIBUTE_TYPE uA
 {
     int ret = 0;
 
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
-    CK_TOKEN_INFO sTokenInfo;
     SlotInfo slotInfo = slot_infos.at( nSlotIdx );
 
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     char    *pStr = NULL;
     QString strMsg;
     BIN     binVal = {0,0};
     int nRow = right_table_->rowCount();
 
-    ret = JS_PKCS11_GetAttributeValue2( p11_ctx, hObj, uAttribute, &binVal );
-    manApplet->logP11Result( "C_GetAttributeValue2", ret );
+    ret = manApplet->cryptokiAPI()->GetAttributeValue2( hSession, hObj, uAttribute, &binVal );
 
     if( ret != CKR_OK ) return;
 
@@ -1624,7 +1607,7 @@ void MainWindow::showCertificateInfo( int index, long hObject )
 
     SlotInfo slotInfo = slot_infos.at(index);
 
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[100];
@@ -1639,16 +1622,14 @@ void MainWindow::showCertificateInfo( int index, long hObject )
             { CKA_CLASS, &objClass, sizeof(objClass) }
         };
 
-        manApplet->logTemplate( sTemplate, 1 );
+        rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, 1 );
+        if( rv != CKR_OK ) return;
 
-        rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, 1 );
-        manApplet->logP11Result( "C_FindObjectsInit", rv );
+        rv = manApplet->cryptokiAPI()->FindObjects( hSession, hObjects, 100, &uObjCnt );
+        if( rv != CKR_OK ) return;
 
-        rv = JS_PKCS11_FindObjects( p11_ctx, hObjects, 100, &uObjCnt );
-        manApplet->logP11Result( "C_FindObjects", rv );
-
-        rv = JS_PKCS11_FindObjectsFinal( p11_ctx );
-        manApplet->logP11Result( "C_FindObjectsFinal", rv );
+        rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
+        if( rv != CKR_OK ) return;
     }
     else
     {
@@ -1693,12 +1674,11 @@ void MainWindow::showCertificateInfo( int index, long hObject )
 
 void MainWindow::showPublicKeyInfo( int index, long hObject )
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     SlotInfo slotInfo = slot_infos.at(index);
 
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[100];
     int rv = 0;
@@ -1712,16 +1692,14 @@ void MainWindow::showPublicKeyInfo( int index, long hObject )
             { CKA_CLASS, &objClass, sizeof(objClass) }
         };
 
-        manApplet->logTemplate( sTemplate, 1 );
+        rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, 1 );
+        if( rv != CKR_OK ) return;
 
-        rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, 1 );
-        manApplet->logP11Result( "C_FindObjectsInit", rv );
+        rv = manApplet->cryptokiAPI()->FindObjects( hSession, hObjects, 100, &uObjCnt );
+        if( rv != CKR_OK ) return;
 
-        rv = JS_PKCS11_FindObjects( p11_ctx, hObjects, 100, &uObjCnt );
-        manApplet->logP11Result( "C_FindObjects", rv );
-
-        rv = JS_PKCS11_FindObjectsFinal( p11_ctx );
-        manApplet->logP11Result( "C_FindObjectsFinal", rv );
+        rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
+        if( rv != CKR_OK ) return;
     }
     else
     {
@@ -1773,12 +1751,11 @@ void MainWindow::showPublicKeyInfo( int index, long hObject )
 
 void MainWindow::showPrivateKeyInfo( int index, long hObject )
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     SlotInfo slotInfo = slot_infos.at(index);
 
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[100];
@@ -1793,16 +1770,14 @@ void MainWindow::showPrivateKeyInfo( int index, long hObject )
             { CKA_CLASS, &objClass, sizeof(objClass) }
         };
 
-        manApplet->logTemplate( sTemplate, 1 );
+        rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, 1 );
+        if( rv != CKR_OK ) return;
 
-        rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, 1 );
-        manApplet->logP11Result( "C_FindObjectsInit", rv );
+        rv = manApplet->cryptokiAPI()->FindObjects( hSession, hObjects, 100, &uObjCnt );
+        if( rv != CKR_OK ) return;
 
-        rv = JS_PKCS11_FindObjects( p11_ctx, hObjects, 100, &uObjCnt );
-        manApplet->logP11Result( "C_FindObjects", rv );
-
-        rv = JS_PKCS11_FindObjectsFinal( p11_ctx );
-        manApplet->logP11Result( "C_FindObjectsFinal", rv );
+        rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
+        if( rv != CKR_OK ) return;
     }
     else
     {
@@ -1863,12 +1838,11 @@ void MainWindow::showPrivateKeyInfo( int index, long hObject )
 
 void MainWindow::showSecretKeyInfo( int index, long hObject )
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     SlotInfo slotInfo = slot_infos.at(index);
 
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[100];
@@ -1883,16 +1857,14 @@ void MainWindow::showSecretKeyInfo( int index, long hObject )
             { CKA_CLASS, &objClass, sizeof(objClass) }
         };
 
-        manApplet->logTemplate( sTemplate, 1 );
+        rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, 1 );
+        if( rv != CKR_OK ) return;
 
-        rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, 1 );
-        manApplet->logP11Result( "C_FindObjectsInit", rv );
+        rv = manApplet->cryptokiAPI()->FindObjects( hSession, hObjects, 100, &uObjCnt );
+        if( rv != CKR_OK ) return;
 
-        rv = JS_PKCS11_FindObjects( p11_ctx, hObjects, 100, &uObjCnt );
-        manApplet->logP11Result( "C_FindObjects", rv );
-
-        rv = JS_PKCS11_FindObjectsFinal( p11_ctx );
-        manApplet->logP11Result( "C_FindObjectsFinal", rv );
+        rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
+        if( rv != CKR_OK ) return;
     }
     else
     {
@@ -1947,12 +1919,11 @@ void MainWindow::showSecretKeyInfo( int index, long hObject )
 
 void MainWindow::showDataInfo( int index, long hObject )
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     SlotInfo slotInfo = slot_infos.at(index);
 
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[100];
@@ -1967,16 +1938,14 @@ void MainWindow::showDataInfo( int index, long hObject )
             { CKA_CLASS, &objClass, sizeof(objClass) }
         };
 
-        manApplet->logTemplate( sTemplate, 1 );
+        rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, 1 );
+        if( rv != CKR_OK ) return;
 
-        rv = JS_PKCS11_FindObjectsInit( p11_ctx, sTemplate, 1 );
-        manApplet->logP11Result( "C_FindObjectsInit", rv );
+        rv = manApplet->cryptokiAPI()->FindObjects( hSession, hObjects, 100, &uObjCnt );
+        if( rv != CKR_OK ) return;
 
-        rv = JS_PKCS11_FindObjects( p11_ctx, hObjects, 100, &uObjCnt );
-        manApplet->logP11Result( "C_FindObjects", rv );
-
-        rv = JS_PKCS11_FindObjectsFinal( p11_ctx);
-        manApplet->logP11Result( "C_FindObjectsFinal", rv );
+        rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
+        if( rv != CKR_OK ) return;
     }
     else
     {

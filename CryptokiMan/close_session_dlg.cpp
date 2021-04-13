@@ -2,6 +2,7 @@
 #include "js_pkcs11.h"
 #include "mainwindow.h"
 #include "man_applet.h"
+#include "cryptoki_api.h"
 
 CloseSessionDlg::CloseSessionDlg(QWidget *parent) :
     QDialog(parent)
@@ -49,7 +50,7 @@ void CloseSessionDlg::setSelectedSlot(int index)
 
 void CloseSessionDlg::accept()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
+
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nFlags = 0;
@@ -58,18 +59,15 @@ void CloseSessionDlg::accept()
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    p11_ctx->hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     if( all_ )
     {
-        rv = JS_PKCS11_CloseAllSessions( p11_ctx, slotInfo.getSlotID() );
-        manApplet->logP11Result( "C_CloseAllSessions", rv );
+        rv = manApplet->cryptokiAPI()->CloseAllSession( slotInfo.getSlotID() );
         strType = "All";
     }
     else {
-
-        rv = JS_PKCS11_CloseSession( p11_ctx );
-        manApplet->logP11Result( "C_CloseSession", rv );
+        rv = manApplet->cryptokiAPI()->CloseSession( hSession );
         strType = "Single";
     }
 

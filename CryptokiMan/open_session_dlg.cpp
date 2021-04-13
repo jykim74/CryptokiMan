@@ -2,7 +2,7 @@
 #include "mainwindow.h"
 #include "open_session_dlg.h"
 #include "js_pkcs11.h"
-
+#include "cryptoki_api.h"
 
 OpenSessionDlg::OpenSessionDlg(QWidget *parent) :
     QDialog(parent)
@@ -39,13 +39,13 @@ void OpenSessionDlg::setSelectedSlot(int index)
 
 void OpenSessionDlg::accept()
 {
-    JP11_CTX* p11_ctx = manApplet->getP11CTX();
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nFlags = 0;
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
+    CK_SESSION_HANDLE hSession = 0;
 
     if( mRWCheck->isChecked() )
         nFlags |= CKF_RW_SESSION;
@@ -53,12 +53,11 @@ void OpenSessionDlg::accept()
     if( mSerialCheck->isChecked() )
         nFlags |= CKF_SERIAL_SESSION;
 
-    int rv = JS_PKCS11_OpenSession( p11_ctx, slotInfo.getSlotID(), nFlags );
-    manApplet->logP11Result( "C_OpenSession", rv );
+    int rv = manApplet->cryptokiAPI()->OpenSession( slotInfo.getSlotID(), nFlags, NULL, NULL, &hSession );
 
     if( rv == CKR_OK )
     {
-        slotInfo.setSessionHandle( p11_ctx->hSession );
+        slotInfo.setSessionHandle( hSession );
         slot_infos.replace(index, slotInfo);
     }
     else {
