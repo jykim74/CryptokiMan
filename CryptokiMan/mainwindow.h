@@ -92,6 +92,7 @@ public slots:
     void about();
     void logView();
     void settings();
+    void operationState();
 
     void rightTableClick( QModelIndex index );
 

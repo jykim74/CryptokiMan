@@ -55,5 +55,6 @@
         <file>images/rp2.png</file>
         <file>cryptokiman.qss</file>
         <file>images/cryptokiman.png</file>
+        <file>images/operation.png</file>
     </qresource>
 </RCC>

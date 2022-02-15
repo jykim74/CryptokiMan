@@ -63,6 +63,7 @@ SOURCES += \
         man_tree_model.cpp \
         man_tree_view.cpp \
         open_session_dlg.cpp \
+        oper_state_dlg.cpp \
         rand_dlg.cpp \
         set_pin_dlg.cpp \
         settings_dlg.cpp \
@@ -109,6 +110,7 @@ HEADERS += \
         man_tree_model.h \
         man_tree_view.h \
         open_session_dlg.h \
+        oper_state_dlg.h \
         rand_dlg.h \
         set_pin_dlg.h \
         settings_dlg.h \
@@ -148,6 +150,7 @@ FORMS += \
         logout_dlg.ui \
         mainwindow.ui \
         open_session_dlg.ui \
+        oper_state_dlg.ui \
         rand_dlg.ui \
         set_pin_dlg.ui \
         settings_dlg.ui \

@@ -46,6 +46,7 @@
 #include "log_view_dlg.h"
 #include "settings_dlg.h"
 #include "settings_mgr.h"
+#include "oper_state_dlg.h"
 #include "cryptoki_api.h"
 
 const int kMaxRecentFiles = 10;
@@ -396,6 +397,13 @@ void MainWindow::createActions()
     initTokenAct->setStatusTip(tr("PKCS11 Initialize token"));
     toolsMenu->addAction( initTokenAct );
     toolsToolBar->addAction( initTokenAct );
+
+    const QIcon operIcon = QIcon::fromTheme( "document-operation", QIcon(":/images/operation.png"));
+    QAction *operStateAct = new QAction( operIcon, tr("OperationState"), this );
+    connect( operStateAct, &QAction::triggered, this, &MainWindow::operationState );
+    operStateAct->setStatusTip( tr( "Operation state tool" ));
+    toolsMenu->addAction( operStateAct );
+    toolsToolBar->addAction( operStateAct );
 
     const QIcon diceIcon = QIcon::fromTheme("Dice", QIcon(":/images/dice.png"));
     QAction *randAct = new QAction( diceIcon, tr("Random"), this);
@@ -887,6 +895,12 @@ void MainWindow::settings()
 {
     SettingsDlg settingsDlg;
     settingsDlg.exec();
+}
+
+void MainWindow::operationState()
+{
+    OperStateDlg operStateDlg;
+    operStateDlg.exec();
 }
 
 void MainWindow::rightTableClick(QModelIndex index)

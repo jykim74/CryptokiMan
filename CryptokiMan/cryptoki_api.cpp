@@ -1594,6 +1594,83 @@ int CryptokiAPI::GenerateRandom( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pRandom
     return rv;
 }
 
+int CryptokiAPI::GetOperationState( CK_SESSION_HANDLE hSession,
+                       CK_BYTE_PTR pOperationState,
+                       CK_ULONG_PTR pulOperationStateLen )
+{
+    int rv = 0;
+    qint64 ms = 0;
+    QElapsedTimer timer;
+    QString strIn;
+
+    timer.start();
+    rv = p11_ctx_->p11FuncList->C_GetOperationState( hSession, pOperationState, pulOperationStateLen );
+    ms = timer.elapsed();
+
+    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    manApplet->dlog( strIn );
+
+    strIn.sprintf( "OperationState_ptr = %p", pOperationState );
+    manApplet->dlog( strIn );
+
+    strIn.sprintf( "OperationStateLen = %d", *pulOperationStateLen );
+    manApplet->dlog( strIn );
+
+    logResult( "C_GetOperationState", rv, ms );
+
+    if( rv == CKR_OK )
+    {
+
+    }
+
+    return rv;
+}
+
+int CryptokiAPI::SetOperationState( CK_SESSION_HANDLE hSession,
+                                    CK_OBJECT_HANDLE hObject,
+                                    CK_BYTE_PTR pOperationState,
+                                    CK_ULONG ulOperationStateLen,
+                                    CK_OBJECT_HANDLE hEncryptionKey,
+                                    CK_OBJECT_HANDLE hAuthenticationKey )
+{
+    int rv = 0;
+    qint64 ms = 0;
+    QElapsedTimer timer;
+    QString strIn;
+
+    timer.start();
+    rv = p11_ctx_->p11FuncList->C_SetOperationState( hSession, pOperationState, ulOperationStateLen, hEncryptionKey, hAuthenticationKey );
+    ms = timer.elapsed();
+
+    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    manApplet->dlog( strIn );
+
+    strIn.sprintf( "ObjectHandle = %ud", hObject );
+    manApplet->dlog( strIn );
+
+    strIn.sprintf( "OperationState_ptr = %p", pOperationState );
+    manApplet->dlog( strIn );
+
+    strIn.sprintf( "OperationStateLen = %ud", ulOperationStateLen );
+    manApplet->dlog( strIn );
+
+    strIn.sprintf( "EncryptKeyHandle = %ud", hEncryptionKey );
+    manApplet->dlog( strIn );
+
+    strIn.sprintf( "AuthenticationKeyHandle = %ud", hAuthenticationKey );
+    manApplet->dlog( strIn );
+
+    logResult( "C_GetOperationState", rv, ms );
+
+    if( rv == CKR_OK )
+    {
+
+    }
+
+    return rv;
+}
+
+
 int CryptokiAPI::DeriveKey( CK_SESSION_HANDLE hSession,
                CK_MECHANISM_PTR pMechanism,
                CK_OBJECT_HANDLE hBaseKey,
