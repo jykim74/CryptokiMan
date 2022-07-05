@@ -938,7 +938,16 @@ int ImportPFXDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
     uCount++;
 
     BIN binECPoint={0,0};
-    JS_BIN_decodeHex( pEcKeyVal->pECPoint, &binECPoint );
+    BIN binPubX = {0,0};
+    BIN binPubY = {0,0};
+
+    JS_BIN_decodeHex( pEcKeyVal->pPubX, &binPubX );
+    JS_BIN_decodeHex( pEcKeyVal->pPubY, &binPubY );
+    JS_BIN_decodeHex( "04", &binECPoint );
+    JS_BIN_appendBin( &binECPoint, &binPubX );
+    JS_BIN_appendBin( &binECPoint, &binPubY );
+    JS_BIN_reset( &binPubX );
+    JS_BIN_reset( &binPubY );
 
     sTemplate[uCount].type = CKA_EC_POINT;
     sTemplate[uCount].pValue = binECPoint.pVal;
