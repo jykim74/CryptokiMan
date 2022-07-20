@@ -16,6 +16,8 @@ public:
     CK_SESSION_HANDLE getSessionHandle();
     JP11_CTX* getCTX() { return p11_ctx_; };
 
+    bool isInit() { return init_; };
+
     int openLibrary( const QString strPath );
     int unloadLibrary();
     int Initialize( void *pReserved );
@@ -131,6 +133,7 @@ private:
 
 private:
     JP11_CTX       *p11_ctx_;
+    bool            init_;
 };
 
 #endif // CRYPTOKIAPI_H

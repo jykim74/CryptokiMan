@@ -8,6 +8,7 @@
 CryptokiAPI::CryptokiAPI()
 {
     p11_ctx_ = NULL;
+    init_ = false;
 }
 
 void CryptokiAPI::setCTX( JP11_CTX *pCTX )
@@ -58,6 +59,7 @@ int CryptokiAPI::Initialize( void *pReserved )
     manApplet->dlog( strIn );
 
     logResult( "C_Initialize", rv, ms );
+    if( rv == CKR_OK ) init_ = true;
 
     return rv;
 }
@@ -77,6 +79,7 @@ int CryptokiAPI::Finalize( void *pReserved )
     manApplet->dlog( strIn );
 
     logResult( "C_Finalize", rv, ms );
+    if( rv == CKR_OK ) init_ = false;
 
     return rv;
 }
@@ -415,7 +418,9 @@ int CryptokiAPI::GetAttributeValue( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE
 
     logTemplate( pAttribute, uAttributeCnt );
 
-    logResult( "C_GetAttributeValue", rv, ms );
+    logResult( QString("C_GetAttributeValue[%1:%2]")
+               .arg(pAttribute->type)
+               .arg(JS_PKCS11_GetCKAName(pAttribute->type)), rv, ms );
 
     if( rv == CKR_OK )
     {

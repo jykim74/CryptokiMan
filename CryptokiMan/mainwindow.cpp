@@ -1691,6 +1691,8 @@ void MainWindow::showPublicKeyInfo( int index, long hObject )
     CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[100];
+    CK_ATTRIBUTE sAttribute;
+
     int rv = 0;
 
     removeAllRightTable();
@@ -1719,6 +1721,8 @@ void MainWindow::showPublicKeyInfo( int index, long hObject )
 
     QString strMsg = "";
 
+
+
     strMsg = QString("%1").arg( uObjCnt );
     right_table_->insertRow( 0 );
     right_table_->setRowHeight( 0, 10 );
@@ -1730,6 +1734,8 @@ void MainWindow::showPublicKeyInfo( int index, long hObject )
     for( int i=0; i < uObjCnt; i++ )
     {
         int row = right_table_->rowCount();
+        int nType = 0;
+        BIN binVal = {0,0};
 
         strMsg = QString("%1").arg( hObjects[i] );
         right_table_->insertRow( row );
@@ -1737,13 +1743,24 @@ void MainWindow::showPublicKeyInfo( int index, long hObject )
         right_table_->setItem( row, 0, new QTableWidgetItem(QString("Handle")));
         right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
 
+        manApplet->cryptokiAPI()->GetAttributeValue2( hSession, hObjects[i], CKA_KEY_TYPE, &binVal );
+        nType = JS_BIN_long( &binVal );
+
         showAttribute( index, ATTR_VAL_STRING, CKA_LABEL, hObjects[i]);
         showAttribute( index, ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, hObjects[i] );
         showAttribute( index, ATTR_VAL_HEX, CKA_ID, hObjects[i] );
-        showAttribute( index, ATTR_VAL_HEX, CKA_MODULUS, hObjects[i]);
-        showAttribute( index, ATTR_VAL_HEX, CKA_PUBLIC_EXPONENT, hObjects[i] );
-        showAttribute( index, ATTR_VAL_HEX, CKA_EC_PARAMS, hObjects[i]);
-        showAttribute( index, ATTR_VAL_HEX, CKA_EC_POINT, hObjects[i]);
+
+        if( nType == CKK_RSA )
+        {
+            showAttribute( index, ATTR_VAL_HEX, CKA_MODULUS, hObjects[i]);
+            showAttribute( index, ATTR_VAL_HEX, CKA_PUBLIC_EXPONENT, hObjects[i] );
+        }
+        else if( nType == CKK_EC )
+        {
+            showAttribute( index, ATTR_VAL_HEX, CKA_EC_PARAMS, hObjects[i]);
+            showAttribute( index, ATTR_VAL_HEX, CKA_EC_POINT, hObjects[i]);
+        }
+
         showAttribute( index, ATTR_VAL_BOOL, CKA_TOKEN, hObjects[i]);
         showAttribute( index, ATTR_VAL_BOOL, CKA_WRAP, hObjects[i]);
         showAttribute( index, ATTR_VAL_BOOL, CKA_ENCRYPT, hObjects[i]);
@@ -1756,6 +1773,7 @@ void MainWindow::showPublicKeyInfo( int index, long hObject )
 
         row = right_table_->rowCount();
         addEmptyLine( row );
+        JS_BIN_reset( &binVal );
     }
 }
 
@@ -1808,8 +1826,13 @@ void MainWindow::showPrivateKeyInfo( int index, long hObject )
 
     for( int i=0; i < uObjCnt; i++ )
     {
+        int nType = 0;
+        BIN binVal = {0,0};
         int row = right_table_->rowCount();
         strMsg = QString("%1").arg( hObjects[i] );
+
+        manApplet->cryptokiAPI()->GetAttributeValue2( hSession, hObjects[i], CKA_KEY_TYPE, &binVal );
+        nType = JS_BIN_long( &binVal );
 
         right_table_->insertRow( row );
         right_table_->setRowHeight( row, 10 );
@@ -1820,15 +1843,22 @@ void MainWindow::showPrivateKeyInfo( int index, long hObject )
         showAttribute( index, ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, hObjects[i] );
         showAttribute( index, ATTR_VAL_HEX, CKA_ID, hObjects[i] );
         showAttribute( index, ATTR_VAL_HEX, CKA_SUBJECT, hObjects[i]);
-        showAttribute( index, ATTR_VAL_HEX, CKA_MODULUS, hObjects[i]);
-        showAttribute( index, ATTR_VAL_HEX, CKA_PUBLIC_EXPONENT, hObjects[i]);
-        showAttribute( index, ATTR_VAL_HEX, CKA_PRIVATE_EXPONENT, hObjects[i]);
-        showAttribute( index, ATTR_VAL_HEX, CKA_PRIME_1, hObjects[i]);
-        showAttribute( index, ATTR_VAL_HEX, CKA_PRIME_2, hObjects[i]);
-        showAttribute( index, ATTR_VAL_HEX, CKA_EXPONENT_1, hObjects[i]);
-        showAttribute( index, ATTR_VAL_HEX, CKA_EXPONENT_2, hObjects[i]);
-        showAttribute( index, ATTR_VAL_HEX, CKA_EC_PARAMS, hObjects[i]);
-        showAttribute( index, ATTR_VAL_HEX, CKA_VALUE, hObjects[i]);
+
+        if( nType == CKK_RSA )
+        {
+            showAttribute( index, ATTR_VAL_HEX, CKA_MODULUS, hObjects[i]);
+            showAttribute( index, ATTR_VAL_HEX, CKA_PUBLIC_EXPONENT, hObjects[i]);
+            showAttribute( index, ATTR_VAL_HEX, CKA_PRIVATE_EXPONENT, hObjects[i]);
+            showAttribute( index, ATTR_VAL_HEX, CKA_PRIME_1, hObjects[i]);
+            showAttribute( index, ATTR_VAL_HEX, CKA_PRIME_2, hObjects[i]);
+            showAttribute( index, ATTR_VAL_HEX, CKA_EXPONENT_1, hObjects[i]);
+            showAttribute( index, ATTR_VAL_HEX, CKA_EXPONENT_2, hObjects[i]);
+        }
+        else if( nType == CKK_EC )
+        {
+            showAttribute( index, ATTR_VAL_HEX, CKA_EC_PARAMS, hObjects[i]);
+        }
+
         showAttribute( index, ATTR_VAL_BOOL, CKA_TOKEN, hObjects[i]);
         showAttribute( index, ATTR_VAL_BOOL, CKA_SENSITIVE, hObjects[i]);
         showAttribute( index, ATTR_VAL_BOOL, CKA_UNWRAP, hObjects[i]);
@@ -1843,6 +1873,7 @@ void MainWindow::showPrivateKeyInfo( int index, long hObject )
 
         row = right_table_->rowCount();
         addEmptyLine( row );
+        JS_BIN_reset( &binVal );
     }
 }
 

@@ -31,7 +31,10 @@ void ManTreeView::onItemClicked( const QModelIndex& index )
 int ManTreeView::showTypeData( int nSlotIndex, int nType )
 {
     if( nType == HM_ITEM_TYPE_ROOT )
-        manApplet->mainWindow()->showGetInfo();
+    {
+        if( manApplet->cryptokiAPI()->isInit() )
+            manApplet->mainWindow()->showGetInfo();
+    }
     else if( nType == HM_ITEM_TYPE_SLOT )
         manApplet->mainWindow()->showSlotInfo( nSlotIndex );
     else if( nType == HM_ITEM_TYPE_TOKEN )
