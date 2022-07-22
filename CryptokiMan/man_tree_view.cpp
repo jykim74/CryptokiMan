@@ -30,6 +30,7 @@ void ManTreeView::onItemClicked( const QModelIndex& index )
 
 int ManTreeView::showTypeData( int nSlotIndex, int nType )
 {
+    ulong hObject = -1;
     if( nType == HM_ITEM_TYPE_ROOT )
     {
         if( manApplet->cryptokiAPI()->isInit() )
@@ -47,14 +48,44 @@ int ManTreeView::showTypeData( int nSlotIndex, int nType )
         manApplet->mainWindow()->showObjectsInfo( nSlotIndex );
     else if( nType == HM_ITEM_TYPE_CERTIFICATE )
         manApplet->mainWindow()->showCertificateInfo( nSlotIndex );
+    else if( nType == HM_ITEM_TYPE_CERTIFICATE_OBJECT )
+    {
+        ManTreeItem *item = currentItem();
+        hObject = item->data().toInt();
+        manApplet->mainWindow()->showCertificateInfo( nSlotIndex, hObject );
+    }
     else if( nType == HM_ITEM_TYPE_PUBLICKEY )
         manApplet->mainWindow()->showPublicKeyInfo( nSlotIndex );
+    else if( nType == HM_ITEM_TYPE_PUBLICKEY_OBJECT )
+    {
+        ManTreeItem *item = currentItem();
+        hObject = item->data().toInt();
+        manApplet->mainWindow()->showPublicKeyInfo( nSlotIndex, hObject );
+    }
     else if( nType == HM_ITEM_TYPE_PRIVATEKEY )
         manApplet->mainWindow()->showPrivateKeyInfo( nSlotIndex );
+    else if( nType == HM_ITEM_TYPE_PRIVATEKEY_OBJECT )
+    {
+        ManTreeItem *item = currentItem();
+        hObject = item->data().toInt();
+        manApplet->mainWindow()->showPrivateKeyInfo( nSlotIndex, hObject );
+    }
     else if( nType == HM_ITEM_TYPE_SECRETKEY )
         manApplet->mainWindow()->showSecretKeyInfo( nSlotIndex );
+    else if( nType == HM_ITEM_TYPE_SECRETKEY_OBJECT )
+    {
+        ManTreeItem *item = currentItem();
+        hObject = item->data().toInt();
+        manApplet->mainWindow()->showSecretKeyInfo( nSlotIndex, hObject );
+    }
     else if( nType == HM_ITEM_TYPE_DATA )
         manApplet->mainWindow()->showDataInfo( nSlotIndex );
+    else if( nType == HM_ITEM_TYPE_DATA_OBJECT )
+    {
+        ManTreeItem *item = currentItem();
+        hObject = item->data().toInt();
+        manApplet->mainWindow()->showDataInfo( nSlotIndex, hObject );
+    }
     else {
         manApplet->mainWindow()->removeAllRightTable();
     }

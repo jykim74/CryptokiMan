@@ -1622,6 +1622,7 @@ void MainWindow::showCertificateInfo( int index, long hObject )
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[100];
     int rv = 0;
+    bool bList = true;
 
     removeAllRightTable();
 
@@ -1645,6 +1646,7 @@ void MainWindow::showCertificateInfo( int index, long hObject )
     {
         uObjCnt = 1;
         hObjects[0] = hObject;
+        bList = false;
     }
 
     QString strMsg = "";
@@ -1656,16 +1658,31 @@ void MainWindow::showCertificateInfo( int index, long hObject )
     right_table_->setItem( 0, 1, new QTableWidgetItem( strMsg ) );
 
     addEmptyLine( 1 );
+    ManTreeItem *parentItem = currentItem();
+
+    if( bList )
+    {
+        for( int i = 0; i <= parentItem->rowCount(); i++ )
+        {
+            parentItem->removeRow( 0 );
+        }
+    }
 
     for( int i=0; i < uObjCnt; i++ )
     {
         int     row = right_table_->rowCount();
+        BIN binVal = {0,0};
+        char *pLabel = NULL;
 
         right_table_->insertRow( row );
         right_table_->setRowHeight( row, 10 );
         right_table_->setItem( row, 0, new QTableWidgetItem(QString("Handle")));
         strMsg = QString("%1").arg( hObjects[i] );
         right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
+
+        manApplet->cryptokiAPI()->GetAttributeValue2( hSession, hObjects[i], CKA_LABEL, &binVal );
+        JS_BIN_string( &binVal, &pLabel );
+        JS_BIN_reset( &binVal );
 
         showAttribute( index, ATTR_VAL_STRING, CKA_LABEL, hObjects[i] );
         showAttribute( index, ATTR_VAL_HEX, CKA_ID, hObjects[i] );
@@ -1677,8 +1694,21 @@ void MainWindow::showCertificateInfo( int index, long hObject )
         showAttribute( index, ATTR_VAL_DATE, CKA_START_DATE, hObjects[i]);
         showAttribute( index, ATTR_VAL_DATE, CKA_END_DATE, hObjects[i] );
 
+        if( bList )
+        {
+            ManTreeItem *item = new ManTreeItem;
+            QVariant val = qVariantFromValue( hObjects[i]);
+
+            item->setText( pLabel );
+            item->setType( HM_ITEM_TYPE_CERTIFICATE_OBJECT );
+            item->setSlotIndex( index );
+            item->setData( val );
+            parentItem->appendRow( item );
+        }
+
         row = right_table_->rowCount();
         addEmptyLine( row );
+        if( pLabel ) JS_free( pLabel );
     }
 }
 
@@ -1694,6 +1724,7 @@ void MainWindow::showPublicKeyInfo( int index, long hObject )
     CK_ATTRIBUTE sAttribute;
 
     int rv = 0;
+    bool bList = true;
 
     removeAllRightTable();
 
@@ -1717,11 +1748,10 @@ void MainWindow::showPublicKeyInfo( int index, long hObject )
     {
         uObjCnt = 1;
         hObjects[0] = hObject;
+        bList = false;
     }
 
     QString strMsg = "";
-
-
 
     strMsg = QString("%1").arg( uObjCnt );
     right_table_->insertRow( 0 );
@@ -1730,12 +1760,22 @@ void MainWindow::showPublicKeyInfo( int index, long hObject )
     right_table_->setItem( 0, 1, new QTableWidgetItem(strMsg));
 
     addEmptyLine( 1 );
+    ManTreeItem *parentItem = currentItem();
+
+    if( bList )
+    {
+        for( int i = 0; i <= parentItem->rowCount(); i++ )
+        {
+            parentItem->removeRow( 0 );
+        }
+    }
 
     for( int i=0; i < uObjCnt; i++ )
     {
         int row = right_table_->rowCount();
         int nType = 0;
         BIN binVal = {0,0};
+        char *pLabel = NULL;
 
         strMsg = QString("%1").arg( hObjects[i] );
         right_table_->insertRow( row );
@@ -1745,6 +1785,11 @@ void MainWindow::showPublicKeyInfo( int index, long hObject )
 
         manApplet->cryptokiAPI()->GetAttributeValue2( hSession, hObjects[i], CKA_KEY_TYPE, &binVal );
         nType = JS_BIN_long( &binVal );
+
+        JS_BIN_reset( &binVal );
+        manApplet->cryptokiAPI()->GetAttributeValue2( hSession, hObjects[i], CKA_LABEL, &binVal );
+        JS_BIN_string( &binVal, &pLabel );
+        JS_BIN_reset( &binVal );
 
         showAttribute( index, ATTR_VAL_STRING, CKA_LABEL, hObjects[i]);
         showAttribute( index, ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, hObjects[i] );
@@ -1771,9 +1816,22 @@ void MainWindow::showPublicKeyInfo( int index, long hObject )
         showAttribute( index, ATTR_VAL_DATE, CKA_START_DATE, hObjects[i]);
         showAttribute( index, ATTR_VAL_DATE, CKA_END_DATE, hObjects[i] );
 
+        if( bList )
+        {
+            ManTreeItem *item = new ManTreeItem;
+            QVariant val = qVariantFromValue( hObjects[i]);
+
+            item->setText( pLabel );
+            item->setType( HM_ITEM_TYPE_PUBLICKEY_OBJECT );
+            item->setSlotIndex( index );
+            item->setData( val );
+            parentItem->appendRow( item );
+
+        }
+
+        if( pLabel ) JS_free( pLabel );
         row = right_table_->rowCount();
         addEmptyLine( row );
-        JS_BIN_reset( &binVal );
     }
 }
 
@@ -1788,6 +1846,7 @@ void MainWindow::showPrivateKeyInfo( int index, long hObject )
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[100];
     int rv = 0;
+    bool bList = true;
 
     removeAllRightTable();
 
@@ -1811,6 +1870,7 @@ void MainWindow::showPrivateKeyInfo( int index, long hObject )
     {
         uObjCnt = 1;
         hObjects[0] = hObject;
+        bList = false;
     }
 
     QString strMsg = "";
@@ -1823,6 +1883,15 @@ void MainWindow::showPrivateKeyInfo( int index, long hObject )
     right_table_->setItem( 0, 1, new QTableWidgetItem( strMsg ));
 
     addEmptyLine( 1 );
+    ManTreeItem *parentItem = currentItem();
+
+    if( bList )
+    {
+        for( int i = 0; i <= parentItem->rowCount(); i++ )
+        {
+            parentItem->removeRow( 0 );
+        }
+    }
 
     for( int i=0; i < uObjCnt; i++ )
     {
@@ -1830,9 +1899,14 @@ void MainWindow::showPrivateKeyInfo( int index, long hObject )
         BIN binVal = {0,0};
         int row = right_table_->rowCount();
         strMsg = QString("%1").arg( hObjects[i] );
+        char *pLabel = NULL;
 
         manApplet->cryptokiAPI()->GetAttributeValue2( hSession, hObjects[i], CKA_KEY_TYPE, &binVal );
         nType = JS_BIN_long( &binVal );
+
+        JS_BIN_reset( &binVal );
+        manApplet->cryptokiAPI()->GetAttributeValue2( hSession, hObjects[i], CKA_LABEL, &binVal );
+        JS_BIN_string( &binVal, &pLabel );
 
         right_table_->insertRow( row );
         right_table_->setRowHeight( row, 10 );
@@ -1870,10 +1944,23 @@ void MainWindow::showPrivateKeyInfo( int index, long hObject )
         showAttribute( index, ATTR_VAL_DATE, CKA_START_DATE, hObjects[i]);
         showAttribute( index, ATTR_VAL_DATE, CKA_END_DATE, hObjects[i] );
 
+        if( bList )
+        {
+            ManTreeItem *item = new ManTreeItem;
+            QVariant val = qVariantFromValue( hObjects[i]);
+
+            item->setText( pLabel );
+            item->setType( HM_ITEM_TYPE_PRIVATEKEY_OBJECT );
+            item->setSlotIndex( index );
+            item->setData( val );
+            parentItem->appendRow( item );
+        }
+
 
         row = right_table_->rowCount();
         addEmptyLine( row );
         JS_BIN_reset( &binVal );
+        if( pLabel ) JS_free( pLabel );
     }
 }
 
@@ -1888,6 +1975,7 @@ void MainWindow::showSecretKeyInfo( int index, long hObject )
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[100];
     int rv = 0;
+    bool bList = true;
 
     removeAllRightTable();
 
@@ -1911,6 +1999,7 @@ void MainWindow::showSecretKeyInfo( int index, long hObject )
     {
         uObjCnt = 1;
         hObjects[0] = hObject;
+        bList = false;
     }
 
     QString strMsg = "";
@@ -1922,16 +2011,32 @@ void MainWindow::showSecretKeyInfo( int index, long hObject )
     right_table_->setItem( 0, 1, new QTableWidgetItem(strMsg) );
 
     addEmptyLine( 1 );
+    ManTreeItem *parentItem = currentItem();
+
+    if( bList )
+    {
+        for( int i = 0; i <= parentItem->rowCount(); i++ )
+        {
+            parentItem->removeRow( 0 );
+        }
+    }
 
     for( int i=0; i < uObjCnt; i++ )
     {
         int row = right_table_->rowCount();
+        BIN binVal = {0,0};
+        char *pLabel = NULL;
+
         strMsg = QString("%1").arg( hObjects[i] );
 
         right_table_->insertRow( row );
         right_table_->setRowHeight( row, 10 );
         right_table_->setItem( row, 0, new QTableWidgetItem(QString("Handle")));
         right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
+
+        manApplet->cryptokiAPI()->GetAttributeValue2( hSession, hObjects[i], CKA_LABEL, &binVal );
+        JS_BIN_string( &binVal, &pLabel );
+        JS_BIN_reset( &binVal );
 
         showAttribute( index, ATTR_VAL_STRING, CKA_LABEL, hObjects[i]);
         showAttribute( index, ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, hObjects[i]);
@@ -1953,6 +2058,21 @@ void MainWindow::showSecretKeyInfo( int index, long hObject )
         showAttribute( index, ATTR_VAL_DATE, CKA_START_DATE, hObjects[i]);
         showAttribute( index, ATTR_VAL_DATE, CKA_END_DATE, hObjects[i] );
 
+        if( bList )
+        {
+            ManTreeItem *item = new ManTreeItem;
+            QVariant val = qVariantFromValue( hObjects[i]);
+
+            item->setText( pLabel );
+            item->setType( HM_ITEM_TYPE_SECRETKEY_OBJECT );
+            item->setSlotIndex( index );
+            item->setData( val );
+            parentItem->appendRow( item );
+
+        }
+
+        if( pLabel ) JS_free( pLabel );
+
         row = right_table_->rowCount();
         addEmptyLine( row );
     }
@@ -1969,6 +2089,7 @@ void MainWindow::showDataInfo( int index, long hObject )
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[100];
     int rv = 0;
+    bool bList = true;
 
     removeAllRightTable();
 
@@ -1992,6 +2113,7 @@ void MainWindow::showDataInfo( int index, long hObject )
     {
         uObjCnt = 1;
         hObjects[0] = hObject;
+        bList = false;
     }
 
     QString strMsg = "";
@@ -2003,22 +2125,52 @@ void MainWindow::showDataInfo( int index, long hObject )
     right_table_->setItem( 0, 1, new QTableWidgetItem( strMsg ) );
 
     addEmptyLine( 1 );
+    ManTreeItem *parentItem = currentItem();
+
+    if( bList )
+    {
+        for( int i = 0; i <= parentItem->rowCount(); i++ )
+        {
+            parentItem->removeRow( 0 );
+        }
+    }
 
     for( int i=0; i < uObjCnt; i++ )
     {
         int row = right_table_->rowCount();
+        BIN binVal = {0,0};
+        char *pLabel = NULL;
+
         strMsg = QString("%1").arg( hObjects[0] );
         right_table_->insertRow( row );
         right_table_->setRowHeight( row, 10 );
         right_table_->setItem( row, 0, new QTableWidgetItem(QString("Handle")));
         right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
 
+        manApplet->cryptokiAPI()->GetAttributeValue2( hSession, hObjects[i], CKA_LABEL, &binVal );
+        JS_BIN_string( &binVal, &pLabel );
+        JS_BIN_reset( &binVal );
 
         showAttribute( index, ATTR_VAL_STRING, CKA_LABEL, hObjects[i]);
         showAttribute( index, ATTR_VAL_HEX, CKA_VALUE, hObjects[i]);
         showAttribute( index, ATTR_VAL_BOOL, CKA_TOKEN, hObjects[i]);
         showAttribute( index, ATTR_VAL_BOOL, CKA_PRIVATE, hObjects[i]);
         showAttribute( index, ATTR_VAL_BOOL, CKA_MODIFIABLE, hObjects[i]);
+
+        if( bList )
+        {
+            ManTreeItem *item = new ManTreeItem;
+            QVariant val = qVariantFromValue( hObjects[i]);
+
+            item->setText( pLabel );
+            item->setType( HM_ITEM_TYPE_DATA_OBJECT );
+            item->setSlotIndex( index );
+            item->setData( val );
+            parentItem->appendRow( item );
+
+        }
+
+        if( pLabel ) JS_free( pLabel );
 
         row = right_table_->rowCount();
         addEmptyLine( row );

@@ -15,17 +15,23 @@
 #define     HM_TREE_SECRETKEY       "SECRETKEY"
 #define     HM_TREE_DATA            "DATA"
 
-#define     HM_ITEM_TYPE_ROOT           0
-#define     HM_ITEM_TYPE_SLOT           1
-#define     HM_ITEM_TYPE_TOKEN          2
-#define     HM_ITEM_TYPE_MECHANISM      3
-#define     HM_ITEM_TYPE_SESSION        4
-#define     HM_ITEM_TYPE_OBJECTS        5
-#define     HM_ITEM_TYPE_CERTIFICATE    6
-#define     HM_ITEM_TYPE_PUBLICKEY      7
-#define     HM_ITEM_TYPE_PRIVATEKEY     8
-#define     HM_ITEM_TYPE_SECRETKEY      9
-#define     HM_ITEM_TYPE_DATA           10
+#define     HM_ITEM_TYPE_ROOT               0
+#define     HM_ITEM_TYPE_SLOT               1
+#define     HM_ITEM_TYPE_TOKEN              2
+#define     HM_ITEM_TYPE_MECHANISM          3
+#define     HM_ITEM_TYPE_SESSION            4
+#define     HM_ITEM_TYPE_OBJECTS            5
+#define     HM_ITEM_TYPE_CERTIFICATE        6
+#define     HM_ITEM_TYPE_PUBLICKEY          7
+#define     HM_ITEM_TYPE_PRIVATEKEY         8
+#define     HM_ITEM_TYPE_SECRETKEY          9
+#define     HM_ITEM_TYPE_DATA               10
+#define     HM_ITEM_TYPE_CERTIFICATE_OBJECT 11
+#define     HM_ITEM_TYPE_PUBLICKEY_OBJECT   12
+#define     HM_ITEM_TYPE_PRIVATEKEY_OBJECT  13
+#define     HM_ITEM_TYPE_SECRETKEY_OBJECT   14
+#define     HM_ITEM_TYPE_DATA_OBJECT        15
+
 
 class ManTreeItem : public QStandardItem
 {
