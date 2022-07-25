@@ -691,18 +691,58 @@ void MainWindow::deleteObject()
     DelObjectDlg delObjectDlg;
     if( pItem )
     {
-        delObjectDlg.setSeletedSlot(pItem->getSlotIndex());
+        delObjectDlg.setSlotIndex(pItem->getSlotIndex());
 
         if( pItem->getType() == HM_ITEM_TYPE_DATA )
-            delObjectDlg.setSelectedObject( OBJ_DATA_IDX );
+        {
+            delObjectDlg.setObjectIndex( OBJ_DATA_IDX );
+        }
         else if( pItem->getType() == HM_ITEM_TYPE_CERTIFICATE )
-            delObjectDlg.setSelectedObject( OBJ_CERT_IDX );
+        {
+            delObjectDlg.setObjectIndex( OBJ_CERT_IDX );
+        }
         else if( pItem->getType() == HM_ITEM_TYPE_PUBLICKEY )
-            delObjectDlg.setSelectedObject( OBJ_PUBKEY_IDX );
+        {
+            delObjectDlg.setObjectIndex( OBJ_PUBKEY_IDX );
+        }
         else if( pItem->getType() == HM_ITEM_TYPE_PRIVATEKEY )
-            delObjectDlg.setSelectedObject( OBJ_PRIKEY_IDX );
+        {
+            delObjectDlg.setObjectIndex( OBJ_PRIKEY_IDX );
+        }
         else if( pItem->getType() == HM_ITEM_TYPE_SECRETKEY )
-            delObjectDlg.setSelectedObject( OBJ_SECRET_IDX );
+        {
+            delObjectDlg.setObjectIndex( OBJ_SECRET_IDX );
+        }
+        else if( pItem->getType() == HM_ITEM_TYPE_DATA_OBJECT )
+        {
+            long obj_id = pItem->data().toInt();
+            delObjectDlg.setObjectID( obj_id );
+            delObjectDlg.setObjectIndex( OBJ_DATA_IDX );
+        }
+        else if( pItem->getType() == HM_ITEM_TYPE_CERTIFICATE_OBJECT )
+        {
+            long obj_id = pItem->data().toInt();
+            delObjectDlg.setObjectID( obj_id );
+            delObjectDlg.setObjectIndex( OBJ_CERT_IDX );
+        }
+        else if( pItem->getType() == HM_ITEM_TYPE_PUBLICKEY_OBJECT )
+        {
+            long obj_id = pItem->data().toInt();
+            delObjectDlg.setObjectID( obj_id );
+            delObjectDlg.setObjectIndex( OBJ_PUBKEY_IDX );
+        }
+        else if( pItem->getType() == HM_ITEM_TYPE_PRIVATEKEY_OBJECT )
+        {
+            long obj_id = pItem->data().toInt();
+            delObjectDlg.setObjectID( obj_id );
+            delObjectDlg.setObjectIndex( OBJ_PRIKEY_IDX );
+        }
+        else if( pItem->getType() == HM_ITEM_TYPE_SECRETKEY_OBJECT )
+        {
+            long obj_id = pItem->data().toInt();
+            delObjectDlg.setObjectID( obj_id );
+            delObjectDlg.setObjectIndex( OBJ_SECRET_IDX );
+        }
     }
 
     delObjectDlg.exec();
@@ -715,18 +755,48 @@ void MainWindow::editAttribute()
     EditAttributeDlg editAttrDlg;
     if( pItem )
     {
-        editAttrDlg.setSelectedSlot( pItem->getSlotIndex() );
+        editAttrDlg.setSlotIndex( pItem->getSlotIndex() );
 
         if( pItem->getType() == HM_ITEM_TYPE_DATA )
-            editAttrDlg.setSelectedObject( OBJ_DATA_IDX );
+            editAttrDlg.setObjectIndex( OBJ_DATA_IDX );
         else if( pItem->getType() == HM_ITEM_TYPE_CERTIFICATE )
-            editAttrDlg.setSelectedObject( OBJ_CERT_IDX );
+            editAttrDlg.setObjectIndex( OBJ_CERT_IDX );
         else if( pItem->getType() == HM_ITEM_TYPE_PUBLICKEY )
-            editAttrDlg.setSelectedObject( OBJ_PUBKEY_IDX );
+            editAttrDlg.setObjectIndex( OBJ_PUBKEY_IDX );
         else if( pItem->getType() == HM_ITEM_TYPE_PRIVATEKEY )
-            editAttrDlg.setSelectedObject( OBJ_PRIKEY_IDX );
+            editAttrDlg.setObjectIndex( OBJ_PRIKEY_IDX );
         else if( pItem->getType() == HM_ITEM_TYPE_SECRETKEY )
-            editAttrDlg.setSelectedObject( OBJ_SECRET_IDX );
+            editAttrDlg.setObjectIndex( OBJ_SECRET_IDX );
+        else if( pItem->getType() == HM_ITEM_TYPE_DATA_OBJECT )
+        {
+            long obj_id = pItem->data().toInt();
+            editAttrDlg.setObjectID( obj_id );
+            editAttrDlg.setObjectIndex( OBJ_DATA_IDX );
+        }
+        else if( pItem->getType() == HM_ITEM_TYPE_CERTIFICATE_OBJECT )
+        {
+            long obj_id = pItem->data().toInt();
+            editAttrDlg.setObjectID( obj_id );
+            editAttrDlg.setObjectIndex( OBJ_CERT_IDX );
+        }
+        else if( pItem->getType() == HM_ITEM_TYPE_PUBLICKEY_OBJECT )
+        {
+            long obj_id = pItem->data().toInt();
+            editAttrDlg.setObjectID( obj_id );
+            editAttrDlg.setObjectIndex( OBJ_PUBKEY_IDX );
+        }
+        else if( pItem->getType() == HM_ITEM_TYPE_PRIVATEKEY_OBJECT )
+        {
+            long obj_id = pItem->data().toInt();
+            editAttrDlg.setObjectID( obj_id );
+            editAttrDlg.setObjectIndex( OBJ_PRIKEY_IDX );
+        }
+        else if( pItem->getType() == HM_ITEM_TYPE_SECRETKEY_OBJECT )
+        {
+            long obj_id = pItem->data().toInt();
+            editAttrDlg.setObjectID( obj_id );
+            editAttrDlg.setObjectIndex( OBJ_SECRET_IDX );
+        }
     }
 
     editAttrDlg.exec();
@@ -1546,58 +1616,63 @@ void MainWindow::showAttribute( int nSlotIdx, int nValType, CK_ATTRIBUTE_TYPE uA
 
     ret = manApplet->cryptokiAPI()->GetAttributeValue2( hSession, hObj, uAttribute, &binVal );
 
-    if( ret != CKR_OK ) return;
-
-    if( nValType == ATTR_VAL_BOOL )
+    if( ret == CKR_OK )
     {
-        strMsg = getBool( &binVal );
-    }
-    else if( nValType == ATTR_VAL_STRING )
-    {
-        JS_BIN_string( &binVal, &pStr );
-        strMsg = pStr;
-    }
-    else if( nValType == ATTR_VAL_HEX )
-    {
-        JS_BIN_encodeHex( &binVal, &pStr );
-        strMsg = pStr;
-    }
-    else if( nValType == ATTR_VAL_KEY_NAME )
-    {
-        long uVal = 0;
-        memcpy( &uVal, binVal.pVal, binVal.nLen );
-        strMsg = JS_PKCS11_GetCKKName( uVal );
-    }
-    else if( nValType == ATTR_VAL_LEN )
-    {
-        strMsg = QString("%1").arg( JS_BIN_long(&binVal));
-    }
-    else if( nValType == ATTR_VAL_DATE )
-    {
-
-        if( binVal.nLen >= 8 )
+        if( nValType == ATTR_VAL_BOOL )
         {
-            char    sYear[5];
-            char    sMonth[3];
-            char    sDay[3];
-            CK_DATE *pDate = (CK_DATE *)binVal.pVal;
-
-            memset( sYear, 0x00, sizeof(sYear));
-            memset( sMonth, 0x00, sizeof(sMonth));
-            memset( sDay, 0x00, sizeof(sDay));
-
-            memcpy( sYear, pDate->year, 4 );
-            memcpy( sMonth, pDate->month, 2 );
-            memcpy( sDay, pDate->day, 2 );
-
-            strMsg = QString( "%1-%2-%3").arg( sYear ).arg( sMonth ).arg(sDay);
+            strMsg = getBool( &binVal );
         }
-        else
+        else if( nValType == ATTR_VAL_STRING )
+        {
+            JS_BIN_string( &binVal, &pStr );
+            strMsg = pStr;
+        }
+        else if( nValType == ATTR_VAL_HEX )
         {
             JS_BIN_encodeHex( &binVal, &pStr );
             strMsg = pStr;
         }
+        else if( nValType == ATTR_VAL_KEY_NAME )
+        {
+            long uVal = 0;
+            memcpy( &uVal, binVal.pVal, binVal.nLen );
+            strMsg = JS_PKCS11_GetCKKName( uVal );
+        }
+        else if( nValType == ATTR_VAL_LEN )
+        {
+            long uLen = 0;
+            memcpy( &uLen, binVal.pVal, sizeof(uLen));
+            strMsg = QString("%1").arg( uLen );
+        }
+        else if( nValType == ATTR_VAL_DATE )
+        {
+            if( binVal.nLen >= 8 )
+            {
+                char    sYear[5];
+                char    sMonth[3];
+                char    sDay[3];
+                CK_DATE *pDate = (CK_DATE *)binVal.pVal;
 
+                memset( sYear, 0x00, sizeof(sYear));
+                memset( sMonth, 0x00, sizeof(sMonth));
+                memset( sDay, 0x00, sizeof(sDay));
+
+                memcpy( sYear, pDate->year, 4 );
+                memcpy( sMonth, pDate->month, 2 );
+                memcpy( sDay, pDate->day, 2 );
+
+                strMsg = QString( "%1-%2-%3").arg( sYear ).arg( sMonth ).arg(sDay);
+            }
+            else
+            {
+                JS_BIN_encodeHex( &binVal, &pStr );
+                strMsg = pStr;
+            }
+        }
+    }
+    else
+    {
+        strMsg = QString( "[ERR] %1[%2]" ).arg( JS_PKCS11_GetErrorMsg(ret)).arg(ret);
     }
 
     QString strName = JS_PKCS11_GetCKAName( uAttribute );
@@ -1784,7 +1859,7 @@ void MainWindow::showPublicKeyInfo( int index, long hObject )
         right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
 
         manApplet->cryptokiAPI()->GetAttributeValue2( hSession, hObjects[i], CKA_KEY_TYPE, &binVal );
-        nType = JS_BIN_long( &binVal );
+        memcpy( &nType, binVal.pVal, sizeof(nType));
 
         JS_BIN_reset( &binVal );
         manApplet->cryptokiAPI()->GetAttributeValue2( hSession, hObjects[i], CKA_LABEL, &binVal );
@@ -1902,7 +1977,7 @@ void MainWindow::showPrivateKeyInfo( int index, long hObject )
         char *pLabel = NULL;
 
         manApplet->cryptokiAPI()->GetAttributeValue2( hSession, hObjects[i], CKA_KEY_TYPE, &binVal );
-        nType = JS_BIN_long( &binVal );
+        memcpy( &nType, binVal.pVal, sizeof(nType));
 
         JS_BIN_reset( &binVal );
         manApplet->cryptokiAPI()->GetAttributeValue2( hSession, hObjects[i], CKA_LABEL, &binVal );

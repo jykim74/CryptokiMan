@@ -10,6 +10,10 @@
 DelObjectDlg::DelObjectDlg(QWidget *parent) :
     QDialog(parent)
 {
+    slot_index_ = -1;
+    object_index_ = -1;
+    object_id_ = -1;
+
     setupUi(this);
 
     connect( mLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(labelChanged(int)));
@@ -21,9 +25,6 @@ DelObjectDlg::DelObjectDlg(QWidget *parent) :
     connect( mDeleteBtn, SIGNAL(clicked()), this, SLOT(deleteObj()));
     connect( mDeleteAllBtn, SIGNAL(clicked()), this, SLOT(deleteAllObj()));
 
-    mObjectCombo->addItems(kObjectList);
-
-    initialize();
 }
 
 DelObjectDlg::~DelObjectDlg()
@@ -31,14 +32,19 @@ DelObjectDlg::~DelObjectDlg()
 
 }
 
-void DelObjectDlg::setSeletedSlot(int index)
+void DelObjectDlg::setSlotIndex( int index )
 {
-    if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
+    slot_index_ = index;
 }
 
-void DelObjectDlg::setSelectedObject(int index)
+void DelObjectDlg::setObjectIndex( int index )
 {
-    if( index >= 0 ) mObjectCombo->setCurrentIndex(index);
+    object_index_ = index;
+}
+
+void DelObjectDlg::setObjectID( long id )
+{
+    object_id_ = id;
 }
 
 void DelObjectDlg::slotChanged(int index)
@@ -46,7 +52,12 @@ void DelObjectDlg::slotChanged(int index)
     if( index < 0 ) return;
 
     QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-    SlotInfo slotInfo = slot_infos.at(index);
+    SlotInfo slotInfo;
+
+    if( slot_index_ < 0 )
+        slotInfo = slot_infos.at(index);
+    else
+        slotInfo = slot_infos.at( slot_index_ );
 
     mSlotIDText->setText( QString( "%1").arg(slotInfo.getSlotID()));
     mSessionText->setText( QString("%1").arg(slotInfo.getSessionHandle()));
@@ -59,22 +70,56 @@ void DelObjectDlg::initialize()
 
     QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
 
-    for( int i=0; i < slot_infos.size(); i++ )
+    if( slot_index_ < 0 )
     {
-        SlotInfo slotInfo = slot_infos.at(i);
+        for( int i=0; i < slot_infos.size(); i++ )
+        {
+            SlotInfo slotInfo = slot_infos.at(i);
 
+            mSlotsCombo->addItem( slotInfo.getDesc() );
+        }
+
+        if( slot_infos.size() > 0 ) slotChanged(0);
+    }
+    else
+    {
+        SlotInfo slotInfo = slot_infos.at(slot_index_);
         mSlotsCombo->addItem( slotInfo.getDesc() );
     }
 
-    if( slot_infos.size() > 0 ) slotChanged(0);
+    if( object_id_ >= 0 ) mDeleteAllBtn->setDisabled(true);
+}
+
+void DelObjectDlg::showEvent(QShowEvent *event)
+{
+    if( object_index_ < 0 )
+        mObjectCombo->addItems(kObjectList);
+    else
+        mObjectCombo->addItem(kObjectList[object_index_]);
+
+    initialize();
+
+    objectChanged( object_index_ );
+}
+
+void DelObjectDlg::closeEvent(QCloseEvent *)
+{
+
 }
 
 void DelObjectDlg::deleteObj()
 {
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
+
     int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.at(index);
+    SlotInfo slotInfo;
+
+    if( slot_index_ < 0 )
+        slotInfo = slot_infos.at(index);
+    else
+        slotInfo = slot_infos.at( slot_index_ );
+
     int rv = -1;
     CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
@@ -188,7 +233,13 @@ void DelObjectDlg::objectChanged( int index )
     int nSlotSel = mSlotsCombo->currentIndex();
     if( nSlotSel < 0 ) return;
 
-    SlotInfo slotInfo = slot_infos.at(nSlotSel);
+    SlotInfo slotInfo;
+
+    if( slot_index_ < 0 )
+        slotInfo = slot_infos.at(nSlotSel);
+    else
+        slotInfo = slot_infos.at(slot_index_);
+
     int rv = -1;
     CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
@@ -215,14 +266,22 @@ void DelObjectDlg::objectChanged( int index )
     sTemplate[uCount].ulValueLen = sizeof(objClass);
     uCount++;
 
-    rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, uCount );
-    if( rv != CKR_OK ) return;
+    if( object_id_ < 0 )
+    {
+        rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, uCount );
+        if( rv != CKR_OK ) return;
 
-    rv = manApplet->cryptokiAPI()->FindObjects( hSession, sObjects, uMaxObjCnt, &uObjCnt );
-    if( rv != CKR_OK ) return;
+        rv = manApplet->cryptokiAPI()->FindObjects( hSession, sObjects, uMaxObjCnt, &uObjCnt );
+        if( rv != CKR_OK ) return;
 
-    rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
-    if( rv != CKR_OK ) return;
+        rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
+        if( rv != CKR_OK ) return;
+    }
+    else
+    {
+        uObjCnt = 1;
+        sObjects[0] = object_id_;
+    }
 
     mLabelCombo->clear();
 

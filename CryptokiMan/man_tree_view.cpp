@@ -176,6 +176,31 @@ void ManTreeView::showContextMenu( QPoint point )
         menu.addAction( tr( "DeleteObject" ), manApplet->mainWindow(), &MainWindow::deleteObject );
         menu.addAction( tr("EditAttribute"), manApplet->mainWindow(), &MainWindow::editAttribute );
     }
+    else if( item->getType() == HM_ITEM_TYPE_DATA_OBJECT )
+    {
+        menu.addAction( tr( "DeleteObject" ), manApplet->mainWindow(), &MainWindow::deleteObject );
+        menu.addAction( tr("EditAttribute"), manApplet->mainWindow(), &MainWindow::editAttribute );
+    }
+    else if( item->getType() == HM_ITEM_TYPE_CERTIFICATE_OBJECT )
+    {
+        menu.addAction( tr( "DeleteObject" ), manApplet->mainWindow(), &MainWindow::deleteObject );
+        menu.addAction( tr("EditAttribute"), manApplet->mainWindow(), &MainWindow::editAttribute );
+    }
+    else if( item->getType() == HM_ITEM_TYPE_PUBLICKEY_OBJECT )
+    {
+        menu.addAction( tr( "DeleteObject" ), manApplet->mainWindow(), &MainWindow::deleteObject );
+        menu.addAction( tr("EditAttribute"), manApplet->mainWindow(), &MainWindow::editAttribute );
+    }
+    else if( item->getType() == HM_ITEM_TYPE_PRIVATEKEY_OBJECT )
+    {
+        menu.addAction( tr( "DeleteObject" ), manApplet->mainWindow(), &MainWindow::deleteObject );
+        menu.addAction( tr("EditAttribute"), manApplet->mainWindow(), &MainWindow::editAttribute );
+    }
+    else if( item->getType() == HM_ITEM_TYPE_SECRETKEY_OBJECT )
+    {
+        menu.addAction( tr( "DeleteObject" ), manApplet->mainWindow(), &MainWindow::deleteObject );
+        menu.addAction( tr("EditAttribute"), manApplet->mainWindow(), &MainWindow::editAttribute );
+    }
 
     menu.exec(QCursor::pos());
 }

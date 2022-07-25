@@ -15,11 +15,14 @@ class DelObjectDlg : public QDialog, public Ui::DelObjectDlg
 public:
     explicit DelObjectDlg(QWidget *parent = nullptr);
     ~DelObjectDlg();
-    void setSeletedSlot( int index );
-    void setSelectedObject( int index );
-
+    void setSlotIndex( int index );
+    void setObjectIndex( int index );
+    void setObjectID( long id );
 
 private slots:
+    void showEvent(QShowEvent *event);
+    void closeEvent(QCloseEvent *);
+
     void deleteObj();
     void deleteAllObj();
     void slotChanged( int index );
@@ -29,6 +32,10 @@ private slots:
 
 private:
     void initialize();
+
+    int slot_index_;
+    int object_index_;
+    long object_id_;
 };
 
 #endif // DEL_OBJECT_DLG_H

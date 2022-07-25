@@ -1806,6 +1806,13 @@ int CryptokiAPI::UnwrapKey( CK_SESSION_HANDLE hSession,
     return rv;
 }
 
+QString CryptokiAPI::getLastError()
+{
+    QString strError = p11_ctx_->sLastLog;
+
+    return strError;
+}
+
 void CryptokiAPI::logResult( const QString strName, int rv, qint64 ms )
 {
     QString strLog;

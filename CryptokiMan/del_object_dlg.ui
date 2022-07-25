@@ -14,74 +14,12 @@
    <string>Delete object</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="3" column="3">
-    <widget class="QLineEdit" name="mSessionText"/>
-   </item>
-   <item row="5" column="1" colspan="4">
-    <widget class="QComboBox" name="mLabelCombo"/>
-   </item>
-   <item row="2" column="0" colspan="2">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Slot status</string>
-     </property>
-    </widget>
-   </item>
    <item row="3" column="2">
     <widget class="QLabel" name="label_5">
      <property name="text">
       <string>Session</string>
      </property>
     </widget>
-   </item>
-   <item row="4" column="0" colspan="2">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Target Object</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="4">
-    <widget class="QLabel" name="label_6">
-     <property name="text">
-      <string>Login</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="5">
-    <widget class="QLineEdit" name="mObjectText"/>
-   </item>
-   <item row="5" column="0">
-    <widget class="QComboBox" name="mObjectCombo"/>
-   </item>
-   <item row="0" column="0" colspan="2">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Slot list</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="1">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="3" column="1">
-    <widget class="QLineEdit" name="mSlotIDText"/>
-   </item>
-   <item row="1" column="0" colspan="6">
-    <widget class="QComboBox" name="mSlotsCombo"/>
-   </item>
-   <item row="3" column="5">
-    <widget class="QLineEdit" name="mLoginText"/>
    </item>
    <item row="3" column="0">
     <widget class="QLabel" name="label_3">
@@ -90,7 +28,10 @@
      </property>
     </widget>
    </item>
-   <item row="7" column="0" colspan="6">
+   <item row="3" column="3">
+    <widget class="QLineEdit" name="mSessionText"/>
+   </item>
+   <item row="8" column="0" colspan="6">
     <layout class="QGridLayout" name="gridLayout_2">
      <property name="topMargin">
       <number>0</number>
@@ -131,6 +72,86 @@
      </item>
     </layout>
    </item>
+   <item row="3" column="1">
+    <widget class="QLineEdit" name="mSlotIDText"/>
+   </item>
+   <item row="2" column="0" colspan="2">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Slot status</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="1">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="5">
+    <widget class="QLineEdit" name="mLoginText"/>
+   </item>
+   <item row="1" column="0" colspan="6">
+    <widget class="QComboBox" name="mSlotsCombo"/>
+   </item>
+   <item row="3" column="4">
+    <widget class="QLabel" name="label_6">
+     <property name="text">
+      <string>Login</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="2">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Target Object</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="2">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Slot list</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0" colspan="6">
+    <layout class="QGridLayout" name="gridLayout_3">
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="mLabelCombo"/>
+     </item>
+     <item row="0" column="0">
+      <widget class="QComboBox" name="mObjectCombo">
+       <property name="maximumSize">
+        <size>
+         <width>100</width>
+         <height>16777215</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QLineEdit" name="mObjectText">
+       <property name="maximumSize">
+        <size>
+         <width>60</width>
+         <height>16777215</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
   </layout>
  </widget>
  <tabstops>
@@ -138,9 +159,6 @@
   <tabstop>mSlotIDText</tabstop>
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
-  <tabstop>mObjectCombo</tabstop>
-  <tabstop>mLabelCombo</tabstop>
-  <tabstop>mObjectText</tabstop>
   <tabstop>mDeleteBtn</tabstop>
   <tabstop>mDeleteAllBtn</tabstop>
   <tabstop>mCloseBtn</tabstop>

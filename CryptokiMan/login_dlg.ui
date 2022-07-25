@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>243</height>
+    <height>227</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -60,6 +60,13 @@
     </layout>
    </item>
    <item>
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QLabel" name="label_3">
      <property name="text">
       <string>Login Type and PIN</string>
@@ -68,6 +75,19 @@
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="label_7">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Login Type</string>
+       </property>
+      </widget>
+     </item>
      <item>
       <widget class="QRadioButton" name="mUserCheck">
        <property name="text">
@@ -98,17 +118,34 @@
        </property>
       </spacer>
      </item>
-     <item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
       <widget class="QLabel" name="label_6">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="text">
         <string>PIN</string>
        </property>
       </widget>
      </item>
-     <item>
+     <item row="0" column="1">
       <widget class="QLineEdit" name="mPinText"/>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="Line" name="line_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
@@ -128,7 +165,6 @@
   <tabstop>mSessionText</tabstop>
   <tabstop>mUserCheck</tabstop>
   <tabstop>mSOCheck</tabstop>
-  <tabstop>mPinText</tabstop>
  </tabstops>
  <resources/>
  <connections>

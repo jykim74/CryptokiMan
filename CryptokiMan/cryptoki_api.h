@@ -127,6 +127,8 @@ public:
                    CK_ULONG ulTemplateCnt,
                    CK_OBJECT_HANDLE_PTR phKey );
 
+    QString getLastError();
+
 private:
     void logResult( const QString strName, int rv, qint64 ms = -1 );
     void logTemplate( const CK_ATTRIBUTE sTemplate[], int nCount );

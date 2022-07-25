@@ -5,25 +5,15 @@
 #include "js_pkcs11.h"
 #include "cryptoki_api.h"
 
-static QStringList sAttributeList = {
-    "CKA_LABEL", "CKA_APPLICATION", "CKA_VALUE", "CKA_OBJECT_ID",
-    "CKA_ISSUER", "CKA_SERIAL_NUMBER", "CKA_TRUSTED", "CKA_SUBJECT",
-    "CKA_ID", "CKA_SENSITIVE", "CKA_ENCRYPT", "CKA_DECRYPT",
-    "CKA_WRAP", "CKA_UNWRAP", "CKA_SIGN", "CKA_SIGN_RECOVER",
-    "CKA_VERIFY", "CKA_VERIFY_RECOVER", "CKA_DERIVE", "CKA_START_DATE",
-    "CKA_END_DATE", "CKA_MODULUS", "CKA_PUBLIC_EXPONENT", "CKA_PRIVATE_EXPONENT",
-    "CKA_PRIME_1", "CKA_PRIME_2", "CKA_EXPONENT_1", "CKA_EXPONENT_2",
-    "CKA_COEFFICIENT", "CKA_PRIME", "CKA_SUBPRIME", "CKA_BASE",
-    "CKA_EXTRACTABLE", "CKA_TOKEN", "CKA_PRIVATE", "CKA_MODIFIABLE",
-    "CKA_START_DATE", "CKA_END_DATE"
-};
 
 EditAttributeDlg::EditAttributeDlg(QWidget *parent) :
     QDialog(parent)
 {
-    setupUi(this);
+    slot_index_ = -1;
+    object_index_ = -1;
+    object_id_ = -1;
 
-    initAttributes();
+    setupUi(this);
 
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
     connect( mObjectCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(objectChanged(int)));
@@ -32,11 +22,6 @@ EditAttributeDlg::EditAttributeDlg(QWidget *parent) :
     connect( mCloseBtn, SIGNAL(clicked(bool)), this, SLOT(clickClose()));
     connect( mGetAttrBtn, SIGNAL(clicked(bool)), this, SLOT(clickGetAttribute()));
     connect( mSetAttrBtn, SIGNAL(clicked(bool)), this, SLOT(clickSetAttribute()));
-
-    mObjectCombo->addItems(kObjectList);
-
-    initialize();
-
 }
 
 EditAttributeDlg::~EditAttributeDlg()
@@ -44,14 +29,19 @@ EditAttributeDlg::~EditAttributeDlg()
 
 }
 
-void EditAttributeDlg::setSelectedSlot(int index)
+void EditAttributeDlg::setSlotIndex( int index )
 {
-    if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
+    slot_index_ = index;
 }
 
-void EditAttributeDlg::setSelectedObject(int index)
+void EditAttributeDlg::setObjectIndex( int index )
 {
-    if( index >= 0 ) mObjectCombo->setCurrentIndex(index);
+    object_index_ = index;
+}
+
+void EditAttributeDlg::setObjectID( long id )
+{
+    object_id_ = id;
 }
 
 void EditAttributeDlg::slotChanged(int index)
@@ -59,7 +49,12 @@ void EditAttributeDlg::slotChanged(int index)
     if( index < 0 ) return;
 
     QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-    SlotInfo slotInfo = slot_infos.at(index);
+    SlotInfo slotInfo;
+
+    if( slot_index_ < 0 )
+        slotInfo = slot_infos.at(index);
+    else
+        slotInfo = slot_infos.at( slot_index_ );
 
     mSlotIDText->setText( QString( "%1").arg(slotInfo.getSlotID()));
     mSessionText->setText( QString("%1").arg(slotInfo.getSessionHandle()));
@@ -85,7 +80,13 @@ void EditAttributeDlg::objectChanged( int index )
     int nSlotSel = mSlotsCombo->currentIndex();
     if( nSlotSel < 0 ) return;
 
-    SlotInfo slotInfo = slot_infos.at(nSlotSel);
+    SlotInfo slotInfo;
+
+    if( slot_index_ < 0 )
+        slotInfo = slot_infos.at(nSlotSel);
+    else
+        slotInfo = slot_infos.at( slot_index_ );
+
     int rv = -1;
     CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
@@ -96,31 +97,56 @@ void EditAttributeDlg::objectChanged( int index )
     CK_ULONG uMaxObjCnt = 20;
     CK_ULONG uObjCnt = 0;
 
+    mAttributeCombo->clear();
+    mAttributeCombo->addItems( kCommonAttList );
+
     if( index == OBJ_DATA_IDX )
+    {
         objClass = CKO_DATA;
+        mAttributeCombo->addItems( kDataAttList );
+    }
     else if( index == OBJ_CERT_IDX )
+    {
         objClass = CKO_CERTIFICATE;
+        mAttributeCombo->addItems( kCertAttList );
+    }
     else if( index == OBJ_PUBKEY_IDX )
+    {
         objClass = CKO_PUBLIC_KEY;
+        mAttributeCombo->addItems( kPubKeyAttList );
+    }
     else if( index == OBJ_PRIKEY_IDX )
+    {
         objClass = CKO_PRIVATE_KEY;
+        mAttributeCombo->addItems( kPriKetAttList );
+    }
     else if( index == OBJ_SECRET_IDX )
+    {
         objClass = CKO_SECRET_KEY;
+        mAttributeCombo->addItems( kSecretKeyAttList );
+    }
 
     sTemplate[uCount].type = CKA_CLASS;
     sTemplate[uCount].pValue = &objClass;
     sTemplate[uCount].ulValueLen = sizeof(objClass);
     uCount++;
 
-    rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, uCount );
-    if( rv != CKR_OK ) return;
+    if( object_id_ < 0 )
+    {
+        rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, uCount );
+        if( rv != CKR_OK ) return;
 
-    rv = manApplet->cryptokiAPI()->FindObjects( hSession, sObjects, uMaxObjCnt, &uObjCnt );
-    if( rv != CKR_OK ) return;
+        rv = manApplet->cryptokiAPI()->FindObjects( hSession, sObjects, uMaxObjCnt, &uObjCnt );
+        if( rv != CKR_OK ) return;
 
-    rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
-    if( rv != CKR_OK ) return;
-
+        rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
+        if( rv != CKR_OK ) return;
+    }
+    else
+    {
+        uObjCnt = 1;
+        sObjects[0] = object_id_;
+    }
 
     mLabelCombo->clear();
 
@@ -152,24 +178,53 @@ void EditAttributeDlg::initialize()
 
     QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
 
-    for( int i=0; i < slot_infos.size(); i++ )
+    if( slot_index_ < 0 )
     {
-        SlotInfo slotInfo = slot_infos.at(i);
+        for( int i=0; i < slot_infos.size(); i++ )
+        {
+            SlotInfo slotInfo = slot_infos.at(i);
 
+            mSlotsCombo->addItem( slotInfo.getDesc() );
+        }
+
+        if( slot_infos.size() > 0 ) slotChanged(0);
+    }
+    else
+    {
+        SlotInfo slotInfo = slot_infos.at(slot_index_);
         mSlotsCombo->addItem( slotInfo.getDesc() );
     }
 
-    if( slot_infos.size() > 0 ) slotChanged(0);
 }
 
 void EditAttributeDlg::initAttributes()
 {
-    mAttributeCombo->addItems(sAttributeList);
+//    mAttributeCombo->addItems(sAttributeList);
+    mAttributeCombo->addItems( kCommonAttList );
 }
 
 void EditAttributeDlg::accept()
 {
     QDialog::accept();
+}
+
+void EditAttributeDlg::showEvent(QShowEvent *event)
+{
+    initAttributes();
+    if( object_index_ < 0 )
+        mObjectCombo->addItems(kObjectList);
+    else
+        mObjectCombo->addItem( kObjectList[object_index_] );
+
+    initialize();
+
+//    if( slot_index_ >= 0 ) mSlotsCombo->setCurrentIndex( slot_index_ );
+    objectChanged( object_index_ );
+}
+
+void EditAttributeDlg::closeEvent(QCloseEvent *)
+{
+
 }
 
 void EditAttributeDlg::clickClose()
@@ -196,8 +251,8 @@ void EditAttributeDlg::clickGetAttribute()
 
     CK_ATTRIBUTE_TYPE attrType = 0;
 
-    int nAttrPos = mAttributeCombo->currentIndex();
-    attrType = JS_PKCS11_GetCKAType(sAttributeList.at(nAttrPos).toStdString().c_str());
+    QString strAttrib = mAttributeCombo->currentText();
+    attrType = JS_PKCS11_GetCKAType( strAttrib.toStdString().c_str());
 
     BIN binVal = {0,0};
     char *pHex = NULL;
@@ -236,8 +291,8 @@ void EditAttributeDlg::clickSetAttribute()
 
     CK_ATTRIBUTE_TYPE attrType = 0;
 
-    int nAttrPos = mAttributeCombo->currentIndex();
-    attrType = JS_PKCS11_GetCKAType( sAttributeList.at(nAttrPos).toStdString().c_str());
+    QString strAttrib = mAttributeCombo->currentText();
+    attrType = JS_PKCS11_GetCKAType( strAttrib.toStdString().c_str() );
 
 
     BIN binVal = {0,0};

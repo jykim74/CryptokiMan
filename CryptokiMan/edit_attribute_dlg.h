@@ -15,11 +15,16 @@ class EditAttributeDlg : public QDialog, public Ui::EditAttributeDlg
 public:
     explicit EditAttributeDlg(QWidget *parent = nullptr);
     ~EditAttributeDlg();
-    void setSelectedSlot( int index );
-    void setSelectedObject( int index );
+
+    void setSlotIndex( int index );
+    void setObjectIndex( int index );
+    void setObjectID( long id );
 
 private slots:
     virtual void accept();
+    void showEvent(QShowEvent *event);
+    void closeEvent(QCloseEvent *);
+
     void slotChanged( int index );
     void labelChanged( int index );
     void objectChanged( int index );
@@ -31,6 +36,10 @@ private slots:
 private:
     void initialize();
     void initAttributes();
+
+    int slot_index_;
+    int object_index_;
+    long object_id_;
 };
 
 #endif // EDIT_ATTRIBUTE_DLG_H
