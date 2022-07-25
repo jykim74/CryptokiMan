@@ -2006,6 +2006,7 @@ void MainWindow::showPrivateKeyInfo( int index, long hObject )
         else if( nType == CKK_EC )
         {
             showAttribute( index, ATTR_VAL_HEX, CKA_EC_PARAMS, hObjects[i]);
+            showAttribute( index, ATTR_VAL_HEX, CKA_VALUE, hObjects[i] );
         }
 
         showAttribute( index, ATTR_VAL_BOOL, CKA_TOKEN, hObjects[i]);
