@@ -134,6 +134,32 @@ void DelObjectDlg::deleteObj()
     }
 
     manApplet->messageBox( tr("success to delete object"), this );
+
+    QString strType = mObjectCombo->currentText();
+    int nDataType = -1;
+
+    if( strType == kObjectList[0] )
+    {
+        nDataType = HM_ITEM_TYPE_DATA;
+    }
+    else if( strType == kObjectList[1] )
+    {
+        nDataType = HM_ITEM_TYPE_CERTIFICATE;
+    }
+    else if( strType == kObjectList[2] )
+    {
+        nDataType = HM_ITEM_TYPE_PUBLICKEY;
+    }
+    else if( strType == kObjectList[3] )
+    {
+        nDataType = HM_ITEM_TYPE_PRIVATEKEY;
+    }
+    else if( strType == kObjectList[4] )
+    {
+        nDataType = HM_ITEM_TYPE_SECRETKEY;
+    }
+
+    manApplet->showTypeData( slot_index_, nDataType );
     QDialog::accept();
 }
 
@@ -158,29 +184,29 @@ void DelObjectDlg::deleteAllObj()
     CK_ULONG uObjCnt = 0;
     int nDataType = -1;
 
-    int type = mObjectCombo->currentIndex();
+    QString strType = mObjectCombo->currentText();
 
-    if( type == OBJ_DATA_IDX )
+    if( strType == kObjectList[0] )
     {
         objClass = CKO_DATA;
         nDataType = HM_ITEM_TYPE_DATA;
     }
-    else if( type == OBJ_CERT_IDX )
+    else if( strType == kObjectList[1] )
     {
         objClass = CKO_CERTIFICATE;
         nDataType = HM_ITEM_TYPE_CERTIFICATE;
     }
-    else if( type == OBJ_PUBKEY_IDX )
+    else if( strType == kObjectList[2] )
     {
         objClass = CKO_PUBLIC_KEY;
         nDataType = HM_ITEM_TYPE_PUBLICKEY;
     }
-    else if( type == OBJ_PRIKEY_IDX )
+    else if( strType == kObjectList[3] )
     {
         objClass = CKO_PRIVATE_KEY;
         nDataType = HM_ITEM_TYPE_PRIVATEKEY;
     }
-    else if( type == OBJ_SECRET_IDX )
+    else if( strType == kObjectList[4] )
     {
         objClass = CKO_SECRET_KEY;
         nDataType = HM_ITEM_TYPE_SECRETKEY;

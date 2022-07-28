@@ -39,6 +39,7 @@ void LoginDlg::initialize()
     }
 
     if( slot_infos.size() > 0 ) slotChanged(0);
+    mPinText->setEchoMode(QLineEdit::Password);
 }
 
 void LoginDlg::accept()
