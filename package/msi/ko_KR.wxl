@@ -4,7 +4,7 @@
   <String Id="AppName">CryptokiMan</String>
   <String Id="PackageDescription">CryptokiMan 설치프로그램</String>
   <String Id="PackageComments">CryptokiMan 설치프로그램</String>
-  <String Id="Manufacturer">JS .Inc</String>
+  <String Id="Manufacturer">JS Inc</String>
   <String Id="DowngradeErrorMessage">이미 더 최신 버전의 CryptokiMan가 설치 되어 있습니다. 설치를 끝내겠습니다.</String>
   <String Id="UninstallCryptokiMan">CryptokiMan 제거</String>
   <String Id="StartCryptokiMan">CryptokiMan 시작</String>

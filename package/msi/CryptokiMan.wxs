@@ -25,13 +25,13 @@
 		<Property Id="SUPPRESS_LAUNCH_BERVIEWER_AFTER_INSTALL_FINISH">
 			<RegistrySearch Id="SuppressLaunchCryptokiManHKCU"
 							Root="HKCU"
-							Key="SOFTWARE\!(loc.AppName)"
+							Key="SOFTWARE\[Manufacturer]\!(loc.AppName)"
 							Name="PreconfigureSuppressLaunchAfterInstall"
 							Type="raw" />
 
 			<RegistrySearch Id="SuppressLaunchCryptokiManHKLM"
 							Root="HKLM"
-							Key="SOFTWARE\!(loc.AppName)"
+							Key="SOFTWARE\[Manufacturer]\!(loc.AppName)"
 							Name="PreconfigureSuppressLaunchAfterInstall"
 							Type="raw" />
 		</Property>
@@ -45,9 +45,7 @@
 			</Directory>
 
 			<Directory Id='ProgramFilesFolder' Name='PFiles'>
-				<Directory Id='INSTALLDIR' Name='!(loc.AppName)'>
-					<Directory Id='bin' Name='bin'>
-					</Directory>
+				<Directory Id='INSTALLDIR' Name='!(loc.Manufacturer)'>
 				</Directory>
 			</Directory>
 		</Directory>
@@ -63,7 +61,7 @@
 					<RegistryValue Name='!(loc.AppName)' Value="[#cryptokiman.exe]" Type="string" KeyPath="yes" />
 				</RegistryKey>
 
-				<Condition>HSMMAN_AUTO_START</Condition>
+				<Condition>CRYPTOKIMAN_AUTO_START</Condition>
 			</Component>
 		</DirectoryRef>
 
