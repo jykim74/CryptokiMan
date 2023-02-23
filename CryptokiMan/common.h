@@ -4,6 +4,7 @@
 #include <QStringList>
 #include <QWidget>
 #include "js_pkcs11.h"
+#include "js_pki_ext.h"
 
 enum {
     OBJ_DATA_IDX = 0,
@@ -23,6 +24,9 @@ enum { JS_FILE_TYPE_CERT,
        JS_FILE_TYPE_BER,
        JS_FILE_TYPE_DLL,
        JS_FILE_TYPE_PFX };
+
+const QString kTableStyle = "QHeaderView::section {background-color:#404040;color:#FFFFFF;}";
+
 
 static QStringList kCommonAttList = {
     "CKA_LABEL", "CKA_ID", "CKA_MODIFIABLE", "CKA_TOKEN",
@@ -62,5 +66,6 @@ QString findFile( QWidget *parent, int nType, const QString strPath );
 void getCKDate( const QDate date, CK_DATE *pCKDate );
 QString getBool( const BIN *pBin );
 QString getHexString( unsigned char *pData, int nDataLen );
+void getInfoValue( const JExtensionInfo *pExtInfo, QString& strVal );
 
 #endif // COMMON_H

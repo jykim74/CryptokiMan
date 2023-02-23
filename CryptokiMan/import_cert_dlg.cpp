@@ -93,6 +93,8 @@ void ImportCertDlg::connectAttributes()
 
 void ImportCertDlg::accept()
 {
+    int ret = 0;
+    JCertInfo sCertInfo;
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int index = mSlotsCombo->currentIndex();
@@ -109,7 +111,21 @@ void ImportCertDlg::accept()
     }
 
     BIN binCert = {0,0};
+
+    memset( &sCertInfo, 0x00, sizeof(sCertInfo));
+
     JS_BIN_fileRead( strCertPath.toStdString().c_str(), &binCert );
+
+    ret = JS_PKI_getCertInfo( &binCert, &sCertInfo, NULL );
+    if( ret != 0 )
+    {
+        manApplet->elog( QString( "fail to decode certificate: %1" ).arg(ret) );
+        JS_BIN_reset( &binCert );
+        return;
+    }
+
+    QString strSubject = sCertInfo.pSubjectName;
+    JS_PKI_resetCertInfo( &sCertInfo );
 
     CK_ATTRIBUTE sTemplate[20];
     CK_ULONG uCount = 0;
@@ -160,7 +176,6 @@ void ImportCertDlg::accept()
         uCount++;
     }
 
-    QString strSubject = mSubjectText->text();
     BIN binSubject = {0,0};
 
     if( !strSubject.isEmpty() )
@@ -261,7 +276,6 @@ void ImportCertDlg::setDefaults()
 {
     mLabelText->setText( "certificate label" );
     mIDText->setText( "01020304" );
-    mSubjectText->setText( "CN=Subject" );
 
     mTokenCheck->setChecked(true);
     mTokenCombo->setEnabled(true);

@@ -138,7 +138,6 @@ void ManTreeView::showContextMenu( QPoint point )
     {
         menu.addAction( tr( "DeleteObject" ), manApplet->mainWindow(), &MainWindow::deleteObject );
         menu.addAction( tr("EditAttribute"), manApplet->mainWindow(), &MainWindow::editAttribute );
-
         menu.addAction( tr("ImportCert" ), manApplet->mainWindow(), &MainWindow::importCert );
     }
     else if( item->getType() == HM_ITEM_TYPE_PUBLICKEY )
@@ -185,6 +184,7 @@ void ManTreeView::showContextMenu( QPoint point )
     {
         menu.addAction( tr( "DeleteObject" ), manApplet->mainWindow(), &MainWindow::deleteObject );
         menu.addAction( tr("EditAttribute"), manApplet->mainWindow(), &MainWindow::editAttribute );
+        menu.addAction( tr( "ViewCertificate"), manApplet->mainWindow(), &MainWindow::viewCert );
     }
     else if( item->getType() == HM_ITEM_TYPE_PUBLICKEY_OBJECT )
     {
@@ -261,6 +261,7 @@ void ManTreeView::P11Initialize()
 
             ManTreeItem *item = new ManTreeItem;
             item->setType( HM_ITEM_TYPE_SLOT );
+            item->setIcon( QIcon( ":/images/slot.png" ));
             item->setText( strName );
             item->setSlotIndex( i );
 
@@ -276,47 +277,56 @@ void ManTreeView::P11Initialize()
 
             ManTreeItem *pItemToken = new ManTreeItem( QString("Token") );
             pItemToken->setType( HM_ITEM_TYPE_TOKEN );
+            pItemToken->setIcon( QIcon(":/images/token.png"));
             pItemToken->setSlotIndex(i);
             item->appendRow( pItemToken );
 
 
             ManTreeItem *pItemMech = new ManTreeItem( QString("Mechanism") );
             pItemMech->setType( HM_ITEM_TYPE_MECHANISM );
+            pItemMech->setIcon(QIcon(":/images/mech.png"));
             pItemMech->setSlotIndex(i);
             item->appendRow( pItemMech );
 
             ManTreeItem *pItemSession = new ManTreeItem( QString("Session") );
             pItemSession->setType( HM_ITEM_TYPE_SESSION );
+            pItemSession->setIcon(QIcon(":/images/session.png"));
             pItemSession->setSlotIndex(i);
             item->appendRow( pItemSession );
 
             ManTreeItem *pItemObjects = new ManTreeItem( QString("Objects") );
             pItemObjects->setType( HM_ITEM_TYPE_OBJECTS );
+            pItemObjects->setIcon(QIcon(":/images/object.png"));
             pItemObjects->setSlotIndex(i);
             item->appendRow( pItemObjects );
 
             ManTreeItem *pItemCert = new ManTreeItem( QString("Certificate" ) );
             pItemCert->setType( HM_ITEM_TYPE_CERTIFICATE );
+            pItemCert->setIcon(QIcon(":/images/cert.png"));
             pItemCert->setSlotIndex(i);
             pItemObjects->appendRow( pItemCert );
 
             ManTreeItem *pItemPubKey = new ManTreeItem( QString("PublicKey") );
             pItemPubKey->setType( HM_ITEM_TYPE_PUBLICKEY );
+            pItemPubKey->setIcon( QIcon(":/images/pubkey.png") );
             pItemPubKey->setSlotIndex(i);
             pItemObjects->appendRow( pItemPubKey );
 
             ManTreeItem *pItemPriKey = new ManTreeItem( QString("PrivateKey" ) );
             pItemPriKey->setType( HM_ITEM_TYPE_PRIVATEKEY );
+            pItemPriKey->setIcon( QIcon(":/images/prikey.png") );
             pItemPriKey->setSlotIndex(i);
             pItemObjects->appendRow( pItemPriKey );
 
             ManTreeItem *pItemSecKey = new ManTreeItem( QString("SecretKey" ) );
             pItemSecKey->setType( HM_ITEM_TYPE_SECRETKEY );
+            pItemSecKey->setIcon(QIcon(":/images/key.jpg"));
             pItemSecKey->setSlotIndex(i);
             pItemObjects->appendRow( pItemSecKey );
 
             ManTreeItem *pItemData = new ManTreeItem( QString("Data" ) );
             pItemData->setType( HM_ITEM_TYPE_DATA );
+            pItemData->setIcon(QIcon(":/images/save.png"));
             pItemData->setSlotIndex(i);
             pItemObjects->appendRow( pItemData );
         }

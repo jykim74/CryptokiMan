@@ -48,6 +48,7 @@
 #include "settings_mgr.h"
 #include "oper_state_dlg.h"
 #include "cryptoki_api.h"
+#include "cert_info_dlg.h"
 
 const int kMaxRecentFiles = 10;
 
@@ -505,6 +506,7 @@ int MainWindow::openLibrary(const QString libPath)
         ManTreeItem *pItem = new ManTreeItem();
         pItem->setText( tr("CryptokiToken"));
         pItem->setType( HM_ITEM_TYPE_ROOT );
+        pItem->setIcon( QIcon(":/images/cryptokiman.png") );
         left_model_->insertRow(0, pItem );
 
         setTitle( libPath );
@@ -854,6 +856,29 @@ void MainWindow::importCert()
     ImportCertDlg importCertDlg;
     if( pItem ) importCertDlg.setSelectedSlot( pItem->getSlotIndex() );
     importCertDlg.exec();
+}
+
+void MainWindow::viewCert()
+{
+    int ret = 0;
+    BIN binVal = {0,0};
+    ManTreeItem *pItem = currentItem();
+
+
+    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
+    SlotInfo slotInfo = slot_infos.at( pItem->getSlotIndex() );
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+
+    long obj_id = pItem->data().toInt();
+
+    ret = manApplet->cryptokiAPI()->GetAttributeValue2( hSession, obj_id, CKA_VALUE, &binVal );
+
+    CertInfoDlg certInfoDlg;
+    certInfoDlg.setCertVal( getHexString( binVal.pVal, binVal.nLen ));
+    certInfoDlg.exec();
+
+end :
+    JS_BIN_reset( &binVal );
 }
 
 void MainWindow::importPFX()
@@ -1737,9 +1762,9 @@ void MainWindow::showCertificateInfo( int index, long hObject )
 
     if( bList )
     {
-        for( int i = 0; i <= parentItem->rowCount(); i++ )
+        while( parentItem->hasChildren() )
         {
-            parentItem->removeRow( 0 );
+            parentItem->removeRow(0);
         }
     }
 
@@ -1839,9 +1864,9 @@ void MainWindow::showPublicKeyInfo( int index, long hObject )
 
     if( bList )
     {
-        for( int i = 0; i <= parentItem->rowCount(); i++ )
+        while( parentItem->hasChildren() )
         {
-            parentItem->removeRow( 0 );
+            parentItem->removeRow(0);
         }
     }
 
@@ -1962,9 +1987,9 @@ void MainWindow::showPrivateKeyInfo( int index, long hObject )
 
     if( bList )
     {
-        for( int i = 0; i <= parentItem->rowCount(); i++ )
+        while( parentItem->hasChildren() )
         {
-            parentItem->removeRow( 0 );
+            parentItem->removeRow(0);
         }
     }
 
@@ -2091,9 +2116,9 @@ void MainWindow::showSecretKeyInfo( int index, long hObject )
 
     if( bList )
     {
-        for( int i = 0; i <= parentItem->rowCount(); i++ )
+        while( parentItem->hasChildren() )
         {
-            parentItem->removeRow( 0 );
+            parentItem->removeRow(0);
         }
     }
 
@@ -2205,9 +2230,9 @@ void MainWindow::showDataInfo( int index, long hObject )
 
     if( bList )
     {
-        for( int i = 0; i <= parentItem->rowCount(); i++ )
+        while( parentItem->hasChildren() )
         {
-            parentItem->removeRow( 0 );
+            parentItem->removeRow(0);
         }
     }
 

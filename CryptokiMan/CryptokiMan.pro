@@ -10,7 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = CryptokiMan
 TEMPLATE = app
-PROJECT_VERSION = "0.9.3"
+PROJECT_VERSION = "0.9.4"
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -18,6 +18,7 @@ PROJECT_VERSION = "0.9.3"
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
 DEFINES += HSMMAN_VERSION=$$PROJECT_VERSION
+# DEFINES += _AUTO_UPDATE
 
 # You can also make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -29,6 +30,7 @@ CONFIG += c++11
 SOURCES += \
         about_dlg.cpp \
         auto_update_service.cpp \
+        cert_info_dlg.cpp \
         close_session_dlg.cpp \
         common.cpp \
         create_data_dlg.cpp \
@@ -77,6 +79,7 @@ SOURCES += \
 HEADERS += \
         about_dlg.h \
         auto_update_service.h \
+        cert_info_dlg.h \
         close_session_dlg.h \
         common.h \
         create_data_dlg.h \
@@ -125,6 +128,7 @@ HEADERS += \
 
 FORMS += \
         about_dlg.ui \
+        cert_info_dlg.ui \
         close_session_dlg.ui \
         create_data_dlg.ui \
         create_ec_pri_key_dlg.ui \
@@ -172,7 +176,6 @@ TRANSLATIONS += i18n/cryptokiman_ko_KR.ts
 
 
 mac {
-    DEFINES += _AUTO_UPDATE
     ICON = images/cryptokiman.icns
 
     QMAKE_LFLAGS += -Wl,-rpath,@loader_path/../Frameworks
@@ -198,7 +201,6 @@ mac {
 }
 
 win32 {
-    DEFINES += _AUTO_UPDATE
     RC_ICONS = cryptokiman.ico
 
     contains(QT_ARCH, i386) {

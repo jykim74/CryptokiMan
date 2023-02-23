@@ -80,6 +80,7 @@ public slots:
     void encrypt();
     void decrypt();
     void importCert();
+    void viewCert();
     void importPFX();
     void improtPrivateKey();
     void initToken();
