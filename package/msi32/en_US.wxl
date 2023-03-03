@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="en-us" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+
+  <String Id="AppName">CryptokiMan</String>
+  <String Id="PackageDescription">CryptokiMan Installer</String>
+  <String Id="PackageComments">CryptokiMan Installer</String>
+  <String Id="Manufacturer">JS Inc</String>
+  <String Id="DowngradeErrorMessage">A more up-to-date version of CryptokiMan is detected on your machine. The installer will now quit</String>
+  <String Id="UninstallCryptokiMan">Uninstall CryptokiMan</String>
+  <String Id="StartCryptokiMan">Start CryptokiMan</String>
+  <String Id="AutoStartText">Start CryptokiMan on startup</String>
+
+</WixLocalization>
+
