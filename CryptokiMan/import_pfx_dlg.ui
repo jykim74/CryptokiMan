@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>589</width>
-    <height>342</height>
+    <height>311</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,69 +17,195 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
        <string>General</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Slot list</string>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <layout class="QGridLayout" name="gridLayout">
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Slot list</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="mSlotsCombo">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>1</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="Line" name="line">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>
-       <item row="3" column="4">
-        <widget class="QLabel" name="label_7">
-         <property name="text">
-          <string>Login</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
+       <item>
         <widget class="QLabel" name="label_2">
          <property name="text">
           <string>Slot status</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
-        <widget class="QLineEdit" name="mSlotIDText"/>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_5">
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="mSlotIDText">
+           <property name="maximumSize">
+            <size>
+             <width>80</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="6">
+          <widget class="QLineEdit" name="mLoginText">
+           <property name="maximumSize">
+            <size>
+             <width>40</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="5">
+          <widget class="QLabel" name="label_7">
+           <property name="text">
+            <string>Login</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_3">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Slot ID</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QLabel" name="label_6">
+           <property name="text">
+            <string>Session</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QLineEdit" name="mSessionText">
+           <property name="maximumSize">
+            <size>
+             <width>80</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="4">
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
        </item>
-       <item row="3" column="3">
-        <widget class="QLineEdit" name="mSessionText"/>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>Slot ID</string>
+       <item>
+        <widget class="Line" name="line_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>
-       <item row="3" column="2">
-        <widget class="QLabel" name="label_6">
-         <property name="text">
-          <string>Session</string>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_6">
+         <property name="topMargin">
+          <number>0</number>
          </property>
-        </widget>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_4">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>PFX Path</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="mPFXPathText"/>
+         </item>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="mFindBtn">
+           <property name="text">
+            <string>Find</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>PFX Path</string>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_7">
+         <property name="topMargin">
+          <number>0</number>
          </property>
-        </widget>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_5">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Password</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="mPasswordText"/>
+         </item>
+        </layout>
        </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="label_5">
-         <property name="text">
-          <string>Password</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
+       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -92,86 +218,128 @@
          </property>
         </spacer>
        </item>
-       <item row="3" column="5">
-        <widget class="QLineEdit" name="mLoginText"/>
-       </item>
-       <item row="4" column="5">
-        <widget class="QPushButton" name="mFindBtn">
-         <property name="text">
-          <string>Find</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1" colspan="4">
-        <widget class="QLineEdit" name="mPFXPathText"/>
-       </item>
-       <item row="1" column="0" colspan="6">
-        <widget class="QComboBox" name="mSlotsCombo"/>
-       </item>
-       <item row="5" column="1" colspan="4">
-        <widget class="QLineEdit" name="mPasswordText"/>
-       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="tab_2">
       <attribute name="title">
        <string>Certificate</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_2">
-       <item row="3" column="2">
-        <widget class="QCheckBox" name="mCertSensitiveCheck">
-         <property name="text">
-          <string notr="true">Sensitive</string>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <layout class="QGridLayout" name="gridLayout_2">
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_8">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Label</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="mCertLabelText"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_9">
+           <property name="text">
+            <string>ID</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="mCertIDText"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="Line" name="line_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
+       <item>
         <widget class="QLabel" name="label_10">
          <property name="text">
           <string>Attributes</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_8">
-         <property name="text">
-          <string>Label</string>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_8">
+         <property name="topMargin">
+          <number>0</number>
          </property>
-        </widget>
+         <item row="0" column="3">
+          <widget class="QComboBox" name="mCertSensitiveCombo"/>
+         </item>
+         <item row="0" column="2">
+          <widget class="QCheckBox" name="mCertSensitiveCheck">
+           <property name="text">
+            <string notr="true">Sensitive</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="5">
+          <widget class="QComboBox" name="mCertModifiableCombo"/>
+         </item>
+         <item row="0" column="0">
+          <widget class="QCheckBox" name="mCertPrivateCheck">
+           <property name="text">
+            <string notr="true">Private</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="4">
+          <widget class="QCheckBox" name="mCertModifiableCheck">
+           <property name="text">
+            <string notr="true">Modifiable</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="mCertPrivateCombo"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QCheckBox" name="mCertTokenCheck">
+           <property name="text">
+            <string notr="true">Token</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QComboBox" name="mCertTokenCombo"/>
+         </item>
+         <item row="1" column="2">
+          <widget class="QCheckBox" name="mCertStartDateCheck">
+           <property name="text">
+            <string>StartDate</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="3">
+          <widget class="QDateEdit" name="mCertStartDateEdit"/>
+         </item>
+         <item row="1" column="4">
+          <widget class="QCheckBox" name="mCertEndDateCheck">
+           <property name="text">
+            <string>EndDate</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="5">
+          <widget class="QDateEdit" name="mCertEndDateEdit"/>
+         </item>
+        </layout>
        </item>
-       <item row="3" column="5">
-        <widget class="QComboBox" name="mCertModifiableCombo"/>
-       </item>
-       <item row="0" column="1" colspan="5">
-        <widget class="QLineEdit" name="mCertLabelText"/>
-       </item>
-       <item row="1" column="1" colspan="5">
-        <widget class="QLineEdit" name="mCertIDText"/>
-       </item>
-       <item row="3" column="1">
-        <widget class="QComboBox" name="mCertPrivateCombo"/>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_9">
-         <property name="text">
-          <string>ID</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QComboBox" name="mCertTokenCombo"/>
-       </item>
-       <item row="3" column="0">
-        <widget class="QCheckBox" name="mCertPrivateCheck">
-         <property name="text">
-          <string notr="true">Private</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="3">
-        <widget class="QComboBox" name="mCertSensitiveCombo"/>
-       </item>
-       <item row="6" column="0">
+       <item>
         <spacer name="verticalSpacer_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -184,48 +352,188 @@
          </property>
         </spacer>
        </item>
-       <item row="3" column="4">
-        <widget class="QCheckBox" name="mCertModifiableCheck">
-         <property name="text">
-          <string notr="true">Modifiable</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QCheckBox" name="mCertTokenCheck">
-         <property name="text">
-          <string notr="true">Token</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QCheckBox" name="mCertStartDateCheck">
-         <property name="text">
-          <string>StartDate</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="2">
-        <widget class="QCheckBox" name="mCertEndDateCheck">
-         <property name="text">
-          <string>EndDate</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QDateEdit" name="mCertStartDateEdit"/>
-       </item>
-       <item row="5" column="3">
-        <widget class="QDateEdit" name="mCertEndDateEdit"/>
-       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="tab_3">
       <attribute name="title">
        <string>Private Key</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_3">
-       <item row="8" column="0">
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <layout class="QGridLayout" name="gridLayout_3">
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="mPriSubjectText"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_12">
+           <property name="text">
+            <string>Subject</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_11">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Label</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="mPriLabelText"/>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_13">
+           <property name="text">
+            <string>ID</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="mPriIDText"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="Line" name="line_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_14">
+         <property name="text">
+          <string>Attributes</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_9">
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <item row="1" column="0">
+          <widget class="QCheckBox" name="mPriUnwrapCheck">
+           <property name="text">
+            <string notr="true">Unwrap</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="2">
+          <widget class="QCheckBox" name="mPriExtractableCheck">
+           <property name="text">
+            <string notr="true">Extractable</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QComboBox" name="mPriDecryptCombo"/>
+         </item>
+         <item row="2" column="0">
+          <widget class="QCheckBox" name="mPriDeriveCheck">
+           <property name="text">
+            <string notr="true">Derive</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QCheckBox" name="mPriModifiableCheck">
+           <property name="text">
+            <string notr="true">Modifiable</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="3">
+          <widget class="QComboBox" name="mPriExtractableCombo"/>
+         </item>
+         <item row="2" column="1">
+          <widget class="QComboBox" name="mPriDeriveCombo"/>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="mPriPrivateCombo"/>
+         </item>
+         <item row="1" column="3">
+          <widget class="QComboBox" name="mPriModifiableCombo"/>
+         </item>
+         <item row="0" column="4">
+          <widget class="QCheckBox" name="mPriSignCheck">
+           <property name="text">
+            <string notr="true">Sign</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="4">
+          <widget class="QCheckBox" name="mPriTokenCheck">
+           <property name="text">
+            <string notr="true">Token</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QCheckBox" name="mPriPrivateCheck">
+           <property name="text">
+            <string notr="true">Private</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="4">
+          <widget class="QCheckBox" name="mPriSensitiveCheck">
+           <property name="text">
+            <string notr="true">Sensitive</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QComboBox" name="mPriUnwrapCombo"/>
+         </item>
+         <item row="0" column="5">
+          <widget class="QComboBox" name="mPriSignCombo"/>
+         </item>
+         <item row="2" column="5">
+          <widget class="QComboBox" name="mPriTokenCombo"/>
+         </item>
+         <item row="0" column="2">
+          <widget class="QCheckBox" name="mPriDecryptCheck">
+           <property name="text">
+            <string notr="true">Decrypt</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="5">
+          <widget class="QComboBox" name="mPriSensitiveCombo"/>
+         </item>
+         <item row="3" column="0">
+          <widget class="QCheckBox" name="mPriStartDateCheck">
+           <property name="text">
+            <string>StartDate</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QDateEdit" name="mPriStartDateEdit"/>
+         </item>
+         <item row="3" column="2">
+          <widget class="QCheckBox" name="mPriEndDateCheck">
+           <property name="text">
+            <string>EndDate</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="3">
+          <widget class="QDateEdit" name="mPriEndDateEdit"/>
+         </item>
+        </layout>
+       </item>
+       <item>
         <spacer name="verticalSpacer_3">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -238,201 +546,158 @@
          </property>
         </spacer>
        </item>
-       <item row="5" column="5">
-        <widget class="QComboBox" name="mPriSensitiveCombo"/>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_13">
-         <property name="text">
-          <string>ID</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="3">
-        <widget class="QComboBox" name="mPriExtractableCombo"/>
-       </item>
-       <item row="0" column="1" colspan="5">
-        <widget class="QLineEdit" name="mPriLabelText"/>
-       </item>
-       <item row="5" column="0">
-        <widget class="QCheckBox" name="mPriUnwrapCheck">
-         <property name="text">
-          <string notr="true">Unwrap</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_12">
-         <property name="text">
-          <string>Subject</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="2">
-        <widget class="QCheckBox" name="mPriDecryptCheck">
-         <property name="text">
-          <string notr="true">Decrypt</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="4">
-        <widget class="QCheckBox" name="mPriSignCheck">
-         <property name="text">
-          <string notr="true">Sign</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QCheckBox" name="mPriPrivateCheck">
-         <property name="text">
-          <string notr="true">Private</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1" colspan="5">
-        <widget class="QLineEdit" name="mPriSubjectText"/>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_11">
-         <property name="text">
-          <string>Label</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1" colspan="5">
-        <widget class="QLineEdit" name="mPriIDText"/>
-       </item>
-       <item row="5" column="3">
-        <widget class="QComboBox" name="mPriModifiableCombo"/>
-       </item>
-       <item row="6" column="1">
-        <widget class="QComboBox" name="mPriDeriveCombo"/>
-       </item>
-       <item row="4" column="3">
-        <widget class="QComboBox" name="mPriDecryptCombo"/>
-       </item>
-       <item row="4" column="5">
-        <widget class="QComboBox" name="mPriSignCombo"/>
-       </item>
-       <item row="6" column="4">
-        <widget class="QCheckBox" name="mPriTokenCheck">
-         <property name="text">
-          <string notr="true">Token</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="4">
-        <widget class="QCheckBox" name="mPriSensitiveCheck">
-         <property name="text">
-          <string notr="true">Sensitive</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="2">
-        <widget class="QCheckBox" name="mPriModifiableCheck">
-         <property name="text">
-          <string notr="true">Modifiable</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QComboBox" name="mPriUnwrapCombo"/>
-       </item>
-       <item row="6" column="5">
-        <widget class="QComboBox" name="mPriTokenCombo"/>
-       </item>
-       <item row="6" column="2">
-        <widget class="QCheckBox" name="mPriExtractableCheck">
-         <property name="text">
-          <string notr="true">Extractable</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_14">
-         <property name="text">
-          <string>Attributes</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QComboBox" name="mPriPrivateCombo"/>
-       </item>
-       <item row="6" column="0">
-        <widget class="QCheckBox" name="mPriDeriveCheck">
-         <property name="text">
-          <string notr="true">Derive</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0">
-        <widget class="QCheckBox" name="mPriStartDateCheck">
-         <property name="text">
-          <string>StartDate</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="2">
-        <widget class="QCheckBox" name="mPriEndDateCheck">
-         <property name="text">
-          <string>EndDate</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="1">
-        <widget class="QDateEdit" name="mPriStartDateEdit"/>
-       </item>
-       <item row="7" column="3">
-        <widget class="QDateEdit" name="mPriEndDateEdit"/>
-       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="tab_4">
       <attribute name="title">
        <string>Public Key</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_4">
-       <item row="5" column="1">
-        <widget class="QComboBox" name="mPubTokenCombo"/>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <layout class="QGridLayout" name="gridLayout_4">
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_15">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Label</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="mPubLabelText"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_16">
+           <property name="text">
+            <string>ID</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="mPubIDText"/>
+         </item>
+        </layout>
        </item>
-       <item row="0" column="1" colspan="5">
-        <widget class="QLineEdit" name="mPubLabelText"/>
-       </item>
-       <item row="1" column="1" colspan="5">
-        <widget class="QLineEdit" name="mPubIDText"/>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_15">
-         <property name="text">
-          <string>Label</string>
+       <item>
+        <widget class="Line" name="line_5">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>
-       <item row="4" column="0">
-        <widget class="QCheckBox" name="mPubVerifyCheck">
+       <item>
+        <widget class="QLabel" name="label_17">
          <property name="text">
-          <string notr="true">Verify</string>
+          <string>Attributes</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
-        <widget class="QComboBox" name="mPubPrivateCombo"/>
-       </item>
-       <item row="4" column="2">
-        <widget class="QCheckBox" name="mPubDeriveCheck">
-         <property name="text">
-          <string notr="true">Derive</string>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_10">
+         <property name="topMargin">
+          <number>0</number>
          </property>
-        </widget>
+         <item row="0" column="0">
+          <widget class="QCheckBox" name="mPubPrivateCheck">
+           <property name="text">
+            <string notr="true">Private</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="5">
+          <widget class="QComboBox" name="mPubWrapCombo"/>
+         </item>
+         <item row="0" column="2">
+          <widget class="QCheckBox" name="mPubEncryptCheck">
+           <property name="text">
+            <string notr="true">Encrypt</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QComboBox" name="mPubEncryptCombo"/>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="mPubPrivateCombo"/>
+         </item>
+         <item row="1" column="1">
+          <widget class="QComboBox" name="mPubVerifyCombo"/>
+         </item>
+         <item row="0" column="4">
+          <widget class="QCheckBox" name="mPubWrapCheck">
+           <property name="text">
+            <string notr="true">Wrap</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="3">
+          <widget class="QComboBox" name="mPubDeriveCombo"/>
+         </item>
+         <item row="1" column="4">
+          <widget class="QCheckBox" name="mPubModifiableCheck">
+           <property name="text">
+            <string notr="true">Modifiable</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QCheckBox" name="mPubDeriveCheck">
+           <property name="text">
+            <string notr="true">Derive</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="5">
+          <widget class="QComboBox" name="mPubModifiableCombo"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QCheckBox" name="mPubVerifyCheck">
+           <property name="text">
+            <string notr="true">Verify</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QCheckBox" name="mPubTokenCheck">
+           <property name="text">
+            <string notr="true">Token</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QComboBox" name="mPubTokenCombo"/>
+         </item>
+         <item row="2" column="2">
+          <widget class="QCheckBox" name="mPubStartDateCheck">
+           <property name="text">
+            <string>StartDate</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="3">
+          <widget class="QDateEdit" name="mPubStartDateEdit"/>
+         </item>
+         <item row="2" column="4">
+          <widget class="QCheckBox" name="mPubEndDateCheck">
+           <property name="text">
+            <string>EndDate</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="5">
+          <widget class="QDateEdit" name="mPubEndDateEdit"/>
+         </item>
+        </layout>
        </item>
-       <item row="5" column="0">
-        <widget class="QCheckBox" name="mPubTokenCheck">
-         <property name="text">
-          <string notr="true">Token</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0">
+       <item>
         <spacer name="verticalSpacer_4">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -444,83 +709,6 @@
           </size>
          </property>
         </spacer>
-       </item>
-       <item row="4" column="4">
-        <widget class="QCheckBox" name="mPubModifiableCheck">
-         <property name="text">
-          <string notr="true">Modifiable</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="5">
-        <widget class="QComboBox" name="mPubWrapCombo"/>
-       </item>
-       <item row="3" column="0">
-        <widget class="QCheckBox" name="mPubPrivateCheck">
-         <property name="text">
-          <string notr="true">Private</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="2">
-        <widget class="QCheckBox" name="mPubEncryptCheck">
-         <property name="text">
-          <string notr="true">Encrypt</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="4">
-        <widget class="QCheckBox" name="mPubWrapCheck">
-         <property name="text">
-          <string notr="true">Wrap</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="3">
-        <widget class="QComboBox" name="mPubDeriveCombo"/>
-       </item>
-       <item row="3" column="3">
-        <widget class="QComboBox" name="mPubEncryptCombo"/>
-       </item>
-       <item row="4" column="1">
-        <widget class="QComboBox" name="mPubVerifyCombo"/>
-       </item>
-       <item row="4" column="5">
-        <widget class="QComboBox" name="mPubModifiableCombo"/>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_17">
-         <property name="text">
-          <string>Attributes</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_16">
-         <property name="text">
-          <string>ID</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <widget class="QCheckBox" name="mPubStartDateCheck">
-         <property name="text">
-          <string>StartDate</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <widget class="QDateEdit" name="mPubStartDateEdit"/>
-       </item>
-       <item row="6" column="2">
-        <widget class="QCheckBox" name="mPubEndDateCheck">
-         <property name="text">
-          <string>EndDate</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="3">
-        <widget class="QDateEdit" name="mPubEndDateEdit"/>
        </item>
       </layout>
      </widget>
@@ -540,72 +728,6 @@
  </widget>
  <tabstops>
   <tabstop>tabWidget</tabstop>
-  <tabstop>mSlotsCombo</tabstop>
-  <tabstop>mSlotIDText</tabstop>
-  <tabstop>mSessionText</tabstop>
-  <tabstop>mLoginText</tabstop>
-  <tabstop>mPFXPathText</tabstop>
-  <tabstop>mFindBtn</tabstop>
-  <tabstop>mPasswordText</tabstop>
-  <tabstop>mCertLabelText</tabstop>
-  <tabstop>mCertIDText</tabstop>
-  <tabstop>mCertPrivateCheck</tabstop>
-  <tabstop>mCertPrivateCombo</tabstop>
-  <tabstop>mCertSensitiveCheck</tabstop>
-  <tabstop>mCertSensitiveCombo</tabstop>
-  <tabstop>mCertModifiableCheck</tabstop>
-  <tabstop>mCertModifiableCombo</tabstop>
-  <tabstop>mCertTokenCheck</tabstop>
-  <tabstop>mCertTokenCombo</tabstop>
-  <tabstop>mCertStartDateCheck</tabstop>
-  <tabstop>mCertStartDateEdit</tabstop>
-  <tabstop>mCertEndDateCheck</tabstop>
-  <tabstop>mCertEndDateEdit</tabstop>
-  <tabstop>mPriLabelText</tabstop>
-  <tabstop>mPriSubjectText</tabstop>
-  <tabstop>mPriIDText</tabstop>
-  <tabstop>mPriPrivateCheck</tabstop>
-  <tabstop>mPriPrivateCombo</tabstop>
-  <tabstop>mPriDecryptCheck</tabstop>
-  <tabstop>mPriDecryptCombo</tabstop>
-  <tabstop>mPriSignCheck</tabstop>
-  <tabstop>mPriSignCombo</tabstop>
-  <tabstop>mPriUnwrapCheck</tabstop>
-  <tabstop>mPriUnwrapCombo</tabstop>
-  <tabstop>mPriModifiableCheck</tabstop>
-  <tabstop>mPriModifiableCombo</tabstop>
-  <tabstop>mPriSensitiveCheck</tabstop>
-  <tabstop>mPriSensitiveCombo</tabstop>
-  <tabstop>mPriDeriveCheck</tabstop>
-  <tabstop>mPriDeriveCombo</tabstop>
-  <tabstop>mPriExtractableCheck</tabstop>
-  <tabstop>mPriExtractableCombo</tabstop>
-  <tabstop>mPriTokenCheck</tabstop>
-  <tabstop>mPriTokenCombo</tabstop>
-  <tabstop>mPriStartDateCheck</tabstop>
-  <tabstop>mPriStartDateEdit</tabstop>
-  <tabstop>mPriEndDateCheck</tabstop>
-  <tabstop>mPriEndDateEdit</tabstop>
-  <tabstop>mPubLabelText</tabstop>
-  <tabstop>mPubIDText</tabstop>
-  <tabstop>mPubPrivateCheck</tabstop>
-  <tabstop>mPubPrivateCombo</tabstop>
-  <tabstop>mPubEncryptCheck</tabstop>
-  <tabstop>mPubEncryptCombo</tabstop>
-  <tabstop>mPubWrapCheck</tabstop>
-  <tabstop>mPubWrapCombo</tabstop>
-  <tabstop>mPubVerifyCheck</tabstop>
-  <tabstop>mPubVerifyCombo</tabstop>
-  <tabstop>mPubDeriveCheck</tabstop>
-  <tabstop>mPubDeriveCombo</tabstop>
-  <tabstop>mPubModifiableCheck</tabstop>
-  <tabstop>mPubModifiableCombo</tabstop>
-  <tabstop>mPubTokenCheck</tabstop>
-  <tabstop>mPubTokenCombo</tabstop>
-  <tabstop>mPubStartDateCheck</tabstop>
-  <tabstop>mPubStartDateEdit</tabstop>
-  <tabstop>mPubEndDateCheck</tabstop>
-  <tabstop>mPubEndDateEdit</tabstop>
  </tabstops>
  <resources/>
  <connections>

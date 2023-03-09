@@ -126,7 +126,7 @@ void CreateDataDlg::accept()
     }
 
     BIN binData = {0,0};
-    QString strData = mDataText->text();
+    QString strData = mDataText->toPlainText();
 
     if( mDataCombo->currentIndex() == 0 )
         JS_BIN_set( &binData, (unsigned char *)strData.toStdString().c_str(), strData.length() );

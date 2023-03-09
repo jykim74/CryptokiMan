@@ -251,7 +251,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Data</source>
-        <translation>데이타</translation>
+        <translation type="vanished">데이타</translation>
     </message>
     <message>
         <source>Slot ID</source>
@@ -300,6 +300,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Success to create data</source>
         <translation>데이타 생성 성공</translation>
+    </message>
+    <message>
+        <source>Data Type</source>
+        <translation>데이타 타입</translation>
     </message>
 </context>
 <context>
@@ -515,6 +519,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>EndDate</source>
         <translation>종료 일자</translation>
     </message>
+    <message>
+        <source>Information</source>
+        <translation>정보</translation>
+    </message>
 </context>
 <context>
     <name>CreateKeyDlg</name>
@@ -629,6 +637,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Derive</source>
         <translation>유도</translation>
+    </message>
+    <message>
+        <source>Key Information</source>
+        <translation>키 정보</translation>
+    </message>
+    <message>
+        <source>Information</source>
+        <translation>정보</translation>
     </message>
 </context>
 <context>
@@ -1245,7 +1261,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Attribute</source>
-        <translation>속성</translation>
+        <translation type="vanished">속성</translation>
     </message>
     <message>
         <source>Login</source>
@@ -1261,7 +1277,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Type</source>
-        <translation>타입</translation>
+        <translation type="vanished">타입</translation>
     </message>
     <message>
         <source>Session</source>
@@ -1298,6 +1314,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>success to set attributes</source>
         <translation>속성 설정 성공</translation>
+    </message>
+    <message>
+        <source>Attribute Type</source>
+        <translation>속성 타입</translation>
     </message>
 </context>
 <context>
@@ -2687,6 +2707,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>Operation state tool</source>
         <translation>운영 상태 툴</translation>
     </message>
+    <message>
+        <source>There is no slot</source>
+        <translation>슬롯이 없습니다</translation>
+    </message>
 </context>
 <context>
     <name>ManApplet</name>
@@ -2786,15 +2810,15 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>CreateECPublicKey</source>
-        <translation>RSA 공개키 생성</translation>
+        <translation>EC 공개키 생성</translation>
     </message>
     <message>
         <source>CreateECPrivateKey</source>
-        <translation>RSA 개인키 생성</translation>
+        <translation>EC 개인키 생성</translation>
     </message>
     <message>
         <source>CreateKey</source>
-        <translation>키 생성</translation>
+        <translation>키 만들기</translation>
     </message>
     <message>
         <source>ImportPFX</source>
@@ -2889,7 +2913,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <name>OpenSessionDlg</name>
     <message>
         <source>Select slot</source>
-        <translation>슬롯 선택</translation>
+        <translation type="vanished">슬롯 선택</translation>
     </message>
     <message>
         <source>Check flags</source>
@@ -2915,6 +2939,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>Open session</source>
         <translation>Open Session</translation>
     </message>
+    <message>
+        <source>Slot list</source>
+        <translation>슬롯 목록</translation>
+    </message>
 </context>
 <context>
     <name>OperStateDlg</name>
@@ -2924,7 +2952,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Slot List</source>
-        <translation>슬롯 목록</translation>
+        <translation type="vanished">슬롯 목록</translation>
     </message>
     <message>
         <source>Slot and Session</source>
@@ -2944,7 +2972,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Operation State</source>
-        <translation>운영 상태</translation>
+        <translation type="vanished">운영 상태</translation>
     </message>
     <message>
         <source>Enc Key</source>
@@ -2977,6 +3005,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>SetOperation OK</source>
         <translation>운영 설정 성공</translation>
+    </message>
+    <message>
+        <source>Slot list</source>
+        <translation>슬롯 목록</translation>
+    </message>
+    <message>
+        <source>Oper State</source>
+        <translation>운영 상태</translation>
     </message>
 </context>
 <context>
@@ -3498,6 +3534,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Signature is bad(%1).</source>
         <translation>잘못된 서명(%1)</translation>
+    </message>
+    <message>
+        <source>Slot Status</source>
+        <translation>슬롯 상태</translation>
     </message>
 </context>
 <context>

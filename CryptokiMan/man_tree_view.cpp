@@ -147,6 +147,8 @@ void ManTreeView::showContextMenu( QPoint point )
 
         menu.addAction( tr("Verify"), manApplet->mainWindow(), &MainWindow::verify );
         menu.addAction( tr("Encrypt"), manApplet->mainWindow(), &MainWindow::encrypt );
+        menu.addAction( tr( "CreateRSAPublicKey"), manApplet->mainWindow(), &MainWindow::createRSAPublicKey );
+        menu.addAction( tr("CreateECPublicKey"), manApplet->mainWindow(), &MainWindow::createECPublicKey );
     }
     else if( item->getType() == HM_ITEM_TYPE_PRIVATEKEY )
     {
@@ -156,6 +158,9 @@ void ManTreeView::showContextMenu( QPoint point )
         menu.addAction( tr( "Sign"), manApplet->mainWindow(), &MainWindow::sign );
         menu.addAction( tr( "Decrypt" ), manApplet->mainWindow(), &MainWindow::decrypt );
         menu.addAction( tr( "ImportPrivateKey"), manApplet->mainWindow(), &MainWindow::improtPrivateKey );
+
+        menu.addAction( tr( "CreateRSAPrivateKey"), manApplet->mainWindow(), &MainWindow::createRSAPrivateKey );
+        menu.addAction( tr("CreateECPrivateKey"), manApplet->mainWindow(), &MainWindow::createECPrivateKey );
     }
     else if( item->getType() == HM_ITEM_TYPE_SECRETKEY )
     {
@@ -169,11 +174,14 @@ void ManTreeView::showContextMenu( QPoint point )
         menu.addAction( tr("Sign"), manApplet->mainWindow(), &MainWindow::sign );
         menu.addAction( tr("Verify"), manApplet->mainWindow(), &MainWindow::verify );
         menu.addAction( tr("DeriveKey"), manApplet->mainWindow(), &MainWindow::deriveKey );
+        menu.addAction( tr( "CreateKey"), manApplet->mainWindow(), &MainWindow::createKey );
+        menu.addAction( tr( "GenerateKey"), manApplet->mainWindow(), &MainWindow::generateKey );
     }
     else if( item->getType() == HM_ITEM_TYPE_DATA )
     {
         menu.addAction( tr( "DeleteObject" ), manApplet->mainWindow(), &MainWindow::deleteObject );
         menu.addAction( tr("EditAttribute"), manApplet->mainWindow(), &MainWindow::editAttribute );
+        menu.addAction( tr( "CreateData"), manApplet->mainWindow(), &MainWindow::createData );
     }
     else if( item->getType() == HM_ITEM_TYPE_DATA_OBJECT )
     {

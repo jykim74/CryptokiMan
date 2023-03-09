@@ -20,6 +20,8 @@ CreateECPriKeyDlg::CreateECPriKeyDlg(QWidget *parent) :
 
     initialize();
     setDefaults();
+
+    tabWidget->setCurrentIndex(0);
 }
 
 CreateECPriKeyDlg::~CreateECPriKeyDlg()

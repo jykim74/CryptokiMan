@@ -21,6 +21,7 @@ ImportCertDlg::ImportCertDlg(QWidget *parent) :
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT( slotChanged(int) ));
     initialize();
     setDefaults();
+
 }
 
 ImportCertDlg::~ImportCertDlg()

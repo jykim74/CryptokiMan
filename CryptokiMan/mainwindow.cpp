@@ -808,6 +808,12 @@ void MainWindow::digest()
 {
     ManTreeItem *pItem = currentItem();
 
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot" ), this );
+        return;
+    }
+
     DigestDlg digestDlg;
     if( pItem ) digestDlg.setSelectedSlot(pItem->getSlotIndex());
     digestDlg.exec();
@@ -816,6 +822,12 @@ void MainWindow::digest()
 void MainWindow::sign()
 {
     ManTreeItem *pItem = currentItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot" ), this );
+        return;
+    }
 
     SignDlg signDlg;
     if( pItem ) signDlg.setSelectedSlot( pItem->getSlotIndex() );
@@ -826,6 +838,12 @@ void MainWindow::verify()
 {
     ManTreeItem *pItem = currentItem();
 
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot" ), this );
+        return;
+    }
+
     VerifyDlg verifyDlg;
     if( pItem ) verifyDlg.setSelectedSlot( pItem->getSlotIndex() );
     verifyDlg.exec();
@@ -834,6 +852,12 @@ void MainWindow::verify()
 void MainWindow::encrypt()
 {
     ManTreeItem *pItem = currentItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot" ), this );
+        return;
+    }
 
     EncryptDlg encryptDlg;
     if( pItem ) encryptDlg.setSelectedSlot(pItem->getSlotIndex());
@@ -844,6 +868,12 @@ void MainWindow::decrypt()
 {
     ManTreeItem *pItem = currentItem();
 
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot" ), this );
+        return;
+    }
+
     DecryptDlg decryptDlg;
     if( pItem ) decryptDlg.setSelectedSlot(pItem->getSlotIndex());
     decryptDlg.exec();
@@ -852,6 +882,12 @@ void MainWindow::decrypt()
 void MainWindow::importCert()
 {
     ManTreeItem *pItem = currentItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot" ), this );
+        return;
+    }
 
     ImportCertDlg importCertDlg;
     if( pItem ) importCertDlg.setSelectedSlot( pItem->getSlotIndex() );
@@ -863,6 +899,12 @@ void MainWindow::viewCert()
     int ret = 0;
     BIN binVal = {0,0};
     ManTreeItem *pItem = currentItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot" ), this );
+        return;
+    }
 
 
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
@@ -885,6 +927,12 @@ void MainWindow::importPFX()
 {
     ManTreeItem *pItem = currentItem();
 
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot" ), this );
+        return;
+    }
+
     ImportPFXDlg importPFXDlg;
     if( pItem ) importPFXDlg.setSelectedSlot( pItem->getSlotIndex() );
     importPFXDlg.exec();
@@ -893,6 +941,12 @@ void MainWindow::importPFX()
 void MainWindow::improtPrivateKey()
 {
     ManTreeItem *pItem = currentItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot" ), this );
+        return;
+    }
 
     ImportPriKeyDlg importPriKeyDlg;
     if( pItem ) importPriKeyDlg.setSelectedSlot( pItem->getSlotIndex() );

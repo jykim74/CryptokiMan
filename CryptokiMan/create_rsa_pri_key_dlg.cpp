@@ -20,6 +20,8 @@ CreateRSAPriKeyDlg::CreateRSAPriKeyDlg(QWidget *parent) :
 
     initialize();
     setDefaults();
+
+    tabWidget->setCurrentIndex(0);
 }
 
 CreateRSAPriKeyDlg::~CreateRSAPriKeyDlg()

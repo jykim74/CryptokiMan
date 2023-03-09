@@ -26,6 +26,8 @@ GenKeyDlg::GenKeyDlg(QWidget *parent) :
 
     initialize();
     setDefaults();
+
+    tabWidget->setCurrentIndex(0);
 }
 
 GenKeyDlg::~GenKeyDlg()

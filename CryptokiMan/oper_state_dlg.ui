@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>222</height>
+    <height>217</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,18 +15,38 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="label_6">
-     <property name="text">
-      <string>Slot List</string>
-     </property>
-    </widget>
-   </item>
-   <item>
     <layout class="QGridLayout" name="gridLayout_5">
      <item row="0" column="0">
-      <widget class="QComboBox" name="mSlotsCombo"/>
+      <widget class="QLabel" name="label_6">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Slot list</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="mSlotsCombo">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>1</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="Line" name="line_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QLabel" name="label_7">
@@ -51,7 +71,7 @@
       <widget class="QLabel" name="label">
        <property name="minimumSize">
         <size>
-         <width>100</width>
+         <width>80</width>
          <height>0</height>
         </size>
        </property>
@@ -66,9 +86,19 @@
     </layout>
    </item>
    <item>
-    <layout class="QGridLayout" name="gridLayout_2">
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="mOperationStateText"/>
+    <widget class="Line" name="line_3">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="gridLayout_6">
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <item row="0" column="3">
+      <widget class="QLineEdit" name="mObjectText"/>
      </item>
      <item row="0" column="2">
       <widget class="QLabel" name="label_8">
@@ -81,27 +111,23 @@
       <widget class="QLabel" name="label_2">
        <property name="minimumSize">
         <size>
-         <width>100</width>
+         <width>80</width>
          <height>0</height>
         </size>
        </property>
        <property name="text">
-        <string>Operation State</string>
+        <string>Oper State</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="3">
-      <widget class="QLineEdit" name="mObjectText"/>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="mOperationStateText"/>
      </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QGridLayout" name="gridLayout_4">
-     <item row="0" column="0">
+     <item row="1" column="0">
       <widget class="QLabel" name="label_3">
        <property name="minimumSize">
         <size>
-         <width>100</width>
+         <width>80</width>
          <height>0</height>
         </size>
        </property>
@@ -110,17 +136,17 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="2">
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="mEncKeyText"/>
+     </item>
+     <item row="1" column="2">
       <widget class="QLabel" name="label_4">
        <property name="text">
         <string>Auth Key</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="mEncKeyText"/>
-     </item>
-     <item row="0" column="3">
+     <item row="1" column="3">
       <widget class="QLineEdit" name="mAuthKeyText"/>
      </item>
     </layout>

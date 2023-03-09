@@ -19,6 +19,7 @@ WrapKeyDlg::WrapKeyDlg(QWidget *parent) :
     initUI();
 
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
+
 }
 
 WrapKeyDlg::~WrapKeyDlg()

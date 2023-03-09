@@ -21,6 +21,8 @@ ImportPriKeyDlg::ImportPriKeyDlg(QWidget *parent) :
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT( slotChanged(int) ));
     initialize();
     setDefaults();
+
+    tabWidget->setCurrentIndex(0);
 }
 
 ImportPriKeyDlg::~ImportPriKeyDlg()
@@ -208,7 +210,7 @@ void ImportPriKeyDlg::clickPubImport()
 {
     bool bVal = mPubImportCheck->isChecked();
 
-    mTabWidget->setTabEnabled( 2, bVal );
+    tabWidget->setTabEnabled( 2, bVal );
 }
 
 void ImportPriKeyDlg::clickPriPrivate()

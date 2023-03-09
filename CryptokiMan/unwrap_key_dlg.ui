@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>587</width>
-    <height>368</height>
+    <width>567</width>
+    <height>375</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,123 +17,288 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_3">
       <attribute name="title">
        <string>General</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="7" column="0">
-        <widget class="QLabel" name="label_7">
-         <property name="text">
-          <string>Mechanism</string>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <layout class="QGridLayout" name="gridLayout">
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="mSlotsCombo">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>1</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Slot list</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="Line" name="line">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
+       <item>
         <widget class="QLabel" name="label_2">
          <property name="text">
           <string>Slot status</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>Slot ID</string>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_3">
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <item row="0" column="5">
+          <widget class="QLabel" name="label_9">
+           <property name="text">
+            <string>Login</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_3">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Slot ID</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="6">
+          <widget class="QLineEdit" name="mLoginText">
+           <property name="maximumSize">
+            <size>
+             <width>40</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QLabel" name="label_8">
+           <property name="text">
+            <string>Session</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QLineEdit" name="mSessionText">
+           <property name="maximumSize">
+            <size>
+             <width>80</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="mSlotIDText">
+           <property name="maximumSize">
+            <size>
+             <width>80</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="4">
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="Line" name="line_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
-        <widget class="QLineEdit" name="mSlotIDText"/>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_4">
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="mWrapKeyPathText"/>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_4">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Wrapped Key</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="mFindBtn">
+           <property name="text">
+            <string>Find</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
-       <item row="3" column="3">
-        <widget class="QLineEdit" name="mSessionText"/>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Slot list</string>
+       <item>
+        <widget class="Line" name="line_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="label_6">
-         <property name="text">
-          <string>Label</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="2">
-        <widget class="QLabel" name="label_8">
-         <property name="text">
-          <string>Session</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>Wrapped Key</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="4">
-        <widget class="QLabel" name="label_9">
-         <property name="text">
-          <string>Login</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="5">
-        <widget class="QLineEdit" name="mLoginText"/>
-       </item>
-       <item row="4" column="5">
-        <widget class="QPushButton" name="mFindBtn">
-         <property name="text">
-          <string>Find</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="6">
-        <widget class="QComboBox" name="mSlotsCombo"/>
-       </item>
-       <item row="4" column="1" colspan="4">
-        <widget class="QLineEdit" name="mWrapKeyPathText"/>
-       </item>
-       <item row="5" column="0" colspan="2">
+       <item>
         <widget class="QLabel" name="label_5">
          <property name="text">
           <string>Unwrap Key properties</string>
          </property>
         </widget>
        </item>
-       <item row="6" column="5">
-        <widget class="QLineEdit" name="mUnwrapObjectText"/>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_5">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_6">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Label</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QLineEdit" name="mUnwrapObjectText">
+           <property name="maximumSize">
+            <size>
+             <width>60</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QLabel" name="label_10">
+           <property name="text">
+            <string>Object</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="mUnwrapLabelCombo">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>1</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
-       <item row="6" column="4">
-        <widget class="QLabel" name="label_10">
-         <property name="text">
-          <string>Object</string>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_6">
+         <item row="0" column="4">
+          <widget class="QLineEdit" name="mUnwrapParamText">
+           <property name="maximumSize">
+            <size>
+             <width>80</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="mUnwrapMechCombo"/>
+         </item>
+         <item row="0" column="3">
+          <widget class="QLabel" name="label_11">
+           <property name="text">
+            <string>Param</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_7">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Mechanism</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
          </property>
-        </widget>
-       </item>
-       <item row="6" column="1" colspan="3">
-        <widget class="QComboBox" name="mUnwrapLabelCombo"/>
-       </item>
-       <item row="7" column="1">
-        <widget class="QComboBox" name="mUnwrapMechCombo"/>
-       </item>
-       <item row="7" column="2">
-        <widget class="QLabel" name="label_11">
-         <property name="text">
-          <string>Param</string>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
          </property>
-        </widget>
-       </item>
-       <item row="7" column="3" colspan="3">
-        <widget class="QLineEdit" name="mUnwrapParamText"/>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -141,210 +306,284 @@
       <attribute name="title">
        <string>Key</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_2">
-       <item row="3" column="5">
-        <widget class="QLineEdit" name="mKeySizeText"/>
-       </item>
-       <item row="6" column="4">
-        <widget class="QCheckBox" name="mDecryptCheck">
-         <property name="text">
-          <string notr="true">Decrypt</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="5">
-        <widget class="QComboBox" name="mWrapCombo"/>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_14">
-         <property name="text">
-          <string>Label</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="3">
-        <widget class="QComboBox" name="mSignCombo"/>
-       </item>
-       <item row="8" column="3">
-        <widget class="QComboBox" name="mExtractableCombo"/>
-       </item>
-       <item row="3" column="1" colspan="3">
-        <widget class="QLineEdit" name="mIDText"/>
-       </item>
-       <item row="6" column="2">
-        <widget class="QCheckBox" name="mEncryptCheck">
-         <property name="text">
-          <string notr="true">Encrypt</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="2">
-        <widget class="QCheckBox" name="mSensitiveCheck">
-         <property name="text">
-          <string notr="true">Sensitive</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QComboBox" name="mPrivateCombo"/>
-       </item>
-       <item row="1" column="3">
-        <widget class="QLabel" name="label_16">
-         <property name="text">
-          <string>Type</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_17">
-         <property name="text">
-          <string>ID</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="5">
-        <widget class="QComboBox" name="mDecryptCombo"/>
-       </item>
-       <item row="8" column="2">
-        <widget class="QCheckBox" name="mExtractableCheck">
-         <property name="text">
-          <string notr="true">Extractable</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="1">
-        <widget class="QComboBox" name="mTokenCombo"/>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_15">
-         <property name="text">
-          <string>Attributes</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <widget class="QCheckBox" name="mUnwrapCheck">
-         <property name="text">
-          <string notr="true">Unwrap</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="4">
-        <widget class="QCheckBox" name="mVerifyCheck">
-         <property name="text">
-          <string notr="true">Verify</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0" colspan="2">
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
         <widget class="QLabel" name="label_12">
          <property name="text">
           <string>Key Properties</string>
          </property>
         </widget>
        </item>
-       <item row="7" column="0">
-        <widget class="QCheckBox" name="mModifiableCheck">
-         <property name="text">
-          <string notr="true">Modifiable</string>
+       <item>
+        <widget class="Line" name="line_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>
-       <item row="5" column="0">
-        <widget class="QCheckBox" name="mPrivateCheck">
-         <property name="text">
-          <string notr="true">Private</string>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_2">
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <item row="0" column="2">
+          <widget class="QLabel" name="label_16">
+           <property name="text">
+            <string>Type</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="6">
+          <widget class="QLineEdit" name="mKeySizeText">
+           <property name="maximumSize">
+            <size>
+             <width>60</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="5">
+          <widget class="QLabel" name="label_18">
+           <property name="text">
+            <string>KeySize</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="mClassCombo"/>
+         </item>
+         <item row="0" column="3">
+          <widget class="QComboBox" name="mTypeCombo"/>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_13">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Class</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="4">
+          <spacer name="horizontalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_7">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_14">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Label</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="mLabelText"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_17">
+           <property name="text">
+            <string>ID</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="mIDText"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="Line" name="line_5">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>
-       <item row="7" column="2">
-        <widget class="QCheckBox" name="mSignCheck">
+       <item>
+        <widget class="QLabel" name="label_15">
          <property name="text">
-          <string notr="true">Sign</string>
+          <string>Attributes</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="3">
-        <widget class="QComboBox" name="mSensitiveCombo"/>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_8">
+         <item row="0" column="4">
+          <widget class="QCheckBox" name="mWrapCheck">
+           <property name="text">
+            <string notr="true">Wrap</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QComboBox" name="mModifiableCombo"/>
+         </item>
+         <item row="0" column="2">
+          <widget class="QCheckBox" name="mSensitiveCheck">
+           <property name="text">
+            <string notr="true">Sensitive</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="4">
+          <widget class="QCheckBox" name="mDecryptCheck">
+           <property name="text">
+            <string notr="true">Decrypt</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QComboBox" name="mTokenCombo"/>
+         </item>
+         <item row="2" column="4">
+          <widget class="QCheckBox" name="mVerifyCheck">
+           <property name="text">
+            <string notr="true">Verify</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="3">
+          <widget class="QComboBox" name="mEncryptCombo"/>
+         </item>
+         <item row="3" column="2">
+          <widget class="QCheckBox" name="mDeriveCheck">
+           <property name="text">
+            <string>Derive</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="4">
+          <widget class="QCheckBox" name="mExtractableCheck">
+           <property name="text">
+            <string notr="true">Extractable</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="5">
+          <widget class="QComboBox" name="mExtractableCombo"/>
+         </item>
+         <item row="0" column="0">
+          <widget class="QCheckBox" name="mPrivateCheck">
+           <property name="text">
+            <string notr="true">Private</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="3">
+          <widget class="QComboBox" name="mDeriveCombo"/>
+         </item>
+         <item row="2" column="0">
+          <widget class="QCheckBox" name="mModifiableCheck">
+           <property name="text">
+            <string notr="true">Modifiable</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QComboBox" name="mSensitiveCombo"/>
+         </item>
+         <item row="1" column="5">
+          <widget class="QComboBox" name="mDecryptCombo"/>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="mPrivateCombo"/>
+         </item>
+         <item row="2" column="2">
+          <widget class="QCheckBox" name="mSignCheck">
+           <property name="text">
+            <string notr="true">Sign</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="5">
+          <widget class="QComboBox" name="mVerifyCombo"/>
+         </item>
+         <item row="2" column="3">
+          <widget class="QComboBox" name="mSignCombo"/>
+         </item>
+         <item row="1" column="1">
+          <widget class="QComboBox" name="mUnwrapCombo"/>
+         </item>
+         <item row="1" column="2">
+          <widget class="QCheckBox" name="mEncryptCheck">
+           <property name="text">
+            <string notr="true">Encrypt</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QCheckBox" name="mUnwrapCheck">
+           <property name="text">
+            <string notr="true">Unwrap</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="5">
+          <widget class="QComboBox" name="mWrapCombo"/>
+         </item>
+         <item row="3" column="0">
+          <widget class="QCheckBox" name="mTokenCheck">
+           <property name="text">
+            <string notr="true">Token</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QCheckBox" name="mStartDateCheck">
+           <property name="text">
+            <string>StartDate</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QDateEdit" name="mStartDateEdit"/>
+         </item>
+         <item row="4" column="2">
+          <widget class="QCheckBox" name="mEndDateCheck">
+           <property name="text">
+            <string>EndDate</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="3">
+          <widget class="QDateEdit" name="mEndDateEdit"/>
+         </item>
+        </layout>
        </item>
-       <item row="1" column="4" colspan="2">
-        <widget class="QComboBox" name="mTypeCombo"/>
-       </item>
-       <item row="5" column="4">
-        <widget class="QCheckBox" name="mWrapCheck">
-         <property name="text">
-          <string notr="true">Wrap</string>
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
          </property>
-        </widget>
-       </item>
-       <item row="8" column="0">
-        <widget class="QCheckBox" name="mTokenCheck">
-         <property name="text">
-          <string notr="true">Token</string>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
          </property>
-        </widget>
-       </item>
-       <item row="3" column="4">
-        <widget class="QLabel" name="label_18">
-         <property name="text">
-          <string>KeySize</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1" colspan="2">
-        <widget class="QComboBox" name="mClassCombo"/>
-       </item>
-       <item row="6" column="1">
-        <widget class="QComboBox" name="mUnwrapCombo"/>
-       </item>
-       <item row="2" column="1" colspan="5">
-        <widget class="QLineEdit" name="mLabelText"/>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_13">
-         <property name="text">
-          <string>Class</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="5">
-        <widget class="QComboBox" name="mVerifyCombo"/>
-       </item>
-       <item row="6" column="3">
-        <widget class="QComboBox" name="mEncryptCombo"/>
-       </item>
-       <item row="7" column="1">
-        <widget class="QComboBox" name="mModifiableCombo"/>
-       </item>
-       <item row="9" column="0">
-        <widget class="QCheckBox" name="mStartDateCheck">
-         <property name="text">
-          <string>StartDate</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="2">
-        <widget class="QCheckBox" name="mEndDateCheck">
-         <property name="text">
-          <string>EndDate</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="1">
-        <widget class="QDateEdit" name="mStartDateEdit"/>
-       </item>
-       <item row="9" column="3">
-        <widget class="QDateEdit" name="mEndDateEdit"/>
-       </item>
-       <item row="8" column="4">
-        <widget class="QCheckBox" name="mDeriveCheck">
-         <property name="text">
-          <string>Derive</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="5">
-        <widget class="QComboBox" name="mDeriveCombo"/>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -364,49 +603,6 @@
  </widget>
  <tabstops>
   <tabstop>tabWidget</tabstop>
-  <tabstop>mSlotsCombo</tabstop>
-  <tabstop>mSlotIDText</tabstop>
-  <tabstop>mSessionText</tabstop>
-  <tabstop>mLoginText</tabstop>
-  <tabstop>mWrapKeyPathText</tabstop>
-  <tabstop>mFindBtn</tabstop>
-  <tabstop>mUnwrapLabelCombo</tabstop>
-  <tabstop>mUnwrapObjectText</tabstop>
-  <tabstop>mUnwrapMechCombo</tabstop>
-  <tabstop>mUnwrapParamText</tabstop>
-  <tabstop>mClassCombo</tabstop>
-  <tabstop>mTypeCombo</tabstop>
-  <tabstop>mLabelText</tabstop>
-  <tabstop>mIDText</tabstop>
-  <tabstop>mKeySizeText</tabstop>
-  <tabstop>mPrivateCheck</tabstop>
-  <tabstop>mPrivateCombo</tabstop>
-  <tabstop>mSensitiveCheck</tabstop>
-  <tabstop>mSensitiveCombo</tabstop>
-  <tabstop>mWrapCheck</tabstop>
-  <tabstop>mWrapCombo</tabstop>
-  <tabstop>mUnwrapCheck</tabstop>
-  <tabstop>mUnwrapCombo</tabstop>
-  <tabstop>mEncryptCheck</tabstop>
-  <tabstop>mEncryptCombo</tabstop>
-  <tabstop>mDecryptCheck</tabstop>
-  <tabstop>mDecryptCombo</tabstop>
-  <tabstop>mModifiableCheck</tabstop>
-  <tabstop>mModifiableCombo</tabstop>
-  <tabstop>mSignCheck</tabstop>
-  <tabstop>mSignCombo</tabstop>
-  <tabstop>mVerifyCheck</tabstop>
-  <tabstop>mVerifyCombo</tabstop>
-  <tabstop>mTokenCheck</tabstop>
-  <tabstop>mTokenCombo</tabstop>
-  <tabstop>mExtractableCheck</tabstop>
-  <tabstop>mExtractableCombo</tabstop>
-  <tabstop>mDeriveCheck</tabstop>
-  <tabstop>mDeriveCombo</tabstop>
-  <tabstop>mStartDateCheck</tabstop>
-  <tabstop>mStartDateEdit</tabstop>
-  <tabstop>mEndDateCheck</tabstop>
-  <tabstop>mEndDateEdit</tabstop>
  </tabstops>
  <resources/>
  <connections>

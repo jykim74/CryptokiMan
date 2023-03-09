@@ -20,6 +20,8 @@ CreateECPubKeyDlg::CreateECPubKeyDlg(QWidget *parent) :
 
     initialize();
     setDefaults();
+
+    tabWidget->setCurrentIndex(0);
 }
 
 CreateECPubKeyDlg::~CreateECPubKeyDlg()

@@ -21,6 +21,8 @@ ImportPFXDlg::ImportPFXDlg(QWidget *parent) :
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT( slotChanged(int) ));
     initialize();
     setDefaults();
+
+    tabWidget->setCurrentIndex(0);
 }
 
 ImportPFXDlg::~ImportPFXDlg()

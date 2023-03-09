@@ -40,6 +40,8 @@ UnwrapKeyDlg::UnwrapKeyDlg(QWidget *parent) :
     initialize();
     setDefaults();
     setUnwrapLabelList();
+
+    tabWidget->setCurrentIndex(0);
 }
 
 UnwrapKeyDlg::~UnwrapKeyDlg()
