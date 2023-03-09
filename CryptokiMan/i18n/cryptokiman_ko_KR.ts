@@ -58,6 +58,149 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
 </context>
 <context>
+    <name>CertInfoDlg</name>
+    <message>
+        <source>Certificate information</source>
+        <translation>인증서 정보</translation>
+    </message>
+    <message>
+        <source>Information</source>
+        <translation>정보</translation>
+    </message>
+    <message>
+        <source>Field List</source>
+        <translation>필드 목록</translation>
+    </message>
+    <message>
+        <source>Detail Value</source>
+        <translation>상세 값</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>닫기</translation>
+    </message>
+    <message>
+        <source>authorityInfoAccess</source>
+        <translation>기관 정보 액세스</translation>
+    </message>
+    <message>
+        <source>authorityKeyIdentifier</source>
+        <translation>기관 키 식별자</translation>
+    </message>
+    <message>
+        <source>basicConstraints</source>
+        <translation>기본 제한</translation>
+    </message>
+    <message>
+        <source>crlDistributionPoints</source>
+        <translation>CRL 배포 지점</translation>
+    </message>
+    <message>
+        <source>extendedKeyUsage</source>
+        <translation>확장된 키 사용</translation>
+    </message>
+    <message>
+        <source>issuerAltName</source>
+        <translation>발급자 대체 이름</translation>
+    </message>
+    <message>
+        <source>keyUsage</source>
+        <translation>키 용도</translation>
+    </message>
+    <message>
+        <source>nameConstraints</source>
+        <translation>이름 제한</translation>
+    </message>
+    <message>
+        <source>certificatePolicies</source>
+        <translation>인증서 정책</translation>
+    </message>
+    <message>
+        <source>policyConstraints</source>
+        <translation>정책 제약 조건</translation>
+    </message>
+    <message>
+        <source>policyMappings</source>
+        <translation>정책 매핑</translation>
+    </message>
+    <message>
+        <source>subjectKeyIdentifier</source>
+        <translation>주체 키 식별자</translation>
+    </message>
+    <message>
+        <source>subjectAltName</source>
+        <translation>주체 대체 이름</translation>
+    </message>
+    <message>
+        <source>crlNumber</source>
+        <translation>CRL 번호</translation>
+    </message>
+    <message>
+        <source>issuingDistributionPoint</source>
+        <translation>발급 배포 지점</translation>
+    </message>
+    <message>
+        <source>CRLReason</source>
+        <translation>폐기 사유</translation>
+    </message>
+    <message>
+        <source>The certificate value is empty</source>
+        <translation>인증서 값이 없습니다.</translation>
+    </message>
+    <message>
+        <source>fail to get certificate information</source>
+        <translation>인증서 정보 가져오기에 실패</translation>
+    </message>
+    <message>
+        <source>Version</source>
+        <translation>버전</translation>
+    </message>
+    <message>
+        <source>Serial</source>
+        <translation>일련번호</translation>
+    </message>
+    <message>
+        <source>NotBefore</source>
+        <translation>유효기간(시작)</translation>
+    </message>
+    <message>
+        <source>NotAfter</source>
+        <translation>유효기간(끝)</translation>
+    </message>
+    <message>
+        <source>SubjectName</source>
+        <translation>주체자 이름</translation>
+    </message>
+    <message>
+        <source>PublicKey</source>
+        <translation>공개키</translation>
+    </message>
+    <message>
+        <source>IssuerName</source>
+        <translation>발급자 이름</translation>
+    </message>
+    <message>
+        <source>SigAlgorithm</source>
+        <translation>서명 알고리즘</translation>
+    </message>
+    <message>
+        <source>Signature</source>
+        <translation>서명</translation>
+    </message>
+    <message>
+        <source>FingerPrint</source>
+        <translation>지문</translation>
+    </message>
+    <message>
+        <source>Field</source>
+        <translation>필드</translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation>값</translation>
+    </message>
+</context>
+<context>
     <name>CloseSessionDlg</name>
     <message>
         <source>Slot list</source>
@@ -1570,7 +1713,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Subject</source>
-        <translation>주체</translation>
+        <translation type="vanished">주체</translation>
     </message>
     <message>
         <source>fail to create certificate(%1)</source>
@@ -2082,6 +2225,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>Login</source>
         <translation>로그인</translation>
     </message>
+    <message>
+        <source>Login Type</source>
+        <translation>로그인 타입</translation>
+    </message>
 </context>
 <context>
     <name>LogoutDlg</name>
@@ -2532,6 +2679,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>&amp;Settings</source>
         <translation>설정(&amp;S)</translation>
     </message>
+    <message>
+        <source>OperationState</source>
+        <translation>운영 상태</translation>
+    </message>
+    <message>
+        <source>Operation state tool</source>
+        <translation>운영 상태 툴</translation>
+    </message>
 </context>
 <context>
     <name>ManApplet</name>
@@ -2689,6 +2844,46 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>DeriveKey</source>
         <translation>Derive Key</translation>
     </message>
+    <message>
+        <source>ViewCertificate</source>
+        <translation>인증서 보기</translation>
+    </message>
+    <message>
+        <source>Token</source>
+        <translation>토큰</translation>
+    </message>
+    <message>
+        <source>Mechanism</source>
+        <translation>알고리즘</translation>
+    </message>
+    <message>
+        <source>Session</source>
+        <translation>세션</translation>
+    </message>
+    <message>
+        <source>Objects</source>
+        <translation>대상</translation>
+    </message>
+    <message>
+        <source>Certificate</source>
+        <translation>인증서</translation>
+    </message>
+    <message>
+        <source>PublicKey</source>
+        <translation>공개키</translation>
+    </message>
+    <message>
+        <source>PrivateKey</source>
+        <translation>개인키</translation>
+    </message>
+    <message>
+        <source>SecretKey</source>
+        <translation>대칭키</translation>
+    </message>
+    <message>
+        <source>Data</source>
+        <translation>데이타</translation>
+    </message>
 </context>
 <context>
     <name>OpenSessionDlg</name>
@@ -2719,6 +2914,69 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Open session</source>
         <translation>Open Session</translation>
+    </message>
+</context>
+<context>
+    <name>OperStateDlg</name>
+    <message>
+        <source>Dialog</source>
+        <translation>대화창</translation>
+    </message>
+    <message>
+        <source>Slot List</source>
+        <translation>슬롯 목록</translation>
+    </message>
+    <message>
+        <source>Slot and Session</source>
+        <translation>슬롯 및 세션</translation>
+    </message>
+    <message>
+        <source>Session Handle</source>
+        <translation>세션 핸들</translation>
+    </message>
+    <message>
+        <source>Slot ID</source>
+        <translation>슬롯 ID</translation>
+    </message>
+    <message>
+        <source>Object</source>
+        <translation>대상</translation>
+    </message>
+    <message>
+        <source>Operation State</source>
+        <translation>운영 상태</translation>
+    </message>
+    <message>
+        <source>Enc Key</source>
+        <translation>암호화 키</translation>
+    </message>
+    <message>
+        <source>Auth Key</source>
+        <translation>인증 키</translation>
+    </message>
+    <message>
+        <source>SetOperationState</source>
+        <translation>운영 상태 설정</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>닫기</translation>
+    </message>
+    <message>
+        <source>GetOperationState</source>
+        <translation>운영 상태 얻기</translation>
+    </message>
+    <message>
+        <source>fail to run GetOperationState:%1</source>
+        <translation>운영 상태 얻기 실패:%1</translation>
+    </message>
+    <message>
+        <source>fail to run SetOperationState:%1</source>
+        <translation>운영 상태 설정 실패: %1</translation>
+    </message>
+    <message>
+        <source>SetOperation OK</source>
+        <translation>운영 설정 성공</translation>
     </message>
 </context>
 <context>

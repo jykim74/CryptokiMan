@@ -275,56 +275,56 @@ void ManTreeView::P11Initialize()
             slotInfos.push_back( slotInfo );
 
 
-            ManTreeItem *pItemToken = new ManTreeItem( QString("Token") );
+            ManTreeItem *pItemToken = new ManTreeItem( QString(tr("Token")) );
             pItemToken->setType( HM_ITEM_TYPE_TOKEN );
             pItemToken->setIcon( QIcon(":/images/token.png"));
             pItemToken->setSlotIndex(i);
             item->appendRow( pItemToken );
 
 
-            ManTreeItem *pItemMech = new ManTreeItem( QString("Mechanism") );
+            ManTreeItem *pItemMech = new ManTreeItem( QString(tr("Mechanism")) );
             pItemMech->setType( HM_ITEM_TYPE_MECHANISM );
             pItemMech->setIcon(QIcon(":/images/mech.png"));
             pItemMech->setSlotIndex(i);
             item->appendRow( pItemMech );
 
-            ManTreeItem *pItemSession = new ManTreeItem( QString("Session") );
+            ManTreeItem *pItemSession = new ManTreeItem( QString(tr("Session")) );
             pItemSession->setType( HM_ITEM_TYPE_SESSION );
             pItemSession->setIcon(QIcon(":/images/session.png"));
             pItemSession->setSlotIndex(i);
             item->appendRow( pItemSession );
 
-            ManTreeItem *pItemObjects = new ManTreeItem( QString("Objects") );
+            ManTreeItem *pItemObjects = new ManTreeItem( QString(tr("Objects")) );
             pItemObjects->setType( HM_ITEM_TYPE_OBJECTS );
             pItemObjects->setIcon(QIcon(":/images/object.png"));
             pItemObjects->setSlotIndex(i);
             item->appendRow( pItemObjects );
 
-            ManTreeItem *pItemCert = new ManTreeItem( QString("Certificate" ) );
+            ManTreeItem *pItemCert = new ManTreeItem( QString(tr("Certificate") ) );
             pItemCert->setType( HM_ITEM_TYPE_CERTIFICATE );
             pItemCert->setIcon(QIcon(":/images/cert.png"));
             pItemCert->setSlotIndex(i);
             pItemObjects->appendRow( pItemCert );
 
-            ManTreeItem *pItemPubKey = new ManTreeItem( QString("PublicKey") );
+            ManTreeItem *pItemPubKey = new ManTreeItem( QString(tr("PublicKey")) );
             pItemPubKey->setType( HM_ITEM_TYPE_PUBLICKEY );
             pItemPubKey->setIcon( QIcon(":/images/pubkey.png") );
             pItemPubKey->setSlotIndex(i);
             pItemObjects->appendRow( pItemPubKey );
 
-            ManTreeItem *pItemPriKey = new ManTreeItem( QString("PrivateKey" ) );
+            ManTreeItem *pItemPriKey = new ManTreeItem( QString(tr("PrivateKey") ) );
             pItemPriKey->setType( HM_ITEM_TYPE_PRIVATEKEY );
             pItemPriKey->setIcon( QIcon(":/images/prikey.png") );
             pItemPriKey->setSlotIndex(i);
             pItemObjects->appendRow( pItemPriKey );
 
-            ManTreeItem *pItemSecKey = new ManTreeItem( QString("SecretKey" ) );
+            ManTreeItem *pItemSecKey = new ManTreeItem( QString(tr("SecretKey") ) );
             pItemSecKey->setType( HM_ITEM_TYPE_SECRETKEY );
             pItemSecKey->setIcon(QIcon(":/images/key.jpg"));
             pItemSecKey->setSlotIndex(i);
             pItemObjects->appendRow( pItemSecKey );
 
-            ManTreeItem *pItemData = new ManTreeItem( QString("Data" ) );
+            ManTreeItem *pItemData = new ManTreeItem( QString(tr("Data") ) );
             pItemData->setType( HM_ITEM_TYPE_DATA );
             pItemData->setIcon(QIcon(":/images/save.png"));
             pItemData->setSlotIndex(i);
