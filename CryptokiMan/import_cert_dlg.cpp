@@ -60,6 +60,9 @@ void ImportCertDlg::initialize()
     }
 
     if( slot_infos.size() > 0 ) slotChanged(0);
+
+    mSubjectInCertCheck->setChecked( true );
+    clickSubjectInCertCheck();
 }
 
 void ImportCertDlg::initAttributes()
@@ -90,12 +93,14 @@ void ImportCertDlg::connectAttributes()
     connect( mFindBtn, SIGNAL(clicked()), this, SLOT(clickFind()));
     connect( mStartDateCheck, SIGNAL(clicked()), this, SLOT(clickStartDate()));
     connect( mEndDateCheck, SIGNAL(clicked()), this, SLOT(clickEndDate()));
+
+    connect( mSubjectInCertCheck, SIGNAL(clicked()), this, SLOT(clickSubjectInCertCheck()));
 }
 
 void ImportCertDlg::accept()
 {
     int ret = 0;
-    JCertInfo sCertInfo;
+
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int index = mSlotsCombo->currentIndex();
@@ -104,6 +109,7 @@ void ImportCertDlg::accept()
     CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     QString strCertPath = mCertPathText->text();
+    QString strSubject;
 
     if( strCertPath.isEmpty() )
     {
@@ -113,20 +119,28 @@ void ImportCertDlg::accept()
 
     BIN binCert = {0,0};
 
-    memset( &sCertInfo, 0x00, sizeof(sCertInfo));
-
-    JS_BIN_fileRead( strCertPath.toStdString().c_str(), &binCert );
-
-    ret = JS_PKI_getCertInfo( &binCert, &sCertInfo, NULL );
-    if( ret != 0 )
+    if( mSubjectInCertCheck->isChecked() )
     {
-        manApplet->elog( QString( "fail to decode certificate: %1" ).arg(ret) );
-        JS_BIN_reset( &binCert );
-        return;
-    }
+        JCertInfo sCertInfo;
+        memset( &sCertInfo, 0x00, sizeof(sCertInfo));
 
-    QString strSubject = sCertInfo.pSubjectName;
-    JS_PKI_resetCertInfo( &sCertInfo );
+        JS_BIN_fileRead( strCertPath.toStdString().c_str(), &binCert );
+
+        ret = JS_PKI_getCertInfo( &binCert, &sCertInfo, NULL );
+        if( ret != 0 )
+        {
+            manApplet->elog( QString( "fail to decode certificate: %1" ).arg(ret) );
+            JS_BIN_reset( &binCert );
+            return;
+        }
+
+        strSubject = sCertInfo.pSubjectName;
+        JS_PKI_resetCertInfo( &sCertInfo );
+    }
+    else
+    {
+        strSubject = mSubjectText->text();
+    }
 
     CK_ATTRIBUTE sTemplate[20];
     CK_ULONG uCount = 0;
@@ -271,6 +285,13 @@ void ImportCertDlg::clickFind()
     if( fileName.isEmpty() ) return;
 
     mCertPathText->setText( fileName );
+}
+
+void ImportCertDlg::clickSubjectInCertCheck()
+{
+    bool bVal = mSubjectInCertCheck->isChecked();
+
+    mSubjectText->setEnabled( !bVal );
 }
 
 void ImportCertDlg::setDefaults()

@@ -53,6 +53,9 @@ private slots:
 
     void clickFind();
 
+    void clickCertSubjectInCertCheck();
+    void clickPriSubjectInCertCheck();
+
 private:
     void initialize();
     void initAttributes();
@@ -66,6 +69,8 @@ private:
     int createECPrivateKey( JECKeyVal *pECKeyVal );
 
     void setDefaults();
+
+    QString subject_in_cert_;
 };
 
 #endif // IMPORT_PFX_DLG_H

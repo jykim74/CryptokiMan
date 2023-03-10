@@ -23,6 +23,7 @@ ImportPFXDlg::ImportPFXDlg(QWidget *parent) :
     setDefaults();
 
     tabWidget->setCurrentIndex(0);
+    subject_in_cert_ = "";
 }
 
 ImportPFXDlg::~ImportPFXDlg()
@@ -50,7 +51,11 @@ void ImportPFXDlg::initialize()
 
     if( slot_infos.size() > 0 ) slotChanged(0);
 
+    mCertSubjectInCertCheck->setChecked( true );
+    mPriSubjectInCertCheck->setChecked( true );
 
+    clickCertSubjectInCertCheck();
+    clickPriSubjectInCertCheck();
 }
 
 void ImportPFXDlg::initAttributes()
@@ -143,6 +148,8 @@ void ImportPFXDlg::connectAttributes()
     connect( mCertEndDateCheck, SIGNAL(clicked()), this, SLOT(clickCertEndDate()));
 
     connect( mFindBtn, SIGNAL(clicked()), this, SLOT(clickFind()));
+    connect( mCertSubjectInCertCheck, SIGNAL(clicked()), this, SLOT(clickCertSubjectInCertCheck()));
+    connect( mPriSubjectInCertCheck, SIGNAL(clicked()), this, SLOT(clickPriSubjectInCertCheck()));
 }
 
 void ImportPFXDlg::accept()
@@ -176,9 +183,11 @@ void ImportPFXDlg::accept()
     BIN binCert = {0,0};
     JRSAKeyVal rsaKeyVal;
     JECKeyVal ecKeyVal;
+    JCertInfo sCertInfo;
 
     memset( &rsaKeyVal, 0x00, sizeof(JRSAKeyVal));
     memset( &ecKeyVal, 0x00, sizeof(JECKeyVal));
+    memset( &sCertInfo, 0x00, sizeof(sCertInfo));
 
 
     rv = JS_PKI_decodePFX( &binPFX, strPasswd.toStdString().c_str(), &binPri, &binCert );
@@ -188,8 +197,13 @@ void ImportPFXDlg::accept()
         return;
     }
 
-    rv = createCert( &binCert );
+    rv = JS_PKI_getCertInfo( &binCert, &sCertInfo, NULL );
+    if( rv == 0 )
+    {
+        subject_in_cert_ = sCertInfo.pSubjectName;
+    }
 
+    rv = createCert( &binCert );
 
     rv = JS_PKI_getRSAKeyVal( &binPri, &rsaKeyVal );
     if( rv == 0 )
@@ -207,15 +221,23 @@ void ImportPFXDlg::accept()
         }
     }
 
-    if( rv != 0 )
+end :
+    JS_BIN_reset( &binPri );
+    JS_BIN_reset( &binCert );
+    JS_PKI_resetRSAKeyVal( &rsaKeyVal );
+    JS_PKI_resetECKeyVal( &ecKeyVal );
+    JS_PKI_resetCertInfo( &sCertInfo );
+
+    if( rv == 0 )
+    {
+        manApplet->messageBox(tr("success to import pfx file"), this );
+        QDialog::accept();
+    }
+    else
     {
         manApplet->warningBox( tr("fail to get key information"), this );
-        return;
+        QDialog::reject();
     }
-
-    manApplet->messageBox(tr("success to import pfx file"), this );
-    QDialog::accept();
-
 }
 
 void ImportPFXDlg::slotChanged(int index)
@@ -359,6 +381,18 @@ void ImportPFXDlg::clickFind()
     mPFXPathText->setText( fileName );
 }
 
+void ImportPFXDlg::clickCertSubjectInCertCheck()
+{
+    bool bVal = mCertSubjectInCertCheck->isChecked();
+
+    mCertSubjectText->setEnabled(!bVal );
+}
+
+void ImportPFXDlg::clickPriSubjectInCertCheck()
+{
+    bool bVal = mPriSubjectInCertCheck->isChecked();
+    mPriSubjectText->setEnabled( !bVal );
+}
 
 
 int ImportPFXDlg::createCert( BIN *pCert )
@@ -416,6 +450,25 @@ int ImportPFXDlg::createCert( BIN *pCert )
         sTemplate[uCount].ulValueLen = binID.nLen;
         uCount++;
     }
+
+    QString strSubject;
+    BIN binSubject = {0,0};
+
+    if( mCertSubjectInCertCheck->isChecked() )
+        strSubject = subject_in_cert_;
+    else
+        strSubject = mCertSubjectText->text();
+
+    if( !strSubject.isEmpty() )
+    {
+        JS_BIN_set( &binSubject, (unsigned char *)strSubject.toStdString().c_str(), strSubject.length() );
+
+        sTemplate[uCount].type = CKA_SUBJECT;
+        sTemplate[uCount].pValue = binSubject.pVal;
+        sTemplate[uCount].ulValueLen = binSubject.nLen;
+        uCount++;
+    }
+
 
     if( mCertModifiableCheck->isChecked() )
     {
@@ -688,8 +741,13 @@ int ImportPFXDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
         uCount++;
     }
 
-    QString strSubject = mPriSubjectText->text();
+    QString strSubject;
     BIN binSubject = {0,0};
+
+    if( mPriSubjectInCertCheck->isChecked() )
+        strSubject = subject_in_cert_;
+    else
+        strSubject = mPriSubjectText->text();
 
     if( !strSubject.isEmpty() )
     {
@@ -1092,8 +1150,13 @@ int ImportPFXDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
         uCount++;
     }
 
-    QString strSubject = mPriSubjectText->text();
+    QString strSubject;
     BIN binSubject = {0,0};
+
+    if( mPriSubjectInCertCheck->isChecked() )
+        strSubject = subject_in_cert_;
+    else
+        strSubject = mPriSubjectText->text();
 
     if( !strSubject.isEmpty() )
     {

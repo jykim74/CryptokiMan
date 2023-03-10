@@ -1733,7 +1733,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Subject</source>
-        <translation type="vanished">주체</translation>
+        <translation>주체</translation>
     </message>
     <message>
         <source>fail to create certificate(%1)</source>
@@ -1754,6 +1754,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>EndDate</source>
         <translation>종료 일자</translation>
+    </message>
+    <message>
+        <source>subject in cert</source>
+        <translation>인증서 주체</translation>
     </message>
 </context>
 <context>
@@ -1925,6 +1929,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>EndDate</source>
         <translation>종료 일자</translation>
+    </message>
+    <message>
+        <source>subject in cert</source>
+        <translation>인증서 주체</translation>
     </message>
 </context>
 <context>

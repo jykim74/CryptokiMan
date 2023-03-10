@@ -28,6 +28,7 @@ private slots:
     void clickEndDate();
 
     void clickFind();
+    void clickSubjectInCertCheck();
 
 private:
     void initialize();

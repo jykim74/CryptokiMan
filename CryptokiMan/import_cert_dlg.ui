@@ -144,6 +144,13 @@
    </item>
    <item>
     <layout class="QGridLayout" name="gridLayout_2">
+     <item row="3" column="2">
+      <widget class="QPushButton" name="mFindBtn">
+       <property name="text">
+        <string>Find</string>
+       </property>
+      </widget>
+     </item>
      <item row="1" column="0">
       <widget class="QLabel" name="label_5">
        <property name="text">
@@ -151,8 +158,11 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
+     <item row="3" column="1">
       <widget class="QLineEdit" name="mCertPathText"/>
+     </item>
+     <item row="1" column="1" colspan="2">
+      <widget class="QLineEdit" name="mIDText"/>
      </item>
      <item row="0" column="0">
       <widget class="QLabel" name="label_4">
@@ -167,25 +177,32 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="0">
+     <item row="3" column="0">
       <widget class="QLabel" name="label_6">
        <property name="text">
         <string>Cert Path</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="2">
-      <widget class="QPushButton" name="mFindBtn">
+     <item row="0" column="1" colspan="2">
+      <widget class="QLineEdit" name="mLabelText"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_10">
        <property name="text">
-        <string>Find</string>
+        <string>Subject</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="1" colspan="2">
-      <widget class="QLineEdit" name="mIDText"/>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="mSubjectText"/>
      </item>
-     <item row="0" column="1" colspan="2">
-      <widget class="QLineEdit" name="mLabelText"/>
+     <item row="2" column="2">
+      <widget class="QCheckBox" name="mSubjectInCertCheck">
+       <property name="text">
+        <string>subject in cert</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
