@@ -19,6 +19,7 @@ public:
     void setSlotIndex( int index );
     void setObjectIndex( int index );
     void setObjectID( long id );
+    void setAttrName( const QString& strName );
 
 private slots:
     virtual void accept();
@@ -40,6 +41,7 @@ private:
     int slot_index_;
     int object_index_;
     long object_id_;
+    QString attr_name_;
 };
 
 #endif // EDIT_ATTRIBUTE_DLG_H

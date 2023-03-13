@@ -2505,7 +2505,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>PKCS11 Edit Attribute</source>
-        <translation>PKCS11 속성 편집</translation>
+        <translation type="vanished">PKCS11 속성 편집</translation>
     </message>
     <message>
         <source>&amp;Crypt</source>
@@ -2719,6 +2719,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>There is no slot</source>
         <translation>슬롯이 없습니다</translation>
     </message>
+    <message>
+        <source>Edit Object</source>
+        <translation>대상 편집</translation>
+    </message>
+    <message>
+        <source>PKCS11 Edit Object</source>
+        <translation>PKCS11 대상 편집</translation>
+    </message>
 </context>
 <context>
     <name>ManApplet</name>
@@ -2846,7 +2854,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>EditAttribute</source>
-        <translation>속성 편집</translation>
+        <translation type="vanished">속성 편집</translation>
     </message>
     <message>
         <source>Verify</source>
@@ -2915,6 +2923,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Data</source>
         <translation>데이타</translation>
+    </message>
+    <message>
+        <source>EditObject</source>
+        <translation>대상 편집</translation>
     </message>
 </context>
 <context>

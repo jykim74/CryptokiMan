@@ -12,6 +12,7 @@ EditAttributeDlg::EditAttributeDlg(QWidget *parent) :
     slot_index_ = -1;
     object_index_ = -1;
     object_id_ = -1;
+    attr_name_ = "";
 
     setupUi(this);
 
@@ -42,6 +43,11 @@ void EditAttributeDlg::setObjectIndex( int index )
 void EditAttributeDlg::setObjectID( long id )
 {
     object_id_ = id;
+}
+
+void EditAttributeDlg::setAttrName( const QString& strName )
+{
+    attr_name_ = strName;
 }
 
 void EditAttributeDlg::slotChanged(int index)
@@ -219,7 +225,45 @@ void EditAttributeDlg::showEvent(QShowEvent *event)
     initialize();
 
 //    if( slot_index_ >= 0 ) mSlotsCombo->setCurrentIndex( slot_index_ );
-    objectChanged( object_index_ );
+
+    if( attr_name_.length() > 0 )
+    {
+        mAttributeCombo->clear();
+        mAttributeCombo->addItem( attr_name_ );
+
+        QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
+
+        int nSlotSel = mSlotsCombo->currentIndex();
+        if( nSlotSel < 0 ) return;
+
+        SlotInfo slotInfo;
+
+        if( slot_index_ < 0 )
+            slotInfo = slot_infos.at(nSlotSel);
+        else
+            slotInfo = slot_infos.at( slot_index_ );
+
+        CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+
+        BIN binLabel = {0,0};
+        char *pHex = NULL;
+
+        manApplet->cryptokiAPI()->GetAttributeValue2( hSession, object_id_, CKA_LABEL, &binLabel );
+        const QVariant objVal =  QVariant((int) object_id_ );
+        JS_BIN_string( &binLabel, &pHex );
+        mLabelCombo->addItem( pHex, objVal );
+        JS_BIN_reset(&binLabel);
+        if( pHex ) JS_free( pHex );
+
+        QString strHandle = QString("%1").arg( object_id_ );
+        mObjectText->setText( strHandle );
+
+        clickGetAttribute();
+    }
+    else
+    {
+        objectChanged( object_index_ );
+    }
 }
 
 void EditAttributeDlg::closeEvent(QCloseEvent *)
@@ -237,6 +281,10 @@ void EditAttributeDlg::clickGetAttribute()
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int index = mSlotsCombo->currentIndex();
+
+    if( slot_index_ > 0 )
+        index = slot_index_;
+
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
     CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
@@ -278,6 +326,10 @@ void EditAttributeDlg::clickSetAttribute()
 
 
     int index = mSlotsCombo->currentIndex();
+
+    if( slot_index_ > 0 )
+        index = slot_index_;
+
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
     CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();

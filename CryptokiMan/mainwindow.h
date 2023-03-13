@@ -30,7 +30,7 @@ public:
     void showWindow();
 //    JP11_CTX* getP11CTX() { return p11_ctx_; };
     QList<SlotInfo>& getSlotInfos() { return slot_infos_; };
-    ManTreeItem* currentItem();
+    ManTreeItem* currentTreeItem();
 
     void showTypeData( int nSlotIndex, int nType );
 
@@ -49,6 +49,8 @@ public:
     void setRightTable( QTableWidget *right_table );
     void removeAllRightTable();
     void addEmptyLine( int row );
+    void setRightType( int nType );
+    int rightType() { return right_type_; };
 
 private slots:
     void closeEvent(QCloseEvent *event);
@@ -73,6 +75,7 @@ public slots:
     void createECPrivateKey();
     void createKey();
     void deleteObject();
+    void editObject();
     void editAttribute();
     void digest();
     void sign();
@@ -96,6 +99,7 @@ public slots:
     void operationState();
 
     void rightTableClick( QModelIndex index );
+    void showRightMenu(QPoint point );
 
     virtual void dragEnterEvent(QDragEnterEvent *event );
     virtual void dropEvent(QDropEvent *event );
@@ -120,6 +124,7 @@ private:
     ManTreeModel    *left_model_;
     QTableWidget    *right_table_;
     QTextEdit       *right_text_;
+    int             right_type_;
 
 //    JP11_CTX       *p11_ctx_;
     QString         file_path_;
