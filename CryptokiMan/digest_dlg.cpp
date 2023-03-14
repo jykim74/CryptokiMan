@@ -122,7 +122,7 @@ void DigestDlg::clickUpdate()
     int rv = -1;
     CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
-    QString strInput = mInputText->text();
+    QString strInput = mInputText->toPlainText();
     if( strInput.isEmpty() )
     {
         manApplet->warningBox(tr("Insert input value."), this );
@@ -201,7 +201,7 @@ void DigestDlg::clickDigest()
     int rv = -1;
     CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
-    QString strInput = mInputText->text();
+    QString strInput = mInputText->toPlainText();
     if( strInput.isEmpty() )
     {
         manApplet->warningBox( tr("You have to insert input value"), this );

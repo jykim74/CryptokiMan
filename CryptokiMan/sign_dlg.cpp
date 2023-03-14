@@ -65,6 +65,8 @@ void SignDlg::slotChanged(int index)
 void SignDlg::setSelectedSlot(int index)
 {
     if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
+
+    keyTypeChanged( 0 );
 }
 
 void SignDlg::initialize()

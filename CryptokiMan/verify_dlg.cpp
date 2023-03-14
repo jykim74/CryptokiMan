@@ -66,7 +66,10 @@ void VerifyDlg::slotChanged(int index)
 
 void VerifyDlg::setSelectedSlot(int index)
 {
-    if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
+    if( index >= 0 )
+        mSlotsCombo->setCurrentIndex(index);
+
+    keyTypeChanged( 0 );
 }
 
 void VerifyDlg::initialize()

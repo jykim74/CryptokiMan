@@ -55,6 +55,8 @@ void WrapKeyDlg::slotChanged(int index)
 void WrapKeyDlg::setSelectedSlot(int index)
 {
     if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
+
+    setWrapLabelList();
 }
 
 void WrapKeyDlg::initialize()

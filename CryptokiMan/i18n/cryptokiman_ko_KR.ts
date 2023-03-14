@@ -747,7 +747,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Modules</source>
-        <translation>모듈</translation>
+        <translation>Modules</translation>
     </message>
     <message>
         <source>Sign</source>
@@ -826,7 +826,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Modules</source>
-        <translation>모듈</translation>
+        <translation>Modules</translation>
     </message>
     <message>
         <source>Attributes</source>

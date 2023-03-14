@@ -83,6 +83,8 @@ void DeriveKeyDlg::slotChanged(int index)
 void DeriveKeyDlg::setSelectedSlot(int index)
 {
     if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
+
+    setSrcLabelList();
 }
 
 void DeriveKeyDlg::initialize()

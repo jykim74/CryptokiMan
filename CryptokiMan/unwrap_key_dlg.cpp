@@ -145,6 +145,8 @@ void UnwrapKeyDlg::slotChanged(int index)
 void UnwrapKeyDlg::setSelectedSlot(int index)
 {
     if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
+
+    setUnwrapLabelList();
 }
 
 void UnwrapKeyDlg::initialize()

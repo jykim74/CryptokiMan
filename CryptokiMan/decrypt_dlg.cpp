@@ -63,6 +63,8 @@ void DecryptDlg::slotChanged(int index)
 void DecryptDlg::setSelectedSlot(int index)
 {
     if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
+
+    keyTypeChanged( 0 );
 }
 
 void DecryptDlg::initialize()

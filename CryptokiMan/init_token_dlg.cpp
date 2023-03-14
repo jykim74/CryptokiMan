@@ -8,6 +8,7 @@ InitTokenDlg::InitTokenDlg(QWidget *parent) :
     QDialog(parent)
 {
     setupUi(this);
+    connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
     initialize();
 }
 
