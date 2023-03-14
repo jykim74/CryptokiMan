@@ -51,6 +51,11 @@ void OperStateDlg::slotChanged(int index)
     mSessionText->setText( QString("%1").arg(slotInfo.getSessionHandle()));
 }
 
+void OperStateDlg::setSelectedSlot(int index)
+{
+    if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
+}
+
 
 void OperStateDlg::clickGetOperationState()
 {

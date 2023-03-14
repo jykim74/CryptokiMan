@@ -10,14 +10,14 @@ EditAttributeDlg::EditAttributeDlg(QWidget *parent) :
     QDialog(parent)
 {
     slot_index_ = -1;
-    object_index_ = -1;
+    object_type_ = -1;
     object_id_ = -1;
+    session_ = -1;
     attr_name_ = "";
 
     setupUi(this);
 
-    connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
-    connect( mObjectCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(objectChanged(int)));
+    connect( mObjectTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(objectTypeChanged(int)));
     connect( mLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(labelChanged(int)));
 
     connect( mCloseBtn, SIGNAL(clicked(bool)), this, SLOT(clickClose()));
@@ -32,12 +32,12 @@ EditAttributeDlg::~EditAttributeDlg()
 
 void EditAttributeDlg::setSlotIndex( int index )
 {
-    slot_index_ = index;
+    slotChanged( index );
 }
 
-void EditAttributeDlg::setObjectIndex( int index )
+void EditAttributeDlg::setObjectType( int type )
 {
-    object_index_ = index;
+    object_type_ = type;
 }
 
 void EditAttributeDlg::setObjectID( long id )
@@ -54,17 +54,22 @@ void EditAttributeDlg::slotChanged(int index)
 {
     if( index < 0 ) return;
 
+    slot_index_ = index;
+
     QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
     SlotInfo slotInfo;
 
-    if( slot_index_ < 0 )
-        slotInfo = slot_infos.at(index);
-    else
-        slotInfo = slot_infos.at( slot_index_ );
+    slotInfo = slot_infos.at( index );
+
+    session_ = slotInfo.getSessionHandle();
 
     mSlotIDText->setText( QString( "%1").arg(slotInfo.getSlotID()));
     mSessionText->setText( QString("%1").arg(slotInfo.getSessionHandle()));
     mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
+
+    mSlotsCombo->clear();
+    mSlotsCombo->addItem( slotInfo.getDesc() );
+    mSlotsCombo->setAcceptDrops(false);
 }
 
 void EditAttributeDlg::labelChanged( int index )
@@ -77,24 +82,9 @@ void EditAttributeDlg::labelChanged( int index )
     mObjectText->setText( strHandle );
 }
 
-void EditAttributeDlg::objectChanged( int index )
+void EditAttributeDlg::objectTypeChanged( int type )
 {
-    if( manApplet == NULL ) return;
-
-    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int nSlotSel = mSlotsCombo->currentIndex();
-    if( nSlotSel < 0 ) return;
-
-    SlotInfo slotInfo;
-
-    if( slot_index_ < 0 )
-        slotInfo = slot_infos.at(nSlotSel);
-    else
-        slotInfo = slot_infos.at( slot_index_ );
-
     int rv = -1;
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[1];
     long uCount = 0;
@@ -106,27 +96,27 @@ void EditAttributeDlg::objectChanged( int index )
     mAttributeCombo->clear();
     mAttributeCombo->addItems( kCommonAttList );
 
-    if( index == OBJ_DATA_IDX )
+    if( type == OBJ_DATA_IDX )
     {
         objClass = CKO_DATA;
         mAttributeCombo->addItems( kDataAttList );
     }
-    else if( index == OBJ_CERT_IDX )
+    else if( type == OBJ_CERT_IDX )
     {
         objClass = CKO_CERTIFICATE;
         mAttributeCombo->addItems( kCertAttList );
     }
-    else if( index == OBJ_PUBKEY_IDX )
+    else if( type == OBJ_PUBKEY_IDX )
     {
         objClass = CKO_PUBLIC_KEY;
         mAttributeCombo->addItems( kPubKeyAttList );
     }
-    else if( index == OBJ_PRIKEY_IDX )
+    else if( type == OBJ_PRIKEY_IDX )
     {
         objClass = CKO_PRIVATE_KEY;
         mAttributeCombo->addItems( kPriKetAttList );
     }
-    else if( index == OBJ_SECRET_IDX )
+    else if( type == OBJ_SECRET_IDX )
     {
         objClass = CKO_SECRET_KEY;
         mAttributeCombo->addItems( kSecretKeyAttList );
@@ -139,13 +129,13 @@ void EditAttributeDlg::objectChanged( int index )
 
     if( object_id_ < 0 )
     {
-        rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, uCount );
+        rv = manApplet->cryptokiAPI()->FindObjectsInit( session_, sTemplate, uCount );
         if( rv != CKR_OK ) return;
 
-        rv = manApplet->cryptokiAPI()->FindObjects( hSession, sObjects, uMaxObjCnt, &uObjCnt );
+        rv = manApplet->cryptokiAPI()->FindObjects( session_, sObjects, uMaxObjCnt, &uObjCnt );
         if( rv != CKR_OK ) return;
 
-        rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
+        rv = manApplet->cryptokiAPI()->FindObjectsFinal( session_ );
         if( rv != CKR_OK ) return;
     }
     else
@@ -161,7 +151,7 @@ void EditAttributeDlg::objectChanged( int index )
         BIN binLabel = {0,0};
         char *pHex = NULL;
 
-        manApplet->cryptokiAPI()->GetAttributeValue2( hSession, sObjects[i], CKA_LABEL, &binLabel );
+        manApplet->cryptokiAPI()->GetAttributeValue2( session_, sObjects[i], CKA_LABEL, &binLabel );
 
         const QVariant objVal =  QVariant( (int)sObjects[i] );
 
@@ -180,26 +170,6 @@ void EditAttributeDlg::objectChanged( int index )
 
 void EditAttributeDlg::initialize()
 {
-    mSlotsCombo->clear();
-
-    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    if( slot_index_ < 0 )
-    {
-        for( int i=0; i < slot_infos.size(); i++ )
-        {
-            SlotInfo slotInfo = slot_infos.at(i);
-
-            mSlotsCombo->addItem( slotInfo.getDesc() );
-        }
-
-        if( slot_infos.size() > 0 ) slotChanged(0);
-    }
-    else
-    {
-        SlotInfo slotInfo = slot_infos.at(slot_index_);
-        mSlotsCombo->addItem( slotInfo.getDesc() );
-    }
 
 }
 
@@ -217,10 +187,10 @@ void EditAttributeDlg::accept()
 void EditAttributeDlg::showEvent(QShowEvent *event)
 {
     initAttributes();
-    if( object_index_ < 0 )
-        mObjectCombo->addItems(kObjectList);
+    if( object_type_ < 0 )
+        mObjectTypeCombo->addItems(kObjectTypeList);
     else
-        mObjectCombo->addItem( kObjectList[object_index_] );
+        mObjectTypeCombo->addItem( kObjectTypeList[object_type_] );
 
     initialize();
 
@@ -251,6 +221,7 @@ void EditAttributeDlg::showEvent(QShowEvent *event)
         manApplet->cryptokiAPI()->GetAttributeValue2( hSession, object_id_, CKA_LABEL, &binLabel );
         const QVariant objVal =  QVariant((int) object_id_ );
         JS_BIN_string( &binLabel, &pHex );
+        mLabelCombo->clear();
         mLabelCombo->addItem( pHex, objVal );
         JS_BIN_reset(&binLabel);
         if( pHex ) JS_free( pHex );
@@ -262,7 +233,7 @@ void EditAttributeDlg::showEvent(QShowEvent *event)
     }
     else
     {
-        objectChanged( object_index_ );
+        objectTypeChanged( object_type_ );
     }
 }
 
@@ -278,16 +249,7 @@ void EditAttributeDlg::clickClose()
 
 void EditAttributeDlg::clickGetAttribute()
 {
-    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int index = mSlotsCombo->currentIndex();
-
-    if( slot_index_ > 0 )
-        index = slot_index_;
-
-    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     long hObject = mObjectText->text().toLong();
 
@@ -305,7 +267,7 @@ void EditAttributeDlg::clickGetAttribute()
     BIN binVal = {0,0};
     char *pHex = NULL;
 
-    rv = manApplet->cryptokiAPI()->GetAttributeValue2( hSession, hObject, attrType, &binVal );
+    rv = manApplet->cryptokiAPI()->GetAttributeValue2( session_, hObject, attrType, &binVal );
 
     if( rv != CKR_OK )
     {
@@ -322,17 +284,7 @@ void EditAttributeDlg::clickGetAttribute()
 
 void EditAttributeDlg::clickSetAttribute()
 {
-    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-
-    int index = mSlotsCombo->currentIndex();
-
-    if( slot_index_ > 0 )
-        index = slot_index_;
-
-    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
     long hObject = mObjectText->text().toLong();
 
     if( hObject <= 0 )
@@ -352,7 +304,7 @@ void EditAttributeDlg::clickSetAttribute()
 
     JS_BIN_decodeHex( strValue.toStdString().c_str(), &binVal );
 
-    rv = manApplet->cryptokiAPI()->SetAttributeValue2( hSession, hObject, attrType, &binVal );
+    rv = manApplet->cryptokiAPI()->SetAttributeValue2( session_, hObject, attrType, &binVal );
 
     if( rv != CKR_OK )
     {

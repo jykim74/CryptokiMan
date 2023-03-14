@@ -16,7 +16,7 @@ public:
     explicit DelObjectDlg(QWidget *parent = nullptr);
     ~DelObjectDlg();
     void setSlotIndex( int index );
-    void setObjectIndex( int index );
+    void setObjectType( int type );
     void setObjectID( long id );
 
 private slots:
@@ -25,17 +25,18 @@ private slots:
 
     void deleteObj();
     void deleteAllObj();
-    void slotChanged( int index );
 
+    void slotChanged(int index);
     void labelChanged( int index );
-    void objectChanged( int index );
+    void objectTypeChanged( int type );
 
 private:
     void initialize();
 
+    int object_type_;
     int slot_index_;
-    int object_index_;
     long object_id_;
+    long session_;
 };
 
 #endif // DEL_OBJECT_DLG_H

@@ -29,6 +29,9 @@ private:
     void initialize();
     void initUI();
     void setWrapLabelList();
+
+    int slot_index_;
+    long session_;
 };
 
 #endif // WRAP_KEY_DLG_H

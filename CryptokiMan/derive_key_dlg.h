@@ -47,6 +47,9 @@ private:
     void setSrcLabelList();
 
     void setDefaults();
+
+    int slot_index_;
+    int session_;
 };
 
 #endif // DERIVE_KEY_DLG_H

@@ -10,21 +10,20 @@
 DelObjectDlg::DelObjectDlg(QWidget *parent) :
     QDialog(parent)
 {
-    slot_index_ = -1;
-    object_index_ = -1;
+    object_type_ = -1;
     object_id_ = -1;
+    slot_index_ = -1;
+    session_  = -1;
 
     setupUi(this);
 
     connect( mLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(labelChanged(int)));
     /* need to check for being crashed */
-    connect( mObjectCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(objectChanged(int)));
-    connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
+    connect( mObjectTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(objectTypeChanged(int)));
 
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(close()));
     connect( mDeleteBtn, SIGNAL(clicked()), this, SLOT(deleteObj()));
     connect( mDeleteAllBtn, SIGNAL(clicked()), this, SLOT(deleteAllObj()));
-
 }
 
 DelObjectDlg::~DelObjectDlg()
@@ -34,12 +33,12 @@ DelObjectDlg::~DelObjectDlg()
 
 void DelObjectDlg::setSlotIndex( int index )
 {
-    slot_index_ = index;
+    slotChanged( index );
 }
 
-void DelObjectDlg::setObjectIndex( int index )
+void DelObjectDlg::setObjectType( int type )
 {
-    object_index_ = index;
+    object_type_ = type;
 }
 
 void DelObjectDlg::setObjectID( long id )
@@ -51,55 +50,39 @@ void DelObjectDlg::slotChanged(int index)
 {
     if( index < 0 ) return;
 
+    slot_index_ = index;
+
     QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
     SlotInfo slotInfo;
 
-    if( slot_index_ < 0 )
-        slotInfo = slot_infos.at(index);
-    else
-        slotInfo = slot_infos.at( slot_index_ );
+    if( slot_infos.size() <= index ) return;
+
+    slotInfo = slot_infos.at(index);
+    session_ = slotInfo.getSessionHandle();
 
     mSlotIDText->setText( QString( "%1").arg(slotInfo.getSlotID()));
     mSessionText->setText( QString("%1").arg(slotInfo.getSessionHandle()));
     mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
+
+    mSlotsCombo->clear();
+    mSlotsCombo->addItem( slotInfo.getDesc() );
 }
 
 void DelObjectDlg::initialize()
 {
-    mSlotsCombo->clear();
-
-    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    if( slot_index_ < 0 )
-    {
-        for( int i=0; i < slot_infos.size(); i++ )
-        {
-            SlotInfo slotInfo = slot_infos.at(i);
-
-            mSlotsCombo->addItem( slotInfo.getDesc() );
-        }
-
-        if( slot_infos.size() > 0 ) slotChanged(0);
-    }
-    else
-    {
-        SlotInfo slotInfo = slot_infos.at(slot_index_);
-        mSlotsCombo->addItem( slotInfo.getDesc() );
-    }
-
     if( object_id_ >= 0 ) mDeleteAllBtn->setDisabled(true);
 }
 
 void DelObjectDlg::showEvent(QShowEvent *event)
 {
-    if( object_index_ < 0 )
-        mObjectCombo->addItems(kObjectList);
+    if( object_type_ < 0 )
+        mObjectTypeCombo->addItems(kObjectTypeList);
     else
-        mObjectCombo->addItem(kObjectList[object_index_]);
+        mObjectTypeCombo->addItem(kObjectTypeList[object_type_]);
 
     initialize();
 
-    objectChanged( object_index_ );
+    objectTypeChanged( object_type_ );
 }
 
 void DelObjectDlg::closeEvent(QCloseEvent *)
@@ -109,23 +92,11 @@ void DelObjectDlg::closeEvent(QCloseEvent *)
 
 void DelObjectDlg::deleteObj()
 {
-    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-
-    int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo;
-
-    if( slot_index_ < 0 )
-        slotInfo = slot_infos.at(index);
-    else
-        slotInfo = slot_infos.at( slot_index_ );
-
     int rv = -1;
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     long hObject = mObjectText->text().toLong();
 
-    rv = manApplet->cryptokiAPI()->DestroyObject( hSession, hObject );
+    rv = manApplet->cryptokiAPI()->DestroyObject( session_, hObject );
 
     if( rv != CKR_OK )
     {
@@ -135,28 +106,28 @@ void DelObjectDlg::deleteObj()
 
     manApplet->messageBox( tr("success to delete object"), this );
 
-    QString strType = mObjectCombo->currentText();
+    QString strType = mObjectTypeCombo->currentText();
     int nDataType = -1;
 
-    if( strType == kObjectList[0] )
-    {
-        nDataType = HM_ITEM_TYPE_DATA;
-    }
-    else if( strType == kObjectList[1] )
+    if( strType == kObjectTypeList[0] )
     {
         nDataType = HM_ITEM_TYPE_CERTIFICATE;
     }
-    else if( strType == kObjectList[2] )
+    else if( strType == kObjectTypeList[1] )
     {
         nDataType = HM_ITEM_TYPE_PUBLICKEY;
     }
-    else if( strType == kObjectList[3] )
+    else if( strType == kObjectTypeList[2] )
     {
         nDataType = HM_ITEM_TYPE_PRIVATEKEY;
     }
-    else if( strType == kObjectList[4] )
+    else if( strType == kObjectTypeList[3] )
     {
         nDataType = HM_ITEM_TYPE_SECRETKEY;
+    }
+    else if( strType == kObjectTypeList[4] )
+    {
+        nDataType = HM_ITEM_TYPE_DATA;
     }
 
     manApplet->showTypeData( slot_index_, nDataType );
@@ -165,16 +136,7 @@ void DelObjectDlg::deleteObj()
 
 void DelObjectDlg::deleteAllObj()
 {
-    if( manApplet == NULL ) return;
-    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-
-    int nSlotSel = mSlotsCombo->currentIndex();
-    if( nSlotSel < 0 ) return;
-
-    SlotInfo slotInfo = slot_infos.at(nSlotSel);
     int rv = -1;
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[1];
     long uCount = 0;
@@ -184,32 +146,33 @@ void DelObjectDlg::deleteAllObj()
     CK_ULONG uObjCnt = 0;
     int nDataType = -1;
 
-    QString strType = mObjectCombo->currentText();
+    QString strType = mObjectTypeCombo->currentText();
 
-    if( strType == kObjectList[0] )
-    {
-        objClass = CKO_DATA;
-        nDataType = HM_ITEM_TYPE_DATA;
-    }
-    else if( strType == kObjectList[1] )
+
+    if( strType == kObjectTypeList[0] )
     {
         objClass = CKO_CERTIFICATE;
         nDataType = HM_ITEM_TYPE_CERTIFICATE;
     }
-    else if( strType == kObjectList[2] )
+    else if( strType == kObjectTypeList[1] )
     {
         objClass = CKO_PUBLIC_KEY;
         nDataType = HM_ITEM_TYPE_PUBLICKEY;
     }
-    else if( strType == kObjectList[3] )
+    else if( strType == kObjectTypeList[2] )
     {
         objClass = CKO_PRIVATE_KEY;
         nDataType = HM_ITEM_TYPE_PRIVATEKEY;
     }
-    else if( strType == kObjectList[4] )
+    else if( strType == kObjectTypeList[3] )
     {
         objClass = CKO_SECRET_KEY;
         nDataType = HM_ITEM_TYPE_SECRETKEY;
+    }
+    if( strType == kObjectTypeList[4] )
+    {
+        objClass = CKO_DATA;
+        nDataType = HM_ITEM_TYPE_DATA;
     }
 
     sTemplate[uCount].type = CKA_CLASS;
@@ -217,23 +180,23 @@ void DelObjectDlg::deleteAllObj()
     sTemplate[uCount].ulValueLen = sizeof(objClass);
     uCount++;
 
-    rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, uCount );
+    rv = manApplet->cryptokiAPI()->FindObjectsInit( session_, sTemplate, uCount );
     if( rv != CKR_OK ) return;
 
-    rv = manApplet->cryptokiAPI()->FindObjects( hSession, sObjects, uMaxObjCnt, &uObjCnt );
+    rv = manApplet->cryptokiAPI()->FindObjects( session_, sObjects, uMaxObjCnt, &uObjCnt );
     if( rv != CKR_OK ) return;
 
-    rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
+    rv = manApplet->cryptokiAPI()->FindObjectsFinal( session_ );
     if( rv != CKR_OK ) return;
 
     mLabelCombo->clear();
 
     for( int i=0; i < uObjCnt; i++ )
     {
-        rv = manApplet->cryptokiAPI()->DestroyObject( hSession, sObjects[i] );
+        rv = manApplet->cryptokiAPI()->DestroyObject( session_, sObjects[i] );
     }
 
-    manApplet->showTypeData( nSlotSel, nDataType );
+    manApplet->showTypeData( slot_index_, nDataType );
 
     QDialog::accept();
 }
@@ -249,25 +212,9 @@ void DelObjectDlg::labelChanged( int index )
     mObjectText->setText( strHandle );
 }
 
-void DelObjectDlg::objectChanged( int index )
+void DelObjectDlg::objectTypeChanged( int type )
 {
-    if( manApplet == NULL ) return;
-
-    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-
-    int nSlotSel = mSlotsCombo->currentIndex();
-    if( nSlotSel < 0 ) return;
-
-    SlotInfo slotInfo;
-
-    if( slot_index_ < 0 )
-        slotInfo = slot_infos.at(nSlotSel);
-    else
-        slotInfo = slot_infos.at(slot_index_);
-
     int rv = -1;
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[1];
     long uCount = 0;
@@ -276,15 +223,15 @@ void DelObjectDlg::objectChanged( int index )
     CK_ULONG uMaxObjCnt = 20;
     CK_ULONG uObjCnt = 0;
 
-    if( index == OBJ_DATA_IDX )
+    if( type == OBJ_DATA_IDX )
         objClass = CKO_DATA;
-    else if( index == OBJ_CERT_IDX )
+    else if( type == OBJ_CERT_IDX )
         objClass = CKO_CERTIFICATE;
-    else if( index == OBJ_PUBKEY_IDX )
+    else if( type == OBJ_PUBKEY_IDX )
         objClass = CKO_PUBLIC_KEY;
-    else if( index == OBJ_PRIKEY_IDX )
+    else if( type == OBJ_PRIKEY_IDX )
         objClass = CKO_PRIVATE_KEY;
-    else if( index == OBJ_SECRET_IDX )
+    else if( type == OBJ_SECRET_IDX )
         objClass = CKO_SECRET_KEY;
 
     sTemplate[uCount].type = CKA_CLASS;
@@ -294,13 +241,13 @@ void DelObjectDlg::objectChanged( int index )
 
     if( object_id_ < 0 )
     {
-        rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, uCount );
+        rv = manApplet->cryptokiAPI()->FindObjectsInit( session_, sTemplate, uCount );
         if( rv != CKR_OK ) return;
 
-        rv = manApplet->cryptokiAPI()->FindObjects( hSession, sObjects, uMaxObjCnt, &uObjCnt );
+        rv = manApplet->cryptokiAPI()->FindObjects( session_, sObjects, uMaxObjCnt, &uObjCnt );
         if( rv != CKR_OK ) return;
 
-        rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
+        rv = manApplet->cryptokiAPI()->FindObjectsFinal( session_ );
         if( rv != CKR_OK ) return;
     }
     else
@@ -316,7 +263,7 @@ void DelObjectDlg::objectChanged( int index )
         BIN binLabel = {0,0};
         char *pHex = NULL;
 
-        rv = manApplet->cryptokiAPI()->GetAttributeValue2( hSession, sObjects[i], CKA_LABEL, &binLabel );
+        rv = manApplet->cryptokiAPI()->GetAttributeValue2( session_, sObjects[i], CKA_LABEL, &binLabel );
 
         const QVariant objVal =  QVariant( (int)sObjects[i] );
 

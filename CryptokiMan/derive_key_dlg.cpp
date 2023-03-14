@@ -28,19 +28,20 @@ static QStringList sSecKeyTypeList = {
 DeriveKeyDlg::DeriveKeyDlg(QWidget *parent) :
     QDialog(parent)
 {
+    slot_index_ = -1;
+    session_ = -1;
+
     setupUi(this);
 
     initAttributes();
     setAttributes();
     connectAttributes();
 
-    connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
     connect( mSrcLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(srcLabelChanged(int)));
     connect( mClassCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(classChanged(int)));
 
     initialize();
     setDefaults();
-    setSrcLabelList();
 }
 
 DeriveKeyDlg::~DeriveKeyDlg()
@@ -72,46 +73,34 @@ void DeriveKeyDlg::slotChanged(int index)
 {
     if( index < 0 ) return;
 
+    slot_index_ = index;
+
     QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
     SlotInfo slotInfo = slot_infos.at(index);
 
     mSlotIDText->setText( QString( "%1").arg(slotInfo.getSlotID()));
+    session_ = slotInfo.getSessionHandle();
     mSessionText->setText( QString("%1").arg(slotInfo.getSessionHandle()));
     mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
+
+    mSlotsCombo->clear();
+    mSlotsCombo->addItem( slotInfo.getDesc() );
 }
 
 void DeriveKeyDlg::setSelectedSlot(int index)
 {
-    if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
+    slotChanged( index );
 
     setSrcLabelList();
 }
 
 void DeriveKeyDlg::initialize()
 {
-    mSlotsCombo->clear();
-
-    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    for( int i=0; i < slot_infos.size(); i++ )
-    {
-        SlotInfo slotInfo = slot_infos.at(i);
-
-        mSlotsCombo->addItem( slotInfo.getDesc() );
-    }
-
-    if( slot_infos.size() > 0 ) slotChanged(0);
     tabWidget->setCurrentIndex(0);
 }
 
 void DeriveKeyDlg::accept()
 {
-    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.at(index);
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
-
     int rv = -1;
 
 
@@ -307,7 +296,7 @@ void DeriveKeyDlg::accept()
         uCount++;
     }
 
-    rv = manApplet->cryptokiAPI()->DeriveKey( hSession, &sMech, hSrcKey, sTemplate, uCount, &uObj );
+    rv = manApplet->cryptokiAPI()->DeriveKey( session_, &sMech, hSrcKey, sTemplate, uCount, &uObj );
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to run DeriveKey(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this);
@@ -449,14 +438,6 @@ void DeriveKeyDlg::clickEndDate()
 
 void DeriveKeyDlg::setSrcLabelList()
 {
-    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int nFlags = 0;
-
-    int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.at(index);
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
-
     int rv = -1;
 
     CK_ATTRIBUTE sTemplate[1];
@@ -475,13 +456,13 @@ void DeriveKeyDlg::setSrcLabelList()
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
     uCnt++;
 
-    rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, uCnt );
+    rv = manApplet->cryptokiAPI()->FindObjectsInit( session_, sTemplate, uCnt );
     if( rv != CKR_OK ) return;
 
-    rv = manApplet->cryptokiAPI()->FindObjects( hSession, sObjects, uMaxObjCnt, &uObjCnt );
+    rv = manApplet->cryptokiAPI()->FindObjects( session_, sObjects, uMaxObjCnt, &uObjCnt );
     if( rv != CKR_OK ) return;
 
-    rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
+    rv = manApplet->cryptokiAPI()->FindObjectsFinal( session_ );
     if( rv != CKR_OK ) return;
 
     mSrcLabelCombo->clear();
@@ -492,7 +473,7 @@ void DeriveKeyDlg::setSrcLabelList()
         BIN binLabel = {0,0};
         QVariant objVal = QVariant( (int)sObjects[i] );
 
-        rv = manApplet->cryptokiAPI()->GetAttributeValue2( hSession, sObjects[i], CKA_LABEL, &binLabel );
+        rv = manApplet->cryptokiAPI()->GetAttributeValue2( session_, sObjects[i], CKA_LABEL, &binLabel );
 
         JS_BIN_string( &binLabel, &pStr );
 
@@ -509,13 +490,13 @@ void DeriveKeyDlg::setSrcLabelList()
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
     uCnt++;
 
-    rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, uCnt );
+    rv = manApplet->cryptokiAPI()->FindObjectsInit( session_, sTemplate, uCnt );
     if( rv != CKR_OK ) return;
 
-    rv = manApplet->cryptokiAPI()->FindObjects( hSession, sObjects, uMaxObjCnt, &uObjCnt );
+    rv = manApplet->cryptokiAPI()->FindObjects( session_, sObjects, uMaxObjCnt, &uObjCnt );
     if( rv != CKR_OK ) return;
 
-    rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
+    rv = manApplet->cryptokiAPI()->FindObjectsFinal( session_ );
     if( rv != CKR_OK ) return;
 
     for( int i=0; i < uObjCnt; i++ )
@@ -524,7 +505,7 @@ void DeriveKeyDlg::setSrcLabelList()
         BIN binLabel = {0,0};
         QVariant objVal = QVariant( (int)sObjects[i] );
 
-        rv = manApplet->cryptokiAPI()->GetAttributeValue2( hSession, sObjects[i], CKA_LABEL, &binLabel );
+        rv = manApplet->cryptokiAPI()->GetAttributeValue2( session_, sObjects[i], CKA_LABEL, &binLabel );
 
         JS_BIN_string( &binLabel, &pStr );
 

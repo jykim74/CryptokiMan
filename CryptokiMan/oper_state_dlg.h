@@ -15,6 +15,7 @@ class OperStateDlg : public QDialog, public Ui::OperStateDlg
 public:
     explicit OperStateDlg(QWidget *parent = nullptr);
     ~OperStateDlg();
+    void setSelectedSlot( int index );
 
 private slots:
     void slotChanged(int index );

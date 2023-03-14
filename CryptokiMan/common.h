@@ -7,15 +7,15 @@
 #include "js_pki_ext.h"
 
 enum {
-    OBJ_DATA_IDX = 0,
-    OBJ_CERT_IDX,
+    OBJ_CERT_IDX = 0,
     OBJ_PUBKEY_IDX,
     OBJ_PRIKEY_IDX,
-    OBJ_SECRET_IDX
+    OBJ_SECRET_IDX,
+    OBJ_DATA_IDX
 };
 
-static QStringList kObjectList = {
-    "Data", "Certificate", "PublicKey", "PrivateKey", "SecretKey"
+static QStringList kObjectTypeList = {
+    "Certificate", "PublicKey", "PrivateKey", "SecretKey", "Data"
 };
 
 enum { JS_FILE_TYPE_CERT,
@@ -67,5 +67,7 @@ void getCKDate( const QDate date, CK_DATE *pCKDate );
 QString getBool( const BIN *pBin );
 QString getHexString( unsigned char *pData, int nDataLen );
 void getInfoValue( const JExtensionInfo *pExtInfo, QString& strVal );
+
+int getDataType( int nItemType );
 
 #endif // COMMON_H

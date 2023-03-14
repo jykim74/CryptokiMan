@@ -79,9 +79,18 @@ public slots:
     void editAttribute();
     void digest();
     void sign();
+    void signType();
+    void signEach();
+
     void verify();
+    void verifyType();
+    void verifyEach();
     void encrypt();
+    void encryptType();
+    void encryptEach();
     void decrypt();
+    void decryptType();
+    void decryptEach();
     void importCert();
     void viewCert();
     void importPFX();

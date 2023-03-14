@@ -47,6 +47,8 @@ private:
     void setDefaults();
     void setUnwrapLabelList();
 
+    int slot_index_;
+    long session_;
 };
 
 #endif // UNWRAP_KEY_DLG_H

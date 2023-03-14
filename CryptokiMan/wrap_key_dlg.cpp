@@ -15,11 +15,11 @@ static QStringList sWrappingMechList = {
 WrapKeyDlg::WrapKeyDlg(QWidget *parent) :
     QDialog(parent)
 {
+    slot_index_ = -1;
+    session_ = -1;
+
     setupUi(this);
     initUI();
-
-    connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
-
 }
 
 WrapKeyDlg::~WrapKeyDlg()
@@ -31,58 +31,45 @@ void WrapKeyDlg::initUI()
 {
     mWrappingMechCombo->addItems(sWrappingMechList);
 
-    connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
     connect( mWrappingLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(wrappingLabelChanged(int)));
     connect( mLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(labelChanged(int)));
-    connect( mFindBtn, SIGNAL(clicked(bool)), this, SLOT(clickFind()));
+    connect( mFindBtn, SIGNAL(clicked()), this, SLOT(clickFind()));
 
     initialize();
-    setWrapLabelList();
 }
 
 void WrapKeyDlg::slotChanged(int index)
 {
     if( index < 0 ) return;
 
+    slot_index_ = index;
+
     QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
     SlotInfo slotInfo = slot_infos.at(index);
 
     mSlotIDText->setText( QString( "%1").arg(slotInfo.getSlotID()));
+    session_ = slotInfo.getSessionHandle();
     mSessionText->setText( QString("%1").arg(slotInfo.getSessionHandle()));
     mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
+
+    mSlotsCombo->clear();
+    mSlotsCombo->addItem( slotInfo.getDesc() );
 }
 
 void WrapKeyDlg::setSelectedSlot(int index)
 {
-    if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
+    slotChanged( index );
 
     setWrapLabelList();
 }
 
 void WrapKeyDlg::initialize()
 {
-    mSlotsCombo->clear();
 
-    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    for( int i=0; i < slot_infos.size(); i++ )
-    {
-        SlotInfo slotInfo = slot_infos.at(i);
-
-        mSlotsCombo->addItem( slotInfo.getDesc() );
-    }
-
-    if( slot_infos.size() > 0 ) slotChanged(0);
 }
 
 void WrapKeyDlg::accept()
 {
-    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.at(index);
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
-
     int rv = -1;
     QString strPath = mPathText->text();
 
@@ -114,7 +101,7 @@ void WrapKeyDlg::accept()
     CK_BYTE_PTR pData = NULL;
     CK_ULONG uDataLen = 0;
 
-    rv = manApplet->cryptokiAPI()->WrapKey( hSession, &sMech, hWrappingKey, hKey, pData, &uDataLen );
+    rv = manApplet->cryptokiAPI()->WrapKey( session_, &sMech, hWrappingKey, hKey, pData, &uDataLen );
 
     if( rv != CKR_OK )
     {
@@ -125,7 +112,7 @@ void WrapKeyDlg::accept()
     pData = (CK_BYTE_PTR)JS_malloc( uDataLen );
     if( pData == NULL ) return;
 
-    rv = manApplet->cryptokiAPI()->WrapKey( hSession, &sMech, hWrappingKey, hKey, pData, &uDataLen );
+    rv = manApplet->cryptokiAPI()->WrapKey( session_, &sMech, hWrappingKey, hKey, pData, &uDataLen );
 
     if( rv != CKR_OK )
     {
@@ -148,14 +135,7 @@ void WrapKeyDlg::accept()
 
 void WrapKeyDlg::setWrapLabelList()
 {
-    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int nFlags = 0;
     int rv = -1;
-
-    int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.at(index);
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[1];
     CK_ULONG uCnt = 0;
@@ -172,13 +152,13 @@ void WrapKeyDlg::setWrapLabelList()
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
     uCnt++;
 
-    rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, uCnt );
+    rv = manApplet->cryptokiAPI()->FindObjectsInit( session_, sTemplate, uCnt );
     if( rv != CKR_OK ) return;
 
-    rv = manApplet->cryptokiAPI()->FindObjects( hSession, sObjects, uMaxObjCnt, &uObjCnt );
+    rv = manApplet->cryptokiAPI()->FindObjects( session_, sObjects, uMaxObjCnt, &uObjCnt );
     if( rv != CKR_OK ) return;
 
-    rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
+    rv = manApplet->cryptokiAPI()->FindObjectsFinal( session_ );
     if( rv != CKR_OK ) return;
 
     mLabelCombo->clear();
@@ -191,7 +171,7 @@ void WrapKeyDlg::setWrapLabelList()
         BIN binLabel = {0,0};
         QVariant objVal = QVariant( (int)sObjects[i] );
 
-        rv = manApplet->cryptokiAPI()->GetAttributeValue2( hSession, sObjects[i], CKA_LABEL, &binLabel );
+        rv = manApplet->cryptokiAPI()->GetAttributeValue2( session_, sObjects[i], CKA_LABEL, &binLabel );
 
         JS_BIN_string( &binLabel, &pLabel );
 
@@ -210,13 +190,13 @@ void WrapKeyDlg::setWrapLabelList()
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
     uCnt++;
 
-    rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, uCnt );
+    rv = manApplet->cryptokiAPI()->FindObjectsInit( session_, sTemplate, uCnt );
     if( rv != CKR_OK ) return;
 
-    rv = manApplet->cryptokiAPI()->FindObjects( hSession, sObjects, uMaxObjCnt, &uObjCnt );
+    rv = manApplet->cryptokiAPI()->FindObjects( session_, sObjects, uMaxObjCnt, &uObjCnt );
     if( rv != CKR_OK ) return;
 
-    rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
+    rv = manApplet->cryptokiAPI()->FindObjectsFinal( session_ );
     if( rv != CKR_OK ) return;
 
     for( int i=0; i < uObjCnt; i++ )
@@ -225,7 +205,7 @@ void WrapKeyDlg::setWrapLabelList()
         BIN binLabel = {0,0};
         QVariant objVal = QVariant( (int)sObjects[i] );
 
-        rv = manApplet->cryptokiAPI()->GetAttributeValue2( hSession, sObjects[i], CKA_LABEL, &binLabel );
+        rv = manApplet->cryptokiAPI()->GetAttributeValue2( session_, sObjects[i], CKA_LABEL, &binLabel );
 
         JS_BIN_string( &binLabel, &pLabel );
 

@@ -2727,6 +2727,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>PKCS11 Edit Object</source>
         <translation>PKCS11 대상 편집</translation>
     </message>
+    <message>
+        <source>View Certificate</source>
+        <translation>인증서 보기</translation>
+    </message>
+    <message>
+        <source>Sign</source>
+        <translation>서명</translation>
+    </message>
 </context>
 <context>
     <name>ManApplet</name>
@@ -2968,7 +2976,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <name>OperStateDlg</name>
     <message>
         <source>Dialog</source>
-        <translation>대화창</translation>
+        <translation type="vanished">대화창</translation>
     </message>
     <message>
         <source>Slot List</source>
@@ -2992,7 +3000,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Operation State</source>
-        <translation type="vanished">운영 상태</translation>
+        <translation>운영 상태</translation>
     </message>
     <message>
         <source>Enc Key</source>

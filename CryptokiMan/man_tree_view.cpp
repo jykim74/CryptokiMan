@@ -147,8 +147,8 @@ void ManTreeView::showContextMenu( QPoint point )
         menu.addAction( tr( "DeleteObject" ), manApplet->mainWindow(), &MainWindow::deleteObject );
         menu.addAction( tr("EditObject"), manApplet->mainWindow(), &MainWindow::editObject );
 
-        menu.addAction( tr("Verify"), manApplet->mainWindow(), &MainWindow::verify );
-        menu.addAction( tr("Encrypt"), manApplet->mainWindow(), &MainWindow::encrypt );
+        menu.addAction( tr("Verify"), manApplet->mainWindow(), &MainWindow::verifyType );
+        menu.addAction( tr("Encrypt"), manApplet->mainWindow(), &MainWindow::encryptType );
         menu.addAction( tr( "CreateRSAPublicKey"), manApplet->mainWindow(), &MainWindow::createRSAPublicKey );
         menu.addAction( tr("CreateECPublicKey"), manApplet->mainWindow(), &MainWindow::createECPublicKey );
     }
@@ -157,8 +157,8 @@ void ManTreeView::showContextMenu( QPoint point )
         menu.addAction( tr( "DeleteObject" ), manApplet->mainWindow(), &MainWindow::deleteObject );
         menu.addAction( tr("EditObject"), manApplet->mainWindow(), &MainWindow::editObject );
 
-        menu.addAction( tr( "Sign"), manApplet->mainWindow(), &MainWindow::sign );
-        menu.addAction( tr( "Decrypt" ), manApplet->mainWindow(), &MainWindow::decrypt );
+        menu.addAction( tr( "Sign"), manApplet->mainWindow(), &MainWindow::signType );
+        menu.addAction( tr( "Decrypt" ), manApplet->mainWindow(), &MainWindow::decryptType );
         menu.addAction( tr( "ImportPrivateKey"), manApplet->mainWindow(), &MainWindow::improtPrivateKey );
 
         menu.addAction( tr( "CreateRSAPrivateKey"), manApplet->mainWindow(), &MainWindow::createRSAPrivateKey );
@@ -169,12 +169,12 @@ void ManTreeView::showContextMenu( QPoint point )
         menu.addAction( tr( "DeleteObject" ), manApplet->mainWindow(), &MainWindow::deleteObject );
         menu.addAction( tr("EditObject"), manApplet->mainWindow(), &MainWindow::editObject );
 
-        menu.addAction( tr("Encrypt"), manApplet->mainWindow(), &MainWindow::encrypt );
-        menu.addAction( tr("Decrypt"), manApplet->mainWindow(), &MainWindow::decrypt );
+        menu.addAction( tr("Encrypt"), manApplet->mainWindow(), &MainWindow::encryptType );
+        menu.addAction( tr("Decrypt"), manApplet->mainWindow(), &MainWindow::decryptType );
         menu.addAction(  tr("WrapKey"), manApplet->mainWindow(), &MainWindow::wrapKey );
         menu.addAction( tr("UnwrapKey"), manApplet->mainWindow(), &MainWindow::unwrapKey );
-        menu.addAction( tr("Sign"), manApplet->mainWindow(), &MainWindow::sign );
-        menu.addAction( tr("Verify"), manApplet->mainWindow(), &MainWindow::verify );
+        menu.addAction( tr("Sign"), manApplet->mainWindow(), &MainWindow::signType );
+        menu.addAction( tr("Verify"), manApplet->mainWindow(), &MainWindow::verifyType );
         menu.addAction( tr("DeriveKey"), manApplet->mainWindow(), &MainWindow::deriveKey );
         menu.addAction( tr( "CreateKey"), manApplet->mainWindow(), &MainWindow::createKey );
         menu.addAction( tr( "GenerateKey"), manApplet->mainWindow(), &MainWindow::generateKey );
@@ -200,16 +200,25 @@ void ManTreeView::showContextMenu( QPoint point )
     {
         menu.addAction( tr( "DeleteObject" ), manApplet->mainWindow(), &MainWindow::deleteObject );
         menu.addAction( tr("EditObject"), manApplet->mainWindow(), &MainWindow::editObject );
+        menu.addAction( tr( "Verify" ), manApplet->mainWindow(), &MainWindow::verifyEach );
+        menu.addAction( tr("Encrypt"), manApplet->mainWindow(), &MainWindow::encryptEach );
+
     }
     else if( item->getType() == HM_ITEM_TYPE_PRIVATEKEY_OBJECT )
     {
         menu.addAction( tr( "DeleteObject" ), manApplet->mainWindow(), &MainWindow::deleteObject );
         menu.addAction( tr("EditObject"), manApplet->mainWindow(), &MainWindow::editObject );
+        menu.addAction( tr( "Sign" ), manApplet->mainWindow(), &MainWindow::signEach );
+        menu.addAction( tr("Decrypt"), manApplet->mainWindow(), &MainWindow::decryptEach );
     }
     else if( item->getType() == HM_ITEM_TYPE_SECRETKEY_OBJECT )
     {
         menu.addAction( tr( "DeleteObject" ), manApplet->mainWindow(), &MainWindow::deleteObject );
         menu.addAction( tr("EditObject"), manApplet->mainWindow(), &MainWindow::editObject );
+        menu.addAction( tr( "Sign" ), manApplet->mainWindow(), &MainWindow::signEach );
+        menu.addAction( tr( "Verify" ), manApplet->mainWindow(), &MainWindow::verifyEach );
+        menu.addAction( tr("Encrypt"), manApplet->mainWindow(), &MainWindow::encryptEach );
+        menu.addAction( tr("Decrypt"), manApplet->mainWindow(), &MainWindow::decryptEach );
     }
 
     menu.exec(QCursor::pos());

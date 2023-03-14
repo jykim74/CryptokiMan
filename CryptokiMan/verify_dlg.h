@@ -16,6 +16,8 @@ public:
     explicit VerifyDlg(QWidget *parent = nullptr);
     ~VerifyDlg();
     void setSelectedSlot( int index );
+    void changeType( int type );
+    void setObject( int type, long hObj );
 
 private slots:
     void slotChanged( int index );
@@ -32,6 +34,9 @@ private slots:
 private:
     void initialize();
     void initUI();
+
+    int slot_index_;
+    long session_;
 };
 
 #endif // VERIFY_DLG_H

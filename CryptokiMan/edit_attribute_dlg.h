@@ -17,7 +17,7 @@ public:
     ~EditAttributeDlg();
 
     void setSlotIndex( int index );
-    void setObjectIndex( int index );
+    void setObjectType( int type );
     void setObjectID( long id );
     void setAttrName( const QString& strName );
 
@@ -28,7 +28,7 @@ private slots:
 
     void slotChanged( int index );
     void labelChanged( int index );
-    void objectChanged( int index );
+    void objectTypeChanged( int type );
 
     void clickClose();
     void clickGetAttribute();
@@ -39,8 +39,9 @@ private:
     void initAttributes();
 
     int slot_index_;
-    int object_index_;
+    int object_type_;
     long object_id_;
+    long session_;
     QString attr_name_;
 };
 

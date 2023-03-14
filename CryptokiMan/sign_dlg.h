@@ -16,6 +16,8 @@ public:
     explicit SignDlg(QWidget *parent = nullptr);
     ~SignDlg();
     void setSelectedSlot( int index );
+    void setObject( int type, long hObj );
+    void changeType( int type );
 
 private slots:
     void slotChanged( int index );
@@ -26,12 +28,15 @@ private slots:
     void clickSign();
     void clickClose();
 
-    void keyTypeChanged( int index );
     void labelChanged( int index );
+    void keyTypeChanged( int index );
 
 private:
     void initialize();
     void initUI();
+
+    long session_;
+    int slot_index_;
 };
 
 #endif // SIGN_DLG_H

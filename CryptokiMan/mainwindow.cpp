@@ -698,57 +698,10 @@ void MainWindow::deleteObject()
     if( pItem )
     {
         delObjectDlg.setSlotIndex(pItem->getSlotIndex());
+        delObjectDlg.setObjectType( getDataType( pItem->getType() ));
 
-        if( pItem->getType() == HM_ITEM_TYPE_DATA )
-        {
-            delObjectDlg.setObjectIndex( OBJ_DATA_IDX );
-        }
-        else if( pItem->getType() == HM_ITEM_TYPE_CERTIFICATE )
-        {
-            delObjectDlg.setObjectIndex( OBJ_CERT_IDX );
-        }
-        else if( pItem->getType() == HM_ITEM_TYPE_PUBLICKEY )
-        {
-            delObjectDlg.setObjectIndex( OBJ_PUBKEY_IDX );
-        }
-        else if( pItem->getType() == HM_ITEM_TYPE_PRIVATEKEY )
-        {
-            delObjectDlg.setObjectIndex( OBJ_PRIKEY_IDX );
-        }
-        else if( pItem->getType() == HM_ITEM_TYPE_SECRETKEY )
-        {
-            delObjectDlg.setObjectIndex( OBJ_SECRET_IDX );
-        }
-        else if( pItem->getType() == HM_ITEM_TYPE_DATA_OBJECT )
-        {
-            long obj_id = pItem->data().toInt();
-            delObjectDlg.setObjectID( obj_id );
-            delObjectDlg.setObjectIndex( OBJ_DATA_IDX );
-        }
-        else if( pItem->getType() == HM_ITEM_TYPE_CERTIFICATE_OBJECT )
-        {
-            long obj_id = pItem->data().toInt();
-            delObjectDlg.setObjectID( obj_id );
-            delObjectDlg.setObjectIndex( OBJ_CERT_IDX );
-        }
-        else if( pItem->getType() == HM_ITEM_TYPE_PUBLICKEY_OBJECT )
-        {
-            long obj_id = pItem->data().toInt();
-            delObjectDlg.setObjectID( obj_id );
-            delObjectDlg.setObjectIndex( OBJ_PUBKEY_IDX );
-        }
-        else if( pItem->getType() == HM_ITEM_TYPE_PRIVATEKEY_OBJECT )
-        {
-            long obj_id = pItem->data().toInt();
-            delObjectDlg.setObjectID( obj_id );
-            delObjectDlg.setObjectIndex( OBJ_PRIKEY_IDX );
-        }
-        else if( pItem->getType() == HM_ITEM_TYPE_SECRETKEY_OBJECT )
-        {
-            long obj_id = pItem->data().toInt();
-            delObjectDlg.setObjectID( obj_id );
-            delObjectDlg.setObjectIndex( OBJ_SECRET_IDX );
-        }
+        long obj_id = pItem->data().toInt();
+        if( obj_id > 0 ) delObjectDlg.setObjectID( obj_id );
     }
 
     delObjectDlg.exec();
@@ -762,47 +715,9 @@ void MainWindow::editObject()
     if( pItem )
     {
         editAttrDlg.setSlotIndex( pItem->getSlotIndex() );
-
-        if( pItem->getType() == HM_ITEM_TYPE_DATA )
-            editAttrDlg.setObjectIndex( OBJ_DATA_IDX );
-        else if( pItem->getType() == HM_ITEM_TYPE_CERTIFICATE )
-            editAttrDlg.setObjectIndex( OBJ_CERT_IDX );
-        else if( pItem->getType() == HM_ITEM_TYPE_PUBLICKEY )
-            editAttrDlg.setObjectIndex( OBJ_PUBKEY_IDX );
-        else if( pItem->getType() == HM_ITEM_TYPE_PRIVATEKEY )
-            editAttrDlg.setObjectIndex( OBJ_PRIKEY_IDX );
-        else if( pItem->getType() == HM_ITEM_TYPE_SECRETKEY )
-            editAttrDlg.setObjectIndex( OBJ_SECRET_IDX );
-        else if( pItem->getType() == HM_ITEM_TYPE_DATA_OBJECT )
-        {
-            long obj_id = pItem->data().toInt();
-            editAttrDlg.setObjectID( obj_id );
-            editAttrDlg.setObjectIndex( OBJ_DATA_IDX );
-        }
-        else if( pItem->getType() == HM_ITEM_TYPE_CERTIFICATE_OBJECT )
-        {
-            long obj_id = pItem->data().toInt();
-            editAttrDlg.setObjectID( obj_id );
-            editAttrDlg.setObjectIndex( OBJ_CERT_IDX );
-        }
-        else if( pItem->getType() == HM_ITEM_TYPE_PUBLICKEY_OBJECT )
-        {
-            long obj_id = pItem->data().toInt();
-            editAttrDlg.setObjectID( obj_id );
-            editAttrDlg.setObjectIndex( OBJ_PUBKEY_IDX );
-        }
-        else if( pItem->getType() == HM_ITEM_TYPE_PRIVATEKEY_OBJECT )
-        {
-            long obj_id = pItem->data().toInt();
-            editAttrDlg.setObjectID( obj_id );
-            editAttrDlg.setObjectIndex( OBJ_PRIKEY_IDX );
-        }
-        else if( pItem->getType() == HM_ITEM_TYPE_SECRETKEY_OBJECT )
-        {
-            long obj_id = pItem->data().toInt();
-            editAttrDlg.setObjectID( obj_id );
-            editAttrDlg.setObjectIndex( OBJ_SECRET_IDX );
-        }
+        editAttrDlg.setObjectType( getDataType( pItem->getType() ));
+        long obj_id = pItem->data().toInt();
+        if( obj_id > 0 ) editAttrDlg.setObjectID( obj_id );
     }
 
     editAttrDlg.exec();
@@ -822,19 +737,8 @@ void MainWindow::editAttribute()
     if( pItem )
     {
         editAttrDlg.setSlotIndex( pItem->getSlotIndex() );
-
-        if( pItem->getType() == HM_ITEM_TYPE_DATA || pItem->getType() == HM_ITEM_TYPE_DATA_OBJECT )
-            editAttrDlg.setObjectIndex( OBJ_DATA_IDX );
-        else if( pItem->getType() == HM_ITEM_TYPE_CERTIFICATE || pItem->getType() == HM_ITEM_TYPE_CERTIFICATE_OBJECT )
-            editAttrDlg.setObjectIndex( OBJ_CERT_IDX );
-        else if( pItem->getType() == HM_ITEM_TYPE_PUBLICKEY || pItem->getType() == HM_ITEM_TYPE_PUBLICKEY_OBJECT )
-            editAttrDlg.setObjectIndex( OBJ_PUBKEY_IDX );
-        else if( pItem->getType() == HM_ITEM_TYPE_PRIVATEKEY || pItem->getType() == HM_ITEM_TYPE_PRIVATEKEY_OBJECT)
-            editAttrDlg.setObjectIndex( OBJ_PRIKEY_IDX );
-        else if( pItem->getType() == HM_ITEM_TYPE_SECRETKEY || pItem->getType() == HM_ITEM_TYPE_SECRETKEY_OBJECT )
-            editAttrDlg.setObjectIndex( OBJ_SECRET_IDX );
+        editAttrDlg.setObjectType( getDataType( pItem->getType() ));
     }
-
 
     editAttrDlg.setAttrName( item0->text() );
     editAttrDlg.setObjectID( item0->data(Qt::UserRole).toInt());
@@ -874,6 +778,45 @@ void MainWindow::sign()
     signDlg.exec();
 }
 
+void MainWindow::signType()
+{
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot" ), this );
+        return;
+    }
+
+    SignDlg signDlg;
+    int type = getDataType( pItem->getType() );
+
+    signDlg.setSelectedSlot( pItem->getSlotIndex() );
+    signDlg.changeType( type );
+    signDlg.exec();
+}
+
+void MainWindow::signEach()
+{
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot" ), this );
+        return;
+    }
+
+    SignDlg signDlg;
+
+    int type = getDataType( pItem->getType() );
+    long obj_id = pItem->data().toInt();
+
+    signDlg.setSelectedSlot( pItem->getSlotIndex() );
+    signDlg.setObject( type, obj_id );
+
+    signDlg.exec();
+}
+
 void MainWindow::verify()
 {
     ManTreeItem *pItem = currentTreeItem();
@@ -889,6 +832,42 @@ void MainWindow::verify()
     verifyDlg.exec();
 }
 
+void MainWindow::verifyType()
+{
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot" ), this );
+        return;
+    }
+
+    VerifyDlg verifyDlg;
+    int type = getDataType( pItem->getType() );
+    verifyDlg.setSelectedSlot( pItem->getSlotIndex() );
+    verifyDlg.changeType( type );
+    verifyDlg.exec();
+}
+
+void MainWindow::verifyEach()
+{
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot" ), this );
+        return;
+    }
+
+    VerifyDlg verifyDlg;
+    int type = getDataType( pItem->getType() );
+    long obj_id = pItem->data().toInt();
+
+    verifyDlg.setSelectedSlot( pItem->getSlotIndex() );
+    verifyDlg.setObject( type, obj_id );
+    verifyDlg.exec();
+}
+
 void MainWindow::encrypt()
 {
     ManTreeItem *pItem = currentTreeItem();
@@ -900,7 +879,50 @@ void MainWindow::encrypt()
     }
 
     EncryptDlg encryptDlg;
-    if( pItem ) encryptDlg.setSelectedSlot(pItem->getSlotIndex());
+
+
+    encryptDlg.setSelectedSlot(pItem->getSlotIndex());
+
+
+    encryptDlg.exec();
+}
+
+void MainWindow::encryptType()
+{
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot" ), this );
+        return;
+    }
+
+    EncryptDlg encryptDlg;
+    int type = getDataType( pItem->getType() );
+
+    encryptDlg.setSelectedSlot(pItem->getSlotIndex());
+    encryptDlg.changeType(type);
+
+    encryptDlg.exec();
+}
+
+void MainWindow::encryptEach()
+{
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot" ), this );
+        return;
+    }
+
+    EncryptDlg encryptDlg;
+
+    int type = getDataType( pItem->getType() );
+    long obj_id = pItem->data().toInt();
+
+    encryptDlg.setSelectedSlot(pItem->getSlotIndex());
+    encryptDlg.setObject( type, obj_id );
     encryptDlg.exec();
 }
 
@@ -915,7 +937,46 @@ void MainWindow::decrypt()
     }
 
     DecryptDlg decryptDlg;
-    if( pItem ) decryptDlg.setSelectedSlot(pItem->getSlotIndex());
+    decryptDlg.setSelectedSlot(pItem->getSlotIndex());
+    decryptDlg.exec();
+}
+
+void MainWindow::decryptType()
+{
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot" ), this );
+        return;
+    }
+
+    DecryptDlg decryptDlg;
+    int type = getDataType( pItem->getType() );
+
+    decryptDlg.setSelectedSlot(pItem->getSlotIndex());
+    decryptDlg.changeType( type );
+
+    decryptDlg.exec();
+}
+
+void MainWindow::decryptEach()
+{
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot" ), this );
+        return;
+    }
+
+    DecryptDlg decryptDlg;
+    int type = getDataType( pItem->getType() );
+    long obj_id = pItem->data().toInt();
+
+    decryptDlg.setSelectedSlot(pItem->getSlotIndex());
+    decryptDlg.setObject( type, obj_id );
+
     decryptDlg.exec();
 }
 
@@ -1088,7 +1149,12 @@ void MainWindow::settings()
 
 void MainWindow::operationState()
 {
+    ManTreeItem *pItem = currentTreeItem();
+
     OperStateDlg operStateDlg;
+
+    if( pItem ) operStateDlg.setSelectedSlot( pItem->getSlotIndex() );
+
     operStateDlg.exec();
 }
 
@@ -1117,26 +1183,53 @@ void MainWindow::showRightMenu(QPoint point )
 {
     QMenu menu(this);
 
-    QModelIndex index = right_table_->indexAt( point );
-    QTableWidgetItem *item0 = right_table_->item( index.row(), 0 );
-    QTableWidgetItem *item1 = right_table_->item( index.row(), 1 );
-
     manApplet->log( QString("RightType: %1").arg(right_type_));
 
     switch ( right_type_ ) {
     case HM_ITEM_TYPE_CERTIFICATE_OBJECT:
+        menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
+        menu.addAction( tr( "Delete Object" ), this, &MainWindow::deleteObject );
+        menu.addAction( tr("View Certificate" ), this, &MainWindow::viewCert );
+        break;
+
     case HM_ITEM_TYPE_CERTIFICATE:
+        menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
+
+        break;
+
     case HM_ITEM_TYPE_PUBLICKEY_OBJECT:
+        menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
+        menu.addAction( tr( "Delete Object" ), this, &MainWindow::deleteObject );
+        menu.addAction( tr( "Verify" ), this, &MainWindow::verifyEach );
+        menu.addAction( tr( "Encrypt"), this, &MainWindow::encryptEach );
+        break;
+
     case HM_ITEM_TYPE_PUBLICKEY:
+        menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
+        break;
+
     case HM_ITEM_TYPE_PRIVATEKEY_OBJECT:
+        menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
+        menu.addAction( tr( "Delete Object" ), this, &MainWindow::deleteObject );
+        menu.addAction( tr( "Sign" ), this, &MainWindow::signEach );
+        menu.addAction( tr( "Decrypt" ), this, &MainWindow::decryptEach );
+        break;
+
     case HM_ITEM_TYPE_PRIVATEKEY:
+        menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
+        break;
+
     case HM_ITEM_TYPE_SECRETKEY_OBJECT:
+        menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
+        menu.addAction( tr( "Delete Object" ), this, &MainWindow::deleteObject );
+        menu.addAction( tr( "Sign" ), this, &MainWindow::signEach );
+        menu.addAction( tr( "Verify" ), this, &MainWindow::verifyEach );
+        menu.addAction( tr( "Encrypt"), this, &MainWindow::encryptEach );
+        menu.addAction( tr( "Decrypt" ), this, &MainWindow::decryptEach );
+        break;
+
     case HM_ITEM_TYPE_SECRETKEY:
-        if( item0->data(Qt::UserRole).toInt() > 0 )
-        {
-            right_table_->setCurrentIndex( index );
-            menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
-        }
+        menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
         break;
     }
 

@@ -16,6 +16,8 @@ public:
     explicit DecryptDlg(QWidget *parent = nullptr);
     ~DecryptDlg();
     void setSelectedSlot( int index );
+    void setObject( int type, long hObj );
+    void changeType( int type );
 
 private slots:
     void slotChanged( int index );
@@ -32,6 +34,9 @@ private slots:
 private:
     void initialize();
     void initUI();
+
+    int slot_index_ = -1;
+    long session_ = -1;
 
 };
 
