@@ -334,7 +334,6 @@ void GenKeyDlg::accept()
     }
 
     manApplet->messageBox( tr( "Success to genereate Key" ), this );
-    manApplet->showTypeData( index, HM_ITEM_TYPE_SECRETKEY );
 
     QDialog::accept();
 }

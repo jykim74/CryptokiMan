@@ -231,7 +231,6 @@ end :
     if( rv == 0 )
     {
         manApplet->messageBox(tr("success to import pfx file"), this );
-        manApplet->showTypeData( index, HM_ITEM_TYPE_PRIVATEKEY );
         QDialog::accept();
     }
     else

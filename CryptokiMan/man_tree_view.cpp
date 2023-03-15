@@ -26,6 +26,7 @@ void ManTreeView::onItemClicked( const QModelIndex& index )
     ManTreeItem *item = currentItem();
 
     showTypeData( item->getSlotIndex(), item->getType() );
+
 }
 
 int ManTreeView::showTypeData( int nSlotIndex, int nType )

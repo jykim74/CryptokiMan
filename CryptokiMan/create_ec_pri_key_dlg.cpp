@@ -301,7 +301,6 @@ void CreateECPriKeyDlg::accept()
     }
 
     manApplet->messageBox( tr("success to create EC private key"), this );
-    manApplet->showTypeData( index, HM_ITEM_TYPE_PRIVATEKEY );
 
     QDialog::accept();
 }
