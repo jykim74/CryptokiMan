@@ -646,6 +646,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>Information</source>
         <translation>정보</translation>
     </message>
+    <message>
+        <source>Create Key Information</source>
+        <translation>키 만들기 정보</translation>
+    </message>
 </context>
 <context>
     <name>CreateRSAPriKeyDlg</name>
@@ -1528,6 +1532,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Derive</source>
         <translation>유도</translation>
+    </message>
+    <message>
+        <source>Generate Key Information</source>
+        <translation>키 생성 정보</translation>
     </message>
 </context>
 <context>
@@ -3073,6 +3081,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>Open File</source>
         <translation>파일 열기</translation>
     </message>
+    <message>
+        <source>BIN Files (*.bin *.der *.pem);;All Files(*.*)</source>
+        <translation>BIN 파일들 (*.bin *.der *.pem);;모든 파일들(*.*)</translation>
+    </message>
+    <message>
+        <source>Save File</source>
+        <translation>저장 파일</translation>
+    </message>
 </context>
 <context>
     <name>RandDlg</name>
@@ -3442,7 +3458,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>KeySize</source>
-        <translation>키 길이</translation>
+        <translation type="vanished">키 길이</translation>
     </message>
     <message>
         <source>fail to unwrapkey(%1)</source>
@@ -3633,6 +3649,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Wrap Key</source>
         <translation type="vanished">Wrap Key</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>타입</translation>
     </message>
 </context>
 </TS>

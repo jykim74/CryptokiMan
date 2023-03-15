@@ -16,13 +16,16 @@ static QStringList sUnwrapMechList = {
 
 
 static QStringList sClassList = {
-    "CKO_PRIVATE_KEY", "CKO_SECRET_KEY"
+    "CKO_SECRET_KEY", "CKO_PRIVATE_KEY",
 };
 
 
-static QStringList sTypeList = {
-    "CKK_RSA", "CKK_DSA", "CKK_ECDSA", "CKK_EC",
+static QStringList sSymTypeList = {
     "CKK_DES", "CKK_DES3", "CKK_AES"
+};
+
+static QStringList sAsymTypeList = {
+    "CKK_RSA", "CKK_DSA", "CKK_ECDSA", "CKK_EC",
 };
 
 UnwrapKeyDlg::UnwrapKeyDlg(QWidget *parent) :
@@ -37,6 +40,9 @@ UnwrapKeyDlg::UnwrapKeyDlg(QWidget *parent) :
     connectAttributes();
 
     connect( mUnwrapLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(unwrapLabelChanged(int)));
+    connect( mUnwrapTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(unwrapTypeChanged(int)));
+    connect( mClassCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(classChanged(int)));
+
     connect( mFindBtn, SIGNAL(clicked(bool)), this, SLOT(clickFind()));
 
     initialize();
@@ -54,7 +60,7 @@ void UnwrapKeyDlg::initAttributes()
 {
     mUnwrapMechCombo->addItems(sUnwrapMechList);
     mClassCombo->addItems(sClassList);
-    mTypeCombo->addItems(sTypeList);
+    mTypeCombo->addItems(sSymTypeList);
 
     mPrivateCombo->addItems(sFalseTrue);
     mSensitiveCombo->addItems(sFalseTrue);
@@ -152,13 +158,14 @@ void UnwrapKeyDlg::slotChanged(int index)
 void UnwrapKeyDlg::setSelectedSlot(int index)
 {
     slotChanged( index );
-
-    setUnwrapLabelList();
+    unwrapTypeChanged(0);
+//    setUnwrapLabelList();
 }
 
 void UnwrapKeyDlg::initialize()
 {
-
+    mUnwrapTypeCombo->addItems( kWrapType );
+    mUnwrapMechCombo->addItems( kSecretWrapMech );
 }
 
 void UnwrapKeyDlg::accept()
@@ -242,15 +249,6 @@ void UnwrapKeyDlg::accept()
         sTemplate[uCount].type = CKA_ID;
         sTemplate[uCount].pValue = binID.pVal;
         sTemplate[uCount].ulValueLen = binID.nLen;
-        uCount++;
-    }
-
-    CK_ULONG modBits = mKeySizeText->text().toLong();
-    if( modBits > 0 )
-    {
-        sTemplate[uCount].type = CKA_VALUE_LEN;
-        sTemplate[uCount].pValue = &modBits;
-        sTemplate[uCount].ulValueLen = sizeof(modBits);
         uCount++;
     }
 
@@ -392,6 +390,32 @@ void UnwrapKeyDlg::unwrapLabelChanged(int index)
     mUnwrapObjectText->setText( strObject );
 }
 
+void UnwrapKeyDlg::unwrapTypeChanged(int index)
+{
+    mUnwrapMechCombo->clear();
+
+    if( mUnwrapTypeCombo->currentText() == kWrapType.at(0) )
+    {
+        mUnwrapMechCombo->addItems( kSecretWrapMech );
+        setUnwrapSecretLabel();
+    }
+    else
+    {
+        mUnwrapMechCombo->addItems( kRSAWrapMech );
+        setUnwrapRSAPrivateLabel();
+    }
+}
+
+void UnwrapKeyDlg::classChanged(int index)
+{
+    mTypeCombo->clear();
+
+    if( mClassCombo->currentText() == sClassList.at(0) )
+        mTypeCombo->addItems( sSymTypeList );
+    else
+        mTypeCombo->addItems( sAsymTypeList );
+}
+
 void UnwrapKeyDlg::clickFind()
 {
     QString strPath = manApplet->getSetPath();
@@ -401,7 +425,8 @@ void UnwrapKeyDlg::clickFind()
     mWrapKeyPathText->setText( fileName );
 }
 
-void UnwrapKeyDlg::setUnwrapLabelList()
+
+void UnwrapKeyDlg::setUnwrapSecretLabel()
 {
     int rv = -1;
 
@@ -434,6 +459,7 @@ void UnwrapKeyDlg::setUnwrapLabelList()
     for( int i=0; i < uObjCnt; i++ )
     {
         char *pLabel = NULL;
+
         BIN binLabel = {0,0};
         QVariant objVal = QVariant( (int)sObjects[i] );
 
@@ -441,17 +467,43 @@ void UnwrapKeyDlg::setUnwrapLabelList()
 
         JS_BIN_string( &binLabel, &pLabel );
 
-       mUnwrapLabelCombo->addItem( pLabel, objVal );
-       JS_BIN_reset(&binLabel );
-       if( pLabel ) JS_free(pLabel);
+        mUnwrapLabelCombo->addItem( pLabel, objVal );
+
+        if( pLabel ) JS_free( pLabel );
+        JS_BIN_reset( &binLabel );
     }
 
-    uCnt = 0;
-    uObjCnt = 0;
-    objClass = CKO_PUBLIC_KEY;
+    int iKeyCnt = mUnwrapLabelCombo->count();
+    if( iKeyCnt > 0 )
+    {
+        QVariant objVal = mUnwrapLabelCombo->itemData(0);
+        QString strObject = QString("%1").arg( objVal.toInt() );
+
+        mUnwrapObjectText->setText( strObject );
+    }
+}
+
+void UnwrapKeyDlg::setUnwrapRSAPrivateLabel()
+{
+    int rv = -1;
+
+    CK_ATTRIBUTE sTemplate[2];
+    CK_ULONG uCnt = 0;
+    CK_OBJECT_HANDLE sObjects[20];
+    CK_ULONG uMaxObjCnt = 20;
+    CK_ULONG uObjCnt = 0;
+
+    CK_OBJECT_CLASS objClass = CKO_PUBLIC_KEY;
+    CK_KEY_TYPE keyType = CKK_RSA;
+
     sTemplate[uCnt].type = CKA_CLASS;
     sTemplate[uCnt].pValue = &objClass;
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
+    uCnt++;
+
+    sTemplate[uCnt].type = CKA_KEY_TYPE;
+    sTemplate[uCnt].pValue = &keyType;
+    sTemplate[uCnt].ulValueLen = sizeof(keyType);
     uCnt++;
 
     rv = manApplet->cryptokiAPI()->FindObjectsInit( session_, sTemplate, uCnt );
@@ -463,9 +515,12 @@ void UnwrapKeyDlg::setUnwrapLabelList()
     rv = manApplet->cryptokiAPI()->FindObjectsFinal( session_ );
     if( rv != CKR_OK ) return;
 
+    mUnwrapLabelCombo->clear();
+
     for( int i=0; i < uObjCnt; i++ )
     {
         char *pLabel = NULL;
+
         BIN binLabel = {0,0};
         QVariant objVal = QVariant( (int)sObjects[i] );
 
@@ -473,21 +528,21 @@ void UnwrapKeyDlg::setUnwrapLabelList()
 
         JS_BIN_string( &binLabel, &pLabel );
 
-       mUnwrapLabelCombo->addItem( pLabel, objVal );
-       JS_BIN_reset(&binLabel );
-       if( pLabel ) JS_free(pLabel);
+        mUnwrapLabelCombo->addItem( pLabel, objVal );
+
+        if( pLabel ) JS_free( pLabel );
+        JS_BIN_reset( &binLabel );
     }
 
     int iKeyCnt = mUnwrapLabelCombo->count();
     if( iKeyCnt > 0 )
     {
         QVariant objVal = mUnwrapLabelCombo->itemData(0);
-
         QString strObject = QString("%1").arg( objVal.toInt() );
-        mUnwrapObjectText->setText(strObject);
+
+        mUnwrapObjectText->setText( strObject );
     }
 }
-
 
 void UnwrapKeyDlg::clickPrivate()
 {

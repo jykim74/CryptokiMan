@@ -23,12 +23,16 @@ private slots:
 
     void labelChanged(int index );
     void wrappingLabelChanged(int index );
+    void wrappingTypeChanged( int index );
     void clickFind();
 
 private:
     void initialize();
     void initUI();
-    void setWrapLabelList();
+
+    void setWrappingSecretLabel();
+    void setWrappingRSAPublicLabel();
+    void setLabelKeyList();
 
     int slot_index_;
     long session_;

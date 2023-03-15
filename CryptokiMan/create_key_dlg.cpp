@@ -324,6 +324,8 @@ void CreateKeyDlg::accept()
     }
 
     manApplet->messageBox( tr("Success to create key"), this );
+    manApplet->showTypeData( index, HM_ITEM_TYPE_SECRETKEY );
+
     QDialog::accept();
 }
 

@@ -6,6 +6,23 @@
 #include "js_pkcs11.h"
 #include "js_pki_ext.h"
 
+#define     HM_ITEM_TYPE_ROOT               0
+#define     HM_ITEM_TYPE_SLOT               1
+#define     HM_ITEM_TYPE_TOKEN              2
+#define     HM_ITEM_TYPE_MECHANISM          3
+#define     HM_ITEM_TYPE_SESSION            4
+#define     HM_ITEM_TYPE_OBJECTS            5
+#define     HM_ITEM_TYPE_CERTIFICATE        6
+#define     HM_ITEM_TYPE_PUBLICKEY          7
+#define     HM_ITEM_TYPE_PRIVATEKEY         8
+#define     HM_ITEM_TYPE_SECRETKEY          9
+#define     HM_ITEM_TYPE_DATA               10
+#define     HM_ITEM_TYPE_CERTIFICATE_OBJECT 11
+#define     HM_ITEM_TYPE_PUBLICKEY_OBJECT   12
+#define     HM_ITEM_TYPE_PRIVATEKEY_OBJECT  13
+#define     HM_ITEM_TYPE_SECRETKEY_OBJECT   14
+#define     HM_ITEM_TYPE_DATA_OBJECT        15
+
 enum {
     OBJ_CERT_IDX = 0,
     OBJ_PUBKEY_IDX,
@@ -22,6 +39,7 @@ enum { JS_FILE_TYPE_CERT,
        JS_FILE_TYPE_PRIKEY,
        JS_FILE_TYPE_TXT,
        JS_FILE_TYPE_BER,
+       JS_FILE_TYPE_BIN,
        JS_FILE_TYPE_DLL,
        JS_FILE_TYPE_PFX };
 
@@ -62,7 +80,21 @@ static QStringList kDataAttList = {
     "CKA_VALUE", "CKA_PRIVATE",
 };
 
+static QStringList kSecretWrapMech = {
+    "CKM_AES_KEY_WRAP", "CKM_AES_KEY_WRAP_PAD"
+};
+
+static QStringList kRSAWrapMech = {
+    "CKM_RSA_PKCS", "CKM_RSA_PKCS_OAEP",
+};
+
+static QStringList kWrapType = {
+    "Secret", "RSA"
+};
+
 QString findFile( QWidget *parent, int nType, const QString strPath );
+QString saveFile( QWidget *parent, int nType, const QString strPath );
+
 void getCKDate( const QDate date, CK_DATE *pCKDate );
 QString getBool( const BIN *pBin );
 QString getHexString( unsigned char *pData, int nDataLen );

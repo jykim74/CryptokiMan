@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>567</width>
-    <height>375</height>
+    <height>362</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_3">
       <attribute name="title">
@@ -238,28 +238,11 @@
         </layout>
        </item>
        <item>
-        <layout class="QGridLayout" name="gridLayout_6">
-         <item row="0" column="4">
-          <widget class="QLineEdit" name="mUnwrapParamText">
-           <property name="maximumSize">
-            <size>
-             <width>80</width>
-             <height>16777215</height>
-            </size>
-           </property>
-          </widget>
-         </item>
+        <layout class="QGridLayout" name="gridLayout_10">
          <item row="0" column="1">
-          <widget class="QComboBox" name="mUnwrapMechCombo"/>
+          <widget class="QComboBox" name="mUnwrapTypeCombo"/>
          </item>
-         <item row="0" column="3">
-          <widget class="QLabel" name="label_11">
-           <property name="text">
-            <string>Param</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
+         <item row="0" column="2">
           <widget class="QLabel" name="label_7">
            <property name="minimumSize">
             <size>
@@ -272,18 +255,54 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="2">
-          <spacer name="horizontalSpacer_3">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_18">
+           <property name="minimumSize">
             <size>
-             <width>40</width>
-             <height>20</height>
+             <width>80</width>
+             <height>0</height>
             </size>
            </property>
-          </spacer>
+           <property name="maximumSize">
+            <size>
+             <width>80</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Type</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QComboBox" name="mUnwrapMechCombo"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_9">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_11">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Param</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="mUnwrapParamText">
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -326,46 +345,16 @@
          <property name="topMargin">
           <number>0</number>
          </property>
-         <item row="0" column="2">
-          <widget class="QLabel" name="label_16">
-           <property name="text">
-            <string>Type</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="6">
-          <widget class="QLineEdit" name="mKeySizeText">
-           <property name="maximumSize">
-            <size>
-             <width>60</width>
-             <height>16777215</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="5">
-          <widget class="QLabel" name="label_18">
-           <property name="text">
-            <string>KeySize</string>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="1">
           <widget class="QComboBox" name="mClassCombo"/>
          </item>
          <item row="0" column="3">
           <widget class="QComboBox" name="mTypeCombo"/>
          </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_13">
-           <property name="minimumSize">
-            <size>
-             <width>80</width>
-             <height>0</height>
-            </size>
-           </property>
+         <item row="0" column="2">
+          <widget class="QLabel" name="label_16">
            <property name="text">
-            <string>Class</string>
+            <string>Type</string>
            </property>
           </widget>
          </item>
@@ -381,6 +370,19 @@
             </size>
            </property>
           </spacer>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_13">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Class</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>

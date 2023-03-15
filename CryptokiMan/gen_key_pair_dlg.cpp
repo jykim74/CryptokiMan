@@ -477,6 +477,8 @@ void GenKeyPairDlg::accept()
     }
 
     manApplet->messageBox( tr("Success to generate key pairs"), this );
+    manApplet->showTypeData( index, HM_ITEM_TYPE_PRIVATEKEY );
+
     QDialog::accept();
 }
 

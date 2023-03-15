@@ -1082,6 +1082,12 @@ void MainWindow::initToken()
 {
     ManTreeItem *pItem = currentTreeItem();
 
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot" ), this );
+        return;
+    }
+
     InitTokenDlg initTokenDlg;
     if( pItem ) initTokenDlg.setSelectedSlot( pItem->getSlotIndex() );
     initTokenDlg.exec();
@@ -1090,6 +1096,12 @@ void MainWindow::initToken()
 void MainWindow::rand()
 {
     ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot" ), this );
+        return;
+    }
 
     RandDlg randDlg;
     if( pItem ) randDlg.setSelectedSlot( pItem->getSlotIndex() );
@@ -1100,6 +1112,12 @@ void MainWindow::setPin()
 {
     ManTreeItem *pItem = currentTreeItem();
 
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot" ), this );
+        return;
+    }
+
     SetPinDlg setPinDlg;
     if( pItem ) setPinDlg.setSelectedSlot( pItem->getSlotIndex() );
     setPinDlg.exec();
@@ -1108,6 +1126,12 @@ void MainWindow::setPin()
 void MainWindow::initPin()
 {
     ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot" ), this );
+        return;
+    }
 
     InitPinDlg initPinDlg;
     if( pItem ) initPinDlg.setSelectedSlot( pItem->getSlotIndex() );
@@ -1118,6 +1142,12 @@ void MainWindow::wrapKey()
 {
     ManTreeItem *pItem = currentTreeItem();
 
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot" ), this );
+        return;
+    }
+
     WrapKeyDlg wrapKeyDlg;
     if( pItem ) wrapKeyDlg.setSelectedSlot( pItem->getSlotIndex() );
     wrapKeyDlg.exec();
@@ -1127,6 +1157,12 @@ void MainWindow::unwrapKey()
 {
     ManTreeItem *pItem = currentTreeItem();
 
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot" ), this );
+        return;
+    }
+
     UnwrapKeyDlg unwrapKeyDlg;
     if( pItem ) unwrapKeyDlg.setSelectedSlot( pItem->getSlotIndex() );
     unwrapKeyDlg.exec();
@@ -1135,6 +1171,12 @@ void MainWindow::unwrapKey()
 void MainWindow::deriveKey()
 {
     ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot" ), this );
+        return;
+    }
 
     DeriveKeyDlg deriveKeyDlg;
     if( pItem ) deriveKeyDlg.setSelectedSlot( pItem->getSlotIndex() );
@@ -1986,7 +2028,14 @@ void MainWindow::showCertificateInfo( int index, long hObject )
     right_table_->setItem( 0, 1, new QTableWidgetItem( strMsg ) );
 
     addEmptyLine( 1 );
-    ManTreeItem *parentItem = currentTreeItem();
+
+    ManTreeItem *parentItem = NULL;
+    ManTreeItem *curItem = currentTreeItem();
+
+    if( curItem->getType() == HM_ITEM_TYPE_CERTIFICATE_OBJECT )
+        parentItem = (ManTreeItem *)curItem->parent();
+    else
+        parentItem = curItem;
 
     if( bList )
     {
@@ -2088,7 +2137,13 @@ void MainWindow::showPublicKeyInfo( int index, long hObject )
     right_table_->setItem( 0, 1, new QTableWidgetItem(strMsg));
 
     addEmptyLine( 1 );
-    ManTreeItem *parentItem = currentTreeItem();
+    ManTreeItem *parentItem = NULL;
+    ManTreeItem *curItem = currentTreeItem();
+
+    if( curItem->getType() == HM_ITEM_TYPE_PUBLICKEY_OBJECT )
+        parentItem = (ManTreeItem *)curItem->parent();
+    else
+        parentItem = curItem;
 
     if( bList )
     {
@@ -2211,7 +2266,13 @@ void MainWindow::showPrivateKeyInfo( int index, long hObject )
     right_table_->setItem( 0, 1, new QTableWidgetItem( strMsg ));
 
     addEmptyLine( 1 );
-    ManTreeItem *parentItem = currentTreeItem();
+    ManTreeItem *parentItem = NULL;
+    ManTreeItem *curItem = currentTreeItem();
+
+    if( curItem->getType() == HM_ITEM_TYPE_PRIVATEKEY_OBJECT )
+        parentItem = (ManTreeItem *)curItem->parent();
+    else
+        parentItem = curItem;
 
     if( bList )
     {
@@ -2340,7 +2401,13 @@ void MainWindow::showSecretKeyInfo( int index, long hObject )
     right_table_->setItem( 0, 1, new QTableWidgetItem(strMsg) );
 
     addEmptyLine( 1 );
-    ManTreeItem *parentItem = currentTreeItem();
+    ManTreeItem *parentItem = NULL;
+    ManTreeItem *curItem = currentTreeItem();
+
+    if( curItem->getType() == HM_ITEM_TYPE_SECRETKEY_OBJECT )
+        parentItem = (ManTreeItem *)curItem->parent();
+    else
+        parentItem = curItem;
 
     if( bList )
     {
@@ -2454,7 +2521,13 @@ void MainWindow::showDataInfo( int index, long hObject )
     right_table_->setItem( 0, 1, new QTableWidgetItem( strMsg ) );
 
     addEmptyLine( 1 );
-    ManTreeItem *parentItem = currentTreeItem();
+    ManTreeItem *parentItem = NULL;
+    ManTreeItem *curItem = currentTreeItem();
+
+    if( curItem->getType() == HM_ITEM_TYPE_DATA_OBJECT )
+        parentItem = (ManTreeItem *)curItem->parent();
+    else
+        parentItem = curItem;
 
     if( bList )
     {

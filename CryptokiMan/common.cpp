@@ -34,6 +34,8 @@ QString findFile( QWidget *parent, int nType, const QString strPath )
         strType = QObject::tr("TXT Files (*.txt *.log);;All Files(*.*)");
     else if( nType == JS_FILE_TYPE_BER )
         strType = QObject::tr("BER Files (*.ber *.der *.pem);;All Files(*.*)");
+    else if( nType == JS_FILE_TYPE_BIN )
+        strType = QObject::tr("BIN Files (*.bin *.der *.pem);;All Files(*.*)");
     else if( nType == JS_FILE_TYPE_DLL )
         strType = QObject::tr( "DLL Files (*.dll);;SO Files (*.so);;All Files (*.*)" );
     else if( nType == JS_FILE_TYPE_PFX )
@@ -48,6 +50,45 @@ QString findFile( QWidget *parent, int nType, const QString strPath )
 
     return fileName;
 };
+
+QString saveFile( QWidget *parent, int nType, const QString strPath )
+{
+    QString strCurPath;
+    QFileDialog::Options options;
+    options |= QFileDialog::DontUseNativeDialog;
+
+    QString strType;
+
+    if( strPath.length() <= 0 )
+        strCurPath = QDir::currentPath();
+    else
+        strCurPath = strPath;
+
+    if( nType == JS_FILE_TYPE_CERT )
+        strType = QObject::tr("Cert Files (*.crt *.der *.pem);;All Files(*.*)");
+    else if( nType == JS_FILE_TYPE_PRIKEY )
+        strType = QObject::tr("Key Files (*.key *.der *.pem);;All Files(*.*)");
+    else if( nType == JS_FILE_TYPE_TXT )
+        strType = QObject::tr("TXT Files (*.txt *.log);;All Files(*.*)");
+    else if( nType == JS_FILE_TYPE_BER )
+        strType = QObject::tr("BER Files (*.ber *.der *.pem);;All Files(*.*)");
+    else if( nType == JS_FILE_TYPE_BIN )
+        strType = QObject::tr("BIN Files (*.bin *.der *.pem);;All Files(*.*)");
+    else if( nType == JS_FILE_TYPE_DLL )
+        strType = QObject::tr( "DLL Files (*.dll);;SO Files (*.so);;All Files (*.*)" );
+    else if( nType == JS_FILE_TYPE_PFX )
+        strType = QObject::tr("PFX Files (*.pfx *.p12 *.pem);;All Files(*.*)");
+
+    QString selectedFilter;
+    QString fileName = QFileDialog::getSaveFileName( parent,
+                                                     QObject::tr("Save File"),
+                                                     strCurPath,
+                                                     strType,
+                                                     &selectedFilter,
+                                                     options );
+
+    return fileName;
+}
 
 void getCKDate( const QDate date, CK_DATE *pCKDate )
 {

@@ -22,6 +22,8 @@ private slots:
     void slotChanged( int index );
 
     void unwrapLabelChanged(int index);
+    void unwrapTypeChanged(int index);
+    void classChanged(int index);
     void clickFind();
 
     void clickPrivate();
@@ -45,7 +47,9 @@ private:
     void setAttributes();
     void connectAttributes();
     void setDefaults();
-    void setUnwrapLabelList();
+
+    void setUnwrapSecretLabel();
+    void setUnwrapRSAPrivateLabel();
 
     int slot_index_;
     long session_;

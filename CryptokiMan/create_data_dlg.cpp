@@ -3,6 +3,7 @@
 #include "mainwindow.h"
 #include "js_pkcs11.h"
 #include "cryptoki_api.h"
+#include "common.h"
 
 static QStringList sFalseTrue = { "false", "true" };
 
@@ -181,6 +182,8 @@ void CreateDataDlg::accept()
     }
 
     manApplet->messageBox( tr("Success to create data"), this );
+    manApplet->showTypeData( index, HM_ITEM_TYPE_DATA );
+
     QDialog::accept();
 }
 

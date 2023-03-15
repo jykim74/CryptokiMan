@@ -7,10 +7,6 @@
 #include "common.h"
 #include "cryptoki_api.h"
 
-static QStringList sWrappingMechList = {
-    "CKM_RSA_PKCS", "CKM_RSA_PKCS_OAEP",
-    "CKM_AES_KEY_WRAP", "CKM_AES_KEY_WRAP_PAD"
-};
 
 WrapKeyDlg::WrapKeyDlg(QWidget *parent) :
     QDialog(parent)
@@ -29,8 +25,7 @@ WrapKeyDlg::~WrapKeyDlg()
 
 void WrapKeyDlg::initUI()
 {
-    mWrappingMechCombo->addItems(sWrappingMechList);
-
+    connect( mWrappingTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(wrappingTypeChanged(int)));
     connect( mWrappingLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(wrappingLabelChanged(int)));
     connect( mLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(labelChanged(int)));
     connect( mFindBtn, SIGNAL(clicked()), this, SLOT(clickFind()));
@@ -60,12 +55,15 @@ void WrapKeyDlg::setSelectedSlot(int index)
 {
     slotChanged( index );
 
-    setWrapLabelList();
+//    setWrapLabelList();
+    wrappingTypeChanged(0);
+    setLabelKeyList();
 }
 
 void WrapKeyDlg::initialize()
 {
-
+    mWrappingTypeCombo->addItems( kWrapType );
+    mWrappingMechCombo->addItems(kSecretWrapMech);
 }
 
 void WrapKeyDlg::accept()
@@ -133,7 +131,168 @@ void WrapKeyDlg::accept()
     QDialog::accept();
 }
 
-void WrapKeyDlg::setWrapLabelList()
+
+void WrapKeyDlg::labelChanged(int index )
+{
+    QVariant objVal = mLabelCombo->itemData(index);
+
+    QString strObject = QString("%1").arg( objVal.toInt() );
+    mObjectText->setText( strObject );
+}
+
+void WrapKeyDlg::wrappingLabelChanged(int index )
+{
+    QVariant objVal = mWrappingLabelCombo->itemData(index);
+
+    QString strObject = QString("%1").arg( objVal.toInt() );
+
+    mWrappingObjectText->setText( strObject );
+}
+
+void WrapKeyDlg::wrappingTypeChanged( int index )
+{
+    mWrappingMechCombo->clear();
+
+    if( mWrappingTypeCombo->currentText() == kWrapType.at(0) )
+    {
+        mWrappingMechCombo->addItems( kSecretWrapMech );
+        setWrappingSecretLabel();
+    }
+    else
+    {
+        mWrappingMechCombo->addItems( kRSAWrapMech );
+        setWrappingRSAPublicLabel();
+    }
+}
+
+void WrapKeyDlg::clickFind()
+{
+    QString strPath = manApplet->getSetPath();
+    QString fileName = saveFile( this, JS_FILE_TYPE_BIN, strPath );
+    if( fileName.isEmpty() ) return;
+
+    mPathText->setText( fileName );
+}
+
+void WrapKeyDlg::setWrappingSecretLabel()
+{
+    int rv = -1;
+
+    CK_ATTRIBUTE sTemplate[1];
+    CK_ULONG uCnt = 0;
+    CK_OBJECT_HANDLE sObjects[20];
+    CK_ULONG uMaxObjCnt = 20;
+    CK_ULONG uObjCnt = 0;
+
+    CK_OBJECT_CLASS objClass = 0;
+
+    objClass = CKO_SECRET_KEY;
+
+    sTemplate[uCnt].type = CKA_CLASS;
+    sTemplate[uCnt].pValue = &objClass;
+    sTemplate[uCnt].ulValueLen = sizeof(objClass);
+    uCnt++;
+
+    rv = manApplet->cryptokiAPI()->FindObjectsInit( session_, sTemplate, uCnt );
+    if( rv != CKR_OK ) return;
+
+    rv = manApplet->cryptokiAPI()->FindObjects( session_, sObjects, uMaxObjCnt, &uObjCnt );
+    if( rv != CKR_OK ) return;
+
+    rv = manApplet->cryptokiAPI()->FindObjectsFinal( session_ );
+    if( rv != CKR_OK ) return;
+
+    mWrappingLabelCombo->clear();
+
+    for( int i=0; i < uObjCnt; i++ )
+    {
+        char *pLabel = NULL;
+
+        BIN binLabel = {0,0};
+        QVariant objVal = QVariant( (int)sObjects[i] );
+
+        rv = manApplet->cryptokiAPI()->GetAttributeValue2( session_, sObjects[i], CKA_LABEL, &binLabel );
+
+        JS_BIN_string( &binLabel, &pLabel );
+
+        mWrappingLabelCombo->addItem( pLabel, objVal );
+
+        if( pLabel ) JS_free( pLabel );
+        JS_BIN_reset( &binLabel );
+    }
+
+    int iKeyCnt = mWrappingLabelCombo->count();
+    if( iKeyCnt > 0 )
+    {
+        QVariant objVal = mWrappingLabelCombo->itemData(0);
+        QString strObject = QString("%1").arg( objVal.toInt() );
+
+        mWrappingObjectText->setText( strObject );
+    }
+}
+
+void WrapKeyDlg::setWrappingRSAPublicLabel()
+{
+    int rv = -1;
+
+    CK_ATTRIBUTE sTemplate[2];
+    CK_ULONG uCnt = 0;
+    CK_OBJECT_HANDLE sObjects[20];
+    CK_ULONG uMaxObjCnt = 20;
+    CK_ULONG uObjCnt = 0;
+
+    CK_OBJECT_CLASS objClass = CKO_PUBLIC_KEY;
+    CK_KEY_TYPE keyType = CKK_RSA;
+
+    sTemplate[uCnt].type = CKA_CLASS;
+    sTemplate[uCnt].pValue = &objClass;
+    sTemplate[uCnt].ulValueLen = sizeof(objClass);
+    uCnt++;
+
+    sTemplate[uCnt].type = CKA_KEY_TYPE;
+    sTemplate[uCnt].pValue = &keyType;
+    sTemplate[uCnt].ulValueLen = sizeof(keyType);
+    uCnt++;
+
+    rv = manApplet->cryptokiAPI()->FindObjectsInit( session_, sTemplate, uCnt );
+    if( rv != CKR_OK ) return;
+
+    rv = manApplet->cryptokiAPI()->FindObjects( session_, sObjects, uMaxObjCnt, &uObjCnt );
+    if( rv != CKR_OK ) return;
+
+    rv = manApplet->cryptokiAPI()->FindObjectsFinal( session_ );
+    if( rv != CKR_OK ) return;
+
+    mWrappingLabelCombo->clear();
+
+    for( int i=0; i < uObjCnt; i++ )
+    {
+        char *pLabel = NULL;
+
+        BIN binLabel = {0,0};
+        QVariant objVal = QVariant( (int)sObjects[i] );
+
+        rv = manApplet->cryptokiAPI()->GetAttributeValue2( session_, sObjects[i], CKA_LABEL, &binLabel );
+
+        JS_BIN_string( &binLabel, &pLabel );
+
+        mWrappingLabelCombo->addItem( pLabel, objVal );
+
+        if( pLabel ) JS_free( pLabel );
+        JS_BIN_reset( &binLabel );
+    }
+
+    int iKeyCnt = mWrappingLabelCombo->count();
+    if( iKeyCnt > 0 )
+    {
+        QVariant objVal = mWrappingLabelCombo->itemData(0);
+        QString strObject = QString("%1").arg( objVal.toInt() );
+
+        mWrappingObjectText->setText( strObject );
+    }
+}
+
+void WrapKeyDlg::setLabelKeyList()
 {
     int rv = -1;
 
@@ -162,7 +321,6 @@ void WrapKeyDlg::setWrapLabelList()
     if( rv != CKR_OK ) return;
 
     mLabelCombo->clear();
-    mWrappingLabelCombo->clear();
 
     for( int i=0; i < uObjCnt; i++ )
     {
@@ -176,7 +334,6 @@ void WrapKeyDlg::setWrapLabelList()
         JS_BIN_string( &binLabel, &pLabel );
 
         mLabelCombo->addItem( pLabel, objVal );
-        mWrappingLabelCombo->addItem( pLabel, objVal );
 
         if( pLabel ) JS_free( pLabel );
         JS_BIN_reset( &binLabel );
@@ -184,7 +341,7 @@ void WrapKeyDlg::setWrapLabelList()
 
     uCnt = 0;
     uObjCnt = 0;
-    objClass = CKO_PUBLIC_KEY;
+    objClass = CKO_PRIVATE_KEY;
     sTemplate[uCnt].type = CKA_CLASS;
     sTemplate[uCnt].pValue = &objClass;
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
@@ -210,7 +367,6 @@ void WrapKeyDlg::setWrapLabelList()
         JS_BIN_string( &binLabel, &pLabel );
 
         mLabelCombo->addItem( pLabel, objVal );
-        mWrappingLabelCombo->addItem( pLabel, objVal );
 
         if( pLabel ) JS_free( pLabel );
         JS_BIN_reset( &binLabel );
@@ -220,38 +376,8 @@ void WrapKeyDlg::setWrapLabelList()
     if( iKeyCnt > 0 )
     {
         QVariant objVal = mLabelCombo->itemData(0);
-
         QString strObject = QString("%1").arg( objVal.toInt() );
 
-
         mObjectText->setText( strObject );
-        mWrappingObjectText->setText( strObject );
     }
-}
-
-
-void WrapKeyDlg::labelChanged(int index )
-{
-    QVariant objVal = mLabelCombo->itemData(index);
-
-    QString strObject = QString("%1").arg( objVal.toInt() );
-    mObjectText->setText( strObject );
-}
-
-void WrapKeyDlg::wrappingLabelChanged(int index )
-{
-    QVariant objVal = mWrappingLabelCombo->itemData(index);
-
-    QString strObject = QString("%1").arg( objVal.toInt() );
-
-    mWrappingObjectText->setText( strObject );
-}
-
-void WrapKeyDlg::clickFind()
-{
-    QString strPath = manApplet->getSetPath();
-    QString fileName = findFile( this, JS_FILE_TYPE_PRIKEY, strPath );
-    if( fileName.isEmpty() ) return;
-
-    mPathText->setText( fileName );
 }
