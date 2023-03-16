@@ -3008,6 +3008,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>EditObject</source>
         <translation>대상 편집</translation>
     </message>
+    <message>
+        <source>You have load Cryptoki Library at first</source>
+        <translation>Cryptoki Library 를 먼저 로드하세요</translation>
+    </message>
 </context>
 <context>
     <name>OpenSessionDlg</name>

@@ -17,10 +17,10 @@ void ManTreeModel::initialize()
 {
     clear();
 
-    ManTreeItem *item_ = new ManTreeItem();
+    ManTreeItem *item = new ManTreeItem();
 
-    item_->setText( tr("No slot"));
-    item_->setIcon( QIcon( ":/images/cryptokiman.png") );
+    item->setText( tr("No slot"));
+    item->setIcon( QIcon( ":/images/cryptokiman.png") );
 
-    insertRow( 0, item_ );
+    insertRow( 0, item );
 }

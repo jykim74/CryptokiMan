@@ -31,6 +31,7 @@ public:
 
     QList<SlotInfo>& getSlotInfos() { return slot_infos_; };
     ManTreeItem* currentTreeItem();
+    ManTreeItem* getRootItem();
 
     void info( QString strInfo );
 

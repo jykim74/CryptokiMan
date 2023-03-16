@@ -1548,6 +1548,11 @@ ManTreeItem* MainWindow::currentTreeItem()
     return item;
 }
 
+ManTreeItem*MainWindow:: getRootItem()
+{
+    return (ManTreeItem*)left_model_->item(0,0);
+}
+
 void MainWindow::info( QString strInfo )
 {
     QTextCursor cursor = info_text_->textCursor();

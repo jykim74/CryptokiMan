@@ -179,10 +179,16 @@ void ManTreeView::P11Initialize()
 {
     int     ret = 0;
 
+    if( manApplet->cryptokiAPI()->getCTX() == NULL )
+    {
+        manApplet->warningBox( tr( "You have load Cryptoki Library at first" ), this );
+        return;
+    }
+
     CK_ULONG uSlotCnt = 0;
     CK_SLOT_ID  sSlotList[10];
 
-    ManTreeItem *parent_item = currentItem();
+    ManTreeItem *parent_item = manApplet->mainWindow()->getRootItem();
     QList<SlotInfo>& slotInfos = manApplet->mainWindow()->getSlotInfos();
 \
     ret = manApplet->cryptokiAPI()->Initialize( NULL );
