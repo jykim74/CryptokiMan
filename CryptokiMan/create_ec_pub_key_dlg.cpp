@@ -266,6 +266,7 @@ void CreateECPubKeyDlg::accept()
     }
 
     manApplet->messageBox( tr("success to create EC public key"), this );
+    manApplet->showTypeList( index, HM_ITEM_TYPE_PUBLICKEY );
 
     QDialog::accept();
 }

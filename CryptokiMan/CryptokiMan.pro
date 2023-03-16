@@ -10,7 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = CryptokiMan
 TEMPLATE = app
-PROJECT_VERSION = "0.9.6"
+PROJECT_VERSION = "0.9.7"
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -54,7 +54,6 @@ SOURCES += \
         import_pri_key_dlg.cpp \
         init_pin_dlg.cpp \
         init_token_dlg.cpp \
-        log_view_dlg.cpp \
         login_dlg.cpp \
         logout_dlg.cpp \
         main.cpp \
@@ -103,7 +102,6 @@ HEADERS += \
         import_pri_key_dlg.h \
         init_pin_dlg.h \
         init_token_dlg.h \
-        log_view_dlg.h \
         login_dlg.h \
         logout_dlg.h \
         mainwindow.h \
@@ -149,7 +147,6 @@ FORMS += \
         import_pri_key_dlg.ui \
         init_pin_dlg.ui \
         init_token_dlg.ui \
-        log_view_dlg.ui \
         login_dlg.ui \
         logout_dlg.ui \
         mainwindow.ui \

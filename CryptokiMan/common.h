@@ -17,11 +17,14 @@
 #define     HM_ITEM_TYPE_PRIVATEKEY         8
 #define     HM_ITEM_TYPE_SECRETKEY          9
 #define     HM_ITEM_TYPE_DATA               10
+
+/*
 #define     HM_ITEM_TYPE_CERTIFICATE_OBJECT 11
 #define     HM_ITEM_TYPE_PUBLICKEY_OBJECT   12
 #define     HM_ITEM_TYPE_PRIVATEKEY_OBJECT  13
 #define     HM_ITEM_TYPE_SECRETKEY_OBJECT   14
 #define     HM_ITEM_TYPE_DATA_OBJECT        15
+*/
 
 enum {
     OBJ_CERT_IDX = 0,
@@ -44,6 +47,8 @@ enum { JS_FILE_TYPE_CERT,
        JS_FILE_TYPE_PFX };
 
 const QString kTableStyle = "QHeaderView::section {background-color:#404040;color:#FFFFFF;}";
+
+const QStringList kLogLevel = { "None", "Error", "Info", "Warn", "Debug" };
 
 
 static QStringList kCommonAttList = {

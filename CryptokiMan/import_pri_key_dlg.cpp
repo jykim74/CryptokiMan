@@ -191,6 +191,7 @@ end :
     }
 
     manApplet->messageBox( tr("success to import private key"), this );
+    manApplet->showTypeList( index, HM_ITEM_TYPE_PRIVATEKEY );
 
     QDialog::accept();
 }

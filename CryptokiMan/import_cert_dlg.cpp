@@ -244,6 +244,8 @@ void ImportCertDlg::accept()
     }
 
     manApplet->messageBox(tr("success to create certificate"), this );
+    manApplet->showTypeList( index, HM_ITEM_TYPE_CERTIFICATE );
+
     QDialog::accept();
 }
 

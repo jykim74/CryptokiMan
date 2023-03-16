@@ -130,7 +130,7 @@ void DelObjectDlg::deleteObj()
         nDataType = HM_ITEM_TYPE_DATA;
     }
 
-    manApplet->showTypeData( slot_index_, nDataType );
+    manApplet->showTypeList( slot_index_, nDataType );
     QDialog::accept();
 }
 
@@ -196,7 +196,7 @@ void DelObjectDlg::deleteAllObj()
         rv = manApplet->cryptokiAPI()->DestroyObject( session_, sObjects[i] );
     }
 
-    manApplet->showTypeData( slot_index_, nDataType );
+    manApplet->showTypeList( slot_index_, nDataType );
 
     QDialog::accept();
 }

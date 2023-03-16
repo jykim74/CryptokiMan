@@ -6,6 +6,8 @@
 class SettingsMgr : public QObject
 {
     Q_OBJECT
+private:
+    int log_level_;
 
 public:
     SettingsMgr( QObject *parent = nullptr );
@@ -13,13 +15,18 @@ public:
     void setSaveLibPath( bool val );
     bool saveLibPath();
 
-    void setShowLogWindow( bool bVal );
-    bool showLogWindow();
+    void setShowLogTab( bool bVal );
+    bool showLogTab();
+
+    int logLevel() { return log_level_; };
+    void setLogLevel( int nLevel );
+    int getLogLevel();
 signals:
 
 public slots:
 
 private:
+    void initialize();
     Q_DISABLE_COPY(SettingsMgr)
 };
 

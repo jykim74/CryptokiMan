@@ -28,29 +28,49 @@ public:
 
     void initialize();
     void showWindow();
-//    JP11_CTX* getP11CTX() { return p11_ctx_; };
+
     QList<SlotInfo>& getSlotInfos() { return slot_infos_; };
     ManTreeItem* currentTreeItem();
 
-    void showTypeData( int nSlotIndex, int nType );
+    void info( QString strInfo );
 
-    void showGetInfo();
-    void showSlotInfo( int index );
-    void showTokenInfo( int index );
-    void showMechanismInfo( int index );
-    void showSessionInfo( int index );
-    void showObjectsInfo( int index );
-    void showCertificateInfo( int index, long hObject = -1 );
-    void showPublicKeyInfo( int index, long hObject = -1 );
-    void showPrivateKeyInfo( int index, long hObject = -1 );
-    void showSecretKeyInfo( int index, long hObject = -1 );
-    void showDataInfo( int index, long hObject = -1 );
+    void log( const QString strLog );
+    void ilog( const QString strLog );
+    void elog( const QString strLog );
+    void wlog( const QString strLog );
+    void dlog( const QString strLog );
+    void write( const QString strLog );
+
+    void showTypeList( int nSlotIndex, int nType );
+
+    void showGetInfoList();
+    void showSlotInfoList( int index );
+    void showTokenInfoList( int index );
+    void showMechanismInfoList( int index );
+    void showSessionInfoList( int index );
+    void showObjectsInfoList( int index );
+    void showCertificateInfoList( int index, long hObject = -1 );
+    void showPublicKeyInfoList( int index, long hObject = -1 );
+    void showPrivateKeyInfoList( int index, long hObject = -1 );
+    void showSecretKeyInfoList( int index, long hObject = -1 );
+    void showDataInfoList( int index, long hObject = -1 );
+
+    void showMechaismInfoDetail( QModelIndex index );
+    void showObjectsInfoDetail( QModelIndex index );
+    void showCertificateInfoDetail( QModelIndex index );
+    void showPublicKeyInfoDetail( QModelIndex index );
+    void showPrivateKeyInfoDetail( QModelIndex index );
+    void showSecretKeyInfoDetail( QModelIndex index );
+    void showDataInfoDetail( QModelIndex index );
 
     void setRightTable( QTableWidget *right_table );
     void removeAllRightTable();
     void addEmptyLine( int row );
     void setRightType( int nType );
     int rightType() { return right_type_; };
+
+    int currentSlotIdx() { return slot_index_; };
+    void setCurrentSlotIdx( int index );
 
 private slots:
     void closeEvent(QCloseEvent *event);
@@ -103,9 +123,10 @@ public slots:
     void unwrapKey();
     void deriveKey();
     void about();
-    void logView();
+    void logView( bool bShow = true );
     void settings();
     void operationState();
+    void logClear();
 
     void rightTableClick( QModelIndex index );
     void showRightMenu(QPoint point );
@@ -114,7 +135,7 @@ public slots:
     virtual void dropEvent(QDropEvent *event );
 
 private:
-    void createTableMenu();
+    void baseTableHeader();
     void createActions();
     void createStatusBar();
     int openLibrary( const QString libPath );
@@ -122,7 +143,8 @@ private:
 
     void adjustForCurrentFile( const QString& filePath );
     void updateRecentActionList();
-    void showAttribute( int nSlotIdx, int nValType, CK_ATTRIBUTE_TYPE uAttribute, CK_OBJECT_HANDLE hObj );
+    void showAttribute( int nValType, CK_ATTRIBUTE_TYPE uAttribute, CK_OBJECT_HANDLE hObj );
+    QString stringAttribute( int nValType, CK_ATTRIBUTE_TYPE uAttribute, CK_OBJECT_HANDLE hObj );
 
     QList<QAction *>  recent_file_list_;
 
@@ -132,13 +154,17 @@ private:
     ManTreeView     *left_tree_;
     ManTreeModel    *left_model_;
     QTableWidget    *right_table_;
-    QTextEdit       *right_text_;
+
+    QTabWidget      *text_tab_;
+    QTextEdit       *info_text_;
+    QTextEdit       *log_text_;
     int             right_type_;
 
 //    JP11_CTX       *p11_ctx_;
     QString         file_path_;
 
     QList<SlotInfo> slot_infos_;
+    int             slot_index_;
 };
 
 #endif // MAINWINDOW_H

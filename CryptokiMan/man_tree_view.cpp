@@ -22,73 +22,48 @@ ManTreeView::ManTreeView( QWidget *parent )
 
 void ManTreeView::onItemClicked( const QModelIndex& index )
 {
-
     ManTreeItem *item = currentItem();
 
-    showTypeData( item->getSlotIndex(), item->getType() );
-
+    showTypeList( item->getSlotIndex(), item->getType() );
 }
 
-int ManTreeView::showTypeData( int nSlotIndex, int nType )
+int ManTreeView::currentSlotIndex()
+{
+    ManTreeItem *item = currentItem();
+    return item->getSlotIndex();
+}
+
+int ManTreeView::showTypeList( int nSlotIndex, int nType )
 {
     ulong hObject = -1;
     manApplet->mainWindow()->setRightType( nType );
+    manApplet->mainWindow()->setCurrentSlotIdx( nSlotIndex );
 
     if( nType == HM_ITEM_TYPE_ROOT )
     {
         if( manApplet->cryptokiAPI()->isInit() )
-            manApplet->mainWindow()->showGetInfo();
+            manApplet->mainWindow()->showGetInfoList();
     }
     else if( nType == HM_ITEM_TYPE_SLOT )
-        manApplet->mainWindow()->showSlotInfo( nSlotIndex );
+        manApplet->mainWindow()->showSlotInfoList( nSlotIndex );
     else if( nType == HM_ITEM_TYPE_TOKEN )
-        manApplet->mainWindow()->showTokenInfo( nSlotIndex );
+        manApplet->mainWindow()->showTokenInfoList( nSlotIndex );
     else if( nType == HM_ITEM_TYPE_MECHANISM )
-        manApplet->mainWindow()->showMechanismInfo( nSlotIndex );
+        manApplet->mainWindow()->showMechanismInfoList( nSlotIndex );
     else if( nType == HM_ITEM_TYPE_SESSION )
-        manApplet->mainWindow()->showSessionInfo( nSlotIndex );
+        manApplet->mainWindow()->showSessionInfoList( nSlotIndex );
     else if( nType == HM_ITEM_TYPE_OBJECTS )
-        manApplet->mainWindow()->showObjectsInfo( nSlotIndex );
+        manApplet->mainWindow()->showObjectsInfoList( nSlotIndex );
     else if( nType == HM_ITEM_TYPE_CERTIFICATE )
-        manApplet->mainWindow()->showCertificateInfo( nSlotIndex );
-    else if( nType == HM_ITEM_TYPE_CERTIFICATE_OBJECT )
-    {
-        ManTreeItem *item = currentItem();
-        hObject = item->data().toInt();
-        manApplet->mainWindow()->showCertificateInfo( nSlotIndex, hObject );
-    }
+        manApplet->mainWindow()->showCertificateInfoList( nSlotIndex );
     else if( nType == HM_ITEM_TYPE_PUBLICKEY )
-        manApplet->mainWindow()->showPublicKeyInfo( nSlotIndex );
-    else if( nType == HM_ITEM_TYPE_PUBLICKEY_OBJECT )
-    {
-        ManTreeItem *item = currentItem();
-        hObject = item->data().toInt();
-        manApplet->mainWindow()->showPublicKeyInfo( nSlotIndex, hObject );
-    }
+        manApplet->mainWindow()->showPublicKeyInfoList( nSlotIndex );
     else if( nType == HM_ITEM_TYPE_PRIVATEKEY )
-        manApplet->mainWindow()->showPrivateKeyInfo( nSlotIndex );
-    else if( nType == HM_ITEM_TYPE_PRIVATEKEY_OBJECT )
-    {
-        ManTreeItem *item = currentItem();
-        hObject = item->data().toInt();
-        manApplet->mainWindow()->showPrivateKeyInfo( nSlotIndex, hObject );
-    }
+        manApplet->mainWindow()->showPrivateKeyInfoList( nSlotIndex );
     else if( nType == HM_ITEM_TYPE_SECRETKEY )
-        manApplet->mainWindow()->showSecretKeyInfo( nSlotIndex );
-    else if( nType == HM_ITEM_TYPE_SECRETKEY_OBJECT )
-    {
-        ManTreeItem *item = currentItem();
-        hObject = item->data().toInt();
-        manApplet->mainWindow()->showSecretKeyInfo( nSlotIndex, hObject );
-    }
+        manApplet->mainWindow()->showSecretKeyInfoList( nSlotIndex );
     else if( nType == HM_ITEM_TYPE_DATA )
-        manApplet->mainWindow()->showDataInfo( nSlotIndex );
-    else if( nType == HM_ITEM_TYPE_DATA_OBJECT )
-    {
-        ManTreeItem *item = currentItem();
-        hObject = item->data().toInt();
-        manApplet->mainWindow()->showDataInfo( nSlotIndex, hObject );
-    }
+        manApplet->mainWindow()->showDataInfoList( nSlotIndex );
     else {
         manApplet->mainWindow()->removeAllRightTable();
     }
@@ -185,41 +160,6 @@ void ManTreeView::showContextMenu( QPoint point )
         menu.addAction( tr( "DeleteObject" ), manApplet->mainWindow(), &MainWindow::deleteObject );
         menu.addAction( tr("EditObject"), manApplet->mainWindow(), &MainWindow::editObject );
         menu.addAction( tr( "CreateData"), manApplet->mainWindow(), &MainWindow::createData );
-    }
-    else if( item->getType() == HM_ITEM_TYPE_DATA_OBJECT )
-    {
-        menu.addAction( tr( "DeleteObject" ), manApplet->mainWindow(), &MainWindow::deleteObject );
-        menu.addAction( tr("EditObject"), manApplet->mainWindow(), &MainWindow::editObject );
-    }
-    else if( item->getType() == HM_ITEM_TYPE_CERTIFICATE_OBJECT )
-    {
-        menu.addAction( tr( "DeleteObject" ), manApplet->mainWindow(), &MainWindow::deleteObject );
-        menu.addAction( tr("EditObject"), manApplet->mainWindow(), &MainWindow::editObject );
-        menu.addAction( tr( "ViewCertificate"), manApplet->mainWindow(), &MainWindow::viewCert );
-    }
-    else if( item->getType() == HM_ITEM_TYPE_PUBLICKEY_OBJECT )
-    {
-        menu.addAction( tr( "DeleteObject" ), manApplet->mainWindow(), &MainWindow::deleteObject );
-        menu.addAction( tr("EditObject"), manApplet->mainWindow(), &MainWindow::editObject );
-        menu.addAction( tr( "Verify" ), manApplet->mainWindow(), &MainWindow::verifyEach );
-        menu.addAction( tr("Encrypt"), manApplet->mainWindow(), &MainWindow::encryptEach );
-
-    }
-    else if( item->getType() == HM_ITEM_TYPE_PRIVATEKEY_OBJECT )
-    {
-        menu.addAction( tr( "DeleteObject" ), manApplet->mainWindow(), &MainWindow::deleteObject );
-        menu.addAction( tr("EditObject"), manApplet->mainWindow(), &MainWindow::editObject );
-        menu.addAction( tr( "Sign" ), manApplet->mainWindow(), &MainWindow::signEach );
-        menu.addAction( tr("Decrypt"), manApplet->mainWindow(), &MainWindow::decryptEach );
-    }
-    else if( item->getType() == HM_ITEM_TYPE_SECRETKEY_OBJECT )
-    {
-        menu.addAction( tr( "DeleteObject" ), manApplet->mainWindow(), &MainWindow::deleteObject );
-        menu.addAction( tr("EditObject"), manApplet->mainWindow(), &MainWindow::editObject );
-        menu.addAction( tr( "Sign" ), manApplet->mainWindow(), &MainWindow::signEach );
-        menu.addAction( tr( "Verify" ), manApplet->mainWindow(), &MainWindow::verifyEach );
-        menu.addAction( tr("Encrypt"), manApplet->mainWindow(), &MainWindow::encryptEach );
-        menu.addAction( tr("Decrypt"), manApplet->mainWindow(), &MainWindow::decryptEach );
     }
 
     menu.exec(QCursor::pos());
@@ -346,7 +286,7 @@ void ManTreeView::P11Initialize()
 
             ManTreeItem *pItemData = new ManTreeItem( QString(tr("Data") ) );
             pItemData->setType( HM_ITEM_TYPE_DATA );
-            pItemData->setIcon(QIcon(":/images/save.png"));
+            pItemData->setIcon(QIcon(":/images/data_add.png"));
             pItemData->setSlotIndex(i);
             pItemObjects->appendRow( pItemData );
         }

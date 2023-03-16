@@ -7,6 +7,8 @@
 #include "man_applet.h"
 #include "auto_update_service.h"
 #include "settings_mgr.h"
+#include "mainwindow.h"
+#include "common.h"
 
 SettingsDlg::SettingsDlg(QWidget *parent) :
     QDialog(parent)
@@ -28,7 +30,12 @@ void SettingsDlg::updateSettings()
     SettingsMgr *mgr = manApplet->settingsMgr();
 
     mgr->setSaveLibPath( mSaveLibPathCheck->checkState() == Qt::Checked );
-    mgr->setShowLogWindow( mShowLogWindowCheck->checkState() == Qt::Checked );
+
+    mgr->setShowLogTab( mShowLogTabCheck->checkState() == Qt::Checked );
+    manApplet->mainWindow()->logView( mShowLogTabCheck->checkState() == Qt::Checked );
+
+    mgr->setLogLevel( mLogLevelCombo->currentIndex() );
+
 
 #ifdef _AUTO_UPDATE
     if( AutoUpdateService::instance()->shouldSupportAutoUpdate() ) {
@@ -65,8 +72,8 @@ void SettingsDlg::initialize()
     state = mgr->saveLibPath() ? Qt::Checked : Qt::Unchecked;
     mSaveLibPathCheck->setCheckState(state);
 
-    state = mgr->showLogWindow() ? Qt::Checked : Qt::Unchecked;
-    mShowLogWindowCheck->setCheckState(state);
+    state = mgr->showLogTab() ? Qt::Checked : Qt::Unchecked;
+    mShowLogTabCheck->setCheckState(state);
 
 #ifdef _AUTO_UPDATE
     if( AutoUpdateService::instance()->shouldSupportAutoUpdate()) {
@@ -75,5 +82,9 @@ void SettingsDlg::initialize()
     }
 #endif
 
+    mLogLevelCombo->addItems( kLogLevel );
+    mLogLevelCombo->setCurrentIndex( mgr->getLogLevel() );
+
     mLangCombo->setCurrentIndex(I18NHelper::getInstance()->preferredLanguage());
+    tabWidget->setCurrentIndex(0);
 }

@@ -182,6 +182,7 @@ void CreateDataDlg::accept()
     }
 
     manApplet->messageBox( tr("Success to create data"), this );
+    manApplet->showTypeList( index, HM_ITEM_TYPE_DATA );
 
     QDialog::accept();
 }

@@ -752,23 +752,18 @@ int getDataType( int nItemType )
 {
     switch ( nItemType ) {
     case HM_ITEM_TYPE_DATA :
-    case HM_ITEM_TYPE_DATA_OBJECT:
         return OBJ_DATA_IDX;
 
     case HM_ITEM_TYPE_CERTIFICATE:
-    case HM_ITEM_TYPE_CERTIFICATE_OBJECT:
         return OBJ_CERT_IDX;
 
     case HM_ITEM_TYPE_PUBLICKEY:
-    case HM_ITEM_TYPE_PUBLICKEY_OBJECT:
         return OBJ_PUBKEY_IDX;
 
     case HM_ITEM_TYPE_PRIVATEKEY:
-    case HM_ITEM_TYPE_PRIVATEKEY_OBJECT:
         return OBJ_PRIKEY_IDX;
 
     case HM_ITEM_TYPE_SECRETKEY:
-    case HM_ITEM_TYPE_SECRETKEY_OBJECT:
         return OBJ_SECRET_IDX;
 
     default:

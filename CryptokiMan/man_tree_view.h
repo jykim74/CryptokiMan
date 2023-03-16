@@ -11,6 +11,7 @@ class ManTreeView : public QTreeView
     Q_OBJECT
 public:
     ManTreeView( QWidget* parent = nullptr );
+    int currentSlotIndex();
 
 private slots:
     void onItemClicked( const QModelIndex& index );
@@ -19,7 +20,7 @@ private slots:
 public slots:
     void P11Initialize();
     void P11Finalize();
-    int showTypeData( int nSlotIndex, int nType );
+    int showTypeList( int nSlotIndex, int nType );
 
 private:
     ManTreeItem* currentItem();

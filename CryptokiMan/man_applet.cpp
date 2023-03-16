@@ -28,7 +28,6 @@
 #include "import_pfx_dlg.h"
 #include "import_pri_key_dlg.h"
 #include "about_dlg.h"
-#include "log_view_dlg.h"
 #include "init_token_dlg.h"
 #include "rand_dlg.h"
 #include "set_pin_dlg.h"
@@ -49,7 +48,6 @@ ManApplet::ManApplet( QObject *parent )
     main_win_ = new MainWindow;
 
     about_dlg_ = new AboutDlg;
-    log_view_dlg_ = new LogViewDlg;
     settings_mgr_ = new SettingsMgr;
     cryptoki_api_ = new CryptokiAPI;
 
@@ -72,15 +70,20 @@ void ManApplet::start()
 {
     main_win_->show();
 
-    if( settings_mgr_->showLogWindow() )
+    if( settings_mgr_->showLogTab() )
         main_win_->logView();
 
     main_win_->activateWindow();
 }
 
-void ManApplet::showTypeData( int nSlotIndex, int nType )
+void ManApplet::showTypeList( int nSlotIndex, int nType )
 {
-    main_win_->showTypeData( nSlotIndex, nType );
+    main_win_->showTypeList( nSlotIndex, nType );
+}
+
+int ManApplet::currentSlotIdx()
+{
+    return main_win_->currentSlotIdx();
 }
 
 void ManApplet::restartApp()
@@ -105,32 +108,32 @@ void ManApplet::setCmd(QString cmd)
 
 void ManApplet::log( const QString strLog )
 {
-    log_view_dlg_->log( strLog );
+    main_win_->log( strLog );
 }
 
 void ManApplet::ilog( const QString strLog )
 {
-    log_view_dlg_->ilog( strLog );
+    main_win_->ilog( strLog );
 }
 
 void ManApplet::elog( const QString strLog )
 {
-    log_view_dlg_->elog( strLog );
+    main_win_->elog( strLog );
 }
 
 void ManApplet::wlog( const QString strLog )
 {
-    log_view_dlg_->wlog( strLog );
+    main_win_->wlog( strLog );
 }
 
 void ManApplet::dlog( const QString strLog )
 {
-    log_view_dlg_->dlog( strLog );
+    main_win_->dlog( strLog );
 }
 
 void ManApplet::write( const QString strLog )
 {
-    log_view_dlg_->write( strLog );
+    main_win_->write( strLog );
 }
 
 

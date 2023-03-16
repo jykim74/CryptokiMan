@@ -64,5 +64,6 @@
         <file>images/object.png</file>
         <file>images/session.png</file>
         <file>images/slot.png</file>
+        <file>images/clear.png</file>
     </qresource>
 </RCC>

@@ -43,7 +43,6 @@
 #include "unwrap_key_dlg.h"
 #include "derive_key_dlg.h"
 #include "about_dlg.h"
-#include "log_view_dlg.h"
 #include "settings_dlg.h"
 #include "settings_mgr.h"
 #include "oper_state_dlg.h"
@@ -59,12 +58,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     createActions();
     createStatusBar();
-    createTableMenu();
 
     setUnifiedTitleAndToolBarOnMac(true);
 
     setAcceptDrops(true);
     right_type_ = -1;
+    slot_index_ = -1;
 }
 
 MainWindow::~MainWindow()
@@ -101,9 +100,17 @@ void MainWindow::initialize()
     hsplitter_ = new QSplitter(Qt::Horizontal);
     vsplitter_ = new QSplitter(Qt::Vertical);
     left_tree_ = new ManTreeView(this);
-    right_text_ = new QTextEdit();
+
     right_table_ = new QTableWidget;
     left_model_ = new ManTreeModel(this);
+
+    log_text_ = new QTextEdit();
+    log_text_->setReadOnly(true);
+    log_text_->setFont( QFont("굴림체") );
+
+    info_text_ = new QTextEdit;
+    info_text_->setReadOnly(true);
+    info_text_->setFont( QFont("굴림체" ));
 
     left_tree_->setModel(left_model_);
     left_tree_->header()->setVisible(false);
@@ -111,18 +118,26 @@ void MainWindow::initialize()
     hsplitter_->addWidget(left_tree_);
     hsplitter_->addWidget(vsplitter_);
     vsplitter_->addWidget(right_table_);
-    vsplitter_->addWidget(right_text_);
+
+    text_tab_ = new QTabWidget;
+    vsplitter_->addWidget( text_tab_ );
+    text_tab_->addTab( info_text_, tr("information") );
+//    text_tab_->addTab( log_text_, tr("log") );
+
+
+
+//    vsplitter_->addWidget(info_text_);
 
     right_table_->setSelectionBehavior(QAbstractItemView::SelectRows);
     right_table_->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     QList <int> vsizes;
-    vsizes << 1200 << 500;
+    vsizes << 500 << 500;
     vsplitter_->setSizes(vsizes);
 
     QList <int> sizes;
-    sizes << 300 << 500;
-    resize(800,800);
+    sizes << 300 << 600;
+    resize(900,768);
 
     hsplitter_->setSizes(sizes);
     setCentralWidget(hsplitter_);
@@ -134,7 +149,8 @@ void MainWindow::initialize()
 
 }
 
-void MainWindow::createTableMenu()
+
+void MainWindow::baseTableHeader()
 {
     QStringList     labels = { tr("Field"), tr("Value") };
 
@@ -228,7 +244,7 @@ void MainWindow::createActions()
     connect( closeSessAct, &QAction::triggered, this, &MainWindow::closeSession );
     closeSessAct->setStatusTip(tr("PKCS11 Close Session"));
     moduleMenu->addAction( closeSessAct );
-    moduleToolBar->addAction( closeSessAct );
+//    moduleToolBar->addAction( closeSessAct );
 
     const QIcon closeAllIcon = QIcon::fromTheme("close_session", QIcon(":/images/close_all.png"));
     QAction *closeAllSessAct = new QAction( closeAllIcon, tr("Close All Sessions"), this );
@@ -283,28 +299,28 @@ void MainWindow::createActions()
     connect( createRSAPubKeyAct, &QAction::triggered, this, &MainWindow::createRSAPublicKey);
     createRSAPubKeyAct->setStatusTip(tr("PKCS11 Create RSA Public key"));
     objectsMenu->addAction( createRSAPubKeyAct );
-    objectsToolBar->addAction( createRSAPubKeyAct );
+//    objectsToolBar->addAction( createRSAPubKeyAct );
 
     const QIcon rp2Icon = QIcon::fromTheme("RSA-Private", QIcon(":/images/rp2.png"));
     QAction *createRSAPriKeyAct = new QAction( rp2Icon, tr("Create RSA Private Key"), this);
     connect( createRSAPriKeyAct, &QAction::triggered, this, &MainWindow::createRSAPrivateKey);
     createRSAPriKeyAct->setStatusTip(tr("PKCS11 Create RSA Private key"));
     objectsMenu->addAction( createRSAPriKeyAct );
-    objectsToolBar->addAction( createRSAPriKeyAct );
+//    objectsToolBar->addAction( createRSAPriKeyAct );
 
     const QIcon ep1Icon = QIcon::fromTheme("EC-Public", QIcon(":/images/ep1.jpg"));
     QAction *createECPubKeyAct = new QAction( ep1Icon, tr("Create EC Public Key"), this);
     connect( createECPubKeyAct, &QAction::triggered, this, &MainWindow::createECPublicKey);
     createDataAct->setStatusTip(tr("PKCS11 Create EC Public key"));
     objectsMenu->addAction( createECPubKeyAct );
-    objectsToolBar->addAction( createECPubKeyAct );
+//    objectsToolBar->addAction( createECPubKeyAct );
 
     const QIcon ep2Icon = QIcon::fromTheme("EC-Private", QIcon(":/images/ep2.jpg"));
     QAction *createECPriKeyAct = new QAction( ep2Icon, tr("Create EC Private Key"), this);
     connect( createECPriKeyAct, &QAction::triggered, this, &MainWindow::createECPrivateKey);
     createECPriKeyAct->setStatusTip(tr("PKCS11 Create EC Private key"));
     objectsMenu->addAction( createECPriKeyAct );
-    objectsToolBar->addAction( createECPriKeyAct );
+//    objectsToolBar->addAction( createECPriKeyAct );
 
     const QIcon keyGenIcon = QIcon::fromTheme("KeyGen", QIcon(":/images/key_gen.png"));
     QAction *createKeyAct = new QAction( keyGenIcon, tr("Create Key"), this);
@@ -318,14 +334,14 @@ void MainWindow::createActions()
     connect( delObjectAct, &QAction::triggered, this, &MainWindow::deleteObject);
     delObjectAct->setStatusTip(tr("PKCS11 Delete Object"));
     objectsMenu->addAction( delObjectAct );
-    objectsToolBar->addAction( delObjectAct );
+//    objectsToolBar->addAction( delObjectAct );
 
     const QIcon editIcon = QIcon::fromTheme("Edit", QIcon(":/images/edit.png"));
     QAction *editAttributeAct = new QAction( editIcon, tr("Edit Object"), this);
     connect( editAttributeAct, &QAction::triggered, this, &MainWindow::editObject);
     editAttributeAct->setStatusTip(tr("PKCS11 Edit Object"));
     objectsMenu->addAction( editAttributeAct );
-    objectsToolBar->addAction( editAttributeAct );
+//    objectsToolBar->addAction( editAttributeAct );
 
 
     QMenu *cryptMenu = menuBar()->addMenu(tr("&Crypt"));
@@ -367,31 +383,25 @@ void MainWindow::createActions()
     cryptMenu->addAction( decryptAct );
     cryptToolBar->addAction( decryptAct );
 
-    addToolBarBreak();
-
     QMenu *importMenu = menuBar()->addMenu(tr("&Import"));
-    QToolBar *importToolBar = addToolBar(tr("Import"));
 
     const QIcon certIcon = QIcon::fromTheme("cert", QIcon(":/images/cert.png"));
     QAction *importCertAct = new QAction( certIcon, tr("Import certificate"), this);
     connect( importCertAct, &QAction::triggered, this, &MainWindow::importCert);
     importCertAct->setStatusTip(tr("PKCS11 import certificate"));
     importMenu->addAction( importCertAct );
-    importToolBar->addAction( importCertAct );
 
     const QIcon pfxIcon = QIcon::fromTheme("PFX", QIcon(":/images/pfx.png"));
     QAction *importPFXAct = new QAction( pfxIcon, tr("Import PFX"), this);
     connect( importPFXAct, &QAction::triggered, this, &MainWindow::importPFX);
     importPFXAct->setStatusTip(tr("PKCS11 import PFX"));
     importMenu->addAction( importPFXAct );
-    importToolBar->addAction( importPFXAct );
 
     const QIcon priKeyIcon = QIcon::fromTheme("PrivateKey", QIcon(":/images/prikey.png"));
     QAction *importPriKeyAct = new QAction( priKeyIcon, tr("Import Private Key"), this);
     connect( importPriKeyAct, &QAction::triggered, this, &MainWindow::improtPrivateKey);
     importPriKeyAct->setStatusTip(tr("PKCS11 import private key"));
     importMenu->addAction( importPriKeyAct );
-    importToolBar->addAction( importPriKeyAct );
 
     QMenu *toolsMenu = menuBar()->addMenu(tr("&Tools"));
     QToolBar *toolsToolBar = addToolBar(tr("Tools"));
@@ -401,7 +411,7 @@ void MainWindow::createActions()
     connect( initTokenAct, &QAction::triggered, this, &MainWindow::initToken);
     initTokenAct->setStatusTip(tr("PKCS11 Initialize token"));
     toolsMenu->addAction( initTokenAct );
-    toolsToolBar->addAction( initTokenAct );
+//    toolsToolBar->addAction( initTokenAct );
 
     const QIcon operIcon = QIcon::fromTheme( "document-operation", QIcon(":/images/operation.png"));
     QAction *operStateAct = new QAction( operIcon, tr("OperationState"), this );
@@ -423,46 +433,45 @@ void MainWindow::createActions()
     connect( setPinAct, &QAction::triggered, this, &MainWindow::setPin);
     setPinAct->setStatusTip(tr("PKCS11 set PIN"));
     toolsMenu->addAction( setPinAct );
-    toolsToolBar->addAction( setPinAct );
+//    toolsToolBar->addAction( setPinAct );
 
     const QIcon pin2Icon = QIcon::fromTheme("Init PIN", QIcon(":/images/pin2.png"));
     QAction *initPinAct = new QAction( pin2Icon, tr("Init PIN"), this);
     connect( initPinAct, &QAction::triggered, this, &MainWindow::initPin);
     initPinAct->setStatusTip(tr("PKCS11 init PIN"));
     toolsMenu->addAction( initPinAct );
-    toolsToolBar->addAction( initPinAct );
+//    toolsToolBar->addAction( initPinAct );
 
     const QIcon wkIcon = QIcon::fromTheme("WrapKey", QIcon(":/images/wk.png"));
     QAction *wrapKeyAct = new QAction( wkIcon, tr("Wrap Key"), this);
     connect( wrapKeyAct, &QAction::triggered, this, &MainWindow::wrapKey);
     wrapKeyAct->setStatusTip(tr("PKCS11 wrap key"));
     toolsMenu->addAction( wrapKeyAct );
-    toolsToolBar->addAction( wrapKeyAct );
+//    toolsToolBar->addAction( wrapKeyAct );
 
     const QIcon ukIcon = QIcon::fromTheme("UnwrapKey", QIcon(":/images/uk.jpg"));
     QAction *unwrapKeyAct = new QAction( ukIcon, tr("Unwrap Key"), this);
     connect( unwrapKeyAct, &QAction::triggered, this, &MainWindow::unwrapKey);
     unwrapKeyAct->setStatusTip(tr("PKCS11 unwrap key"));
     toolsMenu->addAction( unwrapKeyAct );
-    toolsToolBar->addAction( unwrapKeyAct );
+//    toolsToolBar->addAction( unwrapKeyAct );
 
     const QIcon dkIcon = QIcon::fromTheme("DeriveKey", QIcon(":/images/dk.png"));
     QAction *deriveKeyAct = new QAction( dkIcon, tr("Derive Key"), this);
     connect( deriveKeyAct, &QAction::triggered, this, &MainWindow::deriveKey);
     deriveKeyAct->setStatusTip(tr("PKCS11 derive key"));
     toolsMenu->addAction( deriveKeyAct );
-    toolsToolBar->addAction( deriveKeyAct );
+//    toolsToolBar->addAction( deriveKeyAct );
 
     QMenu *helpMenu = menuBar()->addMenu(tr("&Help"));
     QToolBar *helpToolBar = addToolBar(tr("Help"));
 
-
-    const QIcon logIcon = QIcon::fromTheme("log", QIcon(":/images/log.png"));
-    QAction *logViewAct = new QAction( logIcon, tr("Log View"), this);
-    connect( logViewAct, &QAction::triggered, this, &MainWindow::logView);
-    logViewAct->setStatusTip(tr("view log for PKCS11"));
-    helpMenu->addAction( logViewAct );
-    helpToolBar->addAction( logViewAct );
+    const QIcon clearIcon = QIcon::fromTheme( "clear-log", QIcon(":/images/clear.png"));
+    QAction *clearAct = new QAction( clearIcon, tr("&Clear Log"), this );
+    connect( clearAct, &QAction::triggered, this, &MainWindow::logClear );
+    clearAct->setStatusTip(tr("clear log"));
+    helpMenu->addAction( clearAct );
+    helpToolBar->addAction( clearAct );
 
     const QIcon settingIcon = QIcon::fromTheme("setting", QIcon(":/images/setting.png"));
     QAction *settingsAct = new QAction( settingIcon, tr("&Settings"), this);
@@ -692,17 +701,17 @@ void MainWindow::createKey()
 
 void MainWindow::deleteObject()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    QModelIndex index = right_table_->currentIndex();
+    int row = index.row();
+
+    QTableWidgetItem* item0 = right_table_->item( row, 0 );
+    QTableWidgetItem* item1 = right_table_->item( row, 1 );
 
     DelObjectDlg delObjectDlg;
-    if( pItem )
-    {
-        delObjectDlg.setSlotIndex(pItem->getSlotIndex());
-        delObjectDlg.setObjectType( getDataType( pItem->getType() ));
 
-        long obj_id = pItem->data().toInt();
-        if( obj_id > 0 ) delObjectDlg.setObjectID( obj_id );
-    }
+    delObjectDlg.setSlotIndex( slot_index_ );
+    delObjectDlg.setObjectType( getDataType( right_type_ ));
+    delObjectDlg.setObjectID( item1->text().toLong() );
 
     delObjectDlg.exec();
 }
@@ -731,17 +740,11 @@ void MainWindow::editAttribute()
     QTableWidgetItem* item0 = right_table_->item( row, 0 );
     QTableWidgetItem* item1 = right_table_->item( row, 1 );
 
-    ManTreeItem *pItem = currentTreeItem();
-
     EditAttributeDlg editAttrDlg;
-    if( pItem )
-    {
-        editAttrDlg.setSlotIndex( pItem->getSlotIndex() );
-        editAttrDlg.setObjectType( getDataType( pItem->getType() ));
-    }
 
-    editAttrDlg.setAttrName( item0->text() );
-    editAttrDlg.setObjectID( item0->data(Qt::UserRole).toInt());
+    editAttrDlg.setSlotIndex( slot_index_ );
+    editAttrDlg.setObjectType( getDataType( right_type_ ));
+    editAttrDlg.setObjectID( item1->text().toLong());
 
     editAttrDlg.exec();
 
@@ -798,20 +801,24 @@ void MainWindow::signType()
 
 void MainWindow::signEach()
 {
-    ManTreeItem *pItem = currentTreeItem();
-
-    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    if( slot_index_ < 0 )
     {
         manApplet->warningBox( tr( "There is no slot" ), this );
         return;
     }
 
+    QModelIndex index = right_table_->currentIndex();
+    int row = index.row();
+
+    QTableWidgetItem* item0 = right_table_->item( row, 0 );
+    QTableWidgetItem* item1 = right_table_->item( row, 1 );
+
     SignDlg signDlg;
 
-    int type = getDataType( pItem->getType() );
-    long obj_id = pItem->data().toInt();
+    int type = getDataType( right_type_ );
+    long obj_id = item1->text().toLong();
 
-    signDlg.setSelectedSlot( pItem->getSlotIndex() );
+    signDlg.setSelectedSlot( slot_index_ );
     signDlg.setObject( type, obj_id );
 
     signDlg.exec();
@@ -819,88 +826,81 @@ void MainWindow::signEach()
 
 void MainWindow::verify()
 {
-    ManTreeItem *pItem = currentTreeItem();
-
-    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    if( slot_index_ < 0 )
     {
         manApplet->warningBox( tr( "There is no slot" ), this );
         return;
     }
 
     VerifyDlg verifyDlg;
-    if( pItem ) verifyDlg.setSelectedSlot( pItem->getSlotIndex() );
+    verifyDlg.setSelectedSlot( slot_index_ );
     verifyDlg.exec();
 }
 
 void MainWindow::verifyType()
 {
-    ManTreeItem *pItem = currentTreeItem();
-
-    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    if( slot_index_ < 0 )
     {
         manApplet->warningBox( tr( "There is no slot" ), this );
         return;
     }
 
     VerifyDlg verifyDlg;
-    int type = getDataType( pItem->getType() );
-    verifyDlg.setSelectedSlot( pItem->getSlotIndex() );
+    int type = getDataType( right_type_ );
+    verifyDlg.setSelectedSlot( slot_index_ );
     verifyDlg.changeType( type );
     verifyDlg.exec();
 }
 
 void MainWindow::verifyEach()
 {
-    ManTreeItem *pItem = currentTreeItem();
-
-    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    if( slot_index_ < 0 )
     {
         manApplet->warningBox( tr( "There is no slot" ), this );
         return;
     }
 
-    VerifyDlg verifyDlg;
-    int type = getDataType( pItem->getType() );
-    long obj_id = pItem->data().toInt();
+    QModelIndex index = right_table_->currentIndex();
+    int row = index.row();
 
-    verifyDlg.setSelectedSlot( pItem->getSlotIndex() );
+    QTableWidgetItem* item0 = right_table_->item( row, 0 );
+    QTableWidgetItem* item1 = right_table_->item( row, 1 );
+
+    VerifyDlg verifyDlg;
+    int type = getDataType( right_type_ );
+    long obj_id = item1->text().toLong();
+
+    verifyDlg.setSelectedSlot( slot_index_ );
     verifyDlg.setObject( type, obj_id );
     verifyDlg.exec();
 }
 
 void MainWindow::encrypt()
 {
-    ManTreeItem *pItem = currentTreeItem();
-
-    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    if( slot_index_ < 0 )
     {
         manApplet->warningBox( tr( "There is no slot" ), this );
         return;
     }
 
     EncryptDlg encryptDlg;
-
-
-    encryptDlg.setSelectedSlot(pItem->getSlotIndex());
-
+    encryptDlg.setSelectedSlot( slot_index_ );
 
     encryptDlg.exec();
 }
 
 void MainWindow::encryptType()
 {
-    ManTreeItem *pItem = currentTreeItem();
-
-    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    if( slot_index_ < 0 )
     {
         manApplet->warningBox( tr( "There is no slot" ), this );
         return;
     }
 
     EncryptDlg encryptDlg;
-    int type = getDataType( pItem->getType() );
+    int type = getDataType( right_type_ );
 
-    encryptDlg.setSelectedSlot(pItem->getSlotIndex());
+    encryptDlg.setSelectedSlot( slot_index_ );
     encryptDlg.changeType(type);
 
     encryptDlg.exec();
@@ -908,53 +908,53 @@ void MainWindow::encryptType()
 
 void MainWindow::encryptEach()
 {
-    ManTreeItem *pItem = currentTreeItem();
-
-    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    if( slot_index_ < 0 )
     {
         manApplet->warningBox( tr( "There is no slot" ), this );
         return;
     }
 
+    QModelIndex index = right_table_->currentIndex();
+    int row = index.row();
+
+    QTableWidgetItem* item0 = right_table_->item( row, 0 );
+    QTableWidgetItem* item1 = right_table_->item( row, 1 );
+
     EncryptDlg encryptDlg;
 
-    int type = getDataType( pItem->getType() );
-    long obj_id = pItem->data().toInt();
+    int type = getDataType( right_type_ );
+    long obj_id = item1->text().toLong();
 
-    encryptDlg.setSelectedSlot(pItem->getSlotIndex());
+    encryptDlg.setSelectedSlot( slot_index_ );
     encryptDlg.setObject( type, obj_id );
     encryptDlg.exec();
 }
 
 void MainWindow::decrypt()
 {
-    ManTreeItem *pItem = currentTreeItem();
-
-    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    if( slot_index_ < 0 )
     {
         manApplet->warningBox( tr( "There is no slot" ), this );
         return;
     }
 
     DecryptDlg decryptDlg;
-    decryptDlg.setSelectedSlot(pItem->getSlotIndex());
+    decryptDlg.setSelectedSlot( slot_index_ );
     decryptDlg.exec();
 }
 
 void MainWindow::decryptType()
 {
-    ManTreeItem *pItem = currentTreeItem();
-
-    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    if( slot_index_ < 0 )
     {
         manApplet->warningBox( tr( "There is no slot" ), this );
         return;
     }
 
     DecryptDlg decryptDlg;
-    int type = getDataType( pItem->getType() );
+    int type = getDataType( right_type_ );
 
-    decryptDlg.setSelectedSlot(pItem->getSlotIndex());
+    decryptDlg.setSelectedSlot( slot_index_ );
     decryptDlg.changeType( type );
 
     decryptDlg.exec();
@@ -962,19 +962,23 @@ void MainWindow::decryptType()
 
 void MainWindow::decryptEach()
 {
-    ManTreeItem *pItem = currentTreeItem();
-
-    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    if( slot_index_ < 0 )
     {
         manApplet->warningBox( tr( "There is no slot" ), this );
         return;
     }
 
-    DecryptDlg decryptDlg;
-    int type = getDataType( pItem->getType() );
-    long obj_id = pItem->data().toInt();
+    QModelIndex index = right_table_->currentIndex();
+    int row = index.row();
 
-    decryptDlg.setSelectedSlot(pItem->getSlotIndex());
+    QTableWidgetItem* item0 = right_table_->item( row, 0 );
+    QTableWidgetItem* item1 = right_table_->item( row, 1 );
+
+    DecryptDlg decryptDlg;
+    int type = getDataType( right_type_ );
+    long obj_id = item1->text().toLong();
+
+    decryptDlg.setSelectedSlot( slot_index_ );
     decryptDlg.setObject( type, obj_id );
 
     decryptDlg.exec();
@@ -982,16 +986,14 @@ void MainWindow::decryptEach()
 
 void MainWindow::importCert()
 {
-    ManTreeItem *pItem = currentTreeItem();
-
-    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    if( slot_index_ < 0 )
     {
         manApplet->warningBox( tr( "There is no slot" ), this );
         return;
     }
 
     ImportCertDlg importCertDlg;
-    if( pItem ) importCertDlg.setSelectedSlot( pItem->getSlotIndex() );
+    importCertDlg.setSelectedSlot( slot_index_ );
     importCertDlg.exec();
 }
 
@@ -999,22 +1001,18 @@ void MainWindow::viewCert()
 {
     int ret = 0;
     BIN binVal = {0,0};
-    ManTreeItem *pItem = currentTreeItem();
-
-    if( pItem == NULL || pItem->getSlotIndex() < 0 )
-    {
-        manApplet->warningBox( tr( "There is no slot" ), this );
-        return;
-    }
-
 
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-    SlotInfo slotInfo = slot_infos.at( pItem->getSlotIndex() );
+    SlotInfo slotInfo = slot_infos.at( slot_index_ );
     CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
-    long obj_id = pItem->data().toInt();
+    QModelIndex index = right_table_->currentIndex();
+    int row = index.row();
 
-    ret = manApplet->cryptokiAPI()->GetAttributeValue2( hSession, obj_id, CKA_VALUE, &binVal );
+    QTableWidgetItem* item0 = right_table_->item( row, 0 );
+    QTableWidgetItem* item1 = right_table_->item( row, 1 );
+
+    ret = manApplet->cryptokiAPI()->GetAttributeValue2( hSession, item1->text().toLong(), CKA_VALUE, &binVal );
 
     CertInfoDlg certInfoDlg;
     certInfoDlg.setCertVal( getHexString( binVal.pVal, binVal.nLen ));
@@ -1026,31 +1024,27 @@ end :
 
 void MainWindow::importPFX()
 {
-    ManTreeItem *pItem = currentTreeItem();
-
-    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    if( slot_index_ < 0)
     {
         manApplet->warningBox( tr( "There is no slot" ), this );
         return;
     }
 
     ImportPFXDlg importPFXDlg;
-    if( pItem ) importPFXDlg.setSelectedSlot( pItem->getSlotIndex() );
+    importPFXDlg.setSelectedSlot( slot_index_ );
     importPFXDlg.exec();
 }
 
 void MainWindow::improtPrivateKey()
 {
-    ManTreeItem *pItem = currentTreeItem();
-
-    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    if( slot_index_ < 0 )
     {
         manApplet->warningBox( tr( "There is no slot" ), this );
         return;
     }
 
     ImportPriKeyDlg importPriKeyDlg;
-    if( pItem ) importPriKeyDlg.setSelectedSlot( pItem->getSlotIndex() );
+    importPriKeyDlg.setSelectedSlot( slot_index_ );
     importPriKeyDlg.exec();
 }
 
@@ -1061,125 +1055,108 @@ void MainWindow::about()
     manApplet->aboutDlg()->activateWindow();
 }
 
-void MainWindow::logView()
+void MainWindow::logView( bool bShow )
 {
-    QPoint sp;
-    QPoint mp;
-    this->update();
-    mp = this->pos();
-    int width = this->width();
-
-    sp.setY( mp.ry() );
-    sp.setX( mp.rx() + width );
-
-    manApplet->logViewDlg()->show();
-    manApplet->logViewDlg()->raise();
-    manApplet->logViewDlg()->activateWindow();
-    manApplet->logViewDlg()->move(sp);
+    if( bShow == true )
+    {
+        if( text_tab_->count() <= 1 )
+            text_tab_->addTab( log_text_, tr("log") );
+    }
+    else
+    {
+        if( text_tab_->count() == 2 )
+            text_tab_->removeTab(1);
+    }
 }
 
 void MainWindow::initToken()
 {
-    ManTreeItem *pItem = currentTreeItem();
-
-    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    if( slot_index_ < 0 )
     {
         manApplet->warningBox( tr( "There is no slot" ), this );
         return;
     }
 
     InitTokenDlg initTokenDlg;
-    if( pItem ) initTokenDlg.setSelectedSlot( pItem->getSlotIndex() );
+    initTokenDlg.setSelectedSlot( slot_index_ );
     initTokenDlg.exec();
 }
 
 void MainWindow::rand()
 {
-    ManTreeItem *pItem = currentTreeItem();
-
-    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    if( slot_index_ < 0 )
     {
         manApplet->warningBox( tr( "There is no slot" ), this );
         return;
     }
 
     RandDlg randDlg;
-    if( pItem ) randDlg.setSelectedSlot( pItem->getSlotIndex() );
+    randDlg.setSelectedSlot( slot_index_ );
     randDlg.exec();
 }
 
 void MainWindow::setPin()
 {
-    ManTreeItem *pItem = currentTreeItem();
-
-    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    if( slot_index_ < 0 )
     {
         manApplet->warningBox( tr( "There is no slot" ), this );
         return;
     }
 
     SetPinDlg setPinDlg;
-    if( pItem ) setPinDlg.setSelectedSlot( pItem->getSlotIndex() );
+    setPinDlg.setSelectedSlot( slot_index_ );
     setPinDlg.exec();
 }
 
 void MainWindow::initPin()
 {
-    ManTreeItem *pItem = currentTreeItem();
-
-    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    if( slot_index_ < 0 )
     {
         manApplet->warningBox( tr( "There is no slot" ), this );
         return;
     }
 
     InitPinDlg initPinDlg;
-    if( pItem ) initPinDlg.setSelectedSlot( pItem->getSlotIndex() );
+    initPinDlg.setSelectedSlot( slot_index_ );
     initPinDlg.exec();
 }
 
 void MainWindow::wrapKey()
 {
-    ManTreeItem *pItem = currentTreeItem();
-
-    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    if( slot_index_ < 0 )
     {
         manApplet->warningBox( tr( "There is no slot" ), this );
         return;
     }
 
     WrapKeyDlg wrapKeyDlg;
-    if( pItem ) wrapKeyDlg.setSelectedSlot( pItem->getSlotIndex() );
+    wrapKeyDlg.setSelectedSlot( slot_index_ );
     wrapKeyDlg.exec();
 }
 
 void MainWindow::unwrapKey()
 {
-    ManTreeItem *pItem = currentTreeItem();
-
-    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    if( slot_index_ < 0 )
     {
         manApplet->warningBox( tr( "There is no slot" ), this );
         return;
     }
 
     UnwrapKeyDlg unwrapKeyDlg;
-    if( pItem ) unwrapKeyDlg.setSelectedSlot( pItem->getSlotIndex() );
+    unwrapKeyDlg.setSelectedSlot( slot_index_ );
     unwrapKeyDlg.exec();
 }
 
 void MainWindow::deriveKey()
 {
-    ManTreeItem *pItem = currentTreeItem();
-
-    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    if( slot_index_ < 0 )
     {
         manApplet->warningBox( tr( "There is no slot" ), this );
         return;
     }
 
     DeriveKeyDlg deriveKeyDlg;
-    if( pItem ) deriveKeyDlg.setSelectedSlot( pItem->getSlotIndex() );
+    deriveKeyDlg.setSelectedSlot( slot_index_ );
     deriveKeyDlg.exec();
 }
 
@@ -1200,25 +1177,265 @@ void MainWindow::operationState()
     operStateDlg.exec();
 }
 
+void MainWindow::logClear()
+{
+    log_text_->clear();
+}
+
 void MainWindow::rightTableClick(QModelIndex index)
 {
-    qDebug( "clicked view" );
+    QString msg = QString( "detail type: %1" ).arg(right_type_ );
+    qDebug( msg.toStdString().c_str() );
 
+    if( right_type_ == HM_ITEM_TYPE_MECHANISM )
+        showMechaismInfoDetail( index );
+    else if( right_type_ == HM_ITEM_TYPE_OBJECTS )
+        showObjectsInfoDetail( index );
+    else if( right_type_ == HM_ITEM_TYPE_CERTIFICATE )
+        showCertificateInfoDetail( index );
+    else if( right_type_ == HM_ITEM_TYPE_PUBLICKEY )
+        showPublicKeyInfoDetail( index );
+    else if( right_type_ == HM_ITEM_TYPE_PRIVATEKEY )
+        showPrivateKeyInfoDetail( index );
+    else if( right_type_ == HM_ITEM_TYPE_SECRETKEY )
+        showSecretKeyInfoDetail( index );
+    else if( right_type_ == HM_ITEM_TYPE_DATA )
+        showDataInfoDetail( index );
+    else
+    {
+        int row = index.row();
+        int col = index.column();
+
+        QTableWidgetItem *item1 = right_table_->item( row, 0 );
+        QTableWidgetItem *item2 = right_table_->item( row, 1 );
+
+        info_text_->clear();
+
+        if( item1 )
+        {
+            info_text_->setPlainText( item1->text() );
+            info_text_->append( "\n" );
+        }
+
+        if( item2 ) info_text_->append( item2->text() );
+    }
+}
+
+void MainWindow::showMechaismInfoDetail( QModelIndex index )
+{
     int row = index.row();
     int col = index.column();
 
     QTableWidgetItem *item1 = right_table_->item( row, 0 );
     QTableWidgetItem *item2 = right_table_->item( row, 1 );
+    QTableWidgetItem *item3 = right_table_->item( row, 2 );
+    QTableWidgetItem *item4 = right_table_->item( row, 3 );
 
-    right_text_->clear();
+    info_text_->clear();
 
-    if( item1 )
+    info( "========================================================================\n" );
+    info( "== Mechanism Information\n" );
+    info( "========================================================================\n" );
+    info( QString( "Algorithm    : %1\n" ).arg( item1->text() ));
+    info( QString( "Min Key Size : %1\n" ).arg( item2->text() ));
+    info( QString( "Max Key Size : %1\n" ).arg( item3->text() ));
+    info( QString( "Flags        : %1\n" ).arg( item4->text() ));
+}
+
+void MainWindow::showObjectsInfoDetail( QModelIndex index )
+{
+    int row = index.row();
+    int col = index.column();
+
+    QTableWidgetItem *item1 = right_table_->item( row, 0 );
+    QTableWidgetItem *item2 = right_table_->item( row, 1 );
+    QTableWidgetItem *item3 = right_table_->item( row, 2 );
+
+
+    info_text_->clear();
+
+    info( "========================================================================\n" );
+    info( "== Object Information\n" );
+    info( "========================================================================\n" );
+    info( QString( "Class        : %1\n" ).arg( item1->text() ));
+    info( QString( "Objects Size : %1\n" ).arg( item2->text() ));
+    info( QString( "Handle       : %1\n" ).arg( item3->text() ));
+}
+
+void MainWindow::showCertificateInfoDetail( QModelIndex index )
+{
+    int row = index.row();
+    long uObj = -1;
+
+    QTableWidgetItem *item1 = right_table_->item( row, 1 );
+    uObj = item1->text().toLong();
+
+    info_text_->clear();
+
+    info( "========================================================================\n" );
+    info( "== Certificate Information\n" );
+    info( "========================================================================\n" );
+
+    info( QString( "CKA_LABEL      : %1\n" ).arg(stringAttribute( ATTR_VAL_STRING, CKA_LABEL, uObj )) );
+    info( QString( "CKA_ID         : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_ID, uObj ) ));
+    info( QString( "CKA_SUBJECT    : %1\n" ).arg(stringAttribute( ATTR_VAL_STRING, CKA_SUBJECT, uObj ) ));
+    info( QString( "CKA_VALUE      : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_VALUE, uObj ) ));
+    info( QString( "CKA_TOKEN      : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_TOKEN, uObj ) ));
+    info( QString( "CKA_MODIFIABLE : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_MODIFIABLE, uObj ) ));
+    info( QString( "CKA_TRUSTED    : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_TRUSTED, uObj ) ));
+    info( QString( "CKA_PRIVATE    : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_PRIVATE, uObj ) ));
+    info( QString( "CKA_START_DATE : %1\n" ).arg(stringAttribute( ATTR_VAL_DATE, CKA_START_DATE, uObj ) ));
+    info( QString( "CKA_END_DATE   : %1\n" ).arg(stringAttribute( ATTR_VAL_DATE, CKA_END_DATE, uObj ) ));
+}
+
+void MainWindow::showPublicKeyInfoDetail( QModelIndex index )
+{
+    int row = index.row();
+    long uObj = -1;
+
+    QTableWidgetItem *item1 = right_table_->item( row, 1 );
+    uObj = item1->text().toLong();
+    QString strKeyType;
+
+    info_text_->clear();
+
+    info( "========================================================================\n" );
+    info( "== PublicKey Information\n" );
+    info( "========================================================================\n" );
+
+    info( QString( "CKA_LABEL           : %1\n" ).arg(stringAttribute( ATTR_VAL_STRING, CKA_LABEL, uObj)) );
+    strKeyType = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, uObj );
+    info( QString( "CKA_KEY_TYPE        : %1\n").arg( strKeyType ));
+    info( QString( "CKA_ID              : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_ID, uObj ) ));
+
+    if( strKeyType == "CKK_RSA" )
     {
-        right_text_->setPlainText( item1->text() );
-        right_text_->append( "\n" );
+        info( QString( "CKA_MODULUS         : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_MODULUS, uObj) ));
+        info( QString( "CKA_PUBLIC_EXPONENT : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_PUBLIC_EXPONENT, uObj )));
+    }
+    else if( strKeyType == "CKK_EC" || strKeyType == "CKK_ECDSA" )
+    {
+        info( QString( "CKA_EC_PARAMS       : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_EC_PARAMS, uObj)));
+        info( QString( "CKA_EC_POINT        : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_EC_POINT, uObj)));
     }
 
-    if( item2 ) right_text_->append( item2->text() );
+    info( QString( "CKA_TOKEN           : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_TOKEN, uObj)));
+    info( QString( "CKA_WRAP            : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_WRAP, uObj)));
+    info( QString( "CKA_ENCRYPT         : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_ENCRYPT, uObj)));
+    info( QString( "CKA_VERIFY          : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_VERIFY, uObj)));
+    info( QString( "CKA_PRIVATE         : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_PRIVATE, uObj)));
+    info( QString( "CKA_MODIFIABLE      : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_MODIFIABLE, uObj)));
+    info( QString( "CKA_DERIVE          : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_DERIVE, uObj)));
+    info( QString( "ATTR_VAL_DATE       : %1\n" ).arg(stringAttribute( ATTR_VAL_DATE, CKA_START_DATE, uObj)));
+    info( QString( "ATTR_VAL_DATE       : %1\n" ).arg(stringAttribute( ATTR_VAL_DATE, CKA_END_DATE, uObj )));
+}
+
+void MainWindow::showPrivateKeyInfoDetail( QModelIndex index )
+{
+    int row = index.row();
+    long uObj = -1;
+
+    QTableWidgetItem *item1 = right_table_->item( row, 1 );
+    uObj = item1->text().toLong();
+    QString strKeyType;
+
+    info_text_->clear();
+
+    info( "========================================================================\n" );
+    info( "== PrivateKey Information\n" );
+    info( "========================================================================\n" );
+
+
+    info( QString( "CKA_LABEL            : %1\n" ).arg(stringAttribute(ATTR_VAL_STRING, CKA_LABEL, uObj)) );
+
+    strKeyType = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, uObj );
+    info( QString( "CKA_KEY_TYPE         : %1\n").arg( strKeyType ));
+
+    info( QString( "CKA_ID               : %1\n" ).arg(stringAttribute(ATTR_VAL_HEX, CKA_ID, uObj)) );
+    info( QString( "CKA_SUBJECT          : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_SUBJECT, uObj)));
+
+    if( strKeyType == "CKK_RSA" )
+    {
+        info( QString( "CKA_MODULUS          : %1\n" ).arg(stringAttribute(ATTR_VAL_HEX, CKA_MODULUS, uObj)));
+        info( QString( "CKA_PUBLIC_EXPONENT  : %1\n" ).arg(stringAttribute(ATTR_VAL_HEX, CKA_PUBLIC_EXPONENT, uObj)));
+        info( QString( "CKA_PRIVATE_EXPONENT : %1\n" ).arg(stringAttribute(ATTR_VAL_HEX, CKA_PRIVATE_EXPONENT, uObj)));
+        info( QString( "CKA_PRIME_1          : %1\n" ).arg(stringAttribute(ATTR_VAL_HEX, CKA_PRIME_1, uObj)));
+        info( QString( "CKA_PRIME_2          : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_PRIME_2, uObj)));
+        info( QString( "CKA_EXPONENT_1       : %1\n" ).arg(stringAttribute(  ATTR_VAL_HEX, CKA_EXPONENT_1, uObj)));
+        info( QString( "CKA_EXPONENT_2       : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_EXPONENT_2, uObj)));
+    }
+    else if( strKeyType == "CKK_EC" || strKeyType == "CKK_ECDSA" )
+    {
+        info( QString( "CKA_EC_PARAMS        : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_EC_PARAMS, uObj)));
+        info( QString( "CKA_VALUE            : %1\n" ).arg(stringAttribute(  ATTR_VAL_HEX, CKA_VALUE, uObj)) );
+    }
+
+    info( QString( "CKA_TOKEN            : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_TOKEN, uObj)));
+    info( QString( "CKA_SENSITIVE        : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_SENSITIVE, uObj)));
+    info( QString( "CKA_UNWRAP           : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_UNWRAP, uObj)));
+    info( QString( "CKA_SIGN             : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_SIGN, uObj)));
+    info( QString( "CKA_DECRYPT          : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_DECRYPT, uObj)));
+    info( QString( "CKA_MODIFIABLE       : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_MODIFIABLE, uObj)));
+    info( QString( "CKA_DERIVE           : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_DERIVE, uObj)));
+    info( QString( "CKA_EXTRACTABLE      : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_EXTRACTABLE, uObj)));
+    info( QString( "CKA_START_DATE       : %1\n" ).arg(stringAttribute(  ATTR_VAL_DATE, CKA_START_DATE, uObj)));
+    info( QString( "CKA_END_DATE         : %1\n" ).arg(stringAttribute(  ATTR_VAL_DATE, CKA_END_DATE, uObj)) );
+}
+
+void MainWindow::showSecretKeyInfoDetail( QModelIndex index )
+{
+    int row = index.row();
+    long uObj = -1;
+
+    QTableWidgetItem *item1 = right_table_->item( row, 1 );
+    uObj = item1->text().toLong();
+
+    info_text_->clear();
+
+    info( "========================================================================\n" );
+    info( "== SecretKey Information\n" );
+    info( "========================================================================\n" );
+
+    info( QString( "CKA_LABEL       : %1\n" ).arg(stringAttribute( ATTR_VAL_STRING, CKA_LABEL, uObj )));
+    info( QString( "CKA_KEY_TYPE    : %1\n" ).arg(stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, uObj )));
+    info( QString( "CKA_ID          : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_ID, uObj )));
+    info( QString( "CKA_VALUE       : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_VALUE, uObj )));
+    info( QString( "CKA_VALUE_LEN   : %1\n" ).arg(stringAttribute( ATTR_VAL_LEN, CKA_VALUE_LEN, uObj )));
+    info( QString( "CKA_TOKEN       : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_TOKEN, uObj )));
+    info( QString( "CKA_PRIVATE     : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_PRIVATE, uObj )));
+    info( QString( "CKA_SENSITIVE   : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_SENSITIVE, uObj )));
+    info( QString( "CKA_ENCRYPT     : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_ENCRYPT, uObj )));
+    info( QString( "CKA_DECRYPT     : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_DECRYPT, uObj )));
+    info( QString( "CKA_SIGN        : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_SIGN, uObj )));
+    info( QString( "CKA_VERIFY      : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_VERIFY, uObj )));
+    info( QString( "CKA_WRAP        : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_WRAP, uObj )));
+    info( QString( "CKA_UNWRAP      : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_UNWRAP, uObj )));
+    info( QString( "CKA_MODIFIABLE  : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_MODIFIABLE, uObj )));
+    info( QString( "CKA_DERIVE      : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_DERIVE, uObj )));
+    info( QString( "CKA_EXTRACTABLE : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_EXTRACTABLE, uObj )));
+    info( QString( "CKA_START_DATE  : %1\n" ).arg(stringAttribute( ATTR_VAL_DATE, CKA_START_DATE, uObj )));
+    info( QString( "CKA_END_DATE    : %1\n" ).arg(stringAttribute( ATTR_VAL_DATE, CKA_END_DATE, uObj )) );
+}
+
+void MainWindow::showDataInfoDetail( QModelIndex index )
+{
+    int row = index.row();
+    long uObj = -1;
+
+    QTableWidgetItem *item1 = right_table_->item( row, 1 );
+    uObj = item1->text().toLong();
+
+    info_text_->clear();
+
+    info( "========================================================================\n" );
+    info( "== Data Information\n" );
+    info( "========================================================================\n" );
+
+    info( QString( "CKA_LABEL      : %1\n" ).arg(stringAttribute( ATTR_VAL_STRING, CKA_LABEL, uObj )) );
+    info( QString( "CKA_VALUE      : %1\n" ).arg(stringAttribute(  ATTR_VAL_HEX, CKA_VALUE, uObj )));
+    info( QString( "CKA_TOKEN      : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_TOKEN, uObj )));
+    info( QString( "CKA_PRIVATE    : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_PRIVATE, uObj )));
+    info( QString( "CKA_MODIFIABLE : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_MODIFIABLE, uObj )));
 }
 
 void MainWindow::showRightMenu(QPoint point )
@@ -1228,50 +1445,38 @@ void MainWindow::showRightMenu(QPoint point )
     manApplet->log( QString("RightType: %1").arg(right_type_));
 
     switch ( right_type_ ) {
-    case HM_ITEM_TYPE_CERTIFICATE_OBJECT:
+    case HM_ITEM_TYPE_CERTIFICATE:
         menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
         menu.addAction( tr( "Delete Object" ), this, &MainWindow::deleteObject );
         menu.addAction( tr("View Certificate" ), this, &MainWindow::viewCert );
         break;
 
-    case HM_ITEM_TYPE_CERTIFICATE:
-        menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
-
-        break;
-
-    case HM_ITEM_TYPE_PUBLICKEY_OBJECT:
+    case HM_ITEM_TYPE_PUBLICKEY:
         menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
         menu.addAction( tr( "Delete Object" ), this, &MainWindow::deleteObject );
         menu.addAction( tr( "Verify" ), this, &MainWindow::verifyEach );
         menu.addAction( tr( "Encrypt"), this, &MainWindow::encryptEach );
-        break;
-
-    case HM_ITEM_TYPE_PUBLICKEY:
-        menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
-        break;
-
-    case HM_ITEM_TYPE_PRIVATEKEY_OBJECT:
-        menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
-        menu.addAction( tr( "Delete Object" ), this, &MainWindow::deleteObject );
-        menu.addAction( tr( "Sign" ), this, &MainWindow::signEach );
-        menu.addAction( tr( "Decrypt" ), this, &MainWindow::decryptEach );
         break;
 
     case HM_ITEM_TYPE_PRIVATEKEY:
         menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
-        break;
-
-    case HM_ITEM_TYPE_SECRETKEY_OBJECT:
-        menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
         menu.addAction( tr( "Delete Object" ), this, &MainWindow::deleteObject );
         menu.addAction( tr( "Sign" ), this, &MainWindow::signEach );
-        menu.addAction( tr( "Verify" ), this, &MainWindow::verifyEach );
-        menu.addAction( tr( "Encrypt"), this, &MainWindow::encryptEach );
         menu.addAction( tr( "Decrypt" ), this, &MainWindow::decryptEach );
         break;
 
     case HM_ITEM_TYPE_SECRETKEY:
         menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
+        menu.addAction( tr( "Delete Object" ), this, &MainWindow::deleteObject );
+        menu.addAction( tr( "Sign" ), this, &MainWindow::signEach );
+        menu.addAction( tr( "Verify" ), this, &MainWindow::verifyEach );
+        menu.addAction( tr( "Encrypt"), this, &MainWindow::encryptEach );
+        menu.addAction( tr( "Decrypt" ), this, &MainWindow::decryptEach );
+        break;
+
+    case HM_ITEM_TYPE_DATA:
+        menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
+        menu.addAction( tr( "Delete Object" ), this, &MainWindow::deleteObject );
         break;
     }
 
@@ -1286,9 +1491,9 @@ void MainWindow::showWindow()
     activateWindow();
 }
 
-void MainWindow::showTypeData( int nSlotIndex, int nType )
+void MainWindow::showTypeList( int nSlotIndex, int nType )
 {
-    left_tree_->showTypeData( nSlotIndex, nType );
+    left_tree_->showTypeList( nSlotIndex, nType );
 }
 
 void MainWindow::adjustForCurrentFile( const QString& filePath )
@@ -1343,6 +1548,139 @@ ManTreeItem* MainWindow::currentTreeItem()
     return item;
 }
 
+void MainWindow::info( QString strInfo )
+{
+    QTextCursor cursor = info_text_->textCursor();
+
+    QTextCharFormat format;
+    cursor.mergeCharFormat(format);
+
+    cursor.insertText( strInfo );
+
+    info_text_->setTextCursor( cursor );
+    info_text_->repaint();
+}
+
+void MainWindow::log( QString strLog )
+{
+    if( text_tab_->count() <= 1 ) return;
+
+    int nLevel = manApplet->settingsMgr()->logLevel();
+    if( nLevel < 2 ) return;
+
+    QDateTime date;
+    date.setTime_t( time(NULL));
+    QString strMsg;
+
+    strMsg = QString("[I][%1] %2\n" ).arg( date.toString( "HH:mm:ss") ).arg( strLog );
+
+    QTextCursor cursor = log_text_->textCursor();
+
+    QTextCharFormat format;
+    format.setForeground(QColor(0x00,0x00,0x00));
+    cursor.mergeCharFormat(format);
+
+    cursor.insertText( strMsg );
+    cursor.movePosition(QTextCursor::End);
+    log_text_->setTextCursor( cursor );
+    log_text_->repaint();
+}
+
+void MainWindow::ilog( const QString strLog )
+{
+    log( strLog );
+}
+
+void MainWindow::elog( const QString strLog )
+{
+    if( text_tab_->count() <= 1 ) return;
+
+    int nLevel = manApplet->settingsMgr()->logLevel();
+    if( nLevel < 1 ) return;
+
+    QDateTime date;
+    date.setTime_t( time(NULL));
+    QString strMsg;
+
+    strMsg = QString("[E][%1] %2\n" ).arg( date.toString( "HH:mm:ss") ).arg( strLog );
+
+    QTextCursor cursor = log_text_->textCursor();
+    QTextCharFormat format;
+    format.setForeground(QColor(0xFF,0x00,0x00));
+    cursor.mergeCharFormat(format);
+
+    cursor.insertText( strMsg );
+    cursor.movePosition(QTextCursor::End);
+    log_text_->setTextCursor( cursor );
+    log_text_->repaint();
+}
+
+void MainWindow::wlog( const QString strLog )
+{
+    if( text_tab_->count() <= 1 ) return;
+
+    int nLevel = manApplet->settingsMgr()->logLevel();
+    if( nLevel < 3 ) return;
+
+    QDateTime date;
+    date.setTime_t( time(NULL));
+    QString strMsg;
+
+    strMsg = QString("[W][%1] %2\n" ).arg( date.toString( "HH:mm:ss") ).arg( strLog );
+
+    QTextCursor cursor = log_text_->textCursor();
+
+    QTextCharFormat format;
+    format.setForeground(QColor(0x66, 0x33, 0x00));
+    cursor.mergeCharFormat(format);
+
+    cursor.insertText( strMsg );
+    cursor.movePosition(QTextCursor::End);
+    log_text_->setTextCursor( cursor );
+    log_text_->repaint();
+}
+
+void MainWindow::dlog( const QString strLog )
+{
+    if( text_tab_->count() <= 1 ) return;
+
+    int nLevel = manApplet->settingsMgr()->logLevel();
+    if( nLevel < 4 ) return;
+
+    QDateTime date;
+    date.setTime_t( time(NULL));
+    QString strMsg;
+
+    strMsg = QString("[D][%1] %2\n" ).arg( date.toString( "HH:mm:ss") ).arg( strLog );
+
+    QTextCursor cursor = log_text_->textCursor();
+
+    QTextCharFormat format;
+    format.setForeground(QColor(0x00,0x00,0xFF));
+    cursor.mergeCharFormat(format);
+
+    cursor.insertText( strMsg );
+    cursor.movePosition(QTextCursor::End);
+    log_text_->setTextCursor( cursor );
+    log_text_->repaint();
+}
+
+void MainWindow::write( const QString strLog )
+{
+    if( text_tab_->count() <= 1 ) return;
+
+    QTextCursor cursor = log_text_->textCursor();
+
+    QTextCharFormat format;
+    format.setForeground(QColor(0x00,0x00,0x00));
+    cursor.mergeCharFormat(format);
+
+    cursor.insertText( strLog );
+    cursor.movePosition( QTextCursor::End );
+    log_text_->setTextCursor( cursor );
+    log_text_->repaint();
+}
+
 void MainWindow::setTitle(const QString strName)
 {
     QString strWinTitle = QString( "%1 - %2").arg( manApplet->getBrand() ).arg( strName );
@@ -1375,7 +1713,12 @@ void MainWindow::setRightType( int nType )
     right_type_ = nType;
 }
 
-void MainWindow::showGetInfo()
+void MainWindow::setCurrentSlotIdx( int index )
+{
+    slot_index_ = index;
+}
+
+void MainWindow::showGetInfoList()
 {
     int ret = 0;
     CK_INFO     sInfo;
@@ -1389,6 +1732,7 @@ void MainWindow::showGetInfo()
     }
 
     removeAllRightTable();
+    baseTableHeader();
 
     QString strMsg = "";
     QStringList strList;
@@ -1433,7 +1777,7 @@ void MainWindow::showGetInfo()
     row++;
 }
 
-void MainWindow::showSlotInfo( int index )
+void MainWindow::showSlotInfoList( int index )
 {
     long uSlotID = -1;
 
@@ -1450,6 +1794,7 @@ void MainWindow::showSlotInfo( int index )
     }
 
     removeAllRightTable();
+    baseTableHeader();
 
     int row = 0;
     QString strMsg = "";
@@ -1510,7 +1855,7 @@ void MainWindow::showSlotInfo( int index )
     row++;
 }
 
-void MainWindow::showTokenInfo(int index)
+void MainWindow::showTokenInfoList(int index)
 {
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
@@ -1526,6 +1871,7 @@ void MainWindow::showTokenInfo(int index)
     }
 
     removeAllRightTable();
+    baseTableHeader();
 
     int row = 0;
     QString strMsg = "";
@@ -1660,7 +2006,7 @@ void MainWindow::showTokenInfo(int index)
     row++;
 }
 
-void MainWindow::showMechanismInfo(int index)
+void MainWindow::showMechanismInfoList(int index)
 {
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
@@ -1677,6 +2023,22 @@ void MainWindow::showMechanismInfo(int index)
     }
 
     removeAllRightTable();
+
+    QStringList headerList = { tr("Mechanism"), tr("MinSize"), tr("MaxSize"), tr( "Flags") };
+
+    right_table_->clear();
+    right_table_->horizontalHeader()->setStretchLastSection(true);
+    QString style = "QHeaderView::section {background-color:#404040;color:#FFFFFF;}";
+    right_table_->horizontalHeader()->setStyleSheet( style );
+
+    right_table_->setColumnCount(headerList.size());
+    right_table_->setHorizontalHeaderLabels( headerList );
+    right_table_->verticalHeader()->setVisible(false);
+
+    right_table_->setColumnWidth( 0, 180 );
+    right_table_->setColumnWidth( 1, 60 );
+    right_table_->setColumnWidth( 2, 60 );
+
 
     pMechType = (CK_MECHANISM_TYPE_PTR)JS_calloc( ulMechCnt, sizeof(CK_MECHANISM_TYPE));
     rv = manApplet->cryptokiAPI()->GetMechanismList( uSlotID, pMechType, &ulMechCnt );
@@ -1698,14 +2060,20 @@ void MainWindow::showMechanismInfo(int index)
 
         right_table_->insertRow( row );
         right_table_->setRowHeight( row, 10 );
-        right_table_->setItem( row, 0, new QTableWidgetItem( QString("Type")));
-        strMsg = JS_PKCS11_GetCKMName( pMechType[i] );
-        right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
-        row++;
 
-        right_table_->insertRow( row );
-        right_table_->setRowHeight( row, 10 );
-        right_table_->setItem( row, 0, new QTableWidgetItem( QString("flags" )));
+
+        strMsg = JS_PKCS11_GetCKMName( pMechType[i] );
+        QTableWidgetItem *item = new QTableWidgetItem( strMsg );
+        item->setIcon( QIcon(":/images/mech.png"));
+
+        right_table_->setItem( row, 0, item );
+
+        strMsg = QString("%1").arg( stMechInfo.ulMinKeySize );
+        right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
+
+        strMsg = QString("%1").arg( stMechInfo.ulMaxKeySize );
+        right_table_->setItem( row, 2, new QTableWidgetItem( strMsg ) );
+
         strMsg = QString( "%1" ).arg( stMechInfo.flags );
 
         if( stMechInfo.flags & CKF_DECRYPT ) strMsg += " | Decrypt";
@@ -1723,31 +2091,17 @@ void MainWindow::showMechanismInfo(int index)
         if( stMechInfo.flags & CKF_SIGN_RECOVER ) strMsg += " | Sign recover";
         if( stMechInfo.flags & CKF_VERIFY_RECOVER ) strMsg += " | Verify recover";
 
-        right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
-        row++;
+        right_table_->setItem( row, 3, new QTableWidgetItem( strMsg ) );
 
-        right_table_->insertRow( row );
-        right_table_->setRowHeight( row, 10 );
-        right_table_->setItem( row, 0, new QTableWidgetItem( QString( "ulMaxKeySize" )));
-        strMsg = QString("%1").arg( stMechInfo.ulMaxKeySize );
-        right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
-        row++;
 
-        right_table_->insertRow( row );
-        right_table_->setRowHeight( row, 10 );
-        right_table_->setItem( row, 0, new QTableWidgetItem( QString( "ulMinKeySize" )));
-        strMsg = QString("%1").arg( stMechInfo.ulMinKeySize );
-        right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
-        row++;
 
-        addEmptyLine( row );
         row++;
     }
 
     if( pMechType ) JS_free( pMechType );
 }
 
-void MainWindow::showSessionInfo(int index)
+void MainWindow::showSessionInfoList(int index)
 {
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
@@ -1757,6 +2111,7 @@ void MainWindow::showSessionInfo(int index)
     CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     removeAllRightTable();
+    baseTableHeader();
 
     int rv = manApplet->cryptokiAPI()->GetSessionInfo( hSession, &stSessInfo );
 
@@ -1810,7 +2165,7 @@ void MainWindow::showSessionInfo(int index)
 
 }
 
-void MainWindow::showObjectsInfo(int index)
+void MainWindow::showObjectsInfoList(int index)
 {
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
@@ -1821,6 +2176,20 @@ void MainWindow::showObjectsInfo(int index)
     CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     removeAllRightTable();
+
+    QStringList headerList = { tr("Class"), tr("Objet Size"), tr("Handle") };
+
+    right_table_->clear();
+    right_table_->horizontalHeader()->setStretchLastSection(true);
+    QString style = "QHeaderView::section {background-color:#404040;color:#FFFFFF;}";
+    right_table_->horizontalHeader()->setStyleSheet( style );
+
+    right_table_->setColumnCount(headerList.size());
+    right_table_->setHorizontalHeaderLabels( headerList );
+    right_table_->verticalHeader()->setVisible(false);
+
+    right_table_->setColumnWidth( 0, 200  );
+    right_table_->setColumnWidth( 1, 120 );
 
     int ret = 0;
 
@@ -1837,44 +2206,16 @@ void MainWindow::showObjectsInfo(int index)
     int row = 0;
     QString strMsg = "";
 
-    right_table_->insertRow( row );
-    right_table_->setRowHeight( row, 10 );
-    right_table_->setItem( row, 0, new QTableWidgetItem( QString( "Object Count" ) ) );
-    strMsg = QString( "%1" ).arg( uObjCnt );
-    right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
-    row++;
-
-    addEmptyLine( row );
-    row++;
-
     for( int i=0; i < uObjCnt; i++ )
     {
         CK_ULONG uSize = 0;
         QString strVal = "";
 
-        right_table_->insertRow( row );
-        right_table_->setRowHeight( row, 10 );
-        right_table_->setItem( row, 0, new QTableWidgetItem( QString("Handle" )));
-        strVal = QString("%1").arg( hObjects[i] );
-        right_table_->setItem( row, 1, new QTableWidgetItem( QString( strVal) ));
-        row++;
-
-        ret = manApplet->cryptokiAPI()->GetObjectSize( hSession, hObjects[i], &uSize );
-
-        right_table_->insertRow( row );
-        right_table_->setRowHeight( row, 10 );
-        right_table_->setItem( row, 0, new QTableWidgetItem( QString("Size")));
-        strVal = QString("%1").arg( uSize );
-        right_table_->setItem( row, 1, new QTableWidgetItem( QString(strVal) ));
-        row++;
-
         CK_ATTRIBUTE_TYPE attrType = CKA_CLASS;
         BIN binVal = {0,0};
-\
 
         right_table_->insertRow( row );
         right_table_->setRowHeight( row, 10 );
-        right_table_->setItem( row, 0, new QTableWidgetItem( QString("Class")));
 
         ret = manApplet->cryptokiAPI()->GetAttributeValue2( hSession, hObjects[i], attrType, &binVal );
 
@@ -1882,23 +2223,30 @@ void MainWindow::showObjectsInfo(int index)
         memcpy( &uVal, binVal.pVal, binVal.nLen );
         strVal = JS_PKCS11_GetCKOName( uVal );
         JS_BIN_reset( &binVal );
-        right_table_->setItem( row, 1, new QTableWidgetItem( strVal ));
-        row++;
 
-        addEmptyLine( row );
+        QTableWidgetItem *item = new QTableWidgetItem( strVal );
+        item->setIcon( QIcon(":/images/object.png"));
+        right_table_->setItem( row, 0, item );
+
+        ret = manApplet->cryptokiAPI()->GetObjectSize( hSession, hObjects[i], &uSize );
+        strVal = QString("%1").arg( uSize );
+        right_table_->setItem( row, 1, new QTableWidgetItem( QString(strVal) ));
+
+
+        strVal = QString("%1").arg( hObjects[i] );
+        right_table_->setItem( row, 2, new QTableWidgetItem( QString( strVal) ));
+
         row++;
     }
 }
 
 
-void MainWindow::showAttribute( int nSlotIdx, int nValType, CK_ATTRIBUTE_TYPE uAttribute, CK_OBJECT_HANDLE hObj )
+void MainWindow::showAttribute( int nValType, CK_ATTRIBUTE_TYPE uAttribute, CK_OBJECT_HANDLE hObj )
 {
     int ret = 0;
 
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    SlotInfo slotInfo = slot_infos.at( nSlotIdx );
-
+    SlotInfo slotInfo = slot_infos.at( slot_index_ );
     CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     char    *pStr = NULL;
@@ -1981,20 +2329,113 @@ void MainWindow::showAttribute( int nSlotIdx, int nValType, CK_ATTRIBUTE_TYPE uA
     if( pStr ) JS_free( pStr );
 }
 
-void MainWindow::showCertificateInfo( int index, long hObject )
+QString MainWindow::stringAttribute( int nValType, CK_ATTRIBUTE_TYPE uAttribute, CK_OBJECT_HANDLE hObj )
+{
+    int ret = 0;
+
+    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
+    SlotInfo slotInfo = slot_infos.at( slot_index_ );
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+
+    char    *pStr = NULL;
+    QString strMsg;
+    BIN     binVal = {0,0};
+
+    ret = manApplet->cryptokiAPI()->GetAttributeValue2( hSession, hObj, uAttribute, &binVal );
+
+    if( ret == CKR_OK )
+    {
+        if( nValType == ATTR_VAL_BOOL )
+        {
+            strMsg = getBool( &binVal );
+        }
+        else if( nValType == ATTR_VAL_STRING )
+        {
+            JS_BIN_string( &binVal, &pStr );
+            strMsg = pStr;
+        }
+        else if( nValType == ATTR_VAL_HEX )
+        {
+            JS_BIN_encodeHex( &binVal, &pStr );
+            strMsg = pStr;
+        }
+        else if( nValType == ATTR_VAL_KEY_NAME )
+        {
+            long uVal = 0;
+            memcpy( &uVal, binVal.pVal, binVal.nLen );
+            strMsg = JS_PKCS11_GetCKKName( uVal );
+        }
+        else if( nValType == ATTR_VAL_LEN )
+        {
+            long uLen = 0;
+            memcpy( &uLen, binVal.pVal, sizeof(uLen));
+            strMsg = QString("%1").arg( uLen );
+        }
+        else if( nValType == ATTR_VAL_DATE )
+        {
+            if( binVal.nLen >= 8 )
+            {
+                char    sYear[5];
+                char    sMonth[3];
+                char    sDay[3];
+                CK_DATE *pDate = (CK_DATE *)binVal.pVal;
+
+                memset( sYear, 0x00, sizeof(sYear));
+                memset( sMonth, 0x00, sizeof(sMonth));
+                memset( sDay, 0x00, sizeof(sDay));
+
+                memcpy( sYear, pDate->year, 4 );
+                memcpy( sMonth, pDate->month, 2 );
+                memcpy( sDay, pDate->day, 2 );
+
+                strMsg = QString( "%1-%2-%3").arg( sYear ).arg( sMonth ).arg(sDay);
+            }
+            else
+            {
+                JS_BIN_encodeHex( &binVal, &pStr );
+                strMsg = pStr;
+            }
+        }
+    }
+    else
+    {
+        strMsg = QString( "[ERR] %1[%2]" ).arg( JS_PKCS11_GetErrorMsg(ret)).arg(ret);
+    }
+
+    JS_BIN_reset( &binVal );
+    if( pStr ) JS_free( pStr );
+
+    return strMsg;
+}
+
+void MainWindow::showCertificateInfoList( int index, long hObject )
 {
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     SlotInfo slotInfo = slot_infos.at(index);
-
     CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[100];
     int rv = 0;
-    bool bList = true;
 
     removeAllRightTable();
+
+    QStringList headerList = { tr("Label"), tr("Handle"), tr("ID"), tr( "Subject") };
+
+    right_table_->clear();
+    right_table_->horizontalHeader()->setStretchLastSection(true);
+    QString style = "QHeaderView::section {background-color:#404040;color:#FFFFFF;}";
+    right_table_->horizontalHeader()->setStyleSheet( style );
+
+    right_table_->setColumnCount(headerList.size());
+    right_table_->setHorizontalHeaderLabels( headerList );
+    right_table_->verticalHeader()->setVisible(false);
+
+    right_table_->setColumnWidth( 0, 200 );
+    right_table_->setColumnWidth( 1, 60 );
+    right_table_->setColumnWidth( 2, 120 );
+
 
     if( hObject < 0 )
     {
@@ -2016,80 +2457,37 @@ void MainWindow::showCertificateInfo( int index, long hObject )
     {
         uObjCnt = 1;
         hObjects[0] = hObject;
-        bList = false;
     }
 
-    QString strMsg = "";
-
-    right_table_->insertRow( 0 );
-    right_table_->setRowHeight( 0, 10 );
-    right_table_->setItem( 0, 0, new QTableWidgetItem( QString("Certificate count" ) ) );
-    strMsg = QString("%1").arg( uObjCnt );
-    right_table_->setItem( 0, 1, new QTableWidgetItem( strMsg ) );
-
-    addEmptyLine( 1 );
-
-    ManTreeItem *parentItem = NULL;
-    ManTreeItem *curItem = currentTreeItem();
-
-    if( curItem->getType() == HM_ITEM_TYPE_CERTIFICATE_OBJECT )
-        parentItem = (ManTreeItem *)curItem->parent();
-    else
-        parentItem = curItem;
-
-    if( bList )
-    {
-        while( parentItem->hasChildren() )
-        {
-            parentItem->removeRow(0);
-        }
-    }
+    int row = 0;
 
     for( int i=0; i < uObjCnt; i++ )
     {
-        int     row = right_table_->rowCount();
-        BIN binVal = {0,0};
-        char *pLabel = NULL;
+        QString strMsg;
 
         right_table_->insertRow( row );
         right_table_->setRowHeight( row, 10 );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("Handle")));
+
+        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_LABEL, hObjects[i] );
+
+        QTableWidgetItem *item = new QTableWidgetItem( strMsg );
+        item->setIcon( QIcon(":/images/cert.png"));
+        right_table_->setItem( row, 0, item );
+
         strMsg = QString("%1").arg( hObjects[i] );
         right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
 
-        manApplet->cryptokiAPI()->GetAttributeValue2( hSession, hObjects[i], CKA_LABEL, &binVal );
-        JS_BIN_string( &binVal, &pLabel );
-        JS_BIN_reset( &binVal );
+        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_ID, hObjects[i] );
+        right_table_->setItem( row, 2, new QTableWidgetItem(strMsg) );
 
-        showAttribute( index, ATTR_VAL_STRING, CKA_LABEL, hObjects[i] );
-        showAttribute( index, ATTR_VAL_HEX, CKA_ID, hObjects[i] );
-        showAttribute( index, ATTR_VAL_STRING, CKA_SUBJECT, hObjects[i] );
-        showAttribute( index, ATTR_VAL_HEX, CKA_VALUE, hObjects[i] );
-        showAttribute( index, ATTR_VAL_BOOL, CKA_MODIFIABLE, hObjects[i] );
-        showAttribute( index, ATTR_VAL_BOOL, CKA_TRUSTED, hObjects[i]);
-        showAttribute( index, ATTR_VAL_BOOL, CKA_PRIVATE, hObjects[i]);
-        showAttribute( index, ATTR_VAL_DATE, CKA_START_DATE, hObjects[i]);
-        showAttribute( index, ATTR_VAL_DATE, CKA_END_DATE, hObjects[i] );
+        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_SUBJECT, hObjects[i] );
+        right_table_->setItem( row, 3, new QTableWidgetItem(strMsg) );
 
-        if( bList )
-        {
-            ManTreeItem *item = new ManTreeItem;
-            QVariant val = qVariantFromValue( hObjects[i]);
-
-            item->setText( pLabel );
-            item->setType( HM_ITEM_TYPE_CERTIFICATE_OBJECT );
-            item->setSlotIndex( index );
-            item->setData( val );
-            parentItem->appendRow( item );
-        }
-
-        row = right_table_->rowCount();
-        addEmptyLine( row );
-        if( pLabel ) JS_free( pLabel );
+        row++;
     }
 }
 
-void MainWindow::showPublicKeyInfo( int index, long hObject )
+void MainWindow::showPublicKeyInfoList( int index, long hObject )
 {
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
@@ -2098,12 +2496,24 @@ void MainWindow::showPublicKeyInfo( int index, long hObject )
     CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[100];
-    CK_ATTRIBUTE sAttribute;
 
     int rv = 0;
-    bool bList = true;
 
     removeAllRightTable();
+    QStringList headerList = { tr("Label"), tr("Handle"), tr("KeyType"), tr( "ID") };
+
+    right_table_->clear();
+    right_table_->horizontalHeader()->setStretchLastSection(true);
+    QString style = "QHeaderView::section {background-color:#404040;color:#FFFFFF;}";
+    right_table_->horizontalHeader()->setStyleSheet( style );
+
+    right_table_->setColumnCount(headerList.size());
+    right_table_->setHorizontalHeaderLabels( headerList );
+    right_table_->verticalHeader()->setVisible(false);
+
+    right_table_->setColumnWidth( 0, 200 );
+    right_table_->setColumnWidth( 1, 60 );
+    right_table_->setColumnWidth( 2, 100 );
 
     if( hObject < 0 )
     {
@@ -2125,113 +2535,63 @@ void MainWindow::showPublicKeyInfo( int index, long hObject )
     {
         uObjCnt = 1;
         hObjects[0] = hObject;
-        bList = false;
     }
 
     QString strMsg = "";
+    int row = 0;
 
-    strMsg = QString("%1").arg( uObjCnt );
-    right_table_->insertRow( 0 );
-    right_table_->setRowHeight( 0, 10 );
-    right_table_->setItem( 0, 0, new QTableWidgetItem(QString("PublicKey Count")));
-    right_table_->setItem( 0, 1, new QTableWidgetItem(strMsg));
-
-    addEmptyLine( 1 );
-    ManTreeItem *parentItem = NULL;
-    ManTreeItem *curItem = currentTreeItem();
-
-    if( curItem->getType() == HM_ITEM_TYPE_PUBLICKEY_OBJECT )
-        parentItem = (ManTreeItem *)curItem->parent();
-    else
-        parentItem = curItem;
-
-    if( bList )
-    {
-        while( parentItem->hasChildren() )
-        {
-            parentItem->removeRow(0);
-        }
-    }
 
     for( int i=0; i < uObjCnt; i++ )
     {
-        int row = right_table_->rowCount();
-        int nType = 0;
-        BIN binVal = {0,0};
-        char *pLabel = NULL;
-
-        strMsg = QString("%1").arg( hObjects[i] );
         right_table_->insertRow( row );
         right_table_->setRowHeight( row, 10 );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("Handle")));
+
+        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_LABEL, hObjects[i] );
+
+        QTableWidgetItem *item = new QTableWidgetItem( strMsg );
+        item->setIcon( QIcon(":/images/pubkey.png"));
+        right_table_->setItem( row, 0, item );
+
+        strMsg = QString("%1").arg( hObjects[i] );
         right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
 
-        manApplet->cryptokiAPI()->GetAttributeValue2( hSession, hObjects[i], CKA_KEY_TYPE, &binVal );
-        memcpy( &nType, binVal.pVal, sizeof(nType));
+        strMsg = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, hObjects[i] );
+        right_table_->setItem( row, 2, new QTableWidgetItem( strMsg ));
 
-        JS_BIN_reset( &binVal );
-        manApplet->cryptokiAPI()->GetAttributeValue2( hSession, hObjects[i], CKA_LABEL, &binVal );
-        JS_BIN_string( &binVal, &pLabel );
-        JS_BIN_reset( &binVal );
+        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_ID, hObjects[i] );
+        right_table_->setItem( row, 3, new QTableWidgetItem( strMsg ));
 
-        showAttribute( index, ATTR_VAL_STRING, CKA_LABEL, hObjects[i]);
-        showAttribute( index, ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, hObjects[i] );
-        showAttribute( index, ATTR_VAL_HEX, CKA_ID, hObjects[i] );
-
-        if( nType == CKK_RSA )
-        {
-            showAttribute( index, ATTR_VAL_HEX, CKA_MODULUS, hObjects[i]);
-            showAttribute( index, ATTR_VAL_HEX, CKA_PUBLIC_EXPONENT, hObjects[i] );
-        }
-        else if( nType == CKK_EC )
-        {
-            showAttribute( index, ATTR_VAL_HEX, CKA_EC_PARAMS, hObjects[i]);
-            showAttribute( index, ATTR_VAL_HEX, CKA_EC_POINT, hObjects[i]);
-        }
-
-        showAttribute( index, ATTR_VAL_BOOL, CKA_TOKEN, hObjects[i]);
-        showAttribute( index, ATTR_VAL_BOOL, CKA_WRAP, hObjects[i]);
-        showAttribute( index, ATTR_VAL_BOOL, CKA_ENCRYPT, hObjects[i]);
-        showAttribute( index, ATTR_VAL_BOOL, CKA_VERIFY, hObjects[i]);
-        showAttribute( index, ATTR_VAL_BOOL, CKA_PRIVATE, hObjects[i]);
-        showAttribute( index, ATTR_VAL_BOOL, CKA_MODIFIABLE, hObjects[i]);
-        showAttribute( index, ATTR_VAL_BOOL, CKA_DERIVE, hObjects[i]);
-        showAttribute( index, ATTR_VAL_DATE, CKA_START_DATE, hObjects[i]);
-        showAttribute( index, ATTR_VAL_DATE, CKA_END_DATE, hObjects[i] );
-
-        if( bList )
-        {
-            ManTreeItem *item = new ManTreeItem;
-            QVariant val = qVariantFromValue( hObjects[i]);
-
-            item->setText( pLabel );
-            item->setType( HM_ITEM_TYPE_PUBLICKEY_OBJECT );
-            item->setSlotIndex( index );
-            item->setData( val );
-            parentItem->appendRow( item );
-
-        }
-
-        if( pLabel ) JS_free( pLabel );
-        row = right_table_->rowCount();
-        addEmptyLine( row );
+        row++;
     }
 }
 
-void MainWindow::showPrivateKeyInfo( int index, long hObject )
+void MainWindow::showPrivateKeyInfoList( int index, long hObject )
 {
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
     SlotInfo slotInfo = slot_infos.at(index);
-
     CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[100];
     int rv = 0;
-    bool bList = true;
+
 
     removeAllRightTable();
+
+    QStringList headerList = { tr("Label"), tr("Handle"), tr("KeyType"), tr( "ID") };
+
+    right_table_->clear();
+    right_table_->horizontalHeader()->setStretchLastSection(true);
+    QString style = "QHeaderView::section {background-color:#404040;color:#FFFFFF;}";
+    right_table_->horizontalHeader()->setStyleSheet( style );
+
+    right_table_->setColumnCount(headerList.size());
+    right_table_->setHorizontalHeaderLabels( headerList );
+    right_table_->verticalHeader()->setVisible(false);
+
+    right_table_->setColumnWidth( 0, 200 );
+    right_table_->setColumnWidth( 1, 60 );
+    right_table_->setColumnWidth( 2, 100 );
 
     if( hObject < 0 )
     {
@@ -2253,121 +2613,60 @@ void MainWindow::showPrivateKeyInfo( int index, long hObject )
     {
         uObjCnt = 1;
         hObjects[0] = hObject;
-        bList = false;
     }
 
     QString strMsg = "";
-
-    strMsg = QString("%1").arg( uObjCnt );
-
-    right_table_->insertRow( 0 );
-    right_table_->setRowHeight( 0, 10 );
-    right_table_->setItem( 0, 0, new QTableWidgetItem(QString("PrivateKey Count")));
-    right_table_->setItem( 0, 1, new QTableWidgetItem( strMsg ));
-
-    addEmptyLine( 1 );
-    ManTreeItem *parentItem = NULL;
-    ManTreeItem *curItem = currentTreeItem();
-
-    if( curItem->getType() == HM_ITEM_TYPE_PRIVATEKEY_OBJECT )
-        parentItem = (ManTreeItem *)curItem->parent();
-    else
-        parentItem = curItem;
-
-    if( bList )
-    {
-        while( parentItem->hasChildren() )
-        {
-            parentItem->removeRow(0);
-        }
-    }
+    int row = 0;
 
     for( int i=0; i < uObjCnt; i++ )
     {
-        int nType = 0;
-        BIN binVal = {0,0};
-        int row = right_table_->rowCount();
-        strMsg = QString("%1").arg( hObjects[i] );
-        char *pLabel = NULL;
-
-        manApplet->cryptokiAPI()->GetAttributeValue2( hSession, hObjects[i], CKA_KEY_TYPE, &binVal );
-        memcpy( &nType, binVal.pVal, sizeof(nType));
-
-        JS_BIN_reset( &binVal );
-        manApplet->cryptokiAPI()->GetAttributeValue2( hSession, hObjects[i], CKA_LABEL, &binVal );
-        JS_BIN_string( &binVal, &pLabel );
-
         right_table_->insertRow( row );
         right_table_->setRowHeight( row, 10 );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("Handle")));
+
+        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_LABEL, hObjects[i] );
+
+        QTableWidgetItem *item = new QTableWidgetItem( strMsg );
+        item->setIcon( QIcon(":/images/prikey.png"));
+        right_table_->setItem( row, 0, item );
+
+        strMsg = QString("%1").arg( hObjects[i] );
         right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
 
-        showAttribute( index, ATTR_VAL_STRING, CKA_LABEL, hObjects[i]);
-        showAttribute( index, ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, hObjects[i] );
-        showAttribute( index, ATTR_VAL_HEX, CKA_ID, hObjects[i] );
-        showAttribute( index, ATTR_VAL_HEX, CKA_SUBJECT, hObjects[i]);
+        strMsg = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, hObjects[i] );
+        right_table_->setItem( row, 2, new QTableWidgetItem( strMsg ));
 
-        if( nType == CKK_RSA )
-        {
-            showAttribute( index, ATTR_VAL_HEX, CKA_MODULUS, hObjects[i]);
-            showAttribute( index, ATTR_VAL_HEX, CKA_PUBLIC_EXPONENT, hObjects[i]);
-            showAttribute( index, ATTR_VAL_HEX, CKA_PRIVATE_EXPONENT, hObjects[i]);
-            showAttribute( index, ATTR_VAL_HEX, CKA_PRIME_1, hObjects[i]);
-            showAttribute( index, ATTR_VAL_HEX, CKA_PRIME_2, hObjects[i]);
-            showAttribute( index, ATTR_VAL_HEX, CKA_EXPONENT_1, hObjects[i]);
-            showAttribute( index, ATTR_VAL_HEX, CKA_EXPONENT_2, hObjects[i]);
-        }
-        else if( nType == CKK_EC )
-        {
-            showAttribute( index, ATTR_VAL_HEX, CKA_EC_PARAMS, hObjects[i]);
-            showAttribute( index, ATTR_VAL_HEX, CKA_VALUE, hObjects[i] );
-        }
+        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_ID, hObjects[i] );
+        right_table_->setItem( row, 3, new QTableWidgetItem( strMsg ));
 
-        showAttribute( index, ATTR_VAL_BOOL, CKA_TOKEN, hObjects[i]);
-        showAttribute( index, ATTR_VAL_BOOL, CKA_SENSITIVE, hObjects[i]);
-        showAttribute( index, ATTR_VAL_BOOL, CKA_UNWRAP, hObjects[i]);
-        showAttribute( index, ATTR_VAL_BOOL, CKA_SIGN, hObjects[i]);
-        showAttribute( index, ATTR_VAL_BOOL, CKA_DECRYPT, hObjects[i]);
-        showAttribute( index, ATTR_VAL_BOOL, CKA_MODIFIABLE, hObjects[i]);
-        showAttribute( index, ATTR_VAL_BOOL, CKA_DERIVE, hObjects[i]);
-        showAttribute( index, ATTR_VAL_BOOL, CKA_EXTRACTABLE, hObjects[i]);
-        showAttribute( index, ATTR_VAL_DATE, CKA_START_DATE, hObjects[i]);
-        showAttribute( index, ATTR_VAL_DATE, CKA_END_DATE, hObjects[i] );
-
-        if( bList )
-        {
-            ManTreeItem *item = new ManTreeItem;
-            QVariant val = qVariantFromValue( hObjects[i]);
-
-            item->setText( pLabel );
-            item->setType( HM_ITEM_TYPE_PRIVATEKEY_OBJECT );
-            item->setSlotIndex( index );
-            item->setData( val );
-            parentItem->appendRow( item );
-        }
-
-
-        row = right_table_->rowCount();
-        addEmptyLine( row );
-        JS_BIN_reset( &binVal );
-        if( pLabel ) JS_free( pLabel );
+        row++;
     }
 }
 
-void MainWindow::showSecretKeyInfo( int index, long hObject )
+void MainWindow::showSecretKeyInfoList( int index, long hObject )
 {
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
     SlotInfo slotInfo = slot_infos.at(index);
-
     CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[100];
     int rv = 0;
-    bool bList = true;
 
     removeAllRightTable();
+    QStringList headerList = { tr("Label"), tr("Handle"), tr("KeyType"), tr( "ID") };
+
+    right_table_->clear();
+    right_table_->horizontalHeader()->setStretchLastSection(true);
+    QString style = "QHeaderView::section {background-color:#404040;color:#FFFFFF;}";
+    right_table_->horizontalHeader()->setStyleSheet( style );
+
+    right_table_->setColumnCount(headerList.size());
+    right_table_->setHorizontalHeaderLabels( headerList );
+    right_table_->verticalHeader()->setVisible(false);
+
+    right_table_->setColumnWidth( 0, 200 );
+    right_table_->setColumnWidth( 1, 60 );
+    right_table_->setColumnWidth( 2, 100 );
 
     if( hObject < 0 )
     {
@@ -2389,105 +2688,59 @@ void MainWindow::showSecretKeyInfo( int index, long hObject )
     {
         uObjCnt = 1;
         hObjects[0] = hObject;
-        bList = false;
     }
 
+    int row = 0;
     QString strMsg = "";
-
-    strMsg = QString("%1").arg( uObjCnt );
-    right_table_->insertRow( 0 );
-    right_table_->setRowHeight( 0, 10 );
-    right_table_->setItem( 0, 0, new QTableWidgetItem(QString("SecretKey Count")));
-    right_table_->setItem( 0, 1, new QTableWidgetItem(strMsg) );
-
-    addEmptyLine( 1 );
-    ManTreeItem *parentItem = NULL;
-    ManTreeItem *curItem = currentTreeItem();
-
-    if( curItem->getType() == HM_ITEM_TYPE_SECRETKEY_OBJECT )
-        parentItem = (ManTreeItem *)curItem->parent();
-    else
-        parentItem = curItem;
-
-    if( bList )
-    {
-        while( parentItem->hasChildren() )
-        {
-            parentItem->removeRow(0);
-        }
-    }
 
     for( int i=0; i < uObjCnt; i++ )
     {
-        int row = right_table_->rowCount();
-        BIN binVal = {0,0};
-        char *pLabel = NULL;
-
-        strMsg = QString("%1").arg( hObjects[i] );
-
         right_table_->insertRow( row );
         right_table_->setRowHeight( row, 10 );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("Handle")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
 
-        manApplet->cryptokiAPI()->GetAttributeValue2( hSession, hObjects[i], CKA_LABEL, &binVal );
-        JS_BIN_string( &binVal, &pLabel );
-        JS_BIN_reset( &binVal );
+        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_LABEL, hObjects[i] );
 
-        showAttribute( index, ATTR_VAL_STRING, CKA_LABEL, hObjects[i]);
-        showAttribute( index, ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, hObjects[i]);
-        showAttribute( index, ATTR_VAL_HEX, CKA_ID, hObjects[i]);
-        showAttribute( index, ATTR_VAL_HEX, CKA_VALUE, hObjects[i]);
-        showAttribute( index, ATTR_VAL_LEN, CKA_VALUE_LEN, hObjects[i]);
-        showAttribute( index, ATTR_VAL_BOOL, CKA_TOKEN, hObjects[i]);
-        showAttribute( index, ATTR_VAL_BOOL, CKA_PRIVATE, hObjects[i]);
-        showAttribute( index, ATTR_VAL_BOOL, CKA_SENSITIVE, hObjects[i]);
-        showAttribute( index, ATTR_VAL_BOOL, CKA_ENCRYPT, hObjects[i]);
-        showAttribute( index, ATTR_VAL_BOOL, CKA_DECRYPT, hObjects[i]);
-        showAttribute( index, ATTR_VAL_BOOL, CKA_SIGN, hObjects[i]);
-        showAttribute( index, ATTR_VAL_BOOL, CKA_VERIFY, hObjects[i]);
-        showAttribute( index, ATTR_VAL_BOOL, CKA_WRAP, hObjects[i]);
-        showAttribute( index, ATTR_VAL_BOOL, CKA_UNWRAP, hObjects[i]);
-        showAttribute( index, ATTR_VAL_BOOL, CKA_MODIFIABLE, hObjects[i]);
-        showAttribute( index, ATTR_VAL_BOOL, CKA_DERIVE, hObjects[i]);
-        showAttribute( index, ATTR_VAL_BOOL, CKA_EXTRACTABLE, hObjects[i]);
-        showAttribute( index, ATTR_VAL_DATE, CKA_START_DATE, hObjects[i]);
-        showAttribute( index, ATTR_VAL_DATE, CKA_END_DATE, hObjects[i] );
+        QTableWidgetItem *item = new QTableWidgetItem( strMsg );
+        item->setIcon( QIcon(":/images/key.jpg"));
+        right_table_->setItem( row, 0, item );
 
-        if( bList )
-        {
-            ManTreeItem *item = new ManTreeItem;
-            QVariant val = qVariantFromValue( hObjects[i]);
+        strMsg = QString("%1").arg( hObjects[i] );
+        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
 
-            item->setText( pLabel );
-            item->setType( HM_ITEM_TYPE_SECRETKEY_OBJECT );
-            item->setSlotIndex( index );
-            item->setData( val );
-            parentItem->appendRow( item );
+        strMsg = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, hObjects[i] );
+        right_table_->setItem( row, 2, new QTableWidgetItem( strMsg ));
 
-        }
+        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_ID, hObjects[i] );
+        right_table_->setItem( row, 3, new QTableWidgetItem( strMsg ));
 
-        if( pLabel ) JS_free( pLabel );
-
-        row = right_table_->rowCount();
-        addEmptyLine( row );
+        row++;
     }
 }
 
-void MainWindow::showDataInfo( int index, long hObject )
+void MainWindow::showDataInfoList( int index, long hObject )
 {
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
     SlotInfo slotInfo = slot_infos.at(index);
-
     CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[100];
     int rv = 0;
-    bool bList = true;
 
     removeAllRightTable();
+    QStringList headerList = { tr("Label"), tr("Handle") };
+
+    right_table_->clear();
+    right_table_->horizontalHeader()->setStretchLastSection(true);
+    QString style = "QHeaderView::section {background-color:#404040;color:#FFFFFF;}";
+    right_table_->horizontalHeader()->setStyleSheet( style );
+
+    right_table_->setColumnCount(headerList.size());
+    right_table_->setHorizontalHeaderLabels( headerList );
+    right_table_->verticalHeader()->setVisible(false);
+
+//    right_table_->setColumnWidth( 0, 260 );
+    right_table_->setColumnWidth( 1, 60 );
 
     if( hObject < 0 )
     {
@@ -2509,72 +2762,25 @@ void MainWindow::showDataInfo( int index, long hObject )
     {
         uObjCnt = 1;
         hObjects[0] = hObject;
-        bList = false;
     }
 
+    int row = 0;
     QString strMsg = "";
-
-    strMsg = QString("%1").arg( uObjCnt );
-    right_table_->insertRow( 0 );
-    right_table_->setRowHeight( 0, 10 );
-    right_table_->setItem( 0, 0, new QTableWidgetItem(QString("Data Count")));
-    right_table_->setItem( 0, 1, new QTableWidgetItem( strMsg ) );
-
-    addEmptyLine( 1 );
-    ManTreeItem *parentItem = NULL;
-    ManTreeItem *curItem = currentTreeItem();
-
-    if( curItem->getType() == HM_ITEM_TYPE_DATA_OBJECT )
-        parentItem = (ManTreeItem *)curItem->parent();
-    else
-        parentItem = curItem;
-
-    if( bList )
-    {
-        while( parentItem->hasChildren() )
-        {
-            parentItem->removeRow(0);
-        }
-    }
 
     for( int i=0; i < uObjCnt; i++ )
     {
-        int row = right_table_->rowCount();
-        BIN binVal = {0,0};
-        char *pLabel = NULL;
-
-        strMsg = QString("%1").arg( hObjects[0] );
         right_table_->insertRow( row );
         right_table_->setRowHeight( row, 10 );
-        right_table_->setItem( row, 0, new QTableWidgetItem(QString("Handle")));
-        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg));
 
-        manApplet->cryptokiAPI()->GetAttributeValue2( hSession, hObjects[i], CKA_LABEL, &binVal );
-        JS_BIN_string( &binVal, &pLabel );
-        JS_BIN_reset( &binVal );
+        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_LABEL, hObjects[i] );
 
-        showAttribute( index, ATTR_VAL_STRING, CKA_LABEL, hObjects[i]);
-        showAttribute( index, ATTR_VAL_HEX, CKA_VALUE, hObjects[i]);
-        showAttribute( index, ATTR_VAL_BOOL, CKA_TOKEN, hObjects[i]);
-        showAttribute( index, ATTR_VAL_BOOL, CKA_PRIVATE, hObjects[i]);
-        showAttribute( index, ATTR_VAL_BOOL, CKA_MODIFIABLE, hObjects[i]);
+        QTableWidgetItem *item = new QTableWidgetItem( strMsg );
+        item->setIcon( QIcon(":/images/data_add.png"));
+        right_table_->setItem( row, 0, item );
 
-        if( bList )
-        {
-            ManTreeItem *item = new ManTreeItem;
-            QVariant val = qVariantFromValue( hObjects[i]);
+        strMsg = QString("%1").arg( hObjects[i] );
+        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
 
-            item->setText( pLabel );
-            item->setType( HM_ITEM_TYPE_DATA_OBJECT );
-            item->setSlotIndex( index );
-            item->setData( val );
-            parentItem->appendRow( item );
-
-        }
-
-        if( pLabel ) JS_free( pLabel );
-
-        row = right_table_->rowCount();
-        addEmptyLine( row );
+        row++;
     }
 }

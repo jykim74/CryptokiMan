@@ -2200,19 +2200,19 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Save</source>
-        <translation>저장</translation>
+        <translation type="vanished">저장</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>지우기</translation>
+        <translation type="vanished">지우기</translation>
     </message>
     <message>
         <source>view log</source>
-        <translation>로그 보기</translation>
+        <translation type="vanished">로그 보기</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>닫기</translation>
+        <translation type="vanished">닫기</translation>
     </message>
 </context>
 <context>
@@ -2569,7 +2569,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Import</source>
-        <translation>가져오기</translation>
+        <translation type="vanished">가져오기</translation>
     </message>
     <message>
         <source>Import certificate</source>
@@ -2677,11 +2677,11 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Log View</source>
-        <translation>로그 보기</translation>
+        <translation type="vanished">로그 보기</translation>
     </message>
     <message>
         <source>view log for PKCS11</source>
-        <translation>PKCS11 에 대한 로그 보기</translation>
+        <translation type="vanished">PKCS11 에 대한 로그 보기</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -2742,6 +2742,70 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Sign</source>
         <translation>서명</translation>
+    </message>
+    <message>
+        <source>information</source>
+        <translation>정보</translation>
+    </message>
+    <message>
+        <source>&amp;Clear Log</source>
+        <translation>로그 지우기(&amp;C)</translation>
+    </message>
+    <message>
+        <source>clear information and log</source>
+        <translation type="vanished">정보 및 로그 지우기</translation>
+    </message>
+    <message>
+        <source>log</source>
+        <translation>로그</translation>
+    </message>
+    <message>
+        <source>Mechanism</source>
+        <translation>알고리즘</translation>
+    </message>
+    <message>
+        <source>MinSize</source>
+        <translation>최소 크기</translation>
+    </message>
+    <message>
+        <source>MaxSize</source>
+        <translation>최대 크기</translation>
+    </message>
+    <message>
+        <source>Flags</source>
+        <translation>플래그</translation>
+    </message>
+    <message>
+        <source>Class</source>
+        <translation>클래스</translation>
+    </message>
+    <message>
+        <source>Objet Size</source>
+        <translation>객체 크기</translation>
+    </message>
+    <message>
+        <source>Handle</source>
+        <translation>핸들</translation>
+    </message>
+    <message>
+        <source>Label</source>
+        <translation>라벨</translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <translation>ID</translation>
+    </message>
+    <message>
+        <source>Subject</source>
+        <translation>주체</translation>
+    </message>
+    <message>
+        <source>KeyType</source>
+        <translation>키 타입</translation>
+    </message>
+    <message>
+        <source>clear log</source>
+        <translation>로그 지우기</translation>
     </message>
 </context>
 <context>
@@ -2902,7 +2966,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>ViewCertificate</source>
-        <translation>인증서 보기</translation>
+        <translation type="vanished">인증서 보기</translation>
     </message>
     <message>
         <source>Token</source>
@@ -3236,7 +3300,15 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Show log view window at startup</source>
-        <translation>시작 시 로그 보기 뛰우기</translation>
+        <translation type="vanished">시작 시 로그 보기 뛰우기</translation>
+    </message>
+    <message>
+        <source>Show log view tab at startup</source>
+        <translation>시작 시 로그탭 보이기</translation>
+    </message>
+    <message>
+        <source>Log Level</source>
+        <translation>로그 레벨</translation>
     </message>
 </context>
 <context>

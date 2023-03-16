@@ -373,6 +373,7 @@ void CreateRSAPriKeyDlg::accept()
     }
 
     manApplet->messageBox( tr("success to create RSA private key"), this );
+    manApplet->showTypeList( index, HM_ITEM_TYPE_PRIVATEKEY );
 
     QDialog::accept();
 }

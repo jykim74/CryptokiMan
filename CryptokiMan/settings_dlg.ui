@@ -39,9 +39,9 @@
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="mShowLogWindowCheck">
+        <widget class="QCheckBox" name="mShowLogTabCheck">
          <property name="text">
-          <string>Show log view window at startup</string>
+          <string>Show log view tab at startup</string>
          </property>
         </widget>
        </item>
@@ -79,6 +79,23 @@
          </item>
          <item row="0" column="1">
           <widget class="QComboBox" name="mLangCombo"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_2">
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>Log Level</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="mLogLevelCombo"/>
          </item>
         </layout>
        </item>

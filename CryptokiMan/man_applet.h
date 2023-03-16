@@ -30,7 +30,8 @@ public:
     CryptokiAPI* cryptokiAPI() { return cryptoki_api_; };
     QString cmd() { return cmd_; };
 
-    void showTypeData( int nSlotIndex, int nType );
+    void showTypeList( int nSlotIndex, int nType );
+    int currentSlotIdx();
 
 
     void messageBox(const QString& msg, QWidget *parent=0);
