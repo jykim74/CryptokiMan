@@ -214,6 +214,14 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>mSlotsCombo</tabstop>
+  <tabstop>mSlotIDText</tabstop>
+  <tabstop>mSessionText</tabstop>
+  <tabstop>mLoginText</tabstop>
+  <tabstop>mOldPinText</tabstop>
+  <tabstop>mNewPinText</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

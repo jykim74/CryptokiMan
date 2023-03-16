@@ -618,6 +618,58 @@
  </widget>
  <tabstops>
   <tabstop>tabWidget</tabstop>
+  <tabstop>mSlotsCombo</tabstop>
+  <tabstop>mSlotIDText</tabstop>
+  <tabstop>mSessionText</tabstop>
+  <tabstop>mLoginText</tabstop>
+  <tabstop>mMechCombo</tabstop>
+  <tabstop>mOptionCombo</tabstop>
+  <tabstop>mPriLabelText</tabstop>
+  <tabstop>mPriSubjectText</tabstop>
+  <tabstop>mPriIDText</tabstop>
+  <tabstop>mPriPrivateCheck</tabstop>
+  <tabstop>mPriPrivateCombo</tabstop>
+  <tabstop>mPriDecryptCheck</tabstop>
+  <tabstop>mPriDecryptCombo</tabstop>
+  <tabstop>mPriSignCheck</tabstop>
+  <tabstop>mPriSignCombo</tabstop>
+  <tabstop>mPriUnwrapCheck</tabstop>
+  <tabstop>mPriUnwrapCombo</tabstop>
+  <tabstop>mPriModifiableCheck</tabstop>
+  <tabstop>mPriModifiableCombo</tabstop>
+  <tabstop>mPriSensitiveCheck</tabstop>
+  <tabstop>mPriSensitiveCombo</tabstop>
+  <tabstop>mPriDeriveCheck</tabstop>
+  <tabstop>mPriDeriveCombo</tabstop>
+  <tabstop>mPriExtractableCheck</tabstop>
+  <tabstop>mPriExtractableCombo</tabstop>
+  <tabstop>mPriTokenCheck</tabstop>
+  <tabstop>mPriTokenCombo</tabstop>
+  <tabstop>mPriStartDateCheck</tabstop>
+  <tabstop>mPriStartDateEdit</tabstop>
+  <tabstop>mPriEndDateCheck</tabstop>
+  <tabstop>mPriEndDateEdit</tabstop>
+  <tabstop>mPubLabelText</tabstop>
+  <tabstop>mPubIDText</tabstop>
+  <tabstop>mPubExponentText</tabstop>
+  <tabstop>mPubPrivateCheck</tabstop>
+  <tabstop>mPubPrivateCombo</tabstop>
+  <tabstop>mPubEncryptCheck</tabstop>
+  <tabstop>mPubEncryptCombo</tabstop>
+  <tabstop>mPubWrapCheck</tabstop>
+  <tabstop>mPubWrapCombo</tabstop>
+  <tabstop>mPubVerifyCheck</tabstop>
+  <tabstop>mPubVerifyCombo</tabstop>
+  <tabstop>mPubDeriveCheck</tabstop>
+  <tabstop>mPubDeriveCombo</tabstop>
+  <tabstop>mPubModifiableCheck</tabstop>
+  <tabstop>mPubModifiableCombo</tabstop>
+  <tabstop>mPubTokenCheck</tabstop>
+  <tabstop>mPubTokenCombo</tabstop>
+  <tabstop>mPubStartDateCheck</tabstop>
+  <tabstop>mPubStartDateEdit</tabstop>
+  <tabstop>mPubEndDateCheck</tabstop>
+  <tabstop>mPubEndDateEdit</tabstop>
  </tabstops>
  <resources/>
  <connections>

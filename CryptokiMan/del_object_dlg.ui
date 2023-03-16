@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>420</width>
+    <width>423</width>
     <height>203</height>
    </rect>
   </property>
@@ -261,6 +261,15 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>mSlotsCombo</tabstop>
+  <tabstop>mSlotIDText</tabstop>
+  <tabstop>mSessionText</tabstop>
+  <tabstop>mLoginText</tabstop>
+  <tabstop>mObjectTypeCombo</tabstop>
+  <tabstop>mLabelCombo</tabstop>
+  <tabstop>mObjectText</tabstop>
+  <tabstop>mDeleteBtn</tabstop>
+  <tabstop>mDeleteAllBtn</tabstop>
   <tabstop>mCloseBtn</tabstop>
  </tabstops>
  <resources/>

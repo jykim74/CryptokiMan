@@ -391,6 +391,21 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>mSlotsCombo</tabstop>
+  <tabstop>mSlotIDText</tabstop>
+  <tabstop>mSessionText</tabstop>
+  <tabstop>mLoginText</tabstop>
+  <tabstop>mWrappingLabelCombo</tabstop>
+  <tabstop>mWrappingObjectText</tabstop>
+  <tabstop>mWrappingTypeCombo</tabstop>
+  <tabstop>mWrappingMechCombo</tabstop>
+  <tabstop>mWrappingParamText</tabstop>
+  <tabstop>mLabelCombo</tabstop>
+  <tabstop>mObjectText</tabstop>
+  <tabstop>mPathText</tabstop>
+  <tabstop>mFindBtn</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

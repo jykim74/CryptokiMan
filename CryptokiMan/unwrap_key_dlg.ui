@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_3">
       <attribute name="title">
@@ -605,6 +605,49 @@
  </widget>
  <tabstops>
   <tabstop>tabWidget</tabstop>
+  <tabstop>mSlotsCombo</tabstop>
+  <tabstop>mSlotIDText</tabstop>
+  <tabstop>mSessionText</tabstop>
+  <tabstop>mLoginText</tabstop>
+  <tabstop>mWrapKeyPathText</tabstop>
+  <tabstop>mFindBtn</tabstop>
+  <tabstop>mUnwrapLabelCombo</tabstop>
+  <tabstop>mUnwrapObjectText</tabstop>
+  <tabstop>mUnwrapTypeCombo</tabstop>
+  <tabstop>mUnwrapMechCombo</tabstop>
+  <tabstop>mUnwrapParamText</tabstop>
+  <tabstop>mClassCombo</tabstop>
+  <tabstop>mTypeCombo</tabstop>
+  <tabstop>mLabelText</tabstop>
+  <tabstop>mIDText</tabstop>
+  <tabstop>mPrivateCheck</tabstop>
+  <tabstop>mPrivateCombo</tabstop>
+  <tabstop>mSensitiveCheck</tabstop>
+  <tabstop>mSensitiveCombo</tabstop>
+  <tabstop>mWrapCheck</tabstop>
+  <tabstop>mWrapCombo</tabstop>
+  <tabstop>mUnwrapCheck</tabstop>
+  <tabstop>mUnwrapCombo</tabstop>
+  <tabstop>mEncryptCheck</tabstop>
+  <tabstop>mEncryptCombo</tabstop>
+  <tabstop>mDecryptCheck</tabstop>
+  <tabstop>mDecryptCombo</tabstop>
+  <tabstop>mModifiableCheck</tabstop>
+  <tabstop>mModifiableCombo</tabstop>
+  <tabstop>mSignCheck</tabstop>
+  <tabstop>mSignCombo</tabstop>
+  <tabstop>mVerifyCheck</tabstop>
+  <tabstop>mVerifyCombo</tabstop>
+  <tabstop>mTokenCheck</tabstop>
+  <tabstop>mTokenCombo</tabstop>
+  <tabstop>mDeriveCheck</tabstop>
+  <tabstop>mDeriveCombo</tabstop>
+  <tabstop>mExtractableCheck</tabstop>
+  <tabstop>mExtractableCombo</tabstop>
+  <tabstop>mStartDateCheck</tabstop>
+  <tabstop>mStartDateEdit</tabstop>
+  <tabstop>mEndDateCheck</tabstop>
+  <tabstop>mEndDateEdit</tabstop>
  </tabstops>
  <resources/>
  <connections>

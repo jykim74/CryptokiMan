@@ -242,9 +242,14 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>mSlotsCombo</tabstop>
   <tabstop>mSlotIDText</tabstop>
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
+  <tabstop>mSeedCombo</tabstop>
+  <tabstop>mSeedText</tabstop>
+  <tabstop>mSetSeedBtn</tabstop>
+  <tabstop>mLengthText</tabstop>
   <tabstop>mOutputText</tabstop>
  </tabstops>
  <resources/>

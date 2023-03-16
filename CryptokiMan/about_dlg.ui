@@ -114,6 +114,7 @@
  <tabstops>
   <tabstop>pushButton</tabstop>
   <tabstop>mAboutText</tabstop>
+  <tabstop>mCheckUpdateBtn</tabstop>
  </tabstops>
  <resources>
   <include location="cryptokiman.qrc"/>

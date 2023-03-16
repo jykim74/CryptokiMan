@@ -223,22 +223,21 @@
          <property name="topMargin">
           <number>0</number>
          </property>
-         <item row="0" column="3">
-          <widget class="QLabel" name="label_10">
-           <property name="text">
-            <string>Param</string>
+         <item row="0" column="2">
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
            </property>
-          </widget>
-         </item>
-         <item row="0" column="4">
-          <widget class="QLineEdit" name="mSrcParamText">
-           <property name="maximumSize">
+           <property name="sizeHint" stdset="0">
             <size>
-             <width>100</width>
-             <height>16777215</height>
+             <width>40</width>
+             <height>20</height>
             </size>
            </property>
-          </widget>
+          </spacer>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="mSrcMethodCombo"/>
          </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label_9">
@@ -259,21 +258,41 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
-          <widget class="QComboBox" name="mSrcMethodCombo"/>
-         </item>
-         <item row="0" column="2">
-          <spacer name="horizontalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
+        </layout>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_9">
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_10">
+           <property name="minimumSize">
             <size>
-             <width>40</width>
-             <height>20</height>
+             <width>80</width>
+             <height>0</height>
             </size>
            </property>
-          </spacer>
+           <property name="maximumSize">
+            <size>
+             <width>80</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Param</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="mSrcParamText">
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -609,6 +628,47 @@
  </widget>
  <tabstops>
   <tabstop>tabWidget</tabstop>
+  <tabstop>mSlotsCombo</tabstop>
+  <tabstop>mSlotIDText</tabstop>
+  <tabstop>mSessionText</tabstop>
+  <tabstop>mLoginText</tabstop>
+  <tabstop>mSrcLabelCombo</tabstop>
+  <tabstop>mSrcObjectText</tabstop>
+  <tabstop>mSrcMethodCombo</tabstop>
+  <tabstop>mSrcParamText</tabstop>
+  <tabstop>mClassCombo</tabstop>
+  <tabstop>mTypeCombo</tabstop>
+  <tabstop>mLabelText</tabstop>
+  <tabstop>mIDText</tabstop>
+  <tabstop>mKeySizeText</tabstop>
+  <tabstop>mPrivateCheck</tabstop>
+  <tabstop>mPrivateCombo</tabstop>
+  <tabstop>mSensitiveCheck</tabstop>
+  <tabstop>mSensitiveCombo</tabstop>
+  <tabstop>mWrapCheck</tabstop>
+  <tabstop>mWrapCombo</tabstop>
+  <tabstop>mUnwrapCheck</tabstop>
+  <tabstop>mUnwrapCombo</tabstop>
+  <tabstop>mEncryptCheck</tabstop>
+  <tabstop>mEncryptCombo</tabstop>
+  <tabstop>mDecryptCheck</tabstop>
+  <tabstop>mDecryptCombo</tabstop>
+  <tabstop>mModifiableCheck</tabstop>
+  <tabstop>mModifiableCombo</tabstop>
+  <tabstop>mSignCheck</tabstop>
+  <tabstop>mSignCombo</tabstop>
+  <tabstop>mVerifyCheck</tabstop>
+  <tabstop>mVerifyCombo</tabstop>
+  <tabstop>mTokenCheck</tabstop>
+  <tabstop>mTokenCombo</tabstop>
+  <tabstop>mExtractableCheck</tabstop>
+  <tabstop>mExtractableCombo</tabstop>
+  <tabstop>mDeriveCheck</tabstop>
+  <tabstop>mDeriveCombo</tabstop>
+  <tabstop>mStartDateCheck</tabstop>
+  <tabstop>mStartDateEdit</tabstop>
+  <tabstop>mEndDateCheck</tabstop>
+  <tabstop>mEndDateEdit</tabstop>
  </tabstops>
  <resources/>
  <connections>

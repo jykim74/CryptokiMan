@@ -211,6 +211,18 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>mSlotsCombo</tabstop>
+  <tabstop>mSlotIDText</tabstop>
+  <tabstop>mSessionText</tabstop>
+  <tabstop>mOperationStateText</tabstop>
+  <tabstop>mObjectText</tabstop>
+  <tabstop>mEncKeyText</tabstop>
+  <tabstop>mAuthKeyText</tabstop>
+  <tabstop>mGetOperationStateBtn</tabstop>
+  <tabstop>mSetOperationStateBtn</tabstop>
+  <tabstop>mCloseBtn</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

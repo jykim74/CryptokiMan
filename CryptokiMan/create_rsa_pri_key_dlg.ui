@@ -478,6 +478,43 @@
  </widget>
  <tabstops>
   <tabstop>tabWidget</tabstop>
+  <tabstop>mSlotsCombo</tabstop>
+  <tabstop>mSlotIDText</tabstop>
+  <tabstop>mSessionText</tabstop>
+  <tabstop>mLoginText</tabstop>
+  <tabstop>mLabelText</tabstop>
+  <tabstop>mSubjectText</tabstop>
+  <tabstop>mIDText</tabstop>
+  <tabstop>mModulesText</tabstop>
+  <tabstop>mPubExponentText</tabstop>
+  <tabstop>mPriExponentText</tabstop>
+  <tabstop>mPrime1Text</tabstop>
+  <tabstop>mPrime2Text</tabstop>
+  <tabstop>mExponent1Text</tabstop>
+  <tabstop>mExponent2Text</tabstop>
+  <tabstop>mCoefficientText</tabstop>
+  <tabstop>mPrivateCheck</tabstop>
+  <tabstop>mPrivateCombo</tabstop>
+  <tabstop>mDecryptCheck</tabstop>
+  <tabstop>mDecryptCombo</tabstop>
+  <tabstop>mSignCheck</tabstop>
+  <tabstop>mSignCombo</tabstop>
+  <tabstop>mUnwrapCheck</tabstop>
+  <tabstop>mUnwrapCombo</tabstop>
+  <tabstop>mModifiableCheck</tabstop>
+  <tabstop>mModifiableCombo</tabstop>
+  <tabstop>mSensitiveCheck</tabstop>
+  <tabstop>mSensitiveCombo</tabstop>
+  <tabstop>mDeriveCheck</tabstop>
+  <tabstop>mDeriveCombo</tabstop>
+  <tabstop>mExtractableCheck</tabstop>
+  <tabstop>mExtractableCombo</tabstop>
+  <tabstop>mTokenCheck</tabstop>
+  <tabstop>mTokenCombo</tabstop>
+  <tabstop>mStartDateCheck</tabstop>
+  <tabstop>mStartDateEdit</tabstop>
+  <tabstop>mEndDateCheck</tabstop>
+  <tabstop>mEndDateEdit</tabstop>
  </tabstops>
  <resources/>
  <connections>

@@ -303,6 +303,23 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>mSlotsCombo</tabstop>
+  <tabstop>mSessionText</tabstop>
+  <tabstop>mSlotIDText</tabstop>
+  <tabstop>mLoginText</tabstop>
+  <tabstop>mLabelText</tabstop>
+  <tabstop>mPrivateCheck</tabstop>
+  <tabstop>mPrivateCombo</tabstop>
+  <tabstop>mModifiableCheck</tabstop>
+  <tabstop>mModifiableCombo</tabstop>
+  <tabstop>mSensitiveCheck</tabstop>
+  <tabstop>mSensitiveCombo</tabstop>
+  <tabstop>mTokenCheck</tabstop>
+  <tabstop>mTokenCombo</tabstop>
+  <tabstop>mDataCombo</tabstop>
+  <tabstop>mDataText</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
