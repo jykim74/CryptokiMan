@@ -220,14 +220,14 @@ void MainWindow::createActions()
 
     const QIcon initIcon = QIcon::fromTheme("document-init", QIcon(":/images/init.png"));
     QAction *initAct = new QAction( initIcon, tr("P11Initialize"), this );
-    connect( initAct, &QAction::triggered, left_tree_, &ManTreeView::P11Initialize );
+    connect( initAct, &QAction::triggered, this, &MainWindow::P11Initialize );
     initAct->setStatusTip(tr("PKCS11 initialize"));
     moduleMenu->addAction( initAct );
     moduleToolBar->addAction( initAct );
 
     const QIcon finalIcon = QIcon::fromTheme("document-final", QIcon(":/images/final.png"));
     QAction *finalAct = new QAction( finalIcon, tr("P11Finalize"), this );
-    connect( finalAct, &QAction::triggered, left_tree_, &ManTreeView::P11Finalize );
+    connect( finalAct, &QAction::triggered, this, &MainWindow::P11Finalize );
     finalAct->setStatusTip(tr("PKCS11 finalize"));
     moduleMenu->addAction( finalAct );
     moduleToolBar->addAction( finalAct );
@@ -579,7 +579,176 @@ void MainWindow::quit()
 
 void MainWindow::unload()
 {
-    manApplet->cryptokiAPI()->unloadLibrary();
+    int ret = 0;
+    CryptokiAPI *P11 = manApplet->cryptokiAPI();
+
+    if( P11 == NULL || P11->getCTX() == NULL )
+    {
+        manApplet->warningBox( tr( "Cryptoki Library is not loaded"), this );
+        return;
+    }
+
+    ret = manApplet->cryptokiAPI()->unloadLibrary();
+    if( ret == 0 )
+    {
+        manApplet->messageBox( tr( "Cryptoki library is unloaded successfully" ), this );
+
+        ManTreeItem *item = getRootItem();
+        if( item )
+        {
+            item->setText( "No slot" );
+            item->setIcon( QIcon( ":/images/cryptokiman.png") );
+        }
+    }
+}
+
+void MainWindow::P11Initialize()
+{
+    int     ret = 0;
+
+    if( manApplet->cryptokiAPI()->getCTX() == NULL )
+    {
+        manApplet->warningBox( tr( "You have load Cryptoki Library at first" ), this );
+        return;
+    }
+
+    CK_ULONG uSlotCnt = 0;
+    CK_SLOT_ID  sSlotList[10];
+
+    ManTreeItem *parent_item = manApplet->mainWindow()->getRootItem();
+    QList<SlotInfo>& slotInfos = manApplet->mainWindow()->getSlotInfos();
+\
+    ret = manApplet->cryptokiAPI()->Initialize( NULL );
+
+    if( ret != 0 )
+    {
+        QString msg = JS_PKCS11_GetErrorMsg( ret );
+        manApplet->warningBox( msg );
+        return;
+    }
+
+    ret = manApplet->cryptokiAPI()->GetSlotList2( CK_TRUE, sSlotList, &uSlotCnt );
+
+    if( ret == 0 )
+    {
+        for( int i=0; i < uSlotCnt; i++ )
+        {
+            CK_SLOT_INFO    sSlotInfo;
+            SlotInfo    slotInfo;
+
+            ret =manApplet->cryptokiAPI()->GetSlotInfo( sSlotList[i], &sSlotInfo );
+
+            if( ret != 0 )
+            {
+                continue;
+            }
+
+            QString strDesc = (char *)sSlotInfo.slotDescription;
+            QStringList strList = strDesc.split( "  " );
+            QString strName;
+
+            if( strList.size() > 0 )
+                strName = QString( "%1 [%2]" ).arg( strList.at(0) ).arg(i);
+            else
+                strName = QString( "Slot [%1]" ).arg(i);
+
+            ManTreeItem *item = new ManTreeItem;
+            item->setType( HM_ITEM_TYPE_SLOT );
+            item->setIcon( QIcon( ":/images/slot.png" ));
+            item->setText( strName );
+            item->setSlotIndex( i );
+
+            parent_item->appendRow( item );
+
+            slotInfo.setDesc( strName );
+            slotInfo.setLogin( false );
+            slotInfo.setSlotID( sSlotList[i]);
+            slotInfo.setSessionHandle(-1);
+
+            slotInfos.push_back( slotInfo );
+
+
+            ManTreeItem *pItemToken = new ManTreeItem( QString(tr("Token")) );
+            pItemToken->setType( HM_ITEM_TYPE_TOKEN );
+            pItemToken->setIcon( QIcon(":/images/token.png"));
+            pItemToken->setSlotIndex(i);
+            item->appendRow( pItemToken );
+
+
+            ManTreeItem *pItemMech = new ManTreeItem( QString(tr("Mechanism")) );
+            pItemMech->setType( HM_ITEM_TYPE_MECHANISM );
+            pItemMech->setIcon(QIcon(":/images/mech.png"));
+            pItemMech->setSlotIndex(i);
+            item->appendRow( pItemMech );
+
+            ManTreeItem *pItemSession = new ManTreeItem( QString(tr("Session")) );
+            pItemSession->setType( HM_ITEM_TYPE_SESSION );
+            pItemSession->setIcon(QIcon(":/images/session.png"));
+            pItemSession->setSlotIndex(i);
+            item->appendRow( pItemSession );
+
+            ManTreeItem *pItemObjects = new ManTreeItem( QString(tr("Objects")) );
+            pItemObjects->setType( HM_ITEM_TYPE_OBJECTS );
+            pItemObjects->setIcon(QIcon(":/images/object.png"));
+            pItemObjects->setSlotIndex(i);
+            item->appendRow( pItemObjects );
+
+            ManTreeItem *pItemCert = new ManTreeItem( QString(tr("Certificate") ) );
+            pItemCert->setType( HM_ITEM_TYPE_CERTIFICATE );
+            pItemCert->setIcon(QIcon(":/images/cert.png"));
+            pItemCert->setSlotIndex(i);
+            pItemObjects->appendRow( pItemCert );
+
+            ManTreeItem *pItemPubKey = new ManTreeItem( QString(tr("PublicKey")) );
+            pItemPubKey->setType( HM_ITEM_TYPE_PUBLICKEY );
+            pItemPubKey->setIcon( QIcon(":/images/pubkey.png") );
+            pItemPubKey->setSlotIndex(i);
+            pItemObjects->appendRow( pItemPubKey );
+
+            ManTreeItem *pItemPriKey = new ManTreeItem( QString(tr("PrivateKey") ) );
+            pItemPriKey->setType( HM_ITEM_TYPE_PRIVATEKEY );
+            pItemPriKey->setIcon( QIcon(":/images/prikey.png") );
+            pItemPriKey->setSlotIndex(i);
+            pItemObjects->appendRow( pItemPriKey );
+
+            ManTreeItem *pItemSecKey = new ManTreeItem( QString(tr("SecretKey") ) );
+            pItemSecKey->setType( HM_ITEM_TYPE_SECRETKEY );
+            pItemSecKey->setIcon(QIcon(":/images/key.jpg"));
+            pItemSecKey->setSlotIndex(i);
+            pItemObjects->appendRow( pItemSecKey );
+
+            ManTreeItem *pItemData = new ManTreeItem( QString(tr("Data") ) );
+            pItemData->setType( HM_ITEM_TYPE_DATA );
+            pItemData->setIcon(QIcon(":/images/data_add.png"));
+            pItemData->setSlotIndex(i);
+            pItemObjects->appendRow( pItemData );
+        }
+
+//        expand( parent_item->index() );
+        left_tree_->expand( parent_item->index() );
+    }
+}
+
+void MainWindow::P11Finalize()
+{
+    int ret = 0;
+    ret = manApplet->cryptokiAPI()->Finalize(NULL);
+
+    if( ret == 0 )
+    {
+        manApplet->messageBox( tr( "finalized successfully"), this );
+
+        ManTreeItem* root = getRootItem();
+
+        if( root )
+        {
+            int cnt = root->rowCount();
+            for( int i = 0; i < cnt; i++ )
+            {
+                root->removeRow( cnt - 1 - i );
+            }
+        }
+    }
 }
 
 void MainWindow::openSession()
@@ -757,12 +926,14 @@ void MainWindow::digest()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot" ), this );
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
         return;
     }
 
+    int nSlot = pItem->getSlotIndex();
+
     DigestDlg digestDlg;
-    if( pItem ) digestDlg.setSelectedSlot(pItem->getSlotIndex());
+    if( pItem ) digestDlg.setSelectedSlot(nSlot);
     digestDlg.exec();
 }
 
@@ -772,7 +943,7 @@ void MainWindow::sign()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot" ), this );
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
         return;
     }
 
@@ -787,7 +958,7 @@ void MainWindow::signType()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot" ), this );
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
         return;
     }
 
@@ -801,11 +972,15 @@ void MainWindow::signType()
 
 void MainWindow::signEach()
 {
-    if( slot_index_ < 0 )
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot" ), this );
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
         return;
     }
+
+    int nSlot = pItem->getSlotIndex();
 
     QModelIndex index = right_table_->currentIndex();
     int row = index.row();
@@ -818,7 +993,7 @@ void MainWindow::signEach()
     int type = getDataType( right_type_ );
     long obj_id = item1->text().toLong();
 
-    signDlg.setSelectedSlot( slot_index_ );
+    signDlg.setSelectedSlot( nSlot );
     signDlg.setObject( type, obj_id );
 
     signDlg.exec();
@@ -826,39 +1001,51 @@ void MainWindow::signEach()
 
 void MainWindow::verify()
 {
-    if( slot_index_ < 0 )
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot" ), this );
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
         return;
     }
 
+    int nSlot = pItem->getSlotIndex();
+
     VerifyDlg verifyDlg;
-    verifyDlg.setSelectedSlot( slot_index_ );
+    verifyDlg.setSelectedSlot( nSlot );
     verifyDlg.exec();
 }
 
 void MainWindow::verifyType()
 {
-    if( slot_index_ < 0 )
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot" ), this );
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
         return;
     }
 
+    int nSlot = pItem->getSlotIndex();
+
     VerifyDlg verifyDlg;
     int type = getDataType( right_type_ );
-    verifyDlg.setSelectedSlot( slot_index_ );
+    verifyDlg.setSelectedSlot( nSlot );
     verifyDlg.changeType( type );
     verifyDlg.exec();
 }
 
 void MainWindow::verifyEach()
 {
-    if( slot_index_ < 0 )
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot" ), this );
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
         return;
     }
+
+    int nSlot = pItem->getSlotIndex();
 
     QModelIndex index = right_table_->currentIndex();
     int row = index.row();
@@ -870,37 +1057,45 @@ void MainWindow::verifyEach()
     int type = getDataType( right_type_ );
     long obj_id = item1->text().toLong();
 
-    verifyDlg.setSelectedSlot( slot_index_ );
+    verifyDlg.setSelectedSlot( nSlot );
     verifyDlg.setObject( type, obj_id );
     verifyDlg.exec();
 }
 
 void MainWindow::encrypt()
 {
-    if( slot_index_ < 0 )
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot" ), this );
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
         return;
     }
 
+    int nSlot = pItem->getSlotIndex();
+
     EncryptDlg encryptDlg;
-    encryptDlg.setSelectedSlot( slot_index_ );
+    encryptDlg.setSelectedSlot( nSlot );
 
     encryptDlg.exec();
 }
 
 void MainWindow::encryptType()
 {
-    if( slot_index_ < 0 )
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot" ), this );
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
         return;
     }
+
+    int nSlot = pItem->getSlotIndex();
 
     EncryptDlg encryptDlg;
     int type = getDataType( right_type_ );
 
-    encryptDlg.setSelectedSlot( slot_index_ );
+    encryptDlg.setSelectedSlot( nSlot );
     encryptDlg.changeType(type);
 
     encryptDlg.exec();
@@ -908,11 +1103,15 @@ void MainWindow::encryptType()
 
 void MainWindow::encryptEach()
 {
-    if( slot_index_ < 0 )
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot" ), this );
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
         return;
     }
+
+    int nSlot = pItem->getSlotIndex();
 
     QModelIndex index = right_table_->currentIndex();
     int row = index.row();
@@ -925,36 +1124,43 @@ void MainWindow::encryptEach()
     int type = getDataType( right_type_ );
     long obj_id = item1->text().toLong();
 
-    encryptDlg.setSelectedSlot( slot_index_ );
+    encryptDlg.setSelectedSlot( nSlot );
     encryptDlg.setObject( type, obj_id );
     encryptDlg.exec();
 }
 
 void MainWindow::decrypt()
 {
-    if( slot_index_ < 0 )
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot" ), this );
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
         return;
     }
 
+    int nSlot = pItem->getSlotIndex();
     DecryptDlg decryptDlg;
-    decryptDlg.setSelectedSlot( slot_index_ );
+    decryptDlg.setSelectedSlot( nSlot );
     decryptDlg.exec();
 }
 
 void MainWindow::decryptType()
 {
-    if( slot_index_ < 0 )
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot" ), this );
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
         return;
     }
+
+    int nSlot = pItem->getSlotIndex();
 
     DecryptDlg decryptDlg;
     int type = getDataType( right_type_ );
 
-    decryptDlg.setSelectedSlot( slot_index_ );
+    decryptDlg.setSelectedSlot( nSlot );
     decryptDlg.changeType( type );
 
     decryptDlg.exec();
@@ -962,11 +1168,15 @@ void MainWindow::decryptType()
 
 void MainWindow::decryptEach()
 {
-    if( slot_index_ < 0 )
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot" ), this );
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
         return;
     }
+
+    int nSlot = pItem->getSlotIndex();
 
     QModelIndex index = right_table_->currentIndex();
     int row = index.row();
@@ -978,7 +1188,7 @@ void MainWindow::decryptEach()
     int type = getDataType( right_type_ );
     long obj_id = item1->text().toLong();
 
-    decryptDlg.setSelectedSlot( slot_index_ );
+    decryptDlg.setSelectedSlot( nSlot );
     decryptDlg.setObject( type, obj_id );
 
     decryptDlg.exec();
@@ -986,14 +1196,18 @@ void MainWindow::decryptEach()
 
 void MainWindow::importCert()
 {
-    if( slot_index_ < 0 )
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot" ), this );
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
         return;
     }
 
+    int nSlot = pItem->getSlotIndex();
+
     ImportCertDlg importCertDlg;
-    importCertDlg.setSelectedSlot( slot_index_ );
+    importCertDlg.setSelectedSlot( nSlot );
     importCertDlg.exec();
 }
 
@@ -1024,27 +1238,35 @@ end :
 
 void MainWindow::importPFX()
 {
-    if( slot_index_ < 0)
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot" ), this );
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
         return;
     }
 
+    int nSlot = pItem->getSlotIndex();
+
     ImportPFXDlg importPFXDlg;
-    importPFXDlg.setSelectedSlot( slot_index_ );
+    importPFXDlg.setSelectedSlot( nSlot );
     importPFXDlg.exec();
 }
 
 void MainWindow::improtPrivateKey()
 {
-    if( slot_index_ < 0 )
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot" ), this );
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
         return;
     }
 
+    int nSlot = pItem->getSlotIndex();
+
     ImportPriKeyDlg importPriKeyDlg;
-    importPriKeyDlg.setSelectedSlot( slot_index_ );
+    importPriKeyDlg.setSelectedSlot( nSlot );
     importPriKeyDlg.exec();
 }
 
@@ -1071,92 +1293,120 @@ void MainWindow::logView( bool bShow )
 
 void MainWindow::initToken()
 {
-    if( slot_index_ < 0 )
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot" ), this );
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
         return;
     }
 
+    int nSlot = pItem->getSlotIndex();
+
     InitTokenDlg initTokenDlg;
-    initTokenDlg.setSelectedSlot( slot_index_ );
+    initTokenDlg.setSelectedSlot( nSlot );
     initTokenDlg.exec();
 }
 
 void MainWindow::rand()
 {
-    if( slot_index_ < 0 )
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot" ), this );
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
         return;
     }
 
+    int nSlot = pItem->getSlotIndex();
+
     RandDlg randDlg;
-    randDlg.setSelectedSlot( slot_index_ );
+    randDlg.setSelectedSlot( nSlot );
     randDlg.exec();
 }
 
 void MainWindow::setPin()
 {
-    if( slot_index_ < 0 )
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot" ), this );
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
         return;
     }
 
+    int nSlot = pItem->getSlotIndex();
+
     SetPinDlg setPinDlg;
-    setPinDlg.setSelectedSlot( slot_index_ );
+    setPinDlg.setSelectedSlot( nSlot );
     setPinDlg.exec();
 }
 
 void MainWindow::initPin()
 {
-    if( slot_index_ < 0 )
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot" ), this );
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
         return;
     }
 
+    int nSlot = pItem->getSlotIndex();
+
     InitPinDlg initPinDlg;
-    initPinDlg.setSelectedSlot( slot_index_ );
+    initPinDlg.setSelectedSlot( nSlot );
     initPinDlg.exec();
 }
 
 void MainWindow::wrapKey()
 {
-    if( slot_index_ < 0 )
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot" ), this );
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
         return;
     }
 
+    int nSlot = pItem->getSlotIndex();
+
     WrapKeyDlg wrapKeyDlg;
-    wrapKeyDlg.setSelectedSlot( slot_index_ );
+    wrapKeyDlg.setSelectedSlot( nSlot );
     wrapKeyDlg.exec();
 }
 
 void MainWindow::unwrapKey()
 {
-    if( slot_index_ < 0 )
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot" ), this );
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
         return;
     }
 
+    int nSlot = pItem->getSlotIndex();
+
     UnwrapKeyDlg unwrapKeyDlg;
-    unwrapKeyDlg.setSelectedSlot( slot_index_ );
+    unwrapKeyDlg.setSelectedSlot( nSlot );
     unwrapKeyDlg.exec();
 }
 
 void MainWindow::deriveKey()
 {
-    if( slot_index_ < 0 )
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot" ), this );
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
         return;
     }
 
+    int nSlot = pItem->getSlotIndex();
+
     DeriveKeyDlg deriveKeyDlg;
-    deriveKeyDlg.setSelectedSlot( slot_index_ );
+    deriveKeyDlg.setSelectedSlot( nSlot );
     deriveKeyDlg.exec();
 }
 
@@ -1169,6 +1419,12 @@ void MainWindow::settings()
 void MainWindow::operationState()
 {
     ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        return;
+    }
 
     OperStateDlg operStateDlg;
 

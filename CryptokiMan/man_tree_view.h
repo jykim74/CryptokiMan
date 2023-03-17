@@ -18,8 +18,6 @@ private slots:
     void showContextMenu( QPoint point );
 
 public slots:
-    void P11Initialize();
-    void P11Finalize();
     int showTypeList( int nSlotIndex, int nType );
 
 private:

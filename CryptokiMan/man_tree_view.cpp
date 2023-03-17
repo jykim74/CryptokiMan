@@ -78,8 +78,11 @@ void ManTreeView::showContextMenu( QPoint point )
 
     if( item->getType() == HM_ITEM_TYPE_ROOT )
     {
-        menu.addAction( tr("P11Initialize"), this, SLOT(P11Initialize()));
-        menu.addAction( tr("P11Finalize"), this, SLOT(P11Finalize()));
+//        menu.addAction( tr("P11Initialize"), this, SLOT(P11Initialize()));
+//        menu.addAction( tr("P11Finalize"), this, SLOT(P11Finalize()));
+
+        menu.addAction( tr("P11Initialize"), manApplet->mainWindow(), &MainWindow::P11Initialize );
+        menu.addAction( tr("P11Finalize"), manApplet->mainWindow(), &MainWindow::P11Finalize );
     }
     else if( item->getType() == HM_ITEM_TYPE_TOKEN )
     {
@@ -173,137 +176,4 @@ ManTreeItem* ManTreeView::currentItem()
     ManTreeItem *item = (ManTreeItem *)tree_model->itemFromIndex(index);
 
     return item;
-}
-
-void ManTreeView::P11Initialize()
-{
-    int     ret = 0;
-
-    if( manApplet->cryptokiAPI()->getCTX() == NULL )
-    {
-        manApplet->warningBox( tr( "You have load Cryptoki Library at first" ), this );
-        return;
-    }
-
-    CK_ULONG uSlotCnt = 0;
-    CK_SLOT_ID  sSlotList[10];
-
-    ManTreeItem *parent_item = manApplet->mainWindow()->getRootItem();
-    QList<SlotInfo>& slotInfos = manApplet->mainWindow()->getSlotInfos();
-\
-    ret = manApplet->cryptokiAPI()->Initialize( NULL );
-
-    if( ret != 0 )
-    {
-        QString msg = JS_PKCS11_GetErrorMsg( ret );
-        manApplet->warningBox( msg );
-        return;
-    }
-
-    ret = manApplet->cryptokiAPI()->GetSlotList2( CK_TRUE, sSlotList, &uSlotCnt );
-
-    if( ret == 0 )
-    {
-        for( int i=0; i < uSlotCnt; i++ )
-        {
-            CK_SLOT_INFO    sSlotInfo;
-            SlotInfo    slotInfo;
-
-            ret =manApplet->cryptokiAPI()->GetSlotInfo( sSlotList[i], &sSlotInfo );
-
-            if( ret != 0 )
-            {
-                continue;
-            }
-
-            QString strDesc = (char *)sSlotInfo.slotDescription;
-            QStringList strList = strDesc.split( "  " );
-            QString strName;
-
-            if( strList.size() > 0 )
-                strName = QString( "%1 [%2]" ).arg( strList.at(0) ).arg(i);
-            else
-                strName = QString( "Slot [%1]" ).arg(i);
-
-            ManTreeItem *item = new ManTreeItem;
-            item->setType( HM_ITEM_TYPE_SLOT );
-            item->setIcon( QIcon( ":/images/slot.png" ));
-            item->setText( strName );
-            item->setSlotIndex( i );
-
-            parent_item->appendRow( item );
-
-            slotInfo.setDesc( strName );
-            slotInfo.setLogin( false );
-            slotInfo.setSlotID( sSlotList[i]);
-            slotInfo.setSessionHandle(-1);
-
-            slotInfos.push_back( slotInfo );
-
-
-            ManTreeItem *pItemToken = new ManTreeItem( QString(tr("Token")) );
-            pItemToken->setType( HM_ITEM_TYPE_TOKEN );
-            pItemToken->setIcon( QIcon(":/images/token.png"));
-            pItemToken->setSlotIndex(i);
-            item->appendRow( pItemToken );
-
-
-            ManTreeItem *pItemMech = new ManTreeItem( QString(tr("Mechanism")) );
-            pItemMech->setType( HM_ITEM_TYPE_MECHANISM );
-            pItemMech->setIcon(QIcon(":/images/mech.png"));
-            pItemMech->setSlotIndex(i);
-            item->appendRow( pItemMech );
-
-            ManTreeItem *pItemSession = new ManTreeItem( QString(tr("Session")) );
-            pItemSession->setType( HM_ITEM_TYPE_SESSION );
-            pItemSession->setIcon(QIcon(":/images/session.png"));
-            pItemSession->setSlotIndex(i);
-            item->appendRow( pItemSession );
-
-            ManTreeItem *pItemObjects = new ManTreeItem( QString(tr("Objects")) );
-            pItemObjects->setType( HM_ITEM_TYPE_OBJECTS );
-            pItemObjects->setIcon(QIcon(":/images/object.png"));
-            pItemObjects->setSlotIndex(i);
-            item->appendRow( pItemObjects );
-
-            ManTreeItem *pItemCert = new ManTreeItem( QString(tr("Certificate") ) );
-            pItemCert->setType( HM_ITEM_TYPE_CERTIFICATE );
-            pItemCert->setIcon(QIcon(":/images/cert.png"));
-            pItemCert->setSlotIndex(i);
-            pItemObjects->appendRow( pItemCert );
-
-            ManTreeItem *pItemPubKey = new ManTreeItem( QString(tr("PublicKey")) );
-            pItemPubKey->setType( HM_ITEM_TYPE_PUBLICKEY );
-            pItemPubKey->setIcon( QIcon(":/images/pubkey.png") );
-            pItemPubKey->setSlotIndex(i);
-            pItemObjects->appendRow( pItemPubKey );
-
-            ManTreeItem *pItemPriKey = new ManTreeItem( QString(tr("PrivateKey") ) );
-            pItemPriKey->setType( HM_ITEM_TYPE_PRIVATEKEY );
-            pItemPriKey->setIcon( QIcon(":/images/prikey.png") );
-            pItemPriKey->setSlotIndex(i);
-            pItemObjects->appendRow( pItemPriKey );
-
-            ManTreeItem *pItemSecKey = new ManTreeItem( QString(tr("SecretKey") ) );
-            pItemSecKey->setType( HM_ITEM_TYPE_SECRETKEY );
-            pItemSecKey->setIcon(QIcon(":/images/key.jpg"));
-            pItemSecKey->setSlotIndex(i);
-            pItemObjects->appendRow( pItemSecKey );
-
-            ManTreeItem *pItemData = new ManTreeItem( QString(tr("Data") ) );
-            pItemData->setType( HM_ITEM_TYPE_DATA );
-            pItemData->setIcon(QIcon(":/images/data_add.png"));
-            pItemData->setSlotIndex(i);
-            pItemObjects->appendRow( pItemData );
-        }
-
-        expand( parent_item->index() );
-    }
-}
-
-void ManTreeView::P11Finalize()
-{
-    int     ret = 0;
-
-    ret = manApplet->cryptokiAPI()->Finalize( NULL );
 }

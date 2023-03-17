@@ -82,6 +82,8 @@ public slots:
     void openRecent();
     void quit();
     void unload();
+    void P11Initialize();
+    void P11Finalize();
     void openSession();
     void closeSession();
     void closeAllSessions();

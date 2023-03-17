@@ -19,7 +19,7 @@ void ManTreeModel::initialize()
 
     ManTreeItem *item = new ManTreeItem();
 
-    item->setText( tr("No slot"));
+    item->setText( "No slot" );
     item->setIcon( QIcon( ":/images/cryptokiman.png") );
 
     insertRow( 0, item );

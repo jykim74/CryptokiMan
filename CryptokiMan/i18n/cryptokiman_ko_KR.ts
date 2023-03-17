@@ -2725,7 +2725,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>There is no slot</source>
-        <translation>슬롯이 없습니다</translation>
+        <translation type="vanished">슬롯이 없습니다</translation>
     </message>
     <message>
         <source>Edit Object</source>
@@ -2807,6 +2807,58 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>clear log</source>
         <translation>로그 지우기</translation>
     </message>
+    <message>
+        <source>Cryptoki Library is not loaded</source>
+        <translation>Cryptoki 라이브러리가 로드 되지 않았습니다.</translation>
+    </message>
+    <message>
+        <source>Cryptoki library is unloaded successfully</source>
+        <translation>Cryptoki 라이브러리를 제거 하였습니다.</translation>
+    </message>
+    <message>
+        <source>No slot</source>
+        <translation type="vanished">슬롯 없음</translation>
+    </message>
+    <message>
+        <source>You have load Cryptoki Library at first</source>
+        <translation>Cryptoki Library 를 먼저 로드하세요</translation>
+    </message>
+    <message>
+        <source>Token</source>
+        <translation>토큰</translation>
+    </message>
+    <message>
+        <source>Session</source>
+        <translation>세션</translation>
+    </message>
+    <message>
+        <source>Certificate</source>
+        <translation>인증서</translation>
+    </message>
+    <message>
+        <source>PublicKey</source>
+        <translation>공개키</translation>
+    </message>
+    <message>
+        <source>PrivateKey</source>
+        <translation>개인키</translation>
+    </message>
+    <message>
+        <source>SecretKey</source>
+        <translation>대칭키</translation>
+    </message>
+    <message>
+        <source>Data</source>
+        <translation>데이타</translation>
+    </message>
+    <message>
+        <source>finalized successfully</source>
+        <translation>성공정으로 끝냈습니다</translation>
+    </message>
+    <message>
+        <source>There is no slot to be selected</source>
+        <translation>선택한 슬롯이 없습니다</translation>
+    </message>
 </context>
 <context>
     <name>ManApplet</name>
@@ -2831,7 +2883,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <name>ManTreeModel</name>
     <message>
         <source>No slot</source>
-        <translation>슬롯 없음</translation>
+        <translation type="vanished">슬롯 없음</translation>
     </message>
 </context>
 <context>
@@ -2970,39 +3022,39 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Token</source>
-        <translation>토큰</translation>
+        <translation type="vanished">토큰</translation>
     </message>
     <message>
         <source>Mechanism</source>
-        <translation>알고리즘</translation>
+        <translation type="vanished">알고리즘</translation>
     </message>
     <message>
         <source>Session</source>
-        <translation>세션</translation>
+        <translation type="vanished">세션</translation>
     </message>
     <message>
         <source>Objects</source>
-        <translation>대상</translation>
+        <translation type="vanished">대상</translation>
     </message>
     <message>
         <source>Certificate</source>
-        <translation>인증서</translation>
+        <translation type="vanished">인증서</translation>
     </message>
     <message>
         <source>PublicKey</source>
-        <translation>공개키</translation>
+        <translation type="vanished">공개키</translation>
     </message>
     <message>
         <source>PrivateKey</source>
-        <translation>개인키</translation>
+        <translation type="vanished">개인키</translation>
     </message>
     <message>
         <source>SecretKey</source>
-        <translation>대칭키</translation>
+        <translation type="vanished">대칭키</translation>
     </message>
     <message>
         <source>Data</source>
-        <translation>데이타</translation>
+        <translation type="vanished">데이타</translation>
     </message>
     <message>
         <source>EditObject</source>
@@ -3010,7 +3062,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>You have load Cryptoki Library at first</source>
-        <translation>Cryptoki Library 를 먼저 로드하세요</translation>
+        <translation type="vanished">Cryptoki Library 를 먼저 로드하세요</translation>
     </message>
 </context>
 <context>
