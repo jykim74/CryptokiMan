@@ -261,7 +261,7 @@ void MainWindow::createActions()
     moduleToolBar->addAction( loginAct );
 
     const QIcon logoutIcon = QIcon::fromTheme("close_session", QIcon(":/images/logout.png"));
-    QAction *logoutAct = new QAction( logoutIcon, tr("Close All Sessions"), this );
+    QAction *logoutAct = new QAction( logoutIcon, tr("Logout"), this );
     connect( logoutAct, &QAction::triggered, this, &MainWindow::logout );
     logoutAct->setStatusTip(tr("PKCS11 Logout"));
     moduleMenu->addAction( logoutAct );
@@ -752,8 +752,14 @@ void MainWindow::P11Finalize()
 }
 
 void MainWindow::openSession()
-{
+{    
     ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        return;
+    }
 
     OpenSessionDlg openSessionDlg;
     if( pItem ) openSessionDlg.setSelectedSlot( pItem->getSlotIndex() );
@@ -766,6 +772,12 @@ void MainWindow::closeSession()
 {
     ManTreeItem *pItem = currentTreeItem();
 
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        return;
+    }
+
     CloseSessionDlg closeSessionDlg;
     closeSessionDlg.setAll(false);
     if( pItem ) closeSessionDlg.setSelectedSlot( pItem->getSlotIndex() );
@@ -775,6 +787,14 @@ void MainWindow::closeSession()
 
 void MainWindow::closeAllSessions()
 {
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        return;
+    }
+
     CloseSessionDlg closeSessionDlg;
     closeSessionDlg.setAll(true);
     closeSessionDlg.exec();
@@ -784,6 +804,12 @@ void MainWindow::login()
 {
     ManTreeItem *pItem = currentTreeItem();
 
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        return;
+    }
+
     LoginDlg loginDlg;
     if( pItem ) loginDlg.setSelectedSlot( pItem->getSlotIndex() );
     loginDlg.exec();
@@ -791,8 +817,13 @@ void MainWindow::login()
 
 void MainWindow::logout()
 {
-//    manApplet->yesOrNoBox( tr("Do you want to logout?" ), this );  
     ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        return;
+    }
 
     LogoutDlg logoutDlg;
     if( pItem ) logoutDlg.setSelectedSlot( pItem->getSlotIndex() );
@@ -810,6 +841,13 @@ void MainWindow::generateKeyPair()
 void MainWindow::generateKey()
 {
     ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        return;
+    }
+
     GenKeyDlg genKeyDlg;
     if( pItem ) genKeyDlg.setSelectedSlot(pItem->getSlotIndex());
     genKeyDlg.exec();
@@ -818,6 +856,13 @@ void MainWindow::generateKey()
 void MainWindow::createData()
 {
     ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        return;
+    }
+
     CreateDataDlg createDataDlg;
     if( pItem ) createDataDlg.setSelectedSlot( pItem->getSlotIndex() );
     createDataDlg.exec();
@@ -826,6 +871,12 @@ void MainWindow::createData()
 void MainWindow::createRSAPublicKey()
 {
     ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        return;
+    }
 
     CreateRSAPubKeyDlg createRSAPubKeyDlg;
     if( pItem ) createRSAPubKeyDlg.setSelectedSlot(pItem->getSlotIndex());
@@ -836,6 +887,12 @@ void MainWindow::createRSAPrivateKey()
 {
     ManTreeItem *pItem = currentTreeItem();
 
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        return;
+    }
+
     CreateRSAPriKeyDlg createRSAPriKeyDlg;
     if( pItem ) createRSAPriKeyDlg.setSelectedSlot(pItem->getSlotIndex());
     createRSAPriKeyDlg.exec();
@@ -844,6 +901,12 @@ void MainWindow::createRSAPrivateKey()
 void MainWindow::createECPublicKey()
 {
     ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        return;
+    }
 
     CreateECPubKeyDlg createECPubKeyDlg;
     if( pItem ) createECPubKeyDlg.setSelectedSlot( pItem->getSlotIndex() );
@@ -854,6 +917,12 @@ void MainWindow::createECPrivateKey()
 {
     ManTreeItem *pItem = currentTreeItem();
 
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        return;
+    }
+
     CreateECPriKeyDlg createECPriKeyDlg;
     if( pItem ) createECPriKeyDlg.setSelectedSlot( pItem->getSlotIndex() );
     createECPriKeyDlg.exec();
@@ -863,6 +932,12 @@ void MainWindow::createKey()
 {
     ManTreeItem *pItem = currentTreeItem();
 
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        return;
+    }
+
     CreateKeyDlg createKeyDlg;
     if( pItem ) createKeyDlg.setSelectedSlot( pItem->getSlotIndex() );
     createKeyDlg.exec();
@@ -870,11 +945,25 @@ void MainWindow::createKey()
 
 void MainWindow::deleteObject()
 {
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        return;
+    }
+
     QModelIndex index = right_table_->currentIndex();
     int row = index.row();
 
     QTableWidgetItem* item0 = right_table_->item( row, 0 );
     QTableWidgetItem* item1 = right_table_->item( row, 1 );
+
+    if( item0 == NULL || item1 == NULL )
+    {
+        manApplet->warningBox( tr( "There is no object to be selected" ), this );
+        return;
+    }
 
     DelObjectDlg delObjectDlg;
 
@@ -888,6 +977,12 @@ void MainWindow::deleteObject()
 void MainWindow::editObject()
 {
     ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        return;
+    }
 
     EditAttributeDlg editAttrDlg;
     if( pItem )
@@ -903,11 +998,25 @@ void MainWindow::editObject()
 
 void MainWindow::editAttribute()
 {
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        return;
+    }
+
     QModelIndex index = right_table_->currentIndex();
     int row = index.row();
 
     QTableWidgetItem* item0 = right_table_->item( row, 0 );
     QTableWidgetItem* item1 = right_table_->item( row, 1 );
+
+    if( item0 == NULL || item1 == NULL )
+    {
+        manApplet->warningBox( tr( "There is no object to be selected" ), this );
+        return;
+    }
 
     EditAttributeDlg editAttrDlg;
 

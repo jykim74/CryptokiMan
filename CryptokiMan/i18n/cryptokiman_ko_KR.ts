@@ -2417,7 +2417,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Logout</source>
-        <translation type="vanished">로그 아웃</translation>
+        <translation>로그 아웃</translation>
     </message>
     <message>
         <source>&amp;Objects</source>
@@ -2858,6 +2858,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>There is no slot to be selected</source>
         <translation>선택한 슬롯이 없습니다</translation>
+    </message>
+    <message>
+        <source>There is no object to be selected</source>
+        <translation>선택한 대상이 없습니다</translation>
     </message>
 </context>
 <context>
