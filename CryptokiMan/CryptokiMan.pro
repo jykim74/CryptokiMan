@@ -25,6 +25,7 @@ DEFINES += HSMMAN_VERSION=$$PROJECT_VERSION
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+CONFIG += sdk_no_version_check
 CONFIG += c++11
 
 SOURCES += \
@@ -170,7 +171,7 @@ RESOURCES += \
 
 TRANSLATIONS += i18n/cryptokiman_ko_KR.ts
 
-
+INCLUDEPATH += "../../PKILib"
 
 mac {
     ICON = images/cryptokiman.icns
@@ -186,15 +187,19 @@ mac {
 #    INCLUDEPATH += "/usr/local/Sparkle.framework/Headers"
 
     INCLUDEPATH += "/usr/local/include"
-    LIBS += -L"/usr/local/lib" -lltdl
+
 
     debug {
         LIBS += -L"../../build-PKILib-Desktop_Qt_5_15_2_clang_64bit-Debug" -lPKILib
         LIBS += -L"../../PKILib/lib/mac/debug/openssl3/lib" -lcrypto -lssl
+        INCLUDEPATH += "../../PKILib/lib/mac/debug/openssl3/include"
     } else {
         LIBS += -L"../../build-PKILib-Desktop_Qt_5_15_2_clang_64bit-Release" -lPKILib
         LIBS += -L"../../PKILib/lib/mac/openssl3/lib" -lcrypto -lssl
+        INCLUDEPATH += "../../PKILib/lib/mac/openssl3/include"
     }
+
+    LIBS += -L"/usr/local/lib" -lltdl
 }
 
 win32 {
@@ -237,7 +242,7 @@ linux {
     LIBS += -lltdl
 }
 
-INCLUDEPATH += "../../PKILib"
+
 
 DISTFILES += \
     i18n/cryptokiman_ko_KR.qm \
