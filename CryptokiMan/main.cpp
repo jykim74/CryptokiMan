@@ -2,6 +2,8 @@
 #include <QApplication>
 #include <QCommandLineOption>
 #include <QCommandLineParser>
+#include <QFile>
+
 #include "man_applet.h"
 #include "js_pki.h"
 #include "i18n_helper.h"

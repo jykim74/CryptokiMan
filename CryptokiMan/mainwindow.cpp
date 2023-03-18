@@ -137,7 +137,12 @@ void MainWindow::initialize()
 
     QList <int> sizes;
     sizes << 300 << 600;
+
+#ifdef Q_OS_MACOS
+    resize( 1100, 768 );
+#else
     resize(900,768);
+#endif
 
     hsplitter_->setSizes(sizes);
     setCentralWidget(hsplitter_);

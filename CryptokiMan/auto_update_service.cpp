@@ -1,6 +1,7 @@
 #include <QSettings>
-
 #include "auto_update_service.h"
+
+#ifdef _AUTO_UPDATE
 
 #ifdef Q_OS_WIN32
 #include "winsparkle.h"
@@ -162,3 +163,5 @@ bool AutoUpdateService::autoUpdateEnabled() const {
 void AutoUpdateService::setAutoUpdateEnabled(bool enabled) {
     adapter_->setAutoUpdateEnabled(enabled);
 }
+
+#endif
