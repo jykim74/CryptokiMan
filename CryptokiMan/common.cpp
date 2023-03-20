@@ -37,7 +37,11 @@ QString findFile( QWidget *parent, int nType, const QString strPath )
     else if( nType == JS_FILE_TYPE_BIN )
         strType = QObject::tr("BIN Files (*.bin *.der *.pem);;All Files(*.*)");
     else if( nType == JS_FILE_TYPE_DLL )
+#ifdef WIN32
         strType = QObject::tr( "DLL Files (*.dll);;SO Files (*.so);;All Files (*.*)" );
+#else
+        strType = QObject::tr( "SO Files (*.so);;All Files (*.*)" );
+#endif
     else if( nType == JS_FILE_TYPE_PFX )
         strType = QObject::tr("PFX Files (*.pfx *.p12 *.pem);;All Files(*.*)");
 
