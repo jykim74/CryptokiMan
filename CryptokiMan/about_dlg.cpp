@@ -11,6 +11,8 @@ AboutDlg::AboutDlg(QWidget *parent) :
     setWindowTitle(tr("About %1").arg(manApplet->getBrand()));
     setWindowFlags( (windowFlags() & ~Qt::WindowContextHelpButtonHint) | Qt::WindowStaysOnTopHint );
 
+    connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(close()));
+
     version_label_ = tr( "About %1 (%2)").arg( "CryptokiMan").arg(STRINGIZE(HSMMAN_VERSION));
     mVersionLabel->setText( version_label_ );
 
@@ -46,6 +48,12 @@ AboutDlg::AboutDlg(QWidget *parent) :
     strAbout += tr("mailto : jykim74@gmail.com");
 
     strAbout += strAppend;
+
+#ifdef _AUTO_UPDATE
+    mCheckUpdateBtn->show();
+#else
+    mCheckUpdateBtn->hide();
+#endif
 
     mAboutText->setText( strAbout );
 }

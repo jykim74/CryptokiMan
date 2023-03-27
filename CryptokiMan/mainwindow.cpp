@@ -313,14 +313,14 @@ void MainWindow::createActions()
     objectsMenu->addAction( createRSAPriKeyAct );
 //    objectsToolBar->addAction( createRSAPriKeyAct );
 
-    const QIcon ep1Icon = QIcon::fromTheme("EC-Public", QIcon(":/images/ep1.jpg"));
+    const QIcon ep1Icon = QIcon::fromTheme("EC-Public", QIcon(":/images/ep1.png"));
     QAction *createECPubKeyAct = new QAction( ep1Icon, tr("Create EC Public Key"), this);
     connect( createECPubKeyAct, &QAction::triggered, this, &MainWindow::createECPublicKey);
     createDataAct->setStatusTip(tr("PKCS11 Create EC Public key"));
     objectsMenu->addAction( createECPubKeyAct );
 //    objectsToolBar->addAction( createECPubKeyAct );
 
-    const QIcon ep2Icon = QIcon::fromTheme("EC-Private", QIcon(":/images/ep2.jpg"));
+    const QIcon ep2Icon = QIcon::fromTheme("EC-Private", QIcon(":/images/ep2.png"));
     QAction *createECPriKeyAct = new QAction( ep2Icon, tr("Create EC Private Key"), this);
     connect( createECPriKeyAct, &QAction::triggered, this, &MainWindow::createECPrivateKey);
     createECPriKeyAct->setStatusTip(tr("PKCS11 Create EC Private key"));
@@ -454,7 +454,7 @@ void MainWindow::createActions()
     toolsMenu->addAction( wrapKeyAct );
 //    toolsToolBar->addAction( wrapKeyAct );
 
-    const QIcon ukIcon = QIcon::fromTheme("UnwrapKey", QIcon(":/images/uk.jpg"));
+    const QIcon ukIcon = QIcon::fromTheme("UnwrapKey", QIcon(":/images/uk.png"));
     QAction *unwrapKeyAct = new QAction( ukIcon, tr("Unwrap Key"), this);
     connect( unwrapKeyAct, &QAction::triggered, this, &MainWindow::unwrapKey);
     unwrapKeyAct->setStatusTip(tr("PKCS11 unwrap key"));
@@ -718,7 +718,7 @@ void MainWindow::P11Initialize()
 
             ManTreeItem *pItemSecKey = new ManTreeItem( QString(tr("SecretKey") ) );
             pItemSecKey->setType( HM_ITEM_TYPE_SECRETKEY );
-            pItemSecKey->setIcon(QIcon(":/images/key.jpg"));
+            pItemSecKey->setIcon(QIcon(":/images/key.png"));
             pItemSecKey->setSlotIndex(i);
             pItemObjects->appendRow( pItemSecKey );
 
@@ -3076,7 +3076,7 @@ void MainWindow::showSecretKeyInfoList( int index, long hObject )
         strMsg = stringAttribute( ATTR_VAL_STRING, CKA_LABEL, hObjects[i] );
 
         QTableWidgetItem *item = new QTableWidgetItem( strMsg );
-        item->setIcon( QIcon(":/images/key.jpg"));
+        item->setIcon( QIcon(":/images/key.png"));
         right_table_->setItem( row, 0, item );
 
         strMsg = QString("%1").arg( hObjects[i] );

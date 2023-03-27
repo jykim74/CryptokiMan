@@ -41,7 +41,6 @@
         <file>images/pin1.png</file>
         <file>images/pin2.png</file>
         <file>images/dk.png</file>
-        <file>images/uk.jpg</file>
         <file>images/wk.png</file>
         <file>images/decrypt.png</file>
         <file>images/encrypt.png</file>
@@ -49,8 +48,6 @@
         <file>images/delete.png</file>
         <file>images/edit.png</file>
         <file>images/key_gen.png</file>
-        <file>images/ep1.jpg</file>
-        <file>images/ep2.jpg</file>
         <file>images/rp1.png</file>
         <file>images/rp2.png</file>
         <file>cryptokiman.qss</file>
@@ -60,10 +57,13 @@
         <file>images/normal.png</file>
         <file>images/mech.png</file>
         <file>images/pubkey.png</file>
-        <file>images/key.jpg</file>
         <file>images/object.png</file>
         <file>images/session.png</file>
         <file>images/slot.png</file>
         <file>images/clear.png</file>
+        <file>images/key.png</file>
+        <file>images/uk.png</file>
+        <file>images/ep1.png</file>
+        <file>images/ep2.png</file>
     </qresource>
 </RCC>
