@@ -121,6 +121,7 @@ void MainWindow::initialize()
 
     text_tab_ = new QTabWidget;
     vsplitter_->addWidget( text_tab_ );
+    text_tab_->setTabPosition( QTabWidget::South );
     text_tab_->addTab( info_text_, tr("information") );
 //    text_tab_->addTab( log_text_, tr("log") );
 
