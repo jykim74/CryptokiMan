@@ -21,7 +21,7 @@
     </message>
     <message>
         <source>About %1 (%2)</source>
-        <translation>%1(%2) 에 대해서</translation>
+        <translation type="vanished">%1(%2) 에 대해서</translation>
     </message>
     <message>
         <source>About CryptokiMan</source>
@@ -50,11 +50,19 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Copyright (C) 2019 ~ 2020 JongYeob Kim</source>
-        <translation>Copyright (C) 2019 ~ 2020 JongYeob Kim</translation>
+        <translation type="vanished">Copyright (C) 2019 ~ 2020 JongYeob Kim</translation>
     </message>
     <message>
         <source>mailto : jykim74@gmail.com</source>
-        <translation>메일: jykim74@gmail.com</translation>
+        <translation type="vanished">메일: jykim74@gmail.com</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>닫기</translation>
+    </message>
+    <message>
+        <source>About %1 [Ver %2]</source>
+        <translation>%1 에 대해 [Ver %2]</translation>
     </message>
 </context>
 <context>
@@ -3212,6 +3220,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Save File</source>
         <translation>저장 파일</translation>
+    </message>
+    <message>
+        <source>SO Files (*.so *.dylib);;All Files (*.*)</source>
+        <translation>SO 파일들 (*.so *.dylib);;모든 파일들(*.*)</translation>
     </message>
 </context>
 <context>

@@ -13,7 +13,7 @@ AboutDlg::AboutDlg(QWidget *parent) :
 
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(close()));
 
-    version_label_ = tr( "About %1 [Ver %2]").arg( "CryptokiMan").arg(STRINGIZE(HSMMAN_VERSION));
+    version_label_ = tr( "About %1 [Ver %2]").arg( "CryptokiMan").arg(STRINGIZE(CRYPTOKIMAN_VERSION));
     mVersionLabel->setText( version_label_ );
 
 

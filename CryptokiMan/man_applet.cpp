@@ -73,6 +73,11 @@ void ManApplet::start()
     if( settings_mgr_->showLogTab() )
         main_win_->logView();
 
+    QString strVersion = STRINGIZE(CRYPTOKIMAN_VERSION);
+    log( "======================================================");
+    log( QString( "== Start CryptokiMan Version: %1" ).arg( strVersion ));
+    log( "======================================================");
+
     main_win_->activateWindow();
 }
 

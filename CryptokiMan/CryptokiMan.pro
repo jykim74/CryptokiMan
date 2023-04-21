@@ -17,7 +17,7 @@ PROJECT_VERSION = "0.9.7"
 # depend on your compiler). Please consult the documentation of the
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
-DEFINES += HSMMAN_VERSION=$$PROJECT_VERSION
+DEFINES += CRYPTOKIMAN_VERSION=$$PROJECT_VERSION
 # DEFINES += _AUTO_UPDATE
 
 # You can also make your code fail to compile if you use deprecated APIs.
