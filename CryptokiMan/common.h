@@ -27,6 +27,13 @@
 */
 
 enum {
+    DATA_STRING,
+    DATA_HEX,
+    DATA_BASE64,
+    DATA_URL
+};
+
+enum {
     OBJ_CERT_IDX = 0,
     OBJ_PUBKEY_IDX,
     OBJ_PRIKEY_IDX,
@@ -116,5 +123,10 @@ QString getHexString( unsigned char *pData, int nDataLen );
 void getInfoValue( const JExtensionInfo *pExtInfo, QString& strVal );
 
 int getDataType( int nItemType );
+
+void getBINFromString( BIN *pBin, const QString& strType, const QString& strString );
+void getBINFromString( BIN *pBin, int nType, const QString& strString );
+QString getStringFromBIN( const BIN *pBin, const QString& strType, bool bSeenOnly = false );
+QString getStringFromBIN( const BIN *pBin, int nType, bool bSeenOnly = false );
 
 #endif // COMMON_H
