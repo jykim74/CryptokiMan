@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QMessageBox>
+#include "js_license.h"
 
 class MainWindow;
 
@@ -21,10 +22,11 @@ public:
     ~ManApplet();
 
     void start();
+    int checkLicense();
+    JS_LICENSE_INFO& LicenseInfo() { return license_info_; };
 
     MainWindow* mainWindow() { return main_win_; };
 
-    AboutDlg* aboutDlg() { return about_dlg_; };
     LogViewDlg* logViewDlg() { return log_view_dlg_; };
     SettingsMgr* settingsMgr() { return settings_mgr_; };
     CryptokiAPI* cryptokiAPI() { return cryptoki_api_; };
@@ -56,16 +58,19 @@ public:
     void dlog( const QString strLog );
     void write( const QString strLog );
 
+    bool isLicense() { return  is_license_; };
+
 private:
     Q_DISABLE_COPY(ManApplet)
 
     MainWindow* main_win_;
 
-    AboutDlg* about_dlg_;
     LogViewDlg* log_view_dlg_;
     SettingsMgr* settings_mgr_;
 
     bool in_exit_;
+    bool is_license_;
+    JS_LICENSE_INFO license_info_;
     QString cmd_;
     CryptokiAPI     *cryptoki_api_;
 };

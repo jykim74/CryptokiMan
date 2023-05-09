@@ -1387,9 +1387,8 @@ void MainWindow::improtPrivateKey()
 
 void MainWindow::about()
 {
-    manApplet->aboutDlg()->show();
-    manApplet->aboutDlg()->raise();
-    manApplet->aboutDlg()->activateWindow();
+    AboutDlg aboutDlg;
+    aboutDlg.exec();
 }
 
 void MainWindow::logView( bool bShow )

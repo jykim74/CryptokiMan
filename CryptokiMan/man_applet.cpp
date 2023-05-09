@@ -47,11 +47,14 @@ ManApplet::ManApplet( QObject *parent )
 {
     main_win_ = new MainWindow;
 
-    about_dlg_ = new AboutDlg;
     settings_mgr_ = new SettingsMgr;
     cryptoki_api_ = new CryptokiAPI;
 
     in_exit_ = false;
+    is_license_ = false;
+
+    memset( &license_info_, 0x00, sizeof(license_info_));
+
 #ifdef _AUTO_UPDATE
     if( AutoUpdateService::instance()->shouldSupportAutoUpdate() ) {
         AutoUpdateService::instance()->start();
@@ -73,12 +76,56 @@ void ManApplet::start()
     if( settings_mgr_->showLogTab() )
         main_win_->logView();
 
+    if( checkLicense() == false )
+    {
+        warningBox( "This tool is not licensed", NULL );
+        exit(0);
+        return;
+    }
+
     QString strVersion = STRINGIZE(CRYPTOKIMAN_VERSION);
     log( "======================================================");
     log( QString( "== Start CryptokiMan Version: %1" ).arg( strVersion ));
     log( "======================================================");
 
     main_win_->activateWindow();
+}
+
+int ManApplet::checkLicense()
+{
+    QFile resFile( ":/cryptokiman_license.lcn" );
+    resFile.open(QIODevice::ReadOnly);
+    QByteArray data = resFile.readAll();
+    resFile.close();
+
+    char sKey[128];
+
+    memset( sKey, 0x00, sizeof(sKey));
+    memcpy( &license_info_, data.data(), data.size() );
+
+    if( memcmp( license_info_.sProduct, "CryptokiMan", 11 ) != 0 )
+    {
+        is_license_ = false;
+        return is_license_;
+    }
+
+    JS_License_DeriveKey( sKey, &license_info_ );
+
+    QDate expireDate = QDate::fromString( license_info_.sExpire, "yyyy-MM-dd" );
+    QDate nowDate = QDate::currentDate();
+
+    if( expireDate < nowDate )
+    {
+        is_license_ = false;
+        return is_license_;
+    }
+
+    if( memcmp( sKey, license_info_.sKey, sizeof(license_info_.sKey)) == 0 )
+        is_license_ = true;
+    else
+        is_license_ = false;
+
+    return is_license_;
 }
 
 void ManApplet::showTypeList( int nSlotIndex, int nType )

@@ -51,6 +51,20 @@ AboutDlg::AboutDlg(QWidget *parent) :
     strAbout += "<br>mail: ";
     strAbout += "<a href=mailto:jykim74@gmail.com>jykim74@gmail.com</a>";
 
+    if( manApplet->isLicense() )
+    {
+        JS_LICENSE_INFO sLicenseInfo = manApplet->LicenseInfo();
+        strAbout += "<br><br>";
+        strAbout += "SID: ";
+        strAbout += sLicenseInfo.sSID;
+        strAbout += "<br>";
+        strAbout += "License Period: ";
+        strAbout += sLicenseInfo.sIssued;
+        strAbout += " ~ ";
+        strAbout += sLicenseInfo.sExpire;
+    }
+
+
 #ifdef _AUTO_UPDATE
     mCheckUpdateBtn->show();
 #else

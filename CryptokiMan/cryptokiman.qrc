@@ -65,5 +65,6 @@
         <file>images/uk.png</file>
         <file>images/ep1.png</file>
         <file>images/ep2.png</file>
+        <file>cryptokiman_license.lcn</file>
     </qresource>
 </RCC>
