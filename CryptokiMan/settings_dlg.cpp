@@ -31,8 +31,11 @@ void SettingsDlg::updateSettings()
 
     mgr->setSaveLibPath( mSaveLibPathCheck->checkState() == Qt::Checked );
 
-    mgr->setShowLogTab( mShowLogTabCheck->checkState() == Qt::Checked );
-    manApplet->mainWindow()->logView( mShowLogTabCheck->checkState() == Qt::Checked );
+    if( manApplet->isLicense() )
+    {
+        mgr->setShowLogTab( mShowLogTabCheck->checkState() == Qt::Checked );
+        manApplet->mainWindow()->logView( mShowLogTabCheck->checkState() == Qt::Checked );
+    }
 
     mgr->setLogLevel( mLogLevelCombo->currentIndex() );
 
@@ -72,8 +75,13 @@ void SettingsDlg::initialize()
     state = mgr->saveLibPath() ? Qt::Checked : Qt::Unchecked;
     mSaveLibPathCheck->setCheckState(state);
 
-    state = mgr->showLogTab() ? Qt::Checked : Qt::Unchecked;
-    mShowLogTabCheck->setCheckState(state);
+    if( manApplet->isLicense() )
+    {
+        state = mgr->showLogTab() ? Qt::Checked : Qt::Unchecked;
+        mShowLogTabCheck->setCheckState(state);
+    }
+    else
+        mShowLogTabCheck->hide();
 
 #ifdef _AUTO_UPDATE
     if( AutoUpdateService::instance()->shouldSupportAutoUpdate()) {

@@ -71,16 +71,19 @@ ManApplet::~ManApplet()
 
 void ManApplet::start()
 {
-    main_win_->show();
-
-    if( settings_mgr_->showLogTab() )
-        main_win_->logView();
-
     if( checkLicense() == false )
     {
         warningBox( "This tool is not licensed", NULL );
         exit(0);
         return;
+    }
+
+    main_win_->show();
+
+    if( isLicense() )
+    {
+        if( settings_mgr_->showLogTab() )
+            main_win_->logView();
     }
 
     QString strVersion = STRINGIZE(CRYPTOKIMAN_VERSION);

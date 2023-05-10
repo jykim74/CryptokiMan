@@ -123,11 +123,6 @@ void MainWindow::initialize()
     vsplitter_->addWidget( text_tab_ );
     text_tab_->setTabPosition( QTabWidget::South );
     text_tab_->addTab( info_text_, tr("information") );
-//    text_tab_->addTab( log_text_, tr("log") );
-
-
-
-//    vsplitter_->addWidget(info_text_);
 
     right_table_->setSelectionBehavior(QAbstractItemView::SelectRows);
     right_table_->setEditTriggers(QAbstractItemView::NoEditTriggers);
