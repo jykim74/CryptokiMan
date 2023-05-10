@@ -58,6 +58,8 @@ public:
     void dlog( const QString strLog );
     void write( const QString strLog );
 
+    void info( const QString strInfo );
+
     bool isLicense() { return  is_license_; };
 
 private:

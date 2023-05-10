@@ -71,12 +71,7 @@ ManApplet::~ManApplet()
 
 void ManApplet::start()
 {
-    if( checkLicense() == false )
-    {
-        warningBox( "This tool is not licensed", NULL );
-        exit(0);
-        return;
-    }
+    checkLicense();
 
     main_win_->show();
 
@@ -84,6 +79,10 @@ void ManApplet::start()
     {
         if( settings_mgr_->showLogTab() )
             main_win_->logView();
+    }
+    else
+    {
+        info( "The CryptokiMan is not licensed" );
     }
 
     QString strVersion = STRINGIZE(CRYPTOKIMAN_VERSION);
@@ -191,6 +190,10 @@ void ManApplet::write( const QString strLog )
     main_win_->write( strLog );
 }
 
+void ManApplet::info( const QString strInfo )
+{
+    main_win_->info( strInfo );
+}
 
 QString ManApplet::getBrand()
 {
