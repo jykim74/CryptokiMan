@@ -2525,11 +2525,11 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>&amp;Crypt</source>
-        <translation>암호(&amp;C)</translation>
+        <translation type="vanished">암호(&amp;C)</translation>
     </message>
     <message>
         <source>Crypt</source>
-        <translation>암호</translation>
+        <translation type="vanished">암호</translation>
     </message>
     <message>
         <source>Digest</source>
@@ -2870,6 +2870,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>There is no object to be selected</source>
         <translation>선택한 대상이 없습니다</translation>
+    </message>
+    <message>
+        <source>&amp;Cryptogram</source>
+        <translation>암호화(&amp;C)</translation>
+    </message>
+    <message>
+        <source>Cryptogram</source>
+        <translation>암호화</translation>
     </message>
 </context>
 <context>

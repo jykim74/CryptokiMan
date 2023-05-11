@@ -345,8 +345,15 @@ void MainWindow::createActions()
 //    objectsToolBar->addAction( editAttributeAct );
 
 
-    QMenu *cryptMenu = menuBar()->addMenu(tr("&Crypt"));
-    QToolBar *cryptToolBar = addToolBar(tr("Crypt"));
+    QMenu *cryptMenu = menuBar()->addMenu(tr("&Cryptogram"));
+    QToolBar *cryptToolBar = addToolBar(tr("Cryptogram"));
+
+    const QIcon diceIcon = QIcon::fromTheme("Dice", QIcon(":/images/dice.png"));
+    QAction *randAct = new QAction( diceIcon, tr("Random"), this);
+    connect( randAct, &QAction::triggered, this, &MainWindow::rand);
+    randAct->setStatusTip(tr("PKCS11 Random"));
+    cryptMenu->addAction( randAct );
+    cryptToolBar->addAction( randAct );
 
     const QIcon hashIcon = QIcon::fromTheme("hash", QIcon(":/images/hash.png"));
     QAction *digestAct = new QAction( hashIcon, tr("Digest"), this);
@@ -384,95 +391,93 @@ void MainWindow::createActions()
     cryptMenu->addAction( decryptAct );
     cryptToolBar->addAction( decryptAct );
 
-    QMenu *importMenu = menuBar()->addMenu(tr("&Import"));
+    if( manApplet->isLicense() )
+    {
+        QMenu *importMenu = menuBar()->addMenu(tr("&Import"));
 
-    const QIcon certIcon = QIcon::fromTheme("cert", QIcon(":/images/cert.png"));
-    QAction *importCertAct = new QAction( certIcon, tr("Import certificate"), this);
-    connect( importCertAct, &QAction::triggered, this, &MainWindow::importCert);
-    importCertAct->setStatusTip(tr("PKCS11 import certificate"));
-    importMenu->addAction( importCertAct );
+        const QIcon certIcon = QIcon::fromTheme("cert", QIcon(":/images/cert.png"));
+        QAction *importCertAct = new QAction( certIcon, tr("Import certificate"), this);
+        connect( importCertAct, &QAction::triggered, this, &MainWindow::importCert);
+        importCertAct->setStatusTip(tr("PKCS11 import certificate"));
+        importMenu->addAction( importCertAct );
 
-    const QIcon pfxIcon = QIcon::fromTheme("PFX", QIcon(":/images/pfx.png"));
-    QAction *importPFXAct = new QAction( pfxIcon, tr("Import PFX"), this);
-    connect( importPFXAct, &QAction::triggered, this, &MainWindow::importPFX);
-    importPFXAct->setStatusTip(tr("PKCS11 import PFX"));
-    importMenu->addAction( importPFXAct );
+        const QIcon pfxIcon = QIcon::fromTheme("PFX", QIcon(":/images/pfx.png"));
+        QAction *importPFXAct = new QAction( pfxIcon, tr("Import PFX"), this);
+        connect( importPFXAct, &QAction::triggered, this, &MainWindow::importPFX);
+        importPFXAct->setStatusTip(tr("PKCS11 import PFX"));
+        importMenu->addAction( importPFXAct );
 
-    const QIcon priKeyIcon = QIcon::fromTheme("PrivateKey", QIcon(":/images/prikey.png"));
-    QAction *importPriKeyAct = new QAction( priKeyIcon, tr("Import Private Key"), this);
-    connect( importPriKeyAct, &QAction::triggered, this, &MainWindow::improtPrivateKey);
-    importPriKeyAct->setStatusTip(tr("PKCS11 import private key"));
-    importMenu->addAction( importPriKeyAct );
+        const QIcon priKeyIcon = QIcon::fromTheme("PrivateKey", QIcon(":/images/prikey.png"));
+        QAction *importPriKeyAct = new QAction( priKeyIcon, tr("Import Private Key"), this);
+        connect( importPriKeyAct, &QAction::triggered, this, &MainWindow::improtPrivateKey);
+        importPriKeyAct->setStatusTip(tr("PKCS11 import private key"));
+        importMenu->addAction( importPriKeyAct );
 
-    QMenu *toolsMenu = menuBar()->addMenu(tr("&Tools"));
-    QToolBar *toolsToolBar = addToolBar(tr("Tools"));
+        QMenu *toolsMenu = menuBar()->addMenu(tr("&Tools"));
+        QToolBar *toolsToolBar = addToolBar(tr("Tools"));
 
-    const QIcon tokenIcon = QIcon::fromTheme("token", QIcon(":/images/token.png"));
-    QAction *initTokenAct = new QAction( tokenIcon, tr("Initialize Token"), this);
-    connect( initTokenAct, &QAction::triggered, this, &MainWindow::initToken);
-    initTokenAct->setStatusTip(tr("PKCS11 Initialize token"));
-    toolsMenu->addAction( initTokenAct );
-//    toolsToolBar->addAction( initTokenAct );
+        const QIcon tokenIcon = QIcon::fromTheme("token", QIcon(":/images/token.png"));
+        QAction *initTokenAct = new QAction( tokenIcon, tr("Initialize Token"), this);
+        connect( initTokenAct, &QAction::triggered, this, &MainWindow::initToken);
+        initTokenAct->setStatusTip(tr("PKCS11 Initialize token"));
+        toolsMenu->addAction( initTokenAct );
+//      toolsToolBar->addAction( initTokenAct );
 
-    const QIcon operIcon = QIcon::fromTheme( "document-operation", QIcon(":/images/operation.png"));
-    QAction *operStateAct = new QAction( operIcon, tr("OperationState"), this );
-    connect( operStateAct, &QAction::triggered, this, &MainWindow::operationState );
-    operStateAct->setStatusTip( tr( "Operation state tool" ));
-    toolsMenu->addAction( operStateAct );
-    toolsToolBar->addAction( operStateAct );
+        const QIcon operIcon = QIcon::fromTheme( "document-operation", QIcon(":/images/operation.png"));
+        QAction *operStateAct = new QAction( operIcon, tr("OperationState"), this );
+        connect( operStateAct, &QAction::triggered, this, &MainWindow::operationState );
+        operStateAct->setStatusTip( tr( "Operation state tool" ));
+        toolsMenu->addAction( operStateAct );
+        toolsToolBar->addAction( operStateAct );
 
-    const QIcon diceIcon = QIcon::fromTheme("Dice", QIcon(":/images/dice.png"));
-    QAction *randAct = new QAction( diceIcon, tr("Random"), this);
-    connect( randAct, &QAction::triggered, this, &MainWindow::rand);
-    randAct->setStatusTip(tr("PKCS11 Random"));
-    toolsMenu->addAction( randAct );
-    toolsToolBar->addAction( randAct );
+        const QIcon pin1Icon = QIcon::fromTheme("Set PIN", QIcon(":/images/pin1.png"));
+        QAction *setPinAct = new QAction( pin1Icon, tr("Set PIN"), this);
+        connect( setPinAct, &QAction::triggered, this, &MainWindow::setPin);
+        setPinAct->setStatusTip(tr("PKCS11 set PIN"));
+        toolsMenu->addAction( setPinAct );
+//      toolsToolBar->addAction( setPinAct );
 
+        const QIcon pin2Icon = QIcon::fromTheme("Init PIN", QIcon(":/images/pin2.png"));
+        QAction *initPinAct = new QAction( pin2Icon, tr("Init PIN"), this);
+        connect( initPinAct, &QAction::triggered, this, &MainWindow::initPin);
+        initPinAct->setStatusTip(tr("PKCS11 init PIN"));
+        toolsMenu->addAction( initPinAct );
+//      toolsToolBar->addAction( initPinAct );
 
-    const QIcon pin1Icon = QIcon::fromTheme("Set PIN", QIcon(":/images/pin1.png"));
-    QAction *setPinAct = new QAction( pin1Icon, tr("Set PIN"), this);
-    connect( setPinAct, &QAction::triggered, this, &MainWindow::setPin);
-    setPinAct->setStatusTip(tr("PKCS11 set PIN"));
-    toolsMenu->addAction( setPinAct );
-//    toolsToolBar->addAction( setPinAct );
+        const QIcon wkIcon = QIcon::fromTheme("WrapKey", QIcon(":/images/wk.png"));
+        QAction *wrapKeyAct = new QAction( wkIcon, tr("Wrap Key"), this);
+        connect( wrapKeyAct, &QAction::triggered, this, &MainWindow::wrapKey);
+        wrapKeyAct->setStatusTip(tr("PKCS11 wrap key"));
+        toolsMenu->addAction( wrapKeyAct );
+//      toolsToolBar->addAction( wrapKeyAct );
 
-    const QIcon pin2Icon = QIcon::fromTheme("Init PIN", QIcon(":/images/pin2.png"));
-    QAction *initPinAct = new QAction( pin2Icon, tr("Init PIN"), this);
-    connect( initPinAct, &QAction::triggered, this, &MainWindow::initPin);
-    initPinAct->setStatusTip(tr("PKCS11 init PIN"));
-    toolsMenu->addAction( initPinAct );
-//    toolsToolBar->addAction( initPinAct );
+        const QIcon ukIcon = QIcon::fromTheme("UnwrapKey", QIcon(":/images/uk.png"));
+        QAction *unwrapKeyAct = new QAction( ukIcon, tr("Unwrap Key"), this);
+        connect( unwrapKeyAct, &QAction::triggered, this, &MainWindow::unwrapKey);
+        unwrapKeyAct->setStatusTip(tr("PKCS11 unwrap key"));
+        toolsMenu->addAction( unwrapKeyAct );
+//      toolsToolBar->addAction( unwrapKeyAct );
 
-    const QIcon wkIcon = QIcon::fromTheme("WrapKey", QIcon(":/images/wk.png"));
-    QAction *wrapKeyAct = new QAction( wkIcon, tr("Wrap Key"), this);
-    connect( wrapKeyAct, &QAction::triggered, this, &MainWindow::wrapKey);
-    wrapKeyAct->setStatusTip(tr("PKCS11 wrap key"));
-    toolsMenu->addAction( wrapKeyAct );
-//    toolsToolBar->addAction( wrapKeyAct );
-
-    const QIcon ukIcon = QIcon::fromTheme("UnwrapKey", QIcon(":/images/uk.png"));
-    QAction *unwrapKeyAct = new QAction( ukIcon, tr("Unwrap Key"), this);
-    connect( unwrapKeyAct, &QAction::triggered, this, &MainWindow::unwrapKey);
-    unwrapKeyAct->setStatusTip(tr("PKCS11 unwrap key"));
-    toolsMenu->addAction( unwrapKeyAct );
-//    toolsToolBar->addAction( unwrapKeyAct );
-
-    const QIcon dkIcon = QIcon::fromTheme("DeriveKey", QIcon(":/images/dk.png"));
-    QAction *deriveKeyAct = new QAction( dkIcon, tr("Derive Key"), this);
-    connect( deriveKeyAct, &QAction::triggered, this, &MainWindow::deriveKey);
-    deriveKeyAct->setStatusTip(tr("PKCS11 derive key"));
-    toolsMenu->addAction( deriveKeyAct );
-//    toolsToolBar->addAction( deriveKeyAct );
+        const QIcon dkIcon = QIcon::fromTheme("DeriveKey", QIcon(":/images/dk.png"));
+        QAction *deriveKeyAct = new QAction( dkIcon, tr("Derive Key"), this);
+        connect( deriveKeyAct, &QAction::triggered, this, &MainWindow::deriveKey);
+        deriveKeyAct->setStatusTip(tr("PKCS11 derive key"));
+        toolsMenu->addAction( deriveKeyAct );
+//      toolsToolBar->addAction( deriveKeyAct );
+    }
 
     QMenu *helpMenu = menuBar()->addMenu(tr("&Help"));
     QToolBar *helpToolBar = addToolBar(tr("Help"));
 
-    const QIcon clearIcon = QIcon::fromTheme( "clear-log", QIcon(":/images/clear.png"));
-    QAction *clearAct = new QAction( clearIcon, tr("&Clear Log"), this );
-    connect( clearAct, &QAction::triggered, this, &MainWindow::logClear );
-    clearAct->setStatusTip(tr("clear log"));
-    helpMenu->addAction( clearAct );
-    helpToolBar->addAction( clearAct );
+    if( manApplet->isLicense() )
+    {
+        const QIcon clearIcon = QIcon::fromTheme( "clear-log", QIcon(":/images/clear.png"));
+        QAction *clearAct = new QAction( clearIcon, tr("&Clear Log"), this );
+        connect( clearAct, &QAction::triggered, this, &MainWindow::logClear );
+        clearAct->setStatusTip(tr("clear log"));
+        helpMenu->addAction( clearAct );
+        helpToolBar->addAction( clearAct );
+    }
 
     const QIcon settingIcon = QIcon::fromTheme("setting", QIcon(":/images/setting.png"));
     QAction *settingsAct = new QAction( settingIcon, tr("&Settings"), this);

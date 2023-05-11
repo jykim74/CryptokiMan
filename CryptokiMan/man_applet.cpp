@@ -45,11 +45,6 @@ ManApplet *manApplet;
 
 ManApplet::ManApplet( QObject *parent )
 {
-    main_win_ = new MainWindow;
-
-    settings_mgr_ = new SettingsMgr;
-    cryptoki_api_ = new CryptokiAPI;
-
     in_exit_ = false;
     is_license_ = false;
 
@@ -72,6 +67,10 @@ ManApplet::~ManApplet()
 void ManApplet::start()
 {
     checkLicense();
+
+    main_win_ = new MainWindow;
+    settings_mgr_ = new SettingsMgr;
+    cryptoki_api_ = new CryptokiAPI;
 
     main_win_->show();
 
