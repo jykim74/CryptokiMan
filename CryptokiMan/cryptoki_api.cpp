@@ -55,7 +55,7 @@ int CryptokiAPI::Initialize( void *pReserved )
     rv = p11_ctx_->p11FuncList->C_Initialize( pReserved );
     ms = timer.elapsed();
 
-    strIn.sprintf( "pReserved = %p", pReserved );
+    strIn.sprintf( "C_Initialize( @%p )", pReserved );
     manApplet->dlog( strIn );
 
     logResult( "C_Initialize", rv, ms );
@@ -95,7 +95,7 @@ int CryptokiAPI::GetSlotList( CK_BBOOL bVal, CK_SLOT_ID_PTR pSlotList, CK_ULONG_
     rv = p11_ctx_->p11FuncList->C_GetSlotList( bVal, pSlotList, pSlotCnt );
     ms = timer.elapsed();
 
-    strIn.sprintf( "token_present = %02x slot_id = %p slot_count = %p", bVal, pSlotList, pSlotCnt );
+    strIn.sprintf( "C_GetSlotList( token_present = %d, slot_id = @%p, slot_count = %d )", bVal, pSlotList, *pSlotCnt );
     manApplet->dlog( strIn );
 
     logResult( "C_GetSlotList", rv, ms );
@@ -133,7 +133,7 @@ int CryptokiAPI::GetInfo( CK_INFO_PTR pInfo )
     QElapsedTimer timer;
     QString strIn;
 
-    strIn.sprintf( "INFO_PTR = %p", pInfo );
+    strIn.sprintf( "C_GetInfo( INFO_PTR = @%p )", pInfo );
 
     timer.start();
     rv = p11_ctx_->p11FuncList->C_GetInfo( pInfo );
@@ -162,9 +162,7 @@ int CryptokiAPI::GetSlotInfo( CK_SLOT_ID slotID, CK_SLOT_INFO_PTR pSlotInfo )
     rv = p11_ctx_->p11FuncList->C_GetSlotInfo( slotID, pSlotInfo );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SLOT_ID = %d", slotID );
-    manApplet->dlog( strIn );
-    strIn.sprintf( "SLOT_INFO = %p", pSlotInfo );
+    strIn.sprintf( "C_GetSlotInfo( SLOT_ID = %d, SLOT_INFO = @%p )", slotID, pSlotInfo );
     manApplet->dlog( strIn );
 
     logResult( "C_GetSlotInfo", rv, ms );
@@ -188,9 +186,7 @@ int CryptokiAPI::GetTokenInfo( CK_SLOT_ID slotID, CK_TOKEN_INFO_PTR pTokenInfo )
     rv = p11_ctx_->p11FuncList->C_GetTokenInfo( slotID, pTokenInfo );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SLOT_ID = %d", slotID );
-    manApplet->dlog( strIn );
-    strIn.sprintf( "TOKEN_INFO = %p", pTokenInfo );
+    strIn.sprintf( "C_GetTokenInfo( SLOT_ID = %d, TOKEN_INFO = @%p )", slotID, pTokenInfo );
     manApplet->dlog( strIn );
 
     logResult( "C_GetTokenInfo", rv, ms );
@@ -214,11 +210,9 @@ int CryptokiAPI::GetMechanismList( CK_SLOT_ID slotID, CK_MECHANISM_TYPE_PTR pMec
     rv = p11_ctx_->p11FuncList->C_GetMechanismList( slotID, pMechList, puMechCount );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SLOT_ID = %d", slotID );
+    strIn.sprintf( "C_GetMechanismList( SLOT_ID = %d, MECHANISM_TYPE_PTR = @%p, MECHANISM_COUNT_PTR = %d )",
+                   slotID, pMechList, *puMechCount );
     manApplet->dlog( strIn );
-    strIn.sprintf( "MECHANISM_TYPE_PTR = %p", pMechList );
-    manApplet->dlog( strIn );
-    strIn.sprintf( "MECHANISM_COUNT_PTR = %p", puMechCount );
 
     logResult( "C_GetMechanismList", rv, ms );
     manApplet->dlog( strIn );
@@ -242,11 +236,8 @@ int CryptokiAPI::GetMechanismInfo( CK_SLOT_ID slotID, CK_MECHANISM_TYPE iMechTyp
     rv = p11_ctx_->p11FuncList->C_GetMechanismInfo( slotID, iMechType, pInfo );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SLOT_ID = %d", slotID );
-    manApplet->dlog( strIn );
-    strIn.sprintf( "MECHANISM_TYPE = %d", iMechType );
-    manApplet->dlog( strIn );
-    strIn.sprintf( "MECHAINSM_INFO_PTR = %p", pInfo );
+    strIn.sprintf( "C_GetMechanismInfo( SLOT_ID = %d, MECHANISM_TYPE = %d, MECHAINSM_INFO_PTR = @%p )",
+                   slotID, iMechType, pInfo );
     manApplet->dlog( strIn );
 
     logResult( "C_GetMechanismInfo", rv, ms );
@@ -270,9 +261,7 @@ int CryptokiAPI::GetSessionInfo( CK_SESSION_HANDLE hSession, CK_SESSION_INFO_PTR
     rv = p11_ctx_->p11FuncList->C_GetSessionInfo( hSession, pSessionInfo );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
-    manApplet->dlog( strIn );
-    strIn.sprintf( "SESSION_INFO_PTR = %p", pSessionInfo );
+    strIn.sprintf( "C_GetSessionInfo( SESSION_HANDLE = %ud, SESSION_INFO_PTR = @%p )", hSession, pSessionInfo );
     manApplet->dlog( strIn );
 
     logResult( "C_GetSessionInfo", rv, ms );

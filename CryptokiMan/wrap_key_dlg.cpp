@@ -121,7 +121,7 @@ void WrapKeyDlg::accept()
 
     BIN binWrapped = {0,0};
     JS_BIN_set( &binWrapped, pData, uDataLen );
-    JS_BIN_fileWrite( &binWrapped, strPath.toStdString().c_str() );
+    JS_BIN_fileWrite( &binWrapped, strPath.toLocal8Bit().toStdString().c_str() );
 
 
     if( pData ) JS_free( pData );

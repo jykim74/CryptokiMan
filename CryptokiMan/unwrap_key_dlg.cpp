@@ -200,7 +200,7 @@ void UnwrapKeyDlg::accept()
     hUnwrappingKey = mUnwrapObjectText->text().toLong();
 
     BIN binWrappedKey = {0,0};
-    JS_BIN_fileRead( strWrapPath.toStdString().c_str(), &binWrappedKey );
+    JS_BIN_fileRead( strWrapPath.toLocal8Bit().toStdString().c_str(), &binWrappedKey );
 
     memset( &sMech, 0x00, sizeof(sMech));
     sMech.mechanism = JS_PKCS11_GetCKMType( mUnwrapMechCombo->currentText().toStdString().c_str());
