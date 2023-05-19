@@ -55,7 +55,7 @@ int CryptokiAPI::Initialize( void *pReserved )
     rv = p11_ctx_->p11FuncList->C_Initialize( pReserved );
     ms = timer.elapsed();
 
-    strIn.sprintf( "C_Initialize( @%p )", pReserved );
+    strIn.sprintf( "C_Initialize( pReserved = @%p )", pReserved );
     manApplet->dlog( strIn );
 
     logResult( "C_Initialize", rv, ms );
@@ -75,7 +75,7 @@ int CryptokiAPI::Finalize( void *pReserved )
     rv = p11_ctx_->p11FuncList->C_Finalize( pReserved );
     ms = timer.elapsed();
 
-    strIn.sprintf( "pReserved = %p", pReserved );
+    strIn.sprintf( "C_Finalize( pReserved = @%p )", pReserved );
     manApplet->dlog( strIn );
 
     logResult( "C_Finalize", rv, ms );
@@ -261,7 +261,7 @@ int CryptokiAPI::GetSessionInfo( CK_SESSION_HANDLE hSession, CK_SESSION_INFO_PTR
     rv = p11_ctx_->p11FuncList->C_GetSessionInfo( hSession, pSessionInfo );
     ms = timer.elapsed();
 
-    strIn.sprintf( "C_GetSessionInfo( SESSION_HANDLE = %ud, SESSION_INFO_PTR = @%p )", hSession, pSessionInfo );
+    strIn.sprintf( "C_GetSessionInfo( SESSION_HANDLE = %u, SESSION_INFO_PTR = @%p )", hSession, pSessionInfo );
     manApplet->dlog( strIn );
 
     logResult( "C_GetSessionInfo", rv, ms );
@@ -285,11 +285,8 @@ int CryptokiAPI::FindObjectsInit( CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR p
     rv = p11_ctx_->p11FuncList->C_FindObjectsInit( hSession, pTemplate, uCount );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
-    manApplet->dlog( strIn );
-    strIn.sprintf( "ATTRIBUTE_PTR = %p", pTemplate );
-    manApplet->dlog( strIn );
-    strIn.sprintf( "ATTRIBUTE_COUNT = %d", uCount );
+    strIn.sprintf( "C_FindObjectsInit( SESSION_HANDLE = %u, ATTRIBUTE_PTR = @%p, ATTRIBUTE_COUNT = %d )",
+                   hSession, pTemplate, uCount );
     manApplet->dlog( strIn );
 
     logTemplate( pTemplate, uCount );
@@ -315,13 +312,8 @@ int CryptokiAPI::FindObjects( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE_PTR p
     rv = p11_ctx_->p11FuncList->C_FindObjects( hSession, phObject, uMaxObjCount, puObjCount );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
-    manApplet->dlog( strIn );
-    strIn.sprintf( "OBJECT_HANDLE_PTR = %p", phObject );
-    manApplet->dlog( strIn );
-    strIn.sprintf( "MAX_OBJECT_COUNT = %d", uMaxObjCount );
-    manApplet->dlog( strIn );
-    strIn.sprintf( "OBJECT_COUNT_PTR = %p", puObjCount );
+    strIn.sprintf( "C_FindObjects( SESSION_HANDLE = %u, OBJECT_HANDLE_PTR = @%p, MAX_OBJECT_COUNT = %d, OBJECT_COUNT_PTR = @%p )",
+                   hSession, phObject, uMaxObjCount, puObjCount );
     manApplet->dlog( strIn );
 
     logResult( "C_FindObjects", rv, ms );
@@ -345,7 +337,7 @@ int CryptokiAPI::FindObjectsFinal( CK_SESSION_HANDLE hSession )
     rv = p11_ctx_->p11FuncList->C_FindObjectsFinal( hSession );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "C_FindObjectsFinal( SESSION_HANDLE = %u )", hSession );
     manApplet->dlog( strIn );
 
     logResult( "C_FindObjectsFinal", rv, ms );
@@ -369,10 +361,10 @@ int CryptokiAPI::GetObjectSize( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hOb
     rv = p11_ctx_->p11FuncList->C_GetObjectSize( hSession, hObject, puSize );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
-    strIn.sprintf( "OBJECT_HANDLE = %ud", hObject );
+    strIn.sprintf( "OBJECT_HANDLE = %u", hObject );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "OBJECT_SIZE_PTR = %p", puSize );
@@ -399,10 +391,10 @@ int CryptokiAPI::GetAttributeValue( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE
     rv = p11_ctx_->p11FuncList->C_GetAttributeValue( hSession, hObject, pAttribute, uAttributeCnt );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
-    strIn.sprintf( "OBJECT_HANDLE = %ud", hObject );
+    strIn.sprintf( "OBJECT_HANDLE = %u", hObject );
     manApplet->dlog( strIn );
 
     logTemplate( pAttribute, uAttributeCnt );
@@ -474,10 +466,10 @@ int CryptokiAPI::SetAttributeValue( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE
     rv = p11_ctx_->p11FuncList->C_SetAttributeValue( hSession, hObject, pAttribute, uAttributeCnt );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
-    strIn.sprintf( "OBJECT_HANDLE = %ud", hObject );
+    strIn.sprintf( "OBJECT_HANDLE = %u", hObject );
     manApplet->dlog( strIn );
 
     logTemplate( pAttribute, uAttributeCnt );
@@ -555,7 +547,7 @@ int CryptokiAPI::CloseSession( CK_SESSION_HANDLE hSession )
     rv = p11_ctx_->p11FuncList->C_CloseSession( hSession );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     logResult( "C_CloseSession", rv, ms );
@@ -603,7 +595,7 @@ int CryptokiAPI::Login( CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, CK_UT
     rv = p11_ctx_->p11FuncList->C_Login( hSession, userType, pPin, ulPinLen );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "USER_TYPE = %d", userType );
@@ -636,7 +628,7 @@ int CryptokiAPI::Logout( CK_SESSION_HANDLE hSession )
     rv = p11_ctx_->p11FuncList->C_Logout( hSession );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     logResult( "C_Logout", rv, ms );
@@ -668,7 +660,7 @@ int CryptokiAPI::GenerateKeyPair(
     rv = p11_ctx_->p11FuncList->C_GenerateKeyPair( hSession, pMechanism, pPubTemplate, ulPubTemplateCnt, pPriTemplate, ulPriTemplateCnt, phPubKey, phPriKey );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "MECHANISM_PTR = %p", pMechanism );
@@ -709,7 +701,7 @@ int CryptokiAPI::GenerateKey(
     rv = p11_ctx_->p11FuncList->C_GenerateKey( hSession, pMechanism, pTemplate, ulTemplateCnt, phKey );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "MECHANISM_PTR = %p", pMechanism );
@@ -745,7 +737,7 @@ int CryptokiAPI::CreateObject(
     rv = p11_ctx_->p11FuncList->C_CreateObject( hSession, pTemplate, ulTemplateCnt, phObject );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     logTemplate( pTemplate, ulTemplateCnt );
@@ -774,10 +766,10 @@ int CryptokiAPI::DestroyObject( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hOb
     rv = p11_ctx_->p11FuncList->C_DestroyObject( hSession, hObject );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
-    strIn.sprintf( "OBJECT_HANDLE = %ud", hObject );
+    strIn.sprintf( "OBJECT_HANDLE = %u", hObject );
     manApplet->dlog( strIn );
 
     logResult( "C_DestroyObject", rv, ms );
@@ -801,7 +793,7 @@ int CryptokiAPI::DigestInit( CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMecha
     rv = p11_ctx_->p11FuncList->C_DigestInit( hSession, pMechanism );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "MECHANISM_PTR = %p", pMechanism );
@@ -828,7 +820,7 @@ int CryptokiAPI::DigestUpdate( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK
     rv = p11_ctx_->p11FuncList->C_DigestUpdate( hSession, pPart, ulPartLen );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "PART_PTR = %p", pPart );
@@ -858,7 +850,7 @@ int CryptokiAPI::DigestFinal( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pDigest, C
     rv = p11_ctx_->p11FuncList->C_DigestFinal( hSession, pDigest, pulDigestLen );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "DIGEST_PTR = %p", pDigest );
@@ -888,7 +880,7 @@ int CryptokiAPI::Digest( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG
     rv = p11_ctx_->p11FuncList->C_Digest( hSession, pData, ulDataLen, pDigest, pulDigestLen );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "DATA_PTR = %p", pData );
@@ -924,13 +916,13 @@ int CryptokiAPI::SignInit( CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechani
     rv = p11_ctx_->p11FuncList->C_SignInit( hSession, pMechanism, hKey );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "MECHANISM_PTR = %p", pMechanism );
     manApplet->dlog( strIn );
 
-    strIn.sprintf( "OBJECT_HANDLE = %ud", hKey );
+    strIn.sprintf( "OBJECT_HANDLE = %u", hKey );
     manApplet->dlog( strIn );
 
     logResult( "C_SignInit", rv, ms );
@@ -954,7 +946,7 @@ int CryptokiAPI::SignUpdate( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_U
     rv = p11_ctx_->p11FuncList->C_SignUpdate( hSession, pPart, ulPartLen );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "PART_PTR = %p", pPart );
@@ -984,7 +976,7 @@ int CryptokiAPI::SignFinal( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pSign, CK_UL
     rv = p11_ctx_->p11FuncList->C_SignFinal( hSession, pSign, pulSignLen );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "SIGN_PTR = %p", pSign );
@@ -1014,7 +1006,7 @@ int CryptokiAPI::Sign( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG u
     rv = p11_ctx_->p11FuncList->C_Sign( hSession, pData, ulDataLen, pSign, pulSignLen );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "DATA_PTR = %p", pData );
@@ -1050,13 +1042,13 @@ int CryptokiAPI::VerifyInit( CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMecha
     rv = p11_ctx_->p11FuncList->C_VerifyInit( hSession, pMechanism, hKey );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "MECHANISM_PTR = %p", pMechanism );
     manApplet->dlog( strIn );
 
-    strIn.sprintf( "OBJECT_HANDLE = %ud", hKey );
+    strIn.sprintf( "OBJECT_HANDLE = %u", hKey );
     manApplet->dlog( strIn );
 
     logResult( "C_VerifyInit", rv, ms );
@@ -1080,7 +1072,7 @@ int CryptokiAPI::VerifyUpdate( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK
     rv = p11_ctx_->p11FuncList->C_VerifyUpdate( hSession, pPart, ulPartLen );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "PART_PTR = %p", pPart );
@@ -1110,7 +1102,7 @@ int CryptokiAPI::VerifyFinal( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pSign, CK_
     rv = p11_ctx_->p11FuncList->C_VerifyFinal( hSession, pSign, ulSignLen );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "SIGN_PTR = %p", pSign );
@@ -1140,7 +1132,7 @@ int CryptokiAPI::Verify( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG
     rv = p11_ctx_->p11FuncList->C_Verify( hSession, pData, ulDataLen, pSign, ulSignLen );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "DATA_PTR = %p", pData );
@@ -1176,13 +1168,13 @@ int CryptokiAPI::EncryptInit( CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMech
     rv = p11_ctx_->p11FuncList->C_EncryptInit( hSession, pMechanism, hKey );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "MECHANISM_PTR = %p", pMechanism );
     manApplet->dlog( strIn );
 
-    strIn.sprintf( "OBJECT_HANDLE = %ud", hKey );
+    strIn.sprintf( "OBJECT_HANDLE = %u", hKey );
     manApplet->dlog( strIn );
 
     logResult( "C_EncryptInit", rv, ms );
@@ -1206,7 +1198,7 @@ int CryptokiAPI::EncryptUpdate( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, C
     rv = p11_ctx_->p11FuncList->C_EncryptUpdate( hSession, pPart, ulPartLen, pEncPart, pulEncPartLen );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "PART_PTR = %p", pPart );
@@ -1242,7 +1234,7 @@ int CryptokiAPI::EncryptFinal( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pLastEncP
     rv = p11_ctx_->p11FuncList->C_EncryptFinal( hSession, pLastEncPart, pulLastEncPartLen );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "LAST_ENC_PART_PTR = %p", pLastEncPart );
@@ -1272,7 +1264,7 @@ int CryptokiAPI::Encrypt( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULON
     rv = p11_ctx_->p11FuncList->C_Encrypt( hSession, pData, ulDataLen, pEncData, pulEncDataLen );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "DATA_PTR = %p", pData );
@@ -1308,13 +1300,13 @@ int CryptokiAPI::DecryptInit( CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMech
     rv = p11_ctx_->p11FuncList->C_DecryptInit( hSession, pMechanism, hKey );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "MECHANISM_PTR = %p", pMechanism );
     manApplet->dlog( strIn );
 
-    strIn.sprintf( "OBJECT_HANDLE = %ud", hKey );
+    strIn.sprintf( "OBJECT_HANDLE = %u", hKey );
     manApplet->dlog( strIn );
 
     logResult( "C_DecryptInit", rv, ms );
@@ -1338,7 +1330,7 @@ int CryptokiAPI::DecryptUpdate( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pEncPart
     rv = p11_ctx_->p11FuncList->C_DecryptUpdate( hSession, pEncPart, ulEncPartLen, pPart, pulPartLen );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "ENC_PART_PTR = %p", pEncPart );
@@ -1374,7 +1366,7 @@ int CryptokiAPI::DecryptFinal( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pLastPart
     rv = p11_ctx_->p11FuncList->C_DecryptFinal( hSession, pLastPart, pulLastPartLen );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "LAST_PART_PTR = %p", pLastPart );
@@ -1404,7 +1396,7 @@ int CryptokiAPI::Decrypt( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pEncData, CK_U
     rv = p11_ctx_->p11FuncList->C_Decrypt( hSession, pEncData, ulEncDataLen, pData, pulDataLen );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "ENC_DATA_PTR = %p", pEncData );
@@ -1440,7 +1432,7 @@ int CryptokiAPI::InitPIN( CK_SESSION_HANDLE hSession, CK_UTF8CHAR_PTR pPin, CK_U
     rv = p11_ctx_->p11FuncList->C_InitPIN( hSession, pPin, ulPinLen );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "PIN_PTR = %p", pPin );
@@ -1470,7 +1462,7 @@ int CryptokiAPI::SetPIN( CK_SESSION_HANDLE hSession, CK_UTF8CHAR_PTR pOldPin, CK
     rv = p11_ctx_->p11FuncList->C_SetPIN( hSession, pOldPin, ulOldLen, pNewPin, ulNewLen );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "OLD_PIN_PTR = %p", pOldPin );
@@ -1506,16 +1498,11 @@ int CryptokiAPI::InitToken( CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ul
     rv = p11_ctx_->p11FuncList->C_InitToken( slotID, pPin, ulPinLen, pLabel );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SLOT_ID = %ud", slotID );
-    manApplet->dlog( strIn );
-
-    strIn.sprintf( "PIN_PTR = %p", pPin );
-    manApplet->dlog( strIn );
-
-    strIn.sprintf( "PIN_LEN = %d", ulPinLen );
-    manApplet->dlog( strIn );
-
-    strIn.sprintf( "LABEL_PTR = %p", pLabel );
+    strIn.sprintf( "C_InitToken( SLOT_ID = %u, PIN_PTR = @%p, PIN_LEN = %d, LABEL_PTR = @%p",
+                   slotID,
+                   pPin,
+                   ulPinLen,
+                   pLabel );
     manApplet->dlog( strIn );
 
     logResult( "C_InitToken", rv, ms );
@@ -1539,7 +1526,7 @@ int CryptokiAPI::SeedRandom( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pSeed, CK_U
     rv = p11_ctx_->p11FuncList->C_SeedRandom( hSession, pSeed, ulSeedLen );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "SEED_PTR = %p", pSeed );
@@ -1569,7 +1556,7 @@ int CryptokiAPI::GenerateRandom( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pRandom
     rv = p11_ctx_->p11FuncList->C_GenerateRandom( hSession, pRandomData, ulRandomLen );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "RANDOM_DATA_PTR = %p", pRandomData );
@@ -1601,7 +1588,7 @@ int CryptokiAPI::GetOperationState( CK_SESSION_HANDLE hSession,
     rv = p11_ctx_->p11FuncList->C_GetOperationState( hSession, pOperationState, pulOperationStateLen );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "OperationState_ptr = %p", pOperationState );
@@ -1636,22 +1623,22 @@ int CryptokiAPI::SetOperationState( CK_SESSION_HANDLE hSession,
     rv = p11_ctx_->p11FuncList->C_SetOperationState( hSession, pOperationState, ulOperationStateLen, hEncryptionKey, hAuthenticationKey );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
-    strIn.sprintf( "ObjectHandle = %ud", hObject );
+    strIn.sprintf( "ObjectHandle = %u", hObject );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "OperationState_ptr = %p", pOperationState );
     manApplet->dlog( strIn );
 
-    strIn.sprintf( "OperationStateLen = %ud", ulOperationStateLen );
+    strIn.sprintf( "OperationStateLen = %u", ulOperationStateLen );
     manApplet->dlog( strIn );
 
-    strIn.sprintf( "EncryptKeyHandle = %ud", hEncryptionKey );
+    strIn.sprintf( "EncryptKeyHandle = %u", hEncryptionKey );
     manApplet->dlog( strIn );
 
-    strIn.sprintf( "AuthenticationKeyHandle = %ud", hAuthenticationKey );
+    strIn.sprintf( "AuthenticationKeyHandle = %u", hAuthenticationKey );
     manApplet->dlog( strIn );
 
     logResult( "C_GetOperationState", rv, ms );
@@ -1681,13 +1668,13 @@ int CryptokiAPI::DeriveKey( CK_SESSION_HANDLE hSession,
     rv = p11_ctx_->p11FuncList->C_DeriveKey( hSession, pMechanism, hBaseKey, pTemplate, ulTemplateCnt, phKey );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "MECHANISM_PTR = %p", pMechanism );
     manApplet->dlog( strIn );
 
-    strIn.sprintf( "OBJECT_HANDLE = %ud", hBaseKey );
+    strIn.sprintf( "OBJECT_HANDLE = %u", hBaseKey );
     manApplet->dlog( strIn );
 
     logTemplate( pTemplate, ulTemplateCnt );
@@ -1721,16 +1708,16 @@ int CryptokiAPI::WrapKey( CK_SESSION_HANDLE hSession,
     rv = p11_ctx_->p11FuncList->C_WrapKey( hSession, pMechanism, hWrappingKey, hKey, pWrappedKey, pulWrappedKeyLen );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "MECHANISM_PTR = %p", pMechanism );
     manApplet->dlog( strIn );
 
-    strIn.sprintf( "OBJECT_HANDLE = %ud", hWrappingKey );
+    strIn.sprintf( "OBJECT_HANDLE = %u", hWrappingKey );
     manApplet->dlog( strIn );
 
-    strIn.sprintf( "OBJECT_HANDLE = %ud", hKey );
+    strIn.sprintf( "OBJECT_HANDLE = %u", hKey );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "WRAPPED_KEY_PTR = %p", pWrappedKey );
@@ -1766,13 +1753,13 @@ int CryptokiAPI::UnwrapKey( CK_SESSION_HANDLE hSession,
     rv = p11_ctx_->p11FuncList->C_UnwrapKey( hSession, pMechanism, hUnwrappingKey, pWrappedKey, ulWrappedKeyLen, pTemplate, ulTemplateCnt, phKey );
     ms = timer.elapsed();
 
-    strIn.sprintf( "SESSION_HANDLE = %ud", hSession );
+    strIn.sprintf( "SESSION_HANDLE = %u", hSession );
     manApplet->dlog( strIn );
 
     strIn.sprintf( "MECHANISM_PTR = %p", pMechanism );
     manApplet->dlog( strIn );
 
-    strIn.sprintf( "OBJECT_HANDLE = %ud", hUnwrappingKey );
+    strIn.sprintf( "OBJECT_HANDLE = %u", hUnwrappingKey );
 
     strIn.sprintf( "WRAPPED_KEY_PTR = %p", pWrappedKey );
     manApplet->dlog( strIn );
@@ -1782,7 +1769,7 @@ int CryptokiAPI::UnwrapKey( CK_SESSION_HANDLE hSession,
 
     logTemplate( pTemplate, ulTemplateCnt );
 
-    strIn.sprintf( "OBJECT_HANDLE_PTR = %ud", phKey );
+    strIn.sprintf( "OBJECT_HANDLE_PTR = %u", phKey );
     manApplet->dlog( strIn );
 
     logResult( "C_UnwrapKey", rv, ms );
