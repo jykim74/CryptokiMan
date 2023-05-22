@@ -103,6 +103,14 @@ int CryptokiAPI::GetSlotList( CK_BBOOL bVal, CK_SLOT_ID_PTR pSlotList, CK_ULONG_
     if( rv == CKR_OK )
     {
         manApplet->dlog( QString("SlotCount = %1").arg( *pSlotCnt ));
+
+        if( pSlotList )
+        {
+            for( int i = 0; i < *pSlotCnt; i++ )
+            {
+                manApplet->dlog( QString( "Slot : %1").arg( pSlotList[i] ));
+            }
+        }
     }
 
     return 0;
@@ -145,7 +153,10 @@ int CryptokiAPI::GetInfo( CK_INFO_PTR pInfo )
 
     if( rv == CKR_OK )
     {
-
+        manApplet->dlog( QString("cryptoki_version : major %1 minor %2").arg( pInfo->cryptokiVersion.major ).arg( pInfo->cryptokiVersion.minor ));
+        manApplet->dlog( QString("manufacturer_id  : %1").arg( getHexString( pInfo->manufacturerID, sizeof(pInfo->manufacturerID ))));
+        manApplet->dlog( QString("flags            : %1").arg( pInfo->flags ));
+        manApplet->dlog( QString("library_version  : major %1 minor %2").arg( pInfo->libraryVersion.major).arg( pInfo->libraryVersion.minor ));
     }
 
     return rv;
@@ -169,7 +180,11 @@ int CryptokiAPI::GetSlotInfo( CK_SLOT_ID slotID, CK_SLOT_INFO_PTR pSlotInfo )
 
     if( rv == CKR_OK )
     {
-
+        manApplet->dlog( QString( "slot_description : %1").arg( getHexString( pSlotInfo->slotDescription, sizeof( pSlotInfo->slotDescription ))));
+        manApplet->dlog( QString( "manufacturer_id  : %1").arg( getHexString(pSlotInfo->manufacturerID, sizeof(pSlotInfo->manufacturerID))));
+        manApplet->dlog( QString( "flags            : %1").arg( pSlotInfo->flags ));
+        manApplet->dlog( QString( "hardware version : major %1 minor %2").arg( pSlotInfo->hardwareVersion.major).arg( pSlotInfo->hardwareVersion.minor));
+        manApplet->dlog( QString( "firmware_version : major %1 minor %2").arg( pSlotInfo->firmwareVersion.major).arg( pSlotInfo->firmwareVersion.minor));
     }
 
     return rv;
@@ -193,7 +208,24 @@ int CryptokiAPI::GetTokenInfo( CK_SLOT_ID slotID, CK_TOKEN_INFO_PTR pTokenInfo )
 
     if( rv == CKR_OK )
     {
-
+        manApplet->dlog( QString( "label                : %1").arg( getHexString( pTokenInfo->label, sizeof(pTokenInfo->label ))));
+        manApplet->dlog( QString( "manufacturer_id      : %1").arg( getHexString( pTokenInfo->manufacturerID, sizeof(pTokenInfo->manufacturerID))));
+        manApplet->dlog( QString( "model                : %1").arg( getHexString(pTokenInfo->model, sizeof(pTokenInfo->model))));
+        manApplet->dlog( QString( "serial_number        : %1").arg(getHexString( pTokenInfo->serialNumber, sizeof(pTokenInfo->serialNumber))));
+        manApplet->dlog( QString( "flags                : %1").arg( pTokenInfo->flags ));
+        manApplet->dlog( QString( "max_session_count    : %1").arg( pTokenInfo->ulMaxSessionCount ));
+        manApplet->dlog( QString( "session_count        : %1").arg( pTokenInfo->ulSessionCount ));
+        manApplet->dlog( QString( "max_rw_session_count : %1").arg( pTokenInfo->ulMaxRwSessionCount ));
+        manApplet->dlog( QString( "rw_session_count     : %1").arg( pTokenInfo->ulRwSessionCount));
+        manApplet->dlog( QString( "max_pin_len          : %1" ).arg( pTokenInfo->ulMaxPinLen));
+        manApplet->dlog( QString( "min_pin_len          : %1").arg( pTokenInfo->ulMinPinLen));
+        manApplet->dlog( QString( "total_public_memory  : %1").arg( pTokenInfo->ulTotalPublicMemory ));
+        manApplet->dlog( QString( "free_public_memory   : %1" ).arg( pTokenInfo->ulFreePublicMemory));
+        manApplet->dlog( QString( "total_private_memory : %1").arg( pTokenInfo->ulTotalPrivateMemory ));
+        manApplet->dlog( QString( "free_private_memory  : %1" ).arg( pTokenInfo->ulFreePrivateMemory));
+        manApplet->dlog( QString( "hardware version     : major %1 minor %2").arg( pTokenInfo->hardwareVersion.major).arg( pTokenInfo->hardwareVersion.minor));
+        manApplet->dlog( QString( "firmware_version     : major %1 minor %2").arg( pTokenInfo->firmwareVersion.major).arg( pTokenInfo->firmwareVersion.minor));
+        manApplet->dlog( QString( "utc_time             : %1").arg(getHexString(pTokenInfo->utcTime, sizeof(pTokenInfo->utcTime))));
     }
 
     return rv;
@@ -219,7 +251,14 @@ int CryptokiAPI::GetMechanismList( CK_SLOT_ID slotID, CK_MECHANISM_TYPE_PTR pMec
 
     if( rv == CKR_OK )
     {
-
+        manApplet->dlog( QString( "Count : %1").arg( *puMechCount ));
+        if( pMechList )
+        {
+            for( int i = 0; i < *puMechCount; i++ )
+            {
+                manApplet->dlog( QString( "Mechanism : %1 - %2").arg( pMechList[i]).arg(JS_PKCS11_GetCKMName( pMechList[i]) ));
+            }
+        }
     }
 
     return rv;
@@ -244,7 +283,9 @@ int CryptokiAPI::GetMechanismInfo( CK_SLOT_ID slotID, CK_MECHANISM_TYPE iMechTyp
 
     if( rv == CKR_OK )
     {
-
+        manApplet->dlog( QString( "min_key_size : %1").arg( pInfo->ulMinKeySize ));
+        manApplet->dlog( QString( "max_key_size : %1").arg( pInfo->ulMaxKeySize ));
+        manApplet->dlog( QString( "flags        : %1").arg( pInfo->flags ));
     }
 
     return rv;
@@ -268,7 +309,10 @@ int CryptokiAPI::GetSessionInfo( CK_SESSION_HANDLE hSession, CK_SESSION_INFO_PTR
 
     if( rv == CKR_OK )
     {
-
+        manApplet->dlog( QString( "slot_id      : %1").arg( pSessionInfo->slotID ));
+        manApplet->dlog( QString( "state        : %1").arg( pSessionInfo->state ));
+        manApplet->dlog( QString( "flags        : %1").arg( pSessionInfo->flags ));
+        manApplet->dlog( QString( "device error : %1").arg( pSessionInfo->ulDeviceError ));
     }
 
     return rv;
@@ -320,7 +364,14 @@ int CryptokiAPI::FindObjects( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE_PTR p
 
     if( rv == CKR_OK )
     {
-
+        manApplet->dlog( QString( "Object Count : %1").arg( *puObjCount));
+        if( phObject )
+        {
+            for( int i = 0; i < *puObjCount; i++ )
+            {
+                manApplet->dlog( QString( "Object Handler : %1").arg( phObject[i] ));
+            }
+        }
     }
 
     return rv;
@@ -369,7 +420,7 @@ int CryptokiAPI::GetObjectSize( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hOb
 
     if( rv == CKR_OK )
     {
-
+        manApplet->dlog( QString( "Object Size : %1").arg( *puSize ));
     }
 
     return rv;
@@ -397,7 +448,7 @@ int CryptokiAPI::GetAttributeValue( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE
 
     if( rv == CKR_OK )
     {
-
+       manApplet->dlog( QString( "Attribute Value : %1").arg( getHexString( (unsigned char *)pAttribute->pValue, pAttribute->ulValueLen )));
     }
 
     return rv;
@@ -508,7 +559,7 @@ int CryptokiAPI::OpenSession( CK_SLOT_ID slotID, CK_FLAGS flags, CK_VOID_PTR pAp
 
     if( rv == CKR_OK )
     {
-
+        manApplet->dlog( QString( "Session Handler : %1").arg( *phSession ));
     }
 
     return rv;
@@ -646,7 +697,8 @@ int CryptokiAPI::GenerateKeyPair(
 
     if( rv == CKR_OK )
     {
-
+        manApplet->dlog( QString( "Public Handler : %1").arg( *phPubKey ));
+        manApplet->dlog( QString( "Private Handler : %1").arg( *phPriKey ));
     }
 
     return rv;
@@ -679,7 +731,7 @@ int CryptokiAPI::GenerateKey(
 
     if( rv == CKR_OK )
     {
-
+        manApplet->dlog( QString( "Key Handler : %1").arg( *phKey ));
     }
 
     return rv;
@@ -710,7 +762,7 @@ int CryptokiAPI::CreateObject(
 
     if( rv == CKR_OK )
     {
-
+        manApplet->dlog( QString( "Object Handler : %1").arg( *phObject ));
     }
 
     return rv;
@@ -808,7 +860,12 @@ int CryptokiAPI::DigestFinal( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pDigest, C
 
     if( rv == CKR_OK )
     {
+        manApplet->dlog( QString( "DigestLen : %1").arg( *pulDigestLen ));
 
+        if( pDigest )
+        {
+            manApplet->dlog( QString( "Digest : %1").arg( getHexString( pDigest, *pulDigestLen )));
+        }
     }
 
     return rv;
@@ -834,7 +891,12 @@ int CryptokiAPI::Digest( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG
 
     if( rv == CKR_OK )
     {
+        manApplet->dlog( QString( "DigestLen : %1").arg( *pulDigestLen ));
 
+        if( pDigest )
+        {
+            manApplet->dlog( QString( "Digest : %1").arg( getHexString( pDigest, *pulDigestLen )));
+        }
     }
 
     return rv;
@@ -910,7 +972,11 @@ int CryptokiAPI::SignFinal( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pSign, CK_UL
 
     if( rv == CKR_OK )
     {
-
+        manApplet->dlog( QString( "SignLen : %1").arg( *pulSignLen ));
+        if( pSign )
+        {
+            manApplet->dlog( QString( "Sign : %1").arg( getHexString( pSign, *pulSignLen )));
+        }
     }
 
     return rv;
@@ -935,7 +1001,11 @@ int CryptokiAPI::Sign( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG u
 
     if( rv == CKR_OK )
     {
-
+        manApplet->dlog( QString( "SignLen : %1").arg( *pulSignLen ));
+        if( pSign )
+        {
+            manApplet->dlog( QString( "Sign : %1").arg( getHexString( pSign, *pulSignLen )));
+        }
     }
 
     return rv;
@@ -1085,7 +1155,12 @@ int CryptokiAPI::EncryptUpdate( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, C
 
     if( rv == CKR_OK )
     {
+        manApplet->dlog( QString( "EncPartLen : %1").arg( *pulEncPartLen));
 
+        if( pEncPart )
+        {
+            manApplet->dlog( QString( "EncPart : %1").arg( getHexString( pEncPart, *pulEncPartLen)));
+        }
     }
 
     return rv;
@@ -1110,7 +1185,11 @@ int CryptokiAPI::EncryptFinal( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pLastEncP
 
     if( rv == CKR_OK )
     {
-
+        manApplet->dlog( QString( "LastEncPartLen : %1" ).arg( *pulLastEncPartLen ));
+        if( pLastEncPart )
+        {
+            manApplet->dlog( QString( "LastEncPart : %1").arg( getHexString( pLastEncPart, *pulLastEncPartLen)));
+        }
     }
 
     return rv;
@@ -1135,7 +1214,12 @@ int CryptokiAPI::Encrypt( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULON
 
     if( rv == CKR_OK )
     {
+        manApplet->dlog( QString( "EncDataLen : %1").arg( *pulEncDataLen));
 
+        if( pEncData )
+        {
+            manApplet->dlog( QString( "EncData : %1").arg( getHexString( pEncData, *pulEncDataLen)));
+        }
     }
 
     return rv;
@@ -1185,7 +1269,12 @@ int CryptokiAPI::DecryptUpdate( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pEncPart
 
     if( rv == CKR_OK )
     {
+        manApplet->dlog( QString( "DecPartLen : %1").arg( *pulPartLen ));
 
+        if( pPart )
+        {
+            manApplet->dlog( QString( "DecPart : %1").arg( getHexString( pPart, *pulPartLen )));
+        }
     }
 
     return rv;
@@ -1210,7 +1299,12 @@ int CryptokiAPI::DecryptFinal( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pLastPart
 
     if( rv == CKR_OK )
     {
+        manApplet->dlog( QString( "DecLastPartLen : %1").arg( *pulLastPartLen ));
 
+        if( pLastPart )
+        {
+            manApplet->dlog( QString( "DecLastPart : %1").arg( getHexString( pLastPart, *pulLastPartLen )));
+        }
     }
 
     return rv;
@@ -1235,7 +1329,12 @@ int CryptokiAPI::Decrypt( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pEncData, CK_U
 
     if( rv == CKR_OK )
     {
+        manApplet->dlog( QString( "DecDataLen : %1").arg( *pulDataLen ));
 
+        if( pData )
+        {
+            manApplet->dlog( QString( "DecData : %1").arg( getHexString( pData, *pulDataLen )));
+        }
     }
 
     return rv;
@@ -1363,7 +1462,10 @@ int CryptokiAPI::GenerateRandom( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pRandom
 
     if( rv == CKR_OK )
     {
-
+        if( pRandomData )
+        {
+            manApplet->dlog( QString( "Random Data : %1").arg( getHexString( pRandomData, ulRandomLen )));
+        }
     }
 
     return rv;
@@ -1390,7 +1492,7 @@ int CryptokiAPI::GetOperationState( CK_SESSION_HANDLE hSession,
 
     if( rv == CKR_OK )
     {
-
+        if( pOperationState ) manApplet->dlog( QString( "Operation State : %1").arg( getHexString(pOperationState, *pulOperationStateLen )));
     }
 
     return rv;
@@ -1454,7 +1556,7 @@ int CryptokiAPI::DeriveKey( CK_SESSION_HANDLE hSession,
 
     if( rv == CKR_OK )
     {
-
+        manApplet->dlog( QString( "Object Handler : %1").arg( *phKey ));
     }
 
     return rv;
@@ -1484,7 +1586,8 @@ int CryptokiAPI::WrapKey( CK_SESSION_HANDLE hSession,
 
     if( rv == CKR_OK )
     {
-
+        manApplet->dlog( QString( "WrappedKeyLen : %1").arg( *pulWrappedKeyLen ));
+        if( pWrappedKey ) manApplet->dlog( QString( "WrappedKey: %1").arg( getHexString( pWrappedKey, *pulWrappedKeyLen )));
     }
 
     return rv;
@@ -1518,7 +1621,7 @@ int CryptokiAPI::UnwrapKey( CK_SESSION_HANDLE hSession,
 
     if( rv == CKR_OK )
     {
-
+        manApplet->dlog( QString( "Unwrapped Key Handler : %1").arg( *phKey ));
     }
 
     return rv;
