@@ -43,6 +43,8 @@ private slots:
     void clickPubToken();
     void clickPubStartDate();
     void clickPubEndDate();
+    void clickGenDHParam();
+    void changeDH_P();
 
 private:
     void initialize();

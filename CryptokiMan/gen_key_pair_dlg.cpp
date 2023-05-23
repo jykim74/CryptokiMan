@@ -7,8 +7,10 @@
 #include "common.h"
 #include "cryptoki_api.h"
 
-static QStringList sMechList = { "RSA", "ECC" };
+static QStringList sMechList = { "RSA", "ECC", "DH" };
 static QStringList sRSAOptionList = { "1024", "2048", "3096", "4082" };
+static QStringList sDHOptionList = { "512", "1024", "2048" };
+static QStringList sDH_GList = { "02", "05" };
 
 
 static QStringList sFalseTrue = { "false", "true" };
@@ -24,6 +26,8 @@ GenKeyPairDlg::GenKeyPairDlg(QWidget *parent) :
 
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
     connect( mMechCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(mechChanged(int)));
+    connect( mGenDHParamBtn, SIGNAL(clicked()), this, SLOT(clickGenDHParam()));
+    connect( mDH_PText, SIGNAL(textChanged()), this, SLOT(changeDH_P()));
 
     initialize();
     setDefaults();
@@ -62,6 +66,10 @@ void GenKeyPairDlg::initAttributes()
     mMechCombo->addItems( sMechList );
 
     mOptionCombo->addItems( sRSAOptionList );
+    mOptionCombo->setEditable( true );
+
+    mDH_GCombo->addItems( sDH_GList );
+    mDHParamGroup->setDisabled(true);
 
     mPriPrivateCombo->addItems( sFalseTrue );
     mPriDecryptCombo->addItems( sFalseTrue );
@@ -181,6 +189,11 @@ void GenKeyPairDlg::accept()
         stMech.mechanism = CKM_ECDSA_KEY_PAIR_GEN;
         keyType = CKK_ECDSA;
     }
+    else if( iSelMech == 2 )
+    {
+        stMech.mechanism = CKM_DH_PKCS_KEY_PAIR_GEN;
+        keyType = CKK_DH;
+    }
 
     sPubTemplate[uPubCount].type = CKA_CLASS;
     sPubTemplate[uPubCount].pValue = &pubClass;
@@ -231,6 +244,27 @@ void GenKeyPairDlg::accept()
         sPubTemplate[uPubCount].type = CKA_EC_PARAMS;
         sPubTemplate[uPubCount].pValue = binECParam.pVal;
         sPubTemplate[uPubCount].ulValueLen = binECParam.nLen;
+        uPubCount++;
+    }
+    else if( iSelMech == 2 )
+    {
+        BIN binDH_G = {0,0};
+        BIN binDH_P = {0,0};
+
+        QString strDH_P = mDH_PText->toPlainText();
+        QString strDH_G = mDH_GCombo->currentText();
+
+        JS_BIN_decodeHex( strDH_P.toStdString().c_str(), &binDH_P );
+        JS_BIN_decodeHex( strDH_G.toStdString().c_str(), &binDH_G );
+
+        sPubTemplate[uPubCount].type = CKA_PRIME;
+        sPubTemplate[uPubCount].pValue = binDH_P.pVal;
+        sPubTemplate[uPubCount].ulValueLen = binDH_P.nLen;
+        uPubCount++;
+
+        sPubTemplate[uPubCount].type = CKA_BASE;
+        sPubTemplate[uPubCount].pValue = binDH_G.pVal;
+        sPubTemplate[uPubCount].ulValueLen = binDH_G.nLen;
         uPubCount++;
     }
 
@@ -490,13 +524,21 @@ void GenKeyPairDlg::mechChanged(int nIndex)
 
     if( nIndex == 0 )
     {
-        mOptionLabel->setText( QString("Key size") );
+        mOptionLabel->setText( QString("Key Length") );
         mOptionCombo->addItems( sRSAOptionList );
+        mDHParamGroup->setDisabled(true);
     }
-    else
+    else if( nIndex == 1 )
     {
         mOptionLabel->setText( QString("NamedCurve"));
         mOptionCombo->addItems( kECCOptionList );
+        mDHParamGroup->setDisabled(true);
+    }
+    else if( nIndex == 2 )
+    {
+        mOptionLabel->setText( QString("Key Length") );
+        mOptionCombo->addItems( sDHOptionList );
+        mDHParamGroup->setDisabled(false);
     }
 }
 
@@ -587,6 +629,30 @@ void GenKeyPairDlg::clickPubStartDate()
 void GenKeyPairDlg::clickPubEndDate()
 {
     mPubEndDateEdit->setEnabled( mPubEncryptCheck->isChecked() );
+}
+
+void GenKeyPairDlg::clickGenDHParam()
+{
+    int ret = 0;
+    int nG = mDH_GCombo->currentText().toInt();
+    int nLen = mOptionCombo->currentText().toInt();
+
+    BIN binP = {0,0};
+    BIN binG = {0,0};
+
+    ret = JS_PKI_genDHParam( nLen, nG, &binP, &binG );
+
+    mDH_PText->setPlainText( getHexString( binP.pVal, binP.nLen ));
+
+    JS_BIN_reset( &binP );
+    JS_BIN_reset( &binG );
+}
+
+void GenKeyPairDlg::changeDH_P()
+{
+    int nLen = mDH_PText->toPlainText().length() / 2;
+
+    mDH_PLenText->setText( QString("%1").arg( nLen ));
 }
 
 void GenKeyPairDlg::setDefaults()
