@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>217</height>
+    <height>282</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -93,20 +93,7 @@
     </widget>
    </item>
    <item>
-    <layout class="QGridLayout" name="gridLayout_6">
-     <property name="topMargin">
-      <number>0</number>
-     </property>
-     <item row="0" column="3">
-      <widget class="QLineEdit" name="mObjectText"/>
-     </item>
-     <item row="0" column="2">
-      <widget class="QLabel" name="label_8">
-       <property name="text">
-        <string>Object</string>
-       </property>
-      </widget>
-     </item>
+    <layout class="QGridLayout" name="gridLayout_2">
      <item row="0" column="0">
       <widget class="QLabel" name="label_2">
        <property name="minimumSize">
@@ -120,10 +107,60 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="mOperationStateText"/>
+     <item row="0" column="2">
+      <widget class="QLineEdit" name="mOperationStateLenText">
+       <property name="maximumSize">
+        <size>
+         <width>40</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>굴림체</family>
+        </font>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
      </item>
-     <item row="1" column="0">
+     <item row="0" column="1">
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QPlainTextEdit" name="mOperationStateText">
+     <property name="font">
+      <font>
+       <family>굴림체</family>
+      </font>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="gridLayout_6">
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="mEncKeyText"/>
+     </item>
+     <item row="0" column="0">
       <widget class="QLabel" name="label_3">
        <property name="minimumSize">
         <size>
@@ -136,33 +173,17 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
-      <widget class="QLineEdit" name="mEncKeyText"/>
+     <item row="0" column="3">
+      <widget class="QLineEdit" name="mAuthKeyText"/>
      </item>
-     <item row="1" column="2">
+     <item row="0" column="2">
       <widget class="QLabel" name="label_4">
        <property name="text">
         <string>Auth Key</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="3">
-      <widget class="QLineEdit" name="mAuthKeyText"/>
-     </item>
     </layout>
-   </item>
-   <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
    </item>
    <item>
     <widget class="Line" name="line">
@@ -215,8 +236,6 @@
   <tabstop>mSlotsCombo</tabstop>
   <tabstop>mSlotIDText</tabstop>
   <tabstop>mSessionText</tabstop>
-  <tabstop>mOperationStateText</tabstop>
-  <tabstop>mObjectText</tabstop>
   <tabstop>mEncKeyText</tabstop>
   <tabstop>mAuthKeyText</tabstop>
   <tabstop>mGetOperationStateBtn</tabstop>

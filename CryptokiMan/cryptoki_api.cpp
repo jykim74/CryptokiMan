@@ -1499,7 +1499,6 @@ int CryptokiAPI::GetOperationState( CK_SESSION_HANDLE hSession,
 }
 
 int CryptokiAPI::SetOperationState( CK_SESSION_HANDLE hSession,
-                                    CK_OBJECT_HANDLE hObject,
                                     CK_BYTE_PTR pOperationState,
                                     CK_ULONG ulOperationStateLen,
                                     CK_OBJECT_HANDLE hEncryptionKey,
@@ -1514,8 +1513,8 @@ int CryptokiAPI::SetOperationState( CK_SESSION_HANDLE hSession,
     rv = p11_ctx_->p11FuncList->C_SetOperationState( hSession, pOperationState, ulOperationStateLen, hEncryptionKey, hAuthenticationKey );
     ms = timer.elapsed();
 
-    strIn.sprintf( "C_GetOperationState( SESSION_HANDLE = %u, ObjectHandle = %u, OperationState_ptr = @%p, OperationStateLen = %u, EncryptKeyHandle = %u, AuthenticationKeyHandle = %u )",
-                   hSession, hObject, pOperationState, ulOperationStateLen, hEncryptionKey, hAuthenticationKey );
+    strIn.sprintf( "C_GetOperationState( SESSION_HANDLE = %u, OperationState_ptr = @%p, OperationStateLen = %u, EncryptKeyHandle = %u, AuthenticationKeyHandle = %u )",
+                   hSession, pOperationState, ulOperationStateLen, hEncryptionKey, hAuthenticationKey );
     manApplet->dlog( strIn );
 
 

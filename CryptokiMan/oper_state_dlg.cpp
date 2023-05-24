@@ -15,6 +15,7 @@ OperStateDlg::OperStateDlg(QWidget *parent) :
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
     connect( mGetOperationStateBtn, SIGNAL(clicked()), this, SLOT(clickGetOperationState()));
     connect( mSetOperationStateBtn, SIGNAL(clicked()), this, SLOT(clickSetOperationState()));
+    connect( mOperationStateText, SIGNAL(textChanged()), this, SLOT(changeOperationState()));
 
     initialize();
 }
@@ -81,7 +82,7 @@ void OperStateDlg::clickGetOperationState()
         return;
     }
 
-    mOperationStateText->setText( getHexString(sOperState, ulOperStateLen ));
+    mOperationStateText->setPlainText( getHexString(sOperState, ulOperStateLen ));
 }
 
 void OperStateDlg::clickSetOperationState()
@@ -97,15 +98,14 @@ void OperStateDlg::clickSetOperationState()
     SlotInfo slotInfo = slot_infos.at(index);
     CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
-    CK_SESSION_HANDLE hObject = mObjectText->text().toLong();
     CK_SESSION_HANDLE hEncKey = mEncKeyText->text().toLong();
     CK_SESSION_HANDLE hAuthKey = mAuthKeyText->text().toLong();
 
-    QString strOperState = mOperationStateText->text();
+    QString strOperState = mOperationStateText->toPlainText();
 
     JS_BIN_decodeHex( strOperState.toStdString().c_str(), &binOperState );
 
-    ret = manApplet->cryptokiAPI()->SetOperationState( hSession, hObject, binOperState.pVal, binOperState.nLen, hEncKey, hAuthKey );
+    ret = manApplet->cryptokiAPI()->SetOperationState( hSession, binOperState.pVal, binOperState.nLen, hEncKey, hAuthKey );
 
     if( ret != CKR_OK )
     {
@@ -118,4 +118,11 @@ void OperStateDlg::clickSetOperationState()
     }
 
     JS_BIN_reset( &binOperState );
+}
+
+void OperStateDlg::changeOperationState()
+{
+    int nLen = mOperationStateText->toPlainText().length() / 2;
+
+    mOperationStateLenText->setText( QString( "%1" ).arg( nLen ));
 }

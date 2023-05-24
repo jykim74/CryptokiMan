@@ -21,6 +21,7 @@ private slots:
     void slotChanged(int index );
     void clickGetOperationState();
     void clickSetOperationState();
+    void changeOperationState();
 
 private:
     void initialize();
