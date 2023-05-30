@@ -901,3 +901,71 @@ QString getStringFromBIN( const BIN *pBin, int nType, bool bSeenOnly )
     if( pOut ) JS_free( pOut );
     return strOut;
 }
+
+QString getMechFlagString( unsigned long uFlag )
+{
+    QString strFlag = QString( "%1" ).arg( uFlag );
+
+    if( uFlag & CKF_DECRYPT ) strFlag += " | Decrypt";
+    if( uFlag & CKF_DERIVE ) strFlag += " | Derive";
+    if( uFlag & CKF_DIGEST ) strFlag += " | Digest";
+    if( uFlag & CKF_ENCRYPT ) strFlag += " | Encrypt";
+    if( uFlag & CKF_GENERATE ) strFlag += " | Generate";
+    if( uFlag & CKF_GENERATE_KEY_PAIR ) strFlag += " | Generate key pair";
+    if( uFlag & CKF_HW ) strFlag += " | HW";
+    if( uFlag & CKF_SIGN ) strFlag += " | Sign";
+    if( uFlag & CKF_VERIFY ) strFlag += " | Verify";
+    if( uFlag & CKF_ENCRYPT ) strFlag += " | Encrypt";
+    if( uFlag & CKF_WRAP ) strFlag += " | Wrap";
+    if( uFlag & CKF_UNWRAP ) strFlag += " | Unwrap";
+    if( uFlag & CKF_SIGN_RECOVER ) strFlag += " | Sign recover";
+    if( uFlag & CKF_VERIFY_RECOVER ) strFlag += " | Verify recover";
+
+    return strFlag;
+}
+
+QString getSlotFlagString( unsigned long uFlag )
+{
+    QString strFlag = QString( "%1" ).arg( uFlag );
+
+    if( uFlag & CKF_TOKEN_PRESENT )
+        strFlag += " | token present";
+
+    if( uFlag & CKF_REMOVABLE_DEVICE )
+        strFlag += " | removable device";
+
+    if( uFlag & CKF_HW_SLOT )
+        strFlag += " | HW slot";
+
+    return strFlag;
+}
+
+QString getTokenFlagString( unsigned char uFlag )
+{
+    QString strFlag = QString( "%1" ).arg( uFlag );
+
+    if( uFlag & CKF_TOKEN_INITIALIZED ) strFlag += " | token initialized";
+    if( uFlag & CKF_RNG ) strFlag += " | RNG";
+    if( uFlag & CKF_WRITE_PROTECTED ) strFlag += " | write protected";
+    if( uFlag & CKF_LOGIN_REQUIRED ) strFlag += " | login required";
+    if( uFlag & CKF_USER_PIN_INITIALIZED ) strFlag += " | user pin initialized";
+    if( uFlag & CKF_RESTORE_KEY_NOT_NEEDED ) strFlag += " | restore key not needed";
+    if( uFlag & CKF_CLOCK_ON_TOKEN ) strFlag += " | clock on token";
+    if( uFlag & CKF_PROTECTED_AUTHENTICATION_PATH ) strFlag += " | protected authentication path";
+    if( uFlag & CKF_DUAL_CRYPTO_OPERATIONS ) strFlag += " | dual crypto operations";
+
+    return strFlag;
+}
+
+QString getSessionFlagString( unsigned char uFlag )
+{
+    QString strFlag = QString( "%1" ).arg( uFlag );
+
+    if( uFlag & CKS_RO_PUBLIC_SESSION ) strFlag += " | RO_PUBLIC_SESSION";
+    if( uFlag & CKS_RO_USER_FUNCTIONS ) strFlag += " | RO_USER_FUNCTIONS";
+    if( uFlag & CKS_RW_PUBLIC_SESSION ) strFlag += " | RW_PUBLIC_SESSION";
+    if( uFlag & CKS_RW_SO_FUNCTIONS ) strFlag += " | RW_SO_FUNCTIONS";
+    if( uFlag & CKS_RW_USER_FUNCTIONS ) strFlag += " | RW_USER_FUNCTIONS";
+
+    return strFlag;
+}

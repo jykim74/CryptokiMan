@@ -129,4 +129,11 @@ void getBINFromString( BIN *pBin, int nType, const QString& strString );
 QString getStringFromBIN( const BIN *pBin, const QString& strType, bool bSeenOnly = false );
 QString getStringFromBIN( const BIN *pBin, int nType, bool bSeenOnly = false );
 
+
+QString getMechFlagString( unsigned long uFlag );
+QString getSlotFlagString( unsigned long uFlag );
+QString getTokenFlagString( unsigned char uFlag );
+QString getSessionFlagString( unsigned char uFlag );
+
+
 #endif // COMMON_H

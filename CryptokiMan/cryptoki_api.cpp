@@ -182,7 +182,7 @@ int CryptokiAPI::GetSlotInfo( CK_SLOT_ID slotID, CK_SLOT_INFO_PTR pSlotInfo )
     {
         manApplet->dlog( QString( "slot_description : %1").arg( getHexString( pSlotInfo->slotDescription, sizeof( pSlotInfo->slotDescription ))));
         manApplet->dlog( QString( "manufacturer_id  : %1").arg( getHexString(pSlotInfo->manufacturerID, sizeof(pSlotInfo->manufacturerID))));
-        manApplet->dlog( QString( "flags            : %1").arg( pSlotInfo->flags ));
+        manApplet->dlog( QString( "flags            : %1 - %2").arg( pSlotInfo->flags ).arg( getSlotFlagString( pSlotInfo->flags)));
         manApplet->dlog( QString( "hardware version : major %1 minor %2").arg( pSlotInfo->hardwareVersion.major).arg( pSlotInfo->hardwareVersion.minor));
         manApplet->dlog( QString( "firmware_version : major %1 minor %2").arg( pSlotInfo->firmwareVersion.major).arg( pSlotInfo->firmwareVersion.minor));
     }
@@ -212,7 +212,7 @@ int CryptokiAPI::GetTokenInfo( CK_SLOT_ID slotID, CK_TOKEN_INFO_PTR pTokenInfo )
         manApplet->dlog( QString( "manufacturer_id      : %1").arg( getHexString( pTokenInfo->manufacturerID, sizeof(pTokenInfo->manufacturerID))));
         manApplet->dlog( QString( "model                : %1").arg( getHexString(pTokenInfo->model, sizeof(pTokenInfo->model))));
         manApplet->dlog( QString( "serial_number        : %1").arg(getHexString( pTokenInfo->serialNumber, sizeof(pTokenInfo->serialNumber))));
-        manApplet->dlog( QString( "flags                : %1").arg( pTokenInfo->flags ));
+        manApplet->dlog( QString( "flags                : %1 - %2").arg( pTokenInfo->flags ).arg( getTokenFlagString( pTokenInfo->flags )));
         manApplet->dlog( QString( "max_session_count    : %1").arg( pTokenInfo->ulMaxSessionCount ));
         manApplet->dlog( QString( "session_count        : %1").arg( pTokenInfo->ulSessionCount ));
         manApplet->dlog( QString( "max_rw_session_count : %1").arg( pTokenInfo->ulMaxRwSessionCount ));
@@ -279,13 +279,13 @@ int CryptokiAPI::GetMechanismInfo( CK_SLOT_ID slotID, CK_MECHANISM_TYPE iMechTyp
                    slotID, iMechType, pInfo );
     manApplet->dlog( strIn );
 
-    logResult( "C_GetMechanismInfo", rv, ms );
+    logResult( QString("C_GetMechanismInfo: %1").arg( JS_PKCS11_GetCKMName(iMechType)), rv, ms );
 
     if( rv == CKR_OK )
     {
         manApplet->dlog( QString( "min_key_size : %1").arg( pInfo->ulMinKeySize ));
         manApplet->dlog( QString( "max_key_size : %1").arg( pInfo->ulMaxKeySize ));
-        manApplet->dlog( QString( "flags        : %1").arg( pInfo->flags ));
+        manApplet->dlog( QString( "flags        : %1 - %2").arg( pInfo->flags ).arg( getMechFlagString( pInfo->flags )));
     }
 
     return rv;
@@ -311,7 +311,7 @@ int CryptokiAPI::GetSessionInfo( CK_SESSION_HANDLE hSession, CK_SESSION_INFO_PTR
     {
         manApplet->dlog( QString( "slot_id      : %1").arg( pSessionInfo->slotID ));
         manApplet->dlog( QString( "state        : %1").arg( pSessionInfo->state ));
-        manApplet->dlog( QString( "flags        : %1").arg( pSessionInfo->flags ));
+        manApplet->dlog( QString( "flags        : %1 - %2").arg( pSessionInfo->flags ).arg( getSessionFlagString( pSessionInfo->flags )));
         manApplet->dlog( QString( "device error : %1").arg( pSessionInfo->ulDeviceError ));
     }
 
