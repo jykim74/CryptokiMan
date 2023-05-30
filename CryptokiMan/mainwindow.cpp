@@ -150,7 +150,7 @@ void MainWindow::initialize()
     right_table_->setContextMenuPolicy(Qt::CustomContextMenu);
     connect( right_table_, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showRightMenu(QPoint)));
 
-    dock_ = new QDockWidget( tr( "Information" ), this );
+    dock_ = new QDockWidget( tr( "Information And Log Window" ), this );
     addDockWidget(Qt::BottomDockWidgetArea, dock_ );
     dock_->setWidget( text_tab_ );
 }

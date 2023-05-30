@@ -1680,6 +1680,22 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>EndDate</source>
         <translation>종료 일자</translation>
     </message>
+    <message>
+        <source>DH Parameter</source>
+        <translation>DH 파라미터</translation>
+    </message>
+    <message>
+        <source>g</source>
+        <translation>g</translation>
+    </message>
+    <message>
+        <source>Gen DH Param</source>
+        <translation>DH 파라미터 생성</translation>
+    </message>
+    <message>
+        <source>p</source>
+        <translation>p</translation>
+    </message>
 </context>
 <context>
     <name>ImportCertDlg</name>
@@ -2879,6 +2895,18 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>Cryptogram</source>
         <translation>암호화</translation>
     </message>
+    <message>
+        <source>Information And Log Window</source>
+        <translation>정보 및 로그 창</translation>
+    </message>
+    <message>
+        <source>Show Info</source>
+        <translation>정보 보기</translation>
+    </message>
+    <message>
+        <source>Show Information</source>
+        <translation>정보 보기</translation>
+    </message>
 </context>
 <context>
     <name>ManApplet</name>
@@ -3144,7 +3172,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Object</source>
-        <translation>대상</translation>
+        <translation type="vanished">대상</translation>
     </message>
     <message>
         <source>Operation State</source>
