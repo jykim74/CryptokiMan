@@ -130,6 +130,7 @@ public slots:
     void settings();
     void operationState();
     void logClear();
+    void showDock();
 
     void rightTableClick( QModelIndex index );
     void showRightMenu(QPoint point );
@@ -152,7 +153,7 @@ private:
     QList<QAction *>  recent_file_list_;
 
     QSplitter       *hsplitter_;
-    QSplitter       *vsplitter_;
+    QDockWidget     *dock_;
 
     ManTreeView     *left_tree_;
     ManTreeModel    *left_model_;

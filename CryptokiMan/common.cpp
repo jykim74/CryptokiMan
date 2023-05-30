@@ -940,7 +940,7 @@ QString getSlotFlagString( unsigned long uFlag )
     return strFlag;
 }
 
-QString getTokenFlagString( unsigned char uFlag )
+QString getTokenFlagString( unsigned long uFlag )
 {
     QString strFlag = QString( "%1" ).arg( uFlag );
 
@@ -957,15 +957,25 @@ QString getTokenFlagString( unsigned char uFlag )
     return strFlag;
 }
 
-QString getSessionFlagString( unsigned char uFlag )
+QString getSessionFlagString( unsigned long uFlag )
 {
     QString strFlag = QString( "%1" ).arg( uFlag );
 
-    if( uFlag & CKS_RO_PUBLIC_SESSION ) strFlag += " | RO_PUBLIC_SESSION";
-    if( uFlag & CKS_RO_USER_FUNCTIONS ) strFlag += " | RO_USER_FUNCTIONS";
-    if( uFlag & CKS_RW_PUBLIC_SESSION ) strFlag += " | RW_PUBLIC_SESSION";
-    if( uFlag & CKS_RW_SO_FUNCTIONS ) strFlag += " | RW_SO_FUNCTIONS";
-    if( uFlag & CKS_RW_USER_FUNCTIONS ) strFlag += " | RW_USER_FUNCTIONS";
+    if( uFlag & CKF_RW_SESSION ) strFlag += " | CKF_RW_SESSION";
+    if( uFlag & CKF_SERIAL_SESSION ) strFlag += " | CKF_SERIAL_SESSION";
 
     return strFlag;
+}
+
+QString getSessionStateString( unsigned long uState )
+{
+    QString strState = QString( "%1" ).arg( uState );
+
+    if( uState & CKS_RO_PUBLIC_SESSION ) strState += " | RO_PUBLIC_SESSION";
+    if( uState & CKS_RO_USER_FUNCTIONS ) strState += " | RO_USER_FUNCTIONS";
+    if( uState & CKS_RW_PUBLIC_SESSION ) strState += " | RW_PUBLIC_SESSION";
+    if( uState & CKS_RW_SO_FUNCTIONS ) strState += " | RW_SO_FUNCTIONS";
+    if( uState & CKS_RW_USER_FUNCTIONS ) strState += " | RW_USER_FUNCTIONS";
+
+    return strState;
 }

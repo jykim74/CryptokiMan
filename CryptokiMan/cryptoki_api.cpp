@@ -213,16 +213,16 @@ int CryptokiAPI::GetTokenInfo( CK_SLOT_ID slotID, CK_TOKEN_INFO_PTR pTokenInfo )
         manApplet->dlog( QString( "model                : %1").arg( getHexString(pTokenInfo->model, sizeof(pTokenInfo->model))));
         manApplet->dlog( QString( "serial_number        : %1").arg(getHexString( pTokenInfo->serialNumber, sizeof(pTokenInfo->serialNumber))));
         manApplet->dlog( QString( "flags                : %1 - %2").arg( pTokenInfo->flags ).arg( getTokenFlagString( pTokenInfo->flags )));
-        manApplet->dlog( QString( "max_session_count    : %1").arg( pTokenInfo->ulMaxSessionCount ));
-        manApplet->dlog( QString( "session_count        : %1").arg( pTokenInfo->ulSessionCount ));
-        manApplet->dlog( QString( "max_rw_session_count : %1").arg( pTokenInfo->ulMaxRwSessionCount ));
-        manApplet->dlog( QString( "rw_session_count     : %1").arg( pTokenInfo->ulRwSessionCount));
+        manApplet->dlog( QString( "max_session_count    : %1 - 0x%2").arg( pTokenInfo->ulMaxSessionCount ).arg( pTokenInfo->ulMaxSessionCount, 0, 16, QLatin1Char('0')).toUpper());
+        manApplet->dlog( QString( "session_count        : %1 - 0x%2").arg( pTokenInfo->ulSessionCount ).arg( pTokenInfo->ulSessionCount, 0, 16, QLatin1Char('0')).toUpper());
+        manApplet->dlog( QString( "max_rw_session_count : %1 - 0x%2").arg( pTokenInfo->ulMaxRwSessionCount ).arg( pTokenInfo->ulMaxRwSessionCount, 0, 16, QLatin1Char('0')).toUpper());
+        manApplet->dlog( QString( "rw_session_count     : %1 - 0x%2").arg( pTokenInfo->ulRwSessionCount).arg( pTokenInfo->ulRwSessionCount, 0, 16, QLatin1Char('0')).toUpper());
         manApplet->dlog( QString( "max_pin_len          : %1" ).arg( pTokenInfo->ulMaxPinLen));
         manApplet->dlog( QString( "min_pin_len          : %1").arg( pTokenInfo->ulMinPinLen));
-        manApplet->dlog( QString( "total_public_memory  : %1").arg( pTokenInfo->ulTotalPublicMemory ));
-        manApplet->dlog( QString( "free_public_memory   : %1" ).arg( pTokenInfo->ulFreePublicMemory));
-        manApplet->dlog( QString( "total_private_memory : %1").arg( pTokenInfo->ulTotalPrivateMemory ));
-        manApplet->dlog( QString( "free_private_memory  : %1" ).arg( pTokenInfo->ulFreePrivateMemory));
+        manApplet->dlog( QString( "total_public_memory  : %1 - 0x%2").arg( pTokenInfo->ulTotalPublicMemory ).arg( pTokenInfo->ulTotalPublicMemory, 0, 16, QLatin1Char('0')).toUpper());
+        manApplet->dlog( QString( "free_public_memory   : %1 - 0x%2" ).arg( pTokenInfo->ulFreePublicMemory).arg( pTokenInfo->ulFreePublicMemory, 0, 16, QLatin1Char('0')).toUpper());
+        manApplet->dlog( QString( "total_private_memory : %1 - 0x%2").arg( pTokenInfo->ulTotalPrivateMemory ).arg( pTokenInfo->ulTotalPrivateMemory, 0, 16, QLatin1Char('0')).toUpper());
+        manApplet->dlog( QString( "free_private_memory  : %1 - 0x%2" ).arg( pTokenInfo->ulFreePrivateMemory).arg( pTokenInfo->ulFreePrivateMemory, 0, 16, QLatin1Char('0')).toUpper());
         manApplet->dlog( QString( "hardware version     : major %1 minor %2").arg( pTokenInfo->hardwareVersion.major).arg( pTokenInfo->hardwareVersion.minor));
         manApplet->dlog( QString( "firmware_version     : major %1 minor %2").arg( pTokenInfo->firmwareVersion.major).arg( pTokenInfo->firmwareVersion.minor));
         manApplet->dlog( QString( "utc_time             : %1").arg(getHexString(pTokenInfo->utcTime, sizeof(pTokenInfo->utcTime))));
@@ -310,7 +310,7 @@ int CryptokiAPI::GetSessionInfo( CK_SESSION_HANDLE hSession, CK_SESSION_INFO_PTR
     if( rv == CKR_OK )
     {
         manApplet->dlog( QString( "slot_id      : %1").arg( pSessionInfo->slotID ));
-        manApplet->dlog( QString( "state        : %1").arg( pSessionInfo->state ));
+        manApplet->dlog( QString( "state        : %1 - %2").arg( pSessionInfo->state ).arg( getSessionStateString( pSessionInfo->state )));
         manApplet->dlog( QString( "flags        : %1 - %2").arg( pSessionInfo->flags ).arg( getSessionFlagString( pSessionInfo->flags )));
         manApplet->dlog( QString( "device error : %1").arg( pSessionInfo->ulDeviceError ));
     }

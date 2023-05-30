@@ -68,7 +68,16 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    delete hsplitter_;
+    delete dock_;
+    delete left_tree_;
+    delete left_model_;
+    delete right_table_;
+    delete text_tab_;
+    delete info_text_;
+    delete log_text_;
 
+    recent_file_list_.clear();
 }
 
 void MainWindow::dragEnterEvent(QDragEnterEvent *event)
@@ -98,7 +107,6 @@ void MainWindow::dropEvent(QDropEvent *event)
 void MainWindow::initialize()
 {
     hsplitter_ = new QSplitter(Qt::Horizontal);
-    vsplitter_ = new QSplitter(Qt::Vertical);
     left_tree_ = new ManTreeView(this);
 
     right_table_ = new QTableWidget;
@@ -116,20 +124,14 @@ void MainWindow::initialize()
     left_tree_->header()->setVisible(false);
 
     hsplitter_->addWidget(left_tree_);
-    hsplitter_->addWidget(vsplitter_);
-    vsplitter_->addWidget(right_table_);
+    hsplitter_->addWidget( right_table_ );
 
     text_tab_ = new QTabWidget;
-    vsplitter_->addWidget( text_tab_ );
     text_tab_->setTabPosition( QTabWidget::South );
     text_tab_->addTab( info_text_, tr("information") );
 
     right_table_->setSelectionBehavior(QAbstractItemView::SelectRows);
     right_table_->setEditTriggers(QAbstractItemView::NoEditTriggers);
-
-    QList <int> vsizes;
-    vsizes << 500 << 500;
-    vsplitter_->setSizes(vsizes);
 
     QList <int> sizes;
     sizes << 300 << 600;
@@ -148,6 +150,9 @@ void MainWindow::initialize()
     right_table_->setContextMenuPolicy(Qt::CustomContextMenu);
     connect( right_table_, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showRightMenu(QPoint)));
 
+    dock_ = new QDockWidget( tr( "Information" ), this );
+    addDockWidget(Qt::BottomDockWidgetArea, dock_ );
+    dock_->setWidget( text_tab_ );
 }
 
 
@@ -190,6 +195,11 @@ void MainWindow::createActions()
     unloadAct->setStatusTip(tr("Unload cryptoki library"));
     connect( unloadAct, &QAction::triggered, this, &MainWindow::unload );
     fileMenu->addAction(unloadAct);
+
+    QAction *showDockAct = new QAction( tr( "Show Info"), this );
+    showDockAct->setStatusTip(tr("Show Information"));
+    connect( showDockAct, &QAction::triggered, this, &MainWindow::showDock);
+    fileMenu->addAction(showDockAct);
 
     QAction* recentFileAct = NULL;
     for( auto i = 0; i < kMaxRecentFiles; ++i )
@@ -1552,6 +1562,11 @@ void MainWindow::logClear()
     log_text_->clear();
 }
 
+void MainWindow::showDock()
+{
+    dock_->show();
+}
+
 void MainWindow::rightTableClick(QModelIndex index)
 {
     QString msg = QString( "detail type: %1" ).arg(right_type_ );
@@ -2192,6 +2207,8 @@ void MainWindow::showSlotInfoList( int index )
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("flags" )));
+
+    /*
     strMsg = QString( "%1" ).arg( stSlotInfo.flags );
     if( stSlotInfo.flags & CKF_TOKEN_PRESENT )
         strMsg += " | token present";
@@ -2201,7 +2218,8 @@ void MainWindow::showSlotInfoList( int index )
 
     if( stSlotInfo.flags & CKF_HW_SLOT )
         strMsg += " | HW slot";
-
+    */
+    strMsg = getSlotFlagString( stSlotInfo.flags );
 
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
@@ -2262,6 +2280,8 @@ void MainWindow::showTokenInfoList(int index)
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("flags" )));
+
+    /*
     strMsg = QString( "%1" ).arg( sTokenInfo.flags );
 
     if( sTokenInfo.flags & CKF_TOKEN_INITIALIZED ) strMsg += " | token initialized";
@@ -2273,6 +2293,8 @@ void MainWindow::showTokenInfoList(int index)
     if( sTokenInfo.flags & CKF_CLOCK_ON_TOKEN ) strMsg += " | clock on token";
     if( sTokenInfo.flags & CKF_PROTECTED_AUTHENTICATION_PATH ) strMsg += " | protected authentication path";
     if( sTokenInfo.flags & CKF_DUAL_CRYPTO_OPERATIONS ) strMsg += " | dual crypto operations";
+    */
+    strMsg = getTokenFlagString( sTokenInfo.flags );
 
 
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
@@ -2449,6 +2471,7 @@ void MainWindow::showMechanismInfoList(int index)
         strMsg = QString("%1").arg( stMechInfo.ulMaxKeySize );
         right_table_->setItem( row, 2, new QTableWidgetItem( strMsg ) );
 
+        /*
         strMsg = QString( "%1" ).arg( stMechInfo.flags );
 
         if( stMechInfo.flags & CKF_DECRYPT ) strMsg += " | Decrypt";
@@ -2465,6 +2488,8 @@ void MainWindow::showMechanismInfoList(int index)
         if( stMechInfo.flags & CKF_UNWRAP ) strMsg += " | Unwrap";
         if( stMechInfo.flags & CKF_SIGN_RECOVER ) strMsg += " | Sign recover";
         if( stMechInfo.flags & CKF_VERIFY_RECOVER ) strMsg += " | Verify recover";
+        */
+        strMsg = getMechFlagString( stMechInfo.flags );
 
         right_table_->setItem( row, 3, new QTableWidgetItem( strMsg ) );
 
@@ -2501,10 +2526,13 @@ void MainWindow::showSessionInfoList(int index)
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem(QString("flags") ));
+    /*
     strMsg = QString("%1").arg( stSessInfo.flags );
 
     if( stSessInfo.flags & CKF_RW_SESSION ) strMsg += " | CKF_RW_SESSION";
     if( stSessInfo.flags & CKF_SERIAL_SESSION ) strMsg += " | CKF_SERIAL_SESSION";
+    */
+    strMsg = getSessionFlagString( stSessInfo.flags );
 
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
@@ -2519,6 +2547,8 @@ void MainWindow::showSessionInfoList(int index)
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem(QString("state")));
+
+    /*
     strMsg = QString("%1").arg( stSessInfo.state );
 
     if( stSessInfo.state & CKS_RO_PUBLIC_SESSION ) strMsg += " | RO_PUBLIC_SESSION";
@@ -2526,6 +2556,8 @@ void MainWindow::showSessionInfoList(int index)
     if( stSessInfo.state & CKS_RW_PUBLIC_SESSION ) strMsg += " | RW_PUBLIC_SESSION";
     if( stSessInfo.state & CKS_RW_SO_FUNCTIONS ) strMsg += " | RW_SO_FUNCTIONS";
     if( stSessInfo.state & CKS_RW_USER_FUNCTIONS ) strMsg += " | RW_USER_FUNCTIONS";
+    */
+    strMsg = getSessionStateString( stSessInfo.state );
 
     right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
     row++;
