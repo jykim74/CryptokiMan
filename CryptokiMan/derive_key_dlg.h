@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "ui_derive_key_dlg.h"
+#include "js_bin.h"
 
 namespace Ui {
 class DeriveKeyDlg;
@@ -39,6 +40,8 @@ private slots:
     void clickStartDate();
     void clickEndDate();
 
+    void changeMechanism( int index );
+
 private:
     void initialize();
     void initAttributes();
@@ -47,6 +50,8 @@ private:
     void setSrcLabelList();
 
     void setDefaults();
+    void setMechanism( void *pMech );
+    void freeMechanism( void *pMech );
 
     int slot_index_;
     int session_;

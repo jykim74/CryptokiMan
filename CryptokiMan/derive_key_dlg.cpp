@@ -6,6 +6,7 @@
 #include "cryptoki_api.h"
 
 static QStringList sFalseTrue = { "false", "true" };
+static QStringList sParamList = { "CKD_NULL", "CKD_SHA1_KDF" };
 
 static QStringList sMechList = {
     "CKM_DH_PKCS_DERIVE", "CKM_ECDH1_DERIVE",
@@ -42,6 +43,7 @@ DeriveKeyDlg::DeriveKeyDlg(QWidget *parent) :
 
     connect( mSrcLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(srcLabelChanged(int)));
     connect( mClassCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(classChanged(int)));
+    connect( mSrcMethodCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changeMechanism(int)));
 
     initialize();
     setDefaults();
@@ -100,12 +102,13 @@ void DeriveKeyDlg::setSelectedSlot(int index)
 void DeriveKeyDlg::initialize()
 {
     tabWidget->setCurrentIndex(0);
+    mParamCombo->addItems( sParamList );
+    changeMechanism(0);
 }
 
 void DeriveKeyDlg::accept()
 {
     int rv = -1;
-
 
     CK_MECHANISM sMech;
     CK_ATTRIBUTE sTemplate[20];
@@ -125,19 +128,13 @@ void DeriveKeyDlg::accept()
     memset( &sEDate, 0x00, sizeof(sEDate));
 
     memset( &sMech, 0x00, sizeof(sMech));
-    sMech.mechanism = JS_PKCS11_GetCKMType( mSrcMethodCombo->currentText().toStdString().c_str());
+
 
     hSrcKey = mSrcObjectText->text().toLong();
+    setMechanism( &sMech );
 
-    BIN binParam = {0,0};
-    QString strParam = mSrcParamText->text();
-
-    if( !strParam.isEmpty() )
-    {
-        JS_BIN_decodeHex( strParam.toStdString().c_str(), &binParam );
-        sMech.pParameter = binParam.pVal;
-        sMech.ulParameterLen = binParam.nLen;
-    }
+    manApplet->log( QString( "Param[Len:%1] : %2").arg(sMech.ulParameterLen)
+                    .arg( getHexString((unsigned char *)sMech.pParameter, sMech.ulParameterLen)));
 
     objClass = JS_PKCS11_GetCKOType( mClassCombo->currentText().toStdString().c_str() );
     keyType = JS_PKCS11_GetCKKType( mTypeCombo->currentText().toStdString().c_str() );
@@ -303,12 +300,14 @@ void DeriveKeyDlg::accept()
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to run DeriveKey(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this);
+        freeMechanism( &sMech );
         return;
     }
 
     QString strHandle = QString("%1").arg( uObj );
 
     manApplet->messageBox(tr("success to derive key(%1)").arg(strHandle), this );
+    freeMechanism( &sMech );
     QDialog::accept();
 }
 
@@ -437,6 +436,219 @@ void DeriveKeyDlg::clickStartDate()
 void DeriveKeyDlg::clickEndDate()
 {
     mEndDateEdit->setEnabled(mEndDateCheck->isChecked());
+}
+
+void DeriveKeyDlg::changeMechanism( int index )
+{
+    QString strMech = mSrcMethodCombo->currentText();
+
+
+    if( strMech == "CKM_ECDH1_DERIVE" )
+    {
+        mParamComboLabel->setEnabled(true);
+        mParamComboLabel->setText( "EC_KDF_T" );
+        mParamCombo->setEnabled(true);
+
+        mParam1Label->setText( "Public Data" );
+
+        mParam2Label->setText( "Shared Data" );
+        mParam2Label->setEnabled(true);
+        mParam2Text->setEnabled( true );
+        mParam2LenText->setEnabled( true );
+    }
+    else if( strMech == "CKM_DES_CBC_ENCRYPT_DATA"
+             || strMech == "CKM_DES3_CBC_ENCRYPT_DATA"
+             || strMech == "CKM_AES_CBC_ENCRYPT_DATA" )
+    {
+        mParamCombo->setEnabled(false);
+        mParamComboLabel->setEnabled(false);
+
+        mParam1Label->setText( "IV" );
+
+        mParam2Label->setText( "Data Params" );
+        mParam2Label->setEnabled(true);
+        mParam2Text->setEnabled( true );
+        mParam2LenText->setEnabled( true );
+    }
+    else
+    {
+        mParamCombo->setEnabled(false);
+        mParamComboLabel->setEnabled(false);
+        mParam1Label->setText( "Parameter" );
+
+        mParam2Label->setEnabled(false);
+        mParam2Text->setEnabled(false);
+        mParam2LenText->setEnabled(false);
+    }
+}
+
+
+void DeriveKeyDlg::setMechanism( void *pMech )
+{
+    if( pMech == NULL ) return;
+    CK_MECHANISM_PTR pPtr = (CK_MECHANISM *)pMech;
+    long nMech = JS_PKCS11_GetCKMType( mSrcMethodCombo->currentText().toStdString().c_str());
+
+    pPtr->mechanism = nMech;
+
+    if( nMech == CKM_ECDH1_DERIVE )
+    {
+        BIN binShare = {0,0};
+        BIN binPubData = {0,0};
+
+        QString strPubData = mParam1Text->text();
+        QString strShare = mParam2Text->text();
+        QString strParam  = mParamCombo->currentText();
+
+
+        CK_ECDH1_DERIVE_PARAMS_PTR ecdh1Param;
+        ecdh1Param = (CK_ECDH1_DERIVE_PARAMS *)JS_calloc( 1, sizeof(CK_ECDH1_DERIVE_PARAMS));
+
+        if( strParam == "CKD_NULL" )
+            ecdh1Param->kdf = CKD_NULL;
+        else if( strParam == "CKD_SHA1_KDF" )
+            ecdh1Param->kdf = CKD_SHA1_KDF;
+
+        JS_BIN_decodeHex( strPubData.toStdString().c_str(), &binPubData );
+        ecdh1Param->public_data = binPubData.pVal;
+        ecdh1Param->public_data_len = binPubData.nLen;
+
+        if( strShare.length() > 1 )
+        {
+            JS_BIN_decodeHex( strShare.toStdString().c_str(), &binShare );
+            ecdh1Param->shared_data = binShare.pVal;
+            ecdh1Param->shared_data_len = binShare.nLen;
+        }
+
+        pPtr->pParameter = ecdh1Param;
+        pPtr->ulParameterLen = sizeof( ecdh1Param );
+    }
+    else if( nMech == CKM_DES_ECB_ENCRYPT_DATA
+             || nMech == CKM_DES3_ECB_ENCRYPT_DATA
+             || nMech == CKM_AES_ECB_ENCRYPT_DATA )
+    {
+        BIN binData = {0,0};
+        QString strData = mParam1Text->text();
+
+        CK_KEY_DERIVATION_STRING_DATA_PTR strParam;
+        strParam = (CK_KEY_DERIVATION_STRING_DATA *)JS_calloc(1, sizeof(CK_KEY_DERIVATION_STRING_DATA));
+
+        JS_BIN_decodeHex( strData.toStdString().c_str(), &binData );
+        strParam->string_data = binData.pVal;
+        strParam->string_data_len = binData.nLen;
+
+        pPtr->pParameter = strParam;
+        pPtr->ulParameterLen = sizeof(strParam);
+    }
+    else if( nMech == CKM_DES_CBC_ENCRYPT_DATA || nMech == CKM_DES3_CBC_ENCRYPT_DATA )
+    {
+        BIN binIV = {0,0};
+        BIN binData = {0,0};
+
+        QString strIV = mParam1Text->text();
+        QString strData = mParam2Text->text();
+
+        CK_DES_CBC_ENCRYPT_DATA_PARAMS_PTR desParam;
+        desParam = (CK_DES_CBC_ENCRYPT_DATA_PARAMS *)JS_calloc(1, sizeof(CK_DES_CBC_ENCRYPT_DATA_PARAMS));
+
+        JS_BIN_decodeHex( strIV.toStdString().c_str(), &binIV );
+        JS_BIN_decodeHex( strData.toStdString().c_str(), &binData );
+
+        memcpy( desParam->iv, binIV.pVal, binIV.nLen < 8 ? binIV.nLen : 8 );
+        desParam->data_params = binData.pVal;
+        desParam->length = binData.nLen;
+
+        pPtr->pParameter = desParam;
+        pPtr->ulParameterLen = sizeof(desParam);
+    }
+    else if( nMech == CKM_AES_CBC_ENCRYPT_DATA )
+    {
+        BIN binIV = {0,0};
+        BIN binData = {0,0};
+
+        QString strIV = mParam1Text->text();
+        QString strData = mParam2Text->text();
+
+        CK_AES_CBC_ENCRYPT_DATA_PARAMS_PTR aesParam;
+        aesParam = (CK_AES_CBC_ENCRYPT_DATA_PARAMS *)JS_calloc(1, sizeof(CK_AES_CBC_ENCRYPT_DATA_PARAMS));
+
+        JS_BIN_decodeHex( strIV.toStdString().c_str(), &binIV );
+        JS_BIN_decodeHex( strData.toStdString().c_str(), &binData );
+
+        memcpy( aesParam->iv, binIV.pVal, binIV.nLen < 16 ? binIV.nLen : 16 );
+        aesParam->data_params = binData.pVal;
+        aesParam->length = binData.nLen;
+
+        pPtr->pParameter = aesParam;
+        pPtr->ulParameterLen = sizeof(aesParam);
+    }
+    else
+    {
+        BIN binParam = {0,0};
+        QString strParam = mParam1Text->text();
+        JS_BIN_decodeHex( strParam.toStdString().c_str(), &binParam );
+
+        pPtr->pParameter = binParam.pVal;
+        pPtr->ulParameterLen = binParam.nLen;
+    }
+}
+
+void DeriveKeyDlg::freeMechanism( void *pMech )
+{
+    if( pMech == NULL ) return;
+    CK_MECHANISM_PTR pPtr = (CK_MECHANISM *)pMech;
+    long nMech = pPtr->mechanism;
+
+    if( nMech == CKM_ECDH1_DERIVE )
+    {
+        CK_ECDH1_DERIVE_PARAMS_PTR ecdh1Param = (CK_ECDH1_DERIVE_PARAMS *)pPtr->pParameter;
+
+        if( ecdh1Param )
+        {
+            if( ecdh1Param->public_data ) JS_free( ecdh1Param->public_data );
+            if( ecdh1Param->shared_data ) JS_free( ecdh1Param->shared_data );
+            JS_free( ecdh1Param );
+        }
+    }
+    else if( nMech == CKM_DES_ECB_ENCRYPT_DATA
+             || nMech == CKM_DES3_ECB_ENCRYPT_DATA
+             || nMech == CKM_AES_ECB_ENCRYPT_DATA )
+    {
+        CK_KEY_DERIVATION_STRING_DATA_PTR strParam = (CK_KEY_DERIVATION_STRING_DATA *)pPtr->pParameter;
+
+        if( strParam )
+        {
+            if( strParam->string_data ) JS_free( strParam->string_data );
+            JS_free( strParam );
+        }
+    }
+    else if( nMech == CKM_DES_CBC_ENCRYPT_DATA || nMech == CKM_DES3_CBC_ENCRYPT_DATA )
+    {
+        CK_DES_CBC_ENCRYPT_DATA_PARAMS_PTR desParam = (CK_DES_CBC_ENCRYPT_DATA_PARAMS *)pPtr->pParameter;
+
+        if( desParam )
+        {
+            if( desParam->data_params ) JS_free( desParam->data_params );
+            JS_free( desParam );
+        }
+    }
+    else if( nMech == CKM_AES_CBC_ENCRYPT_DATA )
+    {
+        CK_AES_CBC_ENCRYPT_DATA_PARAMS_PTR aesParam = (CK_AES_CBC_ENCRYPT_DATA_PARAMS *)pPtr->pParameter;
+
+        if( aesParam )
+        {
+            if( aesParam->data_params ) JS_free( aesParam->data_params );
+            JS_free( aesParam );
+        }
+    }
+    else
+    {
+        if( pPtr->pParameter ) JS_free( pPtr->pParameter );
+    }
+
+    pPtr->pParameter = NULL;
+    pPtr->ulParameterLen = 0;
 }
 
 void DeriveKeyDlg::setSrcLabelList()
