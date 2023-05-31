@@ -2126,12 +2126,14 @@ void MainWindow::showGetInfoList()
 
     QString strMsg = "";
     QStringList strList;
+    QIcon icon = QIcon( ":/images/cryptokiman.png");
 
     int row = 0;
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
 
     right_table_->setItem( row, 0, new QTableWidgetItem(QString( "cryptokiVersion")));
+    right_table_->item( row, 0 )->setIcon( icon );
     strMsg = QString( "V%1.%2" ).arg( sInfo.cryptokiVersion.major ).arg( sInfo.cryptokiVersion.minor );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
@@ -2139,6 +2141,7 @@ void MainWindow::showGetInfoList()
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem(QString("flags")));
+    right_table_->item( row, 0 )->setIcon( icon );
     strMsg = QString( "%1" ).arg( sInfo.flags );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
@@ -2146,6 +2149,7 @@ void MainWindow::showGetInfoList()
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem(QString("libraryDescription")));
+    right_table_->item( row, 0 )->setIcon( icon );
     strMsg = QString( "%1" ).arg( (char *)sInfo.libraryDescription );
     strList = strMsg.split( "  " );
     if( strList.size() > 0 ) right_table_->setItem( row, 1, new QTableWidgetItem( strList.at(0) ) );
@@ -2154,6 +2158,7 @@ void MainWindow::showGetInfoList()
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem(QString("libraryVersion")));
+    right_table_->item( row, 0 )->setIcon( icon );
     strMsg = QString( "V%1.%2" ).arg( sInfo.libraryVersion.major).arg( sInfo.libraryVersion.minor );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
@@ -2161,6 +2166,7 @@ void MainWindow::showGetInfoList()
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem(QString("manufacturerID")));
+    right_table_->item( row, 0 )->setIcon( icon );
     strMsg = QString( "%1" ).arg( (char *)sInfo.manufacturerID );
     strList = strMsg.split( "  " );
     if( strList.size() >0 ) right_table_->setItem( row, 1, new QTableWidgetItem( strList.at(0) ) );
@@ -2189,10 +2195,12 @@ void MainWindow::showSlotInfoList( int index )
     int row = 0;
     QString strMsg = "";
     QStringList strList;
+    QIcon icon = QIcon( ":/images/slot.png");
 
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("Slot ID" )));
+    right_table_->item( row, 0 )->setIcon( icon );
     strMsg = QString("%1").arg(uSlotID);
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
@@ -2200,6 +2208,7 @@ void MainWindow::showSlotInfoList( int index )
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("firmwareVersion" )));
+    right_table_->item( row, 0 )->setIcon( icon );
     strMsg = QString( "V%1.%2").arg( stSlotInfo.firmwareVersion.major ).arg( stSlotInfo.firmwareVersion.minor );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ));
     row++;
@@ -2207,18 +2216,9 @@ void MainWindow::showSlotInfoList( int index )
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("flags" )));
+    right_table_->item( row, 0 )->setIcon( icon );
 
-    /*
-    strMsg = QString( "%1" ).arg( stSlotInfo.flags );
-    if( stSlotInfo.flags & CKF_TOKEN_PRESENT )
-        strMsg += " | token present";
 
-    if( stSlotInfo.flags & CKF_REMOVABLE_DEVICE )
-        strMsg += " | removable device";
-
-    if( stSlotInfo.flags & CKF_HW_SLOT )
-        strMsg += " | HW slot";
-    */
     strMsg = getSlotFlagString( stSlotInfo.flags );
 
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
@@ -2227,6 +2227,7 @@ void MainWindow::showSlotInfoList( int index )
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("hardwareVersion") ));
+    right_table_->item( row, 0 )->setIcon( icon );
     strMsg = QString( "V%1.%2").arg( stSlotInfo.hardwareVersion.major ).arg( stSlotInfo.hardwareVersion.minor );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
@@ -2234,6 +2235,7 @@ void MainWindow::showSlotInfoList( int index )
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("manufacturerID")));
+    right_table_->item( row, 0 )->setIcon( icon );
     strMsg = QString( "%1" ).arg( (char *)stSlotInfo.manufacturerID );
     strList = strMsg.split( "  " );
     if( strList.size() > 0 ) right_table_->setItem( row, 1, new QTableWidgetItem( strList.at(0) ) );
@@ -2242,6 +2244,7 @@ void MainWindow::showSlotInfoList( int index )
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("slotDescription" )));
+    right_table_->item( row, 0 )->setIcon( icon );
     strMsg = QString( "%1" ).arg( (char *)stSlotInfo.slotDescription );
     strList = strMsg.split( "  " );
     if( strList.size() > 0 ) right_table_->setItem( row, 1, new QTableWidgetItem( strList.at(0) ) );
@@ -2269,10 +2272,12 @@ void MainWindow::showTokenInfoList(int index)
     int row = 0;
     QString strMsg = "";
     QStringList strList;
+    QIcon icon = QIcon( ":/images/token.png");
 
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("firmwareVersion" )));
+    right_table_->item( row, 0 )->setIcon( icon );
     strMsg = QString( "V%1.%2").arg( sTokenInfo.firmwareVersion.major ).arg( sTokenInfo.firmwareVersion.minor );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
@@ -2280,22 +2285,9 @@ void MainWindow::showTokenInfoList(int index)
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("flags" )));
+    right_table_->item( row, 0 )->setIcon( icon );
 
-    /*
-    strMsg = QString( "%1" ).arg( sTokenInfo.flags );
-
-    if( sTokenInfo.flags & CKF_TOKEN_INITIALIZED ) strMsg += " | token initialized";
-    if( sTokenInfo.flags & CKF_RNG ) strMsg += " | RNG";
-    if( sTokenInfo.flags & CKF_WRITE_PROTECTED ) strMsg += " | write protected";
-    if( sTokenInfo.flags & CKF_LOGIN_REQUIRED ) strMsg += " | login required";
-    if( sTokenInfo.flags & CKF_USER_PIN_INITIALIZED ) strMsg += " | user pin initialized";
-    if( sTokenInfo.flags & CKF_RESTORE_KEY_NOT_NEEDED ) strMsg += " | restore key not needed";
-    if( sTokenInfo.flags & CKF_CLOCK_ON_TOKEN ) strMsg += " | clock on token";
-    if( sTokenInfo.flags & CKF_PROTECTED_AUTHENTICATION_PATH ) strMsg += " | protected authentication path";
-    if( sTokenInfo.flags & CKF_DUAL_CRYPTO_OPERATIONS ) strMsg += " | dual crypto operations";
-    */
     strMsg = getTokenFlagString( sTokenInfo.flags );
-
 
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
@@ -2303,6 +2295,7 @@ void MainWindow::showTokenInfoList(int index)
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("hardwareVersion" )));
+    right_table_->item( row, 0 )->setIcon( icon );
     strMsg = QString( "V%1.%2").arg( sTokenInfo.hardwareVersion.major ).arg( sTokenInfo.hardwareVersion.minor );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
@@ -2310,6 +2303,7 @@ void MainWindow::showTokenInfoList(int index)
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("label") ));
+    right_table_->item( row, 0 )->setIcon( icon );
     strMsg = QString("%1").arg( (char *)sTokenInfo.label );
     strList = strMsg.split( "  " );
     if( strList.size() > 0 ) right_table_->setItem( row, 1, new QTableWidgetItem( strList.at(0)) );
@@ -2318,6 +2312,7 @@ void MainWindow::showTokenInfoList(int index)
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("manufacturerID") ));
+    right_table_->item( row, 0 )->setIcon( icon );
     strMsg = QString("%1").arg( (char *)sTokenInfo.manufacturerID );    strList = strMsg.split( "  " );
     if( strList.size() > 0 ) right_table_->setItem( row, 1, new QTableWidgetItem( strList.at(0)) );
     row++;
@@ -2325,6 +2320,7 @@ void MainWindow::showTokenInfoList(int index)
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("model") ));
+    right_table_->item( row, 0 )->setIcon( icon );
     strMsg = QString("%1").arg( (char *)sTokenInfo.model );
     strList = strMsg.split( "  " );
     if( strList.size() > 0 ) right_table_->setItem( row, 1, new QTableWidgetItem( strList.at(0)) );
@@ -2333,6 +2329,7 @@ void MainWindow::showTokenInfoList(int index)
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("serialNumber") ));
+    right_table_->item( row, 0 )->setIcon( icon );
     strMsg = QString("%1").arg( (char *)sTokenInfo.serialNumber );
 //    strList = strMsg.split( "  " );
     strMsg.truncate(16);
@@ -2342,6 +2339,7 @@ void MainWindow::showTokenInfoList(int index)
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("ulFreePrivateMemory") ));
+    right_table_->item( row, 0 )->setIcon( icon );
     strMsg = QString("%1").arg( sTokenInfo.ulFreePrivateMemory );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
@@ -2349,6 +2347,7 @@ void MainWindow::showTokenInfoList(int index)
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("ulFreePublicMemory") ));
+    right_table_->item( row, 0 )->setIcon( icon );
     strMsg = QString("%1").arg( sTokenInfo.ulFreePublicMemory );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
@@ -2356,6 +2355,7 @@ void MainWindow::showTokenInfoList(int index)
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("ulMaxPinLen") ));
+    right_table_->item( row, 0 )->setIcon( icon );
     strMsg = QString("%1").arg( sTokenInfo.ulMaxPinLen );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
@@ -2363,6 +2363,7 @@ void MainWindow::showTokenInfoList(int index)
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("ulMaxRwSessionCount") ));
+    right_table_->item( row, 0 )->setIcon( icon );
     strMsg = QString("%1").arg( sTokenInfo.ulMaxRwSessionCount );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
@@ -2370,6 +2371,7 @@ void MainWindow::showTokenInfoList(int index)
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("ulMaxSessionCount") ));
+    right_table_->item( row, 0 )->setIcon( icon );
     strMsg = QString("%1").arg( sTokenInfo.ulMaxSessionCount );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
@@ -2377,6 +2379,7 @@ void MainWindow::showTokenInfoList(int index)
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("ulMinPinLen") ));
+    right_table_->item( row, 0 )->setIcon( icon );
     strMsg = QString("%1").arg( sTokenInfo.ulMinPinLen );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
@@ -2384,6 +2387,7 @@ void MainWindow::showTokenInfoList(int index)
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("ulSessionCount") ));
+    right_table_->item( row, 0 )->setIcon( icon );
     strMsg = QString("%1").arg( sTokenInfo.ulSessionCount );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
@@ -2391,6 +2395,7 @@ void MainWindow::showTokenInfoList(int index)
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("ulTotalPrivateMemory") ));
+    right_table_->item( row, 0 )->setIcon( icon );
     strMsg = QString("%1").arg( sTokenInfo.ulTotalPrivateMemory );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
@@ -2398,6 +2403,7 @@ void MainWindow::showTokenInfoList(int index)
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("ulTotalPublicMemory") ));
+    right_table_->item( row, 0 )->setIcon( icon );
     strMsg = QString("%1").arg( sTokenInfo.ulTotalPublicMemory );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
@@ -2471,24 +2477,6 @@ void MainWindow::showMechanismInfoList(int index)
         strMsg = QString("%1").arg( stMechInfo.ulMaxKeySize );
         right_table_->setItem( row, 2, new QTableWidgetItem( strMsg ) );
 
-        /*
-        strMsg = QString( "%1" ).arg( stMechInfo.flags );
-
-        if( stMechInfo.flags & CKF_DECRYPT ) strMsg += " | Decrypt";
-        if( stMechInfo.flags & CKF_DERIVE ) strMsg += " | Derive";
-        if( stMechInfo.flags & CKF_DIGEST ) strMsg += " | Digest";
-        if( stMechInfo.flags & CKF_ENCRYPT ) strMsg += " | Encrypt";
-        if( stMechInfo.flags & CKF_GENERATE ) strMsg += " | Generate";
-        if( stMechInfo.flags & CKF_GENERATE_KEY_PAIR ) strMsg += " | Generate key pair";
-        if( stMechInfo.flags & CKF_HW ) strMsg += " | HW";
-        if( stMechInfo.flags & CKF_SIGN ) strMsg += " | Sign";
-        if( stMechInfo.flags & CKF_VERIFY ) strMsg += " | Verify";
-        if( stMechInfo.flags & CKF_ENCRYPT ) strMsg += " | Encrypt";
-        if( stMechInfo.flags & CKF_WRAP ) strMsg += " | Wrap";
-        if( stMechInfo.flags & CKF_UNWRAP ) strMsg += " | Unwrap";
-        if( stMechInfo.flags & CKF_SIGN_RECOVER ) strMsg += " | Sign recover";
-        if( stMechInfo.flags & CKF_VERIFY_RECOVER ) strMsg += " | Verify recover";
-        */
         strMsg = getMechFlagString( stMechInfo.flags );
 
         right_table_->setItem( row, 3, new QTableWidgetItem( strMsg ) );
@@ -2522,16 +2510,13 @@ void MainWindow::showSessionInfoList(int index)
 
     int row = 0;
     QString strMsg = "";
+    QIcon icon = QIcon( ":/images/session.png");
 
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem(QString("flags") ));
-    /*
-    strMsg = QString("%1").arg( stSessInfo.flags );
+    right_table_->item( row, 0 )->setIcon( icon );
 
-    if( stSessInfo.flags & CKF_RW_SESSION ) strMsg += " | CKF_RW_SESSION";
-    if( stSessInfo.flags & CKF_SERIAL_SESSION ) strMsg += " | CKF_SERIAL_SESSION";
-    */
     strMsg = getSessionFlagString( stSessInfo.flags );
 
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
@@ -2540,6 +2525,7 @@ void MainWindow::showSessionInfoList(int index)
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem(QString("slotID" )));
+    right_table_->item( row, 0 )->setIcon( icon );
     strMsg = QString("%1").arg( stSessInfo.slotID );
     right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
     row++;
@@ -2547,16 +2533,9 @@ void MainWindow::showSessionInfoList(int index)
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem(QString("state")));
+    right_table_->item( row, 0 )->setIcon( icon );
 
-    /*
-    strMsg = QString("%1").arg( stSessInfo.state );
 
-    if( stSessInfo.state & CKS_RO_PUBLIC_SESSION ) strMsg += " | RO_PUBLIC_SESSION";
-    if( stSessInfo.state & CKS_RO_USER_FUNCTIONS ) strMsg += " | RO_USER_FUNCTIONS";
-    if( stSessInfo.state & CKS_RW_PUBLIC_SESSION ) strMsg += " | RW_PUBLIC_SESSION";
-    if( stSessInfo.state & CKS_RW_SO_FUNCTIONS ) strMsg += " | RW_SO_FUNCTIONS";
-    if( stSessInfo.state & CKS_RW_USER_FUNCTIONS ) strMsg += " | RW_USER_FUNCTIONS";
-    */
     strMsg = getSessionStateString( stSessInfo.state );
 
     right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
@@ -2565,6 +2544,7 @@ void MainWindow::showSessionInfoList(int index)
     right_table_->insertRow( row );
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("ulDeviceError" )));
+    right_table_->item( row, 0 )->setIcon( icon );
     strMsg = QString("%1 | " ).arg( stSessInfo.ulDeviceError );
     strMsg += JS_PKCS11_GetErrorMsg( stSessInfo.ulDeviceError );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
