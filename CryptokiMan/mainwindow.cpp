@@ -1663,7 +1663,7 @@ void MainWindow::showCertificateInfoDetail( QModelIndex index )
 
     info( QString( "CKA_LABEL      : %1\n" ).arg(stringAttribute( ATTR_VAL_STRING, CKA_LABEL, uObj )) );
     info( QString( "CKA_ID         : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_ID, uObj ) ));
-    info( QString( "CKA_SUBJECT    : %1\n" ).arg(stringAttribute( ATTR_VAL_STRING, CKA_SUBJECT, uObj ) ));
+    info( QString( "CKA_SUBJECT    : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_SUBJECT, uObj ) ));
     info( QString( "CKA_VALUE      : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_VALUE, uObj ) ));
     info( QString( "CKA_TOKEN      : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_TOKEN, uObj ) ));
     info( QString( "CKA_MODIFIABLE : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_MODIFIABLE, uObj ) ));
@@ -2867,7 +2867,7 @@ void MainWindow::showCertificateInfoList( int index, long hObject )
         strMsg = stringAttribute( ATTR_VAL_HEX, CKA_ID, hObjects[i] );
         right_table_->setItem( row, 2, new QTableWidgetItem(strMsg) );
 
-        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_SUBJECT, hObjects[i] );
+        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_SUBJECT, hObjects[i] );
         right_table_->setItem( row, 3, new QTableWidgetItem(strMsg) );
 
         row++;
