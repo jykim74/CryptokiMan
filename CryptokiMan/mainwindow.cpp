@@ -48,6 +48,7 @@
 #include "oper_state_dlg.h"
 #include "cryptoki_api.h"
 #include "cert_info_dlg.h"
+#include "js_pki_tools.h"
 
 const int kMaxRecentFiles = 10;
 
@@ -2851,6 +2852,8 @@ void MainWindow::showCertificateInfoList( int index, long hObject )
     for( int i=0; i < uObjCnt; i++ )
     {
         QString strMsg;
+        BIN binName = {0,0};
+        char *pDN = NULL;
 
         right_table_->insertRow( row );
         right_table_->setRowHeight( row, 10 );
@@ -2868,6 +2871,14 @@ void MainWindow::showCertificateInfoList( int index, long hObject )
         right_table_->setItem( row, 2, new QTableWidgetItem(strMsg) );
 
         strMsg = stringAttribute( ATTR_VAL_HEX, CKA_SUBJECT, hObjects[i] );
+        JS_BIN_decodeHex( strMsg.toStdString().c_str(), &binName );
+        JS_PKI_getTextDN( &binName, &pDN );
+        if( pDN )
+        {
+            strMsg = pDN;
+            JS_free( pDN );
+        }
+        JS_BIN_reset( &binName );
         right_table_->setItem( row, 3, new QTableWidgetItem(strMsg) );
 
         row++;
