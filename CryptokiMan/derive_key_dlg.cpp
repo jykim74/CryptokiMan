@@ -44,6 +44,8 @@ DeriveKeyDlg::DeriveKeyDlg(QWidget *parent) :
     connect( mSrcLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(srcLabelChanged(int)));
     connect( mClassCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(classChanged(int)));
     connect( mSrcMethodCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changeMechanism(int)));
+    connect( mParam1Text, SIGNAL(textChanged(const QString&)), this, SLOT(changeParam1(const QString&)));
+    connect( mParam2Text, SIGNAL(textChanged(const QString&)), this, SLOT(changeParam2(const QString&)));
 
     initialize();
     setDefaults();
@@ -440,10 +442,9 @@ void DeriveKeyDlg::clickEndDate()
 
 void DeriveKeyDlg::changeMechanism( int index )
 {
-    QString strMech = mSrcMethodCombo->currentText();
+    long nMech = JS_PKCS11_GetCKMType( mSrcMethodCombo->currentText().toStdString().c_str());
 
-
-    if( strMech == "CKM_ECDH1_DERIVE" )
+    if( nMech == CKM_ECDH1_DERIVE )
     {
         mParamComboLabel->setEnabled(true);
         mParamComboLabel->setText( "EC_KDF_T" );
@@ -456,9 +457,11 @@ void DeriveKeyDlg::changeMechanism( int index )
         mParam2Text->setEnabled( true );
         mParam2LenText->setEnabled( true );
     }
-    else if( strMech == "CKM_DES_CBC_ENCRYPT_DATA"
-             || strMech == "CKM_DES3_CBC_ENCRYPT_DATA"
-             || strMech == "CKM_AES_CBC_ENCRYPT_DATA" )
+    else if( nMech == CKM_DES_CBC_ENCRYPT_DATA
+             || nMech == CKM_DES3_CBC_ENCRYPT_DATA
+             || nMech == CKM_AES_CBC_ENCRYPT_DATA
+             || nMech == CKM_CONCATENATE_BASE_AND_DATA
+             || nMech == CKM_CONCATENATE_DATA_AND_BASE )
     {
         mParamCombo->setEnabled(false);
         mParamComboLabel->setEnabled(false);
@@ -474,7 +477,7 @@ void DeriveKeyDlg::changeMechanism( int index )
     {
         mParamCombo->setEnabled(false);
         mParamComboLabel->setEnabled(false);
-        mParam1Label->setText( "Parameter" );
+        mParam1Label->setText( tr("Parameter") );
 
         mParam2Label->setEnabled(false);
         mParam2Text->setEnabled(false);
@@ -482,6 +485,19 @@ void DeriveKeyDlg::changeMechanism( int index )
     }
 }
 
+void DeriveKeyDlg::changeParam1( const QString& text )
+{
+    int nLen = text.length() / 2;
+
+    mParam1LenText->setText( QString("%1").arg( nLen ));
+}
+
+void DeriveKeyDlg::changeParam2( const QString& text )
+{
+    int nLen = text.length() / 2;
+
+    mParam2LenText->setText( QString("%1").arg( nLen ));
+}
 
 void DeriveKeyDlg::setMechanism( void *pMech )
 {
@@ -521,11 +537,13 @@ void DeriveKeyDlg::setMechanism( void *pMech )
         }
 
         pPtr->pParameter = ecdh1Param;
-        pPtr->ulParameterLen = sizeof( ecdh1Param );
+        pPtr->ulParameterLen = sizeof( CK_ECDH1_DERIVE_PARAMS );
     }
     else if( nMech == CKM_DES_ECB_ENCRYPT_DATA
              || nMech == CKM_DES3_ECB_ENCRYPT_DATA
-             || nMech == CKM_AES_ECB_ENCRYPT_DATA )
+             || nMech == CKM_AES_ECB_ENCRYPT_DATA
+             || nMech == CKM_CONCATENATE_BASE_AND_DATA
+             || nMech == CKM_CONCATENATE_DATA_AND_BASE )
     {
         BIN binData = {0,0};
         QString strData = mParam1Text->text();
@@ -538,7 +556,7 @@ void DeriveKeyDlg::setMechanism( void *pMech )
         strParam->string_data_len = binData.nLen;
 
         pPtr->pParameter = strParam;
-        pPtr->ulParameterLen = sizeof(strParam);
+        pPtr->ulParameterLen = sizeof(CK_KEY_DERIVATION_STRING_DATA);
     }
     else if( nMech == CKM_DES_CBC_ENCRYPT_DATA || nMech == CKM_DES3_CBC_ENCRYPT_DATA )
     {
@@ -559,7 +577,7 @@ void DeriveKeyDlg::setMechanism( void *pMech )
         desParam->length = binData.nLen;
 
         pPtr->pParameter = desParam;
-        pPtr->ulParameterLen = sizeof(desParam);
+        pPtr->ulParameterLen = sizeof(CK_DES_CBC_ENCRYPT_DATA_PARAMS);
     }
     else if( nMech == CKM_AES_CBC_ENCRYPT_DATA )
     {
@@ -580,7 +598,7 @@ void DeriveKeyDlg::setMechanism( void *pMech )
         aesParam->length = binData.nLen;
 
         pPtr->pParameter = aesParam;
-        pPtr->ulParameterLen = sizeof(aesParam);
+        pPtr->ulParameterLen = sizeof(CK_AES_CBC_ENCRYPT_DATA_PARAMS);
     }
     else
     {
@@ -612,7 +630,9 @@ void DeriveKeyDlg::freeMechanism( void *pMech )
     }
     else if( nMech == CKM_DES_ECB_ENCRYPT_DATA
              || nMech == CKM_DES3_ECB_ENCRYPT_DATA
-             || nMech == CKM_AES_ECB_ENCRYPT_DATA )
+             || nMech == CKM_AES_ECB_ENCRYPT_DATA
+             || nMech == CKM_CONCATENATE_BASE_AND_DATA
+             || nMech == CKM_CONCATENATE_DATA_AND_BASE )
     {
         CK_KEY_DERIVATION_STRING_DATA_PTR strParam = (CK_KEY_DERIVATION_STRING_DATA *)pPtr->pParameter;
 

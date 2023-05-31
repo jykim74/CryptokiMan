@@ -41,6 +41,8 @@ private slots:
     void clickEndDate();
 
     void changeMechanism( int index );
+    void changeParam1( const QString& text );
+    void changeParam2( const QString& text );
 
 private:
     void initialize();

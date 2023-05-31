@@ -1055,7 +1055,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Param</source>
-        <translation>파라미터</translation>
+        <translation type="vanished">파라미터</translation>
     </message>
     <message>
         <source>Session</source>
@@ -1180,6 +1180,26 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Derive</source>
         <translation>유도</translation>
+    </message>
+    <message>
+        <source>Parameter Information</source>
+        <translation>파라미터 정보</translation>
+    </message>
+    <message>
+        <source>Param2 Label</source>
+        <translation>파라미터2 레이블</translation>
+    </message>
+    <message>
+        <source>Param Combo Label</source>
+        <translation>파라미터 콤보 레이블</translation>
+    </message>
+    <message>
+        <source>Param1 Label</source>
+        <translation>파라미터1레이블</translation>
+    </message>
+    <message>
+        <source>Parameter</source>
+        <translation>파라미터</translation>
     </message>
 </context>
 <context>
