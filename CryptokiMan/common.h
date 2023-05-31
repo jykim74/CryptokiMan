@@ -114,6 +114,7 @@ static QStringList kECCOptionList = { "prime256v1",
     "sect409r1", "sect571k1", "sect571r1"
 };
 
+
 QString findFile( QWidget *parent, int nType, const QString strPath );
 QString saveFile( QWidget *parent, int nType, const QString strPath );
 

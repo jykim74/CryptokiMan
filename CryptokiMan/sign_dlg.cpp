@@ -5,6 +5,9 @@
 #include "cryptoki_api.h"
 #include "common.h"
 
+static CK_BBOOL kTrue = CK_TRUE;
+static CK_BBOOL kFalse = CK_FALSE;
+
 static QStringList sMechList = {
     "CKM_RSA_PKCS", "CKM_SHA1_RSA_PKCS", "CKM_SHA256_RSA_PKCS", "CKM_SHA384_RSA_PKCS", "CKM_SHA512_RSA_PKCS",
     "CKM_ECDSA", "CKM_ECDSA_SHA1", "CKM_ECDSA_SHA256", "CKM_ECDSA_SHA384", "CKM_ECDSA_SHA512"
@@ -144,6 +147,12 @@ void SignDlg::keyTypeChanged( int index )
     sTemplate[uCnt].pValue = &objClass;
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
     uCnt++;
+
+    sTemplate[uCnt].type = CKA_SIGN;
+    sTemplate[uCnt].pValue = &kTrue;
+    sTemplate[uCnt].ulValueLen = sizeof(CK_BBOOL);
+    uCnt++;
+
 
     rv = manApplet->cryptokiAPI()->FindObjectsInit( session_, sTemplate, uCnt );
     if( rv != CKR_OK ) return;

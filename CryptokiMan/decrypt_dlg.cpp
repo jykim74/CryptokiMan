@@ -17,6 +17,9 @@ static QStringList sInputList = { "Hex", "Base64" };
 
 static QStringList sKeyList = { "SECRET", "PRIVATE" };
 
+static CK_BBOOL kTrue = CK_TRUE;
+static CK_BBOOL kFalse = CK_FALSE;
+
 DecryptDlg::DecryptDlg(QWidget *parent) :
     QDialog(parent)
 {
@@ -141,6 +144,11 @@ void DecryptDlg::keyTypeChanged( int index )
     sTemplate[uCnt].type = CKA_CLASS;
     sTemplate[uCnt].pValue = &objClass;
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
+    uCnt++;
+
+    sTemplate[uCnt].type = CKA_DECRYPT;
+    sTemplate[uCnt].pValue = &kTrue;
+    sTemplate[uCnt].ulValueLen = sizeof(CK_BBOOL);
     uCnt++;
 
     rv = manApplet->cryptokiAPI()->FindObjectsInit( session_, sTemplate, uCnt );

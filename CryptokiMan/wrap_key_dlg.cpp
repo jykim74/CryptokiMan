@@ -7,6 +7,9 @@
 #include "common.h"
 #include "cryptoki_api.h"
 
+static CK_BBOOL kTrue = CK_TRUE;
+static CK_BBOOL kFalse = CK_FALSE;
+
 
 WrapKeyDlg::WrapKeyDlg(QWidget *parent) :
     QDialog(parent)
@@ -193,6 +196,11 @@ void WrapKeyDlg::setWrappingSecretLabel()
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
     uCnt++;
 
+    sTemplate[uCnt].type = CKA_WRAP;
+    sTemplate[uCnt].pValue = &kTrue;
+    sTemplate[uCnt].ulValueLen = sizeof(CK_BBOOL);
+    uCnt++;
+
     rv = manApplet->cryptokiAPI()->FindObjectsInit( session_, sTemplate, uCnt );
     if( rv != CKR_OK ) return;
 
@@ -252,6 +260,11 @@ void WrapKeyDlg::setWrappingRSAPublicLabel()
     sTemplate[uCnt].type = CKA_KEY_TYPE;
     sTemplate[uCnt].pValue = &keyType;
     sTemplate[uCnt].ulValueLen = sizeof(keyType);
+    uCnt++;
+
+    sTemplate[uCnt].type = CKA_WRAP;
+    sTemplate[uCnt].pValue = &kTrue;
+    sTemplate[uCnt].ulValueLen = sizeof(CK_BBOOL);
     uCnt++;
 
     rv = manApplet->cryptokiAPI()->FindObjectsInit( session_, sTemplate, uCnt );

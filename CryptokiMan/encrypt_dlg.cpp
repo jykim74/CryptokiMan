@@ -5,6 +5,9 @@
 #include "cryptoki_api.h"
 #include "common.h"
 
+static CK_BBOOL kTrue = CK_TRUE;
+static CK_BBOOL kFalse = CK_FALSE;
+
 static QStringList sMechList = {
     "CKM_DES3_ECB", "CKM_DES3_CBC", "CKM_AES_ECB", "CKM_AES_CBC",
 };
@@ -140,6 +143,11 @@ void EncryptDlg::keyTypeChanged( int index )
     sTemplate[uCnt].type = CKA_CLASS;
     sTemplate[uCnt].pValue = &objClass;
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
+    uCnt++;
+
+    sTemplate[uCnt].type = CKA_ENCRYPT;
+    sTemplate[uCnt].pValue = &kTrue;
+    sTemplate[uCnt].ulValueLen = sizeof(CK_BBOOL);
     uCnt++;
 
     rv = manApplet->cryptokiAPI()->FindObjectsInit( session_, sTemplate, uCnt );
