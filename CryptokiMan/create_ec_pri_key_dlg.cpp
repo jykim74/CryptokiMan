@@ -294,6 +294,12 @@ void CreateECPriKeyDlg::accept()
 
     rv = manApplet->cryptokiAPI()->CreateObject( hSession, sTemplate, uCount, &hObject );
 
+    JS_BIN_reset( &binECParams );
+    JS_BIN_reset( &binValue );
+    JS_BIN_reset( &binLabel );
+    JS_BIN_reset( &binID );
+    JS_BIN_reset( &binSubject );
+
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to create EC private key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );

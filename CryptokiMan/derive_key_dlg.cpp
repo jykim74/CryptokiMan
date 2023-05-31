@@ -302,6 +302,10 @@ void DeriveKeyDlg::accept()
     }
 
     rv = manApplet->cryptokiAPI()->DeriveKey( session_, &sMech, hSrcKey, sTemplate, uCount, &uObj );
+
+    JS_BIN_reset( &binLabel );
+    JS_BIN_reset( &binID );
+
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to run DeriveKey(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this);

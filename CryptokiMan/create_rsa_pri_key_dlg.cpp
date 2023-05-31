@@ -366,6 +366,18 @@ void CreateRSAPriKeyDlg::accept()
 
     rv = manApplet->cryptokiAPI()->CreateObject( hSession, sTemplate, uCount, &hObject );
 
+    JS_BIN_reset( &binModules );
+    JS_BIN_reset( &binPublicExponent );
+    JS_BIN_reset( &binPrivateExponent );
+    JS_BIN_reset( &binPrime1 );
+    JS_BIN_reset( &binPrime2 );
+    JS_BIN_reset( &binExponent1 );
+    JS_BIN_reset( &binExponent2 );
+    JS_BIN_reset( &binCoefficient );
+    JS_BIN_reset( &binLabel );
+    JS_BIN_reset( &binID );
+    JS_BIN_reset( &binSubject );
+
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to create RSA private key(%1)").arg( JS_PKCS11_GetErrorMsg(rv)), this );

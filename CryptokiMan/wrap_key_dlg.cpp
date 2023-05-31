@@ -115,6 +115,8 @@ void WrapKeyDlg::accept()
 
     rv = manApplet->cryptokiAPI()->WrapKey( session_, &sMech, hWrappingKey, hKey, pData, &uDataLen );
 
+    JS_BIN_reset( &binParam );
+
     if( rv != CKR_OK )
     {
         if( pData ) JS_free( pData );

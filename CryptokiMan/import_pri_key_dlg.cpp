@@ -183,6 +183,9 @@ void ImportPriKeyDlg::accept()
     }
 
 end :
+    JS_BIN_reset( &binPri );
+    JS_PKI_resetRSAKeyVal( &rsaKeyVal );
+    JS_PKI_resetECKeyVal( &ecKeyVal );
 
     if( rv != 0 )
     {
@@ -454,6 +457,11 @@ int ImportPriKeyDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
 
     rv = manApplet->cryptokiAPI()->CreateObject( hSession, sTemplate, uCount, &hObject );
 
+    JS_BIN_reset( &binID );
+    JS_BIN_reset( &binModulus );
+    JS_BIN_reset( &binPublicExponent );
+
+
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to create RSA public key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
@@ -706,6 +714,17 @@ int ImportPriKeyDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
 
     rv = manApplet->cryptokiAPI()->CreateObject( hSession, sTemplate, uCount, &hObject );
 
+    JS_BIN_reset( &binID );
+    JS_BIN_reset( &binSubject );
+    JS_BIN_reset( &binPublicExponent );
+    JS_BIN_reset( &binModules );
+    JS_BIN_reset( &binPrivateExponent );
+    JS_BIN_reset( &binPrime1 );
+    JS_BIN_reset( &binPrime2 );
+    JS_BIN_reset( &binExponent1 );
+    JS_BIN_reset( &binExponent2 );
+    JS_BIN_reset( &binCoefficient );
+
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to create RSA private key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
@@ -863,6 +882,12 @@ int ImportPriKeyDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
     }
 
     rv = manApplet->cryptokiAPI()->CreateObject( hSession, sTemplate, uCount, &hObject );
+
+    JS_BIN_reset( &binID );
+    JS_BIN_reset( &binECParam );
+    JS_BIN_reset( &binECPoint );
+    JS_BIN_reset( &binPubX );
+    JS_BIN_reset( &binPubY );
 
     if( rv != CKR_OK )
     {
@@ -1049,6 +1074,12 @@ int ImportPriKeyDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
     }
 
     rv = manApplet->cryptokiAPI()->CreateObject( hSession, sTemplate, uCount, &hObject );
+
+    JS_BIN_reset( &binID );
+    JS_BIN_reset( &binSubject );
+    JS_BIN_reset( &binECParam );
+    JS_BIN_reset( &binValue );
+
 
     if( rv != CKR_OK )
     {

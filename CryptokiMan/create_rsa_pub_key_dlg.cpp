@@ -260,6 +260,11 @@ void CreateRSAPubKeyDlg::accept()
 
     rv = manApplet->cryptokiAPI()->CreateObject( hSession, sTemplate, uCount, &hObject );
 
+    JS_BIN_reset( &binModulus );
+    JS_BIN_reset( &binExponent );
+    JS_BIN_reset( &binLabel );
+    JS_BIN_reset( &binID );
+
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to create RSA public key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );

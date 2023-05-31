@@ -371,6 +371,11 @@ void UnwrapKeyDlg::accept()
                 uCount,
                 &uObj );
 
+    JS_BIN_reset( &binWrappedKey );
+    JS_BIN_reset( &binParam );
+    JS_BIN_reset( &binLabel );
+    JS_BIN_reset( &binID );
+
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr( "fail to unwrapkey(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );

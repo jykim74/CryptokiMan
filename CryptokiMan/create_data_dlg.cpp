@@ -175,6 +175,8 @@ void CreateDataDlg::accept()
 
     rv = manApplet->cryptokiAPI()->CreateObject( hSession, sTemplate, uCount, &hObject );
 
+    JS_BIN_reset( &binData );
+
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to create data(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );

@@ -209,6 +209,10 @@ void GenKeyPairDlg::accept()
     BIN binExponent = {0,0};
     BIN binECParam = {0,0};
 
+    BIN binDH_G = {0,0};
+    BIN binDH_P = {0,0};
+
+
     CK_ULONG uModulusBits = 0;
     int nSelOption = mOptionCombo->currentIndex();
 
@@ -248,8 +252,6 @@ void GenKeyPairDlg::accept()
     }
     else if( iSelMech == 2 )
     {
-        BIN binDH_G = {0,0};
-        BIN binDH_P = {0,0};
 
         QString strDH_P = mDH_PText->toPlainText();
         QString strDH_G = mDH_GCombo->currentText();
@@ -493,6 +495,16 @@ void GenKeyPairDlg::accept()
     }
 
     rv = manApplet->cryptokiAPI()->GenerateKeyPair( hSession, &stMech, sPubTemplate, uPubCount, sPriTemplate, uPriCount, &uPubHandle, &uPriHandle );
+
+    JS_BIN_reset( &binExponent );
+    JS_BIN_reset( &binECParam );
+    JS_BIN_reset( &binDH_G );
+    JS_BIN_reset( &binDH_P );
+    JS_BIN_reset( &binPubLabel );
+    JS_BIN_reset( &binPubID );
+    JS_BIN_reset( &binPriLabel );
+    JS_BIN_reset( &binPriSubject );
+    JS_BIN_reset( &binPriID );
 
     if( rv != CKR_OK )
     {

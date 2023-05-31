@@ -327,6 +327,10 @@ void GenKeyDlg::accept()
 
     rv = manApplet->cryptokiAPI()->GenerateKey( hSession, &sMech, sTemplate, uCount, &hObject );
 
+    JS_BIN_reset( &binParam );
+    JS_BIN_reset( &binLabel );
+    JS_BIN_reset( &binID );
+
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to generate key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );

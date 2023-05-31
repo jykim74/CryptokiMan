@@ -237,6 +237,11 @@ void ImportCertDlg::accept()
 
     rv = manApplet->cryptokiAPI()->CreateObject( hSession, sTemplate, uCount, &hObject );
 
+    JS_BIN_reset( &binCert );
+    JS_BIN_reset( &binLabel );
+    JS_BIN_reset( &binID );
+    JS_BIN_reset( &binSubject );
+
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("fail to create certificate(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
