@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Include Id="CryptokiManInclude">
-  <?define CurrentCryptokiManVersion="0.9.8" ?>
+  <?define CurrentCryptokiManVersion="0.9.9" ?>
 
-  <!-- BerViewer Product Guid  -->
-  <?define ProductGuid="7e50871c-a490-4e42-9042-6603914946bd" ?> <!-- Version 0.9.8 -->
+  <!-- CryptokiMan Product Guid  -->
+  <?define ProductGuid="8a17f0e0-8860-4300-aea8-e44eb531eff0" ?> <!-- Version 0.9.9 -->
+  <!-- ?define ProductGuid="7e50871c-a490-4e42-9042-6603914946bd" ? --> <!-- Version 0.9.8 -->
   <!-- ?define ProductGuid="72d8dd8e-ae3e-4adb-8aa5-b062c5057f44" ? --> <!-- Version 0.9.7 -->
   <!-- ?define ProductGuid="8e92f1a4-9c85-43dc-8d84-2c618743895c" ? --> <!-- Version 0.9.6 -->
   <!-- ?define ProductGuid="0583b881-badb-4c96-9e67-4de4fa88b223" ? --> <!-- Version 0.9.5 -->
