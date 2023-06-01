@@ -158,7 +158,7 @@ void ImportPriKeyDlg::accept()
     memset( &rsaKeyVal, 0x00, sizeof(JRSAKeyVal));
     memset( &ecKeyVal, 0x00, sizeof(JECKeyVal));
 
-    JS_BIN_fileRead( strPriPath.toLocal8Bit().toStdString().c_str(), &binPri );
+    JS_BIN_fileReadBER( strPriPath.toLocal8Bit().toStdString().c_str(), &binPri );
 
     rv = JS_PKI_getRSAKeyVal( &binPri, &rsaKeyVal );
     if( rv == 0 )

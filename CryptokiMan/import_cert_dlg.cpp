@@ -124,7 +124,7 @@ void ImportCertDlg::accept()
         JCertInfo sCertInfo;
         memset( &sCertInfo, 0x00, sizeof(sCertInfo));
 
-        JS_BIN_fileRead( strCertPath.toLocal8Bit().toStdString().c_str(), &binCert );
+        JS_BIN_fileReadBER( strCertPath.toLocal8Bit().toStdString().c_str(), &binCert );
 
         ret = JS_PKI_getCertInfo( &binCert, &sCertInfo, NULL );
         if( ret != 0 )

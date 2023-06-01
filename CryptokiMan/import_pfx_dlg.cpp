@@ -169,7 +169,7 @@ void ImportPFXDlg::accept()
         return;
     }
 
-    JS_BIN_fileRead( strPFXPath.toLocal8Bit().toStdString().c_str(), &binPFX );
+    JS_BIN_fileReadBER( strPFXPath.toLocal8Bit().toStdString().c_str(), &binPFX );
 
     QString strPasswd = mPasswordText->text();
     if( strPasswd.isEmpty() )
