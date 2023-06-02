@@ -17,9 +17,6 @@ static QStringList sSecretMechList = {
     "CKM_SHA_1_HMAC", "CKM_SHA256_HMAC", "CKM_SHA384_HMAC", "CKM_SHA512_HMAC"
 };
 
-
-static QStringList sInputList = { "String", "Hex", "Base64" };
-
 static QStringList sKeyList = { "PUBLIC", "SECRET" };
 
 
@@ -43,7 +40,6 @@ void VerifyDlg::initUI()
 {
     mKeyTypeCombo->addItems(sKeyList);
     mMechCombo->addItems( sMechList );
-    mInputCombo->addItems( sInputList );
 
     connect( mKeyTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(keyTypeChanged(int)));
     connect( mLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(labelChanged(int)));
@@ -53,6 +49,12 @@ void VerifyDlg::initUI()
     connect( mFinalBtn, SIGNAL(clicked()), this, SLOT(clickFinal()));
     connect( mVerifyBtn, SIGNAL(clicked()), this, SLOT(clickVerify()));
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(clickClose()));
+
+    connect( mVerifyRecoverInitBtn, SIGNAL(clicked()), this, SLOT(clickVerifyRecoverInit()));
+    connect( mVerifyRecoverBtn, SIGNAL(clicked()), this, SLOT(clickVerifyRecover()));
+
+    connect( mInputText, SIGNAL(textChanged()), this, SLOT(changeInput()));
+    connect( mSignText, SIGNAL(textChanged()), this, SLOT(changeSign()));
 
     initialize();
     keyTypeChanged(0);
@@ -196,6 +198,27 @@ void VerifyDlg::labelChanged( int index )
     mObjectText->setText( strHandle );
 }
 
+void VerifyDlg::changeInput()
+{
+    int nType = DATA_STRING;
+
+    if( mInputHexRadio->isChecked() )
+        nType = DATA_HEX;
+    else if( mInputBase64Radio->isChecked() )
+        nType = DATA_BASE64;
+
+    int nLen = getDataLen( nType, mInputText->toPlainText() );
+
+    mInputLenText->setText( QString("%1").arg( nLen ));
+}
+
+void VerifyDlg::changeSign()
+{
+    int nLen = getDataLen( DATA_HEX, mSignText->toPlainText() );
+
+    mSignLenText->setText( QString("%1").arg( nLen ));
+}
+
 void VerifyDlg::clickInit()
 {
     int rv = -1;
@@ -230,7 +253,7 @@ void VerifyDlg::clickUpdate()
 {
     int rv = -1;
 
-    QString strInput = mInputText->text();
+    QString strInput = mInputText->toPlainText();
 
     if( strInput.isEmpty() )
     {
@@ -240,11 +263,11 @@ void VerifyDlg::clickUpdate()
 
     BIN binInput = {0,0};
 
-    if( mInputCombo->currentIndex() == 0 )
+    if( mInputStringRadio->isChecked() )
         JS_BIN_set( &binInput, (unsigned char *)strInput.toStdString().c_str(), strInput.length() );
-    else if( mInputCombo->currentIndex() == 1 )
+    else if( mInputHexRadio->isChecked() )
         JS_BIN_decodeHex( strInput.toStdString().c_str(), &binInput );
-    else if( mInputCombo->currentIndex() == 2 )
+    else if( mInputBase64Radio->isChecked() )
         JS_BIN_decodeBase64( strInput.toStdString().c_str(), &binInput );
 
     rv = manApplet->cryptokiAPI()->VerifyUpdate( session_, binInput.pVal, binInput.nLen );
@@ -296,7 +319,7 @@ void VerifyDlg::clickVerify()
 {
     int rv = -1;
 
-    QString strInput = mInputText->text();
+    QString strInput = mInputText->toPlainText();
 
     if( strInput.isEmpty() )
     {
@@ -313,11 +336,11 @@ void VerifyDlg::clickVerify()
 
     BIN binInput = {0,0};
 
-    if( mInputCombo->currentIndex() == 0 )
+    if( mInputStringRadio->isChecked() )
         JS_BIN_set( &binInput, (unsigned char *)strInput.toStdString().c_str(), strInput.length() );
-    else if( mInputCombo->currentIndex() == 1 )
+    else if( mInputHexRadio->isChecked() )
         JS_BIN_decodeHex( strInput.toStdString().c_str(), &binInput );
-    else if( mInputCombo->currentIndex() == 2 )
+    else if( mInputBase64Radio->isChecked() )
         JS_BIN_decodeBase64( strInput.toStdString().c_str(), &binInput );
 
     BIN binSign = {0,0};
@@ -339,4 +362,70 @@ void VerifyDlg::clickVerify()
 void VerifyDlg::clickClose()
 {
     this->hide();
+}
+
+void VerifyDlg::clickVerifyRecoverInit()
+{
+    int rv = -1;
+
+    CK_MECHANISM sMech;
+    BIN binParam = {0,0};
+    long uObject = mObjectText->text().toLong();
+
+    sMech.mechanism = JS_PKCS11_GetCKMType( mMechCombo->currentText().toStdString().c_str());
+    QString strParam = mParamText->text();
+
+    if( !strParam.isEmpty() )
+    {
+        JS_BIN_decodeHex( strParam.toStdString().c_str(), &binParam );
+        sMech.pParameter = binParam.pVal;
+        sMech.ulParameterLen = binParam.nLen;
+    }
+
+    rv = manApplet->cryptokiAPI()->VerifyRecoverInit( session_, &sMech, uObject );
+
+    if( rv != CKR_OK )
+    {
+        mStatusLabel->setText("");
+        manApplet->warningBox( tr("fail to run VerifyRecoverInit(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        return;
+    }
+
+    mStatusLabel->setText( "VerifyRecoverInit" );
+}
+
+void VerifyDlg::clickVerifyRecover()
+{
+    int rv = -1;
+
+    unsigned char sData[1024];
+    long ulDataLen = 0;
+
+    QString strSign = mSignText->toPlainText();
+    if( strSign.isEmpty() )
+    {
+        manApplet->warningBox(tr( "You have to insert signature." ), this );
+        return;
+    }
+
+    BIN binSign = {0,0};
+    JS_BIN_decodeHex( strSign.toStdString().c_str(), &binSign );
+
+    rv = manApplet->cryptokiAPI()->VerifyRecover( session_, binSign.pVal, binSign.nLen, sData, (CK_ULONG_PTR)&ulDataLen );
+
+    if( rv != CKR_OK )
+    {
+        manApplet->warningBox( tr( "Signature is bad(%1)." ).arg(JS_PKCS11_GetErrorMsg(rv)), this );
+    }
+    else
+    {
+        mInputHexRadio->setChecked(true);
+        mInputText->setPlainText( getHexString( sData, ulDataLen ));
+        manApplet->messageBox( tr( "Signature is good." ), this );
+    }
+
+    QString strRes = mStatusLabel->text();
+    strRes += "|VerifyRecover";
+
+    mStatusLabel->setText(strRes);
 }

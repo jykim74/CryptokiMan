@@ -28,8 +28,14 @@ private slots:
     void clickVerify();
     void clickClose();
 
+    void clickVerifyRecoverInit();
+    void clickVerifyRecover();
+
     void keyTypeChanged( int index );
     void labelChanged( int index );
+
+    void changeInput();
+    void changeSign();
 
 private:
     void initialize();
