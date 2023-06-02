@@ -1032,6 +1032,60 @@ int CryptokiAPI::Sign( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG u
     return rv;
 }
 
+int CryptokiAPI::SignRecoverInit( CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hKey )
+{
+    int rv = 0;
+    qint64 ms = 0;
+    QElapsedTimer timer;
+    QString strIn;
+
+    timer.start();
+    rv = p11_ctx_->p11FuncList->C_SignRecoverInit( hSession, pMechanism, hKey );
+    ms = timer.elapsed();
+
+    strIn.sprintf( "C_SignRecoverInit( SESSION_HANDLE = %u, MECHANISM_PTR = @%p, OBJECT_HANDLE = %u )",
+                   hSession, pMechanism, hKey );
+    manApplet->dlog( strIn );
+
+    logResult( "C_SignRecoverInit", rv, ms );
+
+    if( rv == CKR_OK )
+    {
+
+    }
+
+    return rv;
+}
+
+int CryptokiAPI::SignRecover( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDataLen, CK_BYTE_PTR pSign, CK_ULONG_PTR pulSignLen )
+{
+    int rv = 0;
+    qint64 ms = 0;
+    QElapsedTimer timer;
+    QString strIn;
+
+    timer.start();
+    rv = p11_ctx_->p11FuncList->C_SignRecover( hSession, pData, ulDataLen, pSign, pulSignLen );
+    ms = timer.elapsed();
+
+    strIn.sprintf( "C_SignRecover( SESSION_HANDLE = %u, DATA_PTR = @%p, DATA_LEN = %d, SIGN_PTR = @%p, SIGN_LEN_PTR = @%p )",
+                   hSession, pData, ulDataLen, pSign, pulSignLen );
+    manApplet->dlog( strIn );
+
+    logResult( "C_SignRecover", rv, ms );
+
+    if( rv == CKR_OK )
+    {
+        manApplet->dlog( QString( "SignLen : %1").arg( *pulSignLen ));
+        if( pSign )
+        {
+            manApplet->dlog( QString( "Sign : %1").arg( getHexString( pSign, *pulSignLen )));
+        }
+    }
+
+    return rv;
+}
+
 int CryptokiAPI::VerifyInit( CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hKey )
 {
     int rv = 0;
@@ -1127,6 +1181,60 @@ int CryptokiAPI::Verify( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG
     if( rv == CKR_OK )
     {
 
+    }
+
+    return rv;
+}
+
+int CryptokiAPI::VerifyRecoverInit( CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hKey )
+{
+    int rv = 0;
+    qint64 ms = 0;
+    QElapsedTimer timer;
+    QString strIn;
+
+    timer.start();
+    rv = p11_ctx_->p11FuncList->C_VerifyRecoverInit( hSession, pMechanism, hKey );
+    ms = timer.elapsed();
+
+    strIn.sprintf( "C_VerifyRecoverInit( SESSION_HANDLE = %u, MECHANISM_PTR = @%p, OBJECT_HANDLE = %u )",
+                   hSession, pMechanism, hKey );
+    manApplet->dlog( strIn );
+
+    logResult( "C_VerifyRecoverInit", rv, ms );
+
+    if( rv == CKR_OK )
+    {
+
+    }
+
+    return rv;
+}
+
+int CryptokiAPI::VerifyRecover( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pSign, CK_ULONG ulSignLen, CK_BYTE_PTR pData, CK_ULONG_PTR pulDataLen )
+{
+    int rv = 0;
+    qint64 ms = 0;
+    QElapsedTimer timer;
+    QString strIn;
+
+    timer.start();
+    rv = p11_ctx_->p11FuncList->C_VerifyRecover( hSession, pSign, ulSignLen, pData, pulDataLen );
+    ms = timer.elapsed();
+
+    strIn.sprintf( "C_VerifyRecover( SESSION_HANDLE = %u, SIGN_PTR = @%p, SIGN_LEN = %d, DATA_PTR = @%p, DATA_LEN_PTR = @%p )",
+                   hSession, pSign, ulSignLen, pData, pulDataLen );
+    manApplet->dlog( strIn );
+
+    logResult( "C_VerifyRecover", rv, ms );
+
+    if( rv == CKR_OK )
+    {
+        manApplet->dlog( QString( "DataLen : %1").arg( *pulDataLen ));
+        if( pSign )
+        {
+            manApplet->dlog( QString( "Data : %1").arg( getHexString( pData, *pulDataLen )));
+        }
     }
 
     return rv;

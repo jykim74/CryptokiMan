@@ -17,7 +17,6 @@ static QStringList sSecretMechList = {
     "CKM_SHA_1_HMAC", "CKM_SHA256_HMAC", "CKM_SHA384_HMAC", "CKM_SHA512_HMAC"
 };
 
-static QStringList sInputList = { "String", "Hex", "Base64" };
 
 static QStringList sKeyList = { "PRIVATE", "SECRET" };
 
@@ -41,7 +40,6 @@ void SignDlg::initUI()
 {
     mKeyTypeCombo->addItems(sKeyList);
     mMechCombo->addItems( sMechList );
-    mInputCombo->addItems( sInputList );
 
     connect( mKeyTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(keyTypeChanged(int)));
     connect( mLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(labelChanged(int)));
@@ -51,6 +49,12 @@ void SignDlg::initUI()
     connect( mFinalBtn, SIGNAL(clicked()), this, SLOT(clickFinal()));
     connect( mSignBtn, SIGNAL(clicked()), this, SLOT(clickSign()));
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(clickClose()));
+
+    connect( mSignRecoverInitBtn, SIGNAL(clicked()), this, SLOT(clickSignRecoverInit()));
+    connect( mSignRecoverBtn, SIGNAL(clicked()), this, SLOT(clickSignRecover()));
+
+    connect( mInputText, SIGNAL(textChanged()), this, SLOT(changeInput()));
+    connect( mOutputText, SIGNAL(textChanged()), this, SLOT(changeOutput()));
 
     initialize();
     keyTypeChanged(0);
@@ -186,6 +190,27 @@ void SignDlg::keyTypeChanged( int index )
     }
 }
 
+void SignDlg::changeInput()
+{
+    int nType = DATA_STRING;
+
+    if( mInputHexRadio->isChecked() )
+        nType = DATA_HEX;
+    else if( mInputBase64Radio->isChecked() )
+        nType = DATA_BASE64;
+
+    int nLen = getDataLen( nType, mInputText->toPlainText() );
+
+    mInputLenText->setText( QString("%1").arg( nLen ));
+}
+
+void SignDlg::changeOutput()
+{
+    int nLen = getDataLen( DATA_HEX, mOutputText->toPlainText() );
+
+    mOutputLenText->setText( QString("%1").arg( nLen ));
+}
+
 void SignDlg::labelChanged( int index )
 {
     QVariant objVal = mLabelCombo->itemData( index );
@@ -233,7 +258,7 @@ void SignDlg::clickUpdate()
 {
     int rv = -1;
 
-    QString strInput = mInputText->text();
+    QString strInput = mInputText->toPlainText();
 
     if( strInput.isEmpty() )
     {
@@ -243,11 +268,11 @@ void SignDlg::clickUpdate()
 
     BIN binInput = {0,0};
 
-    if( mInputCombo->currentIndex() == 0 )
+    if( mInputStringRadio->isChecked() )
         JS_BIN_set( &binInput, (unsigned char *)strInput.toStdString().c_str(), strInput.length() );
-    else if( mInputCombo->currentIndex() == 1 )
+    else if( mInputHexRadio->isChecked() )
         JS_BIN_decodeHex( strInput.toStdString().c_str(), &binInput );
-    else if( mInputCombo->currentIndex() == 2 )
+    else if( mInputBase64Radio->isChecked() )
         JS_BIN_decodeBase64( strInput.toStdString().c_str(), &binInput );
 
     rv = manApplet->cryptokiAPI()->SignUpdate( session_, binInput.pVal, binInput.nLen );
@@ -298,7 +323,7 @@ void SignDlg::clickSign()
 {
     int rv = -1;
 
-    QString strInput = mInputText->text();
+    QString strInput = mInputText->toPlainText();
 
     if( strInput.isEmpty() )
     {
@@ -308,11 +333,11 @@ void SignDlg::clickSign()
 
     BIN binInput = {0,0};
 
-    if( mInputCombo->currentIndex() == 0 )
+    if( mInputStringRadio->isChecked() )
         JS_BIN_set( &binInput, (unsigned char *)strInput.toStdString().c_str(), strInput.length());
-    else if( mInputCombo->currentIndex() == 1 )
+    else if( mInputHexRadio->isChecked() )
         JS_BIN_decodeHex( strInput.toStdString().c_str(), &binInput );
-    else if( mInputCombo->currentIndex() == 2 )
+    else if( mInputBase64Radio->isChecked() )
         JS_BIN_decodeBase64( strInput.toStdString().c_str(), &binInput );
 
     unsigned char sSign[1024];
@@ -344,4 +369,85 @@ void SignDlg::clickSign()
 void SignDlg::clickClose()
 {
     this->hide();
+}
+
+void SignDlg::clickSignRecoverInit()
+{
+    int rv = -1;
+
+    CK_MECHANISM sMech;
+    BIN binParam = {0,0};
+
+    sMech.mechanism = JS_PKCS11_GetCKMType( mMechCombo->currentText().toStdString().c_str());
+
+    QString strParam = mParamText->text();
+    if( !strParam.isEmpty() )
+    {
+        JS_BIN_decodeHex( strParam.toStdString().c_str(), &binParam );
+
+        sMech.pParameter = binParam.pVal;
+        sMech.ulParameterLen = binParam.nLen;
+    }
+
+    CK_OBJECT_HANDLE uObject = mObjectText->text().toLong();
+    rv = manApplet->cryptokiAPI()->SignRecoverInit( session_, &sMech, uObject );
+
+    if( rv != CKR_OK )
+    {
+        mOutputText->setPlainText( "" );
+        mStatusLabel->setText( "" );
+        manApplet->warningBox( tr("fail to run SignRecoverInit(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+    }
+    else
+    {
+        mOutputText->setPlainText( "" );
+        mStatusLabel->setText( "SignRecoverInit" );
+    }
+}
+
+void SignDlg::clickSignRecover()
+{
+    int rv = -1;
+
+    QString strInput = mInputText->toPlainText();
+
+    if( strInput.isEmpty() )
+    {
+        manApplet->warningBox( tr("You have to insert data."), this );
+        return;
+    }
+
+    BIN binInput = {0,0};
+
+    if( mInputStringRadio->isChecked() )
+        JS_BIN_set( &binInput, (unsigned char *)strInput.toStdString().c_str(), strInput.length());
+    else if( mInputHexRadio->isChecked() )
+        JS_BIN_decodeHex( strInput.toStdString().c_str(), &binInput );
+    else if( mInputBase64Radio->isChecked() )
+        JS_BIN_decodeBase64( strInput.toStdString().c_str(), &binInput );
+
+    unsigned char sSign[1024];
+    long uSignLen = 1024;
+
+    rv = manApplet->cryptokiAPI()->SignRecover( session_, binInput.pVal, binInput.nLen, sSign, (CK_ULONG_PTR)&uSignLen );
+
+    if( rv != CKR_OK )
+    {
+        mOutputText->setPlainText("");
+        manApplet->warningBox( tr("fail to run SignRecover(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        return;
+    }
+
+    char *pHex = NULL;
+    BIN binSign = {0,0};
+    JS_BIN_set( &binSign, sSign, uSignLen);
+    JS_BIN_encodeHex( &binSign, &pHex );
+    mOutputText->setPlainText( pHex );
+
+    QString strRes = mStatusLabel->text();
+    strRes += "|SignRecover";
+    mStatusLabel->setText( strRes );
+
+    if( pHex ) JS_free(pHex);
+    JS_BIN_reset(&binSign);
 }
