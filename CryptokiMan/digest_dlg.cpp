@@ -32,11 +32,76 @@ void DigestDlg::initUI()
     mInputCombo->addItems( sInputList );
 
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT( slotChanged(int) ));
+    connect( mKeyLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT( changeKeyLabel(int)));
+
     connect( mInitBtn, SIGNAL(clicked()), this, SLOT(clickInit()));
     connect( mUpdateBtn, SIGNAL(clicked()), this, SLOT(clickUpdate()));
     connect( mFinalBtn, SIGNAL(clicked()), this, SLOT(clickFinal()));
+    connect( mDigestKeyBtn, SIGNAL(clicked()), this, SLOT(clickDigestKey()));
     connect( mDigestBtn, SIGNAL(clicked()), this, SLOT(clickDigest()));
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(clickClose()));
+
+}
+
+long DigestDlg::getSessinHandle()
+{
+    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
+
+    int index = mSlotsCombo->currentIndex();
+    SlotInfo slotInfo = slot_infos.at(index);
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+
+    return hSession;
+}
+
+void DigestDlg::setKeyList()
+{
+    int rv = -1;
+
+    CK_SESSION_HANDLE hSession = getSessinHandle();
+
+    CK_ATTRIBUTE sTemplate[1];
+    CK_ULONG uCnt = 0;
+    CK_OBJECT_HANDLE sObjects[20];
+    CK_ULONG uMaxObjCnt = 20;
+    CK_ULONG uObjCnt = 0;
+
+    CK_OBJECT_CLASS objClass = 0;
+
+    objClass = CKO_SECRET_KEY;
+
+    sTemplate[uCnt].type = CKA_CLASS;
+    sTemplate[uCnt].pValue = &objClass;
+    sTemplate[uCnt].ulValueLen = sizeof(objClass);
+    uCnt++;
+
+    rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, uCnt );
+    if( rv != CKR_OK ) return;
+
+    rv = manApplet->cryptokiAPI()->FindObjects( hSession, sObjects, uMaxObjCnt, &uObjCnt );
+    if( rv != CKR_OK ) return;
+
+    rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
+    if( rv != CKR_OK ) return;
+
+    mKeyLabelCombo->clear();
+
+    for( int i=0; i < uObjCnt; i++ )
+    {
+        char *pLabel = NULL;
+
+        BIN binLabel = {0,0};
+        QVariant objVal = QVariant( (int)sObjects[i] );
+
+        rv = manApplet->cryptokiAPI()->GetAttributeValue2( hSession, sObjects[i], CKA_LABEL, &binLabel );
+
+        JS_BIN_string( &binLabel, &pLabel );
+
+        mKeyLabelCombo->addItem( pLabel, objVal );
+
+        if( pLabel ) JS_free( pLabel );
+        JS_BIN_reset( &binLabel );
+    }
 }
 
 void DigestDlg::slotChanged(int index)
@@ -51,9 +116,19 @@ void DigestDlg::slotChanged(int index)
     mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
 }
 
+void DigestDlg::changeKeyLabel( int index )
+{
+    QVariant objVal = mKeyLabelCombo->itemData(index);
+
+    QString strObject = QString("%1").arg( objVal.toInt() );
+    mKeyObjectText->setText( strObject );
+}
+
 void DigestDlg::setSelectedSlot(int index)
 {
     if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
+
+    setKeyList();
 }
 
 
@@ -71,6 +146,15 @@ void DigestDlg::initialize()
     }
 
     if( slot_infos.size() > 0 ) slotChanged(0);
+}
+
+void DigestDlg::clickDigestKey()
+{
+    int rv;
+    CK_SESSION_HANDLE hSession = getSessinHandle();
+    CK_OBJECT_HANDLE hKey = mKeyObjectText->text().toULong();
+
+    rv = manApplet->cryptokiAPI()->DigestKey( hSession, hKey );
 }
 
 void DigestDlg::clickInit()

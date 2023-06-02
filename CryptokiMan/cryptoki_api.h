@@ -71,6 +71,7 @@ public:
 
     int DigestInit( CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism );
     int DigestUpdate( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen );
+    int DigestKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey );
     int DigestFinal( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pDigest, CK_ULONG_PTR pulDigestLen );
     int Digest( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDataLen, CK_BYTE_PTR pDigest, CK_ULONG_PTR pulDigestLen );
 

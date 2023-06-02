@@ -841,6 +841,27 @@ int CryptokiAPI::DigestUpdate( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK
     return rv;
 }
 
+int CryptokiAPI::DigestKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey )
+{
+    int rv = 0;
+    qint64 ms = 0;
+    QElapsedTimer timer;
+    QString strIn;
+
+    timer.start();
+    rv = p11_ctx_->p11FuncList->C_DigestKey( hSession, hKey );
+    ms = timer.elapsed();
+
+    logResult( "C_DigestKey", rv, ms );
+
+    if( rv == CKR_OK )
+    {
+
+    }
+
+    return rv;
+}
+
 int CryptokiAPI::DigestFinal( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pDigest, CK_ULONG_PTR pulDigestLen )
 {
     int rv = 0;

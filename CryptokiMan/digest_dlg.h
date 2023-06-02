@@ -19,7 +19,9 @@ public:
 
 private slots:
     void slotChanged( int index );
+    void changeKeyLabel( int index );
 
+    void clickDigestKey();
     void clickInit();
     void clickUpdate();
     void clickFinal();
@@ -29,6 +31,9 @@ private slots:
 private:
     void initialize();
     void initUI();
+    void setKeyList();
+
+    long getSessinHandle();
 };
 
 #endif // DIGEST_DLG_H
