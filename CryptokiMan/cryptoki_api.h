@@ -134,6 +134,8 @@ public:
                    CK_ULONG ulTemplateCnt,
                    CK_OBJECT_HANDLE_PTR phKey );
 
+    int WaitForSlotEvent( CK_FLAGS uFlags, CK_SLOT_ID_PTR pSlot, CK_VOID_PTR pReserved );
+
     QString getLastError();
 
 private:

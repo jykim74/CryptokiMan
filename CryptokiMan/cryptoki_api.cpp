@@ -1755,6 +1755,31 @@ int CryptokiAPI::UnwrapKey( CK_SESSION_HANDLE hSession,
     return rv;
 }
 
+int CryptokiAPI::WaitForSlotEvent( CK_FLAGS uFlags, CK_SLOT_ID_PTR pSlot, CK_VOID_PTR pReserved )
+{
+    int rv = 0;
+    qint64 ms = 0;
+    QElapsedTimer timer;
+    QString strIn;
+
+    timer.start();
+    rv = p11_ctx_->p11FuncList->C_WaitForSlotEvent( uFlags, pSlot, pReserved );
+    ms = timer.elapsed();
+
+    strIn.sprintf( "C_WaitForSlotEvent( FLAGS = %u, SLOT_ID_PTR = @%p, RESERVER = @%p )",
+                   uFlags, pSlot, pReserved );
+    manApplet->dlog( strIn );
+
+    logResult( "C_WaitForSlotEvent", rv, ms );
+
+    if( rv == CKR_OK )
+    {
+
+    }
+
+    return rv;
+}
+
 QString CryptokiAPI::getLastError()
 {
     QString strError = p11_ctx_->sLastLog;
