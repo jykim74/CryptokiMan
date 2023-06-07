@@ -744,6 +744,11 @@ void MainWindow::P11Initialize()
 //        expand( parent_item->index() );
         left_tree_->expand( parent_item->index() );
     }
+/*
+    th_work_ = new ThreadWork( this );
+    th_work_->setManApplet( manApplet );
+    th_work_->start();
+*/
 }
 
 void MainWindow::P11Finalize()

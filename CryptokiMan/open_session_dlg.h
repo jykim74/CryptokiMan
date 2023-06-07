@@ -20,6 +20,9 @@ public:
 private slots:
     virtual void accept();
 
+    void clickOpenSession();
+    void clickWaitForSlotEvent();
+
 private:
     void initialize();
 };

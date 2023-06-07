@@ -9,6 +9,10 @@ OpenSessionDlg::OpenSessionDlg(QWidget *parent) :
 {
     setupUi(this);
 
+    connect( mOpenSessionBtn, SIGNAL(clicked()), this, SLOT(clickOpenSession()));
+    connect( mWaitForSlotEventBtn, SIGNAL(clicked()), this, SLOT(clickWaitForSlotEvent()));
+    connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(close()));
+
     initialize();
 }
 
@@ -66,4 +70,20 @@ void OpenSessionDlg::accept()
     }
 
     QDialog::accept();
+}
+
+void OpenSessionDlg::clickOpenSession()
+{
+    accept();
+}
+
+void OpenSessionDlg::clickWaitForSlotEvent()
+{
+    int rv = -1;
+    CK_ULONG uFlags = 0;
+    CK_SLOT_ID uSlotID = 0;
+
+    rv = manApplet->cryptokiAPI()->WaitForSlotEvent( uFlags, &uSlotID, NULL );
+
+    manApplet->messageBox( QString( "WaitForSlotEvent Ret: %1 [%2]").arg( JS_PKCS11_GetErrorMsg(rv) ).arg(rv), this );
 }

@@ -13,6 +13,7 @@
 class ManTreeView;
 class ManTreeModel;
 class ManTreeItem;
+class ThreadWork;
 
 namespace Ui {
 class MainWindow;
@@ -169,6 +170,8 @@ private:
 
     QList<SlotInfo> slot_infos_;
     int             slot_index_;
+    ThreadWork      *th_work_;
+
 };
 
 #endif // MAINWINDOW_H
