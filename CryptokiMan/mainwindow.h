@@ -74,6 +74,8 @@ public:
     int currentSlotIdx() { return slot_index_; };
     void setCurrentSlotIdx( int index );
 
+    void loadLibray( const QString& filename );
+
 private slots:
     void closeEvent(QCloseEvent *event);
 

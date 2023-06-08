@@ -36,6 +36,13 @@ int main(int argc, char *argv[])
     manApplet->setCmd( argv[0]);
     manApplet->start();
 
+    MainWindow *mw = manApplet->mainWindow();
+    if( !parser.positionalArguments().isEmpty() )
+    {
+        mw->loadLibray( parser.positionalArguments().first() );
+        mw->show();
+    }
+
 //    MainWindow w;
 //    w.show();
 

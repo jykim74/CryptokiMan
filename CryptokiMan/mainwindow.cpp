@@ -2114,6 +2114,12 @@ void MainWindow::setCurrentSlotIdx( int index )
     slot_index_ = index;
 }
 
+void MainWindow::loadLibray( const QString& filename )
+{
+    int ret = openLibrary( filename );
+    if( ret == 0 ) setTitle( filename );
+}
+
 void MainWindow::showGetInfoList()
 {
     int ret = 0;
