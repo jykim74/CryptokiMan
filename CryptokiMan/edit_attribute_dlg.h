@@ -34,6 +34,8 @@ private slots:
     void clickGetAttribute();
     void clickSetAttribute();
 
+    void changeValue();
+
 private:
     void initialize();
     void initAttributes();

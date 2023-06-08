@@ -14,6 +14,8 @@ OpenSessionDlg::OpenSessionDlg(QWidget *parent) :
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(close()));
 
     initialize();
+
+    mOpenSessionBtn->setFocus();
 }
 
 OpenSessionDlg::~OpenSessionDlg()

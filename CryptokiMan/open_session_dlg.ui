@@ -146,6 +146,9 @@
   <tabstop>mSlotsCombo</tabstop>
   <tabstop>mSerialCheck</tabstop>
   <tabstop>mRWCheck</tabstop>
+  <tabstop>mWaitForSlotEventBtn</tabstop>
+  <tabstop>mOpenSessionBtn</tabstop>
+  <tabstop>mCloseBtn</tabstop>
  </tabstops>
  <resources/>
  <connections/>

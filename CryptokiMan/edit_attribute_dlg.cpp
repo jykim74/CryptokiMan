@@ -5,6 +5,8 @@
 #include "js_pkcs11.h"
 #include "cryptoki_api.h"
 
+const QStringList kTypeList = { "String", "Hex", "Base64" };
+
 
 EditAttributeDlg::EditAttributeDlg(QWidget *parent) :
     QDialog(parent)
@@ -23,6 +25,11 @@ EditAttributeDlg::EditAttributeDlg(QWidget *parent) :
     connect( mCloseBtn, SIGNAL(clicked(bool)), this, SLOT(clickClose()));
     connect( mGetAttrBtn, SIGNAL(clicked(bool)), this, SLOT(clickGetAttribute()));
     connect( mSetAttrBtn, SIGNAL(clicked(bool)), this, SLOT(clickSetAttribute()));
+
+    connect( mValueText, SIGNAL(textChanged()), this, SLOT(changeValue()));
+    connect( mValueTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changeValue()));
+
+    initialize();
 }
 
 EditAttributeDlg::~EditAttributeDlg()
@@ -170,7 +177,7 @@ void EditAttributeDlg::objectTypeChanged( int type )
 
 void EditAttributeDlg::initialize()
 {
-
+    mValueTypeCombo->addItems( kTypeList );
 }
 
 void EditAttributeDlg::initAttributes()
@@ -191,10 +198,6 @@ void EditAttributeDlg::showEvent(QShowEvent *event)
         mObjectTypeCombo->addItems(kObjectTypeList);
     else
         mObjectTypeCombo->addItem( kObjectTypeList[object_type_] );
-
-    initialize();
-
-//    if( slot_index_ >= 0 ) mSlotsCombo->setCurrentIndex( slot_index_ );
 
     if( attr_name_.length() > 0 )
     {
@@ -265,7 +268,7 @@ void EditAttributeDlg::clickGetAttribute()
     attrType = JS_PKCS11_GetCKAType( strAttrib.toStdString().c_str());
 
     BIN binVal = {0,0};
-    char *pHex = NULL;
+    QString strValue;
 
     rv = manApplet->cryptokiAPI()->GetAttributeValue2( session_, hObject, attrType, &binVal );
 
@@ -275,11 +278,12 @@ void EditAttributeDlg::clickGetAttribute()
         return;
     }
 
-    JS_BIN_encodeHex( &binVal, &pHex );
+//    JS_BIN_encodeHex( &binVal, &pHex );
+
+    strValue = getStringFromBIN( &binVal, mValueTypeCombo->currentText() );
     JS_BIN_reset( &binVal );
 
-    mValueText->setText( pHex );
-    if( pHex ) JS_free(pHex);
+    mValueText->setText( strValue );
 }
 
 void EditAttributeDlg::clickSetAttribute()
@@ -302,7 +306,7 @@ void EditAttributeDlg::clickSetAttribute()
     BIN binVal = {0,0};
     QString strValue = mValueText->toPlainText();
 
-    JS_BIN_decodeHex( strValue.toStdString().c_str(), &binVal );
+    getBINFromString( &binVal, mValueTypeCombo->currentText(), strValue );
 
     rv = manApplet->cryptokiAPI()->SetAttributeValue2( session_, hObject, attrType, &binVal );
 
@@ -314,4 +318,12 @@ void EditAttributeDlg::clickSetAttribute()
 
     manApplet->messageBox( tr("success to set attributes"), this );
     QMessageBox::information( this ,"EditAttribute", "SetAttribute success" );
+}
+
+void EditAttributeDlg::changeValue()
+{
+    QString strValue = mValueText->toPlainText();
+
+    int nLen = getDataLen( mValueTypeCombo->currentText(), strValue );
+    mValueLenText->setText( QString( "%1" ).arg(nLen) );
 }
