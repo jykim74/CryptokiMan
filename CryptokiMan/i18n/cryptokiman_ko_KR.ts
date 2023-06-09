@@ -1284,6 +1284,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>fail run Digest(%1)</source>
         <translation>Digest 실패(%1)</translation>
     </message>
+    <message>
+        <source>Secret Key</source>
+        <translation>비밀 키</translation>
+    </message>
+    <message>
+        <source>DigestKey</source>
+        <translation>DigestKey</translation>
+    </message>
 </context>
 <context>
     <name>EditAttributeDlg</name>
@@ -1309,7 +1317,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Type</source>
-        <translation type="vanished">타입</translation>
+        <translation>타입</translation>
     </message>
     <message>
         <source>Session</source>
@@ -2303,7 +2311,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Login</source>
-        <translation>로그인</translation>
+        <translation>Login</translation>
     </message>
     <message>
         <source>Login Type</source>
@@ -3167,6 +3175,18 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>Slot list</source>
         <translation>슬롯 목록</translation>
     </message>
+    <message>
+        <source>WatiForSlotEvent</source>
+        <translation>WaitForSlotEvent</translation>
+    </message>
+    <message>
+        <source>OpenSession</source>
+        <translation>OpenSession</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>닫기</translation>
+    </message>
 </context>
 <context>
     <name>OperStateDlg</name>
@@ -3529,6 +3549,34 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>fail to run Sign(%1)</source>
         <translation>Sign 실패(%1)</translation>
     </message>
+    <message>
+        <source>Hex</source>
+        <translation>헥사</translation>
+    </message>
+    <message>
+        <source>Base64</source>
+        <translation>베이스64</translation>
+    </message>
+    <message>
+        <source>String</source>
+        <translation>문자열</translation>
+    </message>
+    <message>
+        <source>SignRecoverInit</source>
+        <translation>SignRecoverInit</translation>
+    </message>
+    <message>
+        <source>SignRecover</source>
+        <translation>SignRecover</translation>
+    </message>
+    <message>
+        <source>fail to run SignRecoverInit(%1)</source>
+        <translation>SignReocoverInit 실행 실패(%1)</translation>
+    </message>
+    <message>
+        <source>fail to run SignRecover(%1)</source>
+        <translation>SignRecover 실행 실패 (%1)</translation>
+    </message>
 </context>
 <context>
     <name>UnwrapKeyDlg</name>
@@ -3782,6 +3830,30 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Slot Status</source>
         <translation>슬롯 상태</translation>
+    </message>
+    <message>
+        <source>Base64</source>
+        <translation>베이스64</translation>
+    </message>
+    <message>
+        <source>Hex</source>
+        <translation>헥사</translation>
+    </message>
+    <message>
+        <source>String</source>
+        <translation>문자열</translation>
+    </message>
+    <message>
+        <source>VerifyRecoverInit</source>
+        <translation>VerifyRecoverInit</translation>
+    </message>
+    <message>
+        <source>VerifyRecover</source>
+        <translation>VerifyRecover</translation>
+    </message>
+    <message>
+        <source>fail to run VerifyRecoverInit(%1)</source>
+        <translation>VerifyRecoverInit 실행 실패(%1)</translation>
     </message>
 </context>
 <context>
