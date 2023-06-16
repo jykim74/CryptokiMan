@@ -40,6 +40,7 @@
 #include "auto_update_service.h"
 #include "common.h"
 #include "cryptoki_api.h"
+#include "js_net.h"
 
 ManApplet *manApplet;
 
@@ -94,6 +95,7 @@ void ManApplet::start()
 
 int ManApplet::checkLicense()
 {
+    time_t ntp_t = 0;
     QFile resFile( ":/cryptokiman_license.lcn" );
     resFile.open(QIODevice::ReadOnly);
     QByteArray data = resFile.readAll();
@@ -113,7 +115,19 @@ int ManApplet::checkLicense()
     JS_License_DeriveKey( sKey, &license_info_ );
 
     QDate expireDate = QDate::fromString( license_info_.sExpire, "yyyy-MM-dd" );
-    QDate nowDate = QDate::currentDate();
+    QDate nowDate;
+
+    ntp_t = JS_NET_clientNTP( JS_NTP_SERVER, JS_NTP_PORT, 2 );
+    if( ntp_t > 0 )
+    {
+        QDateTime dateTime;
+        dateTime.setTime_t( ntp_t );
+        nowDate = dateTime.date();
+    }
+    else
+    {
+        nowDate = QDate::currentDate();
+    }
 
     if( expireDate < nowDate )
     {
