@@ -850,6 +850,10 @@ int CryptokiAPI::DigestKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey )
 
     timer.start();
     rv = p11_ctx_->p11FuncList->C_DigestKey( hSession, hKey );
+    strIn.sprintf( "C_DigestKey( SESSION_HANDLE = %u, OBJECT_HANDLE = %u )",
+                   hSession, hKey );
+    manApplet->dlog( strIn );
+
     ms = timer.elapsed();
 
     logResult( "C_DigestKey", rv, ms );

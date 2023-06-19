@@ -155,6 +155,19 @@ void DigestDlg::clickDigestKey()
     CK_OBJECT_HANDLE hKey = mKeyObjectText->text().toULong();
 
     rv = manApplet->cryptokiAPI()->DigestKey( hSession, hKey );
+
+    if( rv == CKR_OK )
+    {
+        QString strMsg = mStatusLabel->text();
+        strMsg += "|DigestKey";
+
+        mStatusLabel->setText( strMsg );
+    }
+    else
+    {
+        manApplet->warningBox( tr("fail to run DigestKey(%1)").arg( JS_PKCS11_GetErrorMsg(rv)), this );
+        mOutputText->setText("");
+    }
 }
 
 void DigestDlg::clickInit()
