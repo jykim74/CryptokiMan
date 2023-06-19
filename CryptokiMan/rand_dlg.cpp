@@ -24,6 +24,8 @@ void RandDlg::initUI()
 
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
     connect( mSetSeedBtn, SIGNAL(clicked()), this, SLOT(clickSeed()));
+    connect( mGenRandBtn, SIGNAL(clicked()), this, SLOT(clickGenRand()));
+    connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(close()));
 
     initialize();
 }
@@ -61,7 +63,7 @@ void RandDlg::initialize()
     if( slot_infos.size() > 0 ) slotChanged(0);
 }
 
-void RandDlg::accept()
+void RandDlg::clickGenRand()
 {
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
     if( slot_infos.size() <= 0 ) return;

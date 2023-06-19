@@ -18,9 +18,9 @@ public:
     void setSelectedSlot( int index );
 
 private slots:
-    virtual void accept();
     void slotChanged( int index );
     void clickSeed();
+    void clickGenRand();
 
 private:
     void initialize();
