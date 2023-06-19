@@ -3,6 +3,7 @@
 #include "man_applet.h"
 #include "js_pkcs11.h"
 #include "cryptoki_api.h"
+#include "common.h"
 
 static QStringList sMechList = {
     "CKM_MD5", "CKM_SHA_1", "CKM_SHA256", "CKM_SHA512"
@@ -40,6 +41,9 @@ void DigestDlg::initUI()
     connect( mDigestKeyBtn, SIGNAL(clicked()), this, SLOT(clickDigestKey()));
     connect( mDigestBtn, SIGNAL(clicked()), this, SLOT(clickDigest()));
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(clickClose()));
+
+    connect( mInputText, SIGNAL(textChanged()), this, SLOT(inputChanged()));
+    connect( mOutputText, SIGNAL(textChanged(const QString&)), this, SLOT(outputChanged()));
 
 }
 
@@ -307,12 +311,7 @@ void DigestDlg::clickDigest()
 
     BIN binInput = {0,0};
 
-    if( mInputCombo->currentIndex() == 0 )
-        JS_BIN_set( &binInput, (unsigned char *)strInput.toStdString().c_str(), strInput.length() );
-    else if( mInputCombo->currentIndex() == 1 )
-        JS_BIN_decodeHex( strInput.toStdString().c_str(), &binInput);
-    else if( mInputCombo->currentIndex() == 2 )
-        JS_BIN_decodeBase64( strInput.toStdString().c_str(), &binInput );
+    getBINFromString( &binInput, mInputCombo->currentText(), strInput );
 
     unsigned char sDigest[512];
     CK_ULONG uDigestLen = 64;
@@ -343,4 +342,17 @@ void DigestDlg::clickDigest()
 void DigestDlg::clickClose()
 {
     this->hide();
+}
+
+void DigestDlg::inputChanged()
+{
+    QString strInput = mInputText->toPlainText();
+    int nLen = getDataLen( mInputCombo->currentText(), strInput );
+    mInputLenText->setText( QString("%1").arg( nLen ));
+}
+void DigestDlg::outputChanged()
+{
+    QString strOutput = mOutputText->text();
+    int nLen = getDataLen( DATA_HEX, strOutput );
+    mOutputLenText->setText( QString("%1").arg(nLen));
 }

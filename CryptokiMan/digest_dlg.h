@@ -28,6 +28,9 @@ private slots:
     void clickDigest();
     void clickClose();
 
+    void inputChanged();
+    void outputChanged();
+
 private:
     void initialize();
     void initUI();
