@@ -38,6 +38,7 @@ void SettingsDlg::updateSettings()
     }
 
     mgr->setLogLevel( mLogLevelCombo->currentIndex() );
+    mgr->setFileReadSize( mFileReadSizeText->text().toInt() );
 
 
 #ifdef _AUTO_UPDATE
@@ -94,6 +95,10 @@ void SettingsDlg::initialize()
 
     mLogLevelCombo->addItems( kLogLevel );
     mLogLevelCombo->setCurrentIndex( mgr->getLogLevel() );
+
+    QIntValidator *intVal = new QIntValidator( 0, 999999 );
+    mFileReadSizeText->setValidator( intVal );
+    mFileReadSizeText->setText( QString("%1").arg(mgr->getFileReadSize()));
 
     mLangCombo->setCurrentIndex(I18NHelper::getInstance()->preferredLanguage());
     tabWidget->setCurrentIndex(0);

@@ -9,6 +9,7 @@ namespace  {
     const char *kP11LibPath = "p11LibPath";
     const char *kShowLogTab = "showLogTab";
     const char *kLogLevel = "logLevel";
+    const char *kFileReadSize = "fileReadSize";
 }
 
 SettingsMgr::SettingsMgr( QObject *parent) : QObject (parent)
@@ -19,6 +20,7 @@ SettingsMgr::SettingsMgr( QObject *parent) : QObject (parent)
 void SettingsMgr::initialize()
 {
     getLogLevel();
+    getFileReadSize();
 }
 
 void SettingsMgr::setSaveLibPath( bool val )
@@ -84,4 +86,25 @@ int SettingsMgr::getLogLevel()
     settings.endGroup();
 
     return log_level_;
+}
+
+void SettingsMgr::setFileReadSize( int size )
+{
+    QSettings sets;
+    sets.beginGroup( kBehaviorGroup );
+    sets.setValue( kFileReadSize, size );
+    sets.endGroup();
+
+    file_read_size_ = size;
+}
+
+int SettingsMgr::getFileReadSize()
+{
+    QSettings sets;
+
+    sets.beginGroup( kBehaviorGroup );
+    file_read_size_ = sets.value( kFileReadSize, 10240 ).toInt();
+    sets.endGroup();
+
+    return file_read_size_;
 }

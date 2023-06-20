@@ -21,12 +21,18 @@ public:
     int logLevel() { return log_level_; };
     void setLogLevel( int nLevel );
     int getLogLevel();
+
+    void setFileReadSize( int size );
+    int getFileReadSize();
+    int fileReadSize() { return file_read_size_; };
 signals:
 
 public slots:
 
 private:
     void initialize();
+    int file_read_size_;
+
     Q_DISABLE_COPY(SettingsMgr)
 };
 

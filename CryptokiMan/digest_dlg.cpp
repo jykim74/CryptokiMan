@@ -7,6 +7,7 @@
 #include "js_pkcs11.h"
 #include "cryptoki_api.h"
 #include "common.h"
+#include "settings_mgr.h"
 
 static QStringList sMechList = {
     "CKM_MD5", "CKM_SHA_1", "CKM_SHA256", "CKM_SHA512"
@@ -360,7 +361,7 @@ void DigestDlg::runFileDigest()
     CK_SESSION_HANDLE hSession = getSessionHandle();
 
     int nRead = 0;
-    int nPartSize = 10240;
+    int nPartSize = manApplet->settingsMgr()->fileReadSize();
     int nReadSize = 0;
     int nLeft = 0;
     int nOffset = 0;
