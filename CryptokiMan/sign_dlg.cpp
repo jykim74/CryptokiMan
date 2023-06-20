@@ -336,7 +336,16 @@ void SignDlg::clickSign()
     if( index == 0 )
         runDataSign();
     else
+    {
+        if( manApplet->isLicense() == false )
+        {
+            QString strMsg = tr( "This feature requires a license." );
+            manApplet->warningBox( strMsg, this );
+            return;
+        }
+
         runFileSign();
+    }
 }
 
 void SignDlg::runDataSign()

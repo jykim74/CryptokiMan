@@ -305,9 +305,20 @@ void DigestDlg::clickDigest()
     int index = mInputTab->currentIndex();
 
     if( index == 0 )
+    {
         runDataDigest();
+    }
     else
+    {
+        if( manApplet->isLicense() == false )
+        {
+            QString strMsg = tr( "This feature requires a license." );
+            manApplet->warningBox( strMsg, this );
+            return;
+        }
+
         runFileDigest();
+    }
 }
 
 void DigestDlg::runDataDigest()

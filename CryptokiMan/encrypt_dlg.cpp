@@ -420,7 +420,16 @@ void EncryptDlg::clickEncrypt()
     if( index == 0 )
         runDataEncrypt();
     else
+    {
+        if( manApplet->isLicense() == false )
+        {
+            QString strMsg = tr( "This feature requires a license." );
+            manApplet->warningBox( strMsg, this );
+            return;
+        }
+
         runFileEncrypt();
+    }
 }
 
 void EncryptDlg::runDataEncrypt()

@@ -1052,6 +1052,10 @@ Do you want to delete the file and continue?</source>
         <source>Decrypt Files</source>
         <translation>복호화 파일</translation>
     </message>
+    <message>
+        <source>This feature requires a license.</source>
+        <translation>이 기능은 라이센스가 필요합니다.</translation>
+    </message>
 </context>
 <context>
     <name>DelObjectDlg</name>
@@ -1417,6 +1421,10 @@ Do you want to delete the file and continue?</source>
         <source>fail to initialize digest:%1</source>
         <translation>Digest 초기화 실패 :%1</translation>
     </message>
+    <message>
+        <source>This feature requires a license.</source>
+        <translation>이 기능은 라이센스가 필요합니다.</translation>
+    </message>
 </context>
 <context>
     <name>EditAttributeDlg</name>
@@ -1635,6 +1643,10 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>Input File</source>
         <translation>파일 입력</translation>
+    </message>
+    <message>
+        <source>This feature requires a license.</source>
+        <translation>이 기능은 라이센스가 필요합니다.</translation>
     </message>
 </context>
 <context>
@@ -3839,6 +3851,10 @@ Do you want to delete the file and continue?</source>
         <source>fail to initialize sign:%1</source>
         <translation>서명 초기화 실패:%1</translation>
     </message>
+    <message>
+        <source>This feature requires a license.</source>
+        <translation>이 기능은 라이센스가 필요합니다.</translation>
+    </message>
 </context>
 <context>
     <name>UnwrapKeyDlg</name>
@@ -4172,6 +4188,10 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>fail to initialize verify:%1</source>
         <translation>검증 초기화 실패:%1</translation>
+    </message>
+    <message>
+        <source>This feature requires a license.</source>
+        <translation>이 기능은 라이센스가 필요합니다.</translation>
     </message>
 </context>
 <context>

@@ -417,7 +417,16 @@ void DecryptDlg::clickDecrypt()
     if( index == 0 )
         runDataDecrypt();
     else
+    {
+        if( manApplet->isLicense() == false )
+        {
+            QString strMsg = tr( "This feature requires a license." );
+            manApplet->warningBox( strMsg, this );
+            return;
+        }
+
         runFileDecrypt();
+    }
 }
 
 void DecryptDlg::runDataDecrypt()

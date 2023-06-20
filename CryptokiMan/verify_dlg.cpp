@@ -332,7 +332,16 @@ void VerifyDlg::clickVerify()
     if( index == 0 )
         runDataVerify();
     else
+    {
+        if( manApplet->isLicense() == false )
+        {
+            QString strMsg = tr( "This feature requires a license." );
+            manApplet->warningBox( strMsg, this );
+            return;
+        }
+
         runFileVerify();
+    }
 }
 
 void VerifyDlg::runDataVerify()
