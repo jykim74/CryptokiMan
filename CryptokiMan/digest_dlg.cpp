@@ -1,3 +1,6 @@
+#include <QFileInfo>
+#include <QDateTime>
+
 #include "digest_dlg.h"
 #include "mainwindow.h"
 #include "man_applet.h"
@@ -45,9 +48,12 @@ void DigestDlg::initUI()
     connect( mInputText, SIGNAL(textChanged()), this, SLOT(inputChanged()));
     connect( mOutputText, SIGNAL(textChanged(const QString&)), this, SLOT(outputChanged()));
 
+    connect( mInputClearBtn, SIGNAL(clicked()), this, SLOT(clickInputClear()));
+    connect( mOutputClearBtn, SIGNAL(clicked()), this, SLOT(clickOutputClear()));
+    connect( mFindSrcFileBtn, SIGNAL(clicked()), this, SLOT(clickFindSrcFile()));
 }
 
-long DigestDlg::getSessinHandle()
+long DigestDlg::getSessionHandle()
 {
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
@@ -62,7 +68,7 @@ void DigestDlg::setKeyList()
 {
     int rv = -1;
 
-    CK_SESSION_HANDLE hSession = getSessinHandle();
+    CK_SESSION_HANDLE hSession = getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[1];
     CK_ULONG uCnt = 0;
@@ -150,12 +156,14 @@ void DigestDlg::initialize()
     }
 
     if( slot_infos.size() > 0 ) slotChanged(0);
+
+    mInputTab->setCurrentIndex(0);
 }
 
 void DigestDlg::clickDigestKey()
 {
     int rv;
-    CK_SESSION_HANDLE hSession = getSessinHandle();
+    CK_SESSION_HANDLE hSession = getSessionHandle();
     CK_OBJECT_HANDLE hKey = mKeyObjectText->text().toULong();
 
     rv = manApplet->cryptokiAPI()->DigestKey( hSession, hKey );
@@ -174,14 +182,10 @@ void DigestDlg::clickDigestKey()
     }
 }
 
-void DigestDlg::clickInit()
+int DigestDlg::clickInit()
 {
-    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = getSessionHandle();
 
     BIN binParam = {0,0};
     CK_MECHANISM stMech;
@@ -212,6 +216,8 @@ void DigestDlg::clickInit()
         mStatusLabel->setText("");
         mOutputText->setText("");
     }
+
+    return rv;
 }
 
 void DigestDlg::clickUpdate()
@@ -295,12 +301,18 @@ void DigestDlg::clickFinal()
 
 void DigestDlg::clickDigest()
 {
-    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
+    int index = mInputTab->currentIndex();
 
-    int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.at(index);
+    if( index == 0 )
+        runDataDigest();
+    else
+        runFileDigest();
+}
+
+void DigestDlg::runDataDigest()
+{
     int rv = -1;
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = getSessionHandle();
 
     QString strInput = mInputText->toPlainText();
     if( strInput.isEmpty() )
@@ -308,6 +320,9 @@ void DigestDlg::clickDigest()
         manApplet->warningBox( tr("You have to insert input value"), this );
         return;
     }
+
+    if( mInitAutoCheck->isChecked() )
+        clickInit();
 
     BIN binInput = {0,0};
 
@@ -339,6 +354,88 @@ void DigestDlg::clickDigest()
     }
 }
 
+void DigestDlg::runFileDigest()
+{
+    int ret = -1;
+    CK_SESSION_HANDLE hSession = getSessionHandle();
+
+    int nRead = 0;
+    int nPartSize = 10240;
+    int nReadSize = 0;
+    int nLeft = 0;
+    int nOffset = 0;
+    int nPercent = 0;
+    QString strSrcFile = mSrcFileText->text();
+    BIN binPart = {0,0};
+
+    QFileInfo fileInfo;
+    fileInfo.setFile( strSrcFile );
+
+    qint64 fileSize = fileInfo.size();
+
+    mHashProgBar->setValue( 0 );
+    mFileTotalSizeText->setText( QString("%1").arg( fileSize ));
+    mFileReadSizeText->setText( "0" );
+
+    nLeft = fileSize;
+
+    if( mInitAutoCheck->isChecked() )
+    {
+        ret = clickInit();
+        if( ret != CKR_OK )
+        {
+            manApplet->warningBox( tr("fail to initialize digest:%1").arg(ret), this );
+            return;
+        }
+    }
+
+    FILE *fp = fopen( strSrcFile.toLocal8Bit().toStdString().c_str(), "rb" );
+
+    while( nLeft > 0 )
+    {
+        if( nLeft < nPartSize )
+            nPartSize = nLeft;
+
+        nRead = JS_BIN_fileReadPartFP( fp, nOffset, nPartSize, &binPart );
+        if( nRead <= 0 ) break;
+
+        ret = manApplet->cryptokiAPI()->DigestUpdate( hSession, binPart.pVal, binPart.nLen );
+        if( ret != CKR_OK )
+        {
+            manApplet->warningBox( tr("fail to run DigestUpdate(%1)").arg( JS_PKCS11_GetErrorMsg(ret)), this );
+            goto end;
+        }
+
+        nReadSize += nRead;
+        nPercent = ( nReadSize * 100 ) / fileSize;
+
+        mFileReadSizeText->setText( QString("%1").arg( nReadSize ));
+        mHashProgBar->setValue( nPercent );
+
+        nLeft -= nPartSize;
+        nOffset += nRead;
+
+        JS_BIN_reset( &binPart );
+        repaint();
+    }
+
+    fclose( fp );
+    manApplet->log( QString("FileRead done[Total:%1 Read:%2]").arg( fileSize ).arg( nReadSize) );
+
+    if( nReadSize == fileSize )
+    {
+        mHashProgBar->setValue( 100 );
+
+        if( ret == CKR_OK )
+        {
+            clickFinal();
+        }
+    }
+
+end :
+    JS_BIN_reset( &binPart );
+}
+
 void DigestDlg::clickClose()
 {
     this->hide();
@@ -355,4 +452,39 @@ void DigestDlg::outputChanged()
     QString strOutput = mOutputText->text();
     int nLen = getDataLen( DATA_HEX, strOutput );
     mOutputLenText->setText( QString("%1").arg(nLen));
+}
+
+void DigestDlg::clickInputClear()
+{
+    mInputText->clear();
+}
+
+void DigestDlg::clickOutputClear()
+{
+    mOutputText->clear();
+}
+
+void DigestDlg::clickFindSrcFile()
+{
+    QString strPath;
+    QString strSrcFile = findFile( this, JS_FILE_TYPE_ALL, strPath );
+
+    if( strSrcFile.length() > 0 )
+    {
+        QFileInfo fileInfo;
+        fileInfo.setFile( strSrcFile );
+
+        qint64 fileSize = fileInfo.size();
+        QDateTime cTime = fileInfo.lastModified();
+
+        QString strInfo = QString("LastModified Time: %1").arg( cTime.toString( "yyyy-MM-dd HH:mm:ss" ));
+
+        mSrcFileText->setText( strSrcFile );
+        mSrcFileSizeText->setText( QString("%1").arg( fileSize ));
+        mSrcFileInfoText->setText( strInfo );
+        mHashProgBar->setValue(0);
+
+        mFileReadSizeText->clear();
+        mFileTotalSizeText->clear();
+    }
 }

@@ -22,21 +22,28 @@ private slots:
     void changeKeyLabel( int index );
 
     void clickDigestKey();
-    void clickInit();
+    int clickInit();
     void clickUpdate();
     void clickFinal();
     void clickDigest();
+    void runDataDigest();
+    void runFileDigest();
     void clickClose();
 
     void inputChanged();
     void outputChanged();
+
+    void clickInputClear();
+    void clickOutputClear();
+
+    void clickFindSrcFile();
 
 private:
     void initialize();
     void initUI();
     void setKeyList();
 
-    long getSessinHandle();
+    long getSessionHandle();
 };
 
 #endif // DIGEST_DLG_H
