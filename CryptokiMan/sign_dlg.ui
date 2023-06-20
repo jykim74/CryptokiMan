@@ -394,13 +394,6 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="0">
-          <widget class="QPushButton" name="mInitBtn">
-           <property name="text">
-            <string>Init</string>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="3">
           <spacer name="horizontalSpacer_6">
            <property name="orientation">
@@ -878,6 +871,13 @@
       <widget class="QPushButton" name="mOutputClearBtn">
        <property name="text">
         <string>Output Clear</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="mInitBtn">
+       <property name="text">
+        <string>Init</string>
        </property>
       </widget>
      </item>

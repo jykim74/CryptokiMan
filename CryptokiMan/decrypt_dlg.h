@@ -22,7 +22,7 @@ public:
 private slots:
     void slotChanged( int index );
 
-    void clickInit();
+    int clickInit();
     void clickUpdate();
     void clickFinal();
     void clickDecrypt();

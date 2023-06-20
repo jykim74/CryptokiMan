@@ -209,7 +209,7 @@ void EncryptDlg::outputChanged()
     mOutputLenText->setText( QString("%1").arg(nLen));
 }
 
-void EncryptDlg::clickInit()
+int EncryptDlg::clickInit()
 {
     int rv = -1;
 
@@ -235,11 +235,13 @@ void EncryptDlg::clickInit()
         mStatusLabel->setText("");
         mOutputText->setPlainText("");
         manApplet->warningBox( tr("fail to run EncryptInit(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
-        return;
+        return rv;
     }
 
     mStatusLabel->setText( "Init" );
     mOutputText->setPlainText( "" );
+
+    return rv;
 }
 
 void EncryptDlg::clickUpdate()
@@ -349,6 +351,9 @@ void EncryptDlg::clickEncrypt()
         mInputText->setFocus();
         return;
     }
+
+    if( mInitAutoCheck->isChecked() )
+        clickInit();
 
     BIN binInput = {0,0};
 

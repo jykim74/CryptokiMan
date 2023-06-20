@@ -211,7 +211,7 @@ void DecryptDlg::outputChanged()
 }
 
 
-void DecryptDlg::clickInit()
+int DecryptDlg::clickInit()
 {
     int rv = -1;
 
@@ -238,11 +238,13 @@ void DecryptDlg::clickInit()
         mOutputText->setPlainText("");
         mStatusLabel->setText("");
         manApplet->warningBox( tr("fail to run DecryptInit(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
-        return;
+        return rv;
     }
 
     mOutputText->setPlainText("");
     mStatusLabel->setText( "Init" );
+
+    return rv;
 }
 
 void DecryptDlg::clickUpdate()
@@ -350,6 +352,9 @@ void DecryptDlg::clickDecrypt()
         mInputText->setFocus();
         return;
     }
+
+    if( mInitAutoCheck->isChecked() )
+        clickInit();
 
     BIN binInput = {0,0};
 
