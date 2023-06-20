@@ -987,6 +987,71 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>fail to run Decrypt(%1)</source>
         <translation>Decrypt 실패(%1)</translation>
     </message>
+    <message>
+        <source>Input Data</source>
+        <translation>데이타 입력</translation>
+    </message>
+    <message>
+        <source>Input Clear</source>
+        <translation>입력 지움</translation>
+    </message>
+    <message>
+        <source>Input File</source>
+        <translation>파일 입력</translation>
+    </message>
+    <message>
+        <source>Src File Path</source>
+        <translation>소스 파일 경로</translation>
+    </message>
+    <message>
+        <source>Find</source>
+        <translation>찾기</translation>
+    </message>
+    <message>
+        <source>File Information</source>
+        <translation>소스 파일 정보</translation>
+    </message>
+    <message>
+        <source>File Status</source>
+        <translation>파일 상태</translation>
+    </message>
+    <message>
+        <source>Total File Size</source>
+        <translation>전체 파일 크기</translation>
+    </message>
+    <message>
+        <source>Read File Size</source>
+        <translation>읽은 파일 크기</translation>
+    </message>
+    <message>
+        <source>Run Status</source>
+        <translation>실행 상태</translation>
+    </message>
+    <message>
+        <source>Dst File Path</source>
+        <translation>대상 파일 경로</translation>
+    </message>
+    <message>
+        <source>Dst Information</source>
+        <translation>대상 파일 정보</translation>
+    </message>
+    <message>
+        <source>Output Clear</source>
+        <translation>출력 지우기</translation>
+    </message>
+    <message>
+        <source>Init Automatically</source>
+        <translation>자동 초기화</translation>
+    </message>
+    <message>
+        <source>Dst file[%1] is already exist.
+Do you want to delete the file and continue?</source>
+        <translation>대상 파일 [%1] 이 이미 존재 합니다. 지우고 계속 하시겠습나까?</translation>
+    </message>
+    <message>
+        <source>Decrypt Files</source>
+        <translation>복호화 파일</translation>
+    </message>
 </context>
 <context>
     <name>DelObjectDlg</name>
@@ -1238,7 +1303,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Input</source>
-        <translation>입력</translation>
+        <translation type="vanished">입력</translation>
     </message>
     <message>
         <source>Slot ID</source>
@@ -1291,6 +1356,66 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>DigestKey</source>
         <translation>DigestKey</translation>
+    </message>
+    <message>
+        <source>Input Data</source>
+        <translation>데이타 입력</translation>
+    </message>
+    <message>
+        <source>Input Type</source>
+        <translation>입력 타입</translation>
+    </message>
+    <message>
+        <source>Input Clear</source>
+        <translation>입력 지움</translation>
+    </message>
+    <message>
+        <source>Input File</source>
+        <translation>파일 입력</translation>
+    </message>
+    <message>
+        <source>Src File Path</source>
+        <translation>소스 파일 경로</translation>
+    </message>
+    <message>
+        <source>Find</source>
+        <translation>찾기</translation>
+    </message>
+    <message>
+        <source>File Information</source>
+        <translation>소스 파일 정보</translation>
+    </message>
+    <message>
+        <source>Total File Size</source>
+        <translation>전체 파일 크기</translation>
+    </message>
+    <message>
+        <source>File Status</source>
+        <translation>파일 상태</translation>
+    </message>
+    <message>
+        <source>Read File Size</source>
+        <translation>읽은 파일 크기</translation>
+    </message>
+    <message>
+        <source>Run Status</source>
+        <translation>실행 상태</translation>
+    </message>
+    <message>
+        <source>Output Clear</source>
+        <translation>출력 지우기</translation>
+    </message>
+    <message>
+        <source>Init automatically</source>
+        <translation>자동 초기화</translation>
+    </message>
+    <message>
+        <source>fail to run DigestKey(%1)</source>
+        <translation>DigestKey(%1) 실행 실패</translation>
+    </message>
+    <message>
+        <source>fail to initialize digest:%1</source>
+        <translation>Digest 초기화 실패 :%1</translation>
     </message>
 </context>
 <context>
@@ -1445,6 +1570,71 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>fail to run Encrypt(%1)</source>
         <translation>Encrypt 실패(%1)</translation>
+    </message>
+    <message>
+        <source>Input Data</source>
+        <translation>데이타 입력</translation>
+    </message>
+    <message>
+        <source>Input Clear</source>
+        <translation>입력 지움</translation>
+    </message>
+    <message>
+        <source>Src File Path</source>
+        <translation>소스 파일 경로</translation>
+    </message>
+    <message>
+        <source>Find</source>
+        <translation>찾기</translation>
+    </message>
+    <message>
+        <source>File Information</source>
+        <translation>소스 파일 정보</translation>
+    </message>
+    <message>
+        <source>Total File Size</source>
+        <translation>전체 파일 크기</translation>
+    </message>
+    <message>
+        <source>File Status</source>
+        <translation>파일 상태</translation>
+    </message>
+    <message>
+        <source>Read File Size</source>
+        <translation>읽은 파일 크기</translation>
+    </message>
+    <message>
+        <source>Run Status</source>
+        <translation>실행 상태</translation>
+    </message>
+    <message>
+        <source>Dst File Path</source>
+        <translation>대상 파일 경로</translation>
+    </message>
+    <message>
+        <source>Dst Information</source>
+        <translation>대상 파일 정보</translation>
+    </message>
+    <message>
+        <source>Output Clear</source>
+        <translation>출력 지우기</translation>
+    </message>
+    <message>
+        <source>Init Automatically</source>
+        <translation>자동 초기화</translation>
+    </message>
+    <message>
+        <source>Dst file[%1] is already exist.
+Do you want to delete the file and continue?</source>
+        <translation>대상 파일 [%1] 이 이미 존재 합니다. 지우고 계속 하시겠습나까?</translation>
+    </message>
+    <message>
+        <source>Encrypt Files</source>
+        <translation>암호화 파일</translation>
+    </message>
+    <message>
+        <source>Input File</source>
+        <translation>파일 입력</translation>
     </message>
 </context>
 <context>
@@ -3301,6 +3491,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>SO Files (*.so *.dylib);;All Files (*.*)</source>
         <translation>SO 파일들 (*.so *.dylib);;모든 파일들(*.*)</translation>
     </message>
+    <message>
+        <source>All Files(*.*)</source>
+        <translation>모든 파일들(*.*)</translation>
+    </message>
 </context>
 <context>
     <name>RandDlg</name>
@@ -3359,6 +3553,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Random</source>
         <translation>랜덤</translation>
+    </message>
+    <message>
+        <source>Generate Random</source>
+        <translation>랜덤 생성</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>닫기</translation>
     </message>
 </context>
 <context>
@@ -3457,6 +3659,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Log Level</source>
         <translation>로그 레벨</translation>
+    </message>
+    <message>
+        <source>File Read Size</source>
+        <translation>파일 읽기 크기</translation>
+    </message>
+    <message>
+        <source>The size of the file to be read at one time</source>
+        <translation>한번에 읽을 파일 블록 크기</translation>
     </message>
 </context>
 <context>
@@ -3576,6 +3786,58 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>fail to run SignRecover(%1)</source>
         <translation>SignRecover 실행 실패 (%1)</translation>
+    </message>
+    <message>
+        <source>Input Data</source>
+        <translation>데이타 입력</translation>
+    </message>
+    <message>
+        <source>Input Clear</source>
+        <translation>입력 지움</translation>
+    </message>
+    <message>
+        <source>Input File</source>
+        <translation>파일 입력</translation>
+    </message>
+    <message>
+        <source>Src File Path</source>
+        <translation>소스 파일 경로</translation>
+    </message>
+    <message>
+        <source>Find</source>
+        <translation>찾기</translation>
+    </message>
+    <message>
+        <source>File Information</source>
+        <translation>소스 파일 정보</translation>
+    </message>
+    <message>
+        <source>File Status</source>
+        <translation>파일 상태</translation>
+    </message>
+    <message>
+        <source>Total File Size</source>
+        <translation>전체 파일 크기</translation>
+    </message>
+    <message>
+        <source>Read File Size</source>
+        <translation>읽은 파일 크기</translation>
+    </message>
+    <message>
+        <source>Run Status</source>
+        <translation>실행 상태</translation>
+    </message>
+    <message>
+        <source>Output Clear</source>
+        <translation>출력 지우기</translation>
+    </message>
+    <message>
+        <source>Init automatically</source>
+        <translation>자동 초기화</translation>
+    </message>
+    <message>
+        <source>fail to initialize sign:%1</source>
+        <translation>서명 초기화 실패:%1</translation>
     </message>
 </context>
 <context>
@@ -3854,6 +4116,62 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>fail to run VerifyRecoverInit(%1)</source>
         <translation>VerifyRecoverInit 실행 실패(%1)</translation>
+    </message>
+    <message>
+        <source>Input Data</source>
+        <translation>데이타 입력</translation>
+    </message>
+    <message>
+        <source>Input Clear</source>
+        <translation>입력 지움</translation>
+    </message>
+    <message>
+        <source>Input File</source>
+        <translation>파일 입력</translation>
+    </message>
+    <message>
+        <source>Src File Path</source>
+        <translation>소스 파일 경로</translation>
+    </message>
+    <message>
+        <source>Find</source>
+        <translation>찾기</translation>
+    </message>
+    <message>
+        <source>File Information</source>
+        <translation>소스 파일 정보</translation>
+    </message>
+    <message>
+        <source>Total File Size</source>
+        <translation>전체 파일 크기</translation>
+    </message>
+    <message>
+        <source>Read File Size</source>
+        <translation>읽은 파일 크기</translation>
+    </message>
+    <message>
+        <source>File Status</source>
+        <translation>파일 상태</translation>
+    </message>
+    <message>
+        <source>Run Status</source>
+        <translation>실행 상태</translation>
+    </message>
+    <message>
+        <source>Sign Clear</source>
+        <translation>서명 지우기</translation>
+    </message>
+    <message>
+        <source>Init Automatically</source>
+        <translation>자동 초기화</translation>
+    </message>
+    <message>
+        <source>fail to initialize sign:%1</source>
+        <translation type="vanished">서명 초기화 실패:%1</translation>
+    </message>
+    <message>
+        <source>fail to initialize verify:%1</source>
+        <translation>검증 초기화 실패:%1</translation>
     </message>
 </context>
 <context>

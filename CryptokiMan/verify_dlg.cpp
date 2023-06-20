@@ -428,7 +428,7 @@ void VerifyDlg::runFileVerify()
         ret = clickInit();
         if( ret != CKR_OK )
         {
-            manApplet->warningBox( tr("fail to initialize sign:%1").arg(ret), this );
+            manApplet->warningBox( tr("fail to initialize verify:%1").arg(ret), this );
             return;
         }
     }
