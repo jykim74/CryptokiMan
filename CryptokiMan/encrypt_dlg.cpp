@@ -1,9 +1,14 @@
+#include <QFileInfo>
+#include <QDateTime>
+#include <QFileDialog>
+
 #include "encrypt_dlg.h"
 #include "man_applet.h"
 #include "mainwindow.h"
 #include "js_pkcs11.h"
 #include "cryptoki_api.h"
 #include "common.h"
+#include "settings_mgr.h"
 
 static CK_BBOOL kTrue = CK_TRUE;
 static CK_BBOOL kFalse = CK_FALSE;
@@ -51,8 +56,12 @@ void EncryptDlg::initUI()
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(clickClose()));
 
     connect( mInputText, SIGNAL(textChanged()), this, SLOT(inputChanged()));
-    connect( mOutputText, SIGNAL(textChanged(const QString&)), this, SLOT(outputChanged()));
+    connect( mOutputText, SIGNAL(textChanged()), this, SLOT(outputChanged()));
 
+    connect( mInputClearBtn, SIGNAL(clicked()), this, SLOT(clickInputClear()));
+    connect( mOutputClearBtn, SIGNAL(clicked()), this, SLOT(clickOutputClear()));
+    connect( mFindSrcFileBtn, SIGNAL(clicked()), this, SLOT(clickFindSrcFile()));
+    connect( mFindDstFileBtn, SIGNAL(clicked()), this, SLOT(clickFindDstFile()));
 
     initialize();
     keyTypeChanged(0);
@@ -117,7 +126,7 @@ void EncryptDlg::changeType( int type )
 
 void EncryptDlg::initialize()
 {
-
+    mInputTab->setCurrentIndex(0);
 }
 
 void EncryptDlg::keyTypeChanged( int index )
@@ -207,6 +216,71 @@ void EncryptDlg::outputChanged()
     QString strOutput = mOutputText->toPlainText();
     int nLen = getDataLen( DATA_HEX, strOutput );
     mOutputLenText->setText( QString("%1").arg(nLen));
+}
+
+void EncryptDlg::clickInputClear()
+{
+    mInputText->clear();
+}
+
+void EncryptDlg::clickOutputClear()
+{
+    mOutputText->clear();
+}
+
+void EncryptDlg::clickFindSrcFile()
+{
+    QString strPath = mSrcFileText->text();
+    QString strSrcFile = findFile( this, JS_FILE_TYPE_ALL, strPath );
+
+    if( strSrcFile.length() > 0 )
+    {
+        QFileInfo fileInfo;
+        fileInfo.setFile( strSrcFile );
+
+        qint64 fileSize = fileInfo.size();
+        QDateTime cTime = fileInfo.lastModified();
+
+        QString strInfo = QString("LastModified Time: %1").arg( cTime.toString( "yyyy-MM-dd HH:mm:ss" ));
+
+        mSrcFileText->setText( strSrcFile );
+        mSrcFileSizeText->setText( QString("%1").arg( fileSize ));
+        mSrcFileInfoText->setText( strInfo );
+        mEncProgBar->setValue(0);
+
+        QStringList nameExt = strSrcFile.split(".");
+        QString strDstName = QString( "%1.dst" ).arg( nameExt.at(0) );
+        if( strSrcFile == strDstName )
+        {
+            strDstName += "_dst";
+        }
+
+        mDstFileText->setText( strDstName );
+
+        mFileReadSizeText->clear();
+        mFileTotalSizeText->clear();
+        mDstFileInfoText->clear();
+        mDstFileSizeText->clear();
+    }
+}
+
+void EncryptDlg::clickFindDstFile()
+{
+    QFileDialog::Options options;
+    options |= QFileDialog::DontUseNativeDialog;
+
+    QString strFilter;
+    QString strPath = mDstFileText->text();
+
+    QString selectedFilter;
+    QString fileName = QFileDialog::getSaveFileName( this,
+                                                     tr("Enc or Dec Files"),
+                                                     strPath,
+                                                     strFilter,
+                                                     &selectedFilter,
+                                                     options );
+
+    if( fileName.length() > 0 ) mDstFileText->setText( fileName );
 }
 
 int EncryptDlg::clickInit()
@@ -341,6 +415,16 @@ void EncryptDlg::clickFinal()
 
 void EncryptDlg::clickEncrypt()
 {
+    int index = mInputTab->currentIndex();
+
+    if( index == 0 )
+        runDataEncrypt();
+    else
+        runFileEncrypt();
+}
+
+void EncryptDlg::runDataEncrypt()
+{
     int rv = -1;
 
     QString strInput = mInputText->toPlainText();
@@ -392,6 +476,133 @@ void EncryptDlg::clickEncrypt()
     if( pEncData ) JS_free( pEncData );
     if( pHex ) JS_free(pHex);
     JS_BIN_reset( &binEncData );
+}
+
+void EncryptDlg::runFileEncrypt()
+{
+    int rv = -1;
+
+    int nRead = 0;
+    int nPartSize = manApplet->settingsMgr()->fileReadSize();
+    int nReadSize = 0;
+    int nLeft = 0;
+    int nOffset = 0;
+    int nPercent = 0;
+    QString strSrcFile = mSrcFileText->text();
+    BIN binPart = {0,0};
+    BIN binDst = {0,0};
+
+    QFileInfo fileInfo;
+    fileInfo.setFile( strSrcFile );
+
+    qint64 fileSize = fileInfo.size();
+
+    mEncProgBar->setValue( 0 );
+    mFileTotalSizeText->setText( QString("%1").arg( fileSize ));
+    mFileReadSizeText->setText( "0" );
+
+    nLeft = fileSize;
+    QString strDstFile = mDstFileText->text();
+
+    if( QFile::exists( strDstFile ) )
+    {
+        QString strMsg = tr( "Dst file[%1] is already exist.\nDo you want to delete the file and continue?" ).arg( strDstFile );
+        bool bVal = manApplet->yesOrNoBox( strMsg, this, false );
+
+        if( bVal == true )
+        {
+            QFile::remove( strDstFile );
+        }
+        else
+            return;
+    }
+
+    if( mInitAutoCheck->isChecked() )
+        clickInit();
+
+    FILE *fp = fopen( strSrcFile.toLocal8Bit().toStdString().c_str(), "rb" );
+
+    while( nLeft > 0 )
+    {
+        unsigned char *pEncPart = NULL;
+        long uEncPartLen = 0;
+
+        if( nLeft < nPartSize )
+            nPartSize = nLeft;
+
+        nRead = JS_BIN_fileReadPartFP( fp, nOffset, nPartSize, &binPart );
+        if( nRead <= 0 ) break;
+
+        //        berApplet->log( QString( "read len : %1").arg( nRead ) );
+        //        berApplet->log( QString( "read : %1").arg( getHexString( binPart.pVal, binPart.nLen )));
+
+        uEncPartLen = binPart.nLen + 64;
+
+        pEncPart = (unsigned char *)JS_malloc( binPart.nLen + 64 );
+        if( pEncPart == NULL ) return;
+
+        rv = manApplet->cryptokiAPI()->EncryptUpdate( session_, binPart.pVal, binPart.nLen, pEncPart, (CK_ULONG_PTR)&uEncPartLen );
+
+        if( rv != CKR_OK )
+        {
+            if( pEncPart ) JS_free( pEncPart );
+            manApplet->warningBox( tr("fail to run EncryptUpdate(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+            goto end;
+        }
+
+        if( uEncPartLen > 0 )
+        {
+            JS_BIN_set( &binDst, pEncPart, uEncPartLen );
+            JS_free( pEncPart );
+            pEncPart = NULL;
+            uEncPartLen = 0;
+        }
+
+//        berApplet->log( QString("enc or dec len: %1").arg( binDst.nLen ));
+//        berApplet->log( QString("enc or dec : %1").arg( getHexString(binDst.pVal, binDst.nLen)));
+
+        if( binDst.nLen > 0 )
+            JS_BIN_fileAppend( &binDst, strDstFile.toLocal8Bit().toStdString().c_str() );
+
+        nReadSize += nRead;
+        nPercent = ( nReadSize * 100 ) / fileSize;
+
+        mFileReadSizeText->setText( QString("%1").arg( nReadSize ));
+        mEncProgBar->setValue( nPercent );
+
+        nLeft -= nPartSize;
+        nOffset += nRead;
+
+        JS_BIN_reset( &binPart );
+        JS_BIN_reset( &binDst );
+        repaint();
+    }
+
+    fclose( fp );
+    manApplet->log( QString("FileRead done[Total:%1 Read:%2]").arg( fileSize ).arg( nReadSize) );
+
+    if( nReadSize == fileSize )
+    {
+        mEncProgBar->setValue( 100 );
+
+        if( rv == 0 )
+        {
+            clickFinal();
+
+            QFileInfo fileInfo;
+            fileInfo.setFile( strDstFile );
+            qint64 fileSize = fileInfo.size();
+            QDateTime cTime = fileInfo.lastModified();
+
+            QString strInfo = QString("LastModified Time: %1").arg( cTime.toString( "yyyy-MM-dd HH:mm:ss" ));
+            mDstFileSizeText->setText( QString("%1").arg( fileSize ));
+            mDstFileInfoText->setText( strInfo );
+        }
+    }
+
+end :
+    JS_BIN_reset( &binPart );
+    JS_BIN_reset( &binDst );
 }
 
 void EncryptDlg::clickClose()

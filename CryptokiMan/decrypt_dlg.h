@@ -25,7 +25,10 @@ private slots:
     int clickInit();
     void clickUpdate();
     void clickFinal();
+
     void clickDecrypt();
+    void runDataDecrypt();
+    void runFileDecrypt();
     void clickClose();
 
     void keyTypeChanged( int index );
@@ -33,6 +36,12 @@ private slots:
 
     void inputChanged();
     void outputChanged();
+
+    void clickInputClear();
+    void clickOutputClear();
+
+    void clickFindSrcFile();
+    void clickFindDstFile();
 
 private:
     void initialize();
