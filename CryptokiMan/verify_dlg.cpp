@@ -1,9 +1,13 @@
+#include <QFileInfo>
+#include <QDateTime>
+
 #include "verify_dlg.h"
 #include "man_applet.h"
 #include "mainwindow.h"
 #include "js_pkcs11.h"
 #include "cryptoki_api.h"
 #include "common.h"
+#include "settings_mgr.h"
 
 static CK_BBOOL kTrue = CK_TRUE;
 static CK_BBOOL kFalse = CK_FALSE;
@@ -55,6 +59,11 @@ void VerifyDlg::initUI()
 
     connect( mInputText, SIGNAL(textChanged()), this, SLOT(changeInput()));
     connect( mSignText, SIGNAL(textChanged()), this, SLOT(changeSign()));
+
+    connect( mInputClearBtn, SIGNAL(clicked()), this, SLOT(clickInputClear()));
+    connect( mSignClearBtn, SIGNAL(clicked()), this, SLOT(clickSignClear()));
+    connect( mFindSrcFileBtn, SIGNAL(clicked()), this, SLOT(clickFindSrcFile()));
+
 
     initialize();
     keyTypeChanged(0);
@@ -219,7 +228,7 @@ void VerifyDlg::changeSign()
     mSignLenText->setText( QString("%1").arg( nLen ));
 }
 
-void VerifyDlg::clickInit()
+int VerifyDlg::clickInit()
 {
     int rv = -1;
 
@@ -243,10 +252,11 @@ void VerifyDlg::clickInit()
     {
         mStatusLabel->setText("");
         manApplet->warningBox( tr("fail to run VerifyInit(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
-        return;
+        return rv;
     }
 
     mStatusLabel->setText( "Init" );
+    return rv;
 }
 
 void VerifyDlg::clickUpdate()
@@ -317,6 +327,16 @@ void VerifyDlg::clickFinal()
 
 void VerifyDlg::clickVerify()
 {
+    int index = mInputTab->currentIndex();
+
+    if( index == 0 )
+        runDataVerify();
+    else
+        runFileVerify();
+}
+
+void VerifyDlg::runDataVerify()
+{
     int rv = -1;
 
     QString strInput = mInputText->toPlainText();
@@ -332,6 +352,11 @@ void VerifyDlg::clickVerify()
     {
         manApplet->warningBox(tr( "You have to insert signature." ), this );
         return;
+    }
+
+    if( mInitAutoCheck->isChecked() )
+    {
+        clickInit();
     }
 
     BIN binInput = {0,0};
@@ -357,6 +382,102 @@ void VerifyDlg::clickVerify()
     strRes += "|Verify";
 
     mStatusLabel->setText(strRes);
+}
+
+void VerifyDlg::runFileVerify()
+{
+    int ret = -1;
+
+    int nRead = 0;
+    int nPartSize = manApplet->settingsMgr()->fileReadSize();
+    int nReadSize = 0;
+    int nLeft = 0;
+    int nOffset = 0;
+    int nPercent = 0;
+    QString strSrcFile = mSrcFileText->text();
+    BIN binPart = {0,0};
+
+    QFileInfo fileInfo;
+    fileInfo.setFile( strSrcFile );
+
+    qint64 fileSize = fileInfo.size();
+
+    mVerifyProgBar->setValue( 0 );
+    mFileTotalSizeText->setText( QString("%1").arg( fileSize ));
+    mFileReadSizeText->setText( "0" );
+
+    nLeft = fileSize;
+
+    QString strInput = mInputText->toPlainText();
+
+    if( strInput.isEmpty() )
+    {
+        manApplet->warningBox( tr("You have to insert data."), this );
+        return;
+    }
+
+    QString strSign = mSignText->toPlainText();
+    if( strSign.isEmpty() )
+    {
+        manApplet->warningBox(tr( "You have to insert signature." ), this );
+        return;
+    }
+
+    if( mInitAutoCheck->isChecked() )
+    {
+        ret = clickInit();
+        if( ret != CKR_OK )
+        {
+            manApplet->warningBox( tr("fail to initialize sign:%1").arg(ret), this );
+            return;
+        }
+    }
+
+    FILE *fp = fopen( strSrcFile.toLocal8Bit().toStdString().c_str(), "rb" );
+
+    while( nLeft > 0 )
+    {
+        if( nLeft < nPartSize )
+            nPartSize = nLeft;
+
+        nRead = JS_BIN_fileReadPartFP( fp, nOffset, nPartSize, &binPart );
+        if( nRead <= 0 ) break;
+
+        ret = manApplet->cryptokiAPI()->VerifyUpdate( session_, binPart.pVal, binPart.nLen );
+        if( ret != CKR_OK )
+        {
+            manApplet->warningBox( tr("fail to run VerifyUpdate(%1)").arg( JS_PKCS11_GetErrorMsg(ret)), this );
+            goto end;
+        }
+
+        nReadSize += nRead;
+        nPercent = ( nReadSize * 100 ) / fileSize;
+
+        mFileReadSizeText->setText( QString("%1").arg( nReadSize ));
+        mVerifyProgBar->setValue( nPercent );
+
+        nLeft -= nPartSize;
+        nOffset += nRead;
+
+        JS_BIN_reset( &binPart );
+        repaint();
+    }
+
+    fclose( fp );
+    manApplet->log( QString("FileRead done[Total:%1 Read:%2]").arg( fileSize ).arg( nReadSize) );
+
+    if( nReadSize == fileSize )
+    {
+        mVerifyProgBar->setValue( 100 );
+
+        if( ret == CKR_OK )
+        {
+            clickFinal();
+        }
+    }
+
+end :
+    JS_BIN_reset( &binPart );
 }
 
 void VerifyDlg::clickClose()
@@ -428,4 +549,39 @@ void VerifyDlg::clickVerifyRecover()
     strRes += "|VerifyRecover";
 
     mStatusLabel->setText(strRes);
+}
+
+void VerifyDlg::clickInputClear()
+{
+    mInputText->clear();
+}
+
+void VerifyDlg::clickSignClear()
+{
+    mSignText->clear();
+}
+
+void VerifyDlg::clickFindSrcFile()
+{
+    QString strPath;
+    QString strSrcFile = findFile( this, JS_FILE_TYPE_ALL, strPath );
+
+    if( strSrcFile.length() > 0 )
+    {
+        QFileInfo fileInfo;
+        fileInfo.setFile( strSrcFile );
+
+        qint64 fileSize = fileInfo.size();
+        QDateTime cTime = fileInfo.lastModified();
+
+        QString strInfo = QString("LastModified Time: %1").arg( cTime.toString( "yyyy-MM-dd HH:mm:ss" ));
+
+        mSrcFileText->setText( strSrcFile );
+        mSrcFileSizeText->setText( QString("%1").arg( fileSize ));
+        mSrcFileInfoText->setText( strInfo );
+        mVerifyProgBar->setValue(0);
+
+        mFileReadSizeText->clear();
+        mFileTotalSizeText->clear();
+    }
 }

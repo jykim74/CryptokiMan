@@ -438,7 +438,7 @@ void SignDlg::runFileSign()
         ret = manApplet->cryptokiAPI()->SignUpdate( session_, binPart.pVal, binPart.nLen );
         if( ret != CKR_OK )
         {
-            manApplet->warningBox( tr("fail to run DigestUpdate(%1)").arg( JS_PKCS11_GetErrorMsg(ret)), this );
+            manApplet->warningBox( tr("fail to run SignUpdate(%1)").arg( JS_PKCS11_GetErrorMsg(ret)), this );
             goto end;
         }
 
