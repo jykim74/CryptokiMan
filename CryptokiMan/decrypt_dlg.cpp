@@ -50,6 +50,10 @@ void DecryptDlg::initUI()
     connect( mDecryptBtn, SIGNAL(clicked()), this, SLOT(clickDecrypt()));
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(clickClose()));
 
+    connect( mInputText, SIGNAL(textChanged()), this, SLOT(inputChanged()));
+    connect( mOutputText, SIGNAL(textChanged(const QString&)), this, SLOT(outputChanged()));
+
+
     initialize();
     keyTypeChanged(0);
 }
@@ -192,6 +196,20 @@ void DecryptDlg::labelChanged( int index )
     mObjectText->setText( strHandle );
 }
 
+void DecryptDlg::inputChanged()
+{
+    QString strInput = mInputText->toPlainText();
+    int nLen = getDataLen( mInputCombo->currentText(), strInput );
+    mInputLenText->setText( QString("%1").arg( nLen ));
+}
+
+void DecryptDlg::outputChanged()
+{
+    QString strOutput = mOutputText->toPlainText();
+    int nLen = getDataLen( DATA_HEX, strOutput );
+    mOutputLenText->setText( QString("%1").arg(nLen));
+}
+
 
 void DecryptDlg::clickInit()
 {
@@ -231,7 +249,7 @@ void DecryptDlg::clickUpdate()
 {
     int rv = -1;
 
-    QString strInput = mInputText->text();
+    QString strInput = mInputText->toPlainText();
 
     if( strInput.isEmpty() )
     {
@@ -286,11 +304,11 @@ void DecryptDlg::clickFinal()
     int rv = -1;
 
     unsigned char *pDecPart = NULL;
-    long uDecPartLen = mInputText->text().length();
+    long uDecPartLen = mInputText->toPlainText().length();
 
     BIN binDecPart = {0,0};
 
-    pDecPart = (unsigned char *)JS_malloc( mInputText->text().length() );
+    pDecPart = (unsigned char *)JS_malloc( mInputText->toPlainText().length() );
     if( pDecPart == NULL )return;
 
     rv = manApplet->cryptokiAPI()->DecryptFinal( session_, pDecPart, (CK_ULONG_PTR)&uDecPartLen );
@@ -325,7 +343,7 @@ void DecryptDlg::clickDecrypt()
 {
     int rv = -1;
 
-    QString strInput = mInputText->text();
+    QString strInput = mInputText->toPlainText();
     if( strInput.isEmpty() )
     {
         manApplet->warningBox( tr("You have to insert data"), this );
@@ -341,8 +359,8 @@ void DecryptDlg::clickDecrypt()
         JS_BIN_decodeBase64( strInput.toStdString().c_str(), &binInput );
 
     unsigned char *pDecData = NULL;
-    long uDecDataLen = mInputText->text().length();
-    pDecData = (unsigned char *)JS_malloc( mInputText->text().length() );
+    long uDecDataLen = mInputText->toPlainText().length();
+    pDecData = (unsigned char *)JS_malloc( mInputText->toPlainText().length() );
 
     rv = manApplet->cryptokiAPI()->Decrypt( session_, binInput.pVal, binInput.nLen, pDecData, (CK_ULONG_PTR)&uDecDataLen );
 

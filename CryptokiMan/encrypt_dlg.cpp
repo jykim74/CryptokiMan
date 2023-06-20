@@ -50,6 +50,10 @@ void EncryptDlg::initUI()
     connect( mEncryptBtn, SIGNAL(clicked()), this, SLOT(clickEncrypt()));
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(clickClose()));
 
+    connect( mInputText, SIGNAL(textChanged()), this, SLOT(inputChanged()));
+    connect( mOutputText, SIGNAL(textChanged(const QString&)), this, SLOT(outputChanged()));
+
+
     initialize();
     keyTypeChanged(0);
 }
@@ -191,6 +195,20 @@ void EncryptDlg::labelChanged( int index )
     mObjectText->setText( strHandle );
 }
 
+void EncryptDlg::inputChanged()
+{
+    QString strInput = mInputText->toPlainText();
+    int nLen = getDataLen( mInputCombo->currentText(), strInput );
+    mInputLenText->setText( QString("%1").arg( nLen ));
+}
+
+void EncryptDlg::outputChanged()
+{
+    QString strOutput = mOutputText->toPlainText();
+    int nLen = getDataLen( DATA_HEX, strOutput );
+    mOutputLenText->setText( QString("%1").arg(nLen));
+}
+
 void EncryptDlg::clickInit()
 {
     int rv = -1;
@@ -228,7 +246,7 @@ void EncryptDlg::clickUpdate()
 {
     int rv = -1;
 
-    QString strInput = mInputText->text();
+    QString strInput = mInputText->toPlainText();
 
     if( strInput.isEmpty() )
     {
@@ -287,7 +305,7 @@ void EncryptDlg::clickFinal()
     unsigned char *pEncPart = NULL;
     long uEncPartLen = 0;
 
-    pEncPart = (unsigned char *)JS_malloc( mInputText->text().length() / 2 + 64 );
+    pEncPart = (unsigned char *)JS_malloc( mInputText->toPlainText().length() / 2 + 64 );
     if( pEncPart == NULL ) return;
 
     BIN binEncPart = {0,0};
@@ -323,7 +341,7 @@ void EncryptDlg::clickEncrypt()
 {
     int rv = -1;
 
-    QString strInput = mInputText->text();
+    QString strInput = mInputText->toPlainText();
 
     if( strInput.isEmpty() )
     {

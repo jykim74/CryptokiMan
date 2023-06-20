@@ -128,7 +128,7 @@ void VerifyDlg::setObject( int type, long hObj )
 
 void VerifyDlg::initialize()
 {
-
+    mInputTab->setCurrentIndex(0);
 }
 
 void VerifyDlg::keyTypeChanged( int index )

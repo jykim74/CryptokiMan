@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>515</width>
-    <height>451</height>
+    <height>535</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -148,18 +148,14 @@
          <height>0</height>
         </size>
        </property>
-       <property name="text">
-        <string>Key Type</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="5">
-      <widget class="QLineEdit" name="mParamText">
        <property name="maximumSize">
         <size>
          <width>80</width>
          <height>16777215</height>
         </size>
+       </property>
+       <property name="text">
+        <string>Key Type</string>
        </property>
       </widget>
      </item>
@@ -173,15 +169,51 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="4">
+     <item row="0" column="3">
+      <widget class="QComboBox" name="mMechCombo">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>1</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="gridLayout_6">
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <item row="0" column="0">
       <widget class="QLabel" name="label_7">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>80</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="text">
         <string>Param</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="3">
-      <widget class="QComboBox" name="mMechCombo"/>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="mParamText">
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -246,22 +278,161 @@
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="label_5">
-     <property name="text">
-      <string>Input</string>
+    <widget class="QTabWidget" name="mInputTab">
+     <property name="currentIndex">
+      <number>1</number>
      </property>
+     <widget class="QWidget" name="tab">
+      <attribute name="title">
+       <string>Input Data</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tab_2">
+      <attribute name="title">
+       <string>Input File</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <layout class="QGridLayout" name="gridLayout_7">
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="mInputCombo"/>
+         </item>
+         <item row="0" column="3">
+          <widget class="QLineEdit" name="mInputLenText">
+           <property name="minimumSize">
+            <size>
+             <width>40</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>40</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_5">
+           <property name="text">
+            <string>Input</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <spacer name="horizontalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QPlainTextEdit" name="mInputText"/>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_4">
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <item row="0" column="4">
+          <widget class="QPushButton" name="mInputClearBtn">
+           <property name="text">
+            <string>Input Clear</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QPushButton" name="mInitBtn">
+           <property name="text">
+            <string>Init</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="mFinalBtn">
+           <property name="text">
+            <string>Final</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QPushButton" name="mUpdateBtn">
+           <property name="text">
+            <string>Update</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <spacer name="horizontalSpacer_5">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
    <item>
-    <layout class="QGridLayout" name="gridLayout_4">
+    <layout class="QGridLayout" name="gridLayout_8">
      <property name="topMargin">
       <number>0</number>
      </property>
+     <item row="0" column="2">
+      <widget class="QLineEdit" name="mOutputLenText">
+       <property name="minimumSize">
+        <size>
+         <width>40</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>40</width>
+         <height>16777215</height>
+        </size>
+       </property>
+      </widget>
+     </item>
      <item row="0" column="0">
-      <widget class="QComboBox" name="mInputCombo"/>
+      <widget class="QLabel" name="label_11">
+       <property name="text">
+        <string>Decrypt</string>
+       </property>
+      </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="mInputText"/>
+      <spacer name="horizontalSpacer_6">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </item>
@@ -274,23 +445,9 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QPushButton" name="mInitBtn">
+      <widget class="QPushButton" name="mOutputClearBtn">
        <property name="text">
-        <string>Init</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="mUpdateBtn">
-       <property name="text">
-        <string>Update</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="mFinalBtn">
-       <property name="text">
-        <string>Final</string>
+        <string>Output Clear</string>
        </property>
       </widget>
      </item>
@@ -366,15 +523,9 @@
   <tabstop>mLoginText</tabstop>
   <tabstop>mKeyTypeCombo</tabstop>
   <tabstop>mMechCombo</tabstop>
-  <tabstop>mParamText</tabstop>
   <tabstop>mLabelCombo</tabstop>
   <tabstop>mObjectText</tabstop>
-  <tabstop>mInputCombo</tabstop>
-  <tabstop>mInputText</tabstop>
   <tabstop>mOutputText</tabstop>
-  <tabstop>mInitBtn</tabstop>
-  <tabstop>mUpdateBtn</tabstop>
-  <tabstop>mFinalBtn</tabstop>
   <tabstop>mDecryptBtn</tabstop>
   <tabstop>mCloseBtn</tabstop>
  </tabstops>

@@ -448,6 +448,7 @@ void DigestDlg::inputChanged()
     int nLen = getDataLen( mInputCombo->currentText(), strInput );
     mInputLenText->setText( QString("%1").arg( nLen ));
 }
+
 void DigestDlg::outputChanged()
 {
     QString strOutput = mOutputText->text();
