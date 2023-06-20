@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>568</width>
-    <height>517</height>
+    <height>544</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -151,12 +151,12 @@
       <widget class="QComboBox" name="mKeyTypeCombo"/>
      </item>
      <item row="0" column="3">
-      <widget class="QComboBox" name="mMechCombo"/>
-     </item>
-     <item row="0" column="4">
-      <widget class="QLabel" name="label_7">
-       <property name="text">
-        <string>Param</string>
+      <widget class="QComboBox" name="mMechCombo">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>1</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
        </property>
       </widget>
      </item>
@@ -179,11 +179,31 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="5">
+    </layout>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="gridLayout_12">
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_7">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Param</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
       <widget class="QLineEdit" name="mParamText">
        <property name="maximumSize">
         <size>
-         <width>80</width>
+         <width>16777215</width>
          <height>16777215</height>
         </size>
        </property>
@@ -254,7 +274,7 @@
    <item>
     <widget class="QTabWidget" name="mInputTab">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -940,7 +960,6 @@
   <tabstop>mLoginText</tabstop>
   <tabstop>mKeyTypeCombo</tabstop>
   <tabstop>mMechCombo</tabstop>
-  <tabstop>mParamText</tabstop>
   <tabstop>mLabelCombo</tabstop>
   <tabstop>mObjectText</tabstop>
   <tabstop>mOutputText</tabstop>

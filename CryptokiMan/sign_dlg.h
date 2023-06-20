@@ -22,10 +22,12 @@ public:
 private slots:
     void slotChanged( int index );
 
-    void clickInit();
+    int clickInit();
     void clickUpdate();
     void clickFinal();
     void clickSign();
+    void runDataSign();
+    void runFileSign();
     void clickClose();
 
     void clickSignRecoverInit();
@@ -36,6 +38,10 @@ private slots:
 
     void changeInput();
     void changeOutput();
+
+    void clickInputClear();
+    void clickOutputClear();
+    void clickFindSrcFile();
 
 private:
     void initialize();

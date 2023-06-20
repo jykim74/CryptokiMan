@@ -35,7 +35,6 @@ private slots:
 
     void clickInputClear();
     void clickOutputClear();
-
     void clickFindSrcFile();
 
 private:
