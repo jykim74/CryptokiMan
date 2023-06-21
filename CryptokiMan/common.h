@@ -115,6 +115,15 @@ static QStringList kECCOptionList = { "prime256v1",
     "sect409r1", "sect571k1", "sect571r1"
 };
 
+static QStringList kSymMechList = {
+    "CKM_DES3_ECB", "CKM_DES3_CBC", "CKM_DES3_CBC_PAD", "CKM_AES_ECB", "CKM_AES_CBC","CKM_AES_CBC_PAD", "CKM_AES_CTR"
+};
+
+static QStringList kAsymMechList = {
+    "CKM_RSA_PKCS"
+};
+
+static QStringList kDataTypeList = { "String", "Hex", "Base64" };
 
 QString findFile( QWidget *parent, int nType, const QString strPath );
 QString saveFile( QWidget *parent, int nType, const QString strPath );

@@ -13,14 +13,6 @@
 static CK_BBOOL kTrue = CK_TRUE;
 static CK_BBOOL kFalse = CK_FALSE;
 
-static QStringList sMechList = {
-    "CKM_DES3_ECB", "CKM_DES3_CBC", "CKM_AES_ECB", "CKM_AES_CBC",
-};
-
-static QStringList sPublicMechList = {
-    "CKM_RSA_PKCS"
-};
-
 static QStringList sInputList = { "String", "Hex", "Base64" };
 
 static QStringList sKeyList = { "SECRET", "PUBLIC" };
@@ -43,7 +35,7 @@ EncryptDlg::~EncryptDlg()
 void EncryptDlg::initUI()
 {
     mKeyTypeCombo->addItems(sKeyList);
-    mMechCombo->addItems( sMechList );
+    mMechCombo->addItems( kSymMechList );
     mInputCombo->addItems( sInputList );
 
     connect( mKeyTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(keyTypeChanged(int)));
@@ -57,6 +49,7 @@ void EncryptDlg::initUI()
 
     connect( mInputText, SIGNAL(textChanged()), this, SLOT(inputChanged()));
     connect( mOutputText, SIGNAL(textChanged()), this, SLOT(outputChanged()));
+    connect( mParamText, SIGNAL(textChanged(const QString&)), this, SLOT(paramChanged()));
 
     connect( mInputClearBtn, SIGNAL(clicked()), this, SLOT(clickInputClear()));
     connect( mOutputClearBtn, SIGNAL(clicked()), this, SLOT(clickOutputClear()));
@@ -146,12 +139,12 @@ void EncryptDlg::keyTypeChanged( int index )
     if( mKeyTypeCombo->currentText() == sKeyList[0] )
     {
         objClass = CKO_SECRET_KEY;
-        mMechCombo->addItems(sMechList);
+        mMechCombo->addItems(kSymMechList);
     }
     else if( mKeyTypeCombo->currentText() == sKeyList[1] )
     {
         objClass = CKO_PUBLIC_KEY;
-        mMechCombo->addItems(sPublicMechList);
+        mMechCombo->addItems(kAsymMechList);
     }
 
     sTemplate[uCnt].type = CKA_CLASS;
@@ -217,6 +210,13 @@ void EncryptDlg::outputChanged()
     QString strOutput = mOutputText->toPlainText();
     int nLen = getDataLen( DATA_HEX, strOutput );
     mOutputLenText->setText( QString("%1").arg(nLen));
+}
+
+void EncryptDlg::paramChanged()
+{
+    QString strParam = mParamText->text();
+    int nLen = getDataLen( DATA_HEX, strParam );
+    mParamLenText->setText( QString("%1").arg(nLen));
 }
 
 void EncryptDlg::clickInputClear()
@@ -382,11 +382,22 @@ void EncryptDlg::clickFinal()
     unsigned char *pEncPart = NULL;
     long uEncPartLen = 0;
 
-    pEncPart = (unsigned char *)JS_malloc( mInputText->toPlainText().length() / 2 + 64 );
-    if( pEncPart == NULL ) return;
-
     BIN binEncPart = {0,0};
-    char *pHex = NULL;
+
+    rv = manApplet->cryptokiAPI()->EncryptFinal( session_, NULL, (CK_ULONG_PTR)&uEncPartLen );
+    if( rv != CKR_OK )
+    {
+        mOutputText->setPlainText( "" );
+        if( pEncPart ) JS_free( pEncPart );
+        manApplet->warningBox( tr("fail to run EncryptFinal(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        return;
+    }
+
+    if( uEncPartLen > 0 )
+    {
+        pEncPart = (unsigned char *)JS_malloc( uEncPartLen );
+        if( pEncPart == NULL ) return;
+    }
 
     rv = manApplet->cryptokiAPI()->EncryptFinal( session_, pEncPart, (CK_ULONG_PTR)&uEncPartLen );
 
@@ -400,17 +411,24 @@ void EncryptDlg::clickFinal()
 
 
     JS_BIN_set( &binEncPart, pEncPart, uEncPartLen );
-    JS_BIN_encodeHex( &binEncPart, &pHex );
 
     QString strRes = mStatusLabel->text();
     strRes += "|Final";
-    QString strOutput = mOutputText->toPlainText();
-    strOutput += pHex;
-
-    mOutputText->setPlainText( strOutput );
     mStatusLabel->setText( strRes );
+
+
+    if( mInputTab->currentIndex() == 0 )
+    {
+        QString strOutput = getStringFromBIN( &binEncPart, DATA_HEX );
+        mOutputText->appendPlainText( strOutput );
+    }
+    else
+    {
+        QString strDstPath = mDstFileText->text();
+        JS_BIN_fileAppend( &binEncPart, strDstPath.toLocal8Bit().toStdString().c_str() );
+    }
+
     if( pEncPart ) JS_free( pEncPart );
-    if( pHex ) JS_free(pHex);
     JS_BIN_reset( &binEncPart );
 }
 

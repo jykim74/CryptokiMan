@@ -103,7 +103,7 @@ int SettingsMgr::getFileReadSize()
     QSettings sets;
 
     sets.beginGroup( kBehaviorGroup );
-    file_read_size_ = sets.value( kFileReadSize, 10240 ).toInt();
+    file_read_size_ = sets.value( kFileReadSize, 1024 ).toInt();
     sets.endGroup();
 
     return file_read_size_;

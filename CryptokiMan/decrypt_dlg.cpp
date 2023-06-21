@@ -10,15 +10,8 @@
 #include "common.h"
 #include "settings_mgr.h"
 
-static QStringList sMechList = {
-    "CKM_DES3_ECB", "CKM_DES3_CBC", "CKM_AES_ECB", "CKM_AES_CBC"
-};
 
-static QStringList sPrivateMechList = {
-    "CKM_RSA_PKCS"
-};
 
-static QStringList sInputList = { "Hex", "Base64" };
 
 static QStringList sKeyList = { "SECRET", "PRIVATE" };
 
@@ -43,8 +36,8 @@ DecryptDlg::~DecryptDlg()
 void DecryptDlg::initUI()
 {
     mKeyTypeCombo->addItems(sKeyList);
-    mMechCombo->addItems( sMechList );
-    mInputCombo->addItems( sInputList );
+    mMechCombo->addItems( kSymMechList );
+    mOutputCombo->addItems( kDataTypeList );
 
     connect( mKeyTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(keyTypeChanged(int)));
     connect( mLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(labelChanged(int)));
@@ -57,6 +50,12 @@ void DecryptDlg::initUI()
 
     connect( mInputText, SIGNAL(textChanged()), this, SLOT(inputChanged()));
     connect( mOutputText, SIGNAL(textChanged()), this, SLOT(outputChanged()));
+    connect( mParamText, SIGNAL(textChanged(const QString&)), this, SLOT(paramChanged()));
+
+    connect( mInputClearBtn, SIGNAL(clicked()), this, SLOT(clickInputClear()));
+    connect( mOutputClearBtn, SIGNAL(clicked()), this, SLOT(clickOutputClear()));
+    connect( mFindSrcFileBtn, SIGNAL(clicked()), this, SLOT(clickFindSrcFile()));
+    connect( mFindDstFileBtn, SIGNAL(clicked()), this, SLOT(clickFindDstFile()));
 
 
     initialize();
@@ -143,12 +142,12 @@ void DecryptDlg::keyTypeChanged( int index )
     if( mKeyTypeCombo->currentText() == sKeyList[0] )
     {
         objClass = CKO_SECRET_KEY;
-        mMechCombo->addItems(sMechList);
+        mMechCombo->addItems(kSymMechList);
     }
     else if( mKeyTypeCombo->currentText() == sKeyList[1] )
     {
         objClass = CKO_PRIVATE_KEY;
-        mMechCombo->addItems(sPrivateMechList);
+        mMechCombo->addItems(kAsymMechList);
     }
 
     sTemplate[uCnt].type = CKA_CLASS;
@@ -205,15 +204,22 @@ void DecryptDlg::labelChanged( int index )
 void DecryptDlg::inputChanged()
 {
     QString strInput = mInputText->toPlainText();
-    int nLen = getDataLen( mInputCombo->currentText(), strInput );
+    int nLen = getDataLen( DATA_HEX, strInput );
     mInputLenText->setText( QString("%1").arg( nLen ));
 }
 
 void DecryptDlg::outputChanged()
 {
     QString strOutput = mOutputText->toPlainText();
-    int nLen = getDataLen( DATA_HEX, strOutput );
+    int nLen = getDataLen( mOutputCombo->currentText(), strOutput );
     mOutputLenText->setText( QString("%1").arg(nLen));
+}
+
+void DecryptDlg::paramChanged()
+{
+    QString strParam = mParamText->text();
+    int nLen = getDataLen( DATA_HEX, strParam );
+    mParamLenText->setText( QString("%1").arg(nLen));
 }
 
 void DecryptDlg::clickInputClear()
@@ -332,11 +338,7 @@ void DecryptDlg::clickUpdate()
 
     BIN binInput = {0,0};
 
-    if( mInputCombo->currentText() == "Hex" )
-        JS_BIN_decodeHex( strInput.toStdString().c_str(), &binInput );
-    else if( mInputCombo->currentText() == "Base64" )
-        JS_BIN_decodeBase64( strInput.toStdString().c_str(), &binInput );
-
+    getBINFromString( &binInput, DATA_HEX, strInput );
 
     unsigned char *pDecPart = NULL;
     long uDecPartLen = binInput.nLen;
@@ -356,13 +358,10 @@ void DecryptDlg::clickUpdate()
         return;
     }
 
-    char *pHex = NULL;
     JS_BIN_set( &binDecPart, pDecPart, uDecPartLen );
-    JS_BIN_encodeHex( &binDecPart, &pHex );
-    QString strDec = mOutputText->toPlainText();
-    strDec += pHex;
-    mOutputText->setPlainText( strDec );
-    if( pHex ) JS_free(pHex);
+
+    QString strDec = getStringFromBIN( &binDecPart, mOutputCombo->currentText() );
+    mOutputText->appendPlainText( strDec );
     JS_BIN_reset( &binDecPart );
 
     QString strRes = mStatusLabel->text();
@@ -380,8 +379,21 @@ void DecryptDlg::clickFinal()
 
     BIN binDecPart = {0,0};
 
-    pDecPart = (unsigned char *)JS_malloc( mInputText->toPlainText().length() );
-    if( pDecPart == NULL )return;
+    rv = manApplet->cryptokiAPI()->DecryptFinal( session_, NULL, (CK_ULONG_PTR)&uDecPartLen );
+
+    if( rv != CKR_OK )
+    {
+        if( pDecPart ) JS_free( pDecPart );
+        mOutputText->setPlainText("");
+        manApplet->warningBox( tr("fail to run DecryptFinal(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        return;
+    }
+
+    if( uDecPartLen > 0 )
+    {
+        pDecPart = (unsigned char *)JS_malloc( uDecPartLen );
+        if( pDecPart == NULL )return;
+    }
 
     rv = manApplet->cryptokiAPI()->DecryptFinal( session_, pDecPart, (CK_ULONG_PTR)&uDecPartLen );
 
@@ -394,20 +406,24 @@ void DecryptDlg::clickFinal()
     }
 
     QString strRes = mStatusLabel->text();
-    QString strDec = mOutputText->toPlainText();
-    char *pHex = NULL;
+    strRes += "|Final";
+    mStatusLabel->setText( strRes );
 
     JS_BIN_set( &binDecPart, pDecPart, uDecPartLen );
-    JS_BIN_encodeHex( &binDecPart, &pHex );
 
-    strRes += "|Final";
-    strDec += pHex;
+    if( mInputTab->currentIndex() == 0 )
+    {
+        QString strDec = getStringFromBIN( &binDecPart, mOutputCombo->currentText() );
+        mOutputText->appendPlainText( strDec );
+    }
+    else
+    {
+        QString strDstPath = mDstFileText->text();
+        JS_BIN_fileAppend( &binDecPart, strDstPath.toLocal8Bit().toStdString().c_str() );
+    }
 
-    mStatusLabel->setText( strRes );
-    mOutputText->setPlainText( strDec );
-
+    JS_BIN_reset( &binDecPart );
     if( pDecPart ) JS_free( pDecPart );
-    if( pHex ) JS_free( pHex );
     JS_BIN_reset( &binDecPart );
 }
 
@@ -450,10 +466,7 @@ void DecryptDlg::runDataDecrypt()
 
     BIN binInput = {0,0};
 
-    if( mInputCombo->currentText() == "Hex" )
-        JS_BIN_decodeHex( strInput.toStdString().c_str(), &binInput );
-    else if( mInputCombo->currentText() == "Base64" )
-        JS_BIN_decodeBase64( strInput.toStdString().c_str(), &binInput );
+    getBINFromString( &binInput, DATA_HEX, strInput );
 
     unsigned char *pDecData = NULL;
     long uDecDataLen = mInputText->toPlainText().length();
@@ -474,13 +487,11 @@ void DecryptDlg::runDataDecrypt()
     mStatusLabel->setText( strRes );
 
     BIN binDecData = {0,0};
-    char *pHex = NULL;
     JS_BIN_set( &binDecData, pDecData, uDecDataLen );
-    JS_BIN_encodeHex( &binDecData, &pHex );
+    QString strDec = getStringFromBIN( &binDecData, mOutputCombo->currentText() );
 
-    mOutputText->setPlainText( pHex );
+    mOutputText->setPlainText( strDec );
     if( pDecData ) JS_free( pDecData );
-    if( pHex ) JS_free(pHex);
     JS_BIN_reset( &binDecData );
 }
 

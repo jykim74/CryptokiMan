@@ -36,6 +36,7 @@ private slots:
 
     void inputChanged();
     void outputChanged();
+    void paramChanged();
 
     void clickInputClear();
     void clickOutputClear();
