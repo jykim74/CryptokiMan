@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>469</width>
-    <height>385</height>
+    <height>425</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -84,6 +84,46 @@
          <height>16777215</height>
         </size>
        </property>
+       <property name="palette">
+        <palette>
+         <active>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </active>
+         <inactive>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </inactive>
+         <disabled>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>240</red>
+             <green>240</green>
+             <blue>240</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </disabled>
+        </palette>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item>
@@ -100,6 +140,46 @@
          <width>80</width>
          <height>16777215</height>
         </size>
+       </property>
+       <property name="palette">
+        <palette>
+         <active>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </active>
+         <inactive>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </inactive>
+         <disabled>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>240</red>
+             <green>240</green>
+             <blue>240</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </disabled>
+        </palette>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -131,6 +211,46 @@
          <height>16777215</height>
         </size>
        </property>
+       <property name="palette">
+        <palette>
+         <active>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </active>
+         <inactive>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </inactive>
+         <disabled>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>240</red>
+             <green>240</green>
+             <blue>240</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </disabled>
+        </palette>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
     </layout>
@@ -143,18 +263,67 @@
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Seed value</string>
-     </property>
-    </widget>
-   </item>
-   <item>
     <layout class="QGridLayout" name="gridLayout_2">
      <property name="topMargin">
       <number>0</number>
      </property>
-     <item row="0" column="0">
+     <item row="0" column="3">
+      <widget class="QLineEdit" name="mSeedLenText">
+       <property name="minimumSize">
+        <size>
+         <width>40</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>40</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="palette">
+        <palette>
+         <active>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </active>
+         <inactive>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </inactive>
+         <disabled>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>240</red>
+             <green>240</green>
+             <blue>240</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </disabled>
+        </palette>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
       <widget class="QComboBox" name="mSeedCombo">
        <property name="minimumSize">
         <size>
@@ -164,8 +333,42 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="mSeedText"/>
+     <item row="0" column="2">
+      <spacer name="horizontalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>Seed Type</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QPlainTextEdit" name="mSeedText"/>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="gridLayout_5">
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <item row="0" column="0">
+      <widget class="QPushButton" name="mSeedClearBtn">
+       <property name="text">
+        <string>Seed Clear</string>
+       </property>
+      </widget>
      </item>
      <item row="0" column="2">
       <widget class="QPushButton" name="mSetSeedBtn">
@@ -174,7 +377,27 @@
        </property>
       </widget>
      </item>
+     <item row="0" column="1">
+      <spacer name="horizontalSpacer_5">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
     </layout>
+   </item>
+   <item>
+    <widget class="Line" name="line_4">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
    </item>
    <item>
     <layout class="QGridLayout" name="gridLayout_3">
@@ -220,7 +443,82 @@
     </layout>
    </item>
    <item>
-    <widget class="QPlainTextEdit" name="mOutputText"/>
+    <widget class="QPlainTextEdit" name="mOutputText">
+     <property name="palette">
+      <palette>
+       <active>
+        <colorrole role="Base">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>221</red>
+           <green>221</green>
+           <blue>255</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </active>
+       <inactive>
+        <colorrole role="Base">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>221</red>
+           <green>221</green>
+           <blue>255</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </inactive>
+       <disabled>
+        <colorrole role="Base">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>240</red>
+           <green>240</green>
+           <blue>240</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </disabled>
+      </palette>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="gridLayout_6">
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <item row="0" column="0">
+      <widget class="QPushButton" name="mRandClearBtn">
+       <property name="text">
+        <string>Random Clear</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QPushButton" name="mGenRandBtn">
+       <property name="text">
+        <string>Generate Random</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <spacer name="horizontalSpacer_6">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
    </item>
    <item>
     <widget class="Line" name="line_3">
@@ -234,13 +532,6 @@
      <property name="topMargin">
       <number>0</number>
      </property>
-     <item row="0" column="1">
-      <widget class="QPushButton" name="mGenRandBtn">
-       <property name="text">
-        <string>Generate Random</string>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="2">
       <widget class="QPushButton" name="mCloseBtn">
        <property name="text">
@@ -271,8 +562,6 @@
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
   <tabstop>mSeedCombo</tabstop>
-  <tabstop>mSeedText</tabstop>
-  <tabstop>mSetSeedBtn</tabstop>
   <tabstop>mLengthText</tabstop>
   <tabstop>mOutputText</tabstop>
  </tabstops>

@@ -126,6 +126,7 @@ void EncryptDlg::changeType( int type )
 
 void EncryptDlg::initialize()
 {
+    mInitAutoCheck->setChecked(true);
     mInputTab->setCurrentIndex(0);
 }
 
@@ -446,7 +447,10 @@ void EncryptDlg::runDataEncrypt()
     }
 
     if( mInitAutoCheck->isChecked() )
-        clickInit();
+    {
+        rv = clickInit();
+        if( rv != CKR_OK ) return;
+    }
 
     BIN binInput = {0,0};
 
@@ -596,6 +600,11 @@ void EncryptDlg::runFileEncrypt()
 
         if( rv == 0 )
         {
+            QString strMsg = mStatusLabel->text();
+            strMsg += "|Update";
+
+            mStatusLabel->setText( strMsg );
+
             clickFinal();
 
             QFileInfo fileInfo;

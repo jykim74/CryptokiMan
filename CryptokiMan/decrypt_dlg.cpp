@@ -122,7 +122,8 @@ void DecryptDlg::changeType( int type )
 
 void DecryptDlg::initialize()
 {
-
+    mInitAutoCheck->setChecked(true);
+    mInputTab->setCurrentIndex(0);
 }
 
 void DecryptDlg::keyTypeChanged( int index )
@@ -442,7 +443,10 @@ void DecryptDlg::runDataDecrypt()
     }
 
     if( mInitAutoCheck->isChecked() )
-        clickInit();
+    {
+        rv = clickInit();
+        if( rv != CKR_OK ) return;
+    }
 
     BIN binInput = {0,0};
 
@@ -589,6 +593,11 @@ void DecryptDlg::runFileDecrypt()
 
         if( rv == 0 )
         {
+            QString strMsg = mStatusLabel->text();
+            strMsg += "|Update";
+
+            mStatusLabel->setText( strMsg );
+
             clickFinal();
 
             QFileInfo fileInfo;

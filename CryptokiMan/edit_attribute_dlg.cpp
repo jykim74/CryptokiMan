@@ -178,6 +178,7 @@ void EditAttributeDlg::objectTypeChanged( int type )
 void EditAttributeDlg::initialize()
 {
     mValueTypeCombo->addItems( kTypeList );
+    mValueTypeCombo->setCurrentText( "Hex" );
 }
 
 void EditAttributeDlg::initAttributes()

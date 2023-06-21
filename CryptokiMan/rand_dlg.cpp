@@ -3,6 +3,7 @@
 #include "man_applet.h"
 #include "js_pkcs11.h"
 #include "cryptoki_api.h"
+#include "common.h"
 
 static QStringList sSeedList = { "String", "Hex", "Base64" };
 
@@ -26,6 +27,11 @@ void RandDlg::initUI()
     connect( mSetSeedBtn, SIGNAL(clicked()), this, SLOT(clickSeed()));
     connect( mGenRandBtn, SIGNAL(clicked()), this, SLOT(clickGenRand()));
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(close()));
+
+    connect( mSeedClearBtn, SIGNAL(clicked()), this, SLOT(clickSeedClear()));
+    connect( mRandClearBtn, SIGNAL(clicked()), this, SLOT(clickRandClear()));
+    connect( mSeedText, SIGNAL(textChanged()), this, SLOT(changeSeed()));
+    connect( mSeedCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changeSeed()));
 
     initialize();
 }
@@ -116,7 +122,7 @@ void RandDlg::clickSeed()
     CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
     int rv = -1;
 
-    QString strSeed = mSeedText->text();
+    QString strSeed = mSeedText->toPlainText();
 
     if( strSeed.isEmpty() )
     {
@@ -141,4 +147,22 @@ void RandDlg::clickSeed()
     }
 
     manApplet->warningBox( tr("SeedRandom is OK"), this );
+}
+
+void RandDlg::clickSeedClear()
+{
+    mSeedText->clear();
+}
+
+void RandDlg::clickRandClear()
+{
+    mOutputText->clear();
+}
+
+void RandDlg::changeSeed()
+{
+    QString strSeed = mSeedText->toPlainText();
+
+    int nLen = getDataLen( mSeedCombo->currentText(), strSeed );
+    mSeedLenText->setText( QString("%1").arg(nLen ));
 }

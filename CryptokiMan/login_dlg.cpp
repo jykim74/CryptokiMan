@@ -4,6 +4,8 @@
 #include "js_pkcs11.h"
 #include "cryptoki_api.h"
 
+const QStringList kLoginType = { "SO", "User" };
+
 LoginDlg::LoginDlg(QWidget *parent) :
     QDialog(parent)
 {
@@ -40,6 +42,9 @@ void LoginDlg::initialize()
 
     if( slot_infos.size() > 0 ) slotChanged(0);
     mPinText->setEchoMode(QLineEdit::Password);
+
+    mTypeCombo->addItems( kLoginType );
+    mTypeCombo->setCurrentIndex(1);
 }
 
 void LoginDlg::accept()
@@ -56,10 +61,10 @@ void LoginDlg::accept()
     CK_UTF8CHAR *pPin = (CK_UTF8CHAR *)mPinText->text().toUtf8().toStdString().c_str();
     CK_ULONG uPinLen = mPinText->text().toUtf8().length();
 
-    if( mUserCheck->isChecked() )
-        nType = CKU_USER;
-    else if( mSOCheck->isChecked() )
+    if( mTypeCombo->currentText() == "SO" )
         nType = CKU_SO;
+    else
+        nType = CKU_USER;
 
     rv = manApplet->cryptokiAPI()->Login( hSession, nType, pPin, uPinLen );
 

@@ -18,7 +18,7 @@ static QStringList sMechList = {
 };
 
 static QStringList sSecretMechList = {
-    "CKM_SHA_1_HMAC", "CKM_SHA256_HMAC", "CKM_SHA384_HMAC", "CKM_SHA512_HMAC"
+    "CKM_MD5_HMAC", "CKM_SHA_1_HMAC", "CKM_SHA256_HMAC", "CKM_SHA384_HMAC", "CKM_SHA512_HMAC"
 };
 
 
@@ -127,6 +127,7 @@ void SignDlg::setObject( int type, long hObj )
 
 void SignDlg::initialize()
 {
+    mInitAutoCheck->setChecked(true);
     mInputTab->setCurrentIndex(0);
 }
 
@@ -235,6 +236,7 @@ int SignDlg::clickInit()
     CK_MECHANISM sMech;
     BIN binParam = {0,0};
 
+    memset( &sMech, 0x00, sizeof(sMech));
     sMech.mechanism = JS_PKCS11_GetCKMType( mMechCombo->currentText().toStdString().c_str());
 
     QString strParam = mParamText->text();
@@ -362,7 +364,8 @@ void SignDlg::runDataSign()
 
     if( mInitAutoCheck->isChecked() )
     {
-        clickInit();
+        rv = clickInit();
+        if( rv != CKR_OK ) return;
     }
 
     BIN binInput = {0,0};
@@ -473,6 +476,10 @@ void SignDlg::runFileSign()
 
         if( ret == CKR_OK )
         {
+            QString strMsg = mStatusLabel->text();
+            strMsg += "|Update";
+
+            mStatusLabel->setText( strMsg );
             clickFinal();
         }
     }

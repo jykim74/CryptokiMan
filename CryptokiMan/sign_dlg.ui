@@ -77,6 +77,46 @@
          <height>16777215</height>
         </size>
        </property>
+       <property name="palette">
+        <palette>
+         <active>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </active>
+         <inactive>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </inactive>
+         <disabled>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>240</red>
+             <green>240</green>
+             <blue>240</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </disabled>
+        </palette>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item>
@@ -93,6 +133,46 @@
          <width>80</width>
          <height>16777215</height>
         </size>
+       </property>
+       <property name="palette">
+        <palette>
+         <active>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </active>
+         <inactive>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </inactive>
+         <disabled>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>240</red>
+             <green>240</green>
+             <blue>240</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </disabled>
+        </palette>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -123,6 +203,46 @@
          <width>40</width>
          <height>16777215</height>
         </size>
+       </property>
+       <property name="palette">
+        <palette>
+         <active>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </active>
+         <inactive>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </inactive>
+         <disabled>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>240</red>
+             <green>240</green>
+             <blue>240</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </disabled>
+        </palette>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -241,6 +361,46 @@
          <height>16777215</height>
         </size>
        </property>
+       <property name="palette">
+        <palette>
+         <active>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </active>
+         <inactive>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </inactive>
+         <disabled>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>240</red>
+             <green>240</green>
+             <blue>240</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </disabled>
+        </palette>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item row="0" column="0">
@@ -330,6 +490,43 @@
              <width>40</width>
              <height>16777215</height>
             </size>
+           </property>
+           <property name="palette">
+            <palette>
+             <active>
+              <colorrole role="Base">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>221</red>
+                 <green>221</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </active>
+             <inactive>
+              <colorrole role="Base">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>221</red>
+                 <green>221</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </inactive>
+             <disabled>
+              <colorrole role="Base">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>240</red>
+                 <green>240</green>
+                 <blue>240</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </disabled>
+            </palette>
            </property>
            <property name="readOnly">
             <bool>true</bool>
@@ -826,6 +1023,43 @@
          <height>16777215</height>
         </size>
        </property>
+       <property name="palette">
+        <palette>
+         <active>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </active>
+         <inactive>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </inactive>
+         <disabled>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>240</red>
+             <green>240</green>
+             <blue>240</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </disabled>
+        </palette>
+       </property>
        <property name="readOnly">
         <bool>true</bool>
        </property>
@@ -860,7 +1094,48 @@
     </layout>
    </item>
    <item>
-    <widget class="QTextBrowser" name="mOutputText"/>
+    <widget class="QPlainTextEdit" name="mOutputText">
+     <property name="palette">
+      <palette>
+       <active>
+        <colorrole role="Base">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>221</red>
+           <green>221</green>
+           <blue>255</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </active>
+       <inactive>
+        <colorrole role="Base">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>221</red>
+           <green>221</green>
+           <blue>255</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </inactive>
+       <disabled>
+        <colorrole role="Base">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>240</red>
+           <green>240</green>
+           <blue>240</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </disabled>
+      </palette>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -962,7 +1237,6 @@
   <tabstop>mMechCombo</tabstop>
   <tabstop>mLabelCombo</tabstop>
   <tabstop>mObjectText</tabstop>
-  <tabstop>mOutputText</tabstop>
   <tabstop>mCloseBtn</tabstop>
  </tabstops>
  <resources/>

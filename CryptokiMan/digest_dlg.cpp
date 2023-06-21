@@ -158,6 +158,7 @@ void DigestDlg::initialize()
 
     if( slot_infos.size() > 0 ) slotChanged(0);
 
+    mInitAutoCheck->setChecked(true);
     mInputTab->setCurrentIndex(0);
 }
 
@@ -334,7 +335,10 @@ void DigestDlg::runDataDigest()
     }
 
     if( mInitAutoCheck->isChecked() )
-        clickInit();
+    {
+        rv = clickInit();
+        if( rv != CKR_OK ) return;
+    }
 
     BIN binInput = {0,0};
 
@@ -440,6 +444,11 @@ void DigestDlg::runFileDigest()
 
         if( ret == CKR_OK )
         {
+            QString strMsg = mStatusLabel->text();
+            strMsg += "|Update";
+
+            mStatusLabel->setText( strMsg );
+
             clickFinal();
         }
     }

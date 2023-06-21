@@ -18,7 +18,7 @@ static QStringList sMechList = {
 };
 
 static QStringList sSecretMechList = {
-    "CKM_SHA_1_HMAC", "CKM_SHA256_HMAC", "CKM_SHA384_HMAC", "CKM_SHA512_HMAC"
+    "CKM_MD5_HMAC", "CKM_SHA_1_HMAC", "CKM_SHA256_HMAC", "CKM_SHA384_HMAC", "CKM_SHA512_HMAC"
 };
 
 static QStringList sKeyList = { "PUBLIC", "SECRET" };
@@ -128,6 +128,7 @@ void VerifyDlg::setObject( int type, long hObj )
 
 void VerifyDlg::initialize()
 {
+    mInitAutoCheck->setChecked(true);
     mInputTab->setCurrentIndex(0);
 }
 
@@ -365,7 +366,8 @@ void VerifyDlg::runDataVerify()
 
     if( mInitAutoCheck->isChecked() )
     {
-        clickInit();
+        rv = clickInit();
+        if( rv != CKR_OK ) return;
     }
 
     BIN binInput = {0,0};
@@ -416,14 +418,6 @@ void VerifyDlg::runFileVerify()
     mFileReadSizeText->setText( "0" );
 
     nLeft = fileSize;
-
-    QString strInput = mInputText->toPlainText();
-
-    if( strInput.isEmpty() )
-    {
-        manApplet->warningBox( tr("You have to insert data."), this );
-        return;
-    }
 
     QString strSign = mSignText->toPlainText();
     if( strSign.isEmpty() )
@@ -481,6 +475,10 @@ void VerifyDlg::runFileVerify()
 
         if( ret == CKR_OK )
         {
+            QString strMsg = mStatusLabel->text();
+            strMsg += "|Update";
+
+            mStatusLabel->setText( strMsg );
             clickFinal();
         }
     }

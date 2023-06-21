@@ -22,6 +22,10 @@ private slots:
     void clickSeed();
     void clickGenRand();
 
+    void clickSeedClear();
+    void clickRandClear();
+
+    void changeSeed();
 private:
     void initialize();
     void initUI();
