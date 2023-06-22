@@ -11,12 +11,8 @@
 #include "settings_mgr.h"
 
 
-
-
 static QStringList sKeyList = { "SECRET", "PRIVATE" };
-
 static CK_BBOOL kTrue = CK_TRUE;
-static CK_BBOOL kFalse = CK_FALSE;
 
 DecryptDlg::DecryptDlg(QWidget *parent) :
     QDialog(parent)
@@ -38,6 +34,7 @@ void DecryptDlg::initUI()
     mKeyTypeCombo->addItems(sKeyList);
     mMechCombo->addItems( kSymMechList );
     mOutputCombo->addItems( kDataTypeList );
+    mAADTypeCombo->addItems( kDataTypeList );
 
     connect( mKeyTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(keyTypeChanged(int)));
     connect( mLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(labelChanged(int)));
@@ -57,9 +54,71 @@ void DecryptDlg::initUI()
     connect( mFindSrcFileBtn, SIGNAL(clicked()), this, SLOT(clickFindSrcFile()));
     connect( mFindDstFileBtn, SIGNAL(clicked()), this, SLOT(clickFindDstFile()));
 
+    connect( mMechCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(mechChanged(int)));
+
 
     initialize();
     keyTypeChanged(0);
+}
+
+void DecryptDlg::setMechanism( void *pMech )
+{
+    if( pMech == NULL ) return;
+    CK_MECHANISM_PTR pPtr = (CK_MECHANISM *)pMech;
+    long nMech = JS_PKCS11_GetCKMType( mMechCombo->currentText().toStdString().c_str());
+
+    pPtr->mechanism = nMech;
+
+    if( nMech == CKM_AES_GCM || nMech == CKM_AES_CCM )
+    {
+        BIN binIV = {0,0};
+        BIN binAAD = {0,0};
+        int nReqLen = mReqTagLenText->text().toInt();
+        QString strIV = mParamText->text();
+        QString strAAD = mAADText->text();
+
+        JS_BIN_decodeHex( strIV.toStdString().c_str(), &binIV );
+        getBINFromString( &binAAD, mAADTypeCombo->currentText(), strAAD );
+
+        CK_GCM_PARAMS_PTR gcmParam;
+        gcmParam = (CK_GCM_PARAMS *)JS_calloc( 1, sizeof(CK_GCM_PARAMS));
+
+        gcmParam->iv_len = binIV.nLen;
+        gcmParam->iv_ptr = binIV.pVal;
+        gcmParam->aad_len = binAAD.nLen;
+        gcmParam->aad_ptr = binAAD.pVal;
+        gcmParam->iv_bits = binIV.nLen * 8;
+        gcmParam->tag_bits = nReqLen * 8;
+
+        pPtr->pParameter = gcmParam;
+        pPtr->ulParameterLen = sizeof(CK_GCM_PARAMS);
+    }
+    else
+    {
+        BIN binParam = {0,0};
+        QString strParam = mParamText->text();
+        JS_BIN_decodeHex( strParam.toStdString().c_str(), &binParam );
+
+        pPtr->pParameter = binParam.pVal;
+        pPtr->ulParameterLen = binParam.nLen;
+    }
+}
+
+void DecryptDlg::freeMechanism( void *pMech )
+{
+    CK_MECHANISM_PTR pPtr = (CK_MECHANISM_PTR)pMech;
+
+    if( pPtr->mechanism == CKM_AES_GCM || pPtr->mechanism == CKM_AES_CBC )
+    {
+        CK_GCM_PARAMS_PTR gcmParam = (CK_GCM_PARAMS_PTR)pPtr->pParameter;
+
+        if( gcmParam->iv_ptr ) JS_free( gcmParam->iv_ptr );
+        if( gcmParam->aad_ptr ) JS_free( gcmParam->aad_ptr );
+    }
+    else
+    {
+        if( pPtr->pParameter ) JS_free( pPtr->pParameter );
+    }
 }
 
 void DecryptDlg::slotChanged(int index)
@@ -78,6 +137,25 @@ void DecryptDlg::slotChanged(int index)
 
     mSlotsCombo->clear();
     mSlotsCombo->addItem( slotInfo.getDesc() );
+}
+
+void DecryptDlg::mechChanged( int index )
+{
+    QString strMech = mMechCombo->currentText();
+    QStringList algList = strMech.split( "_" );
+
+    int size = algList.size();
+
+    QString strLast = algList.at(size-1);
+
+    if( strLast == "GCM" || strLast == "CCM" )
+    {
+        mAEGroup->setEnabled(true);
+    }
+    else
+    {
+        mAEGroup->setEnabled(false);
+    }
 }
 
 void DecryptDlg::setSelectedSlot(int index)
@@ -301,8 +379,11 @@ int DecryptDlg::clickInit()
     long hObject = mObjectText->text().toLong();
 
     CK_MECHANISM sMech;
-    BIN binParam = {0,0};
 
+    memset( &sMech, 0x00, sizeof(sMech));
+
+#if 0
+    BIN binParam = {0,0};
     sMech.mechanism = JS_PKCS11_GetCKMType( mMechCombo->currentText().toStdString().c_str());
 
     QString strParam = mParamText->text();
@@ -313,6 +394,9 @@ int DecryptDlg::clickInit()
         sMech.pParameter = binParam.pVal;
         sMech.ulParameterLen = binParam.nLen;
     }
+#else
+    setMechanism( &sMech );
+#endif
 
     rv = manApplet->cryptokiAPI()->DecryptInit( session_, &sMech, hObject );
 
@@ -326,6 +410,8 @@ int DecryptDlg::clickInit()
 
     mOutputText->setPlainText("");
     mStatusLabel->setText( "Init" );
+
+    freeMechanism( &sMech );
 
     return rv;
 }

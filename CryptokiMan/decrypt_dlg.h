@@ -21,6 +21,7 @@ public:
 
 private slots:
     void slotChanged( int index );
+    void mechChanged( int index );
 
     int clickInit();
     void clickUpdate();
@@ -48,10 +49,11 @@ private:
     void initialize();
     void appendStatusLabel( const QString& strLabel );
     void initUI();
+    void setMechanism( void *pMech );
+    void freeMechanism( void *pMech );
 
     int slot_index_ = -1;
     long session_ = -1;
-
 };
 
 #endif // DECRYPT_DLG_H

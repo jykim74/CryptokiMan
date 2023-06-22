@@ -116,7 +116,8 @@ static QStringList kECCOptionList = { "prime256v1",
 };
 
 static QStringList kSymMechList = {
-    "CKM_DES3_ECB", "CKM_DES3_CBC", "CKM_DES3_CBC_PAD", "CKM_AES_ECB", "CKM_AES_CBC","CKM_AES_CBC_PAD", "CKM_AES_CTR"
+    "CKM_DES3_ECB", "CKM_DES3_CBC", "CKM_DES3_CBC_PAD",
+    "CKM_AES_ECB", "CKM_AES_CBC","CKM_AES_CBC_PAD", "CKM_AES_CTR", "CKM_AES_GCM"
 };
 
 static QStringList kAsymMechList = {
