@@ -48,6 +48,7 @@ void DecryptDlg::initUI()
     connect( mInputText, SIGNAL(textChanged()), this, SLOT(inputChanged()));
     connect( mOutputText, SIGNAL(textChanged()), this, SLOT(outputChanged()));
     connect( mParamText, SIGNAL(textChanged(const QString&)), this, SLOT(paramChanged()));
+    connect( mAADText, SIGNAL(textChanged(const QString&)), this, SLOT(aadChanged()));
 
     connect( mInputClearBtn, SIGNAL(clicked()), this, SLOT(clickInputClear()));
     connect( mOutputClearBtn, SIGNAL(clicked()), this, SLOT(clickOutputClear()));
@@ -305,6 +306,13 @@ void DecryptDlg::paramChanged()
     QString strParam = mParamText->text();
     int nLen = getDataLen( DATA_HEX, strParam );
     mParamLenText->setText( QString("%1").arg(nLen));
+}
+
+void DecryptDlg::aadChanged()
+{
+    QString strAAD = mAADText->text();
+    int nLen = getDataLen( mAADTypeCombo->currentText(), strAAD );
+    mAADLenText->setText( QString("%1").arg(nLen));
 }
 
 void DecryptDlg::clickInputClear()

@@ -1143,13 +1143,6 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QPushButton" name="mOutputClearBtn">
-       <property name="text">
-        <string>Output Clear</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QPushButton" name="mInitBtn">
        <property name="text">
         <string>Init</string>
@@ -1180,6 +1173,13 @@
       <widget class="QPushButton" name="mSignBtn">
        <property name="text">
         <string>Sign</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="mOutputClearBtn">
+       <property name="text">
+        <string>Output Clear</string>
        </property>
       </widget>
      </item>

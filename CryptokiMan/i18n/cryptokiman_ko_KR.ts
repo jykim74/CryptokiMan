@@ -933,7 +933,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Param</source>
-        <translation>파라미터</translation>
+        <translation type="vanished">파라미터</translation>
     </message>
     <message>
         <source>Input</source>
@@ -1055,6 +1055,22 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>This feature requires a license.</source>
         <translation>이 기능은 라이센스가 필요합니다.</translation>
+    </message>
+    <message>
+        <source>Param(IV)</source>
+        <translation>파라미터(IV)</translation>
+    </message>
+    <message>
+        <source>ReqTag Len</source>
+        <translation>요청 태크 길이</translation>
+    </message>
+    <message>
+        <source>Authenticated Encryption</source>
+        <translation>Authenticated Encryption</translation>
+    </message>
+    <message>
+        <source>AAD</source>
+        <translation>AAD</translation>
     </message>
 </context>
 <context>
@@ -1501,7 +1517,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <source>Param</source>
-        <translation>파라미터</translation>
+        <translation type="vanished">파라미터</translation>
     </message>
     <message>
         <source>Key Type</source>
@@ -1647,6 +1663,22 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>This feature requires a license.</source>
         <translation>이 기능은 라이센스가 필요합니다.</translation>
+    </message>
+    <message>
+        <source>Param (IV)</source>
+        <translation>파라미터(IV)</translation>
+    </message>
+    <message>
+        <source>ReqTag Len</source>
+        <translation>요청 태크 길이</translation>
+    </message>
+    <message>
+        <source>Authenticated Encryption</source>
+        <translation>Authenticated Encryption</translation>
+    </message>
+    <message>
+        <source>AAD</source>
+        <translation>AAD</translation>
     </message>
 </context>
 <context>
@@ -2489,15 +2521,15 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <source>Login Type and PIN</source>
-        <translation>로그인 타입 및 핀</translation>
+        <translation type="vanished">로그인 타입 및 핀</translation>
     </message>
     <message>
         <source>User</source>
-        <translation>사용자</translation>
+        <translation type="vanished">사용자</translation>
     </message>
     <message>
         <source>SO</source>
-        <translation>SO</translation>
+        <translation type="vanished">SO</translation>
     </message>
     <message>
         <source>PIN</source>
@@ -2517,7 +2549,19 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <source>Login Type</source>
-        <translation>로그인 타입</translation>
+        <translation type="vanished">로그인 타입</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>타입</translation>
+    </message>
+    <message>
+        <source>Login OK</source>
+        <translation>로그인 성공</translation>
+    </message>
+    <message>
+        <source>Login fail</source>
+        <translation>로그인 실패</translation>
     </message>
 </context>
 <context>
@@ -3389,6 +3433,10 @@ Do you want to delete the file and continue?</source>
         <source>Close</source>
         <translation>닫기</translation>
     </message>
+    <message>
+        <source>OpenSession OK</source>
+        <translation>OpenSession 성공</translation>
+    </message>
 </context>
 <context>
     <name>OperStateDlg</name>
@@ -3524,7 +3572,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <source>Seed value</source>
-        <translation>Seed 값</translation>
+        <translation type="vanished">Seed 값</translation>
     </message>
     <message>
         <source>Random length</source>
@@ -3573,6 +3621,18 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>Close</source>
         <translation>닫기</translation>
+    </message>
+    <message>
+        <source>Seed Type</source>
+        <translation>SEED 타입</translation>
+    </message>
+    <message>
+        <source>Seed Clear</source>
+        <translation>SEED 지우기</translation>
+    </message>
+    <message>
+        <source>Random Clear</source>
+        <translation>랜덤 지우기</translation>
     </message>
 </context>
 <context>

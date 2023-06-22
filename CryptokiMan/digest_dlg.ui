@@ -337,7 +337,7 @@
    <item>
     <widget class="QTabWidget" name="mInputTab">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -1080,13 +1080,6 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QPushButton" name="mOutputClearBtn">
-       <property name="text">
-        <string>Output Clear</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QPushButton" name="mInitBtn">
        <property name="text">
         <string>Init</string>
@@ -1117,6 +1110,13 @@
       <widget class="QPushButton" name="mDigestBtn">
        <property name="text">
         <string>Digest</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="mOutputClearBtn">
+       <property name="text">
+        <string>Output Clear</string>
        </property>
       </widget>
      </item>

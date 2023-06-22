@@ -1109,13 +1109,6 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QPushButton" name="mSignClearBtn">
-       <property name="text">
-        <string>Sign Clear</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QPushButton" name="mInitBtn">
        <property name="text">
         <string>Init</string>
@@ -1146,6 +1139,13 @@
       <widget class="QPushButton" name="mVerifyBtn">
        <property name="text">
         <string>Verify</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="mSignClearBtn">
+       <property name="text">
+        <string>Sign Clear</string>
        </property>
       </widget>
      </item>

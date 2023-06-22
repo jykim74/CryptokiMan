@@ -47,6 +47,7 @@ void EncryptDlg::initUI()
     connect( mInputText, SIGNAL(textChanged()), this, SLOT(inputChanged()));
     connect( mOutputText, SIGNAL(textChanged()), this, SLOT(outputChanged()));
     connect( mParamText, SIGNAL(textChanged(const QString&)), this, SLOT(paramChanged()));
+    connect( mAADText, SIGNAL(textChanged(const QString&)), this, SLOT(aadChanged()));
 
     connect( mInputClearBtn, SIGNAL(clicked()), this, SLOT(clickInputClear()));
     connect( mOutputClearBtn, SIGNAL(clicked()), this, SLOT(clickOutputClear()));
@@ -71,15 +72,13 @@ void EncryptDlg::setMechanism( void *pMech )
     {
         BIN binIV = {0,0};
         BIN binAAD = {0,0};
-        BIN binTag = {0,0};
+
         int nReqLen = mReqTagLenText->text().toInt();
         QString strIV = mParamText->text();
         QString strAAD = mAADText->text();
-        QString strTag = mTagText->text();
 
         JS_BIN_decodeHex( strIV.toStdString().c_str(), &binIV );
         getBINFromString( &binAAD, mAADTypeCombo->currentText(), strAAD );
-        JS_BIN_decodeHex( strTag.toStdString().c_str(), &binTag );
 
         CK_GCM_PARAMS_PTR gcmParam;
         gcmParam = (CK_GCM_PARAMS *)JS_calloc( 1, sizeof(CK_GCM_PARAMS));
@@ -152,12 +151,10 @@ void EncryptDlg::mechChanged( int index )
     if( strLast == "GCM" || strLast == "CCM" )
     {
         mAEGroup->setEnabled(true);
-        mAE2Group->setEnabled(true);
     }
     else
     {
         mAEGroup->setEnabled(false);
-        mAE2Group->setEnabled(false);
     }
 }
 
@@ -307,6 +304,13 @@ void EncryptDlg::paramChanged()
     QString strParam = mParamText->text();
     int nLen = getDataLen( DATA_HEX, strParam );
     mParamLenText->setText( QString("%1").arg(nLen));
+}
+
+void EncryptDlg::aadChanged()
+{
+    QString strAAD = mAADText->text();
+    int nLen = getDataLen( mAADTypeCombo->currentText(), strAAD );
+    mAADLenText->setText( QString("%1").arg(nLen));
 }
 
 void EncryptDlg::clickInputClear()
