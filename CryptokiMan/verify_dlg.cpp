@@ -440,6 +440,13 @@ void VerifyDlg::runFileVerify()
     }
 
     FILE *fp = fopen( strSrcFile.toLocal8Bit().toStdString().c_str(), "rb" );
+    if( fp == NULL )
+    {
+        manApplet->elog( QString( "fail to read file:%1").arg( strSrcFile ));
+        goto end;
+    }
+
+    manApplet->log( QString( "TotalSize: %1 BlockSize: %2").arg( fileSize).arg( nPartSize ));
 
     while( nLeft > 0 )
     {
@@ -448,6 +455,11 @@ void VerifyDlg::runFileVerify()
 
         nRead = JS_BIN_fileReadPartFP( fp, nOffset, nPartSize, &binPart );
         if( nRead <= 0 ) break;
+
+        if( mWriteLogCheck->isChecked() )
+        {
+            manApplet->log( QString( "Read[%1:%2] %3").arg( nOffset ).arg( nRead ).arg( getHexString(binPart.pVal, binPart.nLen)));
+        }
 
         ret = manApplet->cryptokiAPI()->VerifyUpdate( session_, binPart.pVal, binPart.nLen );
         if( ret != CKR_OK )

@@ -1072,6 +1072,10 @@ Do you want to delete the file and continue?</source>
         <source>AAD</source>
         <translation>AAD</translation>
     </message>
+    <message>
+        <source>Write log block data</source>
+        <translation>블록 데이타 로그 기록</translation>
+    </message>
 </context>
 <context>
     <name>DelObjectDlg</name>
@@ -1441,6 +1445,10 @@ Do you want to delete the file and continue?</source>
         <source>This feature requires a license.</source>
         <translation>이 기능은 라이센스가 필요합니다.</translation>
     </message>
+    <message>
+        <source>Write log block data</source>
+        <translation>블록 데이타 로그 기록</translation>
+    </message>
 </context>
 <context>
     <name>EditAttributeDlg</name>
@@ -1679,6 +1687,10 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>AAD</source>
         <translation>AAD</translation>
+    </message>
+    <message>
+        <source>Write log block data</source>
+        <translation>블록 데이타 로그 기록</translation>
     </message>
 </context>
 <context>
@@ -3915,6 +3927,10 @@ Do you want to delete the file and continue?</source>
         <source>This feature requires a license.</source>
         <translation>이 기능은 라이센스가 필요합니다.</translation>
     </message>
+    <message>
+        <source>Write log block data</source>
+        <translation>블록 데이타 로그 기록</translation>
+    </message>
 </context>
 <context>
     <name>UnwrapKeyDlg</name>
@@ -4252,6 +4268,10 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>This feature requires a license.</source>
         <translation>이 기능은 라이센스가 필요합니다.</translation>
+    </message>
+    <message>
+        <source>Write log block data</source>
+        <translation>블록 데이타 로그 기록</translation>
     </message>
 </context>
 <context>

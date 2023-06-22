@@ -642,6 +642,13 @@ void EncryptDlg::runFileEncrypt()
         clickInit();
 
     FILE *fp = fopen( strSrcFile.toLocal8Bit().toStdString().c_str(), "rb" );
+    if( fp == NULL )
+    {
+        manApplet->elog( QString( "fail to read file:%1").arg( strSrcFile ));
+        goto end;
+    }
+
+    manApplet->log( QString( "TotalSize: %1 BlockSize: %2").arg( fileSize).arg( nPartSize ));
 
     while( nLeft > 0 )
     {
@@ -654,8 +661,10 @@ void EncryptDlg::runFileEncrypt()
         nRead = JS_BIN_fileReadPartFP( fp, nOffset, nPartSize, &binPart );
         if( nRead <= 0 ) break;
 
-        //        berApplet->log( QString( "read len : %1").arg( nRead ) );
-        //        berApplet->log( QString( "read : %1").arg( getHexString( binPart.pVal, binPart.nLen )));
+        if( mWriteLogCheck->isChecked() )
+        {
+            manApplet->log( QString( "Read[%1:%2] %3").arg( nOffset ).arg( nRead ).arg( getHexString(binPart.pVal, binPart.nLen)));
+        }
 
         uEncPartLen = binPart.nLen + 64;
 
@@ -671,6 +680,8 @@ void EncryptDlg::runFileEncrypt()
             goto end;
         }
 
+
+
         nUpdateCnt++;
 
         if( uEncPartLen > 0 )
@@ -681,8 +692,10 @@ void EncryptDlg::runFileEncrypt()
             uEncPartLen = 0;
         }
 
-//        berApplet->log( QString("enc or dec len: %1").arg( binDst.nLen ));
-//        berApplet->log( QString("enc or dec : %1").arg( getHexString(binDst.pVal, binDst.nLen)));
+        if( mWriteLogCheck->isChecked() )
+        {
+            manApplet->log( QString( "Enc[%1:%2] %3").arg( nOffset ).arg( binDst.nLen ).arg( getHexString(binDst.pVal, binDst.nLen)));
+        }
 
         if( binDst.nLen > 0 )
             JS_BIN_fileAppend( &binDst, strDstFile.toLocal8Bit().toStdString().c_str() );
