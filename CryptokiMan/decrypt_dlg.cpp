@@ -125,6 +125,13 @@ void DecryptDlg::initialize()
     mInputTab->setCurrentIndex(0);
 }
 
+void DecryptDlg::appendStatusLabel( const QString& strLabel )
+{
+    QString strStatus = mStatusLabel->text();
+    strStatus += strLabel;
+    mStatusLabel->setText( strStatus );
+}
+
 void DecryptDlg::keyTypeChanged( int index )
 {
     int rv = -1;
@@ -364,9 +371,7 @@ void DecryptDlg::clickUpdate()
     mOutputText->appendPlainText( strDec );
     JS_BIN_reset( &binDecPart );
 
-    QString strRes = mStatusLabel->text();
-    strRes += "|Update";
-    mStatusLabel->setText( strRes );
+    appendStatusLabel( "|Update" );
     if( pDecPart ) JS_free( pDecPart );
 }
 
@@ -405,9 +410,7 @@ void DecryptDlg::clickFinal()
         return;
     }
 
-    QString strRes = mStatusLabel->text();
-    strRes += "|Final";
-    mStatusLabel->setText( strRes );
+    appendStatusLabel( "|Final" );
 
     JS_BIN_set( &binDecPart, pDecPart, uDecPartLen );
 
@@ -505,6 +508,7 @@ void DecryptDlg::runFileDecrypt()
     int nLeft = 0;
     int nOffset = 0;
     int nPercent = 0;
+    int nUpdateCnt = 0;
     QString strSrcFile = mSrcFileText->text();
     BIN binPart = {0,0};
     BIN binDst = {0,0};
@@ -567,6 +571,8 @@ void DecryptDlg::runFileDecrypt()
             goto end;
         }
 
+        nUpdateCnt++;
+
         if( uDecPartLen > 0 )
         {
             JS_BIN_set( &binDst, pDecPart, uDecPartLen );
@@ -604,11 +610,8 @@ void DecryptDlg::runFileDecrypt()
 
         if( rv == 0 )
         {
-            QString strMsg = mStatusLabel->text();
-            strMsg += "|Update";
-
-            mStatusLabel->setText( strMsg );
-
+            QString strMsg = QString( "|Update X %1").arg( nUpdateCnt );
+            appendStatusLabel( strMsg );
             clickFinal();
 
             QFileInfo fileInfo;

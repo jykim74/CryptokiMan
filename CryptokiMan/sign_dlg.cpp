@@ -131,6 +131,13 @@ void SignDlg::initialize()
     mInputTab->setCurrentIndex(0);
 }
 
+void SignDlg::appendStatusLabel( const QString& strLabel )
+{
+    QString strStatus = mStatusLabel->text();
+    strStatus += strLabel;
+    mStatusLabel->setText( strStatus );
+}
+
 void SignDlg::keyTypeChanged( int index )
 {
     int rv = -1;
@@ -295,10 +302,7 @@ void SignDlg::clickUpdate()
         return;
     }
 
-    QString strRes = mStatusLabel->text();
-    strRes += "|Update";
-
-    mStatusLabel->setText( strRes );
+    appendStatusLabel( "|Update" );
 }
 
 void SignDlg::clickFinal()
@@ -317,17 +321,12 @@ void SignDlg::clickFinal()
         return;
     }
 
-    char *pHex = NULL;
+
     BIN binSign = {0,0};
     JS_BIN_set( &binSign, sSign, uSignLen );
-    JS_BIN_encodeHex( &binSign, &pHex );
+    mOutputText->setPlainText( getHexString( binSign.pVal, binSign.nLen) );
 
-    mOutputText->setPlainText( pHex );
-    QString strRes = mStatusLabel->text();
-    strRes += "|Final";
-    mStatusLabel->setText( strRes );
-
-    if( pHex ) JS_free(pHex);
+    appendStatusLabel( "|Final" );
     JS_BIN_reset(&binSign);
 }
 
@@ -413,6 +412,7 @@ void SignDlg::runFileSign()
     int nLeft = 0;
     int nOffset = 0;
     int nPercent = 0;
+    int nUpdateCnt = 0;
     QString strSrcFile = mSrcFileText->text();
     BIN binPart = {0,0};
 
@@ -454,6 +454,7 @@ void SignDlg::runFileSign()
             goto end;
         }
 
+        nUpdateCnt++;
         nReadSize += nRead;
         nPercent = ( nReadSize * 100 ) / fileSize;
 
@@ -476,10 +477,9 @@ void SignDlg::runFileSign()
 
         if( ret == CKR_OK )
         {
-            QString strMsg = mStatusLabel->text();
-            strMsg += "|Update";
+            QString strMsg = QString( "|Update X %1").arg( nUpdateCnt );
+            appendStatusLabel( strMsg );
 
-            mStatusLabel->setText( strMsg );
             clickFinal();
         }
     }

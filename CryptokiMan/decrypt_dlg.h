@@ -46,6 +46,7 @@ private slots:
 
 private:
     void initialize();
+    void appendStatusLabel( const QString& strLabel );
     void initUI();
 
     int slot_index_ = -1;

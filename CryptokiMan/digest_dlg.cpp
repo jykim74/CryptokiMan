@@ -162,6 +162,13 @@ void DigestDlg::initialize()
     mInputTab->setCurrentIndex(0);
 }
 
+void DigestDlg::appendStatusLabel( const QString& strLabel )
+{
+    QString strStatus = mStatusLabel->text();
+    strStatus += strLabel;
+    mStatusLabel->setText( strStatus );
+}
+
 void DigestDlg::clickDigestKey()
 {
     int rv;
@@ -252,10 +259,7 @@ void DigestDlg::clickUpdate()
 
     if( rv == CKR_OK )
     {
-        QString strMsg = mStatusLabel->text();
-        strMsg += "|Update";
-
-        mStatusLabel->setText( strMsg );
+        appendStatusLabel( "|Update" );
     }
     else
     {
@@ -285,20 +289,17 @@ void DigestDlg::clickFinal()
 
     if( rv == CKR_OK )
     {
-        char *pHex = NULL;
         JS_BIN_set( &binDigest, sDigest, uDigestLen );
-        JS_BIN_encodeHex( &binDigest, &pHex );
-        mOutputText->setText( pHex );
-        QString strResult = mStatusLabel->text();
-        strResult += "|Final";
-        mStatusLabel->setText(strResult);
-        if( pHex ) JS_free(pHex);
+        mOutputText->setText( getHexString( binDigest.pVal, binDigest.nLen) );
+        appendStatusLabel( "|Final" );
     }
     else
     {
         manApplet->warningBox( tr("fail to run DigestFinal(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         mOutputText->setText("");
     }
+
+    JS_BIN_reset( &binDigest );
 }
 
 void DigestDlg::clickDigest()
@@ -381,6 +382,7 @@ void DigestDlg::runFileDigest()
     int nLeft = 0;
     int nOffset = 0;
     int nPercent = 0;
+    int nUpdateCnt = 0;
     QString strSrcFile = mSrcFileText->text();
     BIN binPart = {0,0};
 
@@ -422,6 +424,7 @@ void DigestDlg::runFileDigest()
             goto end;
         }
 
+        nUpdateCnt++;
         nReadSize += nRead;
         nPercent = ( nReadSize * 100 ) / fileSize;
 
@@ -444,11 +447,8 @@ void DigestDlg::runFileDigest()
 
         if( ret == CKR_OK )
         {
-            QString strMsg = mStatusLabel->text();
-            strMsg += "|Update";
-
-            mStatusLabel->setText( strMsg );
-
+            QString strMsg = QString( "|Update X %1" ).arg( nUpdateCnt );
+            appendStatusLabel( strMsg );
             clickFinal();
         }
     }

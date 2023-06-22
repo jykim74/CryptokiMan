@@ -132,6 +132,13 @@ void VerifyDlg::initialize()
     mInputTab->setCurrentIndex(0);
 }
 
+void VerifyDlg::appendStatusLabel( const QString& strLabel )
+{
+    QString strStatus = mStatusLabel->text();
+    strStatus += strLabel;
+    mStatusLabel->setText( strStatus );
+}
+
 void VerifyDlg::keyTypeChanged( int index )
 {
     int rv = -1;
@@ -289,10 +296,7 @@ void VerifyDlg::clickUpdate()
         return;
     }
 
-    QString strRes = mStatusLabel->text();
-
-    strRes += "|Update";
-    mStatusLabel->setText( strRes );
+    appendStatusLabel( "|Update" );
 }
 
 void VerifyDlg::clickFinal()
@@ -321,9 +325,7 @@ void VerifyDlg::clickFinal()
         manApplet->messageBox( tr("Signature is good."), this );
     }
 
-    QString strRes = mStatusLabel->text();
-    strRes += "|Final";
-    mStatusLabel->setText( strRes );
+    appendStatusLabel( "|Final" );
 }
 
 void VerifyDlg::clickVerify()
@@ -405,6 +407,7 @@ void VerifyDlg::runFileVerify()
     int nLeft = 0;
     int nOffset = 0;
     int nPercent = 0;
+    int nUpdateCnt = 0;
     QString strSrcFile = mSrcFileText->text();
     BIN binPart = {0,0};
 
@@ -453,6 +456,7 @@ void VerifyDlg::runFileVerify()
             goto end;
         }
 
+        nUpdateCnt++;
         nReadSize += nRead;
         nPercent = ( nReadSize * 100 ) / fileSize;
 
@@ -474,11 +478,9 @@ void VerifyDlg::runFileVerify()
         mVerifyProgBar->setValue( 100 );
 
         if( ret == CKR_OK )
-        {
-            QString strMsg = mStatusLabel->text();
-            strMsg += "|Update";
-
-            mStatusLabel->setText( strMsg );
+        {   
+            QString strMsg = QString( "|Update X %1").arg( nUpdateCnt );
+            appendStatusLabel( strMsg );
             clickFinal();
         }
     }

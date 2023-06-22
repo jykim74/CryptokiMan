@@ -123,6 +123,13 @@ void EncryptDlg::initialize()
     mInputTab->setCurrentIndex(0);
 }
 
+void EncryptDlg::appendStatusLabel( const QString& strLabel )
+{
+    QString strStatus = mStatusLabel->text();
+    strStatus += strLabel;
+    mStatusLabel->setText( strStatus );
+}
+
 void EncryptDlg::keyTypeChanged( int index )
 {
     int rv = -1;
@@ -358,21 +365,13 @@ void EncryptDlg::clickUpdate()
     }
 
     BIN binPart = {0,0};
-    char *pHex = NULL;
     JS_BIN_set( &binPart, pEncPart, uEncPartLen );
-    JS_BIN_encodeHex( &binPart, &pHex );
+    appendStatusLabel( "|Update" );
 
-    QString strRes = mStatusLabel->text();
-    QString strOutput = mOutputText->toPlainText();
-
-    strRes += "|Update";
-    strOutput += pHex;
-
-    mStatusLabel->setText( strRes );
-    mOutputText->setPlainText( strOutput );
+    mOutputText->appendPlainText( getHexString( binPart.pVal, binPart.nLen ));
 
     if( pEncPart ) JS_free( pEncPart );
-    if( pHex ) JS_free( pHex );
+    JS_BIN_reset( &binPart );
 }
 
 void EncryptDlg::clickFinal()
@@ -412,9 +411,7 @@ void EncryptDlg::clickFinal()
 
     JS_BIN_set( &binEncPart, pEncPart, uEncPartLen );
 
-    QString strRes = mStatusLabel->text();
-    strRes += "|Final";
-    mStatusLabel->setText( strRes );
+    appendStatusLabel( "|Final" );
 
 
     if( mInputTab->currentIndex() == 0 )
@@ -519,6 +516,7 @@ void EncryptDlg::runFileEncrypt()
     int nLeft = 0;
     int nOffset = 0;
     int nPercent = 0;
+    int nUpdateCnt = 0;
     QString strSrcFile = mSrcFileText->text();
     BIN binPart = {0,0};
     BIN binDst = {0,0};
@@ -581,6 +579,8 @@ void EncryptDlg::runFileEncrypt()
             goto end;
         }
 
+        nUpdateCnt++;
+
         if( uEncPartLen > 0 )
         {
             JS_BIN_set( &binDst, pEncPart, uEncPartLen );
@@ -618,11 +618,8 @@ void EncryptDlg::runFileEncrypt()
 
         if( rv == 0 )
         {
-            QString strMsg = mStatusLabel->text();
-            strMsg += "|Update";
-
-            mStatusLabel->setText( strMsg );
-
+            QString strMsg = QString( "|Update X %1").arg( nUpdateCnt );
+            appendStatusLabel( strMsg );
             clickFinal();
 
             QFileInfo fileInfo;

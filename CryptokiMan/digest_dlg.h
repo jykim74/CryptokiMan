@@ -39,6 +39,7 @@ private slots:
 
 private:
     void initialize();
+    void appendStatusLabel( const QString& strLabel );
     void initUI();
     void setKeyList();
 
