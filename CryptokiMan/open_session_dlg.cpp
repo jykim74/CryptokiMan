@@ -65,8 +65,12 @@ void OpenSessionDlg::accept()
     {
         slotInfo.setSessionHandle( hSession );
         slot_infos.replace(index, slotInfo);
+
+        manApplet->log( "OpenSssion OK" );
+        manApplet->messageBox( tr( "OpenSession OK"), this );
     }
     else {
+        manApplet->log( QString( "OpenSession fail: %1").arg( rv ));
         manApplet->warningBox( tr("OpenSession is failure"), this );
         return;
     }

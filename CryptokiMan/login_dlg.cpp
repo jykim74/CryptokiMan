@@ -72,8 +72,11 @@ void LoginDlg::accept()
     {
         slotInfo.setLogin(true);
         slot_infos.replace( index, slotInfo );
+        manApplet->log( "Login OK" );
+        manApplet->messageBox( tr( "Login OK" ), this );
     }
     else {
+        manApplet->warningBox( tr( "Login fail"), this );
         manApplet->elog( QString("C_Login fail:%1").arg(rv));
     }
 
