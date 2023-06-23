@@ -46,6 +46,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QCheckBox" name="mUseDeviceMechCheck">
+         <property name="text">
+          <string>Use Device Mechanism</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>

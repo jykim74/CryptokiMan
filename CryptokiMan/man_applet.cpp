@@ -5,6 +5,7 @@
 
 #include "man_applet.h"
 #include "mainwindow.h"
+#include "mech_mgr.h"
 #include "open_session_dlg.h"
 #include "close_session_dlg.h"
 #include "login_dlg.h"
@@ -70,6 +71,7 @@ void ManApplet::start()
     checkLicense();
 
     main_win_ = new MainWindow;
+    mech_mgr_ = new MechMgr;
     settings_mgr_ = new SettingsMgr;
     cryptoki_api_ = new CryptokiAPI;
 

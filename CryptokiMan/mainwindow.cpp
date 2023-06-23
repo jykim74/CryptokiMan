@@ -49,6 +49,7 @@
 #include "cryptoki_api.h"
 #include "cert_info_dlg.h"
 #include "js_pki_tools.h"
+#include "mech_mgr.h"
 
 const int kMaxRecentFiles = 10;
 
@@ -744,11 +745,17 @@ void MainWindow::P11Initialize()
 //        expand( parent_item->index() );
         left_tree_->expand( parent_item->index() );
     }
-/*
-    th_work_ = new ThreadWork( this );
-    th_work_->setManApplet( manApplet );
-    th_work_->start();
-*/
+
+    if( manApplet->settingsMgr()->useDeviceMech() == true )
+    {
+        int ret = 0;
+        MechMgr* mechMgr = manApplet->mechMgr();
+        if( mechMgr == NULL ) return;
+
+        ret = mechMgr->loadMechList( sSlotList[0] );
+        if( ret == CKR_OK )
+            manApplet->log( "load mechanism list successfully" );
+    }
 }
 
 void MainWindow::P11Finalize()
@@ -769,6 +776,11 @@ void MainWindow::P11Finalize()
             {
                 root->removeRow( cnt - 1 - i );
             }
+        }
+
+        if( manApplet->settingsMgr()->useDeviceMech() == true )
+        {
+            manApplet->mechMgr()->clearList();
         }
     }
 }

@@ -64,6 +64,8 @@ SOURCES += \
         man_tree_item.cpp \
         man_tree_model.cpp \
         man_tree_view.cpp \
+        mech_mgr.cpp \
+        mech_rec.cpp \
         open_session_dlg.cpp \
         oper_state_dlg.cpp \
         rand_dlg.cpp \
@@ -111,6 +113,8 @@ HEADERS += \
         man_tree_item.h \
         man_tree_model.h \
         man_tree_view.h \
+        mech_mgr.h \
+        mech_rec.h \
         open_session_dlg.h \
         oper_state_dlg.h \
         rand_dlg.h \

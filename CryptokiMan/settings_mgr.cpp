@@ -10,10 +10,14 @@ namespace  {
     const char *kShowLogTab = "showLogTab";
     const char *kLogLevel = "logLevel";
     const char *kFileReadSize = "fileReadSize";
+    const char *kUseDeviceMech = "useDeviceMech";
 }
 
 SettingsMgr::SettingsMgr( QObject *parent) : QObject (parent)
 {
+    file_read_size_ = 0;
+    use_device_mech_ = false;
+
     initialize();
 }
 
@@ -21,6 +25,7 @@ void SettingsMgr::initialize()
 {
     getLogLevel();
     getFileReadSize();
+    getUseDeviceMech();
 }
 
 void SettingsMgr::setSaveLibPath( bool val )
@@ -107,4 +112,25 @@ int SettingsMgr::getFileReadSize()
     sets.endGroup();
 
     return file_read_size_;
+}
+
+void SettingsMgr::setUseDeviceMech( bool bVal )
+{
+    QSettings sets;
+    sets.beginGroup( kBehaviorGroup );
+    sets.setValue( kUseDeviceMech, bVal );
+    sets.endGroup();
+
+    use_device_mech_ = bVal;
+}
+
+bool SettingsMgr::getUseDeviceMech()
+{
+    QSettings sets;
+
+    sets.beginGroup( kBehaviorGroup );
+    use_device_mech_ = sets.value( kUseDeviceMech, false ).toBool();
+    sets.endGroup();
+
+    return use_device_mech_;
 }

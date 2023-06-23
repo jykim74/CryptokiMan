@@ -25,6 +25,10 @@ public:
     void setFileReadSize( int size );
     int getFileReadSize();
     int fileReadSize() { return file_read_size_; };
+
+    void setUseDeviceMech( bool bVal );
+    bool getUseDeviceMech();
+    bool useDeviceMech() { return use_device_mech_; };
 signals:
 
 public slots:
@@ -32,6 +36,7 @@ public slots:
 private:
     void initialize();
     int file_read_size_;
+    bool use_device_mech_;
 
     Q_DISABLE_COPY(SettingsMgr)
 };

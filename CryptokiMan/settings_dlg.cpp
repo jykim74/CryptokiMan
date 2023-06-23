@@ -39,7 +39,7 @@ void SettingsDlg::updateSettings()
 
     mgr->setLogLevel( mLogLevelCombo->currentIndex() );
     mgr->setFileReadSize( mFileReadSizeText->text().toInt() );
-
+    mgr->setUseDeviceMech( mUseDeviceMechCheck->isChecked() );
 
 #ifdef _AUTO_UPDATE
     if( AutoUpdateService::instance()->shouldSupportAutoUpdate() ) {
@@ -99,6 +99,8 @@ void SettingsDlg::initialize()
     QIntValidator *intVal = new QIntValidator( 0, 999999 );
     mFileReadSizeText->setValidator( intVal );
     mFileReadSizeText->setText( QString("%1").arg(mgr->getFileReadSize()));
+
+    mUseDeviceMechCheck->setChecked( mgr->getUseDeviceMech() );
 
     mLangCombo->setCurrentIndex(I18NHelper::getInstance()->preferredLanguage());
     tabWidget->setCurrentIndex(0);

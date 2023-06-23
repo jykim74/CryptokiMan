@@ -8,6 +8,7 @@
 #include "cryptoki_api.h"
 #include "common.h"
 #include "settings_mgr.h"
+#include "mech_mgr.h"
 
 static QStringList sMechList = {
     "CKM_MD5", "CKM_SHA_1", "CKM_SHA256", "CKM_SHA512"
@@ -33,7 +34,16 @@ DigestDlg::~DigestDlg()
 
 void DigestDlg::initUI()
 {
-    mMechCombo->addItems( sMechList );
+    if( manApplet->settingsMgr()->useDeviceMech() )
+    {
+        QStringList mechList = manApplet->mechMgr()->getDigestList();
+        mMechCombo->addItems( mechList );
+    }
+    else
+    {
+        mMechCombo->addItems( sMechList );
+    }
+
     mInputCombo->addItems( sInputList );
 
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT( slotChanged(int) ));

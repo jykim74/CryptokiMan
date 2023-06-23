@@ -12,6 +12,7 @@ class AboutDlg;
 class LogViewDlg;
 class SettingsMgr;
 class CryptokiAPI;
+class MechMgr;
 
 class ManApplet : public QObject
 {
@@ -26,6 +27,7 @@ public:
     JS_LICENSE_INFO& LicenseInfo() { return license_info_; };
 
     MainWindow* mainWindow() { return main_win_; };
+    MechMgr* mechMgr() { return mech_mgr_; };
 
     LogViewDlg* logViewDlg() { return log_view_dlg_; };
     SettingsMgr* settingsMgr() { return settings_mgr_; };
@@ -69,6 +71,7 @@ private:
 
     LogViewDlg* log_view_dlg_;
     SettingsMgr* settings_mgr_;
+    MechMgr* mech_mgr_;
 
     bool in_exit_;
     bool is_license_;
