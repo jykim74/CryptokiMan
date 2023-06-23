@@ -963,7 +963,6 @@ QString getMechFlagString( unsigned long uFlag )
     if( uFlag & CKF_HW ) strFlag += " | HW";
     if( uFlag & CKF_SIGN ) strFlag += " | Sign";
     if( uFlag & CKF_VERIFY ) strFlag += " | Verify";
-    if( uFlag & CKF_ENCRYPT ) strFlag += " | Encrypt";
     if( uFlag & CKF_WRAP ) strFlag += " | Wrap";
     if( uFlag & CKF_UNWRAP ) strFlag += " | Unwrap";
     if( uFlag & CKF_SIGN_RECOVER ) strFlag += " | Sign recover";
