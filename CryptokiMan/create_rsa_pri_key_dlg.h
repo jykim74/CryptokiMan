@@ -33,6 +33,15 @@ private slots:
     void clickStartDate();
     void clickEndDate();
 
+    void changeModules( const QString& text );
+    void changePubExponent( const QString& text );
+    void changePriExponent( const QString& text );
+    void changePrime1( const QString& text );
+    void changePrime2( const QString& text );
+    void changeExponent1( const QString& text );
+    void changeExponent2( const QString& text );
+    void changeCoefficient( const QString& text );
+
 private:
     void initialize();
     void initAttributes();

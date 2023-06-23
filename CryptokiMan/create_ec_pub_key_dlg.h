@@ -31,6 +31,8 @@ private slots:
     void clickStartDate();
     void clickEndDate();
 
+    void changeECPoints( const QString& text );
+    void changeECParams( const QString& text );
 private:
     void initialize();
     void initAttributes();

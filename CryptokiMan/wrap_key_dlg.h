@@ -26,6 +26,7 @@ private slots:
     void wrappingTypeChanged( int index );
     void clickFind();
 
+    void changeWrappingParam(const QString& text );
 private:
     void initialize();
     void initUI();

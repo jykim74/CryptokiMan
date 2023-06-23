@@ -17,6 +17,7 @@ CreateRSAPubKeyDlg::CreateRSAPubKeyDlg(QWidget *parent) :
     connectAttributes();
 
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
+    connect( mModulesText, SIGNAL(textChanged(const QString&)), this, SLOT(changeModules(const QString&)));
 
     initialize();
     setDefaults();
@@ -321,6 +322,12 @@ void CreateRSAPubKeyDlg::clickStartDate()
 void CreateRSAPubKeyDlg::clickEndDate()
 {
     mEndDateEdit->setEnabled(mEndDateCheck->isChecked());
+}
+
+void CreateRSAPubKeyDlg::changeModules( const QString& text )
+{
+    int nLen = getDataLen( DATA_HEX, text );
+    mModulesLenText->setText( QString("%1").arg(nLen));
 }
 
 void CreateRSAPubKeyDlg::setDefaults()

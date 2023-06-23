@@ -23,6 +23,9 @@ WrapKeyDlg::WrapKeyDlg(QWidget *parent) :
     session_ = -1;
 
     setupUi(this);
+
+    connect( mWrappingParamText, SIGNAL(textChanged(const QString&)), this, SLOT(changeWrappingParam(const QString&)));
+
     initUI();
 }
 
@@ -193,6 +196,12 @@ void WrapKeyDlg::clickFind()
     if( fileName.isEmpty() ) return;
 
     mPathText->setText( fileName );
+}
+
+void WrapKeyDlg::changeWrappingParam(const QString& text )
+{
+    int nLen = getDataLen( DATA_HEX, text );
+    mWrappingParamLenText->setText( QString("%1").arg(nLen));
 }
 
 void WrapKeyDlg::setWrappingSecretLabel()

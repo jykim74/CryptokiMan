@@ -93,6 +93,9 @@ void CreateECPriKeyDlg::setAttributes()
 
 void CreateECPriKeyDlg::connectAttributes()
 {
+    connect( mECPramsText, SIGNAL(textChanged(const QString&)), this, SLOT(changeECParams(const QString&)));
+    connect( mKeyValueText, SIGNAL(textChanged(const QString&)), this, SLOT(changeKeyValue(const QString&)));
+
     connect( mPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPrivate()));
     connect( mDecryptCheck, SIGNAL(clicked()), this, SLOT(clickDecrypt()));
     connect( mUnwrapCheck, SIGNAL(clicked()), this, SLOT(clickUnwrap()));
@@ -365,6 +368,18 @@ void CreateECPriKeyDlg::clickStartDate()
 void CreateECPriKeyDlg::clickEndDate()
 {
     mEndDateEdit->setEnabled(mEndDateCheck->isChecked());
+}
+
+void CreateECPriKeyDlg::changeECParams( const QString& text )
+{
+    int nLen = getDataLen( DATA_HEX, text );
+    mECParamsLenText->setText( QString("%1").arg( nLen ));
+}
+
+void CreateECPriKeyDlg::changeKeyValue( const QString& text )
+{
+    int nLen = getDataLen( DATA_HEX, text );
+    mKeyValueLenText->setText( QString("%1").arg( nLen ));
 }
 
 void CreateECPriKeyDlg::setDefaults()

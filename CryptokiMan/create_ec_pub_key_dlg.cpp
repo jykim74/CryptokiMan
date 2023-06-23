@@ -17,6 +17,8 @@ CreateECPubKeyDlg::CreateECPubKeyDlg(QWidget *parent) :
     connectAttributes();
 
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
+    connect( mECPointsText, SIGNAL(textChanged(const QString&)), this, SLOT(changeECPoints(const QString&)));
+    connect( mECParamsText, SIGNAL(textChanged(const QString&)), this, SLOT(changeECParams(const QString&)));
 
     initialize();
     setDefaults();
@@ -323,6 +325,17 @@ void CreateECPubKeyDlg::clickEndDate()
     mEndDateEdit->setEnabled(mEndDateCheck->isChecked());
 }
 
+void CreateECPubKeyDlg::changeECPoints( const QString& text )
+{
+    int nLen = getDataLen( DATA_HEX, text );
+    mECPointsLenText->setText( QString("%1").arg(nLen));
+}
+
+void CreateECPubKeyDlg::changeECParams( const QString& text )
+{
+    int nLen = getDataLen( DATA_HEX, text );
+    mECParamsLenText->setText( QString("%1").arg(nLen));
+}
 
 void CreateECPubKeyDlg::setDefaults()
 {

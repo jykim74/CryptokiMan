@@ -41,6 +41,7 @@ private slots:
     void clickStartDate();
     void clickEndDate();
 
+    void changeUnwrapParam( const QString& text );
 private:
     void initUI();
     void initialize();

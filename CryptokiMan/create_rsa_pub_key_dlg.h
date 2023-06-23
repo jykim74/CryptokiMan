@@ -31,6 +31,7 @@ private slots:
     void clickStartDate();
     void clickEndDate();
 
+    void changeModules( const QString& text );
 private:
     void initialize();
     void initAttributes();

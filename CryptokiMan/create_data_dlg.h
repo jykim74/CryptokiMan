@@ -26,6 +26,7 @@ private slots:
     void clickModifiable();
     void clickToken();
 
+    void changeData();
 private:
     void initialize();
     void initAttributes();

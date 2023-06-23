@@ -47,6 +47,8 @@ UnwrapKeyDlg::UnwrapKeyDlg(QWidget *parent) :
     connect( mUnwrapTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(unwrapTypeChanged(int)));
     connect( mClassCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(classChanged(int)));
 
+    connect( mUnwrapParamText, SIGNAL(textChanged(const QString&)), this, SLOT(changeUnwrapParam(const QString&)));
+
     connect( mFindBtn, SIGNAL(clicked(bool)), this, SLOT(clickFind()));
 
     initialize();
@@ -638,4 +640,10 @@ void UnwrapKeyDlg::clickStartDate()
 void UnwrapKeyDlg::clickEndDate()
 {
     mEndDateEdit->setEnabled(mEndDateCheck->isChecked());
+}
+
+void UnwrapKeyDlg::changeUnwrapParam( const QString& text )
+{
+    int nLen = getDataLen( DATA_HEX, text );
+    mUnwrapParamLenText->setText( QString("%1").arg(nLen));
 }

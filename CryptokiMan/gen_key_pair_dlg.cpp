@@ -209,11 +209,13 @@ void GenKeyPairDlg::accept()
         stMech.mechanism = CKM_DH_PKCS_KEY_PAIR_GEN;
         keyType = CKK_DH;
     }
+#if 0
     else if( strMech == "CKM_DSA_KEY_PAIR_GEN" )
     {
         stMech.mechanism = CKM_DSA_KEY_PAIR_GEN;
         keyType = CKK_DSA;
     }
+#endif
     else
     {
         manApplet->elog( QString( "Invalid Mechanism:%1").arg(strMech));
@@ -296,8 +298,11 @@ void GenKeyPairDlg::accept()
     }
     else if( strMech == "CKM_DSA_KEY_PAIR_GEN" )
     {
+        /* DSA 알고리즘은 좀더 입력 값 확인 이 필요함 */
+        /* 관련 CKA_PRIME, CKA_SUBPRIME 그리고 CKA_BASE 값 설정에 관한 */
+
         uModulusBits = sRSAOptionList.at(nSelOption).toInt();
-        sPubTemplate[uPubCount].type = CKA_MODULUS_BITS;
+        sPubTemplate[uPubCount].type = CKA_PRIME_BITS;
         sPubTemplate[uPubCount].pValue = &uModulusBits;
         sPubTemplate[uPubCount].ulValueLen = sizeof( uModulusBits );
         uPubCount++;

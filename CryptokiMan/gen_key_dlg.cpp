@@ -10,7 +10,6 @@
 static QStringList sMechGenList;
 
 static QStringList sFalseTrue = { "false", "true" };
-
 static QStringList sParamList = { "String", "Hex", "Base64" };
 
 GenKeyDlg::GenKeyDlg(QWidget *parent) :
@@ -24,6 +23,7 @@ GenKeyDlg::GenKeyDlg(QWidget *parent) :
     connectAttributes();
 
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
+    connect( mParamText, SIGNAL(textChanged()), this, SLOT(changeParam()));
 
     initialize();
     setDefaults();
@@ -163,7 +163,7 @@ void GenKeyDlg::accept()
     sMech.mechanism = JS_PKCS11_GetCKMType( mMechCombo->currentText().toStdString().c_str() );
     BIN binParam = {0,0};
 
-    QString strParam = mParamText->text();
+    QString strParam = mParamText->toPlainText();
     if( !strParam.isEmpty() )
     {
         if( mParamCombo->currentIndex() == 0 )
@@ -422,6 +422,14 @@ void GenKeyDlg::clickStartDate()
 void GenKeyDlg::clickEndDate()
 {
     mEndDateEdit->setEnabled(mEndDateCheck->isChecked());
+}
+
+void GenKeyDlg::changeParam()
+{
+    QString strParam = mParamText->toPlainText();
+
+    int nLen = getDataLen( mParamCombo->currentText(), strParam );
+    mParamLenText->setText( QString("%1").arg(nLen));
 }
 
 void GenKeyDlg::setDefaults()

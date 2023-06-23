@@ -867,6 +867,13 @@ void MainWindow::logout()
 void MainWindow::generateKeyPair()
 {
     ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        return;
+    }
+
     GenKeyPairDlg genKeyPairDlg;
     if( pItem ) genKeyPairDlg.setSelectedSlot( pItem->getSlotIndex() );
     genKeyPairDlg.exec();

@@ -83,6 +83,8 @@ void CreateDataDlg::setAttributes()
 
 void CreateDataDlg::connectAttributes()
 {
+    connect( mDataText, SIGNAL(textChanged()), this, SLOT(changeData()));
+
     connect( mPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPrivate()));
     connect( mSensitiveCheck, SIGNAL(clicked()), this, SLOT(clickSensitive()));
     connect( mModifiableCheck, SIGNAL(clicked()), this, SLOT(clickModifiable()));
@@ -207,6 +209,13 @@ void CreateDataDlg::clickModifiable()
 void CreateDataDlg::clickToken()
 {
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
+}
+
+void CreateDataDlg::changeData()
+{
+    QString strData = mDataText->toPlainText();
+    int nLen = getDataLen( mDataCombo->currentText(), strData );
+    mDataLenText->setText( QString("%1").arg(nLen));
 }
 
 void CreateDataDlg::setDefaults()

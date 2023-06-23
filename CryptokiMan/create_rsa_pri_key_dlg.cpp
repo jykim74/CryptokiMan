@@ -18,6 +18,15 @@ CreateRSAPriKeyDlg::CreateRSAPriKeyDlg(QWidget *parent) :
 
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
 
+    connect( mModulesText, SIGNAL(textChanged(const QString&)), this, SLOT(changeModules(const QString&)));
+    connect( mPubExponentText, SIGNAL(textChanged(const QString&)), this, SLOT(changePubExponent(const QString&)));
+    connect( mPriExponentText, SIGNAL(textChanged(const QString&)), this, SLOT(changePriExponent(const QString&)));
+    connect( mPrime1Text, SIGNAL(textChanged(const QString&)), this, SLOT(changePrime1(const QString&)));
+    connect( mPrime2Text, SIGNAL(textChanged(const QString&)), this, SLOT(changePrime2(const QString&)));
+    connect( mExponent1Text, SIGNAL(textChanged(const QString&)), this, SLOT(changeExponent1(const QString&)));
+    connect( mExponent2Text, SIGNAL(textChanged(const QString&)), this, SLOT(changeExponent2(const QString&)));
+    connect( mCoefficientText, SIGNAL(textChanged(const QString&)), this, SLOT(changeCoefficient(const QString&)));
+
     initialize();
     setDefaults();
 
@@ -443,6 +452,54 @@ void CreateRSAPriKeyDlg::clickStartDate()
 void CreateRSAPriKeyDlg::clickEndDate()
 {
     mEndDateEdit->setEnabled(mEndDateCheck->isChecked());
+}
+
+void CreateRSAPriKeyDlg::changeModules( const QString& text )
+{
+    int nLen = getDataLen( DATA_HEX, text );
+    mModulesLenText->setText( QString("%1").arg(nLen));
+}
+
+void CreateRSAPriKeyDlg::changePubExponent( const QString& text )
+{
+    int nLen = getDataLen( DATA_HEX, text );
+    mPubExponentLenText->setText( QString("%1").arg(nLen));
+}
+
+void CreateRSAPriKeyDlg::changePriExponent( const QString& text )
+{
+    int nLen = getDataLen( DATA_HEX, text );
+    mPriExponentLenText->setText( QString("%1").arg(nLen));
+}
+
+void CreateRSAPriKeyDlg::changePrime1( const QString& text )
+{
+    int nLen = getDataLen( DATA_HEX, text );
+    mPrime1LenText->setText( QString("%1").arg(nLen));
+}
+
+void CreateRSAPriKeyDlg::changePrime2( const QString& text )
+{
+    int nLen = getDataLen( DATA_HEX, text );
+    mPrime2LenText->setText( QString("%1").arg(nLen));
+}
+
+void CreateRSAPriKeyDlg::changeExponent1( const QString& text )
+{
+    int nLen = getDataLen( DATA_HEX, text );
+    mExponent1LenText->setText( QString("%1").arg(nLen));
+}
+
+void CreateRSAPriKeyDlg::changeExponent2( const QString& text )
+{
+    int nLen = getDataLen( DATA_HEX, text );
+    mExponent2LenText->setText( QString("%1").arg(nLen));
+}
+
+void CreateRSAPriKeyDlg::changeCoefficient( const QString& text )
+{
+    int nLen = getDataLen( DATA_HEX, text );
+    mCoefficientLenText->setText( QString("%1").arg(nLen));
 }
 
 void CreateRSAPriKeyDlg::setDefaults()

@@ -36,6 +36,7 @@ private slots:
     void clickStartDate();
     void clickEndDate();
 
+    void changeParam();
 private:
     void initUI();
     void initialize();

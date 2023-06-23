@@ -33,6 +33,8 @@ private slots:
     void clickStartDate();
     void clickEndDate();
 
+    void changeECParams( const QString& text );
+    void changeKeyValue( const QString& text );
 private:
     void initialize();
     void initAttributes();
