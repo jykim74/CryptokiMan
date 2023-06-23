@@ -42,6 +42,7 @@ private slots:
     void clickEndDate();
 
 private:
+    void initUI();
     void initialize();
     void initAttributes();
     void setAttributes();

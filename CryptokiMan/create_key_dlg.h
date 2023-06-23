@@ -36,6 +36,7 @@ private slots:
     void clickStartDate();
     void clickEndDate();
 
+    void changeKey();
 private:
     void initialize();
     void initAttributes();

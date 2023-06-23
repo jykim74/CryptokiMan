@@ -6,9 +6,14 @@
 #include "js_pkcs11.h"
 #include "common.h"
 #include "cryptoki_api.h"
+#include "settings_mgr.h"
+#include "mech_mgr.h"
 
 static CK_BBOOL kTrue = CK_TRUE;
 static CK_BBOOL kFalse = CK_FALSE;
+
+static QStringList sMechWrapSymList;
+static QStringList sMechWrapAsymList;
 
 
 WrapKeyDlg::WrapKeyDlg(QWidget *parent) :
@@ -65,8 +70,19 @@ void WrapKeyDlg::setSelectedSlot(int index)
 
 void WrapKeyDlg::initialize()
 {
+    if( manApplet->settingsMgr()->useDeviceMech() == true )
+    {
+        sMechWrapSymList = manApplet->mechMgr()->getWrapList( MECH_TYPE_SYM );
+        sMechWrapAsymList = manApplet->mechMgr()->getWrapList( MECH_TYPE_ASYM );
+    }
+    else
+    {
+        sMechWrapSymList = kMechWrapSymList;
+        sMechWrapAsymList = kMechWrapAsymList;
+    }
+
     mWrappingTypeCombo->addItems( kWrapType );
-    mWrappingMechCombo->addItems(kSecretWrapMech);
+    mWrappingMechCombo->addItems( kMechWrapSymList );
 }
 
 void WrapKeyDlg::accept()
@@ -160,12 +176,12 @@ void WrapKeyDlg::wrappingTypeChanged( int index )
 
     if( mWrappingTypeCombo->currentText() == kWrapType.at(0) )
     {
-        mWrappingMechCombo->addItems( kSecretWrapMech );
+        mWrappingMechCombo->addItems( sMechWrapSymList );
         setWrappingSecretLabel();
     }
     else
     {
-        mWrappingMechCombo->addItems( kRSAWrapMech );
+        mWrappingMechCombo->addItems( sMechWrapAsymList );
         setWrappingRSAPublicLabel();
     }
 }

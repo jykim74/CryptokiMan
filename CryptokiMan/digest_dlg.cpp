@@ -10,9 +10,7 @@
 #include "settings_mgr.h"
 #include "mech_mgr.h"
 
-static QStringList sMechList = {
-    "CKM_MD5", "CKM_SHA_1", "CKM_SHA256", "CKM_SHA512"
-};
+static QStringList sMechDigestList;
 
 static QStringList sInputList = {
     "String", "Hex", "Base64"
@@ -37,14 +35,15 @@ void DigestDlg::initUI()
     if( manApplet->settingsMgr()->useDeviceMech() )
     {
         QStringList mechList = manApplet->mechMgr()->getDigestList();
-        mMechCombo->addItems( mechList );
+        sMechDigestList = mechList;
     }
     else
     {
-        mMechCombo->addItems( sMechList );
+        sMechDigestList = kMechDigestList;
     }
 
     mInputCombo->addItems( sInputList );
+    mMechCombo->addItems( sMechDigestList );
 
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT( slotChanged(int) ));
     connect( mKeyLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT( changeKeyLabel(int)));
@@ -211,8 +210,8 @@ int DigestDlg::clickInit()
 
     memset( &stMech, 0x00, sizeof(stMech) );
 
-    int iPos = mMechCombo->currentIndex();
-    stMech.mechanism = JS_PKCS11_GetCKMType( sMechList.at(iPos).toStdString().c_str());
+    QString strMech = mMechCombo->currentText();
+    stMech.mechanism = JS_PKCS11_GetCKMType( strMech.toStdString().c_str());
 
     QString strParam = mParamText->text();
     if( !strParam.isEmpty() )

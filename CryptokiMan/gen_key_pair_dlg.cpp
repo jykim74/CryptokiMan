@@ -6,8 +6,10 @@
 #include "js_pki_tools.h"
 #include "common.h"
 #include "cryptoki_api.h"
+#include "mech_mgr.h"
+#include "settings_mgr.h"
 
-static QStringList sMechList = { "RSA", "ECC", "DH" };
+static QStringList sMechGenKeyPairList;
 static QStringList sRSAOptionList = { "1024", "2048", "3096", "4082" };
 static QStringList sDHOptionList = { "512", "1024", "2048" };
 static QStringList sDH_GList = { "02", "05" };
@@ -19,6 +21,8 @@ GenKeyPairDlg::GenKeyPairDlg(QWidget *parent) :
     QDialog(parent)
 {
     setupUi(this);
+
+    initUI();
 
     initAttributes();
     setAttributes();
@@ -44,6 +48,25 @@ void GenKeyPairDlg::setSelectedSlot(int index)
     if( index >= 0 ) mSlotsCombo->setCurrentIndex( index );
 }
 
+void GenKeyPairDlg::initUI()
+{
+    if( manApplet->settingsMgr()->useDeviceMech() )
+    {
+        sMechGenKeyPairList = manApplet->mechMgr()->getGenerateKeyPairList();
+    }
+    else
+    {
+        sMechGenKeyPairList = kMechGenKeyPairList;
+    }
+
+    mMechCombo->addItems( sMechGenKeyPairList );
+
+    mOptionCombo->addItems( sRSAOptionList );
+    mOptionCombo->setEditable( true );
+
+    mDH_GCombo->addItems( sDH_GList );
+    mDHParamGroup->setDisabled(true);
+}
 
 void GenKeyPairDlg::initialize()
 {
@@ -63,14 +86,6 @@ void GenKeyPairDlg::initialize()
 
 void GenKeyPairDlg::initAttributes()
 {
-    mMechCombo->addItems( sMechList );
-
-    mOptionCombo->addItems( sRSAOptionList );
-    mOptionCombo->setEditable( true );
-
-    mDH_GCombo->addItems( sDH_GList );
-    mDHParamGroup->setDisabled(true);
-
     mPriPrivateCombo->addItems( sFalseTrue );
     mPriDecryptCombo->addItems( sFalseTrue );
     mPriSignCombo->addItems( sFalseTrue );
@@ -177,22 +192,32 @@ void GenKeyPairDlg::accept()
     memset( &sPubStart, 0x00, sizeof(sPubStart));
     memset( &sPubEnd, 0x00, sizeof(sPubEnd));
 
-    int iSelMech = mMechCombo->currentIndex();
+    QString strMech = mMechCombo->currentText();
 
-    if( iSelMech == 0 )
+    if( strMech == "CKM_RSA_PKCS_KEY_PAIR_GEN" )
     {
         stMech.mechanism = CKM_RSA_PKCS_KEY_PAIR_GEN;
         keyType = CKK_RSA;
     }
-    else if( iSelMech == 1 )
+    else if( strMech == "CKM_ECDSA_KEY_PAIR_GEN" )
     {
         stMech.mechanism = CKM_ECDSA_KEY_PAIR_GEN;
         keyType = CKK_ECDSA;
     }
-    else if( iSelMech == 2 )
+    else if( strMech == "CKM_DH_PKCS_KEY_PAIR_GEN" )
     {
         stMech.mechanism = CKM_DH_PKCS_KEY_PAIR_GEN;
         keyType = CKK_DH;
+    }
+    else if( strMech == "CKM_DSA_KEY_PAIR_GEN" )
+    {
+        stMech.mechanism = CKM_DSA_KEY_PAIR_GEN;
+        keyType = CKK_DSA;
+    }
+    else
+    {
+        manApplet->elog( QString( "Invalid Mechanism:%1").arg(strMech));
+        return;
     }
 
     sPubTemplate[uPubCount].type = CKA_CLASS;
@@ -216,7 +241,7 @@ void GenKeyPairDlg::accept()
     CK_ULONG uModulusBits = 0;
     int nSelOption = mOptionCombo->currentIndex();
 
-    if( iSelMech == 0 )
+    if( strMech == "CKM_RSA_PKCS_KEY_PAIR_GEN" )
     {
         uModulusBits = sRSAOptionList.at(nSelOption).toInt();
         sPubTemplate[uPubCount].type = CKA_MODULUS_BITS;
@@ -235,7 +260,7 @@ void GenKeyPairDlg::accept()
             uPubCount++;
         }
     }
-    else if( iSelMech == 1 )
+    else if( strMech == "CKM_ECDSA_KEY_PAIR_GEN" )
     {
         char sPararmHex[256];
         const char *pCurveName = kECCOptionList.at(nSelOption).toStdString().c_str();
@@ -250,7 +275,7 @@ void GenKeyPairDlg::accept()
         sPubTemplate[uPubCount].ulValueLen = binECParam.nLen;
         uPubCount++;
     }
-    else if( iSelMech == 2 )
+    else if( strMech == "CKM_DH_PKCS_KEY_PAIR_GEN" )
     {
 
         QString strDH_P = mDH_PText->toPlainText();
@@ -267,6 +292,14 @@ void GenKeyPairDlg::accept()
         sPubTemplate[uPubCount].type = CKA_BASE;
         sPubTemplate[uPubCount].pValue = binDH_G.pVal;
         sPubTemplate[uPubCount].ulValueLen = binDH_G.nLen;
+        uPubCount++;
+    }
+    else if( strMech == "CKM_DSA_KEY_PAIR_GEN" )
+    {
+        uModulusBits = sRSAOptionList.at(nSelOption).toInt();
+        sPubTemplate[uPubCount].type = CKA_MODULUS_BITS;
+        sPubTemplate[uPubCount].pValue = &uModulusBits;
+        sPubTemplate[uPubCount].ulValueLen = sizeof( uModulusBits );
         uPubCount++;
     }
 
@@ -533,24 +566,31 @@ void GenKeyPairDlg::slotChanged(int index)
 void GenKeyPairDlg::mechChanged(int nIndex)
 {
     mOptionCombo->clear();
+    QString strMech = mMechCombo->currentText();
 
-    if( nIndex == 0 )
+    if( strMech == "CKM_RSA_PKCS_KEY_PAIR_GEN" )
     {
         mOptionLabel->setText( QString("Key Length") );
         mOptionCombo->addItems( sRSAOptionList );
         mDHParamGroup->setDisabled(true);
     }
-    else if( nIndex == 1 )
+    else if( strMech == "CKM_ECDSA_KEY_PAIR_GEN" )
     {
         mOptionLabel->setText( QString("NamedCurve"));
         mOptionCombo->addItems( kECCOptionList );
         mDHParamGroup->setDisabled(true);
     }
-    else if( nIndex == 2 )
+    else if( strMech == "CKM_DH_PKCS_KEY_PAIR_GEN" )
     {
         mOptionLabel->setText( QString("Key Length") );
         mOptionCombo->addItems( sDHOptionList );
         mDHParamGroup->setDisabled(false);
+    }
+    else if( strMech == "CKM_DSA_KEY_PAIR_GEN" )
+    {
+        mOptionLabel->setText( QString("Key Length") );
+        mOptionCombo->addItems( sRSAOptionList );
+        mDHParamGroup->setDisabled(true);
     }
 }
 

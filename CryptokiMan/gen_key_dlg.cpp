@@ -4,10 +4,10 @@
 #include "js_pkcs11.h"
 #include "common.h"
 #include "cryptoki_api.h"
+#include "settings_mgr.h"
+#include "mech_mgr.h"
 
-static QStringList sMechList = {
-    "CKM_AES_KEY_GEN", "CKM_DES_KEY_GEN", "CKM_DES3_KEY_GEN", "CKM_GENERIC_SECRET_KEY_GEN"
-};
+static QStringList sMechGenList;
 
 static QStringList sFalseTrue = { "false", "true" };
 
@@ -18,6 +18,7 @@ GenKeyDlg::GenKeyDlg(QWidget *parent) :
 {
     setupUi(this);
 
+    initUI();
     initAttributes();
     setAttributes();
     connectAttributes();
@@ -52,6 +53,19 @@ void GenKeyDlg::slotChanged(int index)
     mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
 }
 
+void GenKeyDlg::initUI()
+{
+    if( manApplet->settingsMgr()->useDeviceMech() )
+    {
+        sMechGenList = manApplet->mechMgr()->getGenerateList();
+    }
+    else
+    {
+        sMechGenList = kMechGenList;
+    }
+
+    mMechCombo->addItems(sMechGenList);
+}
 
 void GenKeyDlg::initialize()
 {
@@ -71,7 +85,6 @@ void GenKeyDlg::initialize()
 
 void GenKeyDlg::initAttributes()
 {
-    mMechCombo->addItems(sMechList);
     mParamCombo->addItems(sParamList);
 
     mPrivateCombo->addItems(sFalseTrue);

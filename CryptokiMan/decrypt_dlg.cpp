@@ -9,9 +9,12 @@
 #include "cryptoki_api.h"
 #include "common.h"
 #include "settings_mgr.h"
+#include "mech_mgr.h"
 
 
 static QStringList sKeyList = { "SECRET", "PRIVATE" };
+static QStringList sMechEncSymList;
+static QStringList sMechEncAsymList;
 static CK_BBOOL kTrue = CK_TRUE;
 
 DecryptDlg::DecryptDlg(QWidget *parent) :
@@ -31,8 +34,19 @@ DecryptDlg::~DecryptDlg()
 
 void DecryptDlg::initUI()
 {
+    if( manApplet->settingsMgr()->useDeviceMech() )
+    {
+        sMechEncSymList = manApplet->mechMgr()->getDecList( MECH_TYPE_SYM );
+        sMechEncAsymList = manApplet->mechMgr()->getDecList( MECH_TYPE_ASYM );
+    }
+    else
+    {
+        sMechEncSymList = kMechEncSymList;
+        sMechEncAsymList = kMechEncAsymList;
+    }
+
     mKeyTypeCombo->addItems(sKeyList);
-    mMechCombo->addItems( kSymMechList );
+    mMechCombo->addItems( sMechEncSymList );
     mOutputCombo->addItems( kDataTypeList );
     mAADTypeCombo->addItems( kDataTypeList );
 
@@ -228,12 +242,12 @@ void DecryptDlg::keyTypeChanged( int index )
     if( mKeyTypeCombo->currentText() == sKeyList[0] )
     {
         objClass = CKO_SECRET_KEY;
-        mMechCombo->addItems(kSymMechList);
+        mMechCombo->addItems(sMechEncSymList);
     }
     else if( mKeyTypeCombo->currentText() == sKeyList[1] )
     {
         objClass = CKO_PRIVATE_KEY;
-        mMechCombo->addItems(kAsymMechList);
+        mMechCombo->addItems(sMechEncAsymList);
     }
 
     sTemplate[uCnt].type = CKA_CLASS;

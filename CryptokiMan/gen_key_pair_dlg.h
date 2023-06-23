@@ -47,6 +47,7 @@ private slots:
     void changeDH_P();
 
 private:
+    void initUI();
     void initialize();
     void initAttributes();
     void setAttributes();

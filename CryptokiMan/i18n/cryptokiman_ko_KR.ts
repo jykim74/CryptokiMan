@@ -612,7 +612,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Mechanism</source>
-        <translation>알고리즘</translation>
+        <translation type="vanished">알고리즘</translation>
     </message>
     <message>
         <source>Create key</source>
@@ -1188,7 +1188,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <source>Type</source>
-        <translation>타입</translation>
+        <translation type="vanished">타입</translation>
     </message>
     <message>
         <source>Derived Key</source>
@@ -1289,6 +1289,10 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>Parameter</source>
         <translation>파라미터</translation>
+    </message>
+    <message>
+        <source>Derived Key Type</source>
+        <translation>추출된 키 타입</translation>
     </message>
 </context>
 <context>
@@ -3751,6 +3755,10 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>The size of the file to be read at one time</source>
         <translation>한번에 읽을 파일 블록 크기</translation>
+    </message>
+    <message>
+        <source>Use Device Mechanism</source>
+        <translation>장치 메커니즘 사용</translation>
     </message>
 </context>
 <context>

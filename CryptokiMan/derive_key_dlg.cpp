@@ -4,6 +4,8 @@
 #include "js_pkcs11.h"
 #include "common.h"
 #include "cryptoki_api.h"
+#include "settings_mgr.h"
+#include "mech_mgr.h"
 
 static CK_BBOOL kTrue = CK_TRUE;
 static CK_BBOOL kFalse = CK_FALSE;
@@ -11,14 +13,7 @@ static CK_BBOOL kFalse = CK_FALSE;
 static QStringList sFalseTrue = { "false", "true" };
 static QStringList sParamList = { "CKD_NULL", "CKD_SHA1_KDF" };
 
-static QStringList sMechList = {
-    "CKM_DH_PKCS_DERIVE", "CKM_ECDH1_DERIVE",
-    "CKM_DES_ECB_ENCRYPT_DATA", "CKM_DES_CBC_ENCRYPT_DATA", "CKM_DES3_ECB_ENCRYPT_DATA", "CKM_DES3_CBC_ENCRYPT_DATA",
-    "CKM_AES_ECB_ENCRYPT_DATA", "CKM_AES_CBC_ENCRYPT_DATA", "CKM_CONCATENATE_DATA_AND_BASE",
-    "CKM_CONCATENATE_BASE_AND_DATA", "CKM_CONCATENATE_BASE_AND_KEY",
-    "CKM_SHA1_KEY_DERIVATION", "CKM_SHA256_KEY_DERIVATION", "CKM_SHA384_KEY_DERIVATION", "CKM_SHA512_KEY_DERIVATION",
-    "CKM_SHA224_KEY_DERIVATION"
-};
+static QStringList sMechDeriveList;
 
 static QStringList sKeyClassList = {
     "CKO_SECRET_KEY", "CKO_PRIVATE_KEY"
@@ -40,6 +35,7 @@ DeriveKeyDlg::DeriveKeyDlg(QWidget *parent) :
 
     setupUi(this);
 
+    initUI();
     initAttributes();
     setAttributes();
     connectAttributes();
@@ -102,6 +98,22 @@ void DeriveKeyDlg::setSelectedSlot(int index)
     slotChanged( index );
 
     setSrcLabelList();
+}
+
+void DeriveKeyDlg::initUI()
+{
+    if( manApplet->settingsMgr()->useDeviceMech() == true )
+    {
+        sMechDeriveList = manApplet->mechMgr()->getDeriveList();
+    }
+    else
+    {
+        sMechDeriveList = kMechDeriveList;
+    }
+
+    mSrcMethodCombo->addItems(sMechDeriveList);
+    mClassCombo->addItems( sKeyClassList );
+    mTypeCombo->addItems( sSecKeyTypeList );
 }
 
 void DeriveKeyDlg::initialize()
@@ -322,10 +334,6 @@ void DeriveKeyDlg::accept()
 
 void DeriveKeyDlg::initAttributes()
 {
-    mSrcMethodCombo->addItems(sMechList);
-    mClassCombo->addItems( sKeyClassList );
-    mTypeCombo->addItems( sSecKeyTypeList );
-
     mPrivateCombo->addItems(sFalseTrue);
     mDecryptCombo->addItems(sFalseTrue);
     mSignCombo->addItems(sFalseTrue);

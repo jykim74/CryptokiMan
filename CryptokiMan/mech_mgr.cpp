@@ -80,3 +80,241 @@ const QStringList MechMgr::getDigestList()
 
     return  digestList;
 }
+
+const QStringList MechMgr::getDeriveList()
+{
+    QStringList deriveList;
+
+    for( int i = 0; i < mech_list_.size(); i++ )
+    {
+        MechRec rec = mech_list_.at(i);
+
+        if( rec.getFlags() & CKF_DERIVE )
+            deriveList.append( rec.getIDName() );
+    }
+
+    return  deriveList;
+}
+
+const QStringList MechMgr::getWrapList( int type )
+{
+    QStringList wrapList;
+
+    for( int i = 0; i < mech_list_.size(); i++ )
+    {
+
+        MechRec rec = mech_list_.at(i);
+
+        if( rec.getFlags() & CKF_WRAP )
+        {
+            QString strName = rec.getIDName();
+
+            if( type == MECH_TYPE_SYM )
+            {
+                if( strName.contains( "RSA", Qt::CaseInsensitive) == false )
+                    wrapList.append( strName );
+            }
+            else if( type == MECH_TYPE_ASYM )
+            {
+                if( strName.contains( "RSA", Qt::CaseInsensitive) == true )
+                    wrapList.append( strName );
+            }
+            else
+            {
+                wrapList.append( strName );
+            }
+        }
+    }
+
+    return  wrapList;
+}
+
+const QStringList MechMgr::getUnwrapList( int type )
+{
+    QStringList unwrapList;
+
+    for( int i = 0; i < mech_list_.size(); i++ )
+    {
+        MechRec rec = mech_list_.at(i);
+
+        if( rec.getFlags() & CKF_UNWRAP )
+        {
+            QString strName = rec.getIDName();
+
+            if( type == MECH_TYPE_SYM )
+            {
+                if( strName.contains( "RSA", Qt::CaseInsensitive) == false )
+                    unwrapList.append( strName );
+            }
+            else if( type == MECH_TYPE_ASYM )
+            {
+                if( strName.contains( "RSA", Qt::CaseInsensitive) == true )
+                    unwrapList.append( strName );
+            }
+            else
+            {
+                unwrapList.append( strName );
+            }
+        }
+    }
+
+    return  unwrapList;
+}
+
+const QStringList MechMgr::getGenerateList()
+{
+    QStringList genList;
+
+    for( int i = 0; i < mech_list_.size(); i++ )
+    {
+        MechRec rec = mech_list_.at(i);
+
+        if( rec.getFlags() & CKF_GENERATE )
+            genList.append( rec.getIDName() );
+    }
+
+    return  genList;
+}
+
+const QStringList MechMgr::getGenerateKeyPairList()
+{
+    QStringList keyPairList;
+
+    for( int i = 0; i < mech_list_.size(); i++ )
+    {
+        MechRec rec = mech_list_.at(i);
+
+        if( rec.getFlags() & CKF_GENERATE_KEY_PAIR )
+            keyPairList.append( rec.getIDName() );
+    }
+
+    return  keyPairList;
+}
+
+const QStringList MechMgr::getSignList( int type )
+{
+    QStringList signList;
+
+    for( int i = 0; i < mech_list_.size(); i++ )
+    {
+        MechRec rec = mech_list_.at(i);
+
+        if( rec.getFlags() & CKF_SIGN )
+        {
+            QString strName = rec.getIDName();
+
+            if( type == MECH_TYPE_SYM )
+            {
+                if( strName.contains( "MAC", Qt::CaseInsensitive) == true )
+                    signList.append( strName );
+            }
+            else if( type == MECH_TYPE_ASYM )
+            {
+                if( strName.contains( "MAC", Qt::CaseInsensitive) == false )
+                    signList.append( strName );
+            }
+            else
+            {
+                signList.append( strName );
+            }
+        }
+    }
+
+    return signList;
+}
+
+const QStringList MechMgr::getVerifyList( int type )
+{
+    QStringList verifyList;
+
+    for( int i = 0; i < mech_list_.size(); i++ )
+    {
+        MechRec rec = mech_list_.at(i);
+
+        if( rec.getFlags() & CKF_VERIFY )
+        {
+            QString strName = rec.getIDName();
+
+            if( type == MECH_TYPE_SYM )
+            {
+                if( strName.contains( "MAC", Qt::CaseInsensitive) == true )
+                    verifyList.append( strName );
+            }
+            else if( type == MECH_TYPE_ASYM )
+            {
+                if( strName.contains( "MAC", Qt::CaseInsensitive) == false )
+                    verifyList.append( strName );
+            }
+            else
+            {
+                verifyList.append( strName );
+            }
+        }
+    }
+
+    return verifyList;
+}
+
+const QStringList MechMgr::getEncList( int type )
+{
+    QStringList encList;
+
+    for( int i = 0; i < mech_list_.size(); i++ )
+    {
+        MechRec rec = mech_list_.at(i);
+
+        if( rec.getFlags() & CKF_ENCRYPT )
+        {
+            QString strName = rec.getIDName();
+
+            if( type == MECH_TYPE_SYM )
+            {
+                if( strName.contains( "RSA", Qt::CaseInsensitive) == false )
+                    encList.append( strName );
+            }
+            else if( type == MECH_TYPE_ASYM )
+            {
+                if( strName.contains( "RSA", Qt::CaseInsensitive) == true )
+                    encList.append( strName );
+            }
+            else
+            {
+                encList.append( strName );
+            }
+        }
+    }
+
+    return encList;
+}
+
+const QStringList MechMgr::getDecList( int type )
+{
+    QStringList decList;
+
+    for( int i = 0; i < mech_list_.size(); i++ )
+    {
+        MechRec rec = mech_list_.at(i);
+
+        if( rec.getFlags() & CKF_DECRYPT )
+        {
+            QString strName = rec.getIDName();
+
+            if( type == MECH_TYPE_SYM )
+            {
+                if( strName.contains( "RSA", Qt::CaseInsensitive) == false )
+                    decList.append( strName );
+            }
+            else if( type == MECH_TYPE_ASYM )
+            {
+                if( strName.contains( "RSA", Qt::CaseInsensitive) == true )
+                    decList.append( strName );
+            }
+            else
+            {
+                decList.append( strName );
+            }
+        }
+    }
+
+    return decList;
+}

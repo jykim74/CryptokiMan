@@ -107,6 +107,8 @@ void CreateKeyDlg::setAttributes()
 
 void CreateKeyDlg::connectAttributes()
 {
+    connect( mKeyText, SIGNAL(textChanged()), this, SLOT(changeKey()));
+
     connect( mPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPrivate()));
     connect( mSensitiveCheck, SIGNAL(clicked()), this, SLOT(clickSensitive()));
     connect( mWrapCheck, SIGNAL(clicked()), this, SLOT(clickWrap()));
@@ -184,15 +186,10 @@ void CreateKeyDlg::accept()
         uCount++;
     }
 
-    QString strKey = mKeyText->text();
+    QString strKey = mKeyText->toPlainText();
     BIN binKey = {0,0};
 
-    if( mKeyCombo->currentIndex() == 0 )
-        JS_BIN_set( &binKey, (unsigned char *)strKey.toStdString().c_str(), strKey.length() );
-    else if( mKeyCombo->currentIndex() == 1 )
-        JS_BIN_decodeHex( strKey.toStdString().c_str(), &binKey );
-    else if( mKeyCombo->currentIndex() == 2 )
-        JS_BIN_decodeBase64( strKey.toStdString().c_str(), &binKey );
+    getBINFromString( &binKey, mKeyCombo->currentText(), strKey );
 
     sTemplate[uCount].type = CKA_VALUE;
     sTemplate[uCount].pValue = binKey.pVal;
@@ -399,6 +396,13 @@ void CreateKeyDlg::clickStartDate()
 void CreateKeyDlg::clickEndDate()
 {
     mEndDateEdit->setEnabled(mEndDateCheck->isChecked());
+}
+
+void CreateKeyDlg::changeKey()
+{
+    QString strKey = mKeyText->toPlainText();
+    int nLen = getDataLen( mKeyCombo->currentText(), strKey );
+    mKeyLenText->setText( QString("%1").arg(nLen));
 }
 
 void CreateKeyDlg::setDefaults()

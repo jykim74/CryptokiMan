@@ -4,6 +4,8 @@
 #include <QList>
 #include <QStringList>
 
+enum { MECH_TYPE_ALL, MECH_TYPE_SYM, MECH_TYPE_ASYM };
+
 class MechRec;
 
 class MechMgr
@@ -21,6 +23,15 @@ public:
     int loadMechList( long slotid );
 
     const QStringList getDigestList();
+    const QStringList getDeriveList();
+    const QStringList getWrapList( int type = MECH_TYPE_ALL );
+    const QStringList getUnwrapList( int type = MECH_TYPE_ALL );
+    const QStringList getGenerateList();
+    const QStringList getGenerateKeyPairList();
+    const QStringList getSignList( int type = MECH_TYPE_ALL );
+    const QStringList getVerifyList( int type = MECH_TYPE_ALL );
+    const QStringList getEncList( int type = MECH_TYPE_ALL );
+    const QStringList getDecList( int type = MECH_TYPE_ALL );
 };
 
 #endif // MECHMGR_H

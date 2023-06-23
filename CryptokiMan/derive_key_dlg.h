@@ -45,6 +45,7 @@ private slots:
     void changeParam2( const QString& text );
 
 private:
+    void initUI();
     void initialize();
     void initAttributes();
     void setAttributes();

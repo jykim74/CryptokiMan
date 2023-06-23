@@ -6,17 +6,16 @@
 #include "js_pkcs11.h"
 #include "common.h"
 #include "cryptoki_api.h"
+#include "settings_mgr.h"
+#include "mech_mgr.h"
 
 static CK_BBOOL kTrue = CK_TRUE;
 static CK_BBOOL kFalse = CK_FALSE;
 
+static QStringList sMechUnwrapSymList;
+static QStringList sMechUnwrapAsymList;
+
 static QStringList sFalseTrue = { "false", "true" };
-
-static QStringList sUnwrapMechList = {
-    "CKM_RSA_PKCS", "CKM_RSA_PKCS_OAEP",
-    "CKM_AES_KEY_WRAP", "CKM_AES_KEY_WRAP_PAD"
-};
-
 
 static QStringList sClassList = {
     "CKO_SECRET_KEY", "CKO_PRIVATE_KEY",
@@ -38,6 +37,8 @@ UnwrapKeyDlg::UnwrapKeyDlg(QWidget *parent) :
     session_ = -1;
 
     setupUi(this);
+    initUI();
+
     initAttributes();
     setAttributes();
     connectAttributes();
@@ -59,12 +60,22 @@ UnwrapKeyDlg::~UnwrapKeyDlg()
 
 }
 
-void UnwrapKeyDlg::initAttributes()
+void UnwrapKeyDlg::initUI()
 {
-    mUnwrapMechCombo->addItems(sUnwrapMechList);
+    if( manApplet->settingsMgr()->useDeviceMech() == true )
+    {
+        sMechUnwrapSymList = manApplet->mechMgr()->getUnwrapList( MECH_TYPE_SYM );
+        sMechUnwrapAsymList = manApplet->mechMgr()->getUnwrapList( MECH_TYPE_ASYM );
+    }
+
+    mUnwrapMechCombo->addItems(sMechUnwrapSymList);
     mClassCombo->addItems(sClassList);
     mTypeCombo->addItems(sSymTypeList);
+    mUnwrapTypeCombo->addItems( kWrapType );
+}
 
+void UnwrapKeyDlg::initAttributes()
+{
     mPrivateCombo->addItems(sFalseTrue);
     mSensitiveCombo->addItems(sFalseTrue);
     mWrapCombo->addItems(sFalseTrue);
@@ -167,8 +178,7 @@ void UnwrapKeyDlg::setSelectedSlot(int index)
 
 void UnwrapKeyDlg::initialize()
 {
-    mUnwrapTypeCombo->addItems( kWrapType );
-    mUnwrapMechCombo->addItems( kSecretWrapMech );
+
 }
 
 void UnwrapKeyDlg::accept()
@@ -404,12 +414,12 @@ void UnwrapKeyDlg::unwrapTypeChanged(int index)
 
     if( mUnwrapTypeCombo->currentText() == kWrapType.at(0) )
     {
-        mUnwrapMechCombo->addItems( kSecretWrapMech );
+        mUnwrapMechCombo->addItems( sMechUnwrapSymList );
         setUnwrapSecretLabel();
     }
     else
     {
-        mUnwrapMechCombo->addItems( kRSAWrapMech );
+        mUnwrapMechCombo->addItems( sMechUnwrapAsymList );
         setUnwrapRSAPrivateLabel();
     }
 }
