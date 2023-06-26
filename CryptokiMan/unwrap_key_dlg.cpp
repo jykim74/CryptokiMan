@@ -69,6 +69,11 @@ void UnwrapKeyDlg::initUI()
         sMechUnwrapSymList = manApplet->mechMgr()->getUnwrapList( MECH_TYPE_SYM );
         sMechUnwrapAsymList = manApplet->mechMgr()->getUnwrapList( MECH_TYPE_ASYM );
     }
+    else
+    {
+        sMechUnwrapSymList = kMechWrapSymList;
+        sMechUnwrapAsymList = kMechWrapAsymList;
+    }
 
     mUnwrapMechCombo->addItems(sMechUnwrapSymList);
     mClassCombo->addItems(sClassList);
@@ -267,6 +272,38 @@ void UnwrapKeyDlg::accept()
         uCount++;
     }
 
+    if( mPrivateCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_PRIVATE;
+        sTemplate[uCount].pValue = ( mPrivateCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mSensitiveCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_SENSITIVE;
+        sTemplate[uCount].pValue = ( mSensitiveCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mWrapCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_WRAP;
+        sTemplate[uCount].pValue = ( mWrapCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mUnwrapCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_UNWRAP;
+        sTemplate[uCount].pValue = ( mUnwrapCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
     if( mDecryptCheck->isChecked() )
     {
         sTemplate[uCount].type = CKA_DECRYPT;
@@ -291,42 +328,10 @@ void UnwrapKeyDlg::accept()
         uCount++;
     }
 
-    if( mPrivateCheck->isChecked() )
-    {
-        sTemplate[uCount].type = CKA_PRIVATE;
-        sTemplate[uCount].pValue = ( mPrivateCombo->currentIndex() ? &bTrue : &bFalse );
-        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
-        uCount++;
-    }
-
-    if( mSensitiveCheck->isChecked() )
-    {
-        sTemplate[uCount].type = CKA_SENSITIVE;
-        sTemplate[uCount].pValue = ( mSensitiveCombo->currentIndex() ? &bTrue : &bFalse );
-        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
-        uCount++;
-    }
-
     if( mSignCheck->isChecked() )
     {
         sTemplate[uCount].type = CKA_SIGN;
         sTemplate[uCount].pValue = ( mSignCombo->currentIndex() ? &bTrue : &bFalse );
-        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
-        uCount++;
-    }
-
-    if( mTokenCheck->isChecked() )
-    {
-        sTemplate[uCount].type = CKA_TOKEN;
-        sTemplate[uCount].pValue = ( mTokenCombo->currentIndex() ? &bTrue : &bFalse );
-        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
-        uCount++;
-    }
-
-    if( mUnwrapCheck->isChecked() )
-    {
-        sTemplate[uCount].type = CKA_UNWRAP;
-        sTemplate[uCount].pValue = ( mUnwrapCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
         uCount++;
     }
@@ -339,10 +344,10 @@ void UnwrapKeyDlg::accept()
         uCount++;
     }
 
-    if( mWrapCheck->isChecked() )
+    if( mTokenCheck->isChecked() )
     {
-        sTemplate[uCount].type = CKA_WRAP;
-        sTemplate[uCount].pValue = ( mWrapCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].type = CKA_TOKEN;
+        sTemplate[uCount].pValue = ( mTokenCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
         uCount++;
     }
@@ -351,6 +356,14 @@ void UnwrapKeyDlg::accept()
     {
         sTemplate[uCount].type = CKA_DERIVE;
         sTemplate[uCount].pValue = ( mDeriveCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mExtractableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_EXTRACTABLE;
+        sTemplate[uCount].pValue = ( mExtractableCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
         uCount++;
     }
@@ -438,11 +451,13 @@ void UnwrapKeyDlg::classChanged(int index)
 
 void UnwrapKeyDlg::clickFind()
 {
-    QString strPath = manApplet->getSetPath();
+    QString strPath = manApplet->curFile();
+
     QString fileName = findFile( this, JS_FILE_TYPE_PRIKEY, strPath );
     if( fileName.isEmpty() ) return;
 
     mWrapKeyPathText->setText( fileName );
+    manApplet->setCurFile( fileName );
 }
 
 

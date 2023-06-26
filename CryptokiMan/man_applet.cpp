@@ -95,6 +95,11 @@ void ManApplet::start()
     main_win_->activateWindow();
 }
 
+void ManApplet::setCurFile( const QString& strFile )
+{
+    cur_file_ = strFile;
+}
+
 int ManApplet::checkLicense()
 {
     time_t ntp_t = 0;

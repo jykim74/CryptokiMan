@@ -64,6 +64,9 @@ public:
 
     bool isLicense() { return  is_license_; };
 
+    QString curFile() { return cur_file_; };
+    void setCurFile( const QString& strFile );
+
 private:
     Q_DISABLE_COPY(ManApplet)
 
@@ -78,6 +81,7 @@ private:
     JS_LICENSE_INFO license_info_;
     QString cmd_;
     CryptokiAPI     *cryptoki_api_;
+    QString cur_file_;
 };
 
 extern ManApplet *manApplet;

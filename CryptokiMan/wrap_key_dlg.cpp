@@ -191,11 +191,13 @@ void WrapKeyDlg::wrappingTypeChanged( int index )
 
 void WrapKeyDlg::clickFind()
 {
-    QString strPath = manApplet->getSetPath();
+    QString strPath = manApplet->curFile();
+
     QString fileName = saveFile( this, JS_FILE_TYPE_BIN, strPath );
     if( fileName.isEmpty() ) return;
 
     mPathText->setText( fileName );
+    manApplet->setCurFile( fileName );
 }
 
 void WrapKeyDlg::changeWrappingParam(const QString& text )
