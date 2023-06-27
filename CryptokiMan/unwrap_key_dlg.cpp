@@ -23,7 +23,7 @@ static QStringList sClassList = {
 
 
 static QStringList sSymTypeList = {
-    "CKK_DES", "CKK_DES3", "CKK_AES"
+    "CKK_DES", "CKK_DES3", "CKK_AES", "CKK_GENERIC_SECRET"
 };
 
 static QStringList sAsymTypeList = {
