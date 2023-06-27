@@ -2569,7 +2569,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <source>Type</source>
-        <translation>타입</translation>
+        <translation type="vanished">타입</translation>
     </message>
     <message>
         <source>Login OK</source>
@@ -3980,7 +3980,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <source>Find</source>
-        <translation>찾기</translation>
+        <translation type="vanished">찾기</translation>
     </message>
     <message>
         <source>Unwrap Key properties</source>
@@ -4093,6 +4093,18 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>Derive</source>
         <translation>유도</translation>
+    </message>
+    <message>
+        <source>Input Clear</source>
+        <translation>입력 지움</translation>
+    </message>
+    <message>
+        <source>Read File</source>
+        <translation>파일 읽기</translation>
+    </message>
+    <message>
+        <source>You have to insert wraped key value</source>
+        <translation>암호화된 키 값을 입력하세요</translation>
     </message>
 </context>
 <context>
@@ -4326,11 +4338,11 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <source>Wrapped Path</source>
-        <translation>Wrapped 경로</translation>
+        <translation type="vanished">Wrapped 경로</translation>
     </message>
     <message>
         <source>Find</source>
-        <translation>찾기</translation>
+        <translation type="vanished">찾기</translation>
     </message>
     <message>
         <source>Object</source>
@@ -4351,6 +4363,30 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>Type</source>
         <translation>타입</translation>
+    </message>
+    <message>
+        <source>Output</source>
+        <translation>결과</translation>
+    </message>
+    <message>
+        <source>Output Clear</source>
+        <translation>출력 지우기</translation>
+    </message>
+    <message>
+        <source>Save File</source>
+        <translation>파일 저장</translation>
+    </message>
+    <message>
+        <source>WrapKey</source>
+        <translation>Wrap Key</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>닫기</translation>
+    </message>
+    <message>
+        <source>There is no output data</source>
+        <translation>결과 데이타가 없습니다</translation>
     </message>
 </context>
 </TS>

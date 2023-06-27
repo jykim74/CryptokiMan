@@ -39,7 +39,11 @@ void WrapKeyDlg::initUI()
     connect( mWrappingTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(wrappingTypeChanged(int)));
     connect( mWrappingLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(wrappingLabelChanged(int)));
     connect( mLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(labelChanged(int)));
-    connect( mFindBtn, SIGNAL(clicked()), this, SLOT(clickFind()));
+    connect( mSaveFileBtn, SIGNAL(clicked()), this, SLOT(clickSaveFile()));
+    connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(close()));
+    connect( mOutputClearBtn, SIGNAL(clicked()), this, SLOT( clickClearOuput()));
+    connect( mWrapKeyBtn, SIGNAL(clicked()), this, SLOT(clickWrapKey()));
+    connect( mOutputText, SIGNAL(textChanged()), this, SLOT(changeOutput()));
 
     initialize();
 }
@@ -88,17 +92,9 @@ void WrapKeyDlg::initialize()
     mWrappingMechCombo->addItems( kMechWrapSymList );
 }
 
-void WrapKeyDlg::accept()
+void WrapKeyDlg::clickWrapKey()
 {
     int rv = -1;
-    QString strPath = mPathText->text();
-
-    if( strPath.isEmpty() )
-    {
-        QMessageBox::warning( this, "WrapKey", "You have to select file path to save." );
-        return;
-    }
-
 
     long hWrappingKey = mWrappingObjectText->text().toLong();
     long hKey = mObjectText->text().toLong();
@@ -113,7 +109,7 @@ void WrapKeyDlg::accept()
 
     if( !strParam.isEmpty() )
     {
-        JS_BIN_decodeHex( strPath.toStdString().c_str(), &binParam );
+        JS_BIN_decodeHex( strParam.toStdString().c_str(), &binParam );
         sMech.pParameter = binParam.pVal;
         sMech.ulParameterLen = binParam.nLen;
     }
@@ -145,14 +141,14 @@ void WrapKeyDlg::accept()
 
     BIN binWrapped = {0,0};
     JS_BIN_set( &binWrapped, pData, uDataLen );
-    JS_BIN_fileWrite( &binWrapped, strPath.toLocal8Bit().toStdString().c_str() );
+    mOutputText->setPlainText( getHexString( binWrapped.pVal, binWrapped.nLen));
 
 
     if( pData ) JS_free( pData );
     JS_BIN_reset( &binWrapped );
 
     manApplet->messageBox( "WrapKey is success", this );
-    QDialog::accept();
+    manApplet->log( "WrapKey is success" );
 }
 
 
@@ -189,15 +185,42 @@ void WrapKeyDlg::wrappingTypeChanged( int index )
     }
 }
 
-void WrapKeyDlg::clickFind()
+void WrapKeyDlg::clickSaveFile()
 {
+    BIN binOut = {0,0};
+    QString strOutput = mOutputText->toPlainText();
     QString strPath = manApplet->curFile();
 
-    QString fileName = saveFile( this, JS_FILE_TYPE_BIN, strPath );
-    if( fileName.isEmpty() ) return;
+    if( strOutput.length() < 1 )
+    {
+        manApplet->warningBox( tr( "There is no output data"), this );
+        return;
+    }
 
-    mPathText->setText( fileName );
+    getBINFromString( &binOut, DATA_HEX, strOutput );
+
+    QString fileName = saveFile( this, JS_FILE_TYPE_BIN, strPath );
+    if( fileName.isEmpty() )
+    {
+        JS_BIN_reset( &binOut );
+        return;
+    }
+
+    JS_BIN_fileWrite( &binOut, fileName.toLocal8Bit().toStdString().c_str() );
     manApplet->setCurFile( fileName );
+    JS_BIN_reset( &binOut );
+}
+
+void WrapKeyDlg::clickClearOutput()
+{
+    mOutputText->clear();
+}
+
+void WrapKeyDlg::changeOutput()
+{
+    QString strOut = mOutputText->toPlainText();
+    int nLen = getDataLen( DATA_HEX, strOut );
+    mOutputLenText->setText( QString("%1").arg(nLen));
 }
 
 void WrapKeyDlg::changeWrappingParam(const QString& text )

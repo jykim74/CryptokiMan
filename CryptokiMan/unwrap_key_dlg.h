@@ -24,7 +24,7 @@ private slots:
     void unwrapLabelChanged(int index);
     void unwrapTypeChanged(int index);
     void classChanged(int index);
-    void clickFind();
+    void clickReadFile();
 
     void clickPrivate();
     void clickSensitive();
@@ -42,6 +42,9 @@ private slots:
     void clickEndDate();
 
     void changeUnwrapParam( const QString& text );
+    void clickInputClear();
+    void changeInput();
+
 private:
     void initUI();
     void initialize();

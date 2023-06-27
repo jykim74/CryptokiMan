@@ -49,7 +49,9 @@ UnwrapKeyDlg::UnwrapKeyDlg(QWidget *parent) :
 
     connect( mUnwrapParamText, SIGNAL(textChanged(const QString&)), this, SLOT(changeUnwrapParam(const QString&)));
 
-    connect( mFindBtn, SIGNAL(clicked(bool)), this, SLOT(clickFind()));
+    connect( mReadFileBtn, SIGNAL(clicked(bool)), this, SLOT(clickReadFile()));
+    connect( mInputClearBtn, SIGNAL(clicked()), this, SLOT(clickInputClear()));
+    connect( mInputText, SIGNAL(textChanged()), this, SLOT(changeInput()));
 
     initialize();
     setDefaults();
@@ -192,11 +194,11 @@ void UnwrapKeyDlg::accept()
 {
     int rv = -1;
 
-    QString strWrapPath = mWrapKeyPathText->text();
+    QString strInput = mInputText->toPlainText();
 
-    if( strWrapPath.isEmpty() )
+    if( strInput.length() < 1 )
     {
-        QMessageBox::warning( this, "UnwrapKey", "You have to select wrapped file." );
+        QMessageBox::warning( this, "UnwrapKey", tr("You have to insert wraped key value") );
         return;
     }
 
@@ -220,7 +222,7 @@ void UnwrapKeyDlg::accept()
     hUnwrappingKey = mUnwrapObjectText->text().toLong();
 
     BIN binWrappedKey = {0,0};
-    JS_BIN_fileRead( strWrapPath.toLocal8Bit().toStdString().c_str(), &binWrappedKey );
+    getBINFromString( &binWrappedKey, DATA_HEX, strInput );
 
     memset( &sMech, 0x00, sizeof(sMech));
     sMech.mechanism = JS_PKCS11_GetCKMType( mUnwrapMechCombo->currentText().toStdString().c_str());
@@ -449,14 +451,19 @@ void UnwrapKeyDlg::classChanged(int index)
         mTypeCombo->addItems( sAsymTypeList );
 }
 
-void UnwrapKeyDlg::clickFind()
+void UnwrapKeyDlg::clickReadFile()
 {
     QString strPath = manApplet->curFile();
 
     QString fileName = findFile( this, JS_FILE_TYPE_PRIKEY, strPath );
     if( fileName.isEmpty() ) return;
 
-    mWrapKeyPathText->setText( fileName );
+    BIN binInput = {0,0};
+    JS_BIN_fileRead( fileName.toLocal8Bit().toStdString().c_str(), &binInput );
+
+    mInputText->setPlainText( getHexString( binInput.pVal, binInput.nLen ));
+    JS_BIN_reset( &binInput );
+
     manApplet->setCurFile( fileName );
 }
 
@@ -661,4 +668,16 @@ void UnwrapKeyDlg::changeUnwrapParam( const QString& text )
 {
     int nLen = getDataLen( DATA_HEX, text );
     mUnwrapParamLenText->setText( QString("%1").arg(nLen));
+}
+
+void UnwrapKeyDlg::clickInputClear()
+{
+    mInputText->clear();
+}
+
+void UnwrapKeyDlg::changeInput()
+{
+    QString strInput = mInputText->toPlainText();
+    int nLen = getDataLen( DATA_HEX, strInput );
+    mInputLenText->setText( QString("%1").arg(nLen));
 }

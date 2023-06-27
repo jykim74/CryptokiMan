@@ -18,13 +18,15 @@ public:
     void setSelectedSlot( int index );
 
 private slots:
-    virtual void accept();
+    void clickWrapKey();
     void slotChanged( int index );
 
     void labelChanged(int index );
     void wrappingLabelChanged(int index );
     void wrappingTypeChanged( int index );
-    void clickFind();
+    void clickSaveFile();
+    void clickClearOutput();
+    void changeOutput();
 
     void changeWrappingParam(const QString& text );
 private:
