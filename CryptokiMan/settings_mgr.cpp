@@ -11,6 +11,7 @@ namespace  {
     const char *kLogLevel = "logLevel";
     const char *kFileReadSize = "fileReadSize";
     const char *kUseDeviceMech = "useDeviceMech";
+    const char *kFontFamily = "fontFamily";
 }
 
 SettingsMgr::SettingsMgr( QObject *parent) : QObject (parent)
@@ -133,4 +134,23 @@ bool SettingsMgr::getUseDeviceMech()
     sets.endGroup();
 
     return use_device_mech_;
+}
+
+void SettingsMgr::setFontFamily( const QString& strFamily )
+{
+    QSettings sets;
+    sets.beginGroup( kBehaviorGroup );
+    sets.setValue( kFontFamily, strFamily );
+    sets.endGroup();
+}
+
+QString SettingsMgr::getFontFamily()
+{
+    QSettings sets;
+
+    sets.beginGroup( kBehaviorGroup );
+    QString strFamily = sets.value( kFontFamily, "굴림체" ).toString();
+    sets.endGroup();
+
+    return strFamily;
 }

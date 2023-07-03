@@ -17,6 +17,7 @@ SettingsDlg::SettingsDlg(QWidget *parent) :
 
     mLangCombo->addItems(I18NHelper::getInstance()->getLanguages());
 
+    initFontFamily();
     initialize();
 }
 
@@ -40,6 +41,8 @@ void SettingsDlg::updateSettings()
     mgr->setLogLevel( mLogLevelCombo->currentIndex() );
     mgr->setFileReadSize( mFileReadSizeText->text().toInt() );
     mgr->setUseDeviceMech( mUseDeviceMechCheck->isChecked() );
+
+    mgr->setFontFamily( mFontFamilyCombo->currentText() );
 
 #ifdef _AUTO_UPDATE
     if( AutoUpdateService::instance()->shouldSupportAutoUpdate() ) {
@@ -66,6 +69,12 @@ void SettingsDlg::accept()
     QDialog::accept();
 }
 
+void SettingsDlg::initFontFamily()
+{
+    QFontDatabase fontDB;
+    QStringList fontList = fontDB.families();
+    mFontFamilyCombo->addItems( fontList );
+}
 
 void SettingsDlg::initialize()
 {
@@ -101,6 +110,7 @@ void SettingsDlg::initialize()
     mFileReadSizeText->setText( QString("%1").arg(mgr->getFileReadSize()));
 
     mUseDeviceMechCheck->setChecked( mgr->getUseDeviceMech() );
+    mFontFamilyCombo->setCurrentText( mgr->getFontFamily() );
 
     mLangCombo->setCurrentIndex(I18NHelper::getInstance()->preferredLanguage());
     tabWidget->setCurrentIndex(0);

@@ -7,6 +7,7 @@
 #include "man_applet.h"
 #include "js_pki.h"
 #include "i18n_helper.h"
+#include "settings_mgr.h"
 
 int main(int argc, char *argv[])
 {
@@ -19,13 +20,6 @@ int main(int argc, char *argv[])
     QFile qss(":/cryptokiman.qss");
     qss.open( QFile::ReadOnly );
     app.setStyleSheet(qss.readAll());
-
-#ifdef Q_OS_WIN32
-    QFont font;
-    font.setFamily(QString("굴림체"));
-    app.setFont(font);
-#endif
-
 
     QCommandLineParser parser;
     parser.setApplicationDescription( QCoreApplication::applicationName() );
@@ -41,6 +35,12 @@ int main(int argc, char *argv[])
     manApplet = &mApplet;
     manApplet->setCmd( argv[0]);
     manApplet->start();
+
+    QFont font;
+    QString strFont = manApplet->settingsMgr()->getFontFamily();
+
+    font.setFamily( strFont );
+    app.setFont(font);
 
     MainWindow *mw = manApplet->mainWindow();
     if( !parser.positionalArguments().isEmpty() )

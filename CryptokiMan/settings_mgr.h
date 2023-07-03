@@ -29,6 +29,9 @@ public:
     void setUseDeviceMech( bool bVal );
     bool getUseDeviceMech();
     bool useDeviceMech() { return use_device_mech_; };
+
+    void setFontFamily( const QString& strFamily );
+    QString getFontFamily();
 signals:
 
 public slots:

@@ -20,9 +20,9 @@ private slots:
     void updateSettings();
     virtual void accept();
 
-    void initialize();
-
 private:
+    void initFontFamily();
+    void initialize();
     Q_DISABLE_COPY(SettingsDlg)
 };
 
