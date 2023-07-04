@@ -3760,6 +3760,14 @@ Do you want to delete the file and continue?</source>
         <source>Use Device Mechanism</source>
         <translation>장치 메커니즘 사용</translation>
     </message>
+    <message>
+        <source>Font Family</source>
+        <translation>폰트 패밀리</translation>
+    </message>
+    <message>
+        <source>Need to restart</source>
+        <translation>재실행 필요함</translation>
+    </message>
 </context>
 <context>
     <name>SignDlg</name>
