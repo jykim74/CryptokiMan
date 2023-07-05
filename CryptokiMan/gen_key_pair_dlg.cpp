@@ -4,6 +4,7 @@
 #include "js_pkcs11.h"
 #include "js_pki.h"
 #include "js_pki_tools.h"
+#include "js_pki_eddsa.h"
 #include "common.h"
 #include "cryptoki_api.h"
 #include "mech_mgr.h"
@@ -32,6 +33,13 @@ GenKeyPairDlg::GenKeyPairDlg(QWidget *parent) :
     connect( mMechCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(mechChanged(int)));
     connect( mGenDHParamBtn, SIGNAL(clicked()), this, SLOT(clickGenDHParam()));
     connect( mDH_PText, SIGNAL(textChanged()), this, SLOT(changeDH_P()));
+
+    connect( mDSA_GText, SIGNAL(textChanged()), this, SLOT(changeDSA_G()));
+    connect( mDSA_PText, SIGNAL(textChanged()), this, SLOT(changeDSA_P()));
+    connect( mDSA_QText, SIGNAL(textChanged(const QString&)), this, SLOT(changeDSA_Q()));
+
+    connect( mDSAGenParamBtn, SIGNAL(clicked()), this, SLOT(clickGenDSAParam()));
+    connect( mDSAClearParamBtn, SIGNAL(clicked()), this, SLOT(clickClearDSAParam()));
 
     initialize();
     setDefaults();
@@ -65,7 +73,7 @@ void GenKeyPairDlg::initUI()
     mOptionCombo->setEditable( true );
 
     mDH_GCombo->addItems( sDH_GList );
-    mDHParamGroup->setDisabled(true);
+    mParamTab->setDisabled(true);
 }
 
 void GenKeyPairDlg::initialize()
@@ -209,13 +217,11 @@ void GenKeyPairDlg::accept()
         stMech.mechanism = CKM_DH_PKCS_KEY_PAIR_GEN;
         keyType = CKK_DH;
     }
-#if 0
     else if( strMech == "CKM_DSA_KEY_PAIR_GEN" )
     {
         stMech.mechanism = CKM_DSA_KEY_PAIR_GEN;
         keyType = CKK_DSA;
     }
-#endif
     else
     {
         manApplet->elog( QString( "Invalid Mechanism:%1").arg(strMech));
@@ -239,6 +245,9 @@ void GenKeyPairDlg::accept()
     BIN binDH_G = {0,0};
     BIN binDH_P = {0,0};
 
+    BIN binDSA_P = {0,0};
+    BIN binDSA_Q = {0,0};
+    BIN binDSA_G = {0,0};
 
     CK_ULONG uModulusBits = 0;
     int nSelOption = mOptionCombo->currentIndex();
@@ -300,11 +309,33 @@ void GenKeyPairDlg::accept()
     {
         /* DSA 알고리즘은 좀더 입력 값 확인 이 필요함 */
         /* 관련 CKA_PRIME, CKA_SUBPRIME 그리고 CKA_BASE 값 설정에 관한 */
+        QString strDSA_P = mDSA_PText->toPlainText();
+        QString strDSA_G = mDSA_GText->toPlainText();
+        QString strDSA_Q = mDSA_QText->text();
+
+        JS_BIN_decodeHex( strDSA_G.toStdString().c_str(), &binDSA_G );
+        JS_BIN_decodeHex( strDSA_P.toStdString().c_str(), &binDSA_P );
+        JS_BIN_decodeHex( strDSA_Q.toStdString().c_str(), &binDSA_Q );
 
         uModulusBits = sRSAOptionList.at(nSelOption).toInt();
         sPubTemplate[uPubCount].type = CKA_PRIME_BITS;
         sPubTemplate[uPubCount].pValue = &uModulusBits;
         sPubTemplate[uPubCount].ulValueLen = sizeof( uModulusBits );
+        uPubCount++;
+
+        sPubTemplate[uPubCount].type = CKA_PRIME;
+        sPubTemplate[uPubCount].pValue = binDSA_P.pVal;
+        sPubTemplate[uPubCount].ulValueLen = binDSA_P.nLen;
+        uPubCount++;
+
+        sPubTemplate[uPubCount].type = CKA_SUBPRIME;
+        sPubTemplate[uPubCount].pValue = binDSA_Q.pVal;
+        sPubTemplate[uPubCount].ulValueLen = binDSA_Q.nLen;
+        uPubCount++;
+
+        sPubTemplate[uPubCount].type = CKA_BASE;
+        sPubTemplate[uPubCount].pValue = binDSA_G.pVal;
+        sPubTemplate[uPubCount].ulValueLen = binDSA_G.nLen;
         uPubCount++;
     }
 
@@ -543,6 +574,9 @@ void GenKeyPairDlg::accept()
     JS_BIN_reset( &binPriLabel );
     JS_BIN_reset( &binPriSubject );
     JS_BIN_reset( &binPriID );
+    JS_BIN_reset( &binDSA_G );
+    JS_BIN_reset( &binDSA_P );
+    JS_BIN_reset( &binDSA_Q );
 
     if( rv != CKR_OK )
     {
@@ -577,25 +611,31 @@ void GenKeyPairDlg::mechChanged(int nIndex)
     {
         mOptionLabel->setText( QString("Key Length") );
         mOptionCombo->addItems( sRSAOptionList );
-        mDHParamGroup->setDisabled(true);
+        mParamTab->setDisabled(true);
     }
     else if( strMech == "CKM_ECDSA_KEY_PAIR_GEN" )
     {
         mOptionLabel->setText( QString("NamedCurve"));
         mOptionCombo->addItems( kECCOptionList );
-        mDHParamGroup->setDisabled(true);
+        mParamTab->setDisabled(true);
     }
     else if( strMech == "CKM_DH_PKCS_KEY_PAIR_GEN" )
     {
         mOptionLabel->setText( QString("Key Length") );
         mOptionCombo->addItems( sDHOptionList );
-        mDHParamGroup->setDisabled(false);
+        mParamTab->setDisabled(false);
+        mParamTab->setCurrentIndex(1);
+        mParamTab->setTabEnabled(0, false);
+        mParamTab->setTabEnabled(1, true);
     }
     else if( strMech == "CKM_DSA_KEY_PAIR_GEN" )
     {
         mOptionLabel->setText( QString("Key Length") );
         mOptionCombo->addItems( sRSAOptionList );
-        mDHParamGroup->setDisabled(true);
+        mParamTab->setDisabled(false);
+        mParamTab->setCurrentIndex(0);
+        mParamTab->setTabEnabled(0, true);
+        mParamTab->setTabEnabled(1, false);
     }
 }
 
@@ -710,6 +750,53 @@ void GenKeyPairDlg::changeDH_P()
     int nLen = mDH_PText->toPlainText().length() / 2;
 
     mDH_PLenText->setText( QString("%1").arg( nLen ));
+}
+
+void GenKeyPairDlg::clickGenDSAParam()
+{
+    BIN binP = {0,0};
+    BIN binG = {0,0};
+    BIN binQ = {0,0};
+
+    int nKeyLen = mOptionCombo->currentText().toInt();
+
+    JS_PKI_DSA_GenParam( nKeyLen, &binP, &binQ, &binG );
+
+    mDSA_GText->setPlainText( getHexString(binG.pVal, binG.nLen));
+    mDSA_PText->setPlainText( getHexString(binP.pVal, binP.nLen));
+    mDSA_QText->setText( getHexString(binQ.pVal, binQ.nLen));
+
+    JS_BIN_reset( &binP );
+    JS_BIN_reset( &binG );
+    JS_BIN_reset( &binQ );
+}
+
+void GenKeyPairDlg::clickClearDSAParam()
+{
+    mDSA_GText->clear();
+    mDSA_PText->clear();
+    mDSA_QText->clear();
+}
+
+void GenKeyPairDlg::changeDSA_P()
+{
+    QString strP = mDSA_PText->toPlainText();
+    int nLen = getDataLen( DATA_HEX, strP );
+    mDSA_PLenText->setText( QString("%1").arg(nLen));
+}
+
+void GenKeyPairDlg::changeDSA_G()
+{
+    QString strG = mDSA_GText->toPlainText();
+    int nLen = getDataLen( DATA_HEX, strG );
+    mDSA_GLenText->setText( QString("%1").arg(nLen));
+}
+
+void GenKeyPairDlg::changeDSA_Q()
+{
+    QString strQ = mDSA_QText->text();
+    int nLen = getDataLen( DATA_HEX, strQ );
+    mDSA_QLenText->setText( QString("%1").arg(nLen));
 }
 
 void GenKeyPairDlg::setDefaults()

@@ -46,6 +46,12 @@ private slots:
     void clickGenDHParam();
     void changeDH_P();
 
+    void clickGenDSAParam();
+    void clickClearDSAParam();
+    void changeDSA_P();
+    void changeDSA_G();
+    void changeDSA_Q();
+
 private:
     void initUI();
     void initialize();
