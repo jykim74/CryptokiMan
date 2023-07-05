@@ -1744,7 +1744,7 @@ void MainWindow::showPublicKeyInfoDetail( QModelIndex index )
     {
         info( QString( "CKA_PRIME           : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_PRIME, uObj)));
         info( QString( "CKA_BASE            : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_BASE, uObj)));
-        info( QString( "CKA_VALUE            : %1\n" ).arg(stringAttribute(  ATTR_VAL_HEX, CKA_VALUE, uObj)) );
+        info( QString( "CKA_VALUE           : %1\n" ).arg(stringAttribute(  ATTR_VAL_HEX, CKA_VALUE, uObj)) );
     }
 
     info( QString( "CKA_TOKEN           : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_TOKEN, uObj)));

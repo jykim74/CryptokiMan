@@ -647,7 +647,7 @@
              <item row="0" column="0">
               <widget class="QLabel" name="label_20">
                <property name="text">
-                <string>Generatorr(G)</string>
+                <string>Generator(G)</string>
                </property>
               </widget>
              </item>

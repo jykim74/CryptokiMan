@@ -1974,6 +1974,30 @@ Do you want to delete the file and continue?</source>
         <source>p</source>
         <translation>p</translation>
     </message>
+    <message>
+        <source>DSA Parameter</source>
+        <translation>DSA 파라미터</translation>
+    </message>
+    <message>
+        <source>Subprime(Q)</source>
+        <translation>Subprime(Q)</translation>
+    </message>
+    <message>
+        <source>Prime(P)</source>
+        <translation>Prime(P)</translation>
+    </message>
+    <message>
+        <source>Gen Param</source>
+        <translation>파라미터 생성</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation>지우기</translation>
+    </message>
+    <message>
+        <source>Generator(G)</source>
+        <translation>Generator(G)</translation>
+    </message>
 </context>
 <context>
     <name>ImportCertDlg</name>
