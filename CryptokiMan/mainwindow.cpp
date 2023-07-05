@@ -746,13 +746,18 @@ void MainWindow::P11Initialize()
         left_tree_->expand( parent_item->index() );
     }
 
+    MechMgr* mechMgr = manApplet->mechMgr();
+    if( mechMgr == NULL ) return;
+
+    mechMgr->setSlotID( sSlotList[0] );
+
     if( manApplet->settingsMgr()->useDeviceMech() == true )
     {
         int ret = 0;
         MechMgr* mechMgr = manApplet->mechMgr();
         if( mechMgr == NULL ) return;
 
-        ret = mechMgr->loadMechList( sSlotList[0] );
+        ret = mechMgr->loadMechList();
         if( ret == CKR_OK )
             manApplet->log( "load mechanism list successfully" );
     }

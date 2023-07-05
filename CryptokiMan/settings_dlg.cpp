@@ -9,6 +9,7 @@
 #include "settings_mgr.h"
 #include "mainwindow.h"
 #include "common.h"
+#include "mech_mgr.h"
 
 SettingsDlg::SettingsDlg(QWidget *parent) :
     QDialog(parent)
@@ -41,6 +42,12 @@ void SettingsDlg::updateSettings()
     mgr->setLogLevel( mLogLevelCombo->currentIndex() );
     mgr->setFileReadSize( mFileReadSizeText->text().toInt() );
     mgr->setUseDeviceMech( mUseDeviceMechCheck->isChecked() );
+
+    if( mUseDeviceMechCheck->isChecked() )
+    {
+        MechMgr* mechMgr = manApplet->mechMgr();
+        mechMgr->loadMechList();
+    }
 
     mgr->setFontFamily( mFontFamilyCombo->currentText() );
 

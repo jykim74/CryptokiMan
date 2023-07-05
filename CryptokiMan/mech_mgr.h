@@ -17,10 +17,11 @@ public:
     MechMgr();
     void clearList();
 
+    void setSlotID( long slot_id );
     void add( const MechRec& mechRec );
     void add( int id, int min_size, int max_size, int flags );
 
-    int loadMechList( long slotid );
+    int loadMechList();
 
     const QStringList getDigestList();
     const QStringList getDeriveList();
@@ -32,6 +33,9 @@ public:
     const QStringList getVerifyList( int type = MECH_TYPE_ALL );
     const QStringList getEncList( int type = MECH_TYPE_ALL );
     const QStringList getDecList( int type = MECH_TYPE_ALL );
+
+private:
+    long slot_id_;
 };
 
 #endif // MECHMGR_H

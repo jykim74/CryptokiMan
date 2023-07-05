@@ -7,12 +7,18 @@
 
 MechMgr::MechMgr()
 {
+    slot_id_ = -1;
     mech_list_.clear();
 }
 
 void MechMgr::clearList()
 {
     mech_list_.clear();
+}
+
+void MechMgr::setSlotID( long slot_id )
+{
+    slot_id_ = slot_id;
 }
 
 void MechMgr::add( const MechRec& mechRec )
@@ -31,12 +37,16 @@ void MechMgr::add( int id, int min_size, int max_size, int flags )
     mech_list_.append( rec );
 }
 
-int MechMgr::loadMechList( long slotid )
+int MechMgr::loadMechList()
 {
     CK_MECHANISM_TYPE_PTR   pMechType = NULL;
     CK_ULONG ulMechCnt = 0;
 
-    int rv = manApplet->cryptokiAPI()->GetMechanismList( slotid, pMechType, &ulMechCnt );
+    if( slot_id_ < 0 ) return -1;
+
+    mech_list_.clear();
+
+    int rv = manApplet->cryptokiAPI()->GetMechanismList( slot_id_, pMechType, &ulMechCnt );
     if( rv != CKR_OK )
     {
         manApplet->elog( QString("fail to get mechanism list: %1").arg( rv ));
@@ -44,7 +54,7 @@ int MechMgr::loadMechList( long slotid )
     }
 
     pMechType = (CK_MECHANISM_TYPE_PTR)JS_calloc( ulMechCnt, sizeof(CK_MECHANISM_TYPE));
-    rv = manApplet->cryptokiAPI()->GetMechanismList( slotid, pMechType, &ulMechCnt );
+    rv = manApplet->cryptokiAPI()->GetMechanismList( slot_id_, pMechType, &ulMechCnt );
 
     if( rv != CKR_OK )
     {
@@ -56,7 +66,7 @@ int MechMgr::loadMechList( long slotid )
     {
         CK_MECHANISM_INFO   stMechInfo;
 
-        rv = manApplet->cryptokiAPI()->GetMechanismInfo( slotid, pMechType[i], &stMechInfo );
+        rv = manApplet->cryptokiAPI()->GetMechanismInfo( slot_id_, pMechType[i], &stMechInfo );
         if( rv != CKR_OK ) continue;
 
         add( pMechType[i], stMechInfo.ulMinKeySize, stMechInfo.ulMaxKeySize, stMechInfo.flags );
