@@ -72,6 +72,7 @@ static QStringList kPubKeyAttList = {
     "CKA_MODULUS", "CKA_PUBLIC_EXPONENT", "CKA_TOKEN", "CKA_WRAP",
     "CKA_ENCRYPT", "CKA_VERIFY", "CKA_PRIVATE", "CKA_DERIVE",
     "CKA_ECDSA_PARAMS", "CKA_EC_POINT", "CKA_START_DATE", "CKA_END_DATE",
+    "CKA_VALUE", "CKA_BASE", "CKA_PRIME", "CKA_SUBPRIME"
 };
 
 static QStringList kPriKetAttList = {
@@ -79,7 +80,7 @@ static QStringList kPriKetAttList = {
     "CKA_PRIME_1", "CKA_PRIME_2", "CKA_EXPONENT_1", "CKA_EXPONENT_2",
     "CKA_ECDSA_PARAMS", "CKA_VALUE", "CKA_SENSITIVE", "CKA_UNWARP",
     "CKA_SIGN", "CKA_DECRYPT", "CKA_DERIVE", "CKA_EXTRACTABLE",
-    "CKA_START_DATE", "CKA_END_DATE",
+    "CKA_START_DATE", "CKA_END_DATE", "CKA_VALUE"
 };
 
 static QStringList kSecretKeyAttList = {
