@@ -1733,6 +1733,19 @@ void MainWindow::showPublicKeyInfoDetail( QModelIndex index )
         info( QString( "CKA_EC_PARAMS       : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_EC_PARAMS, uObj)));
         info( QString( "CKA_EC_POINT        : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_EC_POINT, uObj)));
     }
+    else if( strKeyType == "CKK_DSA" )
+    {
+        info( QString( "CKA_PRIME           : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_PRIME, uObj)));
+        info( QString( "CKA_SUBPRIME        : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_SUBPRIME, uObj)));
+        info( QString( "CKA_BASE            : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_BASE, uObj)));
+        info( QString( "CKA_VALUE           : %1\n" ).arg(stringAttribute(  ATTR_VAL_HEX, CKA_VALUE, uObj)) );
+    }
+    else if( strKeyType == "CKK_DH" )
+    {
+        info( QString( "CKA_PRIME           : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_PRIME, uObj)));
+        info( QString( "CKA_BASE            : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_BASE, uObj)));
+        info( QString( "CKA_VALUE            : %1\n" ).arg(stringAttribute(  ATTR_VAL_HEX, CKA_VALUE, uObj)) );
+    }
 
     info( QString( "CKA_TOKEN           : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_TOKEN, uObj)));
     info( QString( "CKA_WRAP            : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_WRAP, uObj)));
@@ -1782,6 +1795,10 @@ void MainWindow::showPrivateKeyInfoDetail( QModelIndex index )
     else if( strKeyType == "CKK_EC" || strKeyType == "CKK_ECDSA" )
     {
         info( QString( "CKA_EC_PARAMS        : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_EC_PARAMS, uObj)));
+        info( QString( "CKA_VALUE            : %1\n" ).arg(stringAttribute(  ATTR_VAL_HEX, CKA_VALUE, uObj)) );
+    }
+    else
+    {
         info( QString( "CKA_VALUE            : %1\n" ).arg(stringAttribute(  ATTR_VAL_HEX, CKA_VALUE, uObj)) );
     }
 
