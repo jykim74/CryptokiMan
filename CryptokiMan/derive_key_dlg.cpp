@@ -541,14 +541,14 @@ void DeriveKeyDlg::setMechanism( void *pMech )
             ecdh1Param->kdf = CKD_SHA1_KDF;
 
         JS_BIN_decodeHex( strPubData.toStdString().c_str(), &binPubData );
-        ecdh1Param->public_data = binPubData.pVal;
-        ecdh1Param->public_data_len = binPubData.nLen;
+        ecdh1Param->pPublicData = binPubData.pVal;
+        ecdh1Param->ulPublicDataLen = binPubData.nLen;
 
         if( strShare.length() > 1 )
         {
             JS_BIN_decodeHex( strShare.toStdString().c_str(), &binShare );
-            ecdh1Param->shared_data = binShare.pVal;
-            ecdh1Param->shared_data_len = binShare.nLen;
+            ecdh1Param->pSharedData = binShare.pVal;
+            ecdh1Param->ulSharedDataLen = binShare.nLen;
         }
 
         pPtr->pParameter = ecdh1Param;
@@ -567,8 +567,8 @@ void DeriveKeyDlg::setMechanism( void *pMech )
         strParam = (CK_KEY_DERIVATION_STRING_DATA *)JS_calloc(1, sizeof(CK_KEY_DERIVATION_STRING_DATA));
 
         JS_BIN_decodeHex( strData.toStdString().c_str(), &binData );
-        strParam->string_data = binData.pVal;
-        strParam->string_data_len = binData.nLen;
+        strParam->pData = binData.pVal;
+        strParam->ulLen = binData.nLen;
 
         pPtr->pParameter = strParam;
         pPtr->ulParameterLen = sizeof(CK_KEY_DERIVATION_STRING_DATA);
@@ -588,7 +588,7 @@ void DeriveKeyDlg::setMechanism( void *pMech )
         JS_BIN_decodeHex( strData.toStdString().c_str(), &binData );
 
         memcpy( desParam->iv, binIV.pVal, binIV.nLen < 8 ? binIV.nLen : 8 );
-        desParam->data_params = binData.pVal;
+        desParam->pData = binData.pVal;
         desParam->length = binData.nLen;
 
         pPtr->pParameter = desParam;
@@ -609,7 +609,7 @@ void DeriveKeyDlg::setMechanism( void *pMech )
         JS_BIN_decodeHex( strData.toStdString().c_str(), &binData );
 
         memcpy( aesParam->iv, binIV.pVal, binIV.nLen < 16 ? binIV.nLen : 16 );
-        aesParam->data_params = binData.pVal;
+        aesParam->pData = binData.pVal;
         aesParam->length = binData.nLen;
 
         pPtr->pParameter = aesParam;
@@ -638,8 +638,8 @@ void DeriveKeyDlg::freeMechanism( void *pMech )
 
         if( ecdh1Param )
         {
-            if( ecdh1Param->public_data ) JS_free( ecdh1Param->public_data );
-            if( ecdh1Param->shared_data ) JS_free( ecdh1Param->shared_data );
+            if( ecdh1Param->pPublicData ) JS_free( ecdh1Param->pPublicData );
+            if( ecdh1Param->pSharedData ) JS_free( ecdh1Param->pSharedData );
             JS_free( ecdh1Param );
         }
     }
@@ -653,7 +653,7 @@ void DeriveKeyDlg::freeMechanism( void *pMech )
 
         if( strParam )
         {
-            if( strParam->string_data ) JS_free( strParam->string_data );
+            if( strParam->pData ) JS_free( strParam->pData );
             JS_free( strParam );
         }
     }
@@ -663,7 +663,7 @@ void DeriveKeyDlg::freeMechanism( void *pMech )
 
         if( desParam )
         {
-            if( desParam->data_params ) JS_free( desParam->data_params );
+            if( desParam->pData ) JS_free( desParam->pData );
             JS_free( desParam );
         }
     }
@@ -673,7 +673,7 @@ void DeriveKeyDlg::freeMechanism( void *pMech )
 
         if( aesParam )
         {
-            if( aesParam->data_params ) JS_free( aesParam->data_params );
+            if( aesParam->pData ) JS_free( aesParam->pData );
             JS_free( aesParam );
         }
     }

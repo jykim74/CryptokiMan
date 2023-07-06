@@ -98,12 +98,12 @@ void EncryptDlg::setMechanism( void *pMech )
         CK_GCM_PARAMS_PTR gcmParam;
         gcmParam = (CK_GCM_PARAMS *)JS_calloc( 1, sizeof(CK_GCM_PARAMS));
 
-        gcmParam->iv_len = binIV.nLen;
-        gcmParam->iv_ptr = binIV.pVal;
-        gcmParam->aad_len = binAAD.nLen;
-        gcmParam->aad_ptr = binAAD.pVal;
-        gcmParam->iv_bits = binIV.nLen * 8;
-        gcmParam->tag_bits = nReqLen * 8;
+        gcmParam->ulIvLen = binIV.nLen;
+        gcmParam->pIv = binIV.pVal;
+        gcmParam->ulAADLen = binAAD.nLen;
+        gcmParam->pAAD = binAAD.pVal;
+        gcmParam->ulIvBits = binIV.nLen * 8;
+        gcmParam->ulTagBits = nReqLen * 8;
 
         pPtr->pParameter = gcmParam;
         pPtr->ulParameterLen = sizeof(CK_GCM_PARAMS);
@@ -127,8 +127,8 @@ void EncryptDlg::freeMechanism( void *pMech )
     {
         CK_GCM_PARAMS_PTR gcmParam = (CK_GCM_PARAMS_PTR)pPtr->pParameter;
 
-        if( gcmParam->iv_ptr ) JS_free( gcmParam->iv_ptr );
-        if( gcmParam->aad_ptr ) JS_free( gcmParam->aad_ptr );
+        if( gcmParam->pIv ) JS_free( gcmParam->pIv );
+        if( gcmParam->pAAD ) JS_free( gcmParam->pAAD );
     }
     else
     {
