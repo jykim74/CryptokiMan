@@ -317,12 +317,6 @@ void GenKeyPairDlg::accept()
         JS_BIN_decodeHex( strDSA_P.toStdString().c_str(), &binDSA_P );
         JS_BIN_decodeHex( strDSA_Q.toStdString().c_str(), &binDSA_Q );
 
-        uModulusBits = sRSAOptionList.at(nSelOption).toInt();
-        sPubTemplate[uPubCount].type = CKA_PRIME_BITS;
-        sPubTemplate[uPubCount].pValue = &uModulusBits;
-        sPubTemplate[uPubCount].ulValueLen = sizeof( uModulusBits );
-        uPubCount++;
-
         sPubTemplate[uPubCount].type = CKA_PRIME;
         sPubTemplate[uPubCount].pValue = binDSA_P.pVal;
         sPubTemplate[uPubCount].ulValueLen = binDSA_P.nLen;
