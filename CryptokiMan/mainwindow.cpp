@@ -118,11 +118,9 @@ void MainWindow::initialize()
 
     log_text_ = new QTextEdit();
     log_text_->setReadOnly(true);
-    log_text_->setFont( QFont("굴림체") );
 
     info_text_ = new QTextEdit;
     info_text_->setReadOnly(true);
-    info_text_->setFont( QFont("굴림체" ));
 
     left_tree_->setModel(left_model_);
     left_tree_->header()->setVisible(false);
