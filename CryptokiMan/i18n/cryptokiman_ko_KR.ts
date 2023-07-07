@@ -329,6 +329,18 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>success to create DSA private key</source>
         <translation>DSA 개인키 생성 성공</translation>
     </message>
+    <message>
+        <source>Subprime(Q)</source>
+        <translation>Subprime(Q)</translation>
+    </message>
+    <message>
+        <source>Base(G)</source>
+        <translation>Base(G)</translation>
+    </message>
+    <message>
+        <source>Prime(P)</source>
+        <translation>Prime(P)</translation>
+    </message>
 </context>
 <context>
     <name>CreateDSAPubKeyDlg</name>

@@ -93,6 +93,10 @@ void CreateDSAPriKeyDlg::setAttributes()
 
 void CreateDSAPriKeyDlg::connectAttributes()
 {
+    connect( mPText, SIGNAL(textChanged(const QString&)), this, SLOT(changeP(const QString&)));
+    connect( mQText, SIGNAL(textChanged(const QString&)), this, SLOT(changeQ(const QString&)));
+    connect( mGText, SIGNAL(textChanged(const QString&)), this, SLOT(changeG(const QString&)));
+
     connect( mKeyValueText, SIGNAL(textChanged(const QString&)), this, SLOT(changeKeyValue(const QString&)));
 
     connect( mPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPrivate()));
@@ -141,6 +145,42 @@ void CreateDSAPriKeyDlg::accept()
     sTemplate[uCount].pValue = &keyType;
     sTemplate[uCount].ulValueLen = sizeof(keyType);
     uCount++;
+
+    QString strP = mPText->text();
+    BIN binP = {0,0};
+
+    if( !strP.isEmpty() )
+    {
+        JS_BIN_decodeHex( strP.toStdString().c_str(), &binP );
+        sTemplate[uCount].type = CKA_PRIME;
+        sTemplate[uCount].pValue = binP.pVal;
+        sTemplate[uCount].ulValueLen = binP.nLen;
+        uCount++;
+    }
+
+    QString strQ = mQText->text();
+    BIN binQ = {0,0};
+
+    if( !strQ.isEmpty() )
+    {
+        JS_BIN_decodeHex( strQ.toStdString().c_str(), &binQ );
+        sTemplate[uCount].type = CKA_SUBPRIME;
+        sTemplate[uCount].pValue = binQ.pVal;
+        sTemplate[uCount].ulValueLen = binQ.nLen;
+        uCount++;
+    }
+
+    QString strG = mGText->text();
+    BIN binG = {0,0};
+
+    if( !strG.isEmpty() )
+    {
+        JS_BIN_decodeHex( strG.toStdString().c_str(), &binG );
+        sTemplate[uCount].type = CKA_BASE;
+        sTemplate[uCount].pValue = binG.pVal;
+        sTemplate[uCount].ulValueLen = binG.nLen;
+        uCount++;
+    }
 
     QString strValue = mKeyValueText->text();
     BIN binValue = {0,0};
@@ -284,6 +324,9 @@ void CreateDSAPriKeyDlg::accept()
 
     rv = manApplet->cryptokiAPI()->CreateObject( hSession, sTemplate, uCount, &hObject );
 
+    JS_BIN_reset( &binP );
+    JS_BIN_reset( &binQ );
+    JS_BIN_reset( &binG );
     JS_BIN_reset( &binValue );
     JS_BIN_reset( &binLabel );
     JS_BIN_reset( &binID );
@@ -354,6 +397,24 @@ void CreateDSAPriKeyDlg::clickStartDate()
 void CreateDSAPriKeyDlg::clickEndDate()
 {
     mEndDateEdit->setEnabled(mEndDateCheck->isChecked());
+}
+
+void CreateDSAPriKeyDlg::changeP( const QString& text )
+{
+    int nLen = getDataLen( DATA_HEX, text );
+    mPLenText->setText( QString("%1").arg(nLen));
+}
+
+void CreateDSAPriKeyDlg::changeQ( const QString& text )
+{
+    int nLen = getDataLen( DATA_HEX, text );
+    mQLenText->setText( QString("%1").arg(nLen));
+}
+
+void CreateDSAPriKeyDlg::changeG( const QString& text )
+{
+    int nLen = getDataLen( DATA_HEX, text );
+    mGLenText->setText( QString("%1").arg(nLen));
 }
 
 void CreateDSAPriKeyDlg::changeKeyValue( const QString& text )

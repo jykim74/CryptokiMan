@@ -1843,6 +1843,13 @@ void MainWindow::showPrivateKeyInfoDetail( QModelIndex index )
         info( QString( "CKA_EC_PARAMS        : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_EC_PARAMS, uObj)));
         info( QString( "CKA_VALUE            : %1\n" ).arg(stringAttribute(  ATTR_VAL_HEX, CKA_VALUE, uObj)) );
     }
+    else if( strKeyType == "CKK_DSA" )
+    {
+        info( QString( "CKA_PRIME           : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_PRIME, uObj)));
+        info( QString( "CKA_SUBPRIME        : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_SUBPRIME, uObj)));
+        info( QString( "CKA_BASE            : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_BASE, uObj)));
+        info( QString( "CKA_VALUE            : %1\n" ).arg(stringAttribute(  ATTR_VAL_HEX, CKA_VALUE, uObj)) );
+    }
     else
     {
         info( QString( "CKA_VALUE            : %1\n" ).arg(stringAttribute(  ATTR_VAL_HEX, CKA_VALUE, uObj)) );

@@ -33,6 +33,9 @@ private slots:
     void clickStartDate();
     void clickEndDate();
 
+    void changeP( const QString& text );
+    void changeQ( const QString& text );
+    void changeG( const QString& text );
     void changeKeyValue( const QString& text );
 private:
     void initialize();
