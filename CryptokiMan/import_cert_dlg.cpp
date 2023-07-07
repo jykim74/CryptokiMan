@@ -71,6 +71,10 @@ void ImportCertDlg::initAttributes()
     mSensitiveCombo->addItems(sFalseTrue);
     mModifiableCombo->addItems(sFalseTrue);
     mTokenCombo->addItems(sFalseTrue);
+
+    QDate nowDate = QDate::currentDate();
+    mStartDateEdit->setDate(nowDate);
+    mEndDateEdit->setDate(nowDate);
 }
 
 void ImportCertDlg::setAttributes()

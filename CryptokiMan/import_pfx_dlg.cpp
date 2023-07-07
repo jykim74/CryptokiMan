@@ -82,6 +82,12 @@ void ImportPFXDlg::initAttributes()
     mCertSensitiveCombo->addItems( sFalseTrue );
     mCertModifiableCombo->addItems( sFalseTrue );
     mCertTokenCombo->addItems( sFalseTrue );
+
+    QDate nowDate = QDate::currentDate();
+    mPubStartDateEdit->setDate(nowDate);
+    mPubEndDateEdit->setDate(nowDate);
+    mPriStartDateEdit->setDate(nowDate);
+    mPriEndDateEdit->setDate(nowDate);
 }
 
 void ImportPFXDlg::setAttributes()

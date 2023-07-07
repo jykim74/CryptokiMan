@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>567</width>
-    <height>402</height>
+    <width>647</width>
+    <height>527</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -381,9 +381,7 @@
        <item>
         <widget class="QPlainTextEdit" name="mInputText">
          <property name="font">
-          <font>
-           <family>굴림체</family>
-          </font>
+          <font/>
          </property>
         </widget>
        </item>

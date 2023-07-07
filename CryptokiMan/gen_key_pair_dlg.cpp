@@ -111,6 +111,12 @@ void GenKeyPairDlg::initAttributes()
     mPubDeriveCombo->addItems( sFalseTrue );
     mPubModifiableCombo->addItems( sFalseTrue );
     mPubTokenCombo->addItems( sFalseTrue );
+
+    QDate nowDate = QDate::currentDate();
+    mPubStartDateEdit->setDate(nowDate);
+    mPubEndDateEdit->setDate(nowDate);
+    mPriStartDateEdit->setDate(nowDate);
+    mPriEndDateEdit->setDate(nowDate);
 }
 
 void GenKeyPairDlg::setAttributes()

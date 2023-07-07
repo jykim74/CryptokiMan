@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>587</width>
-    <height>331</height>
+    <width>641</width>
+    <height>441</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -391,9 +391,7 @@
        <item>
         <widget class="QPlainTextEdit" name="mKeyText">
          <property name="font">
-          <font>
-           <family>굴림체</family>
-          </font>
+          <font/>
          </property>
         </widget>
        </item>

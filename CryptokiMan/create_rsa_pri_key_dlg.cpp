@@ -83,6 +83,10 @@ void CreateRSAPriKeyDlg::initAttributes()
     mModifiableCombo->addItems(sFalseTrue);
     mExtractableCombo->addItems(sFalseTrue);
     mTokenCombo->addItems(sFalseTrue);
+
+    QDate nowDate = QDate::currentDate();
+    mStartDateEdit->setDate(nowDate);
+    mEndDateEdit->setDate(nowDate);
 }
 
 void CreateRSAPriKeyDlg::setAttributes()

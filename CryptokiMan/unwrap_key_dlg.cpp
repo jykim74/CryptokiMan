@@ -97,6 +97,10 @@ void UnwrapKeyDlg::initAttributes()
     mTokenCombo->addItems(sFalseTrue);
     mExtractableCombo->addItems(sFalseTrue);
     mDeriveCombo->addItems(sFalseTrue);
+
+    QDate nowDate = QDate::currentDate();
+    mStartDateEdit->setDate(nowDate);
+    mEndDateEdit->setDate(nowDate);
 }
 
 void UnwrapKeyDlg::setAttributes()

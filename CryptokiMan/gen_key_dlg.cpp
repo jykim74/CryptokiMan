@@ -99,6 +99,10 @@ void GenKeyDlg::initAttributes()
     mTokenCombo->addItems(sFalseTrue);
     mDeriveCombo->addItems(sFalseTrue);
     mExtractableCombo->addItems(sFalseTrue);
+
+    QDate nowDate = QDate::currentDate();
+    mStartDateEdit->setDate(nowDate);
+    mEndDateEdit->setDate(nowDate);
 }
 
 void GenKeyDlg::setAttributes()

@@ -73,6 +73,11 @@ void ImportPriKeyDlg::initAttributes()
     mPubModifiableCombo->addItems( sFalseTrue );
     mPubTokenCombo->addItems( sFalseTrue );
 
+    QDate nowDate = QDate::currentDate();
+    mPriStartDateEdit->setDate(nowDate);
+    mPriEndDateEdit->setDate(nowDate);
+    mPubStartDateEdit->setDate(nowDate);
+    mPubEndDateEdit->setDate(nowDate);
 }
 
 void ImportPriKeyDlg::setAttributes()

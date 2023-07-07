@@ -77,6 +77,10 @@ void CreateDSAPubKeyDlg::initAttributes()
     mDeriveCombo->addItems(sFalseTrue);
     mModifiableCombo->addItems(sFalseTrue);
     mTokenCombo->addItems(sFalseTrue);
+
+    QDate nowDate = QDate::currentDate();
+    mStartDateEdit->setDate(nowDate);
+    mEndDateEdit->setDate(nowDate);
 }
 
 void CreateDSAPubKeyDlg::setAttributes()
