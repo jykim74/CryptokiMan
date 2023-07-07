@@ -66,5 +66,7 @@
         <file>images/ep1.png</file>
         <file>images/ep2.png</file>
         <file>cryptokiman_license.lcn</file>
+        <file>images/dp1.png</file>
+        <file>images/dp2.png</file>
     </qresource>
 </RCC>

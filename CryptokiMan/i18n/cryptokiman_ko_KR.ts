@@ -248,6 +248,180 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
 </context>
 <context>
+    <name>CreateDSAPriKeyDlg</name>
+    <message>
+        <source>Create dsa private key</source>
+        <translation>DSA 개인키 생성</translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation>일반</translation>
+    </message>
+    <message>
+        <source>Slot list</source>
+        <translation>슬롯 목록</translation>
+    </message>
+    <message>
+        <source>Slot status</source>
+        <translation>슬롯 상태</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translation>로그인</translation>
+    </message>
+    <message>
+        <source>Session</source>
+        <translation>세션</translation>
+    </message>
+    <message>
+        <source>Slot ID</source>
+        <translation>슬롯 ID</translation>
+    </message>
+    <message>
+        <source>Label</source>
+        <translation>라벨</translation>
+    </message>
+    <message>
+        <source>Subject</source>
+        <translation>주체</translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <translation>ID</translation>
+    </message>
+    <message>
+        <source>Private Key</source>
+        <translation>개인 키</translation>
+    </message>
+    <message>
+        <source>Key Properties</source>
+        <translation>키 속성</translation>
+    </message>
+    <message>
+        <source>Key value</source>
+        <translation>키 값</translation>
+    </message>
+    <message>
+        <source>Attributes</source>
+        <translation>속성</translation>
+    </message>
+    <message>
+        <source>StartDate</source>
+        <translation>시작 일자</translation>
+    </message>
+    <message>
+        <source>EndDate</source>
+        <translation>종료 일자</translation>
+    </message>
+    <message>
+        <source>fail to create EC private key(%1)</source>
+        <translation type="obsolete">EC 개인키 생성 실패(%1)</translation>
+    </message>
+    <message>
+        <source>success to create EC private key</source>
+        <translation type="obsolete">EC 개인키 생성 성공</translation>
+    </message>
+    <message>
+        <source>fail to create DSA private key(%1)</source>
+        <translation>DSA 개인키 생성 실패(%1)</translation>
+    </message>
+    <message>
+        <source>success to create DSA private key</source>
+        <translation>DSA 개인키 생성 성공</translation>
+    </message>
+</context>
+<context>
+    <name>CreateDSAPubKeyDlg</name>
+    <message>
+        <source>Create dsa public key</source>
+        <translation>DSA 공개키 생성</translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation>일반</translation>
+    </message>
+    <message>
+        <source>Slot list</source>
+        <translation>슬롯 목록</translation>
+    </message>
+    <message>
+        <source>Slot status</source>
+        <translation>슬롯 상태</translation>
+    </message>
+    <message>
+        <source>Slot ID</source>
+        <translation>슬롯 ID</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translation>로그인</translation>
+    </message>
+    <message>
+        <source>Session</source>
+        <translation>세션</translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <translation>ID</translation>
+    </message>
+    <message>
+        <source>Label</source>
+        <translation>라벨</translation>
+    </message>
+    <message>
+        <source>Public Key</source>
+        <translation>공개 키</translation>
+    </message>
+    <message>
+        <source>Information</source>
+        <translation>정보</translation>
+    </message>
+    <message>
+        <source>Subprime(Q)</source>
+        <translation>Subprime(Q)</translation>
+    </message>
+    <message>
+        <source>Prime(P)</source>
+        <translation>Prime(P)</translation>
+    </message>
+    <message>
+        <source>Base(G)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Public</source>
+        <translation>공개키</translation>
+    </message>
+    <message>
+        <source>Attributes</source>
+        <translation>속성</translation>
+    </message>
+    <message>
+        <source>StartDate</source>
+        <translation>시작 일자</translation>
+    </message>
+    <message>
+        <source>EndDate</source>
+        <translation>종료 일자</translation>
+    </message>
+    <message>
+        <source>fail to create EC public key(%1)</source>
+        <translation type="obsolete">EC 공개키 생성 실패(%1)</translation>
+    </message>
+    <message>
+        <source>success to create EC public key</source>
+        <translation type="obsolete">EC 공개키 생성 성공</translation>
+    </message>
+    <message>
+        <source>fail to create DSA public key(%1)</source>
+        <translation>DSA 공개키 생성 실패(%1)</translation>
+    </message>
+    <message>
+        <source>success to create DSA public key</source>
+        <translation>DSA 공개키 생성 성공</translation>
+    </message>
+</context>
+<context>
     <name>CreateDataDlg</name>
     <message>
         <source>Login</source>
@@ -3220,6 +3394,22 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>Show Information</source>
         <translation>정보 보기</translation>
+    </message>
+    <message>
+        <source>Create DSA Public Key</source>
+        <translation>DSA 공개키 생성</translation>
+    </message>
+    <message>
+        <source>PKCS11 Create DSA Public key</source>
+        <translation>PKCS11 DSA 공개키 생성</translation>
+    </message>
+    <message>
+        <source>Create DSA Private Key</source>
+        <translation>DSA 개인키 생성</translation>
+    </message>
+    <message>
+        <source>PKCS11 Create DSA Private key</source>
+        <translation>PKCS11 DSA 개인키 생성</translation>
     </message>
 </context>
 <context>

@@ -35,6 +35,8 @@ SOURCES += \
         close_session_dlg.cpp \
         common.cpp \
         create_data_dlg.cpp \
+        create_dsa_pri_key_dlg.cpp \
+        create_dsa_pub_key_dlg.cpp \
         create_ec_pri_key_dlg.cpp \
         create_ec_pub_key_dlg.cpp \
         create_key_dlg.cpp \
@@ -85,6 +87,8 @@ HEADERS += \
         close_session_dlg.h \
         common.h \
         create_data_dlg.h \
+        create_dsa_pri_key_dlg.h \
+        create_dsa_pub_key_dlg.h \
         create_ec_pri_key_dlg.h \
         create_ec_pub_key_dlg.h \
         create_key_dlg.h \
@@ -134,6 +138,8 @@ FORMS += \
         cert_info_dlg.ui \
         close_session_dlg.ui \
         create_data_dlg.ui \
+        create_dsa_pri_key_dlg.ui \
+        create_dsa_pub_key_dlg.ui \
         create_ec_pri_key_dlg.ui \
         create_ec_pub_key_dlg.ui \
         create_key_dlg.ui \

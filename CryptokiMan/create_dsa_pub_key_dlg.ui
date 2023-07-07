@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CreateECPubKeyDlg</class>
- <widget class="QDialog" name="CreateECPubKeyDlg">
+ <class>CreateDSAPubKeyDlg</class>
+ <widget class="QDialog" name="CreateDSAPubKeyDlg">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Create ec public key</string>
+   <string>Create dsa public key</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -350,18 +350,14 @@
          <property name="topMargin">
           <number>0</number>
          </property>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="mPText"/>
+         </item>
          <item row="1" column="1">
-          <widget class="QLineEdit" name="mECParamsText"/>
+          <widget class="QLineEdit" name="mQText"/>
          </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_5">
-           <property name="text">
-            <string>EC Points</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <widget class="QLineEdit" name="mECPointsLenText">
+         <item row="1" column="2">
+          <widget class="QLineEdit" name="mQLenText">
            <property name="minimumSize">
             <size>
              <width>40</width>
@@ -416,18 +412,154 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="mECPointsText"/>
-         </item>
          <item row="1" column="0">
           <widget class="QLabel" name="label_6">
            <property name="text">
-            <string>EC Params</string>
+            <string>Subprime(Q)</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="2">
-          <widget class="QLineEdit" name="mECParamsLenText">
+         <item row="0" column="2">
+          <widget class="QLineEdit" name="mPLenText">
+           <property name="minimumSize">
+            <size>
+             <width>40</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>40</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="palette">
+            <palette>
+             <active>
+              <colorrole role="Base">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>221</red>
+                 <green>221</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </active>
+             <inactive>
+              <colorrole role="Base">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>221</red>
+                 <green>221</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </inactive>
+             <disabled>
+              <colorrole role="Base">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>240</red>
+                 <green>240</green>
+                 <blue>240</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </disabled>
+            </palette>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_5">
+           <property name="text">
+            <string>Prime(P)</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_4">
+           <property name="text">
+            <string>Base(G)</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_7">
+           <property name="text">
+            <string>Public</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="mGText"/>
+         </item>
+         <item row="3" column="1">
+          <widget class="QLineEdit" name="mPublicText"/>
+         </item>
+         <item row="2" column="2">
+          <widget class="QLineEdit" name="mGLenText">
+           <property name="minimumSize">
+            <size>
+             <width>40</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>40</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="palette">
+            <palette>
+             <active>
+              <colorrole role="Base">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>221</red>
+                 <green>221</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </active>
+             <inactive>
+              <colorrole role="Base">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>221</red>
+                 <green>221</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </inactive>
+             <disabled>
+              <colorrole role="Base">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>240</red>
+                 <green>240</green>
+                 <blue>240</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </disabled>
+            </palette>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="2">
+          <widget class="QLineEdit" name="mPublicLenText">
            <property name="minimumSize">
             <size>
              <width>40</width>
@@ -630,8 +762,8 @@
   <tabstop>mSlotIDText</tabstop>
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
-  <tabstop>mECPointsText</tabstop>
-  <tabstop>mECParamsText</tabstop>
+  <tabstop>mPText</tabstop>
+  <tabstop>mQText</tabstop>
   <tabstop>mPrivateCheck</tabstop>
   <tabstop>mPrivateCombo</tabstop>
   <tabstop>mEncryptCheck</tabstop>
@@ -656,7 +788,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>CreateECPubKeyDlg</receiver>
+   <receiver>CreateDSAPubKeyDlg</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -672,7 +804,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>CreateECPubKeyDlg</receiver>
+   <receiver>CreateDSAPubKeyDlg</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

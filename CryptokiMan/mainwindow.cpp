@@ -24,6 +24,8 @@
 #include "create_rsa_pri_key_dlg.h"
 #include "create_ec_pub_key_dlg.h"
 #include "create_ec_pri_key_dlg.h"
+#include "create_dsa_pub_key_dlg.h"
+#include "create_dsa_pri_key_dlg.h"
 #include "create_key_dlg.h"
 #include "del_object_dlg.h"
 #include "edit_attribute_dlg.h"
@@ -324,7 +326,7 @@ void MainWindow::createActions()
     const QIcon ep1Icon = QIcon::fromTheme("EC-Public", QIcon(":/images/ep1.png"));
     QAction *createECPubKeyAct = new QAction( ep1Icon, tr("Create EC Public Key"), this);
     connect( createECPubKeyAct, &QAction::triggered, this, &MainWindow::createECPublicKey);
-    createDataAct->setStatusTip(tr("PKCS11 Create EC Public key"));
+    createECPubKeyAct->setStatusTip(tr("PKCS11 Create EC Public key"));
     objectsMenu->addAction( createECPubKeyAct );
 //    objectsToolBar->addAction( createECPubKeyAct );
 
@@ -334,6 +336,20 @@ void MainWindow::createActions()
     createECPriKeyAct->setStatusTip(tr("PKCS11 Create EC Private key"));
     objectsMenu->addAction( createECPriKeyAct );
 //    objectsToolBar->addAction( createECPriKeyAct );
+
+    const QIcon dp1Icon = QIcon::fromTheme("DSA-Public", QIcon(":/images/dp1.png"));
+    QAction *createDSAPubKeyAct = new QAction( dp1Icon, tr("Create DSA Public Key"), this);
+    connect( createDSAPubKeyAct, &QAction::triggered, this, &MainWindow::createDSAPublicKey);
+    createDSAPubKeyAct->setStatusTip(tr("PKCS11 Create DSA Public key"));
+    objectsMenu->addAction( createDSAPubKeyAct );
+//    objectsToolBar->addAction( createDSAPubKeyAct );
+
+    const QIcon dp2Icon = QIcon::fromTheme("DSA-Private", QIcon(":/images/dp2.png"));
+    QAction *createDSAPriKeyAct = new QAction( dp2Icon, tr("Create DSA Private Key"), this);
+    connect( createDSAPriKeyAct, &QAction::triggered, this, &MainWindow::createDSAPrivateKey);
+    createDSAPriKeyAct->setStatusTip(tr("PKCS11 Create DSA Private key"));
+    objectsMenu->addAction( createDSAPriKeyAct );
+//    objectsToolBar->addAction( createDSAPriKeyAct );
 
     const QIcon keyGenIcon = QIcon::fromTheme("KeyGen", QIcon(":/images/key_gen.png"));
     QAction *createKeyAct = new QAction( keyGenIcon, tr("Create Key"), this);
@@ -972,6 +988,36 @@ void MainWindow::createECPrivateKey()
     CreateECPriKeyDlg createECPriKeyDlg;
     if( pItem ) createECPriKeyDlg.setSelectedSlot( pItem->getSlotIndex() );
     createECPriKeyDlg.exec();
+}
+
+void MainWindow::createDSAPublicKey()
+{
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        return;
+    }
+
+    CreateDSAPubKeyDlg createDSAPubKeyDlg;
+    if( pItem ) createDSAPubKeyDlg.setSelectedSlot( pItem->getSlotIndex() );
+    createDSAPubKeyDlg.exec();
+}
+
+void MainWindow::createDSAPrivateKey()
+{
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        return;
+    }
+
+    CreateDSAPriKeyDlg createDSAPriKeyDlg;
+    if( pItem ) createDSAPriKeyDlg.setSelectedSlot( pItem->getSlotIndex() );
+    createDSAPriKeyDlg.exec();
 }
 
 void MainWindow::createKey()

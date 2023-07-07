@@ -99,6 +99,8 @@ public slots:
     void createRSAPrivateKey();
     void createECPublicKey();
     void createECPrivateKey();
+    void createDSAPublicKey();
+    void createDSAPrivateKey();
     void createKey();
     void deleteObject();
     void editObject();

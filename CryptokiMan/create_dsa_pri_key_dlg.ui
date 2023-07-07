@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CreateECPubKeyDlg</class>
- <widget class="QDialog" name="CreateECPubKeyDlg">
+ <class>CreateDSAPriKeyDlg</class>
+ <widget class="QDialog" name="CreateDSAPriKeyDlg">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>582</width>
-    <height>352</height>
+    <width>593</width>
+    <height>326</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Create ec public key</string>
+   <string>Create dsa private key</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -29,6 +29,16 @@
          <property name="topMargin">
           <number>0</number>
          </property>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="mSlotsCombo">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>1</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
+         </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label">
            <property name="minimumSize">
@@ -39,16 +49,6 @@
            </property>
            <property name="text">
             <string>Slot list</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QComboBox" name="mSlotsCombo">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-             <horstretch>1</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
            </property>
           </widget>
          </item>
@@ -73,88 +73,11 @@
          <property name="topMargin">
           <number>0</number>
          </property>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_3">
-           <property name="minimumSize">
-            <size>
-             <width>80</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Slot ID</string>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="3">
           <widget class="QLineEdit" name="mSessionText">
            <property name="maximumSize">
             <size>
              <width>80</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="palette">
-            <palette>
-             <active>
-              <colorrole role="Base">
-               <brush brushstyle="SolidPattern">
-                <color alpha="255">
-                 <red>221</red>
-                 <green>221</green>
-                 <blue>255</blue>
-                </color>
-               </brush>
-              </colorrole>
-             </active>
-             <inactive>
-              <colorrole role="Base">
-               <brush brushstyle="SolidPattern">
-                <color alpha="255">
-                 <red>221</red>
-                 <green>221</green>
-                 <blue>255</blue>
-                </color>
-               </brush>
-              </colorrole>
-             </inactive>
-             <disabled>
-              <colorrole role="Base">
-               <brush brushstyle="SolidPattern">
-                <color alpha="255">
-                 <red>240</red>
-                 <green>240</green>
-                 <blue>240</blue>
-                </color>
-               </brush>
-              </colorrole>
-             </disabled>
-            </palette>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="5">
-          <widget class="QLabel" name="label_10">
-           <property name="text">
-            <string>Login</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <widget class="QLabel" name="label_9">
-           <property name="text">
-            <string>Session</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="6">
-          <widget class="QLineEdit" name="mLoginText">
-           <property name="maximumSize">
-            <size>
-             <width>40</width>
              <height>16777215</height>
             </size>
            </property>
@@ -250,6 +173,83 @@
            </property>
           </widget>
          </item>
+         <item row="0" column="5">
+          <widget class="QLabel" name="label_8">
+           <property name="text">
+            <string>Login</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="6">
+          <widget class="QLineEdit" name="mLoginText">
+           <property name="maximumSize">
+            <size>
+             <width>40</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="palette">
+            <palette>
+             <active>
+              <colorrole role="Base">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>221</red>
+                 <green>221</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </active>
+             <inactive>
+              <colorrole role="Base">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>221</red>
+                 <green>221</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </inactive>
+             <disabled>
+              <colorrole role="Base">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>240</red>
+                 <green>240</green>
+                 <blue>240</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </disabled>
+            </palette>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QLabel" name="label_7">
+           <property name="text">
+            <string>Session</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_3">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Slot ID</string>
+           </property>
+          </widget>
+         </item>
          <item row="0" column="4">
           <spacer name="horizontalSpacer">
            <property name="orientation">
@@ -266,36 +266,23 @@
         </layout>
        </item>
        <item>
-        <widget class="Line" name="line_4">
+        <widget class="Line" name="line_2">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>
        <item>
-        <layout class="QGridLayout" name="gridLayout_5">
+        <layout class="QGridLayout" name="gridLayout_4">
          <property name="topMargin">
           <number>0</number>
          </property>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_13">
-           <property name="text">
-            <string>ID</string>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="0">
-          <widget class="QLabel" name="label_12">
+          <widget class="QLabel" name="label_4">
            <property name="minimumSize">
             <size>
              <width>80</width>
              <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>80</width>
-             <height>16777215</height>
             </size>
            </property>
            <property name="text">
@@ -303,10 +290,27 @@
            </property>
           </widget>
          </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="mSubjectText"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_5">
+           <property name="text">
+            <string>Subject</string>
+           </property>
+          </widget>
+         </item>
          <item row="0" column="1">
           <widget class="QLineEdit" name="mLabelText"/>
          </item>
-         <item row="1" column="1">
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_6">
+           <property name="text">
+            <string>ID</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
           <widget class="QLineEdit" name="mIDText"/>
          </item>
         </layout>
@@ -328,18 +332,18 @@
      </widget>
      <widget class="QWidget" name="tab_2">
       <attribute name="title">
-       <string>Public Key</string>
+       <string>Private Key</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
-        <widget class="QLabel" name="label_11">
+        <widget class="QLabel" name="label_9">
          <property name="text">
-          <string>Information</string>
+          <string>Key Properties</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="Line" name="line_2">
+        <widget class="Line" name="line_3">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -350,84 +354,18 @@
          <property name="topMargin">
           <number>0</number>
          </property>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="mECParamsText"/>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="mKeyValueText"/>
          </item>
          <item row="0" column="0">
-          <widget class="QLabel" name="label_5">
+          <widget class="QLabel" name="label_11">
            <property name="text">
-            <string>EC Points</string>
+            <string>Key value</string>
            </property>
           </widget>
          </item>
          <item row="0" column="2">
-          <widget class="QLineEdit" name="mECPointsLenText">
-           <property name="minimumSize">
-            <size>
-             <width>40</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>40</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="palette">
-            <palette>
-             <active>
-              <colorrole role="Base">
-               <brush brushstyle="SolidPattern">
-                <color alpha="255">
-                 <red>221</red>
-                 <green>221</green>
-                 <blue>255</blue>
-                </color>
-               </brush>
-              </colorrole>
-             </active>
-             <inactive>
-              <colorrole role="Base">
-               <brush brushstyle="SolidPattern">
-                <color alpha="255">
-                 <red>221</red>
-                 <green>221</green>
-                 <blue>255</blue>
-                </color>
-               </brush>
-              </colorrole>
-             </inactive>
-             <disabled>
-              <colorrole role="Base">
-               <brush brushstyle="SolidPattern">
-                <color alpha="255">
-                 <red>240</red>
-                 <green>240</green>
-                 <blue>240</blue>
-                </color>
-               </brush>
-              </colorrole>
-             </disabled>
-            </palette>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="mECPointsText"/>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_6">
-           <property name="text">
-            <string>EC Params</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2">
-          <widget class="QLineEdit" name="mECParamsLenText">
+          <widget class="QLineEdit" name="mKeyValueLenText">
            <property name="minimumSize">
             <size>
              <width>40</width>
@@ -485,28 +423,84 @@
         </layout>
        </item>
        <item>
-        <widget class="Line" name="line_3">
+        <widget class="Line" name="line_4">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_8">
+        <widget class="QLabel" name="label_12">
          <property name="text">
           <string>Attributes</string>
          </property>
         </widget>
        </item>
        <item>
-        <layout class="QGridLayout" name="gridLayout_4">
+        <layout class="QGridLayout" name="gridLayout_5">
          <property name="topMargin">
           <number>0</number>
          </property>
          <item row="0" column="2">
-          <widget class="QCheckBox" name="mEncryptCheck">
+          <widget class="QCheckBox" name="mDecryptCheck">
            <property name="text">
-            <string notr="true">Encrypt</string>
+            <string notr="true">Decrypt</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QCheckBox" name="mModifiableCheck">
+           <property name="text">
+            <string notr="true">Modifiable</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QComboBox" name="mDecryptCombo"/>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="mPrivateCombo"/>
+         </item>
+         <item row="2" column="0">
+          <widget class="QCheckBox" name="mDeriveCheck">
+           <property name="text">
+            <string notr="true">Derive</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QComboBox" name="mDeriveCombo"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QCheckBox" name="mUnwrapCheck">
+           <property name="text">
+            <string notr="true">Unwrap</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="4">
+          <widget class="QCheckBox" name="mSensitiveCheck">
+           <property name="text">
+            <string notr="true">Sensitive</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QComboBox" name="mUnwrapCombo"/>
+         </item>
+         <item row="1" column="5">
+          <widget class="QComboBox" name="mSensitiveCombo"/>
+         </item>
+         <item row="2" column="5">
+          <widget class="QComboBox" name="mTokenCombo"/>
+         </item>
+         <item row="0" column="5">
+          <widget class="QComboBox" name="mSignCombo"/>
+         </item>
+         <item row="2" column="4">
+          <widget class="QCheckBox" name="mTokenCheck">
+           <property name="text">
+            <string notr="true">Token</string>
            </property>
           </widget>
          </item>
@@ -517,80 +511,44 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="0">
-          <widget class="QCheckBox" name="mVerifyCheck">
-           <property name="text">
-            <string notr="true">Verify</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QComboBox" name="mVerifyCombo"/>
-         </item>
-         <item row="0" column="1">
-          <widget class="QComboBox" name="mPrivateCombo"/>
-         </item>
          <item row="0" column="4">
-          <widget class="QCheckBox" name="mWrapCheck">
+          <widget class="QCheckBox" name="mSignCheck">
            <property name="text">
-            <string notr="true">Wrap</string>
+            <string notr="true">Sign</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="4">
-          <widget class="QCheckBox" name="mModifiableCheck">
-           <property name="text">
-            <string notr="true">Modifiable</string>
-           </property>
-          </widget>
+         <item row="2" column="3">
+          <widget class="QComboBox" name="mExtractableCombo"/>
          </item>
          <item row="1" column="3">
-          <widget class="QComboBox" name="mDeriveCombo"/>
-         </item>
-         <item row="0" column="3">
-          <widget class="QComboBox" name="mEncryptCombo"/>
-         </item>
-         <item row="1" column="2">
-          <widget class="QCheckBox" name="mDeriveCheck">
-           <property name="text">
-            <string notr="true">Derive</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="5">
-          <widget class="QComboBox" name="mWrapCombo"/>
-         </item>
-         <item row="1" column="5">
           <widget class="QComboBox" name="mModifiableCombo"/>
          </item>
-         <item row="2" column="0">
-          <widget class="QCheckBox" name="mTokenCheck">
+         <item row="2" column="2">
+          <widget class="QCheckBox" name="mExtractableCheck">
            <property name="text">
-            <string notr="true">Token</string>
+            <string notr="true">Extractable</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="1">
-          <widget class="QComboBox" name="mTokenCombo"/>
-         </item>
-         <item row="2" column="2">
+         <item row="3" column="0">
           <widget class="QCheckBox" name="mStartDateCheck">
            <property name="text">
             <string>StartDate</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="3">
+         <item row="3" column="1">
           <widget class="QDateEdit" name="mStartDateEdit"/>
          </item>
-         <item row="2" column="4">
+         <item row="3" column="2">
           <widget class="QCheckBox" name="mEndDateCheck">
            <property name="text">
             <string>EndDate</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="5">
+         <item row="3" column="3">
           <widget class="QDateEdit" name="mEndDateEdit"/>
          </item>
         </layout>
@@ -630,20 +588,26 @@
   <tabstop>mSlotIDText</tabstop>
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
-  <tabstop>mECPointsText</tabstop>
-  <tabstop>mECParamsText</tabstop>
+  <tabstop>mLabelText</tabstop>
+  <tabstop>mSubjectText</tabstop>
+  <tabstop>mIDText</tabstop>
+  <tabstop>mKeyValueText</tabstop>
   <tabstop>mPrivateCheck</tabstop>
   <tabstop>mPrivateCombo</tabstop>
-  <tabstop>mEncryptCheck</tabstop>
-  <tabstop>mEncryptCombo</tabstop>
-  <tabstop>mWrapCheck</tabstop>
-  <tabstop>mWrapCombo</tabstop>
-  <tabstop>mVerifyCheck</tabstop>
-  <tabstop>mVerifyCombo</tabstop>
-  <tabstop>mDeriveCheck</tabstop>
-  <tabstop>mDeriveCombo</tabstop>
+  <tabstop>mDecryptCheck</tabstop>
+  <tabstop>mDecryptCombo</tabstop>
+  <tabstop>mSignCheck</tabstop>
+  <tabstop>mSignCombo</tabstop>
+  <tabstop>mUnwrapCheck</tabstop>
+  <tabstop>mUnwrapCombo</tabstop>
   <tabstop>mModifiableCheck</tabstop>
   <tabstop>mModifiableCombo</tabstop>
+  <tabstop>mSensitiveCheck</tabstop>
+  <tabstop>mSensitiveCombo</tabstop>
+  <tabstop>mDeriveCheck</tabstop>
+  <tabstop>mDeriveCombo</tabstop>
+  <tabstop>mExtractableCheck</tabstop>
+  <tabstop>mExtractableCombo</tabstop>
   <tabstop>mTokenCheck</tabstop>
   <tabstop>mTokenCombo</tabstop>
   <tabstop>mStartDateCheck</tabstop>
@@ -656,7 +620,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>CreateECPubKeyDlg</receiver>
+   <receiver>CreateDSAPriKeyDlg</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -672,7 +636,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>CreateECPubKeyDlg</receiver>
+   <receiver>CreateDSAPriKeyDlg</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
