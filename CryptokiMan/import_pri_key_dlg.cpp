@@ -145,7 +145,7 @@ void ImportPriKeyDlg::accept()
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-
+    int nKeyType = -1;
 
     QString strPriPath = mPathText->text();
 
@@ -155,26 +155,32 @@ void ImportPriKeyDlg::accept()
         return;
     }
 
-
     BIN binPri = {0,0};
     JRSAKeyVal rsaKeyVal;
-    JECKeyVal ecKeyVal;;
+    JECKeyVal ecKeyVal;
+    JDSAKeyVal dsaKeyVal;
 
     memset( &rsaKeyVal, 0x00, sizeof(JRSAKeyVal));
     memset( &ecKeyVal, 0x00, sizeof(JECKeyVal));
+    memset( &dsaKeyVal, 0x00, sizeof(JDSAKeyVal));
 
     JS_BIN_fileReadBER( strPriPath.toLocal8Bit().toStdString().c_str(), &binPri );
 
-    rv = JS_PKI_getRSAKeyVal( &binPri, &rsaKeyVal );
-    if( rv == 0 )
-    {
-        rv = createRSAPrivateKey( &rsaKeyVal );
-        if( rv != 0 ) goto end;
+    nKeyType = JS_PKI_getPriKeyType( &binPri );
 
-        if( mPubImportCheck->isChecked() )
-            rv = createRSAPublicKey( &rsaKeyVal );
+    if( nKeyType == JS_PKI_KEY_TYPE_RSA )
+    {
+        rv = JS_PKI_getRSAKeyVal( &binPri, &rsaKeyVal );
+        if( rv == 0 )
+        {
+            rv = createRSAPrivateKey( &rsaKeyVal );
+            if( rv != 0 ) goto end;
+
+            if( mPubImportCheck->isChecked() )
+                rv = createRSAPublicKey( &rsaKeyVal );
+        }
     }
-    else
+    else if( nKeyType == JS_PKI_KEY_TYPE_ECC )
     {
         rv = JS_PKI_getECKeyVal( &binPri, &ecKeyVal );
         if( rv == 0 )
@@ -186,11 +192,30 @@ void ImportPriKeyDlg::accept()
                 rv = createECPublicKey( &ecKeyVal );
         }
     }
+    else if( nKeyType == JS_PKI_KEY_TYPE_DSA )
+    {
+        rv = JS_PKI_getDSAKeyVal( &binPri, &dsaKeyVal );
+        if( rv == 0 )
+        {
+            rv = createDSAPrivateKey( &dsaKeyVal );
+            if( rv != 0 ) goto end;
+
+            if( mPubImportCheck->isChecked() )
+                rv = createDSAPublicKey( &dsaKeyVal );
+        }
+    }
+    else
+    {
+        manApplet->elog( QString( "Not support key type: %1").arg(nKeyType));
+        rv = -1;
+        goto end;
+    }
 
 end :
     JS_BIN_reset( &binPri );
     JS_PKI_resetRSAKeyVal( &rsaKeyVal );
     JS_PKI_resetECKeyVal( &ecKeyVal );
+    JS_PKI_resetDSAKeyVal( &dsaKeyVal );
 
     if( rv != 0 )
     {
@@ -1085,6 +1110,389 @@ int ImportPriKeyDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
     JS_BIN_reset( &binECParam );
     JS_BIN_reset( &binValue );
 
+    if( rv != CKR_OK )
+    {
+        manApplet->warningBox( tr("fail to create EC private key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this);
+        return rv;
+    }
+
+    return 0;
+}
+
+int ImportPriKeyDlg::createDSAPublicKey( JDSAKeyVal *pDSAKeyVal )
+{
+    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
+
+    int index = mSlotsCombo->currentIndex();
+    SlotInfo slotInfo = slot_infos.at(index);
+    int rv = -1;
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+
+    CK_ATTRIBUTE sTemplate[20];
+    CK_ULONG uCount = 0;
+    CK_OBJECT_HANDLE hObject = -1;
+    CK_BBOOL bTrue = CK_TRUE;
+    CK_BBOOL bFalse = CK_FALSE;
+
+    CK_OBJECT_CLASS objClass = CKO_PUBLIC_KEY;
+    CK_KEY_TYPE keyType = CKK_DSA;
+
+    CK_DATE sSDate;
+    CK_DATE sEDate;
+
+    memset( &sSDate, 0x00, sizeof(sSDate));
+    memset( &sEDate, 0x00, sizeof(sEDate));
+
+    sTemplate[uCount].type = CKA_CLASS;
+    sTemplate[uCount].pValue = &objClass;
+    sTemplate[uCount].ulValueLen = sizeof(objClass);
+    uCount++;
+
+    sTemplate[uCount].type = CKA_KEY_TYPE;
+    sTemplate[uCount].pValue = &keyType;
+    sTemplate[uCount].ulValueLen = sizeof(keyType);
+    uCount++;
+
+    QString strLabel = mPubLabelText->text();
+    BIN binLabel = {0,0};
+
+    if( !strLabel.isEmpty() )
+    {
+        JS_BIN_decodeHex( strLabel.toStdString().c_str(), &binLabel );
+        sTemplate[uCount].type = CKA_LABEL;
+        sTemplate[uCount].pValue = binLabel.pVal;
+        sTemplate[uCount].ulValueLen = binLabel.nLen;
+        uCount++;
+    }
+
+    QString strID = mPubIDText->text();
+    BIN binID = {0,0};
+
+    if( !strID.isEmpty() )
+    {
+        JS_BIN_decodeHex( strID.toStdString().c_str(), &binID );
+        sTemplate[uCount].type = CKA_ID;
+        sTemplate[uCount].pValue = binID.pVal;
+        sTemplate[uCount].ulValueLen = binID.nLen;
+        uCount++;
+    }
+
+    BIN binP={0,0};
+    BIN binQ = {0,0};
+    BIN binG = {0,0};
+    BIN binPub = {0,0};
+
+    JS_BIN_decodeHex( pDSAKeyVal->pP, &binP );
+    JS_BIN_decodeHex( pDSAKeyVal->pQ, &binQ );
+    JS_BIN_decodeHex( pDSAKeyVal->pG, &binG );
+    JS_BIN_decodeHex( pDSAKeyVal->pPublic, &binPub );
+
+    sTemplate[uCount].type = CKA_PRIME;
+    sTemplate[uCount].pValue = binP.pVal;
+    sTemplate[uCount].ulValueLen = binP.nLen;
+    uCount++;
+
+    sTemplate[uCount].type = CKA_SUBPRIME;
+    sTemplate[uCount].pValue = binQ.pVal;
+    sTemplate[uCount].ulValueLen = binQ.nLen;
+    uCount++;
+
+    sTemplate[uCount].type = CKA_BASE;
+    sTemplate[uCount].pValue = binG.pVal;
+    sTemplate[uCount].ulValueLen = binG.nLen;
+    uCount++;
+
+    sTemplate[uCount].type = CKA_VALUE;
+    sTemplate[uCount].pValue = binPub.pVal;
+    sTemplate[uCount].ulValueLen = binPub.nLen;
+    uCount++;
+
+    if( mPubTokenCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_TOKEN;
+        sTemplate[uCount].pValue = ( mPubTokenCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPubPrivateCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_PRIVATE;
+        sTemplate[uCount].pValue = (mPubPrivateCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPubEncryptCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_ENCRYPT;
+        sTemplate[uCount].pValue = (mPubEncryptCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPubWrapCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_WRAP;
+        sTemplate[uCount].pValue = (mPubWrapCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPubVerifyCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_VERIFY;
+        sTemplate[uCount].pValue = (mPubVerifyCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPubModifiableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_MODIFIABLE;
+        sTemplate[uCount].pValue = (mPubModifiableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPubStartDateCheck->isChecked() )
+    {
+        getCKDate( mPubStartDateEdit->date(), &sSDate );
+        sTemplate[uCount].type = CKA_START_DATE;
+        sTemplate[uCount].pValue = &sSDate;
+        sTemplate[uCount].ulValueLen = sizeof(sSDate);
+        uCount++;
+    }
+
+    if( mPubEndDateCheck->isChecked() )
+    {
+        getCKDate( mPubEndDateEdit->date(), &sEDate );
+        sTemplate[uCount].type = CKA_END_DATE;
+        sTemplate[uCount].pValue = &sEDate;
+        sTemplate[uCount].ulValueLen = sizeof(sEDate);
+        uCount++;
+    }
+
+    rv = manApplet->cryptokiAPI()->CreateObject( hSession, sTemplate, uCount, &hObject );
+
+    JS_BIN_reset( &binLabel );
+    JS_BIN_reset( &binID );
+    JS_BIN_reset( &binP );
+    JS_BIN_reset( &binG );
+    JS_BIN_reset( &binQ );
+    JS_BIN_reset( &binPub );
+
+    if( rv != CKR_OK )
+    {
+        manApplet->warningBox( tr("fail to create EC public key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this);
+        return rv;
+    }
+
+    return 0;
+}
+
+int ImportPriKeyDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
+{
+    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
+
+    int index = mSlotsCombo->currentIndex();
+    SlotInfo slotInfo = slot_infos.at(index);
+    int rv = -1;
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+
+
+    CK_ATTRIBUTE sTemplate[20];
+    CK_ULONG uCount = 0;
+    CK_OBJECT_HANDLE hObject = -1;
+    CK_BBOOL bTrue = CK_TRUE;
+    CK_BBOOL bFalse = CK_FALSE;
+
+    CK_OBJECT_CLASS objClass = CKO_PRIVATE_KEY;
+    CK_KEY_TYPE keyType = CKK_EC;
+
+    CK_DATE sSDate;
+    CK_DATE sEDate;
+
+    memset( &sSDate, 0x00, sizeof(sSDate));
+    memset( &sEDate, 0x00, sizeof(sEDate));
+
+    sTemplate[uCount].type = CKA_CLASS;
+    sTemplate[uCount].pValue = &objClass;
+    sTemplate[uCount].ulValueLen = sizeof(objClass);
+    uCount++;
+
+    sTemplate[uCount].type = CKA_KEY_TYPE;
+    sTemplate[uCount].pValue = &keyType;
+    sTemplate[uCount].ulValueLen = sizeof(keyType);
+    uCount++;
+
+    QString strLabel = mPriLabelText->text();
+    BIN binLabel = {0,0};
+
+    if( !strLabel.isEmpty() )
+    {
+        JS_BIN_decodeHex( strLabel.toStdString().c_str(), &binLabel );
+        sTemplate[uCount].type = CKA_LABEL;
+        sTemplate[uCount].pValue = binLabel.pVal;
+        sTemplate[uCount].ulValueLen = binLabel.nLen;
+        uCount++;
+    }
+
+    QString strID = mPriIDText->text();
+    BIN binID = {0,0};
+
+    if( !strID.isEmpty() )
+    {
+        JS_BIN_decodeHex( strID.toStdString().c_str(), &binID );
+        sTemplate[uCount].type = CKA_ID;
+        sTemplate[uCount].pValue = binID.pVal;
+        sTemplate[uCount].ulValueLen = binID.nLen;
+        uCount++;
+    }
+
+    QString strSubject;
+    BIN binSubject = {0,0};
+
+    if( !strSubject.isEmpty() )
+    {
+        JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+        sTemplate[uCount].type = CKA_SUBJECT;
+        sTemplate[uCount].pValue = binSubject.pVal;
+        sTemplate[uCount].ulValueLen = binSubject.nLen;
+        uCount++;
+    }
+
+    BIN binP={0,0};
+    BIN binQ = {0,0};
+    BIN binG = {0,0};
+
+    JS_BIN_decodeHex( pDSAKeyVal->pP, &binP );
+    JS_BIN_decodeHex( pDSAKeyVal->pQ, &binQ );
+    JS_BIN_decodeHex( pDSAKeyVal->pG, &binG );
+
+    sTemplate[uCount].type = CKA_PRIME;
+    sTemplate[uCount].pValue = binP.pVal;
+    sTemplate[uCount].ulValueLen = binP.nLen;
+    uCount++;
+
+    sTemplate[uCount].type = CKA_SUBPRIME;
+    sTemplate[uCount].pValue = binQ.pVal;
+    sTemplate[uCount].ulValueLen = binQ.nLen;
+    uCount++;
+
+    sTemplate[uCount].type = CKA_BASE;
+    sTemplate[uCount].pValue = binG.pVal;
+    sTemplate[uCount].ulValueLen = binG.nLen;
+    uCount++;
+
+
+    BIN binValue = {0,0};
+    JS_BIN_decodeHex( pDSAKeyVal->pPrivate, &binValue );
+
+    sTemplate[uCount].type = CKA_VALUE;
+    sTemplate[uCount].pValue = binValue.pVal;
+    sTemplate[uCount].ulValueLen = binValue.nLen;
+    uCount++;
+
+    if( mPriPrivateCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_PRIVATE;
+        sTemplate[uCount].pValue = ( mPriPrivateCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
+        uCount++;
+    }
+
+    if( mPriTokenCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_TOKEN;
+        sTemplate[uCount].pValue = (mPriTokenCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
+        uCount++;
+    }
+
+    if( mPriDecryptCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_DECRYPT;
+        sTemplate[uCount].pValue = (mPriDecryptCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
+        uCount++;
+    }
+
+    if( mPriUnwrapCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_UNWRAP;
+        sTemplate[uCount].pValue = (mPriUnwrapCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
+        uCount++;
+    }
+
+    if( mPriModifiableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_MODIFIABLE;
+        sTemplate[uCount].pValue = (mPriModifiableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
+        uCount++;
+    }
+
+    if( mPriSensitiveCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_MODIFIABLE;
+        sTemplate[uCount].pValue = (mPriSensitiveCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
+        uCount++;
+    }
+
+    if( mPriDeriveCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_MODIFIABLE;
+        sTemplate[uCount].pValue = (mPriDeriveCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
+        uCount++;
+    }
+
+    if( mPriExtractableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_MODIFIABLE;
+        sTemplate[uCount].pValue = (mPriExtractableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
+        uCount++;
+    }
+
+    if( mPriSignCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_MODIFIABLE;
+        sTemplate[uCount].pValue = (mPriSignCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
+        uCount++;
+    }
+
+    if( mPriStartDateCheck->isChecked() )
+    {
+        getCKDate( mPriStartDateEdit->date(), &sSDate );
+        sTemplate[uCount].type = CKA_START_DATE;
+        sTemplate[uCount].pValue = &sSDate;
+        sTemplate[uCount].ulValueLen = sizeof(sSDate);
+        uCount++;
+    }
+
+    if( mPriEndDateCheck->isChecked() )
+    {
+        getCKDate( mPriEndDateEdit->date(), &sEDate );
+        sTemplate[uCount].type = CKA_END_DATE;
+        sTemplate[uCount].pValue = &sEDate;
+        sTemplate[uCount].ulValueLen = sizeof(sEDate);
+        uCount++;
+    }
+
+    rv = manApplet->cryptokiAPI()->CreateObject( hSession, sTemplate, uCount, &hObject );
+
+    JS_BIN_reset( &binLabel );
+    JS_BIN_reset( &binID );
+    JS_BIN_reset( &binSubject );
+    JS_BIN_reset( &binValue );
+    JS_BIN_reset( &binP );
+    JS_BIN_reset( &binQ );
+    JS_BIN_reset( &binG );
 
     if( rv != CKR_OK )
     {
@@ -1094,6 +1502,7 @@ int ImportPriKeyDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
 
     return 0;
 }
+
 
 void ImportPriKeyDlg::setDefaults()
 {

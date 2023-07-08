@@ -4,6 +4,7 @@
 #include <QDialog>
 #include "ui_import_pfx_dlg.h"
 #include "js_pki.h"
+#include "js_pki_eddsa.h"
 
 namespace Ui {
 class ImportPFXDlg;
@@ -67,6 +68,8 @@ private:
     int createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal );
     int createECPublicKey( JECKeyVal *pEcKeyVal );
     int createECPrivateKey( JECKeyVal *pECKeyVal );
+    int createDSAPublicKey( JDSAKeyVal *pDSAKeyVal );
+    int createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal );
 
     void setDefaults();
 
