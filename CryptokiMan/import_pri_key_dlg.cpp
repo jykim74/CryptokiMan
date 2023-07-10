@@ -4,6 +4,7 @@
 #include "man_applet.h"
 #include "mainwindow.h"
 #include "js_pkcs11.h"
+#include "js_pki_tools.h"
 #include "common.h"
 #include "cryptoki_api.h"
 
@@ -821,7 +822,8 @@ int ImportPriKeyDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
     }
 
     BIN binECParam = {0,0};
-    JS_BIN_decodeHex( pEcKeyVal->pGroup, &binECParam );
+    JS_PKI_getOIDFromString( pEcKeyVal->pCurveOID, &binECParam );
+
 
     sTemplate[uCount].type = CKA_EC_PARAMS;
     sTemplate[uCount].pValue = binECParam.pVal;
@@ -998,7 +1000,7 @@ int ImportPriKeyDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
     }
 
     BIN binECParam = {0,0};
-    JS_BIN_decodeHex( pEcKeyVal->pGroup, &binECParam );
+    JS_PKI_getOIDFromString( pEcKeyVal->pCurveOID, &binECParam );
 
     sTemplate[uCount].type = CKA_EC_PARAMS;
     sTemplate[uCount].pValue = binECParam.pVal;
