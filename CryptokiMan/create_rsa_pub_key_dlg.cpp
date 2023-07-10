@@ -277,7 +277,7 @@ void CreateRSAPubKeyDlg::accept()
     }
 
     manApplet->messageBox( tr("Success to create RSA public key"), this );
-    manApplet->showTypeList( index, HM_ITEM_TYPE_PRIVATEKEY );
+    manApplet->showTypeList( index, HM_ITEM_TYPE_PUBLICKEY );
 
     QDialog::accept();
 }
