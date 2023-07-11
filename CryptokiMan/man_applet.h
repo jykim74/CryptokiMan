@@ -65,6 +65,7 @@ public:
     bool isLicense() { return  is_license_; };
 
     QString curFile() { return cur_file_; };
+    QString curFolder();
     void setCurFile( const QString& strFile );
 
 private:
