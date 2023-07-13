@@ -221,8 +221,11 @@ void ImportPFXDlg::accept()
         rv = JS_PKI_getRSAKeyVal( &binPri, &rsaKeyVal );
         if( rv == 0 )
         {
-            createRSAPrivateKey( &rsaKeyVal );
-            createRSAPublicKey( &rsaKeyVal );
+            rv = createRSAPrivateKey( &rsaKeyVal );
+            if( rv != 0 ) goto end;
+
+            rv = createRSAPublicKey( &rsaKeyVal );
+            if( rv != 0 ) goto end;
         }
     }
     else if( key_type == JS_PKI_KEY_TYPE_ECC )
@@ -230,8 +233,11 @@ void ImportPFXDlg::accept()
         rv = JS_PKI_getECKeyVal( &binPri, &ecKeyVal );
         if( rv == 0 )
         {
-            createECPrivateKey( &ecKeyVal );
-            createECPublicKey( &ecKeyVal );
+            rv = createECPrivateKey( &ecKeyVal );
+            if( rv != 0 ) goto end;
+
+            rv = createECPublicKey( &ecKeyVal );
+            if( rv != 0 ) goto end;
         }
 
     }
@@ -240,8 +246,11 @@ void ImportPFXDlg::accept()
         rv = JS_PKI_getDSAKeyVal( &binPri, &dsaKeyVal );
         if( rv == 0 )
         {
-            createDSAPrivateKey( &dsaKeyVal );
-            createDSAPublicKey( &dsaKeyVal );
+            rv = createDSAPrivateKey( &dsaKeyVal );
+            if( rv != 0 ) goto end;
+
+            rv = createDSAPublicKey( &dsaKeyVal );
+            if( rv != 0 ) goto end;
         }
     }
     else

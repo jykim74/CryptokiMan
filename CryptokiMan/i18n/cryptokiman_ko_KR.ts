@@ -2563,7 +2563,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <source>You have to select private key file.</source>
-        <translation>개인키 파일을 선택하세요</translation>
+        <translation type="vanished">개인키 파일을 선택하세요</translation>
     </message>
     <message>
         <source>fail to get key information.</source>
@@ -2608,6 +2608,26 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>EndDate</source>
         <translation></translation>
+    </message>
+    <message>
+        <source>Encrypted PrivateKey</source>
+        <translation>암호화된 개인키</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>암호</translation>
+    </message>
+    <message>
+        <source>fail to read private key: %1</source>
+        <translation>개인키 읽기 실패: %1</translation>
+    </message>
+    <message>
+        <source>You have to insert password</source>
+        <translation>암호를 입력하세요</translation>
+    </message>
+    <message>
+        <source>fail to decrypt private key:%1</source>
+        <translation>개인키 복호화에 실패하였습니다: %1</translation>
     </message>
 </context>
 <context>

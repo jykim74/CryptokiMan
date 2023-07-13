@@ -23,7 +23,8 @@ private slots:
     virtual void accept();
     void slotChanged( int index );
 
-    void clickPubImport();
+    void checkPubImport();
+    void checkEncPriKey();
 
     void clickPriPrivate();
     void clickPriDecrypt();
@@ -54,6 +55,8 @@ private:
     void initAttributes();
     void setAttributes();
     void connectAttributes();
+
+    int readPrivateKey( BIN *pPriKey );
 
     int createRSAPublicKey( JRSAKeyVal *pRsaKeyVal );
     int createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal );

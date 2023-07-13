@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>642</width>
+    <width>559</width>
     <height>395</height>
    </rect>
   </property>
@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -273,6 +273,40 @@
         </widget>
        </item>
        <item>
+        <layout class="QGridLayout" name="gridLayout_9">
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <item row="0" column="3">
+          <widget class="QCheckBox" name="mEncPriKeyCheck">
+           <property name="text">
+            <string>Encrypted PrivateKey</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QCheckBox" name="mPubImportCheck">
+           <property name="text">
+            <string>Public Key Import</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
         <layout class="QGridLayout" name="gridLayout_5">
          <property name="topMargin">
           <number>0</number>
@@ -309,11 +343,37 @@
         </layout>
        </item>
        <item>
-        <widget class="QCheckBox" name="mPubImportCheck">
-         <property name="text">
-          <string>Public Key Import</string>
+        <layout class="QGridLayout" name="gridLayout_8">
+         <property name="topMargin">
+          <number>0</number>
          </property>
-        </widget>
+         <item row="0" column="2">
+          <widget class="QLineEdit" name="mPasswdText">
+           <property name="echoMode">
+            <enum>QLineEdit::Password</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="mPasswdLabel">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>80</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Password</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
         <spacer name="verticalSpacer">
@@ -710,7 +770,6 @@
   <tabstop>mLoginText</tabstop>
   <tabstop>mPathText</tabstop>
   <tabstop>mFindBtn</tabstop>
-  <tabstop>mPubImportCheck</tabstop>
   <tabstop>mPriLabelText</tabstop>
   <tabstop>mPriSubjectText</tabstop>
   <tabstop>mPriIDText</tabstop>

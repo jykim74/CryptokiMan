@@ -51,7 +51,8 @@ void ImportPriKeyDlg::initialize()
 
     if( slot_infos.size() > 0 ) slotChanged(0);
 
-    clickPubImport();
+    checkPubImport();
+    checkEncPriKey();
 }
 
 void ImportPriKeyDlg::initAttributes()
@@ -109,7 +110,8 @@ void ImportPriKeyDlg::setAttributes()
 
 void ImportPriKeyDlg::connectAttributes()
 {
-    connect( mPubImportCheck, SIGNAL(clicked()), this, SLOT(clickPubImport()));
+    connect( mPubImportCheck, SIGNAL(clicked()), this, SLOT(checkPubImport()));
+    connect( mEncPriKeyCheck, SIGNAL(clicked()), this, SLOT(checkEncPriKey()));
 
     connect( mPriPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPriPrivate()));
     connect( mPriDecryptCheck, SIGNAL(clicked()), this, SLOT(clickPriDecrypt()));
@@ -138,23 +140,66 @@ void ImportPriKeyDlg::connectAttributes()
     connect( mFindBtn, SIGNAL(clicked()), this, SLOT(clickFind()));
 }
 
+int ImportPriKeyDlg::readPrivateKey( BIN *pPriKey )
+{
+    int ret = 0;
+    BIN binData = {0,0};
+    BIN binDec = {0,0};
+    BIN binInfo = {0,0};
+
+    QString strPriPath = mPathText->text();
+
+    ret = JS_BIN_fileReadBER( strPriPath.toLocal8Bit().toStdString().c_str(), &binData );
+    if( ret <= 0 )
+    {
+        manApplet->warningBox( tr( "fail to read private key: %1").arg( ret ), this );
+        return  -1;
+    }
+
+    if( mEncPriKeyCheck->isChecked() )
+    {
+        QString strPasswd = mPasswdText->text();
+        if( strPasswd.length() < 1 )
+        {
+            manApplet->warningBox( tr( "You have to insert password"), this );
+            ret = -1;
+            goto end;
+        }
+
+        ret = JS_PKI_decryptPrivateKey( strPasswd.toStdString().c_str(), &binData, &binInfo, &binDec );
+        if( ret != 0 )
+        {
+            manApplet->warningBox( tr( "fail to decrypt private key:%1").arg( ret ));
+            mPasswdText->setFocus();
+            ret = -1;
+            goto end;
+        }
+
+        JS_BIN_copy( pPriKey, &binDec );
+        ret = 0;
+    }
+    else
+    {
+        JS_BIN_copy( pPriKey, &binData );
+        ret = 0;
+    }
+
+end :
+    JS_BIN_reset( &binData );
+    JS_BIN_reset( &binDec );
+    JS_BIN_reset( &binInfo );
+
+    return ret;
+}
+
 void ImportPriKeyDlg::accept()
 {
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
-    CK_SESSION_HANDLE   hSession = -1;
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
     int nKeyType = -1;
-
-    QString strPriPath = mPathText->text();
-
-    if( strPriPath.isEmpty() )
-    {
-        manApplet->warningBox( tr("You have to select private key file."), this );
-        return;
-    }
 
     BIN binPri = {0,0};
     JRSAKeyVal rsaKeyVal;
@@ -165,7 +210,8 @@ void ImportPriKeyDlg::accept()
     memset( &ecKeyVal, 0x00, sizeof(JECKeyVal));
     memset( &dsaKeyVal, 0x00, sizeof(JDSAKeyVal));
 
-    JS_BIN_fileReadBER( strPriPath.toLocal8Bit().toStdString().c_str(), &binPri );
+    rv = readPrivateKey( &binPri );
+    if( rv != 0 ) return;
 
     nKeyType = JS_PKI_getPriKeyType( &binPri );
 
@@ -242,11 +288,19 @@ void ImportPriKeyDlg::slotChanged(int index)
     mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
 }
 
-void ImportPriKeyDlg::clickPubImport()
+void ImportPriKeyDlg::checkPubImport()
 {
     bool bVal = mPubImportCheck->isChecked();
 
     tabWidget->setTabEnabled( 2, bVal );
+}
+
+void ImportPriKeyDlg::checkEncPriKey()
+{
+    bool bVal = mEncPriKeyCheck->isChecked();
+
+    mPasswdLabel->setEnabled(bVal);
+    mPasswdText->setEnabled(bVal);
 }
 
 void ImportPriKeyDlg::clickPriPrivate()
