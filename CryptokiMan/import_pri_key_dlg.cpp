@@ -169,7 +169,7 @@ int ImportPriKeyDlg::readPrivateKey( BIN *pPriKey )
         ret = JS_PKI_decryptPrivateKey( strPasswd.toStdString().c_str(), &binData, &binInfo, &binDec );
         if( ret != 0 )
         {
-            manApplet->warningBox( tr( "fail to decrypt private key:%1").arg( ret ));
+            manApplet->warningBox( tr( "fail to decrypt private key:%1").arg( ret ), this );
             mPasswdText->setFocus();
             ret = -1;
             goto end;
