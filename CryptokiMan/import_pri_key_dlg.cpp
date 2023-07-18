@@ -437,12 +437,14 @@ int ImportPriKeyDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
     uCount++;
 
     QString strLabel = mPubLabelText->text();
+    BIN binLabel = {0,0};
 
     if( !strLabel.isEmpty() )
     {
+        JS_BIN_set( &binLabel, (unsigned char *)strLabel.toStdString().c_str(), strLabel.length() );
         sTemplate[uCount].type = CKA_LABEL;
-        sTemplate[uCount].pValue = (unsigned char *)strLabel.toStdString().c_str();
-        sTemplate[uCount].ulValueLen = strLabel.length();
+        sTemplate[uCount].pValue = binLabel.pVal;
+        sTemplate[uCount].ulValueLen = binLabel.nLen;
         uCount++;
     }
 
@@ -545,6 +547,7 @@ int ImportPriKeyDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
     JS_BIN_reset( &binID );
     JS_BIN_reset( &binModulus );
     JS_BIN_reset( &binPublicExponent );
+    JS_BIN_reset( &binLabel );
 
 
     if( rv != CKR_OK )
@@ -591,12 +594,14 @@ int ImportPriKeyDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
     uCount++;
 
     QString strLabel = mPriLabelText->text();
+    BIN binLabel = {0,0};
 
     if( !strLabel.isEmpty() )
-    {   
+    {
+        JS_BIN_set( &binLabel, (unsigned char *)strLabel.toStdString().c_str(), strLabel.length() );
         sTemplate[uCount].type = CKA_LABEL;
-        sTemplate[uCount].pValue = (unsigned char *)strLabel.toStdString().c_str();
-        sTemplate[uCount].ulValueLen = strLabel.length();
+        sTemplate[uCount].pValue = binLabel.pVal;
+        sTemplate[uCount].ulValueLen = binLabel.nLen;
         uCount++;
     }
 
@@ -809,6 +814,7 @@ int ImportPriKeyDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
     JS_BIN_reset( &binExponent1 );
     JS_BIN_reset( &binExponent2 );
     JS_BIN_reset( &binCoefficient );
+    JS_BIN_reset( &binLabel );
 
     if( rv != CKR_OK )
     {
@@ -854,12 +860,14 @@ int ImportPriKeyDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
     uCount++;
 
     QString strLabel = mPubLabelText->text();
+    BIN binLabel = {0,0};
 
     if( !strLabel.isEmpty() )
     {
+        JS_BIN_set( &binLabel, (unsigned char *)strLabel.toStdString().c_str(), strLabel.length() );
         sTemplate[uCount].type = CKA_LABEL;
-        sTemplate[uCount].pValue = (unsigned char *)strLabel.toStdString().c_str();
-        sTemplate[uCount].ulValueLen = strLabel.length();
+        sTemplate[uCount].pValue = binLabel.pVal;
+        sTemplate[uCount].ulValueLen = binLabel.nLen;
         uCount++;
     }
 
@@ -887,10 +895,16 @@ int ImportPriKeyDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
     BIN binECPoint={0,0};
     BIN binPubX = {0,0};
     BIN binPubY = {0,0};
+    unsigned char sPrefix[3];
 
     JS_BIN_decodeHex( pEcKeyVal->pPubX, &binPubX );
     JS_BIN_decodeHex( pEcKeyVal->pPubY, &binPubY );
-    JS_BIN_decodeHex( "04", &binECPoint );
+//    JS_BIN_decodeHex( "04", &binECPoint );
+    sPrefix[0] = 0x04;
+    sPrefix[1] = binPubX.nLen + binPubY.nLen + 1;
+    sPrefix[2] = 0x04;
+
+    JS_BIN_set( &binECPoint, sPrefix, 3 );
     JS_BIN_appendBin( &binECPoint, &binPubX );
     JS_BIN_appendBin( &binECPoint, &binPubY );
     JS_BIN_reset( &binPubX );
@@ -974,6 +988,7 @@ int ImportPriKeyDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
     JS_BIN_reset( &binECPoint );
     JS_BIN_reset( &binPubX );
     JS_BIN_reset( &binPubY );
+    JS_BIN_reset( &binLabel );
 
     if( rv != CKR_OK )
     {
@@ -1020,12 +1035,14 @@ int ImportPriKeyDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
     uCount++;
 
     QString strLabel = mPriLabelText->text();
+    BIN binLabel = {0,0};
 
     if( !strLabel.isEmpty() )
     {
+        JS_BIN_set( &binLabel, (unsigned char *)strLabel.toStdString().c_str(), strLabel.length() );
         sTemplate[uCount].type = CKA_LABEL;
-        sTemplate[uCount].pValue = (unsigned char *)strLabel.toStdString().c_str();
-        sTemplate[uCount].ulValueLen = strLabel.length();
+        sTemplate[uCount].pValue = binLabel.pVal;
+        sTemplate[uCount].ulValueLen = binLabel.nLen;
         uCount++;
     }
 
@@ -1165,6 +1182,7 @@ int ImportPriKeyDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
     JS_BIN_reset( &binSubject );
     JS_BIN_reset( &binECParam );
     JS_BIN_reset( &binValue );
+    JS_BIN_reset( &binLabel );
 
     if( rv != CKR_OK )
     {
