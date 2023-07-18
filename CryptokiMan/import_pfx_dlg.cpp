@@ -610,7 +610,7 @@ int ImportPFXDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
 
     if( !strLabel.isEmpty() )
     {
-        JS_BIN_decodeHex( strLabel.toStdString().c_str(), &binLabel );
+        JS_BIN_set( &binLabel, (unsigned char *)strLabel.toStdString().c_str(), strLabel.length() );
         sTemplate[uCount].type = CKA_LABEL;
         sTemplate[uCount].pValue = binLabel.pVal;
         sTemplate[uCount].ulValueLen = binLabel.nLen;
@@ -766,8 +766,7 @@ int ImportPFXDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
 
     if( !strLabel.isEmpty() )
     {
-        JS_BIN_decodeHex( strLabel.toStdString().c_str(), &binLabel );
-
+        JS_BIN_set( &binLabel, (unsigned char *)strLabel.toStdString().c_str(), strLabel.length() );
         sTemplate[uCount].type = CKA_LABEL;
         sTemplate[uCount].pValue = binLabel.pVal;
         sTemplate[uCount].ulValueLen = binLabel.nLen;
@@ -1026,7 +1025,7 @@ int ImportPFXDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
 
     if( !strLabel.isEmpty() )
     {
-        JS_BIN_decodeHex( strLabel.toStdString().c_str(), &binLabel );
+        JS_BIN_set( &binLabel, (unsigned char *)strLabel.toStdString().c_str(), strLabel.length() );
         sTemplate[uCount].type = CKA_LABEL;
         sTemplate[uCount].pValue = binLabel.pVal;
         sTemplate[uCount].ulValueLen = binLabel.nLen;
@@ -1056,10 +1055,16 @@ int ImportPFXDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
     BIN binECPoint={0,0};
     BIN binPubX = {0,0};
     BIN binPubY = {0,0};
+    unsigned char sPrefix[3];
 
     JS_BIN_decodeHex( pEcKeyVal->pPubX, &binPubX );
     JS_BIN_decodeHex( pEcKeyVal->pPubY, &binPubY );
-    JS_BIN_decodeHex( "04", &binECPoint );
+//    JS_BIN_decodeHex( "04", &binECPoint );
+    sPrefix[0] = 0x04;
+    sPrefix[1] = binPubX.nLen + binPubY.nLen + 1;
+    sPrefix[2] = 0x04;
+
+    JS_BIN_set( &binECPoint, sPrefix, 3 );
     JS_BIN_appendBin( &binECPoint, &binPubX );
     JS_BIN_appendBin( &binECPoint, &binPubY );
     JS_BIN_reset( &binPubX );
@@ -1194,7 +1199,7 @@ int ImportPFXDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
 
     if( !strLabel.isEmpty() )
     {
-        JS_BIN_decodeHex( strLabel.toStdString().c_str(), &binLabel );
+        JS_BIN_set( &binLabel, (unsigned char *)strLabel.toStdString().c_str(), strLabel.length() );
         sTemplate[uCount].type = CKA_LABEL;
         sTemplate[uCount].pValue = binLabel.pVal;
         sTemplate[uCount].ulValueLen = binLabel.nLen;
@@ -1392,7 +1397,7 @@ int ImportPFXDlg::createDSAPublicKey( JDSAKeyVal *pDSAKeyVal )
 
     if( !strLabel.isEmpty() )
     {
-        JS_BIN_decodeHex( strLabel.toStdString().c_str(), &binLabel );
+        JS_BIN_set( &binLabel, (unsigned char *)strLabel.toStdString().c_str(), strLabel.length() );
         sTemplate[uCount].type = CKA_LABEL;
         sTemplate[uCount].pValue = binLabel.pVal;
         sTemplate[uCount].ulValueLen = binLabel.nLen;
@@ -1565,7 +1570,7 @@ int ImportPFXDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
 
     if( !strLabel.isEmpty() )
     {
-        JS_BIN_decodeHex( strLabel.toStdString().c_str(), &binLabel );
+        JS_BIN_set( &binLabel, (unsigned char *)strLabel.toStdString().c_str(), strLabel.length() );
         sTemplate[uCount].type = CKA_LABEL;
         sTemplate[uCount].pValue = binLabel.pVal;
         sTemplate[uCount].ulValueLen = binLabel.nLen;
