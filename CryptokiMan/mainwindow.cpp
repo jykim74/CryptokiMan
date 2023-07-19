@@ -3036,12 +3036,26 @@ void MainWindow::showPublicKeyInfoList( int index, long hObject )
 
     if( hObject < 0 )
     {
+        long uCount = 0;
+        CK_ATTRIBUTE sTemplate[4];
         CK_OBJECT_CLASS objClass = CKO_PUBLIC_KEY;
-        CK_ATTRIBUTE sTemplate[1] = {
-            { CKA_CLASS, &objClass, sizeof(objClass) }
-        };
+        CK_KEY_TYPE keyType = 0;
 
-        rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, 1 );
+        sTemplate[uCount].type = CKA_CLASS;
+        sTemplate[uCount].pValue = &objClass;
+        sTemplate[uCount].ulValueLen = sizeof(objClass);
+        uCount++;
+
+        if( manApplet->isLicense() == false )
+        {
+            keyType = CKK_RSA;
+            sTemplate[uCount].type = CKA_KEY_TYPE;
+            sTemplate[uCount].pValue = &keyType;
+            sTemplate[uCount].ulValueLen = sizeof(keyType);
+            uCount++;
+        }
+
+        rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, uCount );
         if( rv != CKR_OK ) return;
 
         rv = manApplet->cryptokiAPI()->FindObjects( hSession, hObjects, 100, &uObjCnt );
@@ -3114,12 +3128,26 @@ void MainWindow::showPrivateKeyInfoList( int index, long hObject )
 
     if( hObject < 0 )
     {
+        long uCount = 0;
+        CK_ATTRIBUTE sTemplate[4];
         CK_OBJECT_CLASS objClass = CKO_PRIVATE_KEY;
-        CK_ATTRIBUTE sTemplate[1] = {
-            { CKA_CLASS, &objClass, sizeof(objClass) }
-        };
+        CK_KEY_TYPE keyType = 0;
 
-        rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, 1 );
+        sTemplate[uCount].type = CKA_CLASS;
+        sTemplate[uCount].pValue = &objClass;
+        sTemplate[uCount].ulValueLen = sizeof(objClass);
+        uCount++;
+
+        if( manApplet->isLicense() == false )
+        {
+            keyType = CKK_RSA;
+            sTemplate[uCount].type = CKA_KEY_TYPE;
+            sTemplate[uCount].pValue = &keyType;
+            sTemplate[uCount].ulValueLen = sizeof(keyType);
+            uCount++;
+        }
+
+        rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, uCount );
         if( rv != CKR_OK ) return;
 
         rv = manApplet->cryptokiAPI()->FindObjects( hSession, hObjects, 100, &uObjCnt );
