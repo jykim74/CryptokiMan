@@ -2809,6 +2809,10 @@ Do you want to delete the file and continue?</source>
         <source>Login fail</source>
         <translation>로그인 실패</translation>
     </message>
+    <message>
+        <source>need to open session</source>
+        <translation>OpenSession 이 필요합니다.</translation>
+    </message>
 </context>
 <context>
     <name>LogoutDlg</name>
@@ -2851,6 +2855,10 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>Slot List</source>
         <translation>슬롯 목록</translation>
+    </message>
+    <message>
+        <source>need to open session</source>
+        <translation>OpenSession 이 필요합니다.</translation>
     </message>
 </context>
 <context>

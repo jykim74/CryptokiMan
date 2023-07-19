@@ -52,6 +52,12 @@ void LogoutDlg::accept()
     int rv = -1;
     hSession = slotInfo.getSessionHandle();
 
+    if( (long)hSession == -1 )
+    {
+        manApplet->warningBox( tr( "need to open session" ), this );
+        return;
+    }
+
     rv = manApplet->cryptokiAPI()->Logout( hSession );
 
     if( rv == CKR_OK )

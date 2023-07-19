@@ -57,6 +57,12 @@ void LoginDlg::accept()
     SlotInfo slotInfo = slot_infos.at(index);
     CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
+    if( (long)hSession == -1 )
+    {
+        manApplet->warningBox( tr( "need to open session" ), this );
+        return;
+    }
+
     int rv = -1;
     CK_UTF8CHAR *pPin = (CK_UTF8CHAR *)mPinText->text().toUtf8().toStdString().c_str();
     CK_ULONG uPinLen = mPinText->text().toUtf8().length();
