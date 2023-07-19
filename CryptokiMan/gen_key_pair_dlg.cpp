@@ -58,14 +58,22 @@ void GenKeyPairDlg::setSelectedSlot(int index)
 
 void GenKeyPairDlg::initUI()
 {
-    if( manApplet->settingsMgr()->useDeviceMech() )
+    if( manApplet->isLicense() )
     {
-        sMechGenKeyPairList = manApplet->mechMgr()->getGenerateKeyPairList();
+        if( manApplet->settingsMgr()->useDeviceMech() )
+        {
+            sMechGenKeyPairList = manApplet->mechMgr()->getGenerateKeyPairList();
+        }
+        else
+        {
+            sMechGenKeyPairList = kMechGenKeyPairList;
+        }
     }
     else
     {
-        sMechGenKeyPairList = kMechGenKeyPairList;
+        sMechGenKeyPairList = kMechGenKeyPairListNoLicense;
     }
+
 
     mMechCombo->addItems( sMechGenKeyPairList );
 

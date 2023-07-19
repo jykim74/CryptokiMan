@@ -38,6 +38,7 @@ private slots:
 
     void changeKey();
 private:
+    void initUI();
     void initialize();
     void initAttributes();
     void setAttributes();

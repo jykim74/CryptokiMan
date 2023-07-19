@@ -321,33 +321,36 @@ void MainWindow::createActions()
     objectsMenu->addAction( createRSAPriKeyAct );
 //    objectsToolBar->addAction( createRSAPriKeyAct );
 
-    const QIcon ep1Icon = QIcon::fromTheme("EC-Public", QIcon(":/images/ep1.png"));
-    QAction *createECPubKeyAct = new QAction( ep1Icon, tr("Create EC Public Key"), this);
-    connect( createECPubKeyAct, &QAction::triggered, this, &MainWindow::createECPublicKey);
-    createECPubKeyAct->setStatusTip(tr("PKCS11 Create EC Public key"));
-    objectsMenu->addAction( createECPubKeyAct );
-//    objectsToolBar->addAction( createECPubKeyAct );
+    if( manApplet->isLicense() )
+    {
+        const QIcon ep1Icon = QIcon::fromTheme("EC-Public", QIcon(":/images/ep1.png"));
+        QAction *createECPubKeyAct = new QAction( ep1Icon, tr("Create EC Public Key"), this);
+        connect( createECPubKeyAct, &QAction::triggered, this, &MainWindow::createECPublicKey);
+        createECPubKeyAct->setStatusTip(tr("PKCS11 Create EC Public key"));
+        objectsMenu->addAction( createECPubKeyAct );
+//      objectsToolBar->addAction( createECPubKeyAct );
 
-    const QIcon ep2Icon = QIcon::fromTheme("EC-Private", QIcon(":/images/ep2.png"));
-    QAction *createECPriKeyAct = new QAction( ep2Icon, tr("Create EC Private Key"), this);
-    connect( createECPriKeyAct, &QAction::triggered, this, &MainWindow::createECPrivateKey);
-    createECPriKeyAct->setStatusTip(tr("PKCS11 Create EC Private key"));
-    objectsMenu->addAction( createECPriKeyAct );
-//    objectsToolBar->addAction( createECPriKeyAct );
+        const QIcon ep2Icon = QIcon::fromTheme("EC-Private", QIcon(":/images/ep2.png"));
+        QAction *createECPriKeyAct = new QAction( ep2Icon, tr("Create EC Private Key"), this);
+        connect( createECPriKeyAct, &QAction::triggered, this, &MainWindow::createECPrivateKey);
+        createECPriKeyAct->setStatusTip(tr("PKCS11 Create EC Private key"));
+        objectsMenu->addAction( createECPriKeyAct );
+//      objectsToolBar->addAction( createECPriKeyAct );
 
-    const QIcon dp1Icon = QIcon::fromTheme("DSA-Public", QIcon(":/images/dp1.png"));
-    QAction *createDSAPubKeyAct = new QAction( dp1Icon, tr("Create DSA Public Key"), this);
-    connect( createDSAPubKeyAct, &QAction::triggered, this, &MainWindow::createDSAPublicKey);
-    createDSAPubKeyAct->setStatusTip(tr("PKCS11 Create DSA Public key"));
-    objectsMenu->addAction( createDSAPubKeyAct );
-//    objectsToolBar->addAction( createDSAPubKeyAct );
+        const QIcon dp1Icon = QIcon::fromTheme("DSA-Public", QIcon(":/images/dp1.png"));
+        QAction *createDSAPubKeyAct = new QAction( dp1Icon, tr("Create DSA Public Key"), this);
+        connect( createDSAPubKeyAct, &QAction::triggered, this, &MainWindow::createDSAPublicKey);
+        createDSAPubKeyAct->setStatusTip(tr("PKCS11 Create DSA Public key"));
+        objectsMenu->addAction( createDSAPubKeyAct );
+//      objectsToolBar->addAction( createDSAPubKeyAct );
 
-    const QIcon dp2Icon = QIcon::fromTheme("DSA-Private", QIcon(":/images/dp2.png"));
-    QAction *createDSAPriKeyAct = new QAction( dp2Icon, tr("Create DSA Private Key"), this);
-    connect( createDSAPriKeyAct, &QAction::triggered, this, &MainWindow::createDSAPrivateKey);
-    createDSAPriKeyAct->setStatusTip(tr("PKCS11 Create DSA Private key"));
-    objectsMenu->addAction( createDSAPriKeyAct );
-//    objectsToolBar->addAction( createDSAPriKeyAct );
+        const QIcon dp2Icon = QIcon::fromTheme("DSA-Private", QIcon(":/images/dp2.png"));
+        QAction *createDSAPriKeyAct = new QAction( dp2Icon, tr("Create DSA Private Key"), this);
+        connect( createDSAPriKeyAct, &QAction::triggered, this, &MainWindow::createDSAPrivateKey);
+        createDSAPriKeyAct->setStatusTip(tr("PKCS11 Create DSA Private key"));
+        objectsMenu->addAction( createDSAPriKeyAct );
+//      objectsToolBar->addAction( createDSAPriKeyAct );
+    }
 
     const QIcon keyGenIcon = QIcon::fromTheme("KeyGen", QIcon(":/images/key_gen.png"));
     QAction *createKeyAct = new QAction( keyGenIcon, tr("Create Key"), this);
@@ -780,6 +783,13 @@ void MainWindow::P11Initialize()
 void MainWindow::P11Finalize()
 {
     int ret = 0;
+
+    if( manApplet->cryptokiAPI()->getCTX() == NULL )
+    {
+        manApplet->warningBox( tr( "You have load Cryptoki Library at first" ), this );
+        return;
+    }
+
     ret = manApplet->cryptokiAPI()->Finalize(NULL);
 
     if( ret == 0 )

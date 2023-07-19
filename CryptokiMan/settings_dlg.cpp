@@ -98,7 +98,12 @@ void SettingsDlg::initialize()
         mShowLogTabCheck->setCheckState(state);
     }
     else
+    {
         mShowLogTabCheck->hide();
+        mUseDeviceMechCheck->hide();
+        mgr->setUseDeviceMech(false);
+        mgr->setShowLogTab(false);
+    }
 
 #ifdef _AUTO_UPDATE
     if( AutoUpdateService::instance()->shouldSupportAutoUpdate()) {

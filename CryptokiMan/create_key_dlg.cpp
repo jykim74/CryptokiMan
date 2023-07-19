@@ -4,13 +4,12 @@
 #include "js_pkcs11.h"
 #include "common.h"
 #include "cryptoki_api.h"
+#include "settings_mgr.h"
+#include "mech_mgr.h"
 
-static QStringList sMechList = {
-    "CKK_AES", "CKK_DES", "CKK_DES3", "CKK_GENERIC_SECRET"
-};
 
+static QStringList sMechList;
 static QStringList sFalseTrue = { "false", "true" };
-
 static QStringList sKeyList = { "String", "Hex", "Base64" };
 
 
@@ -19,6 +18,7 @@ CreateKeyDlg::CreateKeyDlg(QWidget *parent) :
 {
     setupUi(this);
 
+    initUI();
     initAttributes();
     setAttributes();
     connectAttributes();
@@ -27,6 +27,7 @@ CreateKeyDlg::CreateKeyDlg(QWidget *parent) :
 
     initialize();
     setDefaults();
+    tabWidget->setCurrentIndex(0);
 }
 
 CreateKeyDlg::~CreateKeyDlg()
@@ -51,6 +52,26 @@ void CreateKeyDlg::slotChanged(int index)
     mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
 }
 
+void CreateKeyDlg::initUI()
+{
+    if( manApplet->isLicense() )
+    {
+        if( manApplet->settingsMgr()->useDeviceMech() )
+        {
+            sMechList = manApplet->mechMgr()->getGenerateList();
+        }
+        else
+        {
+            sMechList = kMechGenList;
+        }
+    }
+    else
+    {
+        sMechList = kMechGenListNoLicense;
+    }
+
+    mMechCombo->addItems(sMechList);
+}
 
 void CreateKeyDlg::initialize()
 {
@@ -70,7 +91,6 @@ void CreateKeyDlg::initialize()
 
 void CreateKeyDlg::initAttributes()
 {
-    mMechCombo->addItems(sMechList);
     mKeyCombo->addItems(sKeyList);
 
     mPrivateCombo->addItems(sFalseTrue);

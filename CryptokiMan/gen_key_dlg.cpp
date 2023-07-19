@@ -55,13 +55,20 @@ void GenKeyDlg::slotChanged(int index)
 
 void GenKeyDlg::initUI()
 {
-    if( manApplet->settingsMgr()->useDeviceMech() )
+    if( manApplet->isLicense() )
     {
-        sMechGenList = manApplet->mechMgr()->getGenerateList();
+        if( manApplet->settingsMgr()->useDeviceMech() )
+        {
+            sMechGenList = manApplet->mechMgr()->getGenerateList();
+        }
+        else
+        {
+            sMechGenList = kMechGenList;
+        }
     }
     else
     {
-        sMechGenList = kMechGenList;
+        sMechGenList = kMechGenListNoLicense;
     }
 
     mMechCombo->addItems(sMechGenList);

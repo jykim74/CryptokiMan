@@ -158,6 +158,14 @@ static QStringList kMechGenList = {
     "CKM_AES_KEY_GEN", "CKM_DES_KEY_GEN", "CKM_DES3_KEY_GEN", "CKM_GENERIC_SECRET_KEY_GEN"
 };
 
+static QStringList kMechGenKeyPairListNoLicense = {
+  "CKM_RSA_PKCS_KEY_PAIR_GEN"
+};
+
+static QStringList kMechGenListNoLicense = {
+    "CKM_AES_KEY_GEN", "CKM_GENERIC_SECRET_KEY_GEN"
+};
+
 static QStringList kDataTypeList = { "String", "Hex", "Base64" };
 
 QString findFile( QWidget *parent, int nType, const QString strPath );
