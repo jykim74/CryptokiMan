@@ -2305,7 +2305,7 @@ void MainWindow::showSlotInfoList( int index )
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("Slot ID" )));
     right_table_->item( row, 0 )->setIcon( icon );
-    strMsg = QString("%1 - 0x%2").arg(uSlotID).arg( uSlotID, 0, 16);
+    strMsg = QString("%1 - 0x%2").arg(uSlotID).arg( uSlotID, sizeof(CK_ULONG) * 2, 16, QLatin1Char('0'));
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
 
@@ -2444,7 +2444,7 @@ void MainWindow::showTokenInfoList(int index)
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("ulFreePrivateMemory") ));
     right_table_->item( row, 0 )->setIcon( icon );
-    strMsg = QString("%1 - 0x%2").arg( sTokenInfo.ulFreePrivateMemory ).arg( sTokenInfo.ulFreePrivateMemory, 0, 16);
+    strMsg = QString("%1 - 0x%2").arg( sTokenInfo.ulFreePrivateMemory ).arg( sTokenInfo.ulFreePrivateMemory, sizeof(CK_ULONG) * 2, 16, QLatin1Char('0'));
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
 
@@ -2452,7 +2452,7 @@ void MainWindow::showTokenInfoList(int index)
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("ulFreePublicMemory") ));
     right_table_->item( row, 0 )->setIcon( icon );
-    strMsg = QString("%1 - 0x%2").arg( sTokenInfo.ulFreePublicMemory ).arg( sTokenInfo.ulFreePublicMemory, 0, 16 );
+    strMsg = QString("%1 - 0x%2").arg( sTokenInfo.ulFreePublicMemory ).arg( sTokenInfo.ulFreePublicMemory, sizeof(CK_ULONG) * 2, 16, QLatin1Char('0') );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
 
@@ -2492,7 +2492,7 @@ void MainWindow::showTokenInfoList(int index)
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("ulSessionCount") ));
     right_table_->item( row, 0 )->setIcon( icon );
-    strMsg = QString("%1 - 0x%2").arg( sTokenInfo.ulSessionCount ).arg( sTokenInfo.ulSessionCount, 0, 16);
+    strMsg = QString("%1 - 0x%2").arg( sTokenInfo.ulSessionCount ).arg( sTokenInfo.ulSessionCount, sizeof(CK_ULONG) * 2, 16, QLatin1Char('0'));
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
 
@@ -2500,7 +2500,7 @@ void MainWindow::showTokenInfoList(int index)
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("ulTotalPrivateMemory") ));
     right_table_->item( row, 0 )->setIcon( icon );
-    strMsg = QString("%1 - 0x%2").arg( sTokenInfo.ulTotalPrivateMemory ).arg( sTokenInfo.ulTotalPrivateMemory, 0, 16);
+    strMsg = QString("%1 - 0x%2").arg( sTokenInfo.ulTotalPrivateMemory ).arg( sTokenInfo.ulTotalPrivateMemory, sizeof(CK_ULONG) * 2, 16, QLatin1Char('0'));
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
 
@@ -2508,7 +2508,7 @@ void MainWindow::showTokenInfoList(int index)
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem( QString("ulTotalPublicMemory") ));
     right_table_->item( row, 0 )->setIcon( icon );
-    strMsg = QString("%1 - 0x%2").arg( sTokenInfo.ulTotalPublicMemory ).arg( sTokenInfo.ulTotalPublicMemory, 0, 16 );
+    strMsg = QString("%1 - 0x%2").arg( sTokenInfo.ulTotalPublicMemory ).arg( sTokenInfo.ulTotalPublicMemory, sizeof(CK_ULONG) * 2, 16, QLatin1Char('0') );
     right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
     row++;
 }
@@ -2620,7 +2620,7 @@ void MainWindow::showSessionInfoList(int index)
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem(QString("Session Handle" )));
     right_table_->item( row, 0 )->setIcon( icon );
-    strMsg = QString("%1 - 0x%2").arg( hSession ).arg( hSession, 0, 16 );
+    strMsg = QString("%1 - 0x%2").arg( hSession ).arg( hSession, sizeof(CK_ULONG) * 2, 16, QLatin1Char('0') );
     right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
     row++;
 
@@ -2638,7 +2638,7 @@ void MainWindow::showSessionInfoList(int index)
     right_table_->setRowHeight( row, 10 );
     right_table_->setItem( row, 0, new QTableWidgetItem(QString("slotID" )));
     right_table_->item( row, 0 )->setIcon( icon );
-    strMsg = QString("%1 - 0x%2").arg( stSessInfo.slotID ).arg( stSessInfo.slotID, 0, 16 );
+    strMsg = QString("%1 - 0x%2").arg( stSessInfo.slotID ).arg( stSessInfo.slotID, sizeof(CK_ULONG) * 2, 16, QLatin1Char('0') );
     right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
     row++;
 
@@ -2728,11 +2728,11 @@ void MainWindow::showObjectsInfoList(int index)
         right_table_->setItem( row, 0, item );
 
         ret = manApplet->cryptokiAPI()->GetObjectSize( hSession, hObjects[i], &uSize );
-        strVal = QString("%1 - 0x%2").arg( uSize ).arg( uSize, 0, 16);
+        strVal = QString("%1 - 0x%2").arg( uSize ).arg( uSize, sizeof(CK_ULONG) * 2, 16, QLatin1Char('0'));
         right_table_->setItem( row, 1, new QTableWidgetItem( QString(strVal) ));
 
 
-        strVal = QString("%1").arg( hObjects[i] );
+        strVal = QString("%1 - 0x%2").arg( hObjects[i] ).arg( hObjects[i], sizeof(CK_ULONG) * 2, 16, QLatin1Char('0'));
         right_table_->setItem( row, 2, new QTableWidgetItem( QString( strVal) ));
 
         row++;
