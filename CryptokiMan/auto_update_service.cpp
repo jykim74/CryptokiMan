@@ -55,8 +55,8 @@ public:
         win_sparkle_set_appcast_url(getAppcastURI().toUtf8().data());
         win_sparkle_set_app_details(
                     L"CryptokiMan",
-                    L"CryptokiMan",
-                    QString(STRINGIZE(HSMMAN_VERSION)).toStdWString().c_str() );
+                    L"Cryptoki Library Manager",
+                    QString(STRINGIZE(CRYPTOKIMAN_VERSION)).toStdWString().c_str() );
     }
 
     void start() {
