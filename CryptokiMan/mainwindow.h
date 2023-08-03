@@ -130,6 +130,8 @@ public slots:
     void wrapKey();
     void unwrapKey();
     void deriveKey();
+    void bugIssueReport();
+    void qnaDiscussion();
     void about();
     void logView( bool bShow = true );
     void settings();

@@ -516,6 +516,17 @@ void MainWindow::createActions()
     helpToolBar->addAction( settingsAct );
 
     const QIcon cryptokiManIcon = QIcon::fromTheme("cryptokiman", QIcon(":/images/cryptokiman.png"));
+
+    QAction *bugIssueAct = new QAction( cryptokiManIcon, tr("Bug or Issue Report"), this);
+    connect( bugIssueAct, &QAction::triggered, this, &MainWindow::bugIssueReport);
+    helpMenu->addAction( bugIssueAct );
+    bugIssueAct->setStatusTip(tr("Bug or Issue Report"));
+
+    QAction *qnaAct = new QAction( cryptokiManIcon, tr("Q and A"), this);
+    connect( qnaAct, &QAction::triggered, this, &MainWindow::qnaDiscussion);
+    helpMenu->addAction( qnaAct );
+    qnaAct->setStatusTip(tr("Question and Answer"));
+
     QAction *aboutAct = new QAction( cryptokiManIcon, tr("About CryptokiMan"), this );
     connect( aboutAct, &QAction::triggered, this, &MainWindow::about);
     aboutAct->setStatusTip(tr("About CryptokiMan"));
@@ -1478,6 +1489,19 @@ void MainWindow::improtPrivateKey()
     importPriKeyDlg.setSelectedSlot( nSlot );
     importPriKeyDlg.exec();
 }
+
+void MainWindow::bugIssueReport()
+{
+    QString link = "https://github.com/jykim74/CryptokiMan/issues/new";
+    QDesktopServices::openUrl(QUrl(link));
+}
+
+void MainWindow::qnaDiscussion()
+{
+    QString link = "https://github.com/jykim74/CryptokiMan/discussions/new?category=q-a";
+    QDesktopServices::openUrl(QUrl(link));
+}
+
 
 void MainWindow::about()
 {

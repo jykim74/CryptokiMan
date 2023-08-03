@@ -3451,6 +3451,18 @@ Do you want to delete the file and continue?</source>
         <source>PKCS11 Create DSA Private key</source>
         <translation>PKCS11 DSA 개인키 생성</translation>
     </message>
+    <message>
+        <source>Bug or Issue Report</source>
+        <translation>버그 또는 이슈 보고</translation>
+    </message>
+    <message>
+        <source>Q and A</source>
+        <translation>질문하기</translation>
+    </message>
+    <message>
+        <source>Question and Answer</source>
+        <translation>질문과 응답하기</translation>
+    </message>
 </context>
 <context>
     <name>ManApplet</name>
