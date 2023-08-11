@@ -138,6 +138,20 @@ QString getBool( const BIN *pBin )
     return strOut;
 }
 
+QString getHexString( const BIN *pBin )
+{
+    char *pHex = NULL;
+
+    if( pBin == NULL || pBin->nLen <= 0 ) return "";
+
+    JS_BIN_encodeHex( pBin, &pHex );
+
+    QString strHex = pHex;
+    if(pHex) JS_free( pHex );
+
+    return strHex;
+}
+
 QString getHexString( unsigned char *pData, int nDataLen )
 {
     BIN binData = {0,0};

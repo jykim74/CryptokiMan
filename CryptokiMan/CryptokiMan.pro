@@ -57,6 +57,7 @@ SOURCES += \
         import_pri_key_dlg.cpp \
         init_pin_dlg.cpp \
         init_token_dlg.cpp \
+        lcn_info_dlg.cpp \
         login_dlg.cpp \
         logout_dlg.cpp \
         main.cpp \
@@ -109,6 +110,7 @@ HEADERS += \
         import_pri_key_dlg.h \
         init_pin_dlg.h \
         init_token_dlg.h \
+        lcn_info_dlg.h \
         login_dlg.h \
         logout_dlg.h \
         mainwindow.h \
@@ -158,6 +160,7 @@ FORMS += \
         import_pri_key_dlg.ui \
         init_pin_dlg.ui \
         init_token_dlg.ui \
+        lcn_info_dlg.ui \
         login_dlg.ui \
         logout_dlg.ui \
         mainwindow.ui \

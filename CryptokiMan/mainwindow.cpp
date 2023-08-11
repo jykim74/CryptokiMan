@@ -52,6 +52,7 @@
 #include "cert_info_dlg.h"
 #include "js_pki_tools.h"
 #include "mech_mgr.h"
+#include "lcn_info_dlg.h"
 
 const int kMaxRecentFiles = 10;
 
@@ -514,6 +515,12 @@ void MainWindow::createActions()
     settingsAct->setStatusTip(tr("Settings CryptokiMan"));
     helpMenu->addAction( settingsAct );
     helpToolBar->addAction( settingsAct );
+
+    const QIcon lcnIcon = QIcon::fromTheme("berview-license", QIcon(":/images/license.png"));
+    QAction *lcnAct = new QAction( lcnIcon, tr("License Information"), this);
+    connect( lcnAct, &QAction::triggered, this, &MainWindow::licenseInfo);
+    helpMenu->addAction( lcnAct );
+    lcnAct->setStatusTip(tr("License Information"));
 
     const QIcon cryptokiManIcon = QIcon::fromTheme("cryptokiman", QIcon(":/images/cryptokiman.png"));
 
@@ -1488,6 +1495,16 @@ void MainWindow::improtPrivateKey()
     ImportPriKeyDlg importPriKeyDlg;
     importPriKeyDlg.setSelectedSlot( nSlot );
     importPriKeyDlg.exec();
+}
+
+void MainWindow::licenseInfo()
+{
+    LCNInfoDlg lcnInfoDlg;
+    if( lcnInfoDlg.exec() == QDialog::Accepted )
+    {
+        if( manApplet->yesOrNoBox(tr("You have changed license. Restart to apply it?"), this, true))
+            manApplet->restartApp();
+    }
 }
 
 void MainWindow::bugIssueReport()

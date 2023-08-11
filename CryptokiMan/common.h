@@ -173,6 +173,7 @@ QString saveFile( QWidget *parent, int nType, const QString strPath );
 
 void getCKDate( const QDate date, CK_DATE *pCKDate );
 QString getBool( const BIN *pBin );
+QString getHexString( const BIN *pBin );
 QString getHexString( unsigned char *pData, int nDataLen );
 void getInfoValue( const JExtensionInfo *pExtInfo, QString& strVal );
 

@@ -130,6 +130,7 @@ public slots:
     void wrapKey();
     void unwrapKey();
     void deriveKey();
+    void licenseInfo();
     void bugIssueReport();
     void qnaDiscussion();
     void about();
