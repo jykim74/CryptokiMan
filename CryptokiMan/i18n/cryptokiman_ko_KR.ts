@@ -2740,7 +2740,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <source>Issue Date</source>
-        <translation>발급 일자</translation>
+        <translation type="vanished">발급 일자</translation>
     </message>
     <message>
         <source>Email</source>
@@ -2789,6 +2789,14 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>There is no current license</source>
         <translation>현재 라이선스가 없습니다</translation>
+    </message>
+    <message>
+        <source>Issued Date</source>
+        <translation>발급 일자</translation>
+    </message>
+    <message>
+        <source>fail to renew license:%1</source>
+        <translation>라이선스 갱신 실패: %1</translation>
     </message>
 </context>
 <context>
