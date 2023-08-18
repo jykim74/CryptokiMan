@@ -51,6 +51,8 @@
 	<key>NSSupportsAutomaticGraphicsSwitching</key>
 	<string>True</string>
     <!-- For Sparkle Framework -->
+        <key>SUPublicEDKey</key>
+        <string>TLJn+zNF8t6SpCGDfDjjKEJGnv40yVGKJrK1XBhyVKo=</string>
 	<key>SUFeedURL</key>
         <string>https://jykim74.github.io/appcast/cryptokiman_appcast_mac.xml</string>
 	<key>CFBundleLocalizations</key>
