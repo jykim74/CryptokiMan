@@ -69,5 +69,6 @@
         <file>images/dp1.png</file>
         <file>images/dp2.png</file>
         <file>images/license.png</file>
+        <file>Info.plist</file>
     </qresource>
 </RCC>

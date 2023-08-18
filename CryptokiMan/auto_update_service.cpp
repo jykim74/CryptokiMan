@@ -1,5 +1,6 @@
 #include <QSettings>
 #include "auto_update_service.h"
+#include "man_applet.h"
 
 #ifdef _AUTO_UPDATE
 
@@ -54,8 +55,8 @@ public:
         win_sparkle_set_registry_path(kWinSparkleRegPath);
         win_sparkle_set_appcast_url(getAppcastURI().toUtf8().data());
         win_sparkle_set_app_details(
+                    L"JS Inc",
                     L"CryptokiMan",
-                    L"Cryptoki Library Manager",
                     QString(STRINGIZE(CRYPTOKIMAN_VERSION)).toStdWString().c_str() );
     }
 
@@ -153,7 +154,7 @@ void AutoUpdateService::checkUpdate()
 }
 
 bool AutoUpdateService::shouldSupportAutoUpdate() const {
-    return QString("BerViewer") == "BerViewer";
+    return QString("CryptokiMan") == manApplet->getBrand();
 }
 
 bool AutoUpdateService::autoUpdateEnabled() const {

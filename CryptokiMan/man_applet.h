@@ -47,7 +47,7 @@ public:
                                                QMessageBox::StandardButton default_btn);
     bool yesOrCancelBox(const QString& msg, QWidget *parent, bool default_ok);
 
-    QString getBrand();
+    static QString getBrand();
     QString getSetPath();
 
     void restartApp();

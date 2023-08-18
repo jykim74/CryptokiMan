@@ -10,7 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = CryptokiMan
 TEMPLATE = app
-PROJECT_VERSION = "1.2.5"
+PROJECT_VERSION = "1.2.6"
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -187,6 +187,7 @@ TRANSLATIONS += i18n/cryptokiman_ko_KR.ts
 INCLUDEPATH += "../../PKILib"
 
 mac {
+    QMAKE_INFO_PLIST = info.plist
     ICON = images/cryptokiman.icns
 
     QMAKE_LFLAGS += -Wl,-rpath,@loader_path/../Frameworks

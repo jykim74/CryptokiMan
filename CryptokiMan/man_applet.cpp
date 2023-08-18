@@ -222,10 +222,7 @@ void ManApplet::info( const QString strInfo )
 
 QString ManApplet::getBrand()
 {
-    if( is_license_ )
-        return QString::fromUtf8( "CryptokiMan" );
-    else
-        return QString::fromUtf8( "CryptokiManLite" );
+    return QString::fromUtf8( "CryptokiMan" );
 }
 
 QString ManApplet::getSetPath()
