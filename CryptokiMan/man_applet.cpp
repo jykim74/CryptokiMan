@@ -5,6 +5,7 @@
 
 #include "man_applet.h"
 #include "mainwindow.h"
+#include "mech_rec.h"
 #include "mech_mgr.h"
 #include "open_session_dlg.h"
 #include "close_session_dlg.h"
@@ -47,6 +48,11 @@ ManApplet *manApplet;
 
 ManApplet::ManApplet( QObject *parent )
 {
+    main_win_ = nullptr;
+    settings_mgr_ = nullptr;
+    mech_mgr_ = nullptr;
+    cryptoki_api_ = nullptr;
+
     in_exit_ = false;
     is_license_ = false;
 
@@ -64,6 +70,11 @@ ManApplet::~ManApplet()
 #ifdef _AUTO_UPDATE
     AutoUpdateService::instance()->stop();
 #endif
+
+    if( main_win_ != nullptr ) delete main_win_;
+    if( settings_mgr_ != nullptr ) delete settings_mgr_;
+    if( mech_mgr_ != nullptr ) delete mech_mgr_;
+    if( cryptoki_api_ != nullptr ) delete cryptoki_api_;
 }
 
 void ManApplet::start()

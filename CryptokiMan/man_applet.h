@@ -9,7 +9,6 @@ class MainWindow;
 
 
 class AboutDlg;
-class LogViewDlg;
 class SettingsMgr;
 class CryptokiAPI;
 class MechMgr;
@@ -29,7 +28,6 @@ public:
     MainWindow* mainWindow() { return main_win_; };
     MechMgr* mechMgr() { return mech_mgr_; };
 
-    LogViewDlg* logViewDlg() { return log_view_dlg_; };
     SettingsMgr* settingsMgr() { return settings_mgr_; };
     CryptokiAPI* cryptokiAPI() { return cryptoki_api_; };
     QString cmd() { return cmd_; };
@@ -73,7 +71,6 @@ private:
 
     MainWindow* main_win_;
 
-    LogViewDlg* log_view_dlg_;
     SettingsMgr* settings_mgr_;
     MechMgr* mech_mgr_;
 
