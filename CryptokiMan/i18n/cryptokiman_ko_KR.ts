@@ -1260,7 +1260,11 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <source>Write log block data</source>
-        <translation>블록 데이타 로그 기록</translation>
+        <translation type="vanished">블록 데이타 로그 기록</translation>
+    </message>
+    <message>
+        <source>Write log</source>
+        <translation>로그 쓰기</translation>
     </message>
 </context>
 <context>
@@ -1637,7 +1641,11 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <source>Write log block data</source>
-        <translation>블록 데이타 로그 기록</translation>
+        <translation type="vanished">블록 데이타 로그 기록</translation>
+    </message>
+    <message>
+        <source>Write log</source>
+        <translation>로그 쓰기</translation>
     </message>
 </context>
 <context>
@@ -1880,7 +1888,11 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <source>Write log block data</source>
-        <translation>블록 데이타 로그 기록</translation>
+        <translation type="vanished">블록 데이타 로그 기록</translation>
+    </message>
+    <message>
+        <source>Write log</source>
+        <translation>로그 쓰기</translation>
     </message>
 </context>
 <context>
@@ -4298,7 +4310,11 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <source>Write log block data</source>
-        <translation>블록 데이타 로그 기록</translation>
+        <translation type="vanished">블록 데이타 로그 기록</translation>
+    </message>
+    <message>
+        <source>Write log</source>
+        <translation>로그 쓰기</translation>
     </message>
 </context>
 <context>
@@ -4652,7 +4668,11 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <source>Write log block data</source>
-        <translation>블록 데이타 로그 기록</translation>
+        <translation type="vanished">블록 데이타 로그 기록</translation>
+    </message>
+    <message>
+        <source>Write log</source>
+        <translation>로그 쓰기</translation>
     </message>
 </context>
 <context>

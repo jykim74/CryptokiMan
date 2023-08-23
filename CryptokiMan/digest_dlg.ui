@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>539</width>
-    <height>493</height>
+    <height>486</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -838,6 +838,13 @@
        </item>
        <item>
         <layout class="QGridLayout" name="gridLayout_12">
+         <item row="0" column="1">
+          <widget class="QProgressBar" name="mHashProgBar">
+           <property name="value">
+            <number>0</number>
+           </property>
+          </widget>
+         </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label_14">
            <property name="minimumSize">
@@ -857,21 +864,20 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
-          <widget class="QProgressBar" name="mHashProgBar">
-           <property name="value">
-            <number>0</number>
+         <item row="0" column="2">
+          <widget class="QCheckBox" name="mWriteLogCheck">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Write log</string>
            </property>
           </widget>
          </item>
         </layout>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="mWriteLogCheck">
-         <property name="text">
-          <string>Write log block data</string>
-         </property>
-        </widget>
        </item>
        <item>
         <spacer name="verticalSpacer">
