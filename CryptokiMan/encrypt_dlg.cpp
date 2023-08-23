@@ -229,7 +229,7 @@ void EncryptDlg::keyTypeChanged( int index )
 {
     int rv = -1;
 
-    CK_ATTRIBUTE sTemplate[1];
+    CK_ATTRIBUTE sTemplate[10];
     CK_ULONG uCnt = 0;
     CK_OBJECT_HANDLE sObjects[20];
     CK_ULONG uMaxObjCnt = 20;
@@ -248,6 +248,8 @@ void EncryptDlg::keyTypeChanged( int index )
         objClass = CKO_PUBLIC_KEY;
         mMechCombo->addItems(sMechEncAsymList);
     }
+
+    if( session_ < 0 ) return;
 
     sTemplate[uCnt].type = CKA_CLASS;
     sTemplate[uCnt].pValue = &objClass;
@@ -268,7 +270,7 @@ void EncryptDlg::keyTypeChanged( int index )
     rv = manApplet->cryptokiAPI()->FindObjectsFinal(session_);
     if( rv != CKR_OK ) return;
 
-    mLabelCombo->clear();
+    if( mLabelCombo->count() > 0 ) mLabelCombo->clear();
 
     for( int i=0; i < uObjCnt; i++ )
     {
@@ -276,6 +278,7 @@ void EncryptDlg::keyTypeChanged( int index )
         BIN binLabel = {0,0};
 
         rv = manApplet->cryptokiAPI()->GetAttributeValue2( session_, sObjects[i], CKA_LABEL, &binLabel );
+        if( rv != CKR_OK ) break;
 
         QVariant objVal = QVariant((int)sObjects[i]);
         JS_BIN_string( &binLabel, &pStr );

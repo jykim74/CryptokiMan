@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>538</width>
-    <height>649</height>
+    <width>591</width>
+    <height>869</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -618,7 +618,7 @@
    <item>
     <widget class="QTabWidget" name="mInputTab">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -786,9 +786,7 @@
          <item row="0" column="1">
           <widget class="QLineEdit" name="mSrcFileText">
            <property name="font">
-            <font>
-             <family>굴림체</family>
-            </font>
+            <font/>
            </property>
           </widget>
          </item>
@@ -874,9 +872,7 @@
             </palette>
            </property>
            <property name="font">
-            <font>
-             <family>굴림체</family>
-            </font>
+            <font/>
            </property>
            <property name="readOnly">
             <bool>true</bool>
@@ -935,9 +931,7 @@
             </palette>
            </property>
            <property name="font">
-            <font>
-             <family>굴림체</family>
-            </font>
+            <font/>
            </property>
            <property name="readOnly">
             <bool>true</bool>
@@ -1000,9 +994,7 @@
             </palette>
            </property>
            <property name="font">
-            <font>
-             <family>굴림체</family>
-            </font>
+            <font/>
            </property>
            <property name="readOnly">
             <bool>true</bool>
@@ -1094,9 +1086,7 @@
             </palette>
            </property>
            <property name="font">
-            <font>
-             <family>굴림체</family>
-            </font>
+            <font/>
            </property>
            <property name="readOnly">
             <bool>true</bool>
@@ -1172,9 +1162,7 @@
          <item row="0" column="1">
           <widget class="QLineEdit" name="mDstFileText">
            <property name="font">
-            <font>
-             <family>굴림체</family>
-            </font>
+            <font/>
            </property>
           </widget>
          </item>
@@ -1260,9 +1248,7 @@
             </palette>
            </property>
            <property name="font">
-            <font>
-             <family>굴림체</family>
-            </font>
+            <font/>
            </property>
            <property name="readOnly">
             <bool>true</bool>
@@ -1321,9 +1307,7 @@
             </palette>
            </property>
            <property name="font">
-            <font>
-             <family>굴림체</family>
-            </font>
+            <font/>
            </property>
            <property name="readOnly">
             <bool>true</bool>

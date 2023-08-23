@@ -143,7 +143,7 @@ void VerifyDlg::keyTypeChanged( int index )
 {
     int rv = -1;
 
-    CK_ATTRIBUTE sTemplate[1];
+    CK_ATTRIBUTE sTemplate[10];
     CK_ULONG uCnt = 0;
     CK_OBJECT_HANDLE sObjects[20];
     CK_ULONG uMaxObjCnt = 20;
