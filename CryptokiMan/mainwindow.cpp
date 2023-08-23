@@ -73,16 +73,18 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    delete hsplitter_;
-    delete dock_;
+    recent_file_list_.clear();
+
     delete left_tree_;
     delete left_model_;
-    delete right_table_;
-    delete text_tab_;
+
     delete info_text_;
     delete log_text_;
 
-    recent_file_list_.clear();
+    delete right_table_;
+    delete text_tab_;
+    delete dock_;
+    delete hsplitter_;
 }
 
 void MainWindow::dragEnterEvent(QDragEnterEvent *event)
