@@ -47,7 +47,7 @@ public:
 
     static QString getBrand();
     QString getLibPath();
-    QString setLibPath( const QString strPath );
+    void setLibPath( const QString strPath );
 
     void restartApp();
     void exitApp( int nNum = 0 );

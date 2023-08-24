@@ -604,11 +604,7 @@ void MainWindow::open()
         int ret = openLibrary( fileName );
         if( ret != 0 ) return;
 
-
-        QFileInfo fileInfo(fileName);
-        QString strDir = fileInfo.dir().path();
-        manApplet->setLibPath( strDir );
-
+        manApplet->setLibPath( fileName );
         manApplet->log( QString("Cryptoki open successfully[%1]").arg( fileName) );
     }
 }

@@ -253,7 +253,7 @@ QString ManApplet::getLibPath()
     return strPath;
 }
 
-QString ManApplet::setLibPath( const QString strPath )
+void ManApplet::setLibPath( const QString strPath )
 {
     QSettings settings;
     settings.beginGroup( "mainwindow" );
