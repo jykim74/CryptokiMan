@@ -43,7 +43,7 @@
       <widget class="QLabel" name="mVersionLabel">
        <property name="font">
         <font>
-         <family>Courier</family>
+         <family>Consolas</family>
          <pointsize>15</pointsize>
          <weight>75</weight>
          <bold>true</bold>

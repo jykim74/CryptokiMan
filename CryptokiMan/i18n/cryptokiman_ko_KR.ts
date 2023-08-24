@@ -2814,6 +2814,14 @@ Do you want to delete the file and continue?</source>
         <source>The current license is longer period</source>
         <translation>현재 라이선스가 더 긴 기간의 라이선스입니다</translation>
     </message>
+    <message>
+        <source>You have to input email</source>
+        <translation>이메일을 입력하세요</translation>
+    </message>
+    <message>
+        <source>You have to input license key</source>
+        <translation>라이선스 키를 입력하세요</translation>
+    </message>
 </context>
 <context>
     <name>LogViewDlg</name>
@@ -2903,6 +2911,10 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>need to open session</source>
         <translation>OpenSession 이 필요합니다.</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>닫기</translation>
     </message>
 </context>
 <context>
@@ -4580,7 +4592,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <source>Slot Status</source>
-        <translation>슬롯 상태</translation>
+        <translation type="vanished">슬롯 상태</translation>
     </message>
     <message>
         <source>Base64</source>
