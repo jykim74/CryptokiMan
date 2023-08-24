@@ -48,6 +48,7 @@ void LoginDlg::initialize()
     mTypeCombo->addItems( kLoginType );
     mTypeCombo->setCurrentIndex(1);
     mLoginBtn->setDefault(true);
+    mPinText->setFocus();
 }
 
 void LoginDlg::clickLogin()
@@ -87,6 +88,8 @@ void LoginDlg::clickLogin()
     else {
         manApplet->warningBox( tr( "Login fail"), this );
         manApplet->elog( QString("C_Login fail:%1").arg(rv));
+        mPinText->clear();
+        return;
     }
 
     QDialog::close();

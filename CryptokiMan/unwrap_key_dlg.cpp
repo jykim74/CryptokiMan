@@ -476,7 +476,7 @@ void UnwrapKeyDlg::setUnwrapSecretLabel()
 {
     int rv = -1;
 
-    CK_ATTRIBUTE sTemplate[1];
+    CK_ATTRIBUTE sTemplate[10];
     CK_ULONG uCnt = 0;
     CK_OBJECT_HANDLE sObjects[20];
     CK_ULONG uMaxObjCnt = 20;
@@ -538,7 +538,7 @@ void UnwrapKeyDlg::setUnwrapRSAPrivateLabel()
 {
     int rv = -1;
 
-    CK_ATTRIBUTE sTemplate[2];
+    CK_ATTRIBUTE sTemplate[10];
     CK_ULONG uCnt = 0;
     CK_OBJECT_HANDLE sObjects[20];
     CK_ULONG uMaxObjCnt = 20;
