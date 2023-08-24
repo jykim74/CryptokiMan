@@ -414,11 +414,12 @@ void ImportPFXDlg::clickCertEndDate()
 
 void ImportPFXDlg::clickFind()
 {
-    QString strPath = manApplet->getSetPath();
+    QString strPath = manApplet->curFile();
     QString fileName = findFile( this, JS_FILE_TYPE_PFX, strPath );
     if( fileName.isEmpty() ) return;
 
     mPFXPathText->setText( fileName );
+    manApplet->setCurFile( fileName );
 }
 
 void ImportPFXDlg::clickCertSubjectInCertCheck()

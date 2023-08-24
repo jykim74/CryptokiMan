@@ -32,13 +32,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="mSaveLibPathCheck">
-         <property name="text">
-          <string>Save cryptoki library path</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QCheckBox" name="mShowLogTabCheck">
          <property name="text">
           <string>Show log view tab at startup</string>
@@ -223,7 +216,6 @@
  <tabstops>
   <tabstop>tabWidget</tabstop>
   <tabstop>mCheckLatestVersionCheck</tabstop>
-  <tabstop>mSaveLibPathCheck</tabstop>
   <tabstop>mShowLogTabCheck</tabstop>
   <tabstop>mLangCombo</tabstop>
   <tabstop>mLogLevelCombo</tabstop>

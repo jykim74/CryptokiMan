@@ -241,20 +241,24 @@ QString ManApplet::getBrand()
     return QString::fromUtf8( "CryptokiMan" );
 }
 
-QString ManApplet::getSetPath()
+QString ManApplet::getLibPath()
 {
-    bool bSavePath = settings_mgr_->saveLibPath();
-    QString strPath = QDir::currentPath();
+    QString strPath;
+    QSettings settings;
 
-    if( bSavePath )
-    {
-        QSettings settings;
-        settings.beginGroup( "mainwindow" );
-        strPath = settings.value( "libPath", "" ).toString();
-        settings.endGroup();
-    }
+    settings.beginGroup( "mainwindow" );
+    strPath = settings.value( "libPath", "" ).toString();
+    settings.endGroup();
 
     return strPath;
+}
+
+QString ManApplet::setLibPath( const QString strPath )
+{
+    QSettings settings;
+    settings.beginGroup( "mainwindow" );
+    settings.setValue( "libPath", strPath );
+    settings.endGroup();
 }
 
 void ManApplet::warningBox(const QString& msg, QWidget *parent)

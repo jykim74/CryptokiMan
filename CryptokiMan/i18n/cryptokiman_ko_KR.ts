@@ -4111,7 +4111,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <source>Save cryptoki library path</source>
-        <translation>cryptoki 라이브러리 경로 저장</translation>
+        <translation type="vanished">cryptoki 라이브러리 경로 저장</translation>
     </message>
     <message>
         <source>Show log view window at startup</source>

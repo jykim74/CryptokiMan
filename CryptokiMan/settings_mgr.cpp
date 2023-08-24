@@ -4,7 +4,6 @@
 
 namespace  {
     const char *kBehaviorGroup = "CryptokiMan";
-    const char *kSaveLibPath = "saveLibPath";
     const char *kSlotID = "slotId";
     const char *kP11LibPath = "p11LibPath";
     const char *kShowLogTab = "showLogTab";
@@ -30,28 +29,6 @@ void SettingsMgr::initialize()
     getLogLevel();
     getFileReadSize();
     getUseDeviceMech();
-}
-
-void SettingsMgr::setSaveLibPath( bool val )
-{
-    QSettings settings;
-
-    settings.beginGroup( kBehaviorGroup );
-    settings.setValue( kSaveLibPath, val );
-    settings.endGroup();
-}
-
-bool SettingsMgr::saveLibPath()
-{
-    QSettings settings;
-
-    bool val;
-
-    settings.beginGroup(kBehaviorGroup);
-    val = settings.value( kSaveLibPath, false).toBool();
-    settings.endGroup();
-
-    return val;
 }
 
 void SettingsMgr::setShowLogTab( bool bVal )

@@ -596,8 +596,7 @@ void MainWindow::open()
         return;
     }
 
-    bool bSavePath = manApplet->settingsMgr()->saveLibPath();
-    QString strPath = manApplet->getSetPath();
+    QString strPath = manApplet->getLibPath();
     QString fileName = findFile( this, JS_FILE_TYPE_DLL, strPath );
 
     if( !fileName.isEmpty() )
@@ -605,16 +604,10 @@ void MainWindow::open()
         int ret = openLibrary( fileName );
         if( ret != 0 ) return;
 
-        if( bSavePath )
-        {
-            QFileInfo fileInfo(fileName);
-            QString strDir = fileInfo.dir().path();
 
-            QSettings settings;
-            settings.beginGroup("mainwindow");
-            settings.setValue( "libPath", strDir );
-            settings.endGroup();
-        }
+        QFileInfo fileInfo(fileName);
+        QString strDir = fileInfo.dir().path();
+        manApplet->setLibPath( strDir );
 
         manApplet->log( QString("Cryptoki open successfully[%1]").arg( fileName) );
     }

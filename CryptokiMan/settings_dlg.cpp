@@ -31,8 +31,6 @@ void SettingsDlg::updateSettings()
 {
     SettingsMgr *mgr = manApplet->settingsMgr();
 
-    mgr->setSaveLibPath( mSaveLibPathCheck->checkState() == Qt::Checked );
-
     if( manApplet->isLicense() )
     {
         mgr->setShowLogTab( mShowLogTabCheck->checkState() == Qt::Checked );
@@ -88,9 +86,6 @@ void SettingsDlg::initialize()
     SettingsMgr *mgr = manApplet->settingsMgr();
 
     Qt::CheckState state;
-
-    state = mgr->saveLibPath() ? Qt::Checked : Qt::Unchecked;
-    mSaveLibPathCheck->setCheckState(state);
 
     if( manApplet->isLicense() )
     {

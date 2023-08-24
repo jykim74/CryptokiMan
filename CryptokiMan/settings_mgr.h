@@ -12,9 +12,6 @@ private:
 public:
     SettingsMgr( QObject *parent = nullptr );
 
-    void setSaveLibPath( bool val );
-    bool saveLibPath();
-
     void setShowLogTab( bool bVal );
     bool showLogTab();
 

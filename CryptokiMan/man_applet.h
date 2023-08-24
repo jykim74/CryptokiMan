@@ -46,7 +46,8 @@ public:
     bool yesOrCancelBox(const QString& msg, QWidget *parent, bool default_ok);
 
     static QString getBrand();
-    QString getSetPath();
+    QString getLibPath();
+    QString setLibPath( const QString strPath );
 
     void restartApp();
     void exitApp( int nNum = 0 );
