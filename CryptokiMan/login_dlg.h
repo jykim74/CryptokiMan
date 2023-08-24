@@ -18,7 +18,7 @@ public:
     void setSelectedSlot( int index );
 
 private slots:
-    virtual void accept();
+    void clickLogin();
     void slotChanged( int index );
 
 private:

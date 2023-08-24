@@ -49,6 +49,7 @@ public:
     QString getSetPath();
 
     void restartApp();
+    void exitApp( int nNum = 0 );
     void setCmd( QString cmd );
 
     void log( const QString strLog );
@@ -74,7 +75,6 @@ private:
     SettingsMgr* settings_mgr_;
     MechMgr* mech_mgr_;
 
-    bool in_exit_;
     bool is_license_;
     JS_LICENSE_INFO license_info_;
     QString cmd_;

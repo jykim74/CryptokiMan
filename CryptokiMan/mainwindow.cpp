@@ -629,7 +629,8 @@ void MainWindow::openRecent()
 
 void MainWindow::quit()
 {
-    exit(0);
+//    exit(0);
+    manApplet->exitApp();
 }
 
 void MainWindow::unload()

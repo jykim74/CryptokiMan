@@ -12,6 +12,8 @@ LoginDlg::LoginDlg(QWidget *parent) :
     setupUi(this);
 
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
+    connect( mLoginBtn, SIGNAL(clicked()), this, SLOT(clickLogin()));
+    connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(close()));
 
     initialize();
 }
@@ -45,9 +47,10 @@ void LoginDlg::initialize()
 
     mTypeCombo->addItems( kLoginType );
     mTypeCombo->setCurrentIndex(1);
+    mLoginBtn->setDefault(true);
 }
 
-void LoginDlg::accept()
+void LoginDlg::clickLogin()
 {
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 

@@ -53,7 +53,6 @@ ManApplet::ManApplet( QObject *parent )
     mech_mgr_ = nullptr;
     cryptoki_api_ = nullptr;
 
-    in_exit_ = false;
     is_license_ = false;
 
     memset( &license_info_, 0x00, sizeof(license_info_));
@@ -178,17 +177,23 @@ int ManApplet::currentSlotIdx()
 
 void ManApplet::restartApp()
 {
-    if( in_exit_ || QCoreApplication::closingDown() )
+    if( QCoreApplication::closingDown() )
         return;
-
-    in_exit_ = true;
-
 
     QStringList args = QApplication::arguments();
     args.removeFirst();
 
     QProcess::startDetached(QApplication::applicationFilePath(), args);
     QCoreApplication::quit();
+}
+
+void ManApplet::exitApp( int nNum )
+{
+    if ( QCoreApplication::closingDown()) {
+        return;
+    }
+
+    QCoreApplication::exit(nNum);
 }
 
 void ManApplet::setCmd(QString cmd)
