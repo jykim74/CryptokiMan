@@ -23,7 +23,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -341,7 +341,7 @@
        <item>
         <widget class="QTabWidget" name="mParamTab">
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="tab_4">
           <attribute name="title">
@@ -1218,6 +1218,19 @@
   <tabstop>mLoginText</tabstop>
   <tabstop>mMechCombo</tabstop>
   <tabstop>mOptionCombo</tabstop>
+  <tabstop>mParamTab</tabstop>
+  <tabstop>mDSA_QText</tabstop>
+  <tabstop>mDSA_QLenText</tabstop>
+  <tabstop>mDSA_PLenText</tabstop>
+  <tabstop>mDSA_PText</tabstop>
+  <tabstop>mDSA_GLenText</tabstop>
+  <tabstop>mDSA_GText</tabstop>
+  <tabstop>mDSAClearParamBtn</tabstop>
+  <tabstop>mDSAGenParamBtn</tabstop>
+  <tabstop>mGenDHParamBtn</tabstop>
+  <tabstop>mDH_GCombo</tabstop>
+  <tabstop>mDH_PLenText</tabstop>
+  <tabstop>mDH_PText</tabstop>
   <tabstop>mPriLabelText</tabstop>
   <tabstop>mPriSubjectText</tabstop>
   <tabstop>mPriIDText</tabstop>
