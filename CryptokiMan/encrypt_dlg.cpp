@@ -26,7 +26,7 @@ EncryptDlg::EncryptDlg(QWidget *parent) :
     setupUi(this);
     initUI();
 #if defined(Q_OS_MAC)
-    layout()->setSpacing(5);
+    layout()->setSpacing(3);
 #endif
 }
 

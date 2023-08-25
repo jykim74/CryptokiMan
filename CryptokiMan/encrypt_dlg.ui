@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>604</width>
-    <height>784</height>
+    <height>754</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -385,6 +385,9 @@
       <string/>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_4">
+      <property name="spacing">
+       <number>5</number>
+      </property>
       <item>
        <layout class="QGridLayout" name="gridLayout_15">
         <item row="0" column="3">
@@ -611,6 +614,9 @@
        <string>Input Data</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="spacing">
+        <number>5</number>
+       </property>
        <item>
         <layout class="QGridLayout" name="gridLayout_7">
          <property name="topMargin">
@@ -748,6 +754,9 @@
        <string>Input File</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_3">
+       <property name="spacing">
+        <number>5</number>
+       </property>
        <item>
         <layout class="QGridLayout" name="gridLayout_9">
          <item row="0" column="0">
