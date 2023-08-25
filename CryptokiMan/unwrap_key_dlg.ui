@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_3">
       <attribute name="title">
@@ -924,12 +924,16 @@
   <tabstop>mSlotIDText</tabstop>
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
+  <tabstop>mInputClearBtn</tabstop>
   <tabstop>mReadFileBtn</tabstop>
+  <tabstop>mInputLenText</tabstop>
+  <tabstop>mInputText</tabstop>
   <tabstop>mUnwrapLabelCombo</tabstop>
   <tabstop>mUnwrapObjectText</tabstop>
   <tabstop>mUnwrapTypeCombo</tabstop>
   <tabstop>mUnwrapMechCombo</tabstop>
   <tabstop>mUnwrapParamText</tabstop>
+  <tabstop>mUnwrapParamLenText</tabstop>
   <tabstop>mClassCombo</tabstop>
   <tabstop>mTypeCombo</tabstop>
   <tabstop>mLabelText</tabstop>

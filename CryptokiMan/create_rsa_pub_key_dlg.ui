@@ -573,7 +573,10 @@
   <tabstop>mSlotIDText</tabstop>
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
+  <tabstop>mLabelText</tabstop>
+  <tabstop>mIDText</tabstop>
   <tabstop>mModulesText</tabstop>
+  <tabstop>mModulesLenText</tabstop>
   <tabstop>mExponentText</tabstop>
   <tabstop>mPrivateCheck</tabstop>
   <tabstop>mPrivateCombo</tabstop>

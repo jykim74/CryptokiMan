@@ -664,7 +664,9 @@
   <tabstop>mSubjectText</tabstop>
   <tabstop>mIDText</tabstop>
   <tabstop>mECPramsText</tabstop>
+  <tabstop>mECParamsLenText</tabstop>
   <tabstop>mKeyValueText</tabstop>
+  <tabstop>mKeyValueLenText</tabstop>
   <tabstop>mPrivateCheck</tabstop>
   <tabstop>mPrivateCombo</tabstop>
   <tabstop>mDecryptCheck</tabstop>

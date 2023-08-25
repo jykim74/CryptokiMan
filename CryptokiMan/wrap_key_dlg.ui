@@ -810,9 +810,15 @@
   <tabstop>mWrappingTypeCombo</tabstop>
   <tabstop>mWrappingMechCombo</tabstop>
   <tabstop>mWrappingParamText</tabstop>
+  <tabstop>mWrappingParamLenText</tabstop>
   <tabstop>mLabelCombo</tabstop>
   <tabstop>mObjectText</tabstop>
   <tabstop>mOutputLenText</tabstop>
+  <tabstop>mOutputText</tabstop>
+  <tabstop>mOutputClearBtn</tabstop>
+  <tabstop>mSaveFileBtn</tabstop>
+  <tabstop>mWrapKeyBtn</tabstop>
+  <tabstop>mCloseBtn</tabstop>
  </tabstops>
  <resources/>
  <connections/>

@@ -1543,10 +1543,38 @@
   <tabstop>mLoginText</tabstop>
   <tabstop>mKeyTypeCombo</tabstop>
   <tabstop>mMechCombo</tabstop>
+  <tabstop>mParamText</tabstop>
+  <tabstop>mParamLenText</tabstop>
+  <tabstop>mReqTagLenText</tabstop>
+  <tabstop>mAADTypeCombo</tabstop>
+  <tabstop>mAADText</tabstop>
+  <tabstop>mAADLenText</tabstop>
   <tabstop>mLabelCombo</tabstop>
   <tabstop>mObjectText</tabstop>
+  <tabstop>mInputTab</tabstop>
+  <tabstop>mInputCombo</tabstop>
+  <tabstop>mInputLenText</tabstop>
+  <tabstop>mInputText</tabstop>
+  <tabstop>mUpdateBtn</tabstop>
+  <tabstop>mFinalBtn</tabstop>
+  <tabstop>mInputClearBtn</tabstop>
+  <tabstop>mSrcFileText</tabstop>
+  <tabstop>mFindSrcFileBtn</tabstop>
+  <tabstop>mSrcFileInfoText</tabstop>
+  <tabstop>mSrcFileSizeText</tabstop>
+  <tabstop>mFileTotalSizeText</tabstop>
+  <tabstop>mFileReadSizeText</tabstop>
+  <tabstop>mWriteLogCheck</tabstop>
+  <tabstop>mDstFileText</tabstop>
+  <tabstop>mFindDstFileBtn</tabstop>
+  <tabstop>mDstFileInfoText</tabstop>
+  <tabstop>mDstFileSizeText</tabstop>
+  <tabstop>mOutputLenText</tabstop>
   <tabstop>mOutputText</tabstop>
+  <tabstop>mInitBtn</tabstop>
+  <tabstop>mInitAutoCheck</tabstop>
   <tabstop>mEncryptBtn</tabstop>
+  <tabstop>mOutputClearBtn</tabstop>
   <tabstop>mCloseBtn</tabstop>
  </tabstops>
  <resources/>

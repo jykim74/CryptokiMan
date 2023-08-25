@@ -932,6 +932,11 @@
   <tabstop>mSrcLabelCombo</tabstop>
   <tabstop>mSrcObjectText</tabstop>
   <tabstop>mSrcMethodCombo</tabstop>
+  <tabstop>mParamCombo</tabstop>
+  <tabstop>mParam1Text</tabstop>
+  <tabstop>mParam1LenText</tabstop>
+  <tabstop>mParam2Text</tabstop>
+  <tabstop>mParam2LenText</tabstop>
   <tabstop>mClassCombo</tabstop>
   <tabstop>mTypeCombo</tabstop>
   <tabstop>mLabelText</tabstop>

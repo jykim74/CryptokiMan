@@ -562,8 +562,15 @@
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
   <tabstop>mSeedCombo</tabstop>
+  <tabstop>mSeedLenText</tabstop>
+  <tabstop>mSeedText</tabstop>
+  <tabstop>mSeedClearBtn</tabstop>
+  <tabstop>mSetSeedBtn</tabstop>
   <tabstop>mLengthText</tabstop>
   <tabstop>mOutputText</tabstop>
+  <tabstop>mRandClearBtn</tabstop>
+  <tabstop>mGenRandBtn</tabstop>
+  <tabstop>mCloseBtn</tabstop>
  </tabstops>
  <resources/>
  <connections/>

@@ -500,6 +500,8 @@
   <tabstop>mLabelCombo</tabstop>
   <tabstop>mObjectText</tabstop>
   <tabstop>mAttributeCombo</tabstop>
+  <tabstop>mValueTypeCombo</tabstop>
+  <tabstop>mValueLenText</tabstop>
   <tabstop>mValueText</tabstop>
   <tabstop>mGetAttrBtn</tabstop>
   <tabstop>mSetAttrBtn</tabstop>

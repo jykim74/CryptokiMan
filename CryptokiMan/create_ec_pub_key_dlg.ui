@@ -630,8 +630,12 @@
   <tabstop>mSlotIDText</tabstop>
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
+  <tabstop>mLabelText</tabstop>
+  <tabstop>mIDText</tabstop>
   <tabstop>mECPointsText</tabstop>
+  <tabstop>mECPointsLenText</tabstop>
   <tabstop>mECParamsText</tabstop>
+  <tabstop>mECParamsLenText</tabstop>
   <tabstop>mPrivateCheck</tabstop>
   <tabstop>mPrivateCombo</tabstop>
   <tabstop>mEncryptCheck</tabstop>

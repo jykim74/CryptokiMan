@@ -65,6 +65,7 @@ AboutDlg::AboutDlg(QWidget *parent) :
 
 //    mAboutText->setText( strAbout );
     mAboutText->setHtml( strAbout );
+    mCloseBtn->setDefault(true);
 }
 
 AboutDlg::~AboutDlg()

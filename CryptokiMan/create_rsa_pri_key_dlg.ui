@@ -1054,13 +1054,21 @@
   <tabstop>mSubjectText</tabstop>
   <tabstop>mIDText</tabstop>
   <tabstop>mModulesText</tabstop>
+  <tabstop>mModulesLenText</tabstop>
   <tabstop>mPubExponentText</tabstop>
+  <tabstop>mPubExponentLenText</tabstop>
   <tabstop>mPriExponentText</tabstop>
+  <tabstop>mPriExponentLenText</tabstop>
   <tabstop>mPrime1Text</tabstop>
+  <tabstop>mPrime1LenText</tabstop>
   <tabstop>mPrime2Text</tabstop>
+  <tabstop>mPrime2LenText</tabstop>
   <tabstop>mExponent1Text</tabstop>
+  <tabstop>mExponent1LenText</tabstop>
   <tabstop>mExponent2Text</tabstop>
+  <tabstop>mExponent2LenText</tabstop>
   <tabstop>mCoefficientText</tabstop>
+  <tabstop>mCoefficientLenText</tabstop>
   <tabstop>mPrivateCheck</tabstop>
   <tabstop>mPrivateCombo</tabstop>
   <tabstop>mDecryptCheck</tabstop>

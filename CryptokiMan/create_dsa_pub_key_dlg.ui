@@ -762,8 +762,16 @@
   <tabstop>mSlotIDText</tabstop>
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
+  <tabstop>mLabelText</tabstop>
+  <tabstop>mIDText</tabstop>
   <tabstop>mPText</tabstop>
+  <tabstop>mPLenText</tabstop>
   <tabstop>mQText</tabstop>
+  <tabstop>mQLenText</tabstop>
+  <tabstop>mGText</tabstop>
+  <tabstop>mGLenText</tabstop>
+  <tabstop>mPublicText</tabstop>
+  <tabstop>mPublicLenText</tabstop>
   <tabstop>mPrivateCheck</tabstop>
   <tabstop>mPrivateCombo</tabstop>
   <tabstop>mEncryptCheck</tabstop>

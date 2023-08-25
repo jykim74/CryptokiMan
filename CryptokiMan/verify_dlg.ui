@@ -1200,9 +1200,33 @@
   <tabstop>mLoginText</tabstop>
   <tabstop>mKeyTypeCombo</tabstop>
   <tabstop>mMechCombo</tabstop>
+  <tabstop>mParamText</tabstop>
   <tabstop>mLabelCombo</tabstop>
   <tabstop>mObjectText</tabstop>
+  <tabstop>mInputTab</tabstop>
+  <tabstop>mInputStringRadio</tabstop>
+  <tabstop>mInputHexRadio</tabstop>
+  <tabstop>mInputBase64Radio</tabstop>
+  <tabstop>mInputLenText</tabstop>
+  <tabstop>mInputText</tabstop>
+  <tabstop>mUpdateBtn</tabstop>
+  <tabstop>mFinalBtn</tabstop>
+  <tabstop>mVerifyRecoverInitBtn</tabstop>
+  <tabstop>mVerifyRecoverBtn</tabstop>
+  <tabstop>mInputClearBtn</tabstop>
+  <tabstop>mSrcFileText</tabstop>
+  <tabstop>mFindSrcFileBtn</tabstop>
+  <tabstop>mSrcFileInfoText</tabstop>
+  <tabstop>mSrcFileSizeText</tabstop>
+  <tabstop>mFileTotalSizeText</tabstop>
+  <tabstop>mFileReadSizeText</tabstop>
+  <tabstop>mWriteLogCheck</tabstop>
+  <tabstop>mSignLenText</tabstop>
   <tabstop>mSignText</tabstop>
+  <tabstop>mInitBtn</tabstop>
+  <tabstop>mInitAutoCheck</tabstop>
+  <tabstop>mVerifyBtn</tabstop>
+  <tabstop>mSignClearBtn</tabstop>
   <tabstop>mCloseBtn</tabstop>
  </tabstops>
  <resources/>

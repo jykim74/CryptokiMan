@@ -652,6 +652,10 @@
   <tabstop>mSlotIDText</tabstop>
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
+  <tabstop>mMechCombo</tabstop>
+  <tabstop>mKeyCombo</tabstop>
+  <tabstop>mKeyLenText</tabstop>
+  <tabstop>mKeyText</tabstop>
   <tabstop>mLabelText</tabstop>
   <tabstop>mIDText</tabstop>
   <tabstop>mPrivateCheck</tabstop>

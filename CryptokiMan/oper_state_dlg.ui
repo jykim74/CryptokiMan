@@ -355,6 +355,8 @@
   <tabstop>mSlotsCombo</tabstop>
   <tabstop>mSlotIDText</tabstop>
   <tabstop>mSessionText</tabstop>
+  <tabstop>mOperationStateLenText</tabstop>
+  <tabstop>mOperationStateText</tabstop>
   <tabstop>mEncKeyText</tabstop>
   <tabstop>mAuthKeyText</tabstop>
   <tabstop>mGetOperationStateBtn</tabstop>

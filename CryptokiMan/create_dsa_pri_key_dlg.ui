@@ -801,7 +801,14 @@
   <tabstop>mLabelText</tabstop>
   <tabstop>mSubjectText</tabstop>
   <tabstop>mIDText</tabstop>
+  <tabstop>mPText</tabstop>
+  <tabstop>mPLenText</tabstop>
+  <tabstop>mQText</tabstop>
+  <tabstop>mQLenText</tabstop>
+  <tabstop>mGText</tabstop>
+  <tabstop>mGLenText</tabstop>
   <tabstop>mKeyValueText</tabstop>
+  <tabstop>mKeyValueLenText</tabstop>
   <tabstop>mPrivateCheck</tabstop>
   <tabstop>mPrivateCombo</tabstop>
   <tabstop>mDecryptCheck</tabstop>
