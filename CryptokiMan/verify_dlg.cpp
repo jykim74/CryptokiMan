@@ -33,6 +33,9 @@ VerifyDlg::VerifyDlg(QWidget *parent) :
     setupUi(this);
 
     initUI();
+#if defined(Q_OS_MAC)
+    layout()->setSpacing(5);
+#endif
 }
 
 VerifyDlg::~VerifyDlg()
