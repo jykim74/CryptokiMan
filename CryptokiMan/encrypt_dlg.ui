@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>604</width>
-    <height>754</height>
+    <height>742</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -756,6 +756,18 @@
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <property name="spacing">
         <number>5</number>
+       </property>
+       <property name="leftMargin">
+        <number>10</number>
+       </property>
+       <property name="topMargin">
+        <number>10</number>
+       </property>
+       <property name="rightMargin">
+        <number>10</number>
+       </property>
+       <property name="bottomMargin">
+        <number>10</number>
        </property>
        <item>
         <layout class="QGridLayout" name="gridLayout_9">

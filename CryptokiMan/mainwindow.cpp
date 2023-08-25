@@ -170,7 +170,7 @@ void MainWindow::baseTableHeader()
     right_table_->horizontalHeader()->setStyleSheet( style );
 
     right_table_->setColumnCount(2);
-    right_table_->setColumnWidth(0, 140);
+    right_table_->setColumnWidth(0, 180);
     right_table_->setHorizontalHeaderLabels( labels );
     right_table_->verticalHeader()->setVisible(false);
 }
