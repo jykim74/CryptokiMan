@@ -61,6 +61,10 @@ void DigestDlg::initUI()
     connect( mInputClearBtn, SIGNAL(clicked()), this, SLOT(clickInputClear()));
     connect( mOutputClearBtn, SIGNAL(clicked()), this, SLOT(clickOutputClear()));
     connect( mFindSrcFileBtn, SIGNAL(clicked()), this, SLOT(clickFindSrcFile()));
+
+#if defined(Q_OS_MAC)
+    layout()->setSpacing(3);
+#endif
 }
 
 long DigestDlg::getSessionHandle()
