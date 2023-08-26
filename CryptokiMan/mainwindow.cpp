@@ -180,6 +180,10 @@ void MainWindow::createActions()
     QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
     QToolBar *fileToolBar = addToolBar(tr("File"));
 
+#ifdef Q_OS_MAC
+    fileToolBar->setIconSize( QSize(24,24));
+#endif
+
     const QIcon newIcon = QIcon::fromTheme("document-new", QIcon(":/images/new.png"));
     QAction *newAct = new QAction( newIcon, tr("&New"), this);
     newAct->setShortcut(QKeySequence::New);
@@ -234,6 +238,10 @@ void MainWindow::createActions()
     QMenu *moduleMenu = menuBar()->addMenu(tr("&Module"));
     QToolBar *moduleToolBar = addToolBar(tr("Module"));
 
+#ifdef Q_OS_MAC
+    moduleToolBar->setIconSize( QSize(24,24));
+#endif
+
     const QIcon initIcon = QIcon::fromTheme("document-init", QIcon(":/images/init.png"));
     QAction *initAct = new QAction( initIcon, tr("P11Initialize"), this );
     connect( initAct, &QAction::triggered, this, &MainWindow::P11Initialize );
@@ -286,6 +294,10 @@ void MainWindow::createActions()
 
     QMenu *objectsMenu = menuBar()->addMenu(tr("&Objects"));
     QToolBar *objectsToolBar = addToolBar(tr("Objects"));
+
+#ifdef Q_OS_MAC
+    objectsToolBar->setIconSize( QSize(24,24));
+#endif
 
     const QIcon keypairIcon = QIcon::fromTheme("keypair", QIcon(":/images/keypair.png"));
     QAction *genKeyPairAct = new QAction( keypairIcon, tr("Generate Key Pair"), this);
@@ -380,6 +392,10 @@ void MainWindow::createActions()
     QMenu *cryptMenu = menuBar()->addMenu(tr("&Cryptogram"));
     QToolBar *cryptToolBar = addToolBar(tr("Cryptogram"));
 
+#ifdef Q_OS_MAC
+    cryptToolBar->setIconSize( QSize(24,24));
+#endif
+
     const QIcon diceIcon = QIcon::fromTheme("Dice", QIcon(":/images/dice.png"));
     QAction *randAct = new QAction( diceIcon, tr("Random"), this);
     connect( randAct, &QAction::triggered, this, &MainWindow::rand);
@@ -448,6 +464,10 @@ void MainWindow::createActions()
         QMenu *toolsMenu = menuBar()->addMenu(tr("&Tools"));
         QToolBar *toolsToolBar = addToolBar(tr("Tools"));
 
+#ifdef Q_OS_MAC
+        toolsToolBar->setIconSize( QSize(24,24));
+#endif
+
         const QIcon tokenIcon = QIcon::fromTheme("token", QIcon(":/images/token.png"));
         QAction *initTokenAct = new QAction( tokenIcon, tr("Initialize Token"), this);
         connect( initTokenAct, &QAction::triggered, this, &MainWindow::initToken);
@@ -500,6 +520,10 @@ void MainWindow::createActions()
 
     QMenu *helpMenu = menuBar()->addMenu(tr("&Help"));
     QToolBar *helpToolBar = addToolBar(tr("Help"));
+
+#ifdef Q_OS_MAC
+    helpToolBar->setIconSize( QSize(24,24));
+#endif
 
     if( manApplet->isLicense() )
     {

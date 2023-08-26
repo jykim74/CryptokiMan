@@ -172,13 +172,11 @@ private:
     QTextEdit       *log_text_;
     int             right_type_;
 
-//    JP11_CTX       *p11_ctx_;
     QString         file_path_;
 
     QList<SlotInfo> slot_infos_;
     int             slot_index_;
     ThreadWork      *th_work_;
-
 };
 
 #endif // MAINWINDOW_H
