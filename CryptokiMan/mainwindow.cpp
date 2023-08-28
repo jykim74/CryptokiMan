@@ -1978,11 +1978,13 @@ void MainWindow::showDataInfoDetail( QModelIndex index )
     info( "== Data Information\n" );
     info( "========================================================================\n" );
 
-    info( QString( "CKA_LABEL      : %1\n" ).arg(stringAttribute( ATTR_VAL_STRING, CKA_LABEL, uObj )) );
-    info( QString( "CKA_VALUE      : %1\n" ).arg(stringAttribute(  ATTR_VAL_HEX, CKA_VALUE, uObj )));
-    info( QString( "CKA_TOKEN      : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_TOKEN, uObj )));
-    info( QString( "CKA_PRIVATE    : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_PRIVATE, uObj )));
-    info( QString( "CKA_MODIFIABLE : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_MODIFIABLE, uObj )));
+    info( QString( "CKA_LABEL       : %1\n" ).arg(stringAttribute( ATTR_VAL_STRING, CKA_LABEL, uObj )) );
+    info( QString( "CKA_APPLICATION : %1\n" ).arg(stringAttribute( ATTR_VAL_STRING, CKA_APPLICATION, uObj )) );
+    info( QString( "CKA_OBJECT_ID   : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_OBJECT_ID, uObj )));
+    info( QString( "CKA_VALUE       : %1\n" ).arg(stringAttribute(  ATTR_VAL_HEX, CKA_VALUE, uObj )));
+    info( QString( "CKA_TOKEN       : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_TOKEN, uObj )));
+    info( QString( "CKA_PRIVATE     : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_PRIVATE, uObj )));
+    info( QString( "CKA_MODIFIABLE  : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_MODIFIABLE, uObj )));
 }
 
 void MainWindow::showRightMenu(QPoint point )
@@ -3329,7 +3331,7 @@ void MainWindow::showDataInfoList( int index, long hObject )
     int rv = 0;
 
     removeAllRightTable();
-    QStringList headerList = { tr("Label"), tr("Handle") };
+    QStringList headerList = { tr("Label"), tr("Handle"), tr( "ObejctID" ), tr( "Application") };
 
     right_table_->clear();
     right_table_->horizontalHeader()->setStretchLastSection(true);
@@ -3370,6 +3372,11 @@ void MainWindow::showDataInfoList( int index, long hObject )
 
     for( int i=0; i < uObjCnt; i++ )
     {
+        BIN binOID = {0,0};
+        char sOID[128];
+
+        memset( sOID, 0x00, sizeof(sOID));
+
         right_table_->insertRow( row );
         right_table_->setRowHeight( row, 10 );
 
@@ -3381,6 +3388,16 @@ void MainWindow::showDataInfoList( int index, long hObject )
 
         strMsg = QString("%1").arg( hObjects[i] );
         right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
+
+        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_OBJECT_ID, hObjects[i] );
+        JS_BIN_decodeHex( strMsg.toStdString().c_str(), &binOID );
+        JS_PKI_getStringFromOID( &binOID, sOID );
+        JS_BIN_reset( &binOID );
+
+        right_table_->setItem( row, 2, new QTableWidgetItem(sOID) );
+
+        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_APPLICATION, hObjects[i] );
+        right_table_->setItem( row, 3, new QTableWidgetItem(strMsg) );
 
         row++;
     }

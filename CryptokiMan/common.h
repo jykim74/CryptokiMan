@@ -91,7 +91,7 @@ static QStringList kSecretKeyAttList = {
 };
 
 static QStringList kDataAttList = {
-    "CKA_VALUE", "CKA_PRIVATE",
+    "CKA_VALUE", "CKA_PRIVATE", "CKA_OBJECT_ID", "CKA_APPLICATION"
 };
 
 

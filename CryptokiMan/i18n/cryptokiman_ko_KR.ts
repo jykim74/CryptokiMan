@@ -499,6 +499,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>Data Type</source>
         <translation>데이타 타입</translation>
     </message>
+    <message>
+        <source>Application</source>
+        <translation>어플리케이션</translation>
+    </message>
+    <message>
+        <source>Object ID</source>
+        <translation>객체 ID</translation>
+    </message>
 </context>
 <context>
     <name>CreateECPriKeyDlg</name>
@@ -3573,6 +3581,14 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>You have changed license. Restart to apply it?</source>
         <translation>라이선스가 변경 되었습니다.적용을 위해 다시 시작 하시겠습니까?</translation>
+    </message>
+    <message>
+        <source>Application</source>
+        <translation>어플리케이션</translation>
+    </message>
+    <message>
+        <source>ObejctID</source>
+        <translation>객체 ID</translation>
     </message>
 </context>
 <context>

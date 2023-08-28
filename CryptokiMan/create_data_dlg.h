@@ -2,6 +2,7 @@
 #define GEN_DATA_DLG_H
 
 #include <QDialog>
+#include "js_bin.h"
 #include "ui_create_data_dlg.h"
 
 namespace Ui {
@@ -27,12 +28,14 @@ private slots:
     void clickToken();
 
     void changeData();
+
 private:
     void initialize();
     void initAttributes();
     void setAttributes();
     void connectAttributes();
     void setDefaults();
+    void getOID( BIN *pOID );
 };
 
 #endif // GEN_DATA_DLG_H

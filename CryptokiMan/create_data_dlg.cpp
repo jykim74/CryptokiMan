@@ -4,10 +4,11 @@
 #include "js_pkcs11.h"
 #include "cryptoki_api.h"
 #include "common.h"
+#include "js_pki_tools.h"
 
 static QStringList sFalseTrue = { "false", "true" };
-
 static QStringList sDataList = { "String", "Hex", "Base64" };
+static QStringList sOIDTypeList = { "Text", "Value Hex", "ShortName", "LongName", "DER Hex" };
 
 CreateDataDlg::CreateDataDlg(QWidget *parent) :
     QDialog(parent)
@@ -50,6 +51,7 @@ void CreateDataDlg::slotChanged(int index)
 void CreateDataDlg::initialize()
 {
     mSlotsCombo->clear();
+    mObjectIDTypeCombo->addItems( sOIDTypeList );
 
     QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
 
@@ -128,6 +130,31 @@ void CreateDataDlg::accept()
         uCount++;
     }
 
+    BIN binApplication = {0,0};
+    QString strApplication = mApplicationText->text();
+
+    if( !strApplication.isEmpty() )
+    {
+        JS_BIN_set( &binApplication, (unsigned char *)strApplication.toStdString().c_str(), strApplication.length() );
+        sTemplate[uCount].type = CKA_APPLICATION;
+        sTemplate[uCount].pValue = binApplication.pVal;
+        sTemplate[uCount].ulValueLen = binApplication.nLen;
+        uCount++;
+    }
+
+    BIN binOID = {0,0};
+    QString strOID = mObjectIDText->text();
+
+    if( !strOID.isEmpty() )
+    {
+//        JS_BIN_decodeHex( strOID.toStdString().c_str(), &binOID );
+        getOID( &binOID );
+        sTemplate[uCount].type = CKA_OBJECT_ID;
+        sTemplate[uCount].pValue = binOID.pVal;
+        sTemplate[uCount].ulValueLen = binOID.nLen;
+        uCount++;
+    }
+
     BIN binData = {0,0};
     QString strData = mDataText->toPlainText();
 
@@ -178,6 +205,9 @@ void CreateDataDlg::accept()
     rv = manApplet->cryptokiAPI()->CreateObject( hSession, sTemplate, uCount, &hObject );
 
     JS_BIN_reset( &binData );
+    JS_BIN_reset( &binLabel );
+    JS_BIN_reset( &binApplication );
+    JS_BIN_reset( &binOID );
 
     if( rv != CKR_OK )
     {
@@ -225,4 +255,46 @@ void CreateDataDlg::setDefaults()
     mPrivateCheck->setChecked(true);
     mPrivateCombo->setEnabled(true);
     mPrivateCombo->setCurrentIndex(1);
+}
+
+void CreateDataDlg::getOID( BIN *pOID )
+{
+    // { "Text", "Value Hex", "ShortName", "LongName", "DER Hex" };
+    QString strType = mObjectIDTypeCombo->currentText();
+    QString strValue = mObjectIDText->text();
+
+    BIN binVal = {0,0};
+    char sOIDText[128];
+
+    memset( sOIDText, 0x00, sizeof(sOIDText));
+
+    if( strValue.length() <= 0 ) return;
+
+    if( strType == "Text" )
+    {
+        JS_PKI_getOIDFromString( strValue.toStdString().c_str(), pOID );
+    }
+    else if( strType == "Value Hex" )
+    {
+        JS_BIN_decodeHex( strValue.toStdString().c_str(), &binVal );
+        JS_PKI_getStringFromOIDValue( &binVal, sOIDText );
+        JS_PKI_getOIDFromString( sOIDText, pOID );
+        JS_BIN_reset( &binVal );
+    }
+    else if( strType == "ShortName" )
+    {
+        JS_PKI_getOIDFromSN( strValue.toStdString().c_str(), sOIDText );
+        JS_PKI_getOIDFromString( sOIDText, pOID );
+    }
+    else if( strType == "LongName" )
+    {
+        JS_PKI_getOIDFromLN( strValue.toStdString().c_str(), sOIDText );
+        JS_PKI_getOIDFromString( sOIDText, pOID );
+    }
+    else
+    {
+        JS_BIN_decodeHex( strValue.toStdString().c_str(), pOID );
+    }
+
+    JS_BIN_reset( &binVal );
 }
