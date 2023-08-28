@@ -1730,20 +1730,17 @@ void MainWindow::rightTableClick(QModelIndex index)
     else
     {
         int row = index.row();
-        int col = index.column();
 
         QTableWidgetItem *item1 = right_table_->item( row, 0 );
         QTableWidgetItem *item2 = right_table_->item( row, 1 );
 
         info_text_->clear();
 
-        if( item1 )
-        {
-            info_text_->setPlainText( item1->text() );
-            info_text_->append( "\n" );
-        }
-
-        if( item2 ) info_text_->append( item2->text() );
+        info( "========================================================================\n" );
+        info( QString( "== %1 Field Information\n" ).arg( getItemTypeName(right_type_)) );
+        info( "========================================================================\n" );
+        info( QString( "Name  : %1\n" ).arg( item1->text() ));
+        info( QString( "Value : %1\n" ).arg( item2->text() ));
     }
 }
 

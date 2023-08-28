@@ -1045,3 +1045,33 @@ QString getSessionStateString( unsigned long uState )
 
     return strState;
 }
+
+const QString getItemTypeName( int nType )
+{
+    switch ( nType ) {
+    case HM_ITEM_TYPE_ROOT :
+        return "Root";
+    case HM_ITEM_TYPE_SLOT :
+        return "Slot";
+    case HM_ITEM_TYPE_TOKEN :
+        return "Token";
+    case HM_ITEM_TYPE_MECHANISM :
+        return "Mechanism";
+    case HM_ITEM_TYPE_SESSION :
+        return "Session";
+    case HM_ITEM_TYPE_OBJECTS :
+        return "Objects";
+    case HM_ITEM_TYPE_CERTIFICATE :
+        return "Certificate";
+    case HM_ITEM_TYPE_PUBLICKEY :
+        return "PublicKey";
+    case HM_ITEM_TYPE_PRIVATEKEY :
+        return "PrivateKey";
+    case HM_ITEM_TYPE_SECRETKEY :
+        return "SecretKey";
+    case HM_ITEM_TYPE_DATA :
+        return "Data";
+    }
+
+    return "Unknown";
+}
