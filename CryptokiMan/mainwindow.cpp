@@ -182,6 +182,7 @@ void MainWindow::createActions()
 
 #ifdef Q_OS_MAC
     fileToolBar->setIconSize( QSize(24,24));
+    fileToolBar->layout()->setSpacing(0);
 #endif
 
     const QIcon newIcon = QIcon::fromTheme("document-new", QIcon(":/images/new.png"));
@@ -240,6 +241,7 @@ void MainWindow::createActions()
 
 #ifdef Q_OS_MAC
     moduleToolBar->setIconSize( QSize(24,24));
+    moduleToolBar->layout()->setSpacing(0);
 #endif
 
     const QIcon initIcon = QIcon::fromTheme("document-init", QIcon(":/images/init.png"));
@@ -297,6 +299,7 @@ void MainWindow::createActions()
 
 #ifdef Q_OS_MAC
     objectsToolBar->setIconSize( QSize(24,24));
+    objectsToolBar->layout()->setSpacing(0);
 #endif
 
     const QIcon keypairIcon = QIcon::fromTheme("keypair", QIcon(":/images/keypair.png"));
@@ -394,6 +397,7 @@ void MainWindow::createActions()
 
 #ifdef Q_OS_MAC
     cryptToolBar->setIconSize( QSize(24,24));
+    cryptToolBar->layout()->setSpacing(0);
 #endif
 
     const QIcon diceIcon = QIcon::fromTheme("Dice", QIcon(":/images/dice.png"));
@@ -466,6 +470,7 @@ void MainWindow::createActions()
 
 #ifdef Q_OS_MAC
         toolsToolBar->setIconSize( QSize(24,24));
+        toolsToolBar->layout()->setSpacing(0);
 #endif
 
         const QIcon tokenIcon = QIcon::fromTheme("token", QIcon(":/images/token.png"));
@@ -523,6 +528,7 @@ void MainWindow::createActions()
 
 #ifdef Q_OS_MAC
     helpToolBar->setIconSize( QSize(24,24));
+    helpToolBar->layout()->setSpacing(0);
 #endif
 
     if( manApplet->isLicense() )
