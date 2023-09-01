@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>412</width>
-    <height>154</height>
+    <width>419</width>
+    <height>191</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -137,7 +137,7 @@
       <widget class="QLineEdit" name="mSessionText">
        <property name="minimumSize">
         <size>
-         <width>80</width>
+         <width>60</width>
          <height>0</height>
         </size>
        </property>
@@ -199,7 +199,7 @@
        </property>
        <property name="maximumSize">
         <size>
-         <width>80</width>
+         <width>100</width>
          <height>16777215</height>
         </size>
        </property>

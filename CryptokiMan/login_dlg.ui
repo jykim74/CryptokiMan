@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>200</height>
+    <height>274</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -89,7 +89,7 @@
        </property>
        <property name="maximumSize">
         <size>
-         <width>80</width>
+         <width>100</width>
          <height>16777215</height>
         </size>
        </property>
@@ -151,7 +151,7 @@
      <item>
       <widget class="QLabel" name="label_5">
        <property name="text">
-        <string>Session Handle</string>
+        <string>Session</string>
        </property>
       </widget>
      </item>

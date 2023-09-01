@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>282</height>
+    <width>415</width>
+    <height>350</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -104,7 +104,7 @@
      <item row="0" column="2">
       <widget class="QLabel" name="label_5">
        <property name="text">
-        <string>Session Handle</string>
+        <string>    s</string>
        </property>
       </widget>
      </item>
@@ -235,9 +235,7 @@
         </palette>
        </property>
        <property name="font">
-        <font>
-         <family>굴림체</family>
-        </font>
+        <font/>
        </property>
        <property name="readOnly">
         <bool>true</bool>
@@ -262,9 +260,7 @@
    <item>
     <widget class="QPlainTextEdit" name="mOperationStateText">
      <property name="font">
-      <font>
-       <family>굴림체</family>
-      </font>
+      <font/>
      </property>
      <property name="readOnly">
       <bool>false</bool>

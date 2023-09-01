@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>457</width>
-    <height>346</height>
+    <height>368</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -67,7 +67,7 @@
       <widget class="QLineEdit" name="mSlotIDText">
        <property name="maximumSize">
         <size>
-         <width>80</width>
+         <width>100</width>
          <height>16777215</height>
         </size>
        </property>

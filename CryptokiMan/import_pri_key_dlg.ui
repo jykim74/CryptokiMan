@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>559</width>
+    <width>642</width>
     <height>395</height>
    </rect>
   </property>
@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -197,7 +197,7 @@
           <widget class="QLineEdit" name="mSlotIDText">
            <property name="maximumSize">
             <size>
-             <width>80</width>
+             <width>100</width>
              <height>16777215</height>
             </size>
            </property>

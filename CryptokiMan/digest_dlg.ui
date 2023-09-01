@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>539</width>
-    <height>486</height>
+    <height>661</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -80,7 +80,7 @@
       <widget class="QLineEdit" name="mSlotIDText">
        <property name="maximumSize">
         <size>
-         <width>80</width>
+         <width>100</width>
          <height>16777215</height>
         </size>
        </property>
@@ -498,9 +498,7 @@
          <item row="0" column="1">
           <widget class="QLineEdit" name="mSrcFileText">
            <property name="font">
-            <font>
-             <family>굴림체</family>
-            </font>
+            <font/>
            </property>
           </widget>
          </item>
@@ -586,9 +584,7 @@
             </palette>
            </property>
            <property name="font">
-            <font>
-             <family>굴림체</family>
-            </font>
+            <font/>
            </property>
            <property name="readOnly">
             <bool>true</bool>
@@ -666,9 +662,7 @@
             </palette>
            </property>
            <property name="font">
-            <font>
-             <family>굴림체</family>
-            </font>
+            <font/>
            </property>
            <property name="readOnly">
             <bool>true</bool>
@@ -764,9 +758,7 @@
             </palette>
            </property>
            <property name="font">
-            <font>
-             <family>굴림체</family>
-            </font>
+            <font/>
            </property>
            <property name="readOnly">
             <bool>true</bool>
@@ -825,9 +817,7 @@
             </palette>
            </property>
            <property name="font">
-            <font>
-             <family>굴림체</family>
-            </font>
+            <font/>
            </property>
            <property name="readOnly">
             <bool>true</bool>

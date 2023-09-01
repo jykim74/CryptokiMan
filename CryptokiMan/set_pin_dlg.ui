@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>240</height>
+    <width>411</width>
+    <height>294</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -67,7 +67,7 @@
       <widget class="QLineEdit" name="mSessionText">
        <property name="minimumSize">
         <size>
-         <width>80</width>
+         <width>60</width>
          <height>0</height>
         </size>
        </property>
@@ -129,7 +129,7 @@
        </property>
        <property name="maximumSize">
         <size>
-         <width>80</width>
+         <width>100</width>
          <height>16777215</height>
         </size>
        </property>
@@ -227,6 +227,12 @@
      </item>
      <item row="0" column="0">
       <widget class="QLabel" name="label_3">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="text">
         <string>Slot ID</string>
        </property>
@@ -289,6 +295,12 @@
      </item>
      <item row="0" column="0">
       <widget class="QLabel" name="label_5">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="text">
         <string>Old Pin</string>
        </property>
