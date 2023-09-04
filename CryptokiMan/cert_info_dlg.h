@@ -24,11 +24,12 @@ public:
 private slots:
     void showEvent(QShowEvent *event);
     void clickField( QModelIndex index );
+    void changeFieldType( int index );
 
 private:
     QString cert_val_;
 
-    void initialize();
+    void getFields();
     void initUI();
     void clearTable();
 };

@@ -207,6 +207,26 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>Value</source>
         <translation>값</translation>
     </message>
+    <message>
+        <source>All</source>
+        <translation>전체</translation>
+    </message>
+    <message>
+        <source>Version1 Only</source>
+        <translation>버전1 필드만</translation>
+    </message>
+    <message>
+        <source>Extension Only</source>
+        <translation>확장 필드만</translation>
+    </message>
+    <message>
+        <source>Critical Extension Only</source>
+        <translation>중요 확장 필드만</translation>
+    </message>
+    <message>
+        <source>Attribute Only</source>
+        <translation>속성만</translation>
+    </message>
 </context>
 <context>
     <name>CloseSessionDlg</name>
@@ -2870,7 +2890,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <source>Session Handle</source>
-        <translation>세션 핸들</translation>
+        <translation type="vanished">세션 핸들</translation>
     </message>
     <message>
         <source>Login Type and PIN</source>
@@ -2923,6 +2943,10 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>Close</source>
         <translation>닫기</translation>
+    </message>
+    <message>
+        <source>Session</source>
+        <translation>세션</translation>
     </message>
 </context>
 <context>
@@ -3863,7 +3887,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <source>Session Handle</source>
-        <translation>세션 핸들</translation>
+        <translation type="vanished">세션 핸들</translation>
     </message>
     <message>
         <source>Slot ID</source>
@@ -3916,6 +3940,10 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>Oper State</source>
         <translation>운영 상태</translation>
+    </message>
+    <message>
+        <source>    s</source>
+        <translation>s</translation>
     </message>
 </context>
 <context>
