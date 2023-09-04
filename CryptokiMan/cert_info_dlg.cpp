@@ -99,6 +99,8 @@ void CertInfoDlg::getFields()
 
     int nType = mFieldTypeCombo->currentIndex();
 
+    memset( &sCertInfo, 0x00, sizeof(sCertInfo));
+
     if( cert_val_.length() < 1 )
     {
         manApplet->warningBox( tr( "The certificate value is empty"), this );

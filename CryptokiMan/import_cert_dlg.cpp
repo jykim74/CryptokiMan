@@ -122,6 +122,7 @@ void ImportCertDlg::accept()
     }
 
     BIN binCert = {0,0};
+    BIN binSubject = {0,0};
 
     if( mSubjectInCertCheck->isChecked() )
     {
@@ -130,6 +131,8 @@ void ImportCertDlg::accept()
 
         JS_BIN_fileReadBER( strCertPath.toLocal8Bit().toStdString().c_str(), &binCert );
 
+        ret = JS_PKI_getCertSubjetDN( &binCert, &binSubject );
+/*
         ret = JS_PKI_getCertInfo( &binCert, &sCertInfo, NULL );
         if( ret != 0 )
         {
@@ -140,10 +143,12 @@ void ImportCertDlg::accept()
 
         strSubject = sCertInfo.pSubjectName;
         JS_PKI_resetCertInfo( &sCertInfo );
+*/
     }
     else
     {
-        strSubject = mSubjectText->text();
+//        strSubject = mSubjectText->text();
+        JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
     }
 
     CK_ATTRIBUTE sTemplate[20];
@@ -195,12 +200,10 @@ void ImportCertDlg::accept()
         uCount++;
     }
 
-    BIN binSubject = {0,0};
-
-    if( !strSubject.isEmpty() )
+//    if( !strSubject.isEmpty() )
+    if( binSubject.nLen > 0 )
     {
-        JS_BIN_set( &binSubject, (unsigned char *)strSubject.toStdString().c_str(), strSubject.length() );
-
+//        JS_BIN_set( &binSubject, (unsigned char *)strSubject.toStdString().c_str(), strSubject.length() );
         sTemplate[uCount].type = CKA_SUBJECT;
         sTemplate[uCount].pValue = binSubject.pVal;
         sTemplate[uCount].ulValueLen = binSubject.nLen;
