@@ -74,6 +74,7 @@ void CreateDSAPubKeyDlg::initAttributes()
     mEncryptCombo->addItems(sFalseTrue);
     mWrapCombo->addItems(sFalseTrue);
     mVerifyCombo->addItems(sFalseTrue);
+    mVerifyRecoverCombo->addItems(sFalseTrue);
     mDeriveCombo->addItems(sFalseTrue);
     mModifiableCombo->addItems(sFalseTrue);
     mTokenCombo->addItems(sFalseTrue);
@@ -89,6 +90,7 @@ void CreateDSAPubKeyDlg::setAttributes()
     mEncryptCombo->setEnabled(mEncryptCheck->isChecked());
     mWrapCombo->setEnabled(mWrapCheck->isChecked());
     mVerifyCombo->setEnabled(mVerifyCheck->isChecked());
+    mVerifyRecoverCombo->setEnabled(mVerifyRecoverCheck->isChecked());
     mDeriveCombo->setEnabled(mDeriveCheck->isChecked());
     mModifiableCombo->setEnabled(mModifiableCheck->isChecked());
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
@@ -102,6 +104,7 @@ void CreateDSAPubKeyDlg::connectAttributes()
     connect( mEncryptCheck, SIGNAL(clicked()), this, SLOT(clickEncrypt()));
     connect( mWrapCheck, SIGNAL(clicked()), this, SLOT(clickWrap()));
     connect( mVerifyCheck, SIGNAL(clicked()), this, SLOT(clickVerify()));
+    connect( mVerifyRecoverCheck, SIGNAL(clicked()), this, SLOT(clickVerifyRecover()));
     connect( mDeriveCheck, SIGNAL(clicked()), this, SLOT(clickDerive()));
     connect( mModifiableCheck, SIGNAL(clicked()), this, SLOT(clickModifiable()));
     connect( mTokenCheck, SIGNAL(clicked()), this, SLOT(clickToken()));
@@ -265,6 +268,14 @@ void CreateDSAPubKeyDlg::accept()
         uCount++;
     }
 
+    if( mVerifyRecoverCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_VERIFY_RECOVER;
+        sTemplate[uCount].pValue = ( mVerifyRecoverCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
     if( mWrapCheck->isChecked() )
     {
         sTemplate[uCount].type = CKA_WRAP;
@@ -333,6 +344,11 @@ void CreateDSAPubKeyDlg::clickVerify()
     mVerifyCombo->setEnabled(mVerifyCheck->isChecked());
 }
 
+void CreateDSAPubKeyDlg::clickVerifyRecover()
+{
+    mVerifyRecoverCombo->setEnabled(mVerifyRecoverCheck->isChecked());
+}
+
 void CreateDSAPubKeyDlg::clickDerive()
 {
     mDeriveCombo->setEnabled(mDeriveCheck->isChecked());
@@ -385,8 +401,8 @@ void CreateDSAPubKeyDlg::changePublic( const QString& text )
 
 void CreateDSAPubKeyDlg::setDefaults()
 {
-    mLabelText->setText( "Publick Key Label" );
-    mIDText->setText( "Public Key ID" );
+    mLabelText->setText( "DSA Public Key Label" );
+    mIDText->setText( "01020304" );
 
     mEncryptCheck->setChecked(true);
     mEncryptCombo->setEnabled(true);

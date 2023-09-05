@@ -24,6 +24,7 @@ private slots:
     void clickPrivate();
     void clickDecrypt();
     void clickSign();
+    void clickSignRecover();
     void clickUnwrap();
     void clickModifiable();
     void clickSensitive();

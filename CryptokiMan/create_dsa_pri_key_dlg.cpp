@@ -68,6 +68,7 @@ void CreateDSAPriKeyDlg::initAttributes()
     mPrivateCombo->addItems(sFalseTrue);
     mDecryptCombo->addItems(sFalseTrue);
     mSignCombo->addItems(sFalseTrue);
+    mSignRecoverCombo->addItems(sFalseTrue);
     mUnwrapCombo->addItems(sFalseTrue);
     mSensitiveCombo->addItems(sFalseTrue);
     mDeriveCombo->addItems(sFalseTrue);
@@ -86,6 +87,7 @@ void CreateDSAPriKeyDlg::setAttributes()
     mDecryptCombo->setEnabled(mDecryptCheck->isChecked());
     mUnwrapCombo->setEnabled(mUnwrapCheck->isChecked());
     mSignCombo->setEnabled(mSignCheck->isChecked());
+    mSignRecoverCombo->setEnabled(mSignRecoverCheck->isChecked());
     mDeriveCombo->setEnabled(mDeriveCheck->isChecked());
     mSensitiveCombo->setEnabled(mSensitiveCheck->isChecked());
     mModifiableCombo->setEnabled(mModifiableCheck->isChecked());
@@ -107,6 +109,7 @@ void CreateDSAPriKeyDlg::connectAttributes()
     connect( mDecryptCheck, SIGNAL(clicked()), this, SLOT(clickDecrypt()));
     connect( mUnwrapCheck, SIGNAL(clicked()), this, SLOT(clickUnwrap()));
     connect( mSignCheck, SIGNAL(clicked()), this, SLOT(clickSign()));
+    connect( mSignRecoverCheck, SIGNAL(clicked()), this, SLOT(clickSignRecover()));
     connect( mDeriveCheck, SIGNAL(clicked()), this, SLOT(clickDerive()));
     connect( mModifiableCheck, SIGNAL(clicked()), this, SLOT(clickModifiable()));
     connect( mSensitiveCheck, SIGNAL(clicked()), this, SLOT(clickSensitive()));
@@ -306,6 +309,15 @@ void CreateDSAPriKeyDlg::accept()
         uCount++;
     }
 
+    if( mSignRecoverCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_SIGN_RECOVER;
+        sTemplate[uCount].pValue = ( mSignRecoverCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+
     if( mStartDateCheck->isChecked() )
     {
         getCKDate( mStartDateEdit->date(), &sSDate );
@@ -361,6 +373,11 @@ void CreateDSAPriKeyDlg::clickDecrypt()
 void CreateDSAPriKeyDlg::clickSign()
 {
     mSignCombo->setEnabled(mSignCheck->isChecked());
+}
+
+void CreateDSAPriKeyDlg::clickSignRecover()
+{
+    mSignRecoverCombo->setEnabled(mSignRecoverCheck->isChecked());
 }
 
 void CreateDSAPriKeyDlg::clickUnwrap()
@@ -429,9 +446,8 @@ void CreateDSAPriKeyDlg::changeKeyValue( const QString& text )
 
 void CreateDSAPriKeyDlg::setDefaults()
 {
-    mLabelText->setText( "Private Label" );
-    mSubjectText->setText( "CN=SubjectDN" );
-    mIDText->setText( "Private ID" );
+    mLabelText->setText( "DSA Private Label" );
+    mIDText->setText( "01020304" );
 
     mPrivateCheck->setChecked(true);
     mPrivateCombo->setEnabled(true);

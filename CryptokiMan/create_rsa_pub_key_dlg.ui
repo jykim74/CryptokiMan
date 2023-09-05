@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>625</width>
-    <height>252</height>
+    <height>278</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -453,12 +453,6 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="5">
-          <widget class="QComboBox" name="mWrapCombo"/>
-         </item>
-         <item row="1" column="1">
-          <widget class="QComboBox" name="mVerifyCombo"/>
-         </item>
          <item row="1" column="2">
           <widget class="QCheckBox" name="mDeriveCheck">
            <property name="text">
@@ -466,31 +460,8 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
-          <widget class="QComboBox" name="mPrivateCombo"/>
-         </item>
          <item row="1" column="5">
           <widget class="QComboBox" name="mModifiableCombo"/>
-         </item>
-         <item row="1" column="3">
-          <widget class="QComboBox" name="mDeriveCombo"/>
-         </item>
-         <item row="0" column="3">
-          <widget class="QComboBox" name="mEncryptCombo"/>
-         </item>
-         <item row="0" column="0">
-          <widget class="QCheckBox" name="mPrivateCheck">
-           <property name="text">
-            <string notr="true">Private</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QCheckBox" name="mVerifyCheck">
-           <property name="text">
-            <string notr="true">Verify</string>
-           </property>
-          </widget>
          </item>
          <item row="0" column="4">
           <widget class="QCheckBox" name="mWrapCheck">
@@ -506,6 +477,13 @@
            </property>
           </widget>
          </item>
+         <item row="0" column="0">
+          <widget class="QCheckBox" name="mPrivateCheck">
+           <property name="text">
+            <string notr="true">Private</string>
+           </property>
+          </widget>
+         </item>
          <item row="2" column="0">
           <widget class="QCheckBox" name="mTokenCheck">
            <property name="text">
@@ -513,10 +491,45 @@
            </property>
           </widget>
          </item>
+         <item row="0" column="5">
+          <widget class="QComboBox" name="mWrapCombo"/>
+         </item>
+         <item row="1" column="1">
+          <widget class="QComboBox" name="mVerifyCombo"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QCheckBox" name="mVerifyCheck">
+           <property name="text">
+            <string notr="true">Verify</string>
+           </property>
+          </widget>
+         </item>
          <item row="2" column="1">
           <widget class="QComboBox" name="mTokenCombo"/>
          </item>
-         <item row="2" column="2">
+         <item row="1" column="3">
+          <widget class="QComboBox" name="mDeriveCombo"/>
+         </item>
+         <item row="0" column="3">
+          <widget class="QComboBox" name="mEncryptCombo"/>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="mPrivateCombo"/>
+         </item>
+         <item row="3" column="0">
+          <widget class="QCheckBox" name="mEndDateCheck">
+           <property name="text">
+            <string>EndDate</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QDateEdit" name="mEndDateEdit"/>
+         </item>
+         <item row="2" column="5">
+          <widget class="QDateEdit" name="mStartDateEdit"/>
+         </item>
+         <item row="2" column="4">
           <widget class="QCheckBox" name="mStartDateCheck">
            <property name="text">
             <string>StartDate</string>
@@ -524,17 +537,14 @@
           </widget>
          </item>
          <item row="2" column="3">
-          <widget class="QDateEdit" name="mStartDateEdit"/>
+          <widget class="QComboBox" name="mVerifyRecoverCombo"/>
          </item>
-         <item row="2" column="4">
-          <widget class="QCheckBox" name="mEndDateCheck">
+         <item row="2" column="2">
+          <widget class="QCheckBox" name="mVerifyRecoverCheck">
            <property name="text">
-            <string>EndDate</string>
+            <string>VerifyRecover</string>
            </property>
           </widget>
-         </item>
-         <item row="2" column="5">
-          <widget class="QDateEdit" name="mEndDateEdit"/>
          </item>
         </layout>
        </item>
@@ -592,10 +602,6 @@
   <tabstop>mModifiableCombo</tabstop>
   <tabstop>mTokenCheck</tabstop>
   <tabstop>mTokenCombo</tabstop>
-  <tabstop>mStartDateCheck</tabstop>
-  <tabstop>mStartDateEdit</tabstop>
-  <tabstop>mEndDateCheck</tabstop>
-  <tabstop>mEndDateEdit</tabstop>
  </tabstops>
  <resources/>
  <connections>

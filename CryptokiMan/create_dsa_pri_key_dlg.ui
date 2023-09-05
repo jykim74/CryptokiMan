@@ -741,17 +741,10 @@
            </property>
           </widget>
          </item>
-         <item row="3" column="0">
-          <widget class="QCheckBox" name="mStartDateCheck">
-           <property name="text">
-            <string>StartDate</string>
-           </property>
-          </widget>
+         <item row="3" column="5">
+          <widget class="QDateEdit" name="mEndDateEdit"/>
          </item>
-         <item row="3" column="1">
-          <widget class="QDateEdit" name="mStartDateEdit"/>
-         </item>
-         <item row="3" column="2">
+         <item row="3" column="4">
           <widget class="QCheckBox" name="mEndDateCheck">
            <property name="text">
             <string>EndDate</string>
@@ -759,7 +752,24 @@
           </widget>
          </item>
          <item row="3" column="3">
-          <widget class="QDateEdit" name="mEndDateEdit"/>
+          <widget class="QDateEdit" name="mStartDateEdit"/>
+         </item>
+         <item row="3" column="2">
+          <widget class="QCheckBox" name="mStartDateCheck">
+           <property name="text">
+            <string>StartDate</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QCheckBox" name="mSignRecoverCheck">
+           <property name="text">
+            <string>SignRecover</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QComboBox" name="mSignRecoverCombo"/>
          </item>
         </layout>
        </item>
@@ -827,10 +837,6 @@
   <tabstop>mExtractableCombo</tabstop>
   <tabstop>mTokenCheck</tabstop>
   <tabstop>mTokenCombo</tabstop>
-  <tabstop>mStartDateCheck</tabstop>
-  <tabstop>mStartDateEdit</tabstop>
-  <tabstop>mEndDateCheck</tabstop>
-  <tabstop>mEndDateEdit</tabstop>
  </tabstops>
  <resources/>
  <connections>

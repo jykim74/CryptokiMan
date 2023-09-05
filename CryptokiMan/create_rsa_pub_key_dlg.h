@@ -25,6 +25,7 @@ private slots:
     void clickEncrypt();
     void clickWrap();
     void clickVerify();
+    void clickVerifyRecover();
     void clickDerive();
     void clickModifiable();
     void clickToken();
