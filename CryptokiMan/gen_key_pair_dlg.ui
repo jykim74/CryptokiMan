@@ -23,7 +23,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -831,8 +831,12 @@
          <property name="topMargin">
           <number>0</number>
          </property>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="mPriLabelText"/>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_10">
+           <property name="text">
+            <string>Subject</string>
+           </property>
+          </widget>
          </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label_9">
@@ -847,16 +851,6 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="mPriSubjectText"/>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_10">
-           <property name="text">
-            <string>Subject</string>
-           </property>
-          </widget>
-         </item>
          <item row="2" column="0">
           <widget class="QLabel" name="label_11">
            <property name="text">
@@ -866,6 +860,19 @@
          </item>
          <item row="2" column="1">
           <widget class="QLineEdit" name="mPriIDText"/>
+         </item>
+         <item row="2" column="2">
+          <widget class="QCheckBox" name="mPriUseSKICheck">
+           <property name="text">
+            <string>Use SKI</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1" colspan="2">
+          <widget class="QLineEdit" name="mPriLabelText"/>
+         </item>
+         <item row="1" column="1" colspan="2">
+          <widget class="QLineEdit" name="mPriSubjectText"/>
          </item>
         </layout>
        </item>
@@ -1035,15 +1042,22 @@
          <property name="topMargin">
           <number>0</number>
          </property>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="mPubExponentText">
+           <property name="maximumSize">
+            <size>
+             <width>80</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
+         </item>
          <item row="1" column="0">
           <widget class="QLabel" name="label_14">
            <property name="text">
             <string>ID</string>
            </property>
           </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="mPubLabelText"/>
          </item>
          <item row="1" column="1">
           <widget class="QLineEdit" name="mPubIDText"/>
@@ -1068,15 +1082,15 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="1">
-          <widget class="QLineEdit" name="mPubExponentText">
-           <property name="maximumSize">
-            <size>
-             <width>80</width>
-             <height>16777215</height>
-            </size>
+         <item row="1" column="2">
+          <widget class="QCheckBox" name="mPubUseSKICheck">
+           <property name="text">
+            <string>Use SKI</string>
            </property>
           </widget>
+         </item>
+         <item row="0" column="1" colspan="2">
+          <widget class="QLineEdit" name="mPubLabelText"/>
          </item>
         </layout>
        </item>

@@ -22,6 +22,8 @@ private slots:
     void slotChanged( int index );
     void mechChanged( int nIndex );
 
+    void clickPriUseSKI();
+
     void clickPriPrivate();
     void clickPriDecrypt();
     void clickPriSign();
@@ -35,6 +37,7 @@ private slots:
     void clickPriStartDate();
     void clickPriEndDate();
 
+    void clickPubUseSKI();
     void clickPubPrivate();
     void clickPubEncrypt();
     void clickPubWrap();

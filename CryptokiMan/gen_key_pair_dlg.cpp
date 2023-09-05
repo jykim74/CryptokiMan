@@ -162,6 +162,7 @@ void GenKeyPairDlg::setAttributes()
 
 void GenKeyPairDlg::connectAttributes()
 {
+    connect( mPriUseSKICheck, SIGNAL(clicked()), this, SLOT(clickPriUseSKI()));
     connect( mPriPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPriPrivate()));
     connect( mPriDecryptCheck, SIGNAL(clicked()), this, SLOT(clickPriDecrypt()));
     connect( mPriSignCheck, SIGNAL(clicked()), this, SLOT(clickPriSign()));
@@ -175,6 +176,7 @@ void GenKeyPairDlg::connectAttributes()
     connect( mPriStartDateCheck, SIGNAL(clicked()), this, SLOT(clickPriStartDate()));
     connect( mPriEndDateCheck, SIGNAL(clicked()), this, SLOT(clickPriEndDate()));
 
+    connect( mPubUseSKICheck, SIGNAL(clicked()), this, SLOT(clickPubUseSKI()));
     connect( mPubPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPubPrivate()));
     connect( mPubEncryptCheck, SIGNAL(clicked()), this, SLOT(clickPubEncrypt()));
     connect( mPubWrapCheck, SIGNAL(clicked()), this, SLOT(clickPubWrap()));
@@ -673,6 +675,12 @@ void GenKeyPairDlg::mechChanged(int nIndex)
     }
 }
 
+void GenKeyPairDlg::clickPriUseSKI()
+{
+    bool bVal = mPriUseSKICheck->isChecked();
+    mPriIDText->setEnabled( !bVal );
+}
+
 void GenKeyPairDlg::clickPriPrivate()
 {
     mPriPrivateCombo->setEnabled( mPriPrivateCheck->isChecked() );
@@ -726,6 +734,12 @@ void GenKeyPairDlg::clickPriStartDate()
 void GenKeyPairDlg::clickPriEndDate()
 {
     mPriEndDateEdit->setEnabled( mPriEndDateCheck->isChecked() );
+}
+
+void GenKeyPairDlg::clickPubUseSKI()
+{
+    bool bVal = mPubUseSKICheck->isChecked();
+    mPubIDText->setEnabled( !bVal );
 }
 
 void GenKeyPairDlg::clickPubPrivate()
@@ -852,6 +866,11 @@ void GenKeyPairDlg::setDefaults()
 
     mPriLabelText->setText( "Private Label" );
     mPriIDText->setText( "01020304" );
+
+    mPriUseSKICheck->setChecked(true);
+    clickPriUseSKI();
+    mPubUseSKICheck->setChecked(true);
+    clickPubUseSKI();
 
     mPubEncryptCheck->setChecked(true);
     mPubEncryptCombo->setEnabled(true);
