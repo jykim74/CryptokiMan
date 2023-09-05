@@ -247,6 +247,14 @@ void DeriveKeyDlg::accept()
         uCount++;
     }
 
+    if( mSignRecoverCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_SIGN_RECOVER;
+        sTemplate[uCount].pValue = ( mSignRecoverCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
     if( mTokenCheck->isChecked() )
     {
         sTemplate[uCount].type = CKA_TOKEN;
@@ -267,6 +275,14 @@ void DeriveKeyDlg::accept()
     {
         sTemplate[uCount].type = CKA_VERIFY;
         sTemplate[uCount].pValue = ( mVerifyCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mVerifyRecoverCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_VERIFY_RECOVER;
+        sTemplate[uCount].pValue = ( mVerifyRecoverCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
         uCount++;
     }
@@ -337,7 +353,9 @@ void DeriveKeyDlg::initAttributes()
     mPrivateCombo->addItems(sFalseTrue);
     mDecryptCombo->addItems(sFalseTrue);
     mSignCombo->addItems(sFalseTrue);
+    mSignRecoverCombo->addItems(sFalseTrue);
     mVerifyCombo->addItems(sFalseTrue);
+    mVerifyRecoverCombo->addItems(sFalseTrue);
     mUnwrapCombo->addItems(sFalseTrue);
     mSensitiveCombo->addItems(sFalseTrue);
     mWrapCombo->addItems(sFalseTrue);
@@ -354,7 +372,9 @@ void DeriveKeyDlg::setAttributes()
     mDecryptCombo->setEnabled(mDecryptCheck->isChecked());
     mUnwrapCombo->setEnabled(mUnwrapCheck->isChecked());
     mSignCombo->setEnabled(mSignCheck->isChecked());
+    mSignRecoverCombo->setEnabled(mSignRecoverCheck->isChecked());
     mVerifyCombo->setEnabled(mVerifyCheck->isChecked());
+    mVerifyRecoverCombo->setEnabled(mVerifyRecoverCheck->isChecked());
     mWrapCombo->setEnabled(mWrapCheck->isChecked());
     mSensitiveCombo->setEnabled(mSensitiveCheck->isChecked());
     mModifiableCombo->setEnabled(mModifiableCheck->isChecked());
@@ -373,12 +393,14 @@ void DeriveKeyDlg::connectAttributes()
     connect( mDecryptCheck, SIGNAL(clicked()), this, SLOT(clickDecrypt()));
     connect( mUnwrapCheck, SIGNAL(clicked()), this, SLOT(clickUnwrap()));
     connect( mSignCheck, SIGNAL(clicked()), this, SLOT(clickSign()));
+    connect( mSignRecoverCheck, SIGNAL(clicked()), this, SLOT(clickSignRecover()));
     connect( mWrapCheck, SIGNAL(clicked()), this, SLOT(clickWrap()));
     connect( mModifiableCheck, SIGNAL(clicked()), this, SLOT(clickModifiable()));
     connect( mSensitiveCheck, SIGNAL(clicked()), this, SLOT(clickSensitive()));
     connect( mEncryptCheck, SIGNAL(clicked()), this, SLOT(clickEncrypt()));
     connect( mTokenCheck, SIGNAL(clicked()), this, SLOT(clickToken()));
     connect( mVerifyCheck, SIGNAL(clicked()), this, SLOT(clickVerify()));
+    connect( mVerifyRecoverCheck, SIGNAL(clicked()), this, SLOT(clickVerifyRecover()));
     connect( mExtractableCheck, SIGNAL(clicked()), this, SLOT(clickExtractable()));
     connect( mDeriveCheck, SIGNAL(clicked()), this, SLOT(clickDerive()));
     connect( mStartDateCheck, SIGNAL(clicked()), this, SLOT(clickStartDate()));
@@ -425,9 +447,19 @@ void DeriveKeyDlg::clickSign()
     mSignCombo->setEnabled(mSignCheck->isChecked());
 }
 
+void DeriveKeyDlg::clickSignRecover()
+{
+    mSignRecoverCombo->setEnabled(mSignRecoverCheck->isChecked());
+}
+
 void DeriveKeyDlg::clickVerify()
 {
     mVerifyCombo->setEnabled(mVerifyCheck->isChecked());
+}
+
+void DeriveKeyDlg::clickVerifyRecover()
+{
+    mVerifyRecoverCombo->setEnabled(mVerifyRecoverCheck->isChecked());
 }
 
 void DeriveKeyDlg::clickToken()

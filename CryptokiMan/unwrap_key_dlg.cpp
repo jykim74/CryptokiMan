@@ -93,7 +93,9 @@ void UnwrapKeyDlg::initAttributes()
     mDecryptCombo->addItems(sFalseTrue);
     mModifiableCombo->addItems(sFalseTrue);
     mSignCombo->addItems(sFalseTrue);
+    mSignRecoverCombo->addItems(sFalseTrue);
     mVerifyCombo->addItems(sFalseTrue);
+    mVerifyRecoverCombo->addItems(sFalseTrue);
     mTokenCombo->addItems(sFalseTrue);
     mExtractableCombo->addItems(sFalseTrue);
     mDeriveCombo->addItems(sFalseTrue);
@@ -113,7 +115,9 @@ void UnwrapKeyDlg::setAttributes()
     mDecryptCombo->setEnabled(mDecryptCheck->isChecked());
     mModifiableCombo->setEnabled(mModifiableCheck->isChecked());
     mSignCombo->setEnabled(mSignCheck->isChecked());
+    mSignRecoverCombo->setEnabled(mSignRecoverCheck->isChecked());
     mVerifyCombo->setEnabled(mVerifyCheck->isChecked());
+    mVerifyRecoverCombo->setEnabled(mVerifyRecoverCheck->isChecked());
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
     mExtractableCombo->setEnabled(mExtractableCheck->isChecked());
     clickDerive();
@@ -131,7 +135,9 @@ void UnwrapKeyDlg::connectAttributes()
     connect( mDecryptCheck, SIGNAL(clicked()), this, SLOT(clickDecrypt()));
     connect( mModifiableCheck, SIGNAL(clicked()), this, SLOT(clickModifiable()));
     connect( mSignCheck, SIGNAL(clicked()), this, SLOT(clickSign()));
+    connect( mSignRecoverCheck, SIGNAL(clicked()), this, SLOT(clickSignRecover()));
     connect( mVerifyCheck, SIGNAL(clicked()), this, SLOT(clickVerify()));
+    connect( mVerifyRecoverCheck, SIGNAL(clicked()), this, SLOT(clickVerifyRecover()));
     connect( mTokenCheck, SIGNAL(clicked()), this, SLOT(clickToken()));
     connect( mExtractableCheck, SIGNAL(clicked()), this, SLOT(clickExtractable()));
     connect( mDeriveCheck, SIGNAL(clicked()), this, SLOT(clickDerive()));
@@ -205,7 +211,6 @@ void UnwrapKeyDlg::accept()
         QMessageBox::warning( this, "UnwrapKey", tr("You have to insert wraped key value") );
         return;
     }
-
 
     CK_MECHANISM sMech;
     CK_ATTRIBUTE sTemplate[20];
@@ -342,10 +347,26 @@ void UnwrapKeyDlg::accept()
         uCount++;
     }
 
+    if( mSignRecoverCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_SIGN_RECOVER;
+        sTemplate[uCount].pValue = ( mSignRecoverCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
     if( mVerifyCheck->isChecked() )
     {
         sTemplate[uCount].type = CKA_VERIFY;
         sTemplate[uCount].pValue = ( mVerifyCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mVerifyRecoverCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_VERIFY_RECOVER;
+        sTemplate[uCount].pValue = ( mVerifyRecoverCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
         uCount++;
     }
@@ -639,10 +660,22 @@ void UnwrapKeyDlg::clickSign()
 {
     mSignCombo->setEnabled(mSignCheck->isChecked());
 }
+
+void UnwrapKeyDlg::clickSignRecover()
+{
+    mSignRecoverCombo->setEnabled(mSignRecoverCheck->isChecked());
+}
+
 void UnwrapKeyDlg::clickVerify()
 {
     mVerifyCombo->setEnabled(mVerifyCheck->isChecked());
 }
+
+void UnwrapKeyDlg::clickVerifyRecover()
+{
+    mVerifyRecoverCombo->setEnabled(mVerifyRecoverCheck->isChecked());
+}
+
 void UnwrapKeyDlg::clickToken()
 {
     mTokenCombo->setEnabled(mTokenCheck->isChecked());

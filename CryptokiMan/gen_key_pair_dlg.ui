@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>626</width>
-    <height>536</height>
+    <height>670</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,7 +23,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -978,17 +978,10 @@
            </property>
           </widget>
          </item>
-         <item row="3" column="0">
-          <widget class="QCheckBox" name="mPriStartDateCheck">
-           <property name="text">
-            <string>StartDate</string>
-           </property>
-          </widget>
+         <item row="3" column="5">
+          <widget class="QDateEdit" name="mPriEndDateEdit"/>
          </item>
-         <item row="3" column="1">
-          <widget class="QDateEdit" name="mPriStartDateEdit"/>
-         </item>
-         <item row="3" column="2">
+         <item row="3" column="4">
           <widget class="QCheckBox" name="mPriEndDateCheck">
            <property name="text">
             <string>EndDate</string>
@@ -996,7 +989,24 @@
           </widget>
          </item>
          <item row="3" column="3">
-          <widget class="QDateEdit" name="mPriEndDateEdit"/>
+          <widget class="QDateEdit" name="mPriStartDateEdit"/>
+         </item>
+         <item row="3" column="2">
+          <widget class="QCheckBox" name="mPriStartDateCheck">
+           <property name="text">
+            <string>StartDate</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QCheckBox" name="mPriSignRecoverCheck">
+           <property name="text">
+            <string>SignRecover</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QComboBox" name="mPriSignRecoverCombo"/>
          </item>
         </layout>
        </item>
@@ -1089,32 +1099,15 @@
          <property name="topMargin">
           <number>0</number>
          </property>
-         <item row="1" column="2">
-          <widget class="QCheckBox" name="mPubDeriveCheck">
+         <item row="1" column="0">
+          <widget class="QCheckBox" name="mPubVerifyCheck">
            <property name="text">
-            <string notr="true">Derive</string>
+            <string notr="true">Verify</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="4">
-          <widget class="QCheckBox" name="mPubModifiableCheck">
-           <property name="text">
-            <string notr="true">Modifiable</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="5">
-          <widget class="QComboBox" name="mPubModifiableCombo"/>
-         </item>
-         <item row="0" column="5">
-          <widget class="QComboBox" name="mPubWrapCombo"/>
-         </item>
-         <item row="0" column="0">
-          <widget class="QCheckBox" name="mPubPrivateCheck">
-           <property name="text">
-            <string notr="true">Private</string>
-           </property>
-          </widget>
+         <item row="0" column="3">
+          <widget class="QComboBox" name="mPubEncryptCombo"/>
          </item>
          <item row="0" column="2">
           <widget class="QCheckBox" name="mPubEncryptCheck">
@@ -1123,23 +1116,50 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="4">
-          <widget class="QCheckBox" name="mPubWrapCheck">
+         <item row="2" column="0">
+          <widget class="QCheckBox" name="mPubTokenCheck">
            <property name="text">
-            <string notr="true">Wrap</string>
+            <string notr="true">Token</string>
            </property>
           </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QCheckBox" name="mPubDeriveCheck">
+           <property name="text">
+            <string notr="true">Derive</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QCheckBox" name="mPubPrivateCheck">
+           <property name="text">
+            <string notr="true">Private</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="5">
+          <widget class="QComboBox" name="mPubWrapCombo"/>
+         </item>
+         <item row="1" column="5">
+          <widget class="QComboBox" name="mPubModifiableCombo"/>
          </item>
          <item row="1" column="1">
           <widget class="QComboBox" name="mPubVerifyCombo"/>
          </item>
-         <item row="0" column="3">
-          <widget class="QComboBox" name="mPubEncryptCombo"/>
-         </item>
-         <item row="1" column="0">
-          <widget class="QCheckBox" name="mPubVerifyCheck">
+         <item row="1" column="4">
+          <widget class="QCheckBox" name="mPubModifiableCheck">
            <property name="text">
-            <string notr="true">Verify</string>
+            <string notr="true">Modifiable</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QComboBox" name="mPubTokenCombo"/>
+         </item>
+         <item row="0" column="4">
+          <widget class="QCheckBox" name="mPubWrapCheck">
+           <property name="text">
+            <string notr="true">Wrap</string>
            </property>
           </widget>
          </item>
@@ -1149,35 +1169,35 @@
          <item row="0" column="1">
           <widget class="QComboBox" name="mPubPrivateCombo"/>
          </item>
-         <item row="2" column="0">
-          <widget class="QCheckBox" name="mPubTokenCheck">
-           <property name="text">
-            <string notr="true">Token</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QComboBox" name="mPubTokenCombo"/>
-         </item>
-         <item row="2" column="2">
-          <widget class="QCheckBox" name="mPubStartDateCheck">
-           <property name="text">
-            <string>StartDate</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="3">
-          <widget class="QDateEdit" name="mPubStartDateEdit"/>
-         </item>
-         <item row="2" column="4">
+         <item row="3" column="0">
           <widget class="QCheckBox" name="mPubEndDateCheck">
            <property name="text">
             <string>EndDate</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="5">
+         <item row="3" column="1">
           <widget class="QDateEdit" name="mPubEndDateEdit"/>
+         </item>
+         <item row="2" column="5">
+          <widget class="QDateEdit" name="mPubStartDateEdit"/>
+         </item>
+         <item row="2" column="4">
+          <widget class="QCheckBox" name="mPubStartDateCheck">
+           <property name="text">
+            <string>StartDate</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="2">
+          <widget class="QCheckBox" name="mPubVerifyRecoverCheck">
+           <property name="text">
+            <string>VerifyRecover</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="3">
+          <widget class="QComboBox" name="mPubVerifyRecoverCombo"/>
          </item>
         </layout>
        </item>
@@ -1252,10 +1272,6 @@
   <tabstop>mPriExtractableCombo</tabstop>
   <tabstop>mPriTokenCheck</tabstop>
   <tabstop>mPriTokenCombo</tabstop>
-  <tabstop>mPriStartDateCheck</tabstop>
-  <tabstop>mPriStartDateEdit</tabstop>
-  <tabstop>mPriEndDateCheck</tabstop>
-  <tabstop>mPriEndDateEdit</tabstop>
   <tabstop>mPubLabelText</tabstop>
   <tabstop>mPubIDText</tabstop>
   <tabstop>mPubExponentText</tabstop>
@@ -1273,10 +1289,6 @@
   <tabstop>mPubModifiableCombo</tabstop>
   <tabstop>mPubTokenCheck</tabstop>
   <tabstop>mPubTokenCombo</tabstop>
-  <tabstop>mPubStartDateCheck</tabstop>
-  <tabstop>mPubStartDateEdit</tabstop>
-  <tabstop>mPubEndDateCheck</tabstop>
-  <tabstop>mPubEndDateEdit</tabstop>
  </tabstops>
  <resources/>
  <connections>

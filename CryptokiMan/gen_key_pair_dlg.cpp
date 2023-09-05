@@ -109,6 +109,7 @@ void GenKeyPairDlg::initAttributes()
     mPriPrivateCombo->addItems( sFalseTrue );
     mPriDecryptCombo->addItems( sFalseTrue );
     mPriSignCombo->addItems( sFalseTrue );
+    mPriSignRecoverCombo->addItems(sFalseTrue);
     mPriUnwrapCombo->addItems( sFalseTrue );
     mPriModifiableCombo->addItems( sFalseTrue );
     mPriSensitiveCombo->addItems( sFalseTrue );
@@ -120,6 +121,7 @@ void GenKeyPairDlg::initAttributes()
     mPubEncryptCombo->addItems( sFalseTrue );
     mPubWrapCombo->addItems( sFalseTrue );
     mPubVerifyCombo->addItems( sFalseTrue );
+    mPubVerifyRecoverCombo->addItems(sFalseTrue);
     mPubDeriveCombo->addItems( sFalseTrue );
     mPubModifiableCombo->addItems( sFalseTrue );
     mPubTokenCombo->addItems( sFalseTrue );
@@ -136,6 +138,7 @@ void GenKeyPairDlg::setAttributes()
     mPriPrivateCombo->setEnabled( mPriPrivateCheck->isChecked() );
     mPriDecryptCombo->setEnabled( mPriDecryptCheck->isChecked() );
     mPriSignCombo->setEnabled( mPriSignCheck->isChecked() );
+    mPriSignRecoverCombo->setEnabled( mPriSignRecoverCheck->isChecked() );
     mPriUnwrapCombo->setEnabled( mPriUnwrapCheck->isChecked() );
     mPriModifiableCombo->setEnabled( mPriModifiableCheck->isChecked() );
     mPriSensitiveCombo->setEnabled( mPriSensitiveCheck->isChecked() );
@@ -149,6 +152,7 @@ void GenKeyPairDlg::setAttributes()
     mPubEncryptCombo->setEnabled( mPubEncryptCheck->isChecked() );
     mPubWrapCombo->setEnabled( mPubWrapCheck->isChecked() );
     mPubVerifyCombo->setEnabled( mPubVerifyCheck->isChecked() );
+    mPubVerifyRecoverCombo->setEnabled( mPubVerifyRecoverCheck->isChecked() );
     mPubDeriveCombo->setEnabled( mPubDeriveCheck->isChecked() );
     mPubModifiableCombo->setEnabled( mPubModifiableCheck->isChecked() );
     mPubTokenCombo->setEnabled( mPubTokenCheck->isChecked() );
@@ -161,6 +165,7 @@ void GenKeyPairDlg::connectAttributes()
     connect( mPriPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPriPrivate()));
     connect( mPriDecryptCheck, SIGNAL(clicked()), this, SLOT(clickPriDecrypt()));
     connect( mPriSignCheck, SIGNAL(clicked()), this, SLOT(clickPriSign()));
+    connect( mPriSignRecoverCheck, SIGNAL(clicked()), this, SLOT(clickSignRecover()));
     connect( mPriUnwrapCheck, SIGNAL(clicked()), this, SLOT(clickPriUnwrap()));
     connect( mPriModifiableCheck, SIGNAL(clicked()), this, SLOT(clickPriModifiable()));
     connect( mPriSensitiveCheck, SIGNAL(clicked()), this, SLOT(clickPriSensitive()));
@@ -174,6 +179,7 @@ void GenKeyPairDlg::connectAttributes()
     connect( mPubEncryptCheck, SIGNAL(clicked()), this, SLOT(clickPubEncrypt()));
     connect( mPubWrapCheck, SIGNAL(clicked()), this, SLOT(clickPubWrap()));
     connect( mPubVerifyCheck, SIGNAL(clicked()), this, SLOT(clickPubVerify()));
+    connect( mPubVerifyRecoverCheck, SIGNAL(clicked()), this, SLOT(clickVerifyRecover()));
     connect( mPubDeriveCheck, SIGNAL(clicked()), this, SLOT(clickPubDerive()));
     connect( mPubModifiableCheck, SIGNAL(clicked()), this, SLOT(clickPubModifiable()));
     connect( mPubTokenCheck, SIGNAL(clicked()), this, SLOT(clickPubToken()));
@@ -414,6 +420,14 @@ void GenKeyPairDlg::accept()
         uPubCount++;
     }
 
+    if( mPubVerifyRecoverCheck->isChecked() )
+    {
+        sPubTemplate[uPubCount].type = CKA_VERIFY_RECOVER;
+        sPubTemplate[uPubCount].pValue = (mPubVerifyRecoverCombo->currentIndex() ? &bTrue : &bFalse );
+        sPubTemplate[uPubCount].ulValueLen = sizeof(CK_BBOOL);
+        uPubCount++;
+    }
+
     if( mPubModifiableCheck->isChecked() )
     {
         sPubTemplate[uPubCount].type = CKA_MODIFIABLE;
@@ -557,6 +571,14 @@ void GenKeyPairDlg::accept()
         uPriCount++;
     }
 
+    if( mPriSignRecoverCheck->isChecked() )
+    {
+        sPriTemplate[uPriCount].type = CKA_SIGN_RECOVER;
+        sPriTemplate[uPriCount].pValue = (mPriSignRecoverCombo->currentIndex() ? &bTrue : &bFalse );
+        sPriTemplate[uPriCount].ulValueLen = sizeof( CK_BBOOL );
+        uPriCount++;
+    }
+
     if( mPriStartDateCheck->isChecked() )
     {
         getCKDate( mPriStartDateEdit->date(), &sPriStart );
@@ -666,6 +688,11 @@ void GenKeyPairDlg::clickPriSign()
     mPriSignCombo->setEnabled(mPriSignCheck->isChecked());
 }
 
+void GenKeyPairDlg::clickPriSignRecover()
+{
+    mPriSignRecoverCombo->setEnabled(mPriSignRecoverCheck->isChecked());
+}
+
 void GenKeyPairDlg::clickPriUnwrap()
 {
     mPriUnwrapCombo->setEnabled(mPriUnwrapCheck->isChecked());
@@ -717,6 +744,12 @@ void GenKeyPairDlg::clickPubVerify()
 {
     mPubVerifyCombo->setEnabled(mPubVerifyCheck->isChecked());
 }
+
+void GenKeyPairDlg::clickPubVerifyRecover()
+{
+    mPubVerifyRecoverCombo->setEnabled(mPubVerifyRecoverCheck->isChecked());
+}
+
 void GenKeyPairDlg::clickPubDerive()
 {
     mPubDeriveCombo->setEnabled(mPubDeriveCheck->isChecked());
@@ -815,12 +848,10 @@ void GenKeyPairDlg::setDefaults()
 {
     mPubLabelText->setText( "Public Label" );
     mPubExponentText->setText( "010001" );
-    mPubIDText->setText( "Public ID" );
+    mPubIDText->setText( "01020304" );
 
     mPriLabelText->setText( "Private Label" );
-    mPriSubjectText->setText( "CN=SubjectDN" );
-    mPriIDText->setText( "Private ID" );
-
+    mPriIDText->setText( "01020304" );
 
     mPubEncryptCheck->setChecked(true);
     mPubEncryptCombo->setEnabled(true);

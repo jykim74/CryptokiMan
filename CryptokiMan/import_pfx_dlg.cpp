@@ -66,6 +66,7 @@ void ImportPFXDlg::initAttributes()
     mPriPrivateCombo->addItems( sFalseTrue );
     mPriDecryptCombo->addItems( sFalseTrue );
     mPriSignCombo->addItems( sFalseTrue );
+    mPriSignRecoverCombo->addItems( sFalseTrue );
     mPriUnwrapCombo->addItems( sFalseTrue );
     mPriModifiableCombo->addItems( sFalseTrue );
     mPriSensitiveCombo->addItems( sFalseTrue );
@@ -77,6 +78,7 @@ void ImportPFXDlg::initAttributes()
     mPubEncryptCombo->addItems( sFalseTrue );
     mPubWrapCombo->addItems( sFalseTrue );
     mPubVerifyCombo->addItems( sFalseTrue );
+    mPubVerifyRecoverCombo->addItems( sFalseTrue );
     mPubDeriveCombo->addItems( sFalseTrue );
     mPubModifiableCombo->addItems( sFalseTrue );
     mPubTokenCombo->addItems( sFalseTrue );
@@ -98,6 +100,7 @@ void ImportPFXDlg::setAttributes()
     mPriPrivateCombo->setEnabled( mPriPrivateCheck->isChecked() );
     mPriDecryptCombo->setEnabled( mPriDecryptCheck->isChecked() );
     mPriSignCombo->setEnabled( mPriSignCheck->isChecked() );
+    mPriSignRecoverCombo->setEnabled( mPriSignRecoverCheck->isChecked() );
     mPriUnwrapCombo->setEnabled( mPriUnwrapCheck->isChecked() );
     mPriModifiableCombo->setEnabled( mPriModifiableCheck->isChecked() );
     mPriSensitiveCombo->setEnabled( mPriSensitiveCheck->isChecked() );
@@ -111,6 +114,7 @@ void ImportPFXDlg::setAttributes()
     mPubEncryptCombo->setEnabled( mPubEncryptCheck->isChecked() );
     mPubWrapCombo->setEnabled( mPubWrapCheck->isChecked() );
     mPubVerifyCombo->setEnabled( mPubVerifyCheck->isChecked() );
+    mPubVerifyRecoverCombo->setEnabled( mPubVerifyRecoverCheck->isChecked() );
     mPubDeriveCombo->setEnabled( mPubDeriveCheck->isChecked() );
     mPubModifiableCombo->setEnabled( mPubModifiableCheck->isChecked() );
     mPubTokenCombo->setEnabled( mPubTokenCheck->isChecked() );
@@ -130,6 +134,7 @@ void ImportPFXDlg::connectAttributes()
     connect( mPriPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPriPrivate()));
     connect( mPriDecryptCheck, SIGNAL(clicked()), this, SLOT(clickPriDecrypt()));
     connect( mPriSignCheck, SIGNAL(clicked()), this, SLOT(clickPriSign()));
+    connect( mPriSignRecoverCheck, SIGNAL(clicked()), this, SLOT(clickSignRecover()));
     connect( mPriUnwrapCheck, SIGNAL(clicked()), this, SLOT(clickPriUnwrap()));
     connect( mPriModifiableCheck, SIGNAL(clicked()), this, SLOT(clickPriModifiable()));
     connect( mPriSensitiveCheck, SIGNAL(clicked()), this, SLOT(clickPriSensitive()));
@@ -143,6 +148,7 @@ void ImportPFXDlg::connectAttributes()
     connect( mPubEncryptCheck, SIGNAL(clicked()), this, SLOT(clickPubEncrypt()));
     connect( mPubWrapCheck, SIGNAL(clicked()), this, SLOT(clickPubWrap()));
     connect( mPubVerifyCheck, SIGNAL(clicked()), this, SLOT(clickPubVerify()));
+    connect( mPubVerifyRecoverCheck, SIGNAL(clicked()), this, SLOT(clickVerifyRecover()));
     connect( mPubDeriveCheck, SIGNAL(clicked()), this, SLOT(clickPubDerive()));
     connect( mPubModifiableCheck, SIGNAL(clicked()), this, SLOT(clickPubModifiable()));
     connect( mPubTokenCheck, SIGNAL(clicked()), this, SLOT(clickPubToken()));
@@ -316,6 +322,11 @@ void ImportPFXDlg::clickPriSign()
     mPriSignCombo->setEnabled(mPriSignCheck->isChecked());
 }
 
+void ImportPFXDlg::clickPriSignRecover()
+{
+    mPriSignRecoverCombo->setEnabled(mPriSignRecoverCheck->isChecked());
+}
+
 void ImportPFXDlg::clickPriUnwrap()
 {
     mPriUnwrapCombo->setEnabled(mPriUnwrapCheck->isChecked());
@@ -363,10 +374,17 @@ void ImportPFXDlg::clickPubWrap()
 {
     mPubWrapCombo->setEnabled(mPubWrapCheck->isChecked());
 }
+
 void ImportPFXDlg::clickPubVerify()
 {
     mPubVerifyCombo->setEnabled(mPubVerifyCheck->isChecked());
 }
+
+void ImportPFXDlg::clickPubVerifyRecover()
+{
+    mPubVerifyRecoverCombo->setEnabled(mPubVerifyRecoverCheck->isChecked());
+}
+
 void ImportPFXDlg::clickPubDerive()
 {
     mPubDeriveCombo->setEnabled(mPubDeriveCheck->isChecked());
@@ -703,6 +721,14 @@ int ImportPFXDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
         uCount++;
     }
 
+    if( mPubVerifyRecoverCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_VERIFY_RECOVER;
+        sTemplate[uCount].pValue = (mPubVerifyRecoverCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
     if( mPubModifiableCheck->isChecked() )
     {
         sTemplate[uCount].type = CKA_MODIFIABLE;
@@ -977,6 +1003,14 @@ int ImportPFXDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
         uCount++;
     }
 
+    if( mPriSignRecoverCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_SIGN_RECOVER;
+        sTemplate[uCount].pValue = (mPriSignRecoverCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
+        uCount++;
+    }
+
     if( mPriStartDateCheck->isChecked() )
     {
         getCKDate( mPriStartDateEdit->date(), &sSDate );
@@ -1143,6 +1177,14 @@ int ImportPFXDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
     {
         sTemplate[uCount].type = CKA_VERIFY;
         sTemplate[uCount].pValue = (mPubVerifyCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPubVerifyRecoverCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_VERIFY_RECOVER;
+        sTemplate[uCount].pValue = (mPubVerifyRecoverCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
         uCount++;
     }
@@ -1359,6 +1401,14 @@ int ImportPFXDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
         uCount++;
     }
 
+    if( mPriSignRecoverCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_SIGN_RECOVER;
+        sTemplate[uCount].pValue = (mPriSignRecoverCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
+        uCount++;
+    }
+
     if( mPriStartDateCheck->isChecked() )
     {
         getCKDate( mPriStartDateEdit->date(), &sSDate );
@@ -1518,6 +1568,14 @@ int ImportPFXDlg::createDSAPublicKey( JDSAKeyVal *pDSAKeyVal )
     {
         sTemplate[uCount].type = CKA_VERIFY;
         sTemplate[uCount].pValue = (mPubVerifyCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPubVerifyRecoverCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_VERIFY_RECOVER;
+        sTemplate[uCount].pValue = (mPubVerifyRecoverCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
         uCount++;
     }
@@ -1746,6 +1804,14 @@ int ImportPFXDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
     {
         sTemplate[uCount].type = CKA_SIGN;
         sTemplate[uCount].pValue = (mPriSignCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
+        uCount++;
+    }
+
+    if( mPriSignRecoverCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_SIGN_RECOVER;
+        sTemplate[uCount].pValue = (mPriSignRecoverCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
         uCount++;
     }

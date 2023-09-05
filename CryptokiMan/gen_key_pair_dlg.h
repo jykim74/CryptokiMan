@@ -25,6 +25,7 @@ private slots:
     void clickPriPrivate();
     void clickPriDecrypt();
     void clickPriSign();
+    void clickPriSignRecover();
     void clickPriUnwrap();
     void clickPriModifiable();
     void clickPriSensitive();
@@ -38,6 +39,7 @@ private slots:
     void clickPubEncrypt();
     void clickPubWrap();
     void clickPubVerify();
+    void clickPubVerifyRecover();
     void clickPubDerive();
     void clickPubModifiable();
     void clickPubToken();

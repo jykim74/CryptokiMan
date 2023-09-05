@@ -60,6 +60,7 @@ void ImportPriKeyDlg::initAttributes()
     mPriPrivateCombo->addItems( sFalseTrue );
     mPriDecryptCombo->addItems( sFalseTrue );
     mPriSignCombo->addItems( sFalseTrue );
+    mPriSignRecoverCombo->addItems(sFalseTrue);
     mPriUnwrapCombo->addItems( sFalseTrue );
     mPriModifiableCombo->addItems( sFalseTrue );
     mPriSensitiveCombo->addItems( sFalseTrue );
@@ -71,6 +72,7 @@ void ImportPriKeyDlg::initAttributes()
     mPubEncryptCombo->addItems( sFalseTrue );
     mPubWrapCombo->addItems( sFalseTrue );
     mPubVerifyCombo->addItems( sFalseTrue );
+    mPubVerifyRecoverCombo->addItems(sFalseTrue);
     mPubDeriveCombo->addItems( sFalseTrue );
     mPubModifiableCombo->addItems( sFalseTrue );
     mPubTokenCombo->addItems( sFalseTrue );
@@ -87,6 +89,7 @@ void ImportPriKeyDlg::setAttributes()
     mPriPrivateCombo->setEnabled( mPriPrivateCheck->isChecked() );
     mPriDecryptCombo->setEnabled( mPriDecryptCheck->isChecked() );
     mPriSignCombo->setEnabled( mPriSignCheck->isChecked() );
+    mPriSignRecoverCombo->setEnabled( mPriSignRecoverCheck->isChecked());
     mPriUnwrapCombo->setEnabled( mPriUnwrapCheck->isChecked() );
     mPriModifiableCombo->setEnabled( mPriModifiableCheck->isChecked() );
     mPriSensitiveCombo->setEnabled( mPriSensitiveCheck->isChecked() );
@@ -100,6 +103,7 @@ void ImportPriKeyDlg::setAttributes()
     mPubEncryptCombo->setEnabled( mPubEncryptCheck->isChecked() );
     mPubWrapCombo->setEnabled( mPubWrapCheck->isChecked() );
     mPubVerifyCombo->setEnabled( mPubVerifyCheck->isChecked() );
+    mPubVerifyRecoverCombo->setEnabled( mPubVerifyRecoverCheck->isChecked() );
     mPubDeriveCombo->setEnabled( mPubDeriveCheck->isChecked() );
     mPubModifiableCombo->setEnabled( mPubModifiableCheck->isChecked() );
     mPubTokenCombo->setEnabled( mPubTokenCheck->isChecked() );
@@ -318,6 +322,11 @@ void ImportPriKeyDlg::clickPriSign()
     mPriSignCombo->setEnabled(mPriSignCheck->isChecked());
 }
 
+void ImportPriKeyDlg::clickPriSignRecover()
+{
+    mPriSignRecoverCombo->setEnabled(mPriSignRecoverCheck->isChecked());
+}
+
 void ImportPriKeyDlg::clickPriUnwrap()
 {
     mPriUnwrapCombo->setEnabled(mPriUnwrapCheck->isChecked());
@@ -368,6 +377,12 @@ void ImportPriKeyDlg::clickPubVerify()
 {
     mPubVerifyCombo->setEnabled(mPubVerifyCheck->isChecked());
 }
+
+void ImportPriKeyDlg::clickPubVerifyRecover()
+{
+    mPubVerifyRecoverCombo->setEnabled(mPubVerifyRecoverCheck->isChecked());
+}
+
 void ImportPriKeyDlg::clickPubDerive()
 {
     mPubDeriveCombo->setEnabled(mPubDeriveCheck->isChecked());
@@ -513,6 +528,14 @@ int ImportPriKeyDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
     {
         sTemplate[uCount].type = CKA_VERIFY;
         sTemplate[uCount].pValue = (mPubVerifyCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPubVerifyRecoverCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_VERIFY_RECOVER;
+        sTemplate[uCount].pValue = (mPubVerifyRecoverCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
         uCount++;
     }
@@ -785,6 +808,14 @@ int ImportPriKeyDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
         uCount++;
     }
 
+    if( mPriSignRecoverCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_SIGN_RECOVER;
+        sTemplate[uCount].pValue = (mPriSignRecoverCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
+        uCount++;
+    }
+
     if( mPriStartDateCheck->isChecked() )
     {
         getCKDate( mPriStartDateEdit->date(), &sSDate );
@@ -952,6 +983,14 @@ int ImportPriKeyDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
     {
         sTemplate[uCount].type = CKA_VERIFY;
         sTemplate[uCount].pValue = (mPubVerifyCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPubVerifyRecoverCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_VERIFY_RECOVER;
+        sTemplate[uCount].pValue = (mPubVerifyRecoverCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
         uCount++;
     }
@@ -1129,7 +1168,7 @@ int ImportPriKeyDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
 
     if( mPriSensitiveCheck->isChecked() )
     {
-        sTemplate[uCount].type = CKA_MODIFIABLE;
+        sTemplate[uCount].type = CKA_SENSITIVE;
         sTemplate[uCount].pValue = (mPriSensitiveCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
         uCount++;
@@ -1137,7 +1176,7 @@ int ImportPriKeyDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
 
     if( mPriDeriveCheck->isChecked() )
     {
-        sTemplate[uCount].type = CKA_MODIFIABLE;
+        sTemplate[uCount].type = CKA_DERIVE;
         sTemplate[uCount].pValue = (mPriDeriveCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
         uCount++;
@@ -1145,7 +1184,7 @@ int ImportPriKeyDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
 
     if( mPriExtractableCheck->isChecked() )
     {
-        sTemplate[uCount].type = CKA_MODIFIABLE;
+        sTemplate[uCount].type = CKA_EXTRACTABLE;
         sTemplate[uCount].pValue = (mPriExtractableCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
         uCount++;
@@ -1153,8 +1192,16 @@ int ImportPriKeyDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
 
     if( mPriSignCheck->isChecked() )
     {
-        sTemplate[uCount].type = CKA_MODIFIABLE;
+        sTemplate[uCount].type = CKA_SIGN;
         sTemplate[uCount].pValue = (mPriSignCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
+        uCount++;
+    }
+
+    if( mPriSignRecoverCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_SIGN_RECOVER;
+        sTemplate[uCount].pValue = (mPriSignRecoverCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
         uCount++;
     }
@@ -1319,6 +1366,14 @@ int ImportPriKeyDlg::createDSAPublicKey( JDSAKeyVal *pDSAKeyVal )
     {
         sTemplate[uCount].type = CKA_VERIFY;
         sTemplate[uCount].pValue = (mPubVerifyCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPubVerifyRecoverCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_VERIFY_RECOVER;
+        sTemplate[uCount].pValue = (mPubVerifyRecoverCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
         uCount++;
     }
@@ -1539,6 +1594,14 @@ int ImportPriKeyDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
     {
         sTemplate[uCount].type = CKA_SIGN;
         sTemplate[uCount].pValue = (mPriSignCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
+        uCount++;
+    }
+
+    if( mPriSignRecoverCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_SIGN_RECOVER;
+        sTemplate[uCount].pValue = (mPriSignRecoverCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
         uCount++;
     }
