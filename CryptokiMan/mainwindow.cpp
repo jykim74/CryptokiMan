@@ -1795,9 +1795,15 @@ void MainWindow::showCertificateInfoDetail( QModelIndex index )
 {
     int row = index.row();
     long uObj = -1;
+    BIN binDN = {0,0};
+    char *pDN = NULL;
 
     QTableWidgetItem *item1 = right_table_->item( row, 1 );
     uObj = item1->text().toLong();
+
+    QString strSubject = (stringAttribute( ATTR_VAL_HEX, CKA_SUBJECT, uObj ) );
+    JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binDN );
+    JS_PKI_getTextDN( &binDN, &pDN );
 
     info_text_->clear();
 
@@ -1807,7 +1813,7 @@ void MainWindow::showCertificateInfoDetail( QModelIndex index )
 
     info( QString( "CKA_LABEL      : %1\n" ).arg(stringAttribute( ATTR_VAL_STRING, CKA_LABEL, uObj )) );
     info( QString( "CKA_ID         : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_ID, uObj ) ));
-    info( QString( "CKA_SUBJECT    : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_SUBJECT, uObj ) ));
+    info( QString( "CKA_SUBJECT    : %1 - %2\n" ).arg( strSubject ).arg( pDN ? pDN : "" ) );
     info( QString( "CKA_VALUE      : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_VALUE, uObj ) ));
     info( QString( "CKA_TOKEN      : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_TOKEN, uObj ) ));
     info( QString( "CKA_MODIFIABLE : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_MODIFIABLE, uObj ) ));
@@ -1815,6 +1821,9 @@ void MainWindow::showCertificateInfoDetail( QModelIndex index )
     info( QString( "CKA_PRIVATE    : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_PRIVATE, uObj ) ));
     info( QString( "CKA_START_DATE : %1\n" ).arg(stringAttribute( ATTR_VAL_DATE, CKA_START_DATE, uObj ) ));
     info( QString( "CKA_END_DATE   : %1\n" ).arg(stringAttribute( ATTR_VAL_DATE, CKA_END_DATE, uObj ) ));
+
+    JS_BIN_reset( &binDN );
+    if( pDN ) JS_free( pDN );
 }
 
 void MainWindow::showPublicKeyInfoDetail( QModelIndex index )
