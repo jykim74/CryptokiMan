@@ -132,22 +132,15 @@ void ImportCertDlg::accept()
         JS_BIN_fileReadBER( strCertPath.toLocal8Bit().toStdString().c_str(), &binCert );
 
         ret = JS_PKI_getCertSubjetDN( &binCert, &binSubject );
-/*
-        ret = JS_PKI_getCertInfo( &binCert, &sCertInfo, NULL );
         if( ret != 0 )
         {
             manApplet->elog( QString( "fail to decode certificate: %1" ).arg(ret) );
             JS_BIN_reset( &binCert );
             return;
         }
-
-        strSubject = sCertInfo.pSubjectName;
-        JS_PKI_resetCertInfo( &sCertInfo );
-*/
     }
     else
     {
-//        strSubject = mSubjectText->text();
         JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
     }
 

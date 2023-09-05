@@ -201,14 +201,14 @@ void ImportPFXDlg::accept()
     memset( &dsaKeyVal, 0x00, sizeof(JDSAKeyVal));
     memset( &sCertInfo, 0x00, sizeof(sCertInfo));
 
-    key_type = JS_PKI_getPriKeyType( &binPri );
-
     rv = JS_PKI_decodePFX( &binPFX, strPasswd.toStdString().c_str(), &binPri, &binCert );
     if( rv != 0 )
     {
         manApplet->warningBox( tr( "fail to decode PFX"), this );
         return;
     }
+
+    key_type = JS_PKI_getPriKeyType( &binPri );
 
     rv = JS_PKI_getCertInfo( &binCert, &sCertInfo, NULL );
     if( rv == 0 )
@@ -218,6 +218,11 @@ void ImportPFXDlg::accept()
     }
 
     rv = createCert( &binCert );
+    if( rv != CKR_OK )
+    {
+        manApplet->elog( "fail to create certificate" );
+        goto end;
+    }
 
     if( key_type == JS_PKI_KEY_TYPE_RSA )
     {
@@ -278,7 +283,7 @@ end :
     }
     else
     {
-        manApplet->warningBox( tr("fail to get key information"), this );
+        manApplet->warningBox( tr("fail to import pfx"), this );
         QDialog::reject();
     }
 }
@@ -454,6 +459,7 @@ int ImportPFXDlg::createCert( BIN *pCert )
     CK_OBJECT_CLASS objClass = CKO_CERTIFICATE;
     CK_BBOOL bTrue = CK_TRUE;
     CK_BBOOL bFalse = CK_FALSE;
+    CK_CERTIFICATE_TYPE certType = CKC_X_509;
 
     CK_DATE sSDate;
     CK_DATE sEDate;
@@ -466,6 +472,11 @@ int ImportPFXDlg::createCert( BIN *pCert )
     sTemplate[uCount].ulValueLen = sizeof(objClass);
     uCount++;
 
+    sTemplate[uCount].type = CKA_CERTIFICATE_TYPE;
+    sTemplate[uCount].pValue = &certType;
+    sTemplate[uCount].ulValueLen = sizeof(certType);
+    uCount++;
+
     sTemplate[uCount].type = CKA_VALUE;
     sTemplate[uCount].pValue = pCert->pVal;
     sTemplate[uCount].ulValueLen = pCert->nLen;
@@ -476,7 +487,7 @@ int ImportPFXDlg::createCert( BIN *pCert )
 
     if( !strLabel.isEmpty() )
     {
-        JS_BIN_decodeHex( strLabel.toStdString().c_str(), &binLabel );
+        JS_BIN_set( &binLabel, (unsigned char *)strLabel.toStdString().c_str(), strLabel.length() );
         sTemplate[uCount].type = CKA_LABEL;
         sTemplate[uCount].pValue = binLabel.pVal;
         sTemplate[uCount].ulValueLen = binLabel.nLen;
@@ -575,7 +586,7 @@ int ImportPFXDlg::createCert( BIN *pCert )
         return -1;
     }
 
-    return 0;
+    return rv;
 }
 
 int ImportPFXDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
@@ -823,6 +834,16 @@ int ImportPFXDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
         uCount++;
     }
 
+    BIN binModules = {0,0};
+    if( pRsaKeyVal->pN )
+    {
+        JS_BIN_decodeHex( pRsaKeyVal->pN, &binModules );
+        sTemplate[uCount].type = CKA_MODULUS;
+        sTemplate[uCount].pValue = binModules.pVal;
+        sTemplate[uCount].ulValueLen = binModules.nLen;
+        uCount++;
+    }
+
     BIN binPrivateExponent = {0,0};
     if( pRsaKeyVal->pD )
     {
@@ -926,7 +947,7 @@ int ImportPFXDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
 
     if( mPriSensitiveCheck->isChecked() )
     {
-        sTemplate[uCount].type = CKA_MODIFIABLE;
+        sTemplate[uCount].type = CKA_SENSITIVE;
         sTemplate[uCount].pValue = (mPriSensitiveCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
         uCount++;
@@ -934,7 +955,7 @@ int ImportPFXDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
 
     if( mPriDeriveCheck->isChecked() )
     {
-        sTemplate[uCount].type = CKA_MODIFIABLE;
+        sTemplate[uCount].type = CKA_DERIVE;
         sTemplate[uCount].pValue = (mPriDeriveCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
         uCount++;
@@ -942,7 +963,7 @@ int ImportPFXDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
 
     if( mPriExtractableCheck->isChecked() )
     {
-        sTemplate[uCount].type = CKA_MODIFIABLE;
+        sTemplate[uCount].type = CKA_EXTRACTABLE;
         sTemplate[uCount].pValue = (mPriExtractableCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
         uCount++;
@@ -950,7 +971,7 @@ int ImportPFXDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
 
     if( mPriSignCheck->isChecked() )
     {
-        sTemplate[uCount].type = CKA_MODIFIABLE;
+        sTemplate[uCount].type = CKA_SIGN;
         sTemplate[uCount].pValue = (mPriSignCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
         uCount++;
@@ -980,6 +1001,7 @@ int ImportPFXDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
     JS_BIN_reset( &binID );
     JS_BIN_reset( &binSubject );
     JS_BIN_reset( &binPublicExponent );
+    JS_BIN_reset( &binModules );
     JS_BIN_reset( &binPrivateExponent );
     JS_BIN_reset( &binPrime1 );
     JS_BIN_reset( &binPrime2 );
@@ -1307,7 +1329,7 @@ int ImportPFXDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
 
     if( mPriSensitiveCheck->isChecked() )
     {
-        sTemplate[uCount].type = CKA_MODIFIABLE;
+        sTemplate[uCount].type = CKA_SENSITIVE;
         sTemplate[uCount].pValue = (mPriSensitiveCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
         uCount++;
@@ -1315,7 +1337,7 @@ int ImportPFXDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
 
     if( mPriDeriveCheck->isChecked() )
     {
-        sTemplate[uCount].type = CKA_MODIFIABLE;
+        sTemplate[uCount].type = CKA_DERIVE;
         sTemplate[uCount].pValue = (mPriDeriveCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
         uCount++;
@@ -1323,7 +1345,7 @@ int ImportPFXDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
 
     if( mPriExtractableCheck->isChecked() )
     {
-        sTemplate[uCount].type = CKA_MODIFIABLE;
+        sTemplate[uCount].type = CKA_EXTRACTABLE;
         sTemplate[uCount].pValue = (mPriExtractableCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
         uCount++;
@@ -1331,7 +1353,7 @@ int ImportPFXDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
 
     if( mPriSignCheck->isChecked() )
     {
-        sTemplate[uCount].type = CKA_MODIFIABLE;
+        sTemplate[uCount].type = CKA_SIGN;
         sTemplate[uCount].pValue = (mPriSignCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
         uCount++;
@@ -1537,7 +1559,7 @@ int ImportPFXDlg::createDSAPublicKey( JDSAKeyVal *pDSAKeyVal )
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr("fail to create EC public key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this);
+        manApplet->warningBox( tr("fail to create DSA public key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this);
         return rv;
     }
 
@@ -1561,7 +1583,7 @@ int ImportPFXDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
     CK_BBOOL bFalse = CK_FALSE;
 
     CK_OBJECT_CLASS objClass = CKO_PRIVATE_KEY;
-    CK_KEY_TYPE keyType = CKK_EC;
+    CK_KEY_TYPE keyType = CKK_DSA;
 
     CK_DATE sSDate;
     CK_DATE sEDate;
@@ -1698,7 +1720,7 @@ int ImportPFXDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
 
     if( mPriSensitiveCheck->isChecked() )
     {
-        sTemplate[uCount].type = CKA_MODIFIABLE;
+        sTemplate[uCount].type = CKA_SENSITIVE;
         sTemplate[uCount].pValue = (mPriSensitiveCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
         uCount++;
@@ -1706,7 +1728,7 @@ int ImportPFXDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
 
     if( mPriDeriveCheck->isChecked() )
     {
-        sTemplate[uCount].type = CKA_MODIFIABLE;
+        sTemplate[uCount].type = CKA_DERIVE;
         sTemplate[uCount].pValue = (mPriDeriveCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
         uCount++;
@@ -1714,7 +1736,7 @@ int ImportPFXDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
 
     if( mPriExtractableCheck->isChecked() )
     {
-        sTemplate[uCount].type = CKA_MODIFIABLE;
+        sTemplate[uCount].type = CKA_EXTRACTABLE;
         sTemplate[uCount].pValue = (mPriExtractableCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
         uCount++;
@@ -1722,7 +1744,7 @@ int ImportPFXDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
 
     if( mPriSignCheck->isChecked() )
     {
-        sTemplate[uCount].type = CKA_MODIFIABLE;
+        sTemplate[uCount].type = CKA_SIGN;
         sTemplate[uCount].pValue = (mPriSignCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
         uCount++;
@@ -1758,7 +1780,7 @@ int ImportPFXDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr("fail to create EC private key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this);
+        manApplet->warningBox( tr("fail to create DSA private key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this);
         return rv;
     }
 

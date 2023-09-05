@@ -2448,7 +2448,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <source>fail to get key information</source>
-        <translation>키 정보 가져오기 실패</translation>
+        <translation type="vanished">키 정보 가져오기 실패</translation>
     </message>
     <message>
         <source>Import PFX</source>
@@ -2493,6 +2493,18 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>subject in cert</source>
         <translation>인증서 주체</translation>
+    </message>
+    <message>
+        <source>fail to import pfx</source>
+        <translation>PKCS11 PFX 가져오기 실패</translation>
+    </message>
+    <message>
+        <source>fail to create DSA public key(%1)</source>
+        <translation>DSA 공개키 생성 실패(%1)</translation>
+    </message>
+    <message>
+        <source>fail to create DSA private key(%1)</source>
+        <translation>DSA 개인키 생성 실패(%1)</translation>
     </message>
 </context>
 <context>
@@ -2668,6 +2680,14 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>fail to decrypt private key:%1</source>
         <translation>개인키 복호화에 실패하였습니다: %1</translation>
+    </message>
+    <message>
+        <source>fail to create DSA public key(%1)</source>
+        <translation>DSA 공개키 생성 실패(%1)</translation>
+    </message>
+    <message>
+        <source>fail to create DSA private key(%1)</source>
+        <translation>DSA 개인키 생성 실패(%1)</translation>
     </message>
 </context>
 <context>

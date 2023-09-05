@@ -1233,7 +1233,8 @@ int ImportPriKeyDlg::createDSAPublicKey( JDSAKeyVal *pDSAKeyVal )
 
     if( !strLabel.isEmpty() )
     {
-        JS_BIN_decodeHex( strLabel.toStdString().c_str(), &binLabel );
+        JS_BIN_set( &binLabel, (unsigned char *)strLabel.toStdString().c_str(), strLabel.length() );
+
         sTemplate[uCount].type = CKA_LABEL;
         sTemplate[uCount].pValue = binLabel.pVal;
         sTemplate[uCount].ulValueLen = binLabel.nLen;
@@ -1359,7 +1360,7 @@ int ImportPriKeyDlg::createDSAPublicKey( JDSAKeyVal *pDSAKeyVal )
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr("fail to create EC public key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this);
+        manApplet->warningBox( tr("fail to create DSA public key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this);
         return rv;
     }
 
@@ -1383,7 +1384,7 @@ int ImportPriKeyDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
     CK_BBOOL bFalse = CK_FALSE;
 
     CK_OBJECT_CLASS objClass = CKO_PRIVATE_KEY;
-    CK_KEY_TYPE keyType = CKK_EC;
+    CK_KEY_TYPE keyType = CKK_DSA;
 
     CK_DATE sSDate;
     CK_DATE sEDate;
@@ -1406,7 +1407,8 @@ int ImportPriKeyDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
 
     if( !strLabel.isEmpty() )
     {
-        JS_BIN_decodeHex( strLabel.toStdString().c_str(), &binLabel );
+        JS_BIN_set( &binLabel, (unsigned char *)strLabel.toStdString().c_str(), strLabel.length() );
+
         sTemplate[uCount].type = CKA_LABEL;
         sTemplate[uCount].pValue = binLabel.pVal;
         sTemplate[uCount].ulValueLen = binLabel.nLen;
@@ -1511,7 +1513,7 @@ int ImportPriKeyDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
 
     if( mPriSensitiveCheck->isChecked() )
     {
-        sTemplate[uCount].type = CKA_MODIFIABLE;
+        sTemplate[uCount].type = CKA_SENSITIVE;
         sTemplate[uCount].pValue = (mPriSensitiveCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
         uCount++;
@@ -1519,7 +1521,7 @@ int ImportPriKeyDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
 
     if( mPriDeriveCheck->isChecked() )
     {
-        sTemplate[uCount].type = CKA_MODIFIABLE;
+        sTemplate[uCount].type = CKA_DERIVE;
         sTemplate[uCount].pValue = (mPriDeriveCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
         uCount++;
@@ -1527,7 +1529,7 @@ int ImportPriKeyDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
 
     if( mPriExtractableCheck->isChecked() )
     {
-        sTemplate[uCount].type = CKA_MODIFIABLE;
+        sTemplate[uCount].type = CKA_EXTRACTABLE;
         sTemplate[uCount].pValue = (mPriExtractableCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
         uCount++;
@@ -1535,7 +1537,7 @@ int ImportPriKeyDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
 
     if( mPriSignCheck->isChecked() )
     {
-        sTemplate[uCount].type = CKA_MODIFIABLE;
+        sTemplate[uCount].type = CKA_SIGN;
         sTemplate[uCount].pValue = (mPriSignCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
         uCount++;
@@ -1571,7 +1573,7 @@ int ImportPriKeyDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr("fail to create EC private key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this);
+        manApplet->warningBox( tr("fail to create DSA private key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this);
         return rv;
     }
 
