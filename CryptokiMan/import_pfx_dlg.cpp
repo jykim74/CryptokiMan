@@ -13,6 +13,9 @@ static QStringList sFalseTrue = { "false", "true" };
 ImportPFXDlg::ImportPFXDlg(QWidget *parent) :
     QDialog(parent)
 {
+    der_dn_.nLen = 0;
+    der_dn_.pVal = NULL;
+
     setupUi(this);
 
     initAttributes();
@@ -24,12 +27,11 @@ ImportPFXDlg::ImportPFXDlg(QWidget *parent) :
     setDefaults();
 
     tabWidget->setCurrentIndex(0);
-    subject_in_cert_ = "";
 }
 
 ImportPFXDlg::~ImportPFXDlg()
 {
-
+    JS_BIN_reset( &der_dn_ );
 }
 
 void ImportPFXDlg::setSelectedSlot(int index)
@@ -211,7 +213,8 @@ void ImportPFXDlg::accept()
     rv = JS_PKI_getCertInfo( &binCert, &sCertInfo, NULL );
     if( rv == 0 )
     {
-        subject_in_cert_ = sCertInfo.pSubjectName;
+        //subject_in_cert_ = sCertInfo.pSubjectName;
+        JS_PKI_getCertSubjetDN( &binCert, &der_dn_ );
     }
 
     rv = createCert( &binCert );
@@ -496,14 +499,17 @@ int ImportPFXDlg::createCert( BIN *pCert )
     BIN binSubject = {0,0};
 
     if( mCertSubjectInCertCheck->isChecked() )
-        strSubject = subject_in_cert_;
-    else
-        strSubject = mCertSubjectText->text();
-
-    if( !strSubject.isEmpty() )
     {
-        JS_BIN_set( &binSubject, (unsigned char *)strSubject.toStdString().c_str(), strSubject.length() );
+        JS_BIN_copy( &binSubject, &der_dn_ );
+    }
+    else
+    {
+        strSubject = mCertSubjectText->text();
+        JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+    }
 
+    if( binSubject.nLen > 0 )
+    {
         sTemplate[uCount].type = CKA_SUBJECT;
         sTemplate[uCount].pValue = binSubject.pVal;
         sTemplate[uCount].ulValueLen = binSubject.nLen;
@@ -790,14 +796,17 @@ int ImportPFXDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
     BIN binSubject = {0,0};
 
     if( mPriSubjectInCertCheck->isChecked() )
-        strSubject = subject_in_cert_;
-    else
-        strSubject = mPriSubjectText->text();
-
-    if( !strSubject.isEmpty() )
     {
+        JS_BIN_copy( &binSubject, &der_dn_ );
+    }
+    else
+    {
+        strSubject = mPriSubjectText->text();
         JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+    }
 
+    if( binSubject.nLen > 0 )
+    {
         sTemplate[uCount].type = CKA_SUBJECT;
         sTemplate[uCount].pValue = binSubject.pVal;
         sTemplate[uCount].ulValueLen = binSubject.nLen;
@@ -1223,13 +1232,17 @@ int ImportPFXDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
     BIN binSubject = {0,0};
 
     if( mPriSubjectInCertCheck->isChecked() )
-        strSubject = subject_in_cert_;
-    else
-        strSubject = mPriSubjectText->text();
-
-    if( !strSubject.isEmpty() )
     {
+        JS_BIN_copy( &binSubject, &der_dn_ );
+    }
+    else
+    {
+        strSubject = mPriSubjectText->text();
         JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+    }
+
+    if( binSubject.nLen > 0 )
+    {
         sTemplate[uCount].type = CKA_SUBJECT;
         sTemplate[uCount].pValue = binSubject.pVal;
         sTemplate[uCount].ulValueLen = binSubject.nLen;
@@ -1594,13 +1607,17 @@ int ImportPFXDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
     BIN binSubject = {0,0};
 
     if( mPriSubjectInCertCheck->isChecked() )
-        strSubject = subject_in_cert_;
-    else
-        strSubject = mPriSubjectText->text();
-
-    if( !strSubject.isEmpty() )
     {
+        JS_BIN_copy( &binSubject, &der_dn_ );
+    }
+    else
+    {
+        strSubject = mPriSubjectText->text();
         JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+    }
+
+    if( binSubject.nLen > 0 )
+    {
         sTemplate[uCount].type = CKA_SUBJECT;
         sTemplate[uCount].pValue = binSubject.pVal;
         sTemplate[uCount].ulValueLen = binSubject.nLen;
@@ -1750,15 +1767,17 @@ int ImportPFXDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
 
 void ImportPFXDlg::setDefaults()
 {
+    const QString strDefaultID = "0102030405060708";
+
     mCertLabelText->setText( "Certificate Label" );
-    mCertIDText->setText( "Certificate ID" );
+    mCertIDText->setText( strDefaultID );
 
     mCertTokenCheck->setChecked(true);
     mCertTokenCombo->setEnabled(true);
     mCertTokenCombo->setCurrentIndex(1);
 
     mPubLabelText->setText( "Public Label" );
-    mPubIDText->setText( "Public ID" );
+    mPubIDText->setText( strDefaultID );
 
     mPubEncryptCheck->setChecked(true);
     mPubEncryptCombo->setEnabled(true);
@@ -1774,8 +1793,7 @@ void ImportPFXDlg::setDefaults()
     mPubVerifyCombo->setCurrentIndex(1);
 
     mPriLabelText->setText( "Private Label" );
-    mPriSubjectText->setText( "CN=SubjectDN" );
-    mPriIDText->setText( "Private ID" );
+    mPriIDText->setText( strDefaultID );
 
     mPriPrivateCheck->setChecked(true);
     mPriPrivateCombo->setEnabled(true);

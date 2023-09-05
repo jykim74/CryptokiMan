@@ -66,12 +66,12 @@
      <item row="0" column="2">
       <widget class="QLabel" name="label_3">
        <property name="text">
-        <string>Slot ID</string>
+        <string>Session</string>
        </property>
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="mSessionText">
+      <widget class="QLineEdit" name="mSlotIDText">
        <property name="maximumSize">
         <size>
          <width>100</width>
@@ -177,7 +177,7 @@
       </widget>
      </item>
      <item row="0" column="3">
-      <widget class="QLineEdit" name="mSlotIDText">
+      <widget class="QLineEdit" name="mSessionText">
        <property name="maximumSize">
         <size>
          <width>80</width>
@@ -235,7 +235,7 @@
         </size>
        </property>
        <property name="text">
-        <string>Session</string>
+        <string>Slot ID</string>
        </property>
       </widget>
      </item>
@@ -530,8 +530,8 @@
  </widget>
  <tabstops>
   <tabstop>mSlotsCombo</tabstop>
-  <tabstop>mSessionText</tabstop>
   <tabstop>mSlotIDText</tabstop>
+  <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
   <tabstop>mLabelText</tabstop>
   <tabstop>mPrivateCheck</tabstop>

@@ -73,7 +73,7 @@ private:
 
     void setDefaults();
 
-    QString subject_in_cert_;
+    BIN der_dn_;
 };
 
 #endif // IMPORT_PFX_DLG_H

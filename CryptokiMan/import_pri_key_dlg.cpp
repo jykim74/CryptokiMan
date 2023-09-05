@@ -1581,18 +1581,17 @@ int ImportPriKeyDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
 
 void ImportPriKeyDlg::setDefaults()
 {
+    const QString strDefaultID = "0102030405060708";
+
     mPubLabelText->setText( "Public Label" );
-    mPubIDText->setText( "Public ID" );
+    mPubIDText->setText( strDefaultID );
 
     mPriLabelText->setText( "Private Label" );
-    mPriSubjectText->setText( "CN=SubjectDN" );
-    mPriIDText->setText( "Private ID" );
-
+    mPriIDText->setText( strDefaultID );
 
     mPubEncryptCheck->setChecked(true);
     mPubEncryptCombo->setEnabled(true);
     mPubEncryptCombo->setCurrentIndex(1);
-
 
     mPubTokenCheck->setChecked(true);
     mPubTokenCombo->setEnabled(true);
