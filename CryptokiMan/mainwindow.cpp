@@ -1874,6 +1874,7 @@ void MainWindow::showPublicKeyInfoDetail( QModelIndex index )
     info( QString( "CKA_WRAP            : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_WRAP, uObj)));
     info( QString( "CKA_ENCRYPT         : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_ENCRYPT, uObj)));
     info( QString( "CKA_VERIFY          : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_VERIFY, uObj)));
+    info( QString( "CKA_VERIFY_RECOVER  : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_VERIFY_RECOVER, uObj)));
     info( QString( "CKA_PRIVATE         : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_PRIVATE, uObj)));
     info( QString( "CKA_MODIFIABLE      : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_MODIFIABLE, uObj)));
     info( QString( "CKA_DERIVE          : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_DERIVE, uObj)));
@@ -1936,6 +1937,7 @@ void MainWindow::showPrivateKeyInfoDetail( QModelIndex index )
     info( QString( "CKA_SENSITIVE        : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_SENSITIVE, uObj)));
     info( QString( "CKA_UNWRAP           : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_UNWRAP, uObj)));
     info( QString( "CKA_SIGN             : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_SIGN, uObj)));
+    info( QString( "CKA_SIGN_RECOVER     : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_SIGN_RECOVER, uObj)));
     info( QString( "CKA_DECRYPT          : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_DECRYPT, uObj)));
     info( QString( "CKA_MODIFIABLE       : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_MODIFIABLE, uObj)));
     info( QString( "CKA_DERIVE           : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_DERIVE, uObj)));
