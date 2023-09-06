@@ -114,6 +114,7 @@ void CreateRSAPriKeyDlg::setAttributes()
 
 void CreateRSAPriKeyDlg::connectAttributes()
 {
+    connect( mFindKeyBtn, SIGNAL(clicked()), this, SLOT(clickFindKey()));
     connect( mGenKeyBtn, SIGNAL(clicked()), this, SLOT(clickGenKey()));
     connect( mUseSKICheck, SIGNAL(clicked()), this, SLOT(clickUseSKI()));
 
@@ -461,6 +462,51 @@ void CreateRSAPriKeyDlg::clickGenKey()
 end :
     JS_BIN_reset( &binPri );
     JS_BIN_reset( &binPub );
+    JS_PKI_resetRSAKeyVal( &sRSAKey );
+}
+
+void CreateRSAPriKeyDlg::clickFindKey()
+{
+    int ret = 0;
+    int nKeyType = -1;
+    BIN binPri = {0,0};
+    JRSAKeyVal  sRSAKey;
+    QString strPath = manApplet->curFile();
+    QString fileName = findFile( this, JS_FILE_TYPE_BER, strPath );
+    if( fileName.length() < 1 ) return;
+
+    memset( &sRSAKey, 0x00, sizeof(sRSAKey ));
+
+    ret = JS_BIN_fileReadBER( fileName.toLocal8Bit().toStdString().c_str(), &binPri );
+    if( ret < 0 )
+    {
+        manApplet->elog( QString( "fail to read private key:%1").arg( ret) );
+        goto end;
+    }
+
+    nKeyType = JS_PKI_getPriKeyType( &binPri );
+    if( nKeyType != JS_PKI_KEY_TYPE_RSA )
+    {
+        manApplet->elog( QString( "invalid private key type: %1").arg( nKeyType ));
+        goto end;
+    }
+
+    ret = JS_PKI_getRSAKeyVal( &binPri, &sRSAKey );
+    if( ret != 0 ) goto end;
+
+    mModulesText->setText( sRSAKey.pN );
+    mPubExponentText->setText( sRSAKey.pE );
+    mPriExponentText->setText( sRSAKey.pD );
+    mPrime1Text->setText( sRSAKey.pP );
+    mPrime2Text->setText( sRSAKey.pQ );
+    mExponent1Text->setText( sRSAKey.pDMP1 );
+    mExponent2Text->setText( sRSAKey.pDMQ1 );
+    mCoefficientText->setText( sRSAKey.pIQMP );
+
+    manApplet->setCurFile( fileName );
+
+end :
+    JS_BIN_reset( &binPri );
     JS_PKI_resetRSAKeyVal( &sRSAKey );
 }
 

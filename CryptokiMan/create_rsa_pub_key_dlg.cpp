@@ -102,6 +102,7 @@ void CreateRSAPubKeyDlg::setAttributes()
 void CreateRSAPubKeyDlg::connectAttributes()
 {
     connect( mGenKeyBtn, SIGNAL(clicked()), this, SLOT(clickGenKey()));
+    connect( mFindKeyBtn, SIGNAL(clicked()), this, SLOT(clickFindKey()));
     connect( mUseSKICheck, SIGNAL(clicked()), this, SLOT(clickUseSKI()));
 
     connect( mPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPrivate()));
@@ -336,12 +337,65 @@ end :
     JS_PKI_resetRSAKeyVal( &sRSAKey );
 }
 
+void CreateRSAPubKeyDlg::clickFindKey()
+{
+    int ret = 0;
+    int nKeyType = -1;
+    BIN binKey = {0,0};
+    JRSAKeyVal sRSAKey;
+
+    QString strPath = manApplet->curFile();
+    QString fileName = findFile( this, JS_FILE_TYPE_BER, strPath );
+    if( fileName.length() < 1 ) return;
+
+    memset( &sRSAKey, 0x00, sizeof(sRSAKey));
+
+    ret = JS_BIN_fileReadBER( fileName.toLocal8Bit().toStdString().c_str(), &binKey );
+    if( ret < 0 )
+    {
+        manApplet->elog( QString( "fail to read key:%1").arg( ret) );
+        goto end;
+    }
+
+    nKeyType = JS_PKI_getPriKeyType( &binKey );
+    if( nKeyType < 0 )
+    {
+        nKeyType = JS_PKI_getPubKeyType( &binKey );
+        if( nKeyType != JS_PKI_KEY_TYPE_RSA )
+        {
+            manApplet->elog( QString( "invalid public key type: %1").arg( nKeyType ));
+            goto end;
+        }
+
+        ret = JS_PKI_getRSAKeyValFromPub( &binKey, &sRSAKey );
+        if( ret != 0 ) goto end;
+    }
+    else if( nKeyType != JS_PKI_KEY_TYPE_RSA )
+    {
+        manApplet->elog( QString( "invalid private key type: %1").arg( nKeyType ));
+        goto end;
+    }
+    else
+    {
+        ret = JS_PKI_getRSAKeyVal( &binKey, &sRSAKey );
+        if( ret != 0 ) goto end;
+    }
+
+    mModulesText->setText( sRSAKey.pN );
+    mExponentText->setText( sRSAKey.pE );
+
+    manApplet->setCurFile( fileName );
+
+end :
+    JS_BIN_reset( &binKey );
+    JS_PKI_resetRSAKeyVal( &sRSAKey );
+}
+
 void CreateRSAPubKeyDlg::clickUseSKI()
 {
     bool bVal = mUseSKICheck->isChecked();
     mIDText->setEnabled( !bVal );
 }
-
 
 void CreateRSAPubKeyDlg::clickPrivate()
 {

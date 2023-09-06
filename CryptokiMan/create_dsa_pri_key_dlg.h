@@ -23,6 +23,7 @@ private slots:
     void slotChanged( int index );
 
     void clickGenKey();
+    void clickFindKey();
 
     void clickUseSKI();
     void clickPrivate();

@@ -106,6 +106,7 @@ void CreateDSAPriKeyDlg::setAttributes()
 void CreateDSAPriKeyDlg::connectAttributes()
 {
     connect( mGenKeyBtn, SIGNAL(clicked()), this, SLOT(clickGenKey()));
+    connect( mFindKeyBtn, SIGNAL(clicked()), this, SLOT(clickFindKey()));
     connect( mUseSKICheck, SIGNAL(clicked()), this, SLOT(clickUseSKI()));
 
     connect( mPText, SIGNAL(textChanged(const QString&)), this, SLOT(changeP(const QString&)));
@@ -402,6 +403,46 @@ void CreateDSAPriKeyDlg::clickGenKey()
 end :
     JS_BIN_reset( &binPri );
     JS_BIN_reset( &binPub );
+    JS_PKI_resetDSAKeyVal( &sDSAKey );
+}
+
+void CreateDSAPriKeyDlg::clickFindKey()
+{
+    int ret = 0;
+    int nKeyType = -1;
+    BIN binPri = {0,0};
+    JDSAKeyVal  sDSAKey;
+    QString strPath = manApplet->curFile();
+    QString fileName = findFile( this, JS_FILE_TYPE_BER, strPath );
+    if( fileName.length() < 1 ) return;
+
+    memset( &sDSAKey, 0x00, sizeof(sDSAKey ));
+
+    ret = JS_BIN_fileReadBER( fileName.toLocal8Bit().toStdString().c_str(), &binPri );
+    if( ret < 0 )
+    {
+        manApplet->elog( QString( "fail to read private key:%1").arg( ret) );
+        goto end;
+    }
+
+    nKeyType = JS_PKI_getPriKeyType( &binPri );
+    if( nKeyType != JS_PKI_KEY_TYPE_DSA )
+    {
+        manApplet->elog( QString( "invalid private key type: %1").arg( nKeyType ));
+        goto end;
+    }
+
+    ret = JS_PKI_getDSAKeyVal( &binPri, &sDSAKey );
+    if( ret != 0 ) goto end;
+
+    mGText->setText( sDSAKey.pG );
+    mPText->setText( sDSAKey.pP );
+    mQText->setText( sDSAKey.pQ );
+    mKeyValueText->setText( sDSAKey.pPrivate );
+
+    manApplet->setCurFile( fileName );
+end :
+    JS_BIN_reset( &binPri );
     JS_PKI_resetDSAKeyVal( &sDSAKey );
 }
 

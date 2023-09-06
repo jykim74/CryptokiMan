@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>625</width>
-    <height>318</height>
+    <width>659</width>
+    <height>427</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -343,16 +343,6 @@
          <property name="topMargin">
           <number>0</number>
          </property>
-         <item row="0" column="2">
-          <widget class="QLabel" name="label_4">
-           <property name="text">
-            <string>Named Curve</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="3">
-          <widget class="QComboBox" name="mParamCombo"/>
-         </item>
          <item row="0" column="4">
           <widget class="QPushButton" name="mGenKeyBtn">
            <property name="text">
@@ -364,6 +354,13 @@
           <widget class="QLabel" name="label_11">
            <property name="text">
             <string>Key Value</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QLabel" name="label_4">
+           <property name="text">
+            <string>Named Curve</string>
            </property>
           </widget>
          </item>
@@ -379,6 +376,16 @@
             </size>
            </property>
           </spacer>
+         </item>
+         <item row="0" column="3">
+          <widget class="QComboBox" name="mParamCombo"/>
+         </item>
+         <item row="0" column="5">
+          <widget class="QPushButton" name="mFindKeyBtn">
+           <property name="text">
+            <string>Find Key</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>

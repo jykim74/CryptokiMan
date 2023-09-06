@@ -106,6 +106,7 @@ void CreateECPriKeyDlg::setAttributes()
 void CreateECPriKeyDlg::connectAttributes()
 {
     connect( mGenKeyBtn, SIGNAL(clicked()), this, SLOT(clickGenKey()));
+    connect( mFindKeyBtn, SIGNAL(clicked()), this, SLOT(clickFindKey()));
     connect( mUseSKICheck, SIGNAL(clicked()), this, SLOT(clickUseSKI()));
 
     connect( mECParamsText, SIGNAL(textChanged(const QString&)), this, SLOT(changeECParams(const QString&)));
@@ -375,6 +376,49 @@ void CreateECPriKeyDlg::clickGenKey()
 end :
     JS_BIN_reset( &binPri );
     JS_BIN_reset( &binPub );
+    JS_BIN_reset( &binOID );
+    JS_PKI_resetECKeyVal( &sECKey );
+}
+
+void CreateECPriKeyDlg::clickFindKey()
+{
+    int ret = 0;
+    int nKeyType = -1;
+    BIN binPri = {0,0};
+    BIN binOID = {0,0};
+    JECKeyVal  sECKey;
+    QString strPath = manApplet->curFile();
+    QString fileName = findFile( this, JS_FILE_TYPE_BER, strPath );
+    if( fileName.length() < 1 ) return;
+
+    memset( &sECKey, 0x00, sizeof(sECKey ));
+
+
+    ret = JS_BIN_fileReadBER( fileName.toLocal8Bit().toStdString().c_str(), &binPri );
+    if( ret < 0 )
+    {
+        manApplet->elog( QString( "fail to read private key:%1").arg( ret) );
+        goto end;
+    }
+
+    nKeyType = JS_PKI_getPriKeyType( &binPri );
+    if( nKeyType != JS_PKI_KEY_TYPE_ECC )
+    {
+        manApplet->elog( QString( "invalid private key type: %1").arg( nKeyType ));
+        goto end;
+    }
+
+    ret = JS_PKI_getECKeyVal( &binPri, &sECKey );
+    if( ret != 0 ) goto end;
+
+    JS_PKI_getOIDFromString( sECKey.pCurveOID, &binOID );
+
+    mKeyValueText->setText( sECKey.pPrivate );
+    mECParamsText->setText( getHexString( binOID.pVal, binOID.nLen ));
+    manApplet->setCurFile( fileName );
+
+end :
+    JS_BIN_reset( &binPri );
     JS_BIN_reset( &binOID );
     JS_PKI_resetECKeyVal( &sECKey );
 }

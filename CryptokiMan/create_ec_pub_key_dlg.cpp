@@ -104,6 +104,7 @@ void CreateECPubKeyDlg::setAttributes()
 void CreateECPubKeyDlg::connectAttributes()
 {
     connect( mGenKeyBtn, SIGNAL(clicked()), this, SLOT(clickGenKey()));
+    connect( mFindKeyBtn, SIGNAL(clicked()), this, SLOT(clickFindKey()));
     connect( mUseSKICheck, SIGNAL(clicked()), this, SLOT(clickUseSKI()));
 
     connect( mPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPrivate()));
@@ -352,6 +353,68 @@ void CreateECPubKeyDlg::clickUseSKI()
     mIDText->setEnabled( !bVal );
 }
 
+void CreateECPubKeyDlg::clickFindKey()
+{
+    int ret = 0;
+    int nKeyType = -1;
+    BIN binKey = {0,0};
+    BIN binOID = {0,0};
+    JECKeyVal sECKey;
+
+    QString strPath = manApplet->curFile();
+    QString fileName = findFile( this, JS_FILE_TYPE_BER, strPath );
+    if( fileName.length() < 1 ) return;
+
+    QString strPoints = "04";
+
+    memset( &sECKey, 0x00, sizeof(sECKey));
+
+    ret = JS_BIN_fileReadBER( fileName.toLocal8Bit().toStdString().c_str(), &binKey );
+    if( ret < 0 )
+    {
+        manApplet->elog( QString( "fail to read key:%1").arg( ret) );
+        goto end;
+    }
+
+    nKeyType = JS_PKI_getPriKeyType( &binKey );
+    if( nKeyType < 0 )
+    {
+        nKeyType = JS_PKI_getPubKeyType( &binKey );
+        if( nKeyType != JS_PKI_KEY_TYPE_ECC )
+        {
+            manApplet->elog( QString( "invalid public key type: %1").arg( nKeyType ));
+            goto end;
+        }
+
+        ret = JS_PKI_getECKeyValFromPub( &binKey, &sECKey );
+        if( ret != 0 ) goto end;
+    }
+    else if( nKeyType != JS_PKI_KEY_TYPE_ECC )
+    {
+        manApplet->elog( QString( "invalid private key type: %1").arg( nKeyType ));
+        goto end;
+    }
+    else
+    {
+        ret = JS_PKI_getECKeyVal( &binKey, &sECKey );
+        if( ret != 0 ) goto end;
+    }
+
+    JS_PKI_getOIDFromString( sECKey.pCurveOID, &binOID );
+
+    strPoints += sECKey.pPubX;
+    strPoints += sECKey.pPubY;
+
+    mECParamsText->setText( getHexString( binOID.pVal, binOID.nLen ));
+    mECPointsText->setText( strPoints );
+
+    manApplet->setCurFile( fileName );
+
+end :
+    JS_BIN_reset( &binKey );
+    JS_BIN_reset( &binOID );
+    JS_PKI_resetECKeyVal( &sECKey );
+}
 
 void CreateECPubKeyDlg::clickPrivate()
 {

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>642</width>
-    <height>318</height>
+    <width>659</width>
+    <height>432</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -350,6 +350,19 @@
          <item row="0" column="3">
           <widget class="QComboBox" name="mParamCombo"/>
          </item>
+         <item row="0" column="1">
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
          <item row="0" column="4">
           <widget class="QPushButton" name="mGenKeyBtn">
            <property name="text">
@@ -371,18 +384,12 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
-          <spacer name="horizontalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
+         <item row="0" column="5">
+          <widget class="QPushButton" name="mFindKeyBtn">
+           <property name="text">
+            <string>Find Key</string>
            </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
+          </widget>
          </item>
         </layout>
        </item>

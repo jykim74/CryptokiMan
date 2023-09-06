@@ -108,6 +108,7 @@ void CreateDSAPubKeyDlg::setAttributes()
 void CreateDSAPubKeyDlg::connectAttributes()
 {
     connect( mGenKeyBtn, SIGNAL(clicked()), this, SLOT(clickGenKey()));
+    connect( mFindKeyBtn, SIGNAL(clicked()), this, SLOT(clickFindKey()));
     connect( mUseSKICheck, SIGNAL(clicked()), this, SLOT(clickUseSKI()));
 
     connect( mPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPrivate()));
@@ -375,6 +376,61 @@ void CreateDSAPubKeyDlg::clickUseSKI()
     mIDText->setEnabled( !bVal );
 }
 
+void CreateDSAPubKeyDlg::clickFindKey()
+{
+    int ret = 0;
+    int nKeyType = -1;
+    BIN binKey = {0,0};
+    JDSAKeyVal sDSAKey;
+
+    QString strPath = manApplet->curFile();
+    QString fileName = findFile( this, JS_FILE_TYPE_BER, strPath );
+    if( fileName.length() < 1 ) return;
+
+    memset( &sDSAKey, 0x00, sizeof(sDSAKey));
+
+    ret = JS_BIN_fileReadBER( fileName.toLocal8Bit().toStdString().c_str(), &binKey );
+    if( ret < 0 )
+    {
+        manApplet->elog( QString( "fail to read key:%1").arg( ret) );
+        goto end;
+    }
+
+    nKeyType = JS_PKI_getPriKeyType( &binKey );
+    if( nKeyType < 0 )
+    {
+        nKeyType = JS_PKI_getPubKeyType( &binKey );
+        if( nKeyType != JS_PKI_KEY_TYPE_DSA )
+        {
+            manApplet->elog( QString( "invalid public key type: %1").arg( nKeyType ));
+            goto end;
+        }
+
+        ret = JS_PKI_getDSAKeyValFromPub( &binKey, &sDSAKey );
+        if( ret != 0 ) goto end;
+    }
+    else if( nKeyType != JS_PKI_KEY_TYPE_DSA )
+    {
+        manApplet->elog( QString( "invalid private key type: %1").arg( nKeyType ));
+        goto end;
+    }
+    else
+    {
+        ret = JS_PKI_getDSAKeyVal( &binKey, &sDSAKey );
+        if( ret != 0 ) goto end;
+    }
+
+    mGText->setText( sDSAKey.pG );
+    mPText->setText( sDSAKey.pP );
+    mQText->setText( sDSAKey.pQ );
+    mPublicText->setText( sDSAKey.pPublic );
+
+    manApplet->setCurFile( fileName );
+
+end :
+    JS_BIN_reset( &binKey );
+    JS_PKI_resetDSAKeyVal( &sDSAKey );
+}
 
 void CreateDSAPubKeyDlg::clickPrivate()
 {

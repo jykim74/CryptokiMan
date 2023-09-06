@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>625</width>
-    <height>318</height>
+    <width>659</width>
+    <height>427</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -343,16 +343,6 @@
          <property name="topMargin">
           <number>0</number>
          </property>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_6">
-           <property name="text">
-            <string>Key Value</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="3">
-          <widget class="QComboBox" name="mParamCombo"/>
-         </item>
          <item row="0" column="1">
           <spacer name="horizontalSpacer_2">
            <property name="orientation">
@@ -366,17 +356,10 @@
            </property>
           </spacer>
          </item>
-         <item row="0" column="4">
-          <widget class="QLabel" name="label_13">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_6">
            <property name="text">
-            <string>E</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="6">
-          <widget class="QPushButton" name="mGenKeyBtn">
-           <property name="text">
-            <string>Gen Key</string>
+            <string>Key Value</string>
            </property>
           </widget>
          </item>
@@ -403,6 +386,30 @@
            </property>
            <property name="maxLength">
             <number>8</number>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="4">
+          <widget class="QLabel" name="label_13">
+           <property name="text">
+            <string>E</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="6">
+          <widget class="QPushButton" name="mGenKeyBtn">
+           <property name="text">
+            <string>Gen Key</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QComboBox" name="mParamCombo"/>
+         </item>
+         <item row="0" column="7">
+          <widget class="QPushButton" name="mFindKeyBtn">
+           <property name="text">
+            <string>Find Key</string>
            </property>
           </widget>
          </item>
