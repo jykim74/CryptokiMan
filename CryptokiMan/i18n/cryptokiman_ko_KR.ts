@@ -315,7 +315,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Key Properties</source>
-        <translation>키 속성</translation>
+        <translation type="vanished">키 속성</translation>
     </message>
     <message>
         <source>Key value</source>
@@ -369,6 +369,18 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>SignRecover</source>
         <translation>SignRecover</translation>
     </message>
+    <message>
+        <source>Key Value</source>
+        <translation>키 값</translation>
+    </message>
+    <message>
+        <source>Gen Key</source>
+        <translation>키 생성</translation>
+    </message>
+    <message>
+        <source>Key Length</source>
+        <translation>키 길이</translation>
+    </message>
 </context>
 <context>
     <name>CreateDSAPubKeyDlg</name>
@@ -414,7 +426,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Information</source>
-        <translation>정보</translation>
+        <translation type="vanished">정보</translation>
     </message>
     <message>
         <source>Subprime(Q)</source>
@@ -467,6 +479,18 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>VerifyRecover</source>
         <translation>VerifyRecover</translation>
+    </message>
+    <message>
+        <source>Key Value</source>
+        <translation>키 값</translation>
+    </message>
+    <message>
+        <source>Key Length</source>
+        <translation>키 길이</translation>
+    </message>
+    <message>
+        <source>Gen Key</source>
+        <translation>키 생성</translation>
     </message>
 </context>
 <context>
@@ -588,7 +612,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Key Properties</source>
-        <translation>키 속성</translation>
+        <translation type="vanished">키 속성</translation>
     </message>
     <message>
         <source>EC Params</source>
@@ -665,6 +689,18 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>SignRecover</source>
         <translation>SignRecover</translation>
+    </message>
+    <message>
+        <source>Gen Key</source>
+        <translation>키 생성</translation>
+    </message>
+    <message>
+        <source>Key Value</source>
+        <translation>키 값</translation>
+    </message>
+    <message>
+        <source>Named Curve</source>
+        <translation>커브 이름</translation>
     </message>
 </context>
 <context>
@@ -767,7 +803,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Information</source>
-        <translation>정보</translation>
+        <translation type="vanished">정보</translation>
     </message>
     <message>
         <source>Use SKI</source>
@@ -776,6 +812,18 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>VerifyRecover</source>
         <translation>VerifyRecover</translation>
+    </message>
+    <message>
+        <source>Named Curve</source>
+        <translation>커브 이름</translation>
+    </message>
+    <message>
+        <source>Gen Key</source>
+        <translation>키 생성</translation>
+    </message>
+    <message>
+        <source>Key Value</source>
+        <translation>키 값</translation>
     </message>
 </context>
 <context>
@@ -1055,6 +1103,18 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>SignRecover</source>
         <translation>SignRecover</translation>
     </message>
+    <message>
+        <source>Key Length</source>
+        <translation>키 길이</translation>
+    </message>
+    <message>
+        <source>E</source>
+        <translation>E</translation>
+    </message>
+    <message>
+        <source>Gen Key</source>
+        <translation></translation>
+    </message>
 </context>
 <context>
     <name>CreateRSAPubKeyDlg</name>
@@ -1161,6 +1221,22 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>VerifyRecover</source>
         <translation>VerifyRecover</translation>
+    </message>
+    <message>
+        <source>Key Value</source>
+        <translation>키 값</translation>
+    </message>
+    <message>
+        <source>E</source>
+        <translation>E</translation>
+    </message>
+    <message>
+        <source>Gen Key</source>
+        <translation>키 생성</translation>
+    </message>
+    <message>
+        <source>Key Length</source>
+        <translation>키 길이</translation>
     </message>
 </context>
 <context>

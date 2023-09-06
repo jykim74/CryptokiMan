@@ -69,6 +69,8 @@ void CreateDSAPriKeyDlg::initialize()
 
 void CreateDSAPriKeyDlg::initAttributes()
 {
+    mParamCombo->addItems( kDSAOptionList );
+
     mPrivateCombo->addItems(sFalseTrue);
     mDecryptCombo->addItems(sFalseTrue);
     mSignCombo->addItems(sFalseTrue);
@@ -103,6 +105,7 @@ void CreateDSAPriKeyDlg::setAttributes()
 
 void CreateDSAPriKeyDlg::connectAttributes()
 {
+    connect( mGenKeyBtn, SIGNAL(clicked()), this, SLOT(clickGenKey()));
     connect( mUseSKICheck, SIGNAL(clicked()), this, SLOT(clickUseSKI()));
 
     connect( mPText, SIGNAL(textChanged(const QString&)), this, SLOT(changeP(const QString&)));
@@ -374,6 +377,34 @@ void CreateDSAPriKeyDlg::accept()
     QDialog::accept();
 }
 
+void CreateDSAPriKeyDlg::clickGenKey()
+{
+    int ret = 0;
+    BIN binPub = {0,0};
+    BIN binPri = {0,0};
+    JDSAKeyVal sDSAKey;
+
+    int nKeyLen = mParamCombo->currentText().toInt();
+
+    memset( &sDSAKey, 0x00, sizeof(sDSAKey));
+
+    ret = JS_PKI_DSA_GenKeyPair( nKeyLen, &binPub, &binPri );
+    if( ret != 0 ) goto end;
+
+    ret = JS_PKI_getDSAKeyVal( &binPri, &sDSAKey );
+    if( ret != 0 ) goto end;
+
+    mGText->setText( sDSAKey.pG );
+    mPText->setText( sDSAKey.pP );
+    mQText->setText( sDSAKey.pQ );
+    mKeyValueText->setText( sDSAKey.pPrivate );
+
+end :
+    JS_BIN_reset( &binPri );
+    JS_BIN_reset( &binPub );
+    JS_PKI_resetDSAKeyVal( &sDSAKey );
+}
+
 void CreateDSAPriKeyDlg::clickUseSKI()
 {
     bool bVal = mUseSKICheck->isChecked();
@@ -466,6 +497,8 @@ void CreateDSAPriKeyDlg::changeKeyValue( const QString& text )
 
 void CreateDSAPriKeyDlg::setDefaults()
 {
+    mParamCombo->setCurrentText( "2048" );
+
     mLabelText->setText( "DSA Private Label" );
     mIDText->setText( "01020304" );
 

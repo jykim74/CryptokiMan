@@ -69,6 +69,8 @@ void CreateECPriKeyDlg::initialize()
 
 void CreateECPriKeyDlg::initAttributes()
 {
+    mParamCombo->addItems( kECCOptionList );
+
     mPrivateCombo->addItems(sFalseTrue);
     mDecryptCombo->addItems(sFalseTrue);
     mSignCombo->addItems(sFalseTrue);
@@ -103,9 +105,10 @@ void CreateECPriKeyDlg::setAttributes()
 
 void CreateECPriKeyDlg::connectAttributes()
 {
+    connect( mGenKeyBtn, SIGNAL(clicked()), this, SLOT(clickGenKey()));
     connect( mUseSKICheck, SIGNAL(clicked()), this, SLOT(clickUseSKI()));
 
-    connect( mECPramsText, SIGNAL(textChanged(const QString&)), this, SLOT(changeECParams(const QString&)));
+    connect( mECParamsText, SIGNAL(textChanged(const QString&)), this, SLOT(changeECParams(const QString&)));
     connect( mKeyValueText, SIGNAL(textChanged(const QString&)), this, SLOT(changeKeyValue(const QString&)));
 
     connect( mPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPrivate()));
@@ -156,7 +159,7 @@ void CreateECPriKeyDlg::accept()
     sTemplate[uCount].ulValueLen = sizeof(keyType);
     uCount++;
 
-    QString strECParams = mECPramsText->text();
+    QString strECParams = mECParamsText->text();
     BIN binECParams = {0,0};
 
     if( !strECParams.isEmpty() )
@@ -344,6 +347,38 @@ void CreateECPriKeyDlg::accept()
     QDialog::accept();
 }
 
+void CreateECPriKeyDlg::clickGenKey()
+{
+    int ret = 0;
+    BIN binPub = {0,0};
+    BIN binPri = {0,0};
+    BIN binOID = {0,0};
+    JECKeyVal sECKey;
+
+    QString strParam = mParamCombo->currentText();
+    int nNid = -1;
+
+    JS_PKI_getOIDFromString( strParam.toStdString().c_str(), &binOID );
+
+    memset( &sECKey, 0x00, sizeof(sECKey));
+
+    nNid = JS_PKI_getNidFromSN( strParam.toStdString().c_str() );
+    ret = JS_PKI_ECCGenKeyPair( nNid, &binPub, &binPri );
+    if( ret != 0 ) goto end;
+
+    ret = JS_PKI_getECKeyVal( &binPri, &sECKey );
+    if( ret != 0 ) goto end;
+
+    mKeyValueText->setText( sECKey.pPrivate );
+    mECParamsText->setText( getHexString( binOID.pVal, binOID.nLen ));
+
+end :
+    JS_BIN_reset( &binPri );
+    JS_BIN_reset( &binPub );
+    JS_BIN_reset( &binOID );
+    JS_PKI_resetECKeyVal( &sECKey );
+}
+
 void CreateECPriKeyDlg::clickUseSKI()
 {
     bool bVal = mUseSKICheck->isChecked();
@@ -425,6 +460,8 @@ void CreateECPriKeyDlg::changeKeyValue( const QString& text )
 
 void CreateECPriKeyDlg::setDefaults()
 {
+    mParamCombo->setCurrentText( "prime256v1" );
+
     mLabelText->setText( "EC Private Label" );
     mIDText->setText( "01020304" );
 
@@ -464,7 +501,7 @@ int CreateECPriKeyDlg::getSKI( BIN *pSKI )
     BIN binPub = {0,0};
     BIN binOID = {0,0};
     char sOID[128];
-    QString strParam = mECPramsText->text();
+    QString strParam = mECParamsText->text();
 
     memset( &sECKey, 0x00, sizeof(sECKey));
     memset(sOID, 0x00, sizeof(sOID));

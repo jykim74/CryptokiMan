@@ -111,6 +111,9 @@ static QStringList kECCOptionList = { "prime256v1",
     "sect409r1", "sect571k1", "sect571r1"
 };
 
+static QStringList kRSAOptionList = { "1024", "2048", "3072", "4096" };
+static QStringList kDSAOptionList = { "1024", "2048", "3072", "4096" };
+
 static QStringList kMechDigestList = {
     "CKM_MD5", "CKM_SHA_1", "CKM_SHA256", "CKM_SHA512"
 };

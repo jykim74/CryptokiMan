@@ -22,6 +22,7 @@ private slots:
     virtual void accept();
     void slotChanged( int index );
 
+    void clickGenKey();
     void clickUseSKI();
     void clickPrivate();
     void clickDecrypt();

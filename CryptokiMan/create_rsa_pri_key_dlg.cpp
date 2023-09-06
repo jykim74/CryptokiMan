@@ -78,6 +78,8 @@ void CreateRSAPriKeyDlg::initialize()
 
 void CreateRSAPriKeyDlg::initAttributes()
 {
+    mParamCombo->addItems( kRSAOptionList );
+
     mPrivateCombo->addItems(sFalseTrue);
     mDecryptCombo->addItems(sFalseTrue);
     mSignCombo->addItems(sFalseTrue);
@@ -112,6 +114,7 @@ void CreateRSAPriKeyDlg::setAttributes()
 
 void CreateRSAPriKeyDlg::connectAttributes()
 {
+    connect( mGenKeyBtn, SIGNAL(clicked()), this, SLOT(clickGenKey()));
     connect( mUseSKICheck, SIGNAL(clicked()), this, SLOT(clickUseSKI()));
 
     connect( mPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPrivate()));
@@ -428,6 +431,39 @@ void CreateRSAPriKeyDlg::accept()
     QDialog::accept();
 }
 
+void CreateRSAPriKeyDlg::clickGenKey()
+{
+    int ret = 0;
+    BIN binPub = {0,0};
+    BIN binPri = {0,0};
+    JRSAKeyVal sRSAKey;
+
+    int nKeyLen = mParamCombo->currentText().toInt();
+    int nE = mEText->text().toInt();
+
+    memset( &sRSAKey, 0x00, sizeof(sRSAKey));
+
+    ret = JS_PKI_RSAGenKeyPair( nKeyLen, nE, &binPub, &binPri );
+    if( ret != 0 ) goto end;
+
+    ret = JS_PKI_getRSAKeyVal( &binPri, &sRSAKey );
+    if( ret != 0 ) goto end;
+
+    mModulesText->setText( sRSAKey.pN );
+    mPubExponentText->setText( sRSAKey.pE );
+    mPriExponentText->setText( sRSAKey.pD );
+    mPrime1Text->setText( sRSAKey.pP );
+    mPrime2Text->setText( sRSAKey.pQ );
+    mExponent1Text->setText( sRSAKey.pDMP1 );
+    mExponent2Text->setText( sRSAKey.pDMQ1 );
+    mCoefficientText->setText( sRSAKey.pIQMP );
+
+end :
+    JS_BIN_reset( &binPri );
+    JS_BIN_reset( &binPub );
+    JS_PKI_resetRSAKeyVal( &sRSAKey );
+}
+
 void CreateRSAPriKeyDlg::clickUseSKI()
 {
     bool bVal = mUseSKICheck->isChecked();
@@ -544,6 +580,9 @@ void CreateRSAPriKeyDlg::changeCoefficient( const QString& text )
 
 void CreateRSAPriKeyDlg::setDefaults()
 {
+    mParamCombo->setCurrentText( "2048" );
+    mEText->setText( "65537" );
+
     mLabelText->setText( "RSA Private Label" );
     mIDText->setText( "01020304" );
 

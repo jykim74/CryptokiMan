@@ -71,6 +71,8 @@ void CreateECPubKeyDlg::initialize()
 
 void CreateECPubKeyDlg::initAttributes()
 {
+    mParamCombo->addItems( kECCOptionList );
+
     mPrivateCombo->addItems(sFalseTrue);
     mEncryptCombo->addItems(sFalseTrue);
     mWrapCombo->addItems(sFalseTrue);
@@ -101,6 +103,7 @@ void CreateECPubKeyDlg::setAttributes()
 
 void CreateECPubKeyDlg::connectAttributes()
 {
+    connect( mGenKeyBtn, SIGNAL(clicked()), this, SLOT(clickGenKey()));
     connect( mUseSKICheck, SIGNAL(clicked()), this, SLOT(clickUseSKI()));
 
     connect( mPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPrivate()));
@@ -307,6 +310,42 @@ void CreateECPubKeyDlg::accept()
     QDialog::accept();
 }
 
+void CreateECPubKeyDlg::clickGenKey()
+{
+    int ret = 0;
+    BIN binPub = {0,0};
+    BIN binPri = {0,0};
+    BIN binOID = {0,0};
+    JECKeyVal sECKey;
+
+    QString strParam = mParamCombo->currentText();
+    int nNid = -1;
+    QString strPoints = "04";
+
+    JS_PKI_getOIDFromString( strParam.toStdString().c_str(), &binOID );
+
+    memset( &sECKey, 0x00, sizeof(sECKey));
+
+    nNid = JS_PKI_getNidFromSN( strParam.toStdString().c_str() );
+    ret = JS_PKI_ECCGenKeyPair( nNid, &binPub, &binPri );
+    if( ret != 0 ) goto end;
+
+    ret = JS_PKI_getECKeyVal( &binPri, &sECKey );
+    if( ret != 0 ) goto end;
+
+    strPoints += sECKey.pPubX;
+    strPoints += sECKey.pPubY;
+
+    mECParamsText->setText( getHexString( binOID.pVal, binOID.nLen ));
+    mECPointsText->setText( strPoints );
+
+end :
+    JS_BIN_reset( &binPri );
+    JS_BIN_reset( &binPub );
+    JS_BIN_reset( &binOID );
+    JS_PKI_resetECKeyVal( &sECKey );
+}
+
 void CreateECPubKeyDlg::clickUseSKI()
 {
     bool bVal = mUseSKICheck->isChecked();
@@ -379,6 +418,8 @@ void CreateECPubKeyDlg::changeECParams( const QString& text )
 
 void CreateECPubKeyDlg::setDefaults()
 {
+    mParamCombo->setCurrentText( "prime256v1" );
+
     mLabelText->setText( "EC Public Key Label" );
     mIDText->setText( "01020304" );
 
