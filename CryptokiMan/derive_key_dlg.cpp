@@ -181,9 +181,17 @@ void DeriveKeyDlg::accept()
     BIN binID = {0,0};
     QString strID = mIDText->text();
 
-    if( !strID.isEmpty() )
+    if( mUseRandCheck->isChecked() )
     {
-        JS_BIN_set( &binID, (unsigned char *)strID.toStdString().c_str(), strID.length() );
+        JS_PKI_genRandom( 20, &binID );
+    }
+    else
+    {
+        JS_BIN_decodeHex( strID.toStdString().c_str(), &binID );
+    }
+
+    if( binID.nLen > 0 )
+    {
         sTemplate[uCount].type = CKA_ID;
         sTemplate[uCount].pValue = binID.pVal;
         sTemplate[uCount].ulValueLen = binID.nLen;
@@ -389,6 +397,7 @@ void DeriveKeyDlg::setAttributes()
 
 void DeriveKeyDlg::connectAttributes()
 {
+    connect( mUseRandCheck, SIGNAL(clicked()), this, SLOT(clickUseRand()));
     connect( mPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPrivate()));
     connect( mDecryptCheck, SIGNAL(clicked()), this, SLOT(clickDecrypt()));
     connect( mUnwrapCheck, SIGNAL(clicked()), this, SLOT(clickUnwrap()));
@@ -405,6 +414,12 @@ void DeriveKeyDlg::connectAttributes()
     connect( mDeriveCheck, SIGNAL(clicked()), this, SLOT(clickDerive()));
     connect( mStartDateCheck, SIGNAL(clicked()), this, SLOT(clickStartDate()));
     connect( mEndDateCheck, SIGNAL(clicked()), this, SLOT(clickEndDate()));
+}
+
+void DeriveKeyDlg::clickUseRand()
+{
+    bool bVal = mUseRandCheck->isChecked();
+    mIDText->setEnabled( !bVal );
 }
 
 void DeriveKeyDlg::clickPrivate()
@@ -813,6 +828,9 @@ void DeriveKeyDlg::setSrcLabelList()
 
 void DeriveKeyDlg::setDefaults()
 {
+    mUseRandCheck->setChecked(true);
+    clickUseRand();
+
     mPrivateCheck->setChecked(true);
     mPrivateCombo->setEnabled(true);
     mPrivateCombo->setCurrentIndex(1);

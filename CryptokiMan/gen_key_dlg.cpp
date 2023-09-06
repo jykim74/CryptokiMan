@@ -132,6 +132,7 @@ void GenKeyDlg::setAttributes()
 
 void GenKeyDlg::connectAttributes()
 {
+    connect( mUseRandCheck, SIGNAL(clicked()), this, SLOT(clickUseRand()));
     connect( mPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPrivate()));
     connect( mSensitiveCheck, SIGNAL(clicked()), this, SLOT(clickSensitive()));
     connect( mWrapCheck, SIGNAL(clicked()), this, SLOT(clickWrap()));
@@ -217,9 +218,18 @@ void GenKeyDlg::accept()
     BIN binID = {0,0};
     QString strID = mIDText->text();
 
-    if( !strID.isEmpty() )
+    if( mUseRandCheck->isChecked() )
     {
-        JS_BIN_set( &binID, (unsigned char *)strID.toStdString().c_str(), strID.length() );
+        JS_PKI_genRandom( 20, &binID );
+    }
+    else
+    {
+        QString strID = mIDText->text();
+        JS_BIN_decodeHex( strID.toStdString().c_str(), &binID );
+    }
+
+    if( binID.nLen > 0 )
+    {
         sTemplate[uCount].type = CKA_ID;
         sTemplate[uCount].pValue = binID.pVal;
         sTemplate[uCount].ulValueLen = binID.nLen;
@@ -367,6 +377,13 @@ void GenKeyDlg::accept()
     QDialog::accept();
 }
 
+void GenKeyDlg::clickUseRand()
+{
+    bool bVal = mUseRandCheck->isChecked();
+
+    mIDText->setEnabled( !bVal );
+}
+
 void GenKeyDlg::clickPrivate()
 {
     mPrivateCombo->setEnabled(mPrivateCheck->isChecked());
@@ -446,6 +463,9 @@ void GenKeyDlg::changeParam()
 void GenKeyDlg::setDefaults()
 {
     mLabelText->setText( "Secret key Label" );
+
+    mUseRandCheck->setChecked(true);
+    clickUseRand();
 
     mPrivateCheck->setChecked(true);
     mPrivateCombo->setEnabled(true);

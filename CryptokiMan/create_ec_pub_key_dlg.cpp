@@ -4,6 +4,10 @@
 #include "js_pkcs11.h"
 #include "common.h"
 #include "cryptoki_api.h"
+#include "js_pki.h"
+#include "js_pki_eddsa.h"
+#include "js_pki_key.h"
+#include "js_pki_tools.h"
 
 static QStringList sFalseTrue = { "false", "true" };
 
@@ -97,6 +101,8 @@ void CreateECPubKeyDlg::setAttributes()
 
 void CreateECPubKeyDlg::connectAttributes()
 {
+    connect( mUseSKICheck, SIGNAL(clicked()), this, SLOT(clickUseSKI()));
+
     connect( mPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPrivate()));
     connect( mEncryptCheck, SIGNAL(clicked()), this, SLOT(clickEncrypt()));
     connect( mWrapCheck, SIGNAL(clicked()), this, SLOT(clickWrap()));
@@ -183,9 +189,17 @@ void CreateECPubKeyDlg::accept()
     QString strID = mIDText->text();
     BIN binID = {0,0};
 
-    if( !strID.isEmpty() )
+    if( mUseSKICheck->isChecked() )
+    {
+        getSKI( &binID );
+    }
+    else
     {
         JS_BIN_decodeHex( strID.toStdString().c_str(), &binID );
+    }
+
+    if( binID.nLen > 0 )
+    {
         sTemplate[uCount].type = CKA_ID;
         sTemplate[uCount].pValue = binID.pVal;
         sTemplate[uCount].ulValueLen = binID.nLen;
@@ -293,6 +307,12 @@ void CreateECPubKeyDlg::accept()
     QDialog::accept();
 }
 
+void CreateECPubKeyDlg::clickUseSKI()
+{
+    bool bVal = mUseSKICheck->isChecked();
+    mIDText->setEnabled( !bVal );
+}
+
 
 void CreateECPubKeyDlg::clickPrivate()
 {
@@ -362,6 +382,9 @@ void CreateECPubKeyDlg::setDefaults()
     mLabelText->setText( "EC Public Key Label" );
     mIDText->setText( "01020304" );
 
+    mUseSKICheck->setChecked(true);
+    clickUseSKI();
+
     mEncryptCheck->setChecked(true);
     mEncryptCombo->setEnabled(true);
     mEncryptCombo->setCurrentIndex(1);
@@ -380,4 +403,78 @@ void CreateECPubKeyDlg::setDefaults()
 
     mStartDateEdit->setDate( nowTime.date() );
     mEndDateEdit->setDate( nowTime.date() );
+}
+
+int CreateECPubKeyDlg::getSKI( BIN *pSKI )
+{
+    int ret = 0;
+    JECKeyVal sECKey;
+
+    BIN binPub = {0,0};
+    BIN binOID = {0,0};
+    BIN binPoints = {0,0};
+    BIN binPubX = {0,0};
+    BIN binPubY = {0,0};
+    char *pHexPubX = NULL;
+    char *pHexPubY = NULL;
+
+    char sOID[128];
+    QString strParam = mECParamsText->text();
+    QString strPoints = mECPointsText->text();
+
+    memset( &sECKey, 0x00, sizeof(sECKey));
+    memset(sOID, 0x00, sizeof(sOID));
+
+    JS_BIN_decodeHex( strPoints.toStdString().c_str(), &binPoints );
+    JS_BIN_decodeHex( strParam.toStdString().c_str(), &binOID );
+
+    ret = JS_PKI_getStringFromOID( &binOID, sOID );
+    if( ret != 0 )
+    {
+        manApplet->elog( QString( "invalid parameters: %1").arg(ret));
+        goto end;
+    }
+
+    if( binPoints.nLen <= 3 )
+    {
+        manApplet->elog( QString( "Invalid Points value" ) );
+        goto end;
+    }
+
+    JS_BIN_set( &binPubX, &binPoints.pVal[1], (binPoints.nLen-1) / 2 );
+    JS_BIN_set( &binPubY, &binPoints.pVal[1 + binPubX.nLen], binPubX.nLen );
+    JS_BIN_encodeHex( &binPubX, &pHexPubX );
+    JS_BIN_encodeHex( &binPubY, &pHexPubY );
+
+    JS_PKI_setECKeyVal( &sECKey,
+                        sOID,
+                        pHexPubX,
+                        pHexPubY,
+                        NULL );
+
+    ret = JS_PKI_encodeECPublicKey( &sECKey, &binPub );
+    if( ret != 0 )
+    {
+        manApplet->elog( QString( "fail to encode private key: %d").arg(ret));
+        goto end;
+    }
+
+    ret = JS_PKI_getKeyIdentifier( &binPub, pSKI );
+    if( ret != 0 )
+    {
+        manApplet->elog( QString( "fail to get key identifier: %1").arg(ret));
+        goto end;
+    }
+
+end :
+    JS_PKI_resetECKeyVal( &sECKey );
+    JS_BIN_reset( &binPub );
+    JS_BIN_reset( &binOID );
+    JS_BIN_reset( &binPoints );
+    JS_BIN_reset( &binPubX );
+    JS_BIN_reset( &binPubY );
+    if( pHexPubX ) JS_free( pHexPubX );
+    if( pHexPubY ) JS_free( pHexPubY );
+
+    return ret;
 }

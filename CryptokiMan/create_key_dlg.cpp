@@ -131,6 +131,7 @@ void CreateKeyDlg::setAttributes()
 
 void CreateKeyDlg::connectAttributes()
 {
+    connect( mUseRandCheck, SIGNAL(clicked()), this, SLOT(clickUseRand()));
     connect( mKeyText, SIGNAL(textChanged()), this, SLOT(changeKey()));
 
     connect( mPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPrivate()));
@@ -201,9 +202,17 @@ void CreateKeyDlg::accept()
     BIN binID = {0,0};
     QString strID = mIDText->text();
 
-    if( !strID.isEmpty() )
+    if( mUseRandCheck->isChecked() )
     {
-        JS_BIN_set( &binID, (unsigned char *)strID.toStdString().c_str(), strID.length() );
+        JS_PKI_genRandom( 20, &binID );
+    }
+    else
+    {
+        JS_BIN_decodeHex( strID.toStdString().c_str(), &binID );
+    }
+
+    if( binID.nLen > 0 )
+    {
         sTemplate[uCount].type = CKA_ID;
         sTemplate[uCount].pValue = binID.pVal;
         sTemplate[uCount].ulValueLen = binID.nLen;
@@ -354,6 +363,12 @@ void CreateKeyDlg::accept()
     QDialog::accept();
 }
 
+void CreateKeyDlg::clickUseRand()
+{
+    bool bVal = mUseRandCheck->isChecked();
+    mIDText->setEnabled(!bVal);
+}
+
 void CreateKeyDlg::clickPrivate()
 {
     mPrivateCombo->setEnabled(mPrivateCheck->isChecked());
@@ -432,6 +447,9 @@ void CreateKeyDlg::changeKey()
 void CreateKeyDlg::setDefaults()
 {
     mLabelText->setText( "Secret key label" );
+
+    mUseRandCheck->setChecked(true);
+    clickUseRand();
 
     mPrivateCheck->setChecked(true);
     mPrivateCombo->setEnabled(true);

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>678</width>
-    <height>521</height>
+    <height>387</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -660,6 +660,13 @@
            </property>
           </widget>
          </item>
+         <item row="0" column="2">
+          <widget class="QLabel" name="label_15">
+           <property name="text">
+            <string>Derived Key Type</string>
+           </property>
+          </widget>
+         </item>
          <item row="0" column="1">
           <widget class="QComboBox" name="mClassCombo">
            <property name="sizePolicy">
@@ -670,10 +677,20 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="2">
-          <widget class="QLabel" name="label_15">
+         <item row="0" column="4">
+          <widget class="QLabel" name="label_17">
            <property name="text">
-            <string>Derived Key Type</string>
+            <string>KeySize</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="5">
+          <widget class="QLineEdit" name="mKeySizeText">
+           <property name="maximumSize">
+            <size>
+             <width>60</width>
+             <height>16777215</height>
+            </size>
            </property>
           </widget>
          </item>
@@ -701,13 +718,6 @@
        </item>
        <item>
         <layout class="QGridLayout" name="gridLayout_7">
-         <item row="0" column="2">
-          <widget class="QLabel" name="label_17">
-           <property name="text">
-            <string>KeySize</string>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="1">
           <widget class="QLineEdit" name="mIDText"/>
          </item>
@@ -724,13 +734,10 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="3">
-          <widget class="QLineEdit" name="mKeySizeText">
-           <property name="maximumSize">
-            <size>
-             <width>60</width>
-             <height>16777215</height>
-            </size>
+         <item row="0" column="2">
+          <widget class="QCheckBox" name="mUseRandCheck">
+           <property name="text">
+            <string>Use Random</string>
            </property>
           </widget>
          </item>
@@ -961,7 +968,6 @@
   <tabstop>mTypeCombo</tabstop>
   <tabstop>mLabelText</tabstop>
   <tabstop>mIDText</tabstop>
-  <tabstop>mKeySizeText</tabstop>
   <tabstop>mPrivateCheck</tabstop>
   <tabstop>mPrivateCombo</tabstop>
   <tabstop>mSensitiveCheck</tabstop>

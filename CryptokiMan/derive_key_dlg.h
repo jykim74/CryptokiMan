@@ -25,6 +25,7 @@ private slots:
     void srcLabelChanged( int index );
     void classChanged( int index );
 
+    void clickUseRand();
     void clickPrivate();
     void clickSensitive();
     void clickWrap();

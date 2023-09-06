@@ -4,6 +4,10 @@
 #include "js_pkcs11.h"
 #include "common.h"
 #include "cryptoki_api.h"
+#include "js_pki.h"
+#include "js_pki_eddsa.h"
+#include "js_pki_key.h"
+#include "js_pki_tools.h"
 
 static QStringList sFalseTrue = { "false", "true" };
 
@@ -99,6 +103,8 @@ void CreateDSAPriKeyDlg::setAttributes()
 
 void CreateDSAPriKeyDlg::connectAttributes()
 {
+    connect( mUseSKICheck, SIGNAL(clicked()), this, SLOT(clickUseSKI()));
+
     connect( mPText, SIGNAL(textChanged(const QString&)), this, SLOT(changeP(const QString&)));
     connect( mQText, SIGNAL(textChanged(const QString&)), this, SLOT(changeQ(const QString&)));
     connect( mGText, SIGNAL(textChanged(const QString&)), this, SLOT(changeG(const QString&)));
@@ -216,9 +222,17 @@ void CreateDSAPriKeyDlg::accept()
     QString strID = mIDText->text();
     BIN binID = {0,0};
 
-    if( !strID.isEmpty() )
+    if( mUseSKICheck->isChecked() )
+    {
+        getSKI( &binID );
+    }
+    else
     {
         JS_BIN_decodeHex( strID.toStdString().c_str(), &binID );
+    }
+
+    if( binID.nLen > 0 )
+    {
         sTemplate[uCount].type = CKA_ID;
         sTemplate[uCount].pValue = binID.pVal;
         sTemplate[uCount].ulValueLen = binID.nLen;
@@ -360,6 +374,12 @@ void CreateDSAPriKeyDlg::accept()
     QDialog::accept();
 }
 
+void CreateDSAPriKeyDlg::clickUseSKI()
+{
+    bool bVal = mUseSKICheck->isChecked();
+    mIDText->setEnabled( !bVal );
+}
+
 void CreateDSAPriKeyDlg::clickPrivate()
 {
     mPrivateCombo->setEnabled(mPrivateCheck->isChecked());
@@ -449,6 +469,9 @@ void CreateDSAPriKeyDlg::setDefaults()
     mLabelText->setText( "DSA Private Label" );
     mIDText->setText( "01020304" );
 
+    mUseSKICheck->setChecked(true);
+    clickUseSKI();
+
     mPrivateCheck->setChecked(true);
     mPrivateCombo->setEnabled(true);
     mPrivateCombo->setCurrentIndex(1);
@@ -471,4 +494,48 @@ void CreateDSAPriKeyDlg::setDefaults()
 
     mStartDateEdit->setDate( nowTime.date() );
     mEndDateEdit->setDate( nowTime.date() );
+}
+
+int CreateDSAPriKeyDlg::getSKI( BIN *pSKI )
+{
+    int ret = 0;
+    JDSAKeyVal  sDSAKey;
+    BIN binPri = {0,0};
+    BIN binPub = {0,0};
+
+    memset( &sDSAKey, 0x00, sizeof(sDSAKey));
+
+    JS_PKI_setDSAKeyVal( &sDSAKey,
+                         mGText->text().toStdString().c_str(),
+                         mPText->text().toStdString().c_str(),
+                         mQText->text().toStdString().c_str(),
+                         NULL,
+                         mKeyValueText->text().toStdString().c_str() );
+
+    ret = JS_PKI_encodeDSAPrivateKey( &sDSAKey, &binPri );
+    if( ret != 0 )
+    {
+        manApplet->elog( QString( "fail to encode private key: %d").arg(ret));
+        goto end;
+    }
+
+    ret = JS_PKI_getPubKeyFromPri( JS_PKI_KEY_TYPE_DSA, &binPri, &binPub );
+    if( ret != 0 )
+    {
+        manApplet->elog( QString( "fail to get public key from private key: %1").arg(ret));
+        goto end;
+    }
+
+    ret = JS_PKI_getKeyIdentifier( &binPub, pSKI );
+    if( ret != 0 )
+    {
+        manApplet->elog( QString( "fail to get key identifier: %1").arg(ret));
+        goto end;
+    }
+
+end :
+    JS_PKI_resetDSAKeyVal( &sDSAKey );
+    JS_BIN_reset( &binPri );
+    JS_BIN_reset( &binPub );
+    return ret;
 }

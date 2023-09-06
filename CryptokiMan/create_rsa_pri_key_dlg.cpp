@@ -4,6 +4,10 @@
 #include "js_pkcs11.h"
 #include "common.h"
 #include "cryptoki_api.h"
+#include "js_pki.h"
+#include "js_pki_eddsa.h"
+#include "js_pki_key.h"
+#include "js_pki_tools.h"
 
 static QStringList sFalseTrue = { "false", "true" };
 
@@ -108,6 +112,8 @@ void CreateRSAPriKeyDlg::setAttributes()
 
 void CreateRSAPriKeyDlg::connectAttributes()
 {
+    connect( mUseSKICheck, SIGNAL(clicked()), this, SLOT(clickUseSKI()));
+
     connect( mPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPrivate()));
     connect( mDecryptCheck, SIGNAL(clicked()), this, SLOT(clickDecrypt()));
     connect( mUnwrapCheck, SIGNAL(clicked()), this, SLOT(clickUnwrap()));
@@ -267,9 +273,17 @@ void CreateRSAPriKeyDlg::accept()
     QString strID = mIDText->text();
     BIN binID = {0,0};
 
-    if( !strID.isEmpty() )
+    if( mUseSKICheck->isChecked() )
+    {
+        getSKI( &binID );
+    }
+    else
     {
         JS_BIN_decodeHex( strID.toStdString().c_str(), &binID );
+    }
+
+    if( binID.nLen > 0 )
+    {
         sTemplate[uCount].type = CKA_ID;
         sTemplate[uCount].pValue = binID.pVal;
         sTemplate[uCount].ulValueLen = binID.nLen;
@@ -414,6 +428,12 @@ void CreateRSAPriKeyDlg::accept()
     QDialog::accept();
 }
 
+void CreateRSAPriKeyDlg::clickUseSKI()
+{
+    bool bVal = mUseSKICheck->isChecked();
+    mIDText->setEnabled( !bVal );
+}
+
 void CreateRSAPriKeyDlg::clickPrivate()
 {
     mPrivateCombo->setEnabled(mPrivateCheck->isChecked());
@@ -527,6 +547,9 @@ void CreateRSAPriKeyDlg::setDefaults()
     mLabelText->setText( "RSA Private Label" );
     mIDText->setText( "01020304" );
 
+    mUseSKICheck->setChecked(true);
+    clickUseSKI();
+
     mPrivateCheck->setChecked(true);
     mPrivateCombo->setEnabled(true);
     mPrivateCombo->setCurrentIndex(1);
@@ -549,4 +572,51 @@ void CreateRSAPriKeyDlg::setDefaults()
 
     mStartDateEdit->setDate( nowTime.date() );
     mEndDateEdit->setDate( nowTime.date() );
+}
+
+int CreateRSAPriKeyDlg::getSKI( BIN *pSKI )
+{
+    int ret = 0;
+    JRSAKeyVal  sRSAKey;
+    BIN binPri = {0,0};
+    BIN binPub = {0,0};
+
+    memset( &sRSAKey, 0x00, sizeof(sRSAKey));
+
+    JS_PKI_setRSAKeyVal( &sRSAKey,
+                         mModulesText->text().toStdString().c_str(),
+                         mPubExponentText->text().toStdString().c_str(),
+                         mPriExponentText->text().toStdString().c_str(),
+                         mPrime1Text->text().toStdString().c_str(),
+                         mPrime2Text->text().toStdString().c_str(),
+                         mExponent1Text->text().toStdString().c_str(),
+                         mExponent2Text->text().toStdString().c_str(),
+                         mCoefficientText->text().toStdString().c_str() );
+
+    ret = JS_PKI_encodeRSAPrivateKey( &sRSAKey, &binPri );
+    if( ret != 0 )
+    {
+        manApplet->elog( QString( "fail to encode private key: %d").arg(ret));
+        goto end;
+    }
+
+    ret = JS_PKI_getPubKeyFromPri( JS_PKI_KEY_TYPE_DSA, &binPri, &binPub );
+    if( ret != 0 )
+    {
+        manApplet->elog( QString( "fail to get public key from private key: %1").arg(ret));
+        goto end;
+    }
+
+    ret = JS_PKI_getKeyIdentifier( &binPub, pSKI );
+    if( ret != 0 )
+    {
+        manApplet->elog( QString( "fail to get key identifier: %1").arg(ret));
+        goto end;
+    }
+
+end :
+    JS_PKI_resetRSAKeyVal( &sRSAKey );
+    JS_BIN_reset( &binPri );
+    JS_BIN_reset( &binPub );
+    return ret;
 }

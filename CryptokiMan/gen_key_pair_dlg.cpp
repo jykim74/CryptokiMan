@@ -166,7 +166,7 @@ void GenKeyPairDlg::connectAttributes()
     connect( mPriPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPriPrivate()));
     connect( mPriDecryptCheck, SIGNAL(clicked()), this, SLOT(clickPriDecrypt()));
     connect( mPriSignCheck, SIGNAL(clicked()), this, SLOT(clickPriSign()));
-    connect( mPriSignRecoverCheck, SIGNAL(clicked()), this, SLOT(clickSignRecover()));
+    connect( mPriSignRecoverCheck, SIGNAL(clicked()), this, SLOT(clickPriSignRecover()));
     connect( mPriUnwrapCheck, SIGNAL(clicked()), this, SLOT(clickPriUnwrap()));
     connect( mPriModifiableCheck, SIGNAL(clicked()), this, SLOT(clickPriModifiable()));
     connect( mPriSensitiveCheck, SIGNAL(clicked()), this, SLOT(clickPriSensitive()));
@@ -181,7 +181,7 @@ void GenKeyPairDlg::connectAttributes()
     connect( mPubEncryptCheck, SIGNAL(clicked()), this, SLOT(clickPubEncrypt()));
     connect( mPubWrapCheck, SIGNAL(clicked()), this, SLOT(clickPubWrap()));
     connect( mPubVerifyCheck, SIGNAL(clicked()), this, SLOT(clickPubVerify()));
-    connect( mPubVerifyRecoverCheck, SIGNAL(clicked()), this, SLOT(clickVerifyRecover()));
+    connect( mPubVerifyRecoverCheck, SIGNAL(clicked()), this, SLOT(clickPubVerifyRecover()));
     connect( mPubDeriveCheck, SIGNAL(clicked()), this, SLOT(clickPubDerive()));
     connect( mPubModifiableCheck, SIGNAL(clicked()), this, SLOT(clickPubModifiable()));
     connect( mPubTokenCheck, SIGNAL(clicked()), this, SLOT(clickPubToken()));
@@ -620,6 +620,16 @@ void GenKeyPairDlg::accept()
         return;
     }
 
+    if( mPriUseSKICheck->isChecked() || mPubUseSKICheck->isChecked() )
+    {
+        rv = setSKI( hSession, keyType, uPriHandle, uPubHandle );
+        if( rv != CKR_OK )
+        {
+            manApplet->warningBox( tr( "failure to set SKI(rv:%1)").arg(JS_PKCS11_GetErrorMsg( rv )), this );
+            return;
+        }
+    }
+
     manApplet->messageBox( tr("Success to generate key pairs"), this );
     manApplet->showTypeList( index, HM_ITEM_TYPE_PRIVATEKEY );
 
@@ -911,4 +921,171 @@ void GenKeyPairDlg::setDefaults()
 
     mPubStartDateEdit->setDate( nowTime.date() );
     mPubEndDateEdit->setDate( nowTime.date() );
+}
+
+int GenKeyPairDlg::setSKI( long hSession, int nKeyType, long hPri, long hPub )
+{
+    int rv = 0;
+    BIN binPub = {0,0};
+    BIN binSKI = {0,0};
+
+    CryptokiAPI* cryptoAPI = manApplet->cryptokiAPI();
+    if( cryptoAPI == NULL ) return -1;
+
+    if( nKeyType == CKK_RSA )
+    {
+        char *pN = NULL;
+        char *pE = NULL;
+        BIN binN = {0,0};
+        BIN binE = {0,0};
+
+        rv = cryptoAPI->GetAttributeValue2( hSession, hPub, CKA_MODULUS, &binN );
+        if( rv != 0 ) goto end;
+
+        rv = cryptoAPI->GetAttributeValue2( hSession, hPub, CKA_PUBLIC_EXPONENT, &binE );
+        if( rv != 0 )
+        {
+            JS_BIN_reset( &binN );
+            goto end;
+        }
+
+        JRSAKeyVal  rsaKey;
+        memset( &rsaKey, 0x00, sizeof(rsaKey));
+
+        JS_BIN_encodeHex( &binN, &pN );
+        JS_BIN_encodeHex( &binE, &pE );
+
+        JS_PKI_setRSAKeyVal( &rsaKey, pN, pE, NULL, NULL, NULL, NULL, NULL, NULL );
+        JS_PKI_encodeRSAPublicKey( &rsaKey, &binPub );
+
+        JS_BIN_reset( &binN );
+        JS_BIN_reset( &binE );
+        if( pN ) JS_free( pN );
+        if( pE ) JS_free( pE );
+        JS_PKI_resetRSAKeyVal( &rsaKey );
+    }
+    else if( nKeyType == CKK_ECDSA )
+    {
+        BIN binVal = {0,0};
+        BIN binKey = {0,0};
+        BIN binPubX = {0,0};
+        BIN binPubY = {0,0};
+
+        char *pPubX = NULL;
+        char *pPubY = NULL;
+        char sCurveOID[128];
+
+        QString strParam = mOptionCombo->currentText();
+
+        JECKeyVal   ecKey;
+        memset( &ecKey, 0x00, sizeof(ecKey));
+        memset( sCurveOID, 0x00, sizeof(sCurveOID));
+
+        JS_PKI_getOIDFromSN( strParam.toStdString().c_str(), sCurveOID );
+
+        rv = cryptoAPI->GetAttributeValue2( hSession, hPub, CKA_EC_POINT, &binVal );
+        if( rv != 0 ) goto end;
+
+        JS_BIN_set( &binKey, binVal.pVal + 3, binVal.nLen - 3 ); // 04+Len(1byte)+04 건너팀
+        JS_BIN_set( &binPubX, &binKey.pVal[0], binKey.nLen/2 );
+        JS_BIN_set( &binPubY, &binKey.pVal[binKey.nLen/2], binKey.nLen/2 );
+
+
+        JS_BIN_encodeHex( &binPubX, &pPubX );
+        JS_BIN_encodeHex( &binPubY, &pPubY );
+
+        JS_PKI_setECKeyVal( &ecKey, sCurveOID, pPubX, pPubY, NULL );
+        JS_PKI_encodeECPublicKey( &ecKey, &binPub );
+
+        JS_BIN_reset( &binVal );
+        JS_BIN_reset( &binKey );
+        JS_BIN_reset( &binPubX );
+        JS_BIN_reset( &binPubY );
+        if( pPubX ) JS_free( pPubX );
+        if( pPubY ) JS_free( pPubY );
+
+        JS_PKI_resetECKeyVal( &ecKey );
+    }
+    else if( nKeyType == CKK_DSA )
+    {
+        char *pHexG = NULL;
+        char *pHexP = NULL;
+        char *pHexQ = NULL;
+        char *pHexPub = NULL;
+
+        BIN binVal = {0,0};
+        BIN binP = {0,0};
+        BIN binG = {0,0};
+        BIN binQ = {0,0};
+
+        JDSAKeyVal sDSAKey;
+        memset( &sDSAKey, 0x00, sizeof(sDSAKey));
+
+        rv = cryptoAPI->GetAttributeValue2( hSession, hPub, CKA_VALUE, &binVal );
+        if( rv != 0 ) goto end;
+
+        rv = cryptoAPI->GetAttributeValue2( hSession, hPub, CKA_PRIME, &binP );
+        if( rv != 0 )
+        {
+            JS_BIN_reset( &binVal );
+            goto end;
+        }
+
+        rv = cryptoAPI->GetAttributeValue2( hSession, hPub, CKA_SUBPRIME, &binQ );
+        if( rv != 0 )
+        {
+            JS_BIN_reset( &binVal );
+            JS_BIN_reset( &binP );
+            goto end;
+        }
+
+        rv = cryptoAPI->GetAttributeValue2( hSession, hPub, CKA_BASE, &binG );
+        if( rv != 0 )
+        {
+            JS_BIN_reset( &binVal );
+            JS_BIN_reset( &binP );
+            JS_BIN_reset( &binQ );
+            goto end;
+        }
+
+        JS_BIN_encodeHex( &binP, &pHexP );
+        JS_BIN_encodeHex( &binQ, &pHexQ );
+        JS_BIN_encodeHex( &binG, &pHexG );
+        JS_BIN_encodeHex( &binVal, &pHexPub );
+
+        JS_PKI_setDSAKeyVal( &sDSAKey, pHexG, pHexP, pHexQ, pHexPub, NULL );
+        JS_PKI_encodeDSAPublicKey( &sDSAKey, &binPub );
+
+        if( pHexG ) JS_free( pHexG );
+        if( pHexP ) JS_free( pHexP );
+        if( pHexQ ) JS_free( pHexQ );
+        if( pHexPub ) JS_free( pHexPub );
+
+        JS_BIN_reset( &binVal );
+        JS_BIN_reset( &binP );
+        JS_BIN_reset( &binQ );
+        JS_BIN_reset( &binG );
+
+        JS_PKI_resetDSAKeyVal( &sDSAKey );
+    }
+
+    JS_PKI_getKeyIdentifier( &binPub, &binSKI );
+
+    if( mPriUseSKICheck->isChecked() )
+    {
+        rv = cryptoAPI->SetAttributeValue2( hSession, hPri, CKA_ID, &binSKI );
+        if( rv != 0 ) goto end;
+    }
+
+    if( mPubUseSKICheck->isChecked() )
+    {
+        rv = cryptoAPI->SetAttributeValue2( hSession, hPub, CKA_ID, &binSKI );
+        if( rv != 0 ) goto end;
+    }
+
+end :
+    JS_BIN_reset( &binPub );
+    JS_BIN_reset( &binSKI );
+
+    return rv;
 }

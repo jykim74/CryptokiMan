@@ -26,6 +26,7 @@ private slots:
     void classChanged(int index);
     void clickReadFile();
 
+    void clickUseRand();
     void clickPrivate();
     void clickSensitive();
     void clickWrap();

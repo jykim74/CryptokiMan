@@ -23,6 +23,7 @@ private slots:
     virtual void accept();
     void slotChanged( int index );
 
+    void clickCertUseSKI();
     void clickCertPrivate();
     void clickCertSensitive();
     void clickCertModifiable();
@@ -30,6 +31,7 @@ private slots:
     void clickCertStartDate();
     void clickCertEndDate();
 
+    void clickPriUseSKI();
     void clickPriPrivate();
     void clickPriDecrypt();
     void clickPriSign();
@@ -43,6 +45,7 @@ private slots:
     void clickPriStartDate();
     void clickPriEndDate();
 
+    void clickPubUseSKI();
     void clickPubPrivate();
     void clickPubEncrypt();
     void clickPubWrap();
@@ -76,6 +79,7 @@ private:
     void setDefaults();
 
     BIN der_dn_;
+    BIN ski_;
 };
 
 #endif // IMPORT_PFX_DLG_H

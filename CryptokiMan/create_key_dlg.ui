@@ -434,15 +434,15 @@
          <property name="topMargin">
           <number>0</number>
          </property>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="mIDText"/>
+         </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label_7">
            <property name="text">
             <string>Label</string>
            </property>
           </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="mLabelText"/>
          </item>
          <item row="1" column="0">
           <widget class="QLabel" name="label_4">
@@ -451,8 +451,15 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="mIDText"/>
+         <item row="1" column="2">
+          <widget class="QCheckBox" name="mUseRandCheck">
+           <property name="text">
+            <string>Use Random</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1" colspan="2">
+          <widget class="QLineEdit" name="mLabelText"/>
          </item>
         </layout>
        </item>

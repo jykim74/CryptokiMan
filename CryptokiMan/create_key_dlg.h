@@ -21,6 +21,7 @@ private slots:
     virtual void accept();
     void slotChanged( int index );
 
+    void clickUseRand();
     void clickPrivate();
     void clickSensitive();
     void clickWrap();

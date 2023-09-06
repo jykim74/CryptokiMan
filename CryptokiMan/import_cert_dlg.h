@@ -20,6 +20,7 @@ public:
 private slots:
     void slotChanged( int index );
     virtual void accept();
+    void clickUseSKI();
     void clickPrivate();
     void clickSensitive();
     void clickModifiable();

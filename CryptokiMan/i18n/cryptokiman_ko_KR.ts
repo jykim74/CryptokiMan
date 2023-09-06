@@ -361,6 +361,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>Prime(P)</source>
         <translation>Prime(P)</translation>
     </message>
+    <message>
+        <source>Use SKI</source>
+        <translation>SKI 사용</translation>
+    </message>
+    <message>
+        <source>SignRecover</source>
+        <translation>SignRecover</translation>
+    </message>
 </context>
 <context>
     <name>CreateDSAPubKeyDlg</name>
@@ -451,6 +459,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>success to create DSA public key</source>
         <translation>DSA 공개키 생성 성공</translation>
+    </message>
+    <message>
+        <source>Use SKI</source>
+        <translation>SKI 사용</translation>
+    </message>
+    <message>
+        <source>VerifyRecover</source>
+        <translation>VerifyRecover</translation>
     </message>
 </context>
 <context>
@@ -642,6 +658,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>EndDate</source>
         <translation>종료 일자</translation>
     </message>
+    <message>
+        <source>Use SKI</source>
+        <translation>SKI 사용</translation>
+    </message>
+    <message>
+        <source>SignRecover</source>
+        <translation>SignRecover</translation>
+    </message>
 </context>
 <context>
     <name>CreateECPubKeyDlg</name>
@@ -744,6 +768,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Information</source>
         <translation>정보</translation>
+    </message>
+    <message>
+        <source>Use SKI</source>
+        <translation>SKI 사용</translation>
+    </message>
+    <message>
+        <source>VerifyRecover</source>
+        <translation>VerifyRecover</translation>
     </message>
 </context>
 <context>
@@ -871,6 +903,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Create Key Information</source>
         <translation>키 만들기 정보</translation>
+    </message>
+    <message>
+        <source>Use Random</source>
+        <translation>랜덤 사용</translation>
     </message>
 </context>
 <context>
@@ -1011,6 +1047,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>EndDate</source>
         <translation>종료 일자</translation>
     </message>
+    <message>
+        <source>Use SKI</source>
+        <translation>SKI 사용</translation>
+    </message>
+    <message>
+        <source>SignRecover</source>
+        <translation>SignRecover</translation>
+    </message>
 </context>
 <context>
     <name>CreateRSAPubKeyDlg</name>
@@ -1109,6 +1153,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>EndDate</source>
         <translation>종료 일자</translation>
+    </message>
+    <message>
+        <source>Use SKI</source>
+        <translation>SKI 사용</translation>
+    </message>
+    <message>
+        <source>VerifyRecover</source>
+        <translation>VerifyRecover</translation>
     </message>
 </context>
 <context>
@@ -1511,6 +1563,18 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>Derived Key Type</source>
         <translation>추출된 키 타입</translation>
+    </message>
+    <message>
+        <source>Use Random</source>
+        <translation>랜덤 사용</translation>
+    </message>
+    <message>
+        <source>SignRecover</source>
+        <translation>SignRecover</translation>
+    </message>
+    <message>
+        <source>VerifyRecover</source>
+        <translation>VerifyRecover</translation>
     </message>
 </context>
 <context>
@@ -2049,6 +2113,10 @@ Do you want to delete the file and continue?</source>
         <source>Generate Key Information</source>
         <translation>키 생성 정보</translation>
     </message>
+    <message>
+        <source>Use Random</source>
+        <translation>랜덤 사용</translation>
+    </message>
 </context>
 <context>
     <name>GenKeyPairDlg</name>
@@ -2224,6 +2292,22 @@ Do you want to delete the file and continue?</source>
         <source>Generator(G)</source>
         <translation>Generator(G)</translation>
     </message>
+    <message>
+        <source>Use SKI</source>
+        <translation>SKI 사용</translation>
+    </message>
+    <message>
+        <source>SignRecover</source>
+        <translation>SignRecover</translation>
+    </message>
+    <message>
+        <source>VerifyRecover</source>
+        <translation>VerifyRecover</translation>
+    </message>
+    <message>
+        <source>failure to set SKI(rv:%1)</source>
+        <translation>SKI 설정 실패(rv:%1)</translation>
+    </message>
 </context>
 <context>
     <name>ImportCertDlg</name>
@@ -2318,6 +2402,14 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>subject in cert</source>
         <translation>인증서 주체</translation>
+    </message>
+    <message>
+        <source>Use SKI</source>
+        <translation>SKI 사용</translation>
+    </message>
+    <message>
+        <source>fail to read certificate:%1</source>
+        <translation>인증서 읽기 실패(%1)</translation>
     </message>
 </context>
 <context>
@@ -2506,6 +2598,18 @@ Do you want to delete the file and continue?</source>
         <source>fail to create DSA private key(%1)</source>
         <translation>DSA 개인키 생성 실패(%1)</translation>
     </message>
+    <message>
+        <source>Use SKI</source>
+        <translation>SKI 사용</translation>
+    </message>
+    <message>
+        <source>SignRecover</source>
+        <translation>SignRecover</translation>
+    </message>
+    <message>
+        <source>VerifyRecover</source>
+        <translation>VerifyRecover</translation>
+    </message>
 </context>
 <context>
     <name>ImportPriKeyDlg</name>
@@ -2688,6 +2792,14 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>fail to create DSA private key(%1)</source>
         <translation>DSA 개인키 생성 실패(%1)</translation>
+    </message>
+    <message>
+        <source>SignRecover</source>
+        <translation>SignRecover</translation>
+    </message>
+    <message>
+        <source>VerifyRecover</source>
+        <translation>VerifyRecover</translation>
     </message>
 </context>
 <context>
@@ -4558,6 +4670,18 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>You have to insert wraped key value</source>
         <translation>암호화된 키 값을 입력하세요</translation>
+    </message>
+    <message>
+        <source>Use Random</source>
+        <translation>랜덤 사용</translation>
+    </message>
+    <message>
+        <source>SignRecover</source>
+        <translation>SignRecover</translation>
+    </message>
+    <message>
+        <source>VerifyRecover</source>
+        <translation>VerifyRecover</translation>
     </message>
 </context>
 <context>

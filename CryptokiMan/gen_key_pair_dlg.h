@@ -64,6 +64,8 @@ private:
     void setAttributes();
     void connectAttributes();
     void setDefaults();
+
+    int setSKI( long hSession, int nKeyType, long hPri, long hPub );
 };
 
 #endif // GEN_KEY_PAIR_DLG_H

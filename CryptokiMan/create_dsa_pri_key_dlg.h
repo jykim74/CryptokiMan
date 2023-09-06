@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "ui_create_dsa_pri_key_dlg.h"
+#include "js_bin.h"
 
 namespace Ui {
 class CreateDSAPriKeyDlg;
@@ -21,6 +22,7 @@ private slots:
     virtual void accept();
     void slotChanged( int index );
 
+    void clickUseSKI();
     void clickPrivate();
     void clickDecrypt();
     void clickSign();
@@ -45,6 +47,7 @@ private:
     void connectAttributes();
 
     void setDefaults();
+    int getSKI( BIN *pSKI );
 };
 
 #endif // GEN_EC_PRI_KEY_DLG_H

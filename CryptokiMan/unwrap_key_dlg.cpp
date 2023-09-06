@@ -127,6 +127,8 @@ void UnwrapKeyDlg::setAttributes()
 
 void UnwrapKeyDlg::connectAttributes()
 {
+    connect( mUseRandCheck, SIGNAL(clicked()), this, SLOT(clickUseRand()));
+
     connect( mPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPrivate()));
     connect( mSensitiveCheck, SIGNAL(clicked()), this, SLOT(clickSensitive()));
     connect( mWrapCheck, SIGNAL(clicked()), this, SLOT(clickWrap()));
@@ -147,6 +149,9 @@ void UnwrapKeyDlg::connectAttributes()
 
 void UnwrapKeyDlg::setDefaults()
 {
+    mUseRandCheck->setChecked(true);
+    clickUseRand();
+
     mPrivateCheck->setChecked(true);
     mPrivateCombo->setEnabled(true);
     mPrivateCombo->setCurrentIndex(1);
@@ -274,9 +279,17 @@ void UnwrapKeyDlg::accept()
     BIN binID = {0,0};
     QString strID = mIDText->text();
 
-    if( !strID.isEmpty() )
+    if( mUseRandCheck->isChecked() )
     {
-        JS_BIN_set( &binID, (unsigned char *)strID.toStdString().c_str(), strID.length() );
+        JS_PKI_genRandom( 20, &binID );
+    }
+    else
+    {
+        JS_BIN_decodeHex( strID.toStdString().c_str(), &binID );
+    }
+
+    if( binID.nLen > 0 )
+    {
         sTemplate[uCount].type = CKA_ID;
         sTemplate[uCount].pValue = binID.pVal;
         sTemplate[uCount].ulValueLen = binID.nLen;
@@ -619,6 +632,12 @@ void UnwrapKeyDlg::setUnwrapRSAPrivateLabel()
 
         mUnwrapObjectText->setText( strObject );
     }
+}
+
+void UnwrapKeyDlg::clickUseRand()
+{
+    bool bVal = mUseRandCheck->isChecked();
+    mIDText->setEnabled( !bVal );
 }
 
 void UnwrapKeyDlg::clickPrivate()
