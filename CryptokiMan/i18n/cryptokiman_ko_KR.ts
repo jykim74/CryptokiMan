@@ -381,6 +381,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>Key Length</source>
         <translation>키 길이</translation>
     </message>
+    <message>
+        <source>Find Key</source>
+        <translation>키 찾기</translation>
+    </message>
 </context>
 <context>
     <name>CreateDSAPubKeyDlg</name>
@@ -491,6 +495,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Gen Key</source>
         <translation>키 생성</translation>
+    </message>
+    <message>
+        <source>Find Key</source>
+        <translation>키 찾기</translation>
     </message>
 </context>
 <context>
@@ -702,6 +710,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>Named Curve</source>
         <translation>커브 이름</translation>
     </message>
+    <message>
+        <source>Find Key</source>
+        <translation>키 찾기</translation>
+    </message>
 </context>
 <context>
     <name>CreateECPubKeyDlg</name>
@@ -824,6 +836,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Key Value</source>
         <translation>키 값</translation>
+    </message>
+    <message>
+        <source>Find Key</source>
+        <translation>키 찾기</translation>
     </message>
 </context>
 <context>
@@ -1115,6 +1131,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>Gen Key</source>
         <translation></translation>
     </message>
+    <message>
+        <source>Find Key</source>
+        <translation>키 찾기</translation>
+    </message>
 </context>
 <context>
     <name>CreateRSAPubKeyDlg</name>
@@ -1237,6 +1257,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Key Length</source>
         <translation>키 길이</translation>
+    </message>
+    <message>
+        <source>Find Key</source>
+        <translation>키 찾기</translation>
     </message>
 </context>
 <context>
