@@ -1525,6 +1525,18 @@ Do you want to delete the file and continue?</source>
         <source>Delete</source>
         <translation>삭제</translation>
     </message>
+    <message>
+        <source>Are you sure to delete %1 objects all</source>
+        <translation type="vanished">%1 객체 모두를 지우시겠습니까?</translation>
+    </message>
+    <message>
+        <source>invalid object type[%1]</source>
+        <translation>유효하지 않은 객체 타입 [%1]</translation>
+    </message>
+    <message>
+        <source>Are you sure to delete %1 objects all?</source>
+        <translation>[%1] 객체 모두를 지우시겠습니까?</translation>
+    </message>
 </context>
 <context>
     <name>DeriveKeyDlg</name>

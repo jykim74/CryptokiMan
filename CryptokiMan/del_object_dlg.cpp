@@ -70,7 +70,7 @@ void DelObjectDlg::slotChanged(int index)
 
 void DelObjectDlg::initialize()
 {
-    if( object_id_ >= 0 ) mDeleteAllBtn->setDisabled(true);
+//    if( object_id_ >= 0 ) mDeleteAllBtn->setDisabled(true);
 }
 
 void DelObjectDlg::showEvent(QShowEvent *event)
@@ -148,6 +148,8 @@ void DelObjectDlg::deleteAllObj()
 
     QString strType = mObjectTypeCombo->currentText();
 
+    bool bVal = manApplet->yesOrNoBox( tr( "Are you sure to delete %1 objects all?").arg( strType ), this, false );
+    if( bVal == false ) return;
 
     if( strType == kObjectTypeList[0] )
     {
@@ -169,10 +171,15 @@ void DelObjectDlg::deleteAllObj()
         objClass = CKO_SECRET_KEY;
         nDataType = HM_ITEM_TYPE_SECRETKEY;
     }
-    if( strType == kObjectTypeList[4] )
+    else if( strType == kObjectTypeList[4] )
     {
         objClass = CKO_DATA;
         nDataType = HM_ITEM_TYPE_DATA;
+    }
+    else
+    {
+        manApplet->warningBox( tr( "invalid object type[%1]").arg( strType ));
+        return;
     }
 
     sTemplate[uCount].type = CKA_CLASS;
@@ -194,11 +201,23 @@ void DelObjectDlg::deleteAllObj()
     for( int i=0; i < uObjCnt; i++ )
     {
         rv = manApplet->cryptokiAPI()->DestroyObject( session_, sObjects[i] );
+        if( rv != CKR_OK )
+        {
+            manApplet->elog( QString( "fail to delete object: %1").arg( sObjects[i] ));
+            break;
+        }
+        else
+        {
+            manApplet->log( QString( "object(%1) is deleted").arg( sObjects[i] ));
+        }
     }
 
     manApplet->showTypeList( slot_index_, nDataType );
 
-    QDialog::accept();
+    if( rv == CKR_OK)
+        QDialog::accept();
+    else
+        QDialog::reject();
 }
 
 
