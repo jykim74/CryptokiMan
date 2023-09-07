@@ -1818,6 +1818,7 @@ void MainWindow::showCertificateInfoDetail( QModelIndex index )
     info( QString( "CKA_TOKEN      : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_TOKEN, uObj ) ));
     info( QString( "CKA_MODIFIABLE : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_MODIFIABLE, uObj ) ));
     info( QString( "CKA_TRUSTED    : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_TRUSTED, uObj ) ));
+    info( QString( "CKA_LOCAL      : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_LOCAL, uObj ) ));
     info( QString( "CKA_PRIVATE    : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_PRIVATE, uObj ) ));
     info( QString( "CKA_START_DATE : %1\n" ).arg(stringAttribute( ATTR_VAL_DATE, CKA_START_DATE, uObj ) ));
     info( QString( "CKA_END_DATE   : %1\n" ).arg(stringAttribute( ATTR_VAL_DATE, CKA_END_DATE, uObj ) ));
@@ -1852,6 +1853,8 @@ void MainWindow::showPublicKeyInfoDetail( QModelIndex index )
     info( QString( "CKA_KEY_TYPE        : %1\n").arg( strKeyType ));
     info( QString( "CKA_SUBJECT         : %1 - %2\n" ).arg( strSubject ).arg( pDN ? pDN : "" ) );
     info( QString( "CKA_ID              : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_ID, uObj ) ));
+    info( QString( "CKA_TRUSTED         : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_TRUSTED, uObj ) ));
+    info( QString( "CKA_LOCAL           : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_LOCAL, uObj ) ));
 
     if( strKeyType == "CKK_RSA" )
     {
@@ -1921,6 +1924,7 @@ void MainWindow::showPrivateKeyInfoDetail( QModelIndex index )
     info( QString( "CKA_SUBJECT          : %1 - %2\n" ).arg( strSubject ).arg( pDN ? pDN : "" ) );
     info( QString( "CKA_ID               : %1\n" ).arg(stringAttribute(ATTR_VAL_HEX, CKA_ID, uObj)) );
     info( QString( "CKA_SUBJECT          : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_SUBJECT, uObj)));
+    info( QString( "CKA_LOCAL            : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_LOCAL, uObj ) ));
 
     if( strKeyType == "CKK_RSA" )
     {
@@ -1996,6 +2000,8 @@ void MainWindow::showSecretKeyInfoDetail( QModelIndex index )
     info( QString( "CKA_MODIFIABLE  : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_MODIFIABLE, uObj )));
     info( QString( "CKA_DERIVE      : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_DERIVE, uObj )));
     info( QString( "CKA_EXTRACTABLE : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_EXTRACTABLE, uObj )));
+    info( QString( "CKA_TRUSTED     : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_TRUSTED, uObj ) ));
+    info( QString( "CKA_LOCAL       : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_LOCAL, uObj ) ));
     info( QString( "CKA_START_DATE  : %1\n" ).arg(stringAttribute( ATTR_VAL_DATE, CKA_START_DATE, uObj )));
     info( QString( "CKA_END_DATE    : %1\n" ).arg(stringAttribute( ATTR_VAL_DATE, CKA_END_DATE, uObj )) );
 }
