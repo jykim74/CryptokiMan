@@ -3013,6 +3013,10 @@ Do you want to delete the file and continue?</source>
         <source>Trusted</source>
         <translation>Trusted</translation>
     </message>
+    <message>
+        <source>Use SKI</source>
+        <translation>SKI 사용</translation>
+    </message>
 </context>
 <context>
     <name>InitPinDlg</name>

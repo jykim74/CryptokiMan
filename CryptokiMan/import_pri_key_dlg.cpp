@@ -13,6 +13,9 @@ static QStringList sFalseTrue = { "false", "true" };
 ImportPriKeyDlg::ImportPriKeyDlg(QWidget *parent) :
     QDialog(parent)
 {
+    ski_.nLen = 0;
+    ski_.pVal = NULL;
+
     setupUi(this);
 
     initAttributes();
@@ -28,7 +31,7 @@ ImportPriKeyDlg::ImportPriKeyDlg(QWidget *parent) :
 
 ImportPriKeyDlg::~ImportPriKeyDlg()
 {
-
+    JS_BIN_reset( &ski_ );
 }
 
 void ImportPriKeyDlg::setSelectedSlot(int index)
@@ -119,6 +122,7 @@ void ImportPriKeyDlg::connectAttributes()
     connect( mPubImportCheck, SIGNAL(clicked()), this, SLOT(checkPubImport()));
     connect( mEncPriKeyCheck, SIGNAL(clicked()), this, SLOT(checkEncPriKey()));
 
+    connect( mPriUseSKICheck, SIGNAL(clicked()), this, SLOT(clickPriUseSKI()));
     connect( mPriPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPriPrivate()));
     connect( mPriDecryptCheck, SIGNAL(clicked()), this, SLOT(clickPriDecrypt()));
     connect( mPriSignCheck, SIGNAL(clicked()), this, SLOT(clickPriSign()));
@@ -131,7 +135,7 @@ void ImportPriKeyDlg::connectAttributes()
     connect( mPriStartDateCheck, SIGNAL(clicked()), this, SLOT(clickPriStartDate()));
     connect( mPriEndDateCheck, SIGNAL(clicked()), this, SLOT(clickPriEndDate()));
 
-
+    connect( mPubUseSKICheck, SIGNAL(clicked()), this, SLOT(clickPubUseSKI()));
     connect( mPubPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPubPrivate()));
     connect( mPubEncryptCheck, SIGNAL(clicked()), this, SLOT(clickPubEncrypt()));
     connect( mPubWrapCheck, SIGNAL(clicked()), this, SLOT(clickPubWrap()));
@@ -209,6 +213,8 @@ void ImportPriKeyDlg::accept()
     int nKeyType = -1;
 
     BIN binPri = {0,0};
+    BIN binPub = {0,0};
+
     JRSAKeyVal rsaKeyVal;
     JECKeyVal ecKeyVal;
     JDSAKeyVal dsaKeyVal;
@@ -221,6 +227,14 @@ void ImportPriKeyDlg::accept()
     if( rv != 0 ) return;
 
     nKeyType = JS_PKI_getPriKeyType( &binPri );
+
+    rv = JS_PKI_getPubKeyFromPri( nKeyType, &binPri, &binPub );
+    if( rv != 0 )
+    {
+        goto end;
+    }
+
+    JS_PKI_getKeyIdentifier( &binPub, &ski_ );
 
     if( nKeyType == JS_PKI_KEY_TYPE_RSA )
     {
@@ -267,6 +281,7 @@ void ImportPriKeyDlg::accept()
 
 end :
     JS_BIN_reset( &binPri );
+    JS_BIN_reset( &binPub );
     JS_PKI_resetRSAKeyVal( &rsaKeyVal );
     JS_PKI_resetECKeyVal( &ecKeyVal );
     JS_PKI_resetDSAKeyVal( &dsaKeyVal );
@@ -308,6 +323,12 @@ void ImportPriKeyDlg::checkEncPriKey()
 
     mPasswdLabel->setEnabled(bVal);
     mPasswdText->setEnabled(bVal);
+}
+
+void ImportPriKeyDlg::clickPriUseSKI()
+{
+    bool bVal = mPriUseSKICheck->isChecked();
+    mPriIDText->setEnabled( !bVal );
 }
 
 void ImportPriKeyDlg::clickPriPrivate()
@@ -364,10 +385,17 @@ void ImportPriKeyDlg::clickPriEndDate()
     mPriEndDateEdit->setEnabled( mPriEndDateCheck->isChecked());
 }
 
+void ImportPriKeyDlg::clickPubUseSKI()
+{
+    bool bVal = mPubUseSKICheck->isChecked();
+    mPubIDText->setEnabled( !bVal );
+}
+
 void ImportPriKeyDlg::clickPubPrivate()
 {
     mPubPrivateCombo->setEnabled(mPubPrivateCheck->isChecked());
 }
+
 void ImportPriKeyDlg::clickPubEncrypt()
 {
     mPubEncryptCombo->setEnabled(mPubEncryptCheck->isChecked());
@@ -489,9 +517,17 @@ int ImportPriKeyDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
     QString strID = mPubIDText->text();
     BIN binID = {0,0};
 
-    if( !strID.isEmpty() )
+    if( mPubUseSKICheck->isChecked() )
+    {
+        JS_BIN_copy( &binID, &ski_ );
+    }
+    else
     {
         JS_BIN_decodeHex( strID.toStdString().c_str(), &binID );
+    }
+
+    if( binID.nLen > 0 )
+    {
         sTemplate[uCount].type = CKA_ID;
         sTemplate[uCount].pValue = binID.pVal;
         sTemplate[uCount].ulValueLen = binID.nLen;
@@ -663,9 +699,17 @@ int ImportPriKeyDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
     QString strID = mPriIDText->text();
     BIN binID = {0,0};
 
-    if( !strID.isEmpty() )
+    if( mPriUseSKICheck->isChecked() )
+    {
+        JS_BIN_copy( &binID, &ski_ );
+    }
+    else
     {
         JS_BIN_decodeHex( strID.toStdString().c_str(), &binID );
+    }
+
+    if( binID.nLen > 0 )
+    {
         sTemplate[uCount].type = CKA_ID;
         sTemplate[uCount].pValue = binID.pVal;
         sTemplate[uCount].ulValueLen = binID.nLen;
@@ -950,9 +994,17 @@ int ImportPriKeyDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
     QString strID = mPubIDText->text();
     BIN binID = {0,0};
 
-    if( !strID.isEmpty() )
+    if( mPubUseSKICheck->isChecked() )
+    {
+        JS_BIN_copy( &binID, &ski_ );
+    }
+    else
     {
         JS_BIN_decodeHex( strID.toStdString().c_str(), &binID );
+    }
+
+    if( binID.nLen > 0 )
+    {
         sTemplate[uCount].type = CKA_ID;
         sTemplate[uCount].pValue = binID.pVal;
         sTemplate[uCount].ulValueLen = binID.nLen;
@@ -1142,9 +1194,17 @@ int ImportPriKeyDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
     QString strID = mPriIDText->text();
     BIN binID = {0,0};
 
-    if( !strID.isEmpty() )
+    if( mPriUseSKICheck->isChecked() )
+    {
+        JS_BIN_copy( &binID, &ski_ );
+    }
+    else
     {
         JS_BIN_decodeHex( strID.toStdString().c_str(), &binID );
+    }
+
+    if( binID.nLen > 0 )
+    {
         sTemplate[uCount].type = CKA_ID;
         sTemplate[uCount].pValue = binID.pVal;
         sTemplate[uCount].ulValueLen = binID.nLen;
@@ -1357,9 +1417,17 @@ int ImportPriKeyDlg::createDSAPublicKey( JDSAKeyVal *pDSAKeyVal )
     QString strID = mPubIDText->text();
     BIN binID = {0,0};
 
-    if( !strID.isEmpty() )
+    if( mPubUseSKICheck->isChecked() )
+    {
+        JS_BIN_copy( &binID, &ski_ );
+    }
+    else
     {
         JS_BIN_decodeHex( strID.toStdString().c_str(), &binID );
+    }
+
+    if( binID.nLen > 0 )
+    {
         sTemplate[uCount].type = CKA_ID;
         sTemplate[uCount].pValue = binID.pVal;
         sTemplate[uCount].ulValueLen = binID.nLen;
@@ -1548,9 +1616,17 @@ int ImportPriKeyDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
     QString strID = mPriIDText->text();
     BIN binID = {0,0};
 
-    if( !strID.isEmpty() )
+    if( mPriUseSKICheck->isChecked() )
+    {
+        JS_BIN_copy( &binID, &ski_ );
+    }
+    else
     {
         JS_BIN_decodeHex( strID.toStdString().c_str(), &binID );
+    }
+
+    if( binID.nLen > 0 )
+    {
         sTemplate[uCount].type = CKA_ID;
         sTemplate[uCount].pValue = binID.pVal;
         sTemplate[uCount].ulValueLen = binID.nLen;
@@ -1722,6 +1798,12 @@ int ImportPriKeyDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
 void ImportPriKeyDlg::setDefaults()
 {
     const QString strDefaultID = "0102030405060708";
+
+    mPriUseSKICheck->setChecked(true);
+    clickPriUseSKI();
+
+    mPubUseSKICheck->setChecked(true);
+    clickPubUseSKI();
 
     mPubLabelText->setText( "Public Label" );
     mPubIDText->setText( strDefaultID );

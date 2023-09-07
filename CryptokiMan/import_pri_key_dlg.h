@@ -26,6 +26,8 @@ private slots:
     void checkPubImport();
     void checkEncPriKey();
 
+    void clickPriUseSKI();
+
     void clickPriPrivate();
     void clickPriDecrypt();
     void clickPriSign();
@@ -39,6 +41,7 @@ private slots:
     void clickPriStartDate();
     void clickPriEndDate();
 
+    void clickPubUseSKI();
     void clickPubPrivate();
     void clickPubEncrypt();
     void clickPubWrap();
@@ -69,6 +72,8 @@ private:
     int createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal );
 
     void setDefaults();
+
+    BIN ski_;
 };
 
 #endif // IMPORT_PRI_KEY_DLG_H
