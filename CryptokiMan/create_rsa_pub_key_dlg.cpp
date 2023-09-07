@@ -189,6 +189,19 @@ void CreateRSAPubKeyDlg::accept()
         uCount++;
     }
 
+    QString strSubject = mSubjectText->text();
+    BIN binSubject = {0,0};
+
+    if( !strSubject.isEmpty() )
+    {
+        JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+        sTemplate[uCount].type = CKA_SUBJECT;
+        sTemplate[uCount].pValue = binSubject.pVal;
+        sTemplate[uCount].ulValueLen = binSubject.nLen;
+        uCount++;
+    }
+
+
     QString strID = mIDText->text();
     BIN binID = {0,0};
 
@@ -296,6 +309,7 @@ void CreateRSAPubKeyDlg::accept()
     JS_BIN_reset( &binModulus );
     JS_BIN_reset( &binExponent );
     JS_BIN_reset( &binLabel );
+    JS_BIN_reset( &binSubject );
     JS_BIN_reset( &binID );
 
     if( rv != CKR_OK )

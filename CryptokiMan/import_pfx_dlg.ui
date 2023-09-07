@@ -730,6 +730,13 @@
          <property name="topMargin">
           <number>0</number>
          </property>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_16">
+           <property name="text">
+            <string>ID</string>
+           </property>
+          </widget>
+         </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label_15">
            <property name="minimumSize">
@@ -740,13 +747,6 @@
            </property>
            <property name="text">
             <string>Label</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_16">
-           <property name="text">
-            <string>ID</string>
            </property>
           </widget>
          </item>
@@ -762,6 +762,23 @@
          </item>
          <item row="0" column="1" colspan="2">
           <widget class="QLineEdit" name="mPubLabelText"/>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_19">
+           <property name="text">
+            <string>Subject</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="mPubSubjectText"/>
+         </item>
+         <item row="2" column="2">
+          <widget class="QCheckBox" name="mPubSubjectInCertCheck">
+           <property name="text">
+            <string>subject in cert</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>

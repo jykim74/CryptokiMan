@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>659</width>
-    <height>427</height>
+    <height>318</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -277,15 +277,25 @@
          <property name="topMargin">
           <number>0</number>
          </property>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="mIDText"/>
+         <item row="2" column="2">
+          <widget class="QCheckBox" name="mUseSKICheck">
+           <property name="text">
+            <string>Use SKI</string>
+           </property>
+          </widget>
          </item>
-         <item row="1" column="0">
+         <item row="2" column="0">
           <widget class="QLabel" name="label_13">
            <property name="text">
             <string>ID</string>
            </property>
           </widget>
+         </item>
+         <item row="0" column="1" colspan="2">
+          <widget class="QLineEdit" name="mLabelText"/>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="mIDText"/>
          </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label_12">
@@ -306,15 +316,15 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="2">
-          <widget class="QCheckBox" name="mUseSKICheck">
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_7">
            <property name="text">
-            <string>Use SKI</string>
+            <string>Subject</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="1" colspan="2">
-          <widget class="QLineEdit" name="mLabelText"/>
+         <item row="1" column="1" colspan="2">
+          <widget class="QLineEdit" name="mSubjectText"/>
          </item>
         </layout>
        </item>

@@ -1830,10 +1830,16 @@ void MainWindow::showPublicKeyInfoDetail( QModelIndex index )
 {
     int row = index.row();
     long uObj = -1;
+    BIN binDN = {0,0};
+    char *pDN = NULL;
 
     QTableWidgetItem *item1 = right_table_->item( row, 1 );
     uObj = item1->text().toLong();
     QString strKeyType;
+
+    QString strSubject = (stringAttribute( ATTR_VAL_HEX, CKA_SUBJECT, uObj ) );
+    JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binDN );
+    JS_PKI_getTextDN( &binDN, &pDN );
 
     info_text_->clear();
 
@@ -1844,6 +1850,7 @@ void MainWindow::showPublicKeyInfoDetail( QModelIndex index )
     info( QString( "CKA_LABEL           : %1\n" ).arg(stringAttribute( ATTR_VAL_STRING, CKA_LABEL, uObj)) );
     strKeyType = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, uObj );
     info( QString( "CKA_KEY_TYPE        : %1\n").arg( strKeyType ));
+    info( QString( "CKA_SUBJECT         : %1 - %2\n" ).arg( strSubject ).arg( pDN ? pDN : "" ) );
     info( QString( "CKA_ID              : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_ID, uObj ) ));
 
     if( strKeyType == "CKK_RSA" )
@@ -1880,16 +1887,25 @@ void MainWindow::showPublicKeyInfoDetail( QModelIndex index )
     info( QString( "CKA_DERIVE          : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_DERIVE, uObj)));
     info( QString( "ATTR_VAL_DATE       : %1\n" ).arg(stringAttribute( ATTR_VAL_DATE, CKA_START_DATE, uObj)));
     info( QString( "ATTR_VAL_DATE       : %1\n" ).arg(stringAttribute( ATTR_VAL_DATE, CKA_END_DATE, uObj )));
+
+    JS_BIN_reset( &binDN );
+    if( pDN ) JS_free( pDN );
 }
 
 void MainWindow::showPrivateKeyInfoDetail( QModelIndex index )
 {
     int row = index.row();
     long uObj = -1;
+    BIN binDN = {0,0};
+    char *pDN = NULL;
 
     QTableWidgetItem *item1 = right_table_->item( row, 1 );
     uObj = item1->text().toLong();
     QString strKeyType;
+
+    QString strSubject = (stringAttribute( ATTR_VAL_HEX, CKA_SUBJECT, uObj ) );
+    JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binDN );
+    JS_PKI_getTextDN( &binDN, &pDN );
 
     info_text_->clear();
 
@@ -1902,7 +1918,7 @@ void MainWindow::showPrivateKeyInfoDetail( QModelIndex index )
 
     strKeyType = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, uObj );
     info( QString( "CKA_KEY_TYPE         : %1\n").arg( strKeyType ));
-
+    info( QString( "CKA_SUBJECT          : %1 - %2\n" ).arg( strSubject ).arg( pDN ? pDN : "" ) );
     info( QString( "CKA_ID               : %1\n" ).arg(stringAttribute(ATTR_VAL_HEX, CKA_ID, uObj)) );
     info( QString( "CKA_SUBJECT          : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_SUBJECT, uObj)));
 
@@ -1944,6 +1960,9 @@ void MainWindow::showPrivateKeyInfoDetail( QModelIndex index )
     info( QString( "CKA_EXTRACTABLE      : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_EXTRACTABLE, uObj)));
     info( QString( "CKA_START_DATE       : %1\n" ).arg(stringAttribute(  ATTR_VAL_DATE, CKA_START_DATE, uObj)));
     info( QString( "CKA_END_DATE         : %1\n" ).arg(stringAttribute(  ATTR_VAL_DATE, CKA_END_DATE, uObj)) );
+
+    JS_BIN_reset( &binDN );
+    if( pDN ) JS_free( pDN );
 }
 
 void MainWindow::showSecretKeyInfoDetail( QModelIndex index )

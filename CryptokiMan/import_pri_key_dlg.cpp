@@ -464,6 +464,19 @@ int ImportPriKeyDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
         uCount++;
     }
 
+    QString strSubject = mPubSubjectText->text();
+    BIN binSubject = {0,0};
+
+    if( !strSubject.isEmpty() )
+    {
+        JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+
+        sTemplate[uCount].type = CKA_SUBJECT;
+        sTemplate[uCount].pValue = binSubject.pVal;
+        sTemplate[uCount].ulValueLen = binSubject.nLen;
+        uCount++;
+    }
+
     QString strID = mPubIDText->text();
     BIN binID = {0,0};
 
@@ -569,6 +582,7 @@ int ImportPriKeyDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
     rv = manApplet->cryptokiAPI()->CreateObject( hSession, sTemplate, uCount, &hObject );
 
     JS_BIN_reset( &binID );
+    JS_BIN_reset( &binSubject );
     JS_BIN_reset( &binModulus );
     JS_BIN_reset( &binPublicExponent );
     JS_BIN_reset( &binLabel );
@@ -903,6 +917,19 @@ int ImportPriKeyDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
         uCount++;
     }
 
+    QString strSubject = mPubSubjectText->text();
+    BIN binSubject = {0,0};
+
+    if( !strSubject.isEmpty() )
+    {
+        JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+
+        sTemplate[uCount].type = CKA_SUBJECT;
+        sTemplate[uCount].pValue = binSubject.pVal;
+        sTemplate[uCount].ulValueLen = binSubject.nLen;
+        uCount++;
+    }
+
     QString strID = mPubIDText->text();
     BIN binID = {0,0};
 
@@ -1024,6 +1051,7 @@ int ImportPriKeyDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
     rv = manApplet->cryptokiAPI()->CreateObject( hSession, sTemplate, uCount, &hObject );
 
     JS_BIN_reset( &binID );
+    JS_BIN_reset( &binSubject );
     JS_BIN_reset( &binECParam );
     JS_BIN_reset( &binECPoint );
     JS_BIN_reset( &binPubX );
@@ -1288,6 +1316,19 @@ int ImportPriKeyDlg::createDSAPublicKey( JDSAKeyVal *pDSAKeyVal )
         uCount++;
     }
 
+    QString strSubject = mPubSubjectText->text();
+    BIN binSubject = {0,0};
+
+    if( !strSubject.isEmpty() )
+    {
+        JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+
+        sTemplate[uCount].type = CKA_SUBJECT;
+        sTemplate[uCount].pValue = binSubject.pVal;
+        sTemplate[uCount].ulValueLen = binSubject.nLen;
+        uCount++;
+    }
+
     QString strID = mPubIDText->text();
     BIN binID = {0,0};
 
@@ -1407,6 +1448,7 @@ int ImportPriKeyDlg::createDSAPublicKey( JDSAKeyVal *pDSAKeyVal )
     rv = manApplet->cryptokiAPI()->CreateObject( hSession, sTemplate, uCount, &hObject );
 
     JS_BIN_reset( &binLabel );
+    JS_BIN_reset( &binSubject );
     JS_BIN_reset( &binID );
     JS_BIN_reset( &binP );
     JS_BIN_reset( &binG );

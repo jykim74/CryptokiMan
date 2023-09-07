@@ -61,6 +61,7 @@ private slots:
 
     void clickCertSubjectInCertCheck();
     void clickPriSubjectInCertCheck();
+    void clickPubSubjectInCertCheck();
 
 private:
     void initialize();

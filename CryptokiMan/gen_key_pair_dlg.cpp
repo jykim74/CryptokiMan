@@ -371,6 +371,18 @@ void GenKeyPairDlg::accept()
         uPubCount++;
     }
 
+    BIN binPubSubject = {0,0};
+    QString strPubSubject = mPubSubjectText->text();
+
+    if( !strPubSubject.isEmpty() )
+    {
+        JS_BIN_set( &binPubSubject, (unsigned char *)strPubSubject.toStdString().c_str(), strPubSubject.length() );
+        sPubTemplate[uPriCount].type = CKA_SUBJECT;
+        sPubTemplate[uPriCount].pValue = binPubSubject.pVal;
+        sPubTemplate[uPriCount].ulValueLen = binPubSubject.nLen;
+        uPubCount++;
+    }
+
     BIN binPubID = {0,0};
     QString strPubID = mPubIDText->text();
     if( !strPubID.isEmpty() )
@@ -485,8 +497,8 @@ void GenKeyPairDlg::accept()
     {
         JS_BIN_set( &binPriSubject, (unsigned char *)strPriSubject.toStdString().c_str(), strPriSubject.length() );
         sPriTemplate[uPriCount].type = CKA_SUBJECT;
-        sPriTemplate[uPriCount].pValue = binPriLabel.pVal;
-        sPriTemplate[uPriCount].ulValueLen = binPriLabel.nLen;
+        sPriTemplate[uPriCount].pValue = binPriSubject.pVal;
+        sPriTemplate[uPriCount].ulValueLen = binPriSubject.nLen;
         uPriCount++;
     }
 
@@ -606,6 +618,7 @@ void GenKeyPairDlg::accept()
     JS_BIN_reset( &binDH_G );
     JS_BIN_reset( &binDH_P );
     JS_BIN_reset( &binPubLabel );
+    JS_BIN_reset( &binPubSubject );
     JS_BIN_reset( &binPubID );
     JS_BIN_reset( &binPriLabel );
     JS_BIN_reset( &binPriSubject );

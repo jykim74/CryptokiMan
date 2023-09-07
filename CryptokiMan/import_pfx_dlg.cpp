@@ -58,11 +58,7 @@ void ImportPFXDlg::initialize()
 
     if( slot_infos.size() > 0 ) slotChanged(0);
 
-    mCertSubjectInCertCheck->setChecked( true );
-    mPriSubjectInCertCheck->setChecked( true );
 
-    clickCertSubjectInCertCheck();
-    clickPriSubjectInCertCheck();
 }
 
 void ImportPFXDlg::initAttributes()
@@ -139,7 +135,7 @@ void ImportPFXDlg::connectAttributes()
     connect( mPriPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPriPrivate()));
     connect( mPriDecryptCheck, SIGNAL(clicked()), this, SLOT(clickPriDecrypt()));
     connect( mPriSignCheck, SIGNAL(clicked()), this, SLOT(clickPriSign()));
-    connect( mPriSignRecoverCheck, SIGNAL(clicked()), this, SLOT(clickSignRecover()));
+    connect( mPriSignRecoverCheck, SIGNAL(clicked()), this, SLOT(clickPriSignRecover()));
     connect( mPriUnwrapCheck, SIGNAL(clicked()), this, SLOT(clickPriUnwrap()));
     connect( mPriModifiableCheck, SIGNAL(clicked()), this, SLOT(clickPriModifiable()));
     connect( mPriSensitiveCheck, SIGNAL(clicked()), this, SLOT(clickPriSensitive()));
@@ -154,7 +150,7 @@ void ImportPFXDlg::connectAttributes()
     connect( mPubEncryptCheck, SIGNAL(clicked()), this, SLOT(clickPubEncrypt()));
     connect( mPubWrapCheck, SIGNAL(clicked()), this, SLOT(clickPubWrap()));
     connect( mPubVerifyCheck, SIGNAL(clicked()), this, SLOT(clickPubVerify()));
-    connect( mPubVerifyRecoverCheck, SIGNAL(clicked()), this, SLOT(clickVerifyRecover()));
+    connect( mPubVerifyRecoverCheck, SIGNAL(clicked()), this, SLOT(clickPubVerifyRecover()));
     connect( mPubDeriveCheck, SIGNAL(clicked()), this, SLOT(clickPubDerive()));
     connect( mPubModifiableCheck, SIGNAL(clicked()), this, SLOT(clickPubModifiable()));
     connect( mPubTokenCheck, SIGNAL(clicked()), this, SLOT(clickPubToken()));
@@ -172,6 +168,7 @@ void ImportPFXDlg::connectAttributes()
     connect( mFindBtn, SIGNAL(clicked()), this, SLOT(clickFind()));
     connect( mCertSubjectInCertCheck, SIGNAL(clicked()), this, SLOT(clickCertSubjectInCertCheck()));
     connect( mPriSubjectInCertCheck, SIGNAL(clicked()), this, SLOT(clickPriSubjectInCertCheck()));
+    connect( mPubSubjectInCertCheck, SIGNAL(clicked()), this, SLOT(clickPubSubjectInCertCheck()));
 }
 
 void ImportPFXDlg::accept()
@@ -493,6 +490,11 @@ void ImportPFXDlg::clickPriSubjectInCertCheck()
     mPriSubjectText->setEnabled( !bVal );
 }
 
+void ImportPFXDlg::clickPubSubjectInCertCheck()
+{
+    bool bVal = mPubSubjectInCertCheck->isChecked();
+    mPubSubjectText->setEnabled( !bVal );
+}
 
 int ImportPFXDlg::createCert( BIN *pCert )
 {
@@ -1944,6 +1946,14 @@ int ImportPFXDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
 void ImportPFXDlg::setDefaults()
 {
     const QString strDefaultID = "0102030405060708";
+
+    mCertSubjectInCertCheck->setChecked( true );
+    mPriSubjectInCertCheck->setChecked( true );
+    mPubSubjectInCertCheck->setChecked( true );
+
+    clickCertSubjectInCertCheck();
+    clickPriSubjectInCertCheck();
+    clickPubSubjectInCertCheck();
 
     mCertUseSKICheck->setChecked(true);
     clickCertUseSKI();

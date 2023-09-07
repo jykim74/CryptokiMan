@@ -500,6 +500,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>Find Key</source>
         <translation>키 찾기</translation>
     </message>
+    <message>
+        <source>Subject</source>
+        <translation>주체</translation>
+    </message>
 </context>
 <context>
     <name>CreateDataDlg</name>
@@ -840,6 +844,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Find Key</source>
         <translation>키 찾기</translation>
+    </message>
+    <message>
+        <source>Subject</source>
+        <translation>주체</translation>
     </message>
 </context>
 <context>
@@ -1261,6 +1269,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Find Key</source>
         <translation>키 찾기</translation>
+    </message>
+    <message>
+        <source>Subject</source>
+        <translation>주체</translation>
     </message>
 </context>
 <context>

@@ -23,7 +23,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -1042,7 +1042,7 @@
          <property name="topMargin">
           <number>0</number>
          </property>
-         <item row="2" column="1">
+         <item row="3" column="1">
           <widget class="QLineEdit" name="mPubExponentText">
            <property name="maximumSize">
             <size>
@@ -1051,16 +1051,6 @@
             </size>
            </property>
           </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_14">
-           <property name="text">
-            <string>ID</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="mPubIDText"/>
          </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label_8">
@@ -1076,13 +1066,23 @@
           </widget>
          </item>
          <item row="2" column="0">
+          <widget class="QLabel" name="label_14">
+           <property name="text">
+            <string>ID</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="mPubIDText"/>
+         </item>
+         <item row="3" column="0">
           <widget class="QLabel" name="label_13">
            <property name="text">
             <string>Exponent</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="2">
+         <item row="2" column="2">
           <widget class="QCheckBox" name="mPubUseSKICheck">
            <property name="text">
             <string>Use SKI</string>
@@ -1091,6 +1091,16 @@
          </item>
          <item row="0" column="1" colspan="2">
           <widget class="QLineEdit" name="mPubLabelText"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_21">
+           <property name="text">
+            <string>Subject</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1" colspan="2">
+          <widget class="QLineEdit" name="mPubSubjectText"/>
          </item>
         </layout>
        </item>
