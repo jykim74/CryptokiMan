@@ -357,14 +357,12 @@ void CreateECPriKeyDlg::clickGenKey()
     JECKeyVal sECKey;
 
     QString strParam = mParamCombo->currentText();
-    int nNid = -1;
 
     JS_PKI_getOIDFromString( strParam.toStdString().c_str(), &binOID );
 
     memset( &sECKey, 0x00, sizeof(sECKey));
 
-    nNid = JS_PKI_getNidFromSN( strParam.toStdString().c_str() );
-    ret = JS_PKI_ECCGenKeyPair( nNid, &binPub, &binPri );
+    ret = JS_PKI_ECCGenKeyPair( strParam.toStdString().c_str(), &binPub, &binPri );
     if( ret != 0 ) goto end;
 
     ret = JS_PKI_getECKeyVal( &binPri, &sECKey );
