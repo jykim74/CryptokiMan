@@ -347,7 +347,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>success to create DSA private key</source>
-        <translation>DSA 개인키 생성 성공</translation>
+        <translation type="vanished">DSA 개인키 생성 성공</translation>
     </message>
     <message>
         <source>Subprime(Q)</source>
@@ -384,6 +384,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Find Key</source>
         <translation>키 찾기</translation>
+    </message>
+    <message>
+        <source>success to create DSA private key[H:%1]</source>
+        <translation>DSA 개인키 생성 성공[H:%1]</translation>
+    </message>
+    <message>
+        <source>fail to get valid key:%1</source>
+        <translation>유효한 키 가져오기 실패: %1</translation>
     </message>
 </context>
 <context>
@@ -474,7 +482,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>success to create DSA public key</source>
-        <translation>DSA 공개키 생성 성공</translation>
+        <translation type="vanished">DSA 공개키 생성 성공</translation>
     </message>
     <message>
         <source>Use SKI</source>
@@ -507,6 +515,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Trusted</source>
         <translation>Trusted</translation>
+    </message>
+    <message>
+        <source>fail to get valid key:%1</source>
+        <translation>유효한 키 가져오기 실패: %1</translation>
+    </message>
+    <message>
+        <source>success to create DSA public key[H:%1]</source>
+        <translation>DSA 공개키 생성 성공[H:%1]</translation>
     </message>
 </context>
 <context>
@@ -688,7 +704,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>success to create EC private key</source>
-        <translation>EC 개인키 생성 성공</translation>
+        <translation type="vanished">EC 개인키 생성 성공</translation>
     </message>
     <message>
         <source>StartDate</source>
@@ -721,6 +737,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Find Key</source>
         <translation>키 찾기</translation>
+    </message>
+    <message>
+        <source>success to create EC private key[H:%1]</source>
+        <translation>ECC 개인키 생성 성공[H:%1]</translation>
+    </message>
+    <message>
+        <source>fail to get valid key:%1</source>
+        <translation>유효한 키 가져오기 실패: %1</translation>
     </message>
 </context>
 <context>
@@ -811,7 +835,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>success to create EC public key</source>
-        <translation>EC 공개키 생성 성공</translation>
+        <translation type="vanished">EC 공개키 생성 성공</translation>
     </message>
     <message>
         <source>StartDate</source>
@@ -856,6 +880,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Trusted</source>
         <translation>Trusted</translation>
+    </message>
+    <message>
+        <source>success to create EC public key[H:%1]</source>
+        <translation>ECC 공개키 생성 성공[H:%1]</translation>
+    </message>
+    <message>
+        <source>fail to get valid key:%1</source>
+        <translation>유효한 키 가져오기 실패: %1</translation>
     </message>
 </context>
 <context>
@@ -1121,7 +1153,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>success to create RSA private key</source>
-        <translation>RSA 개인키 생성 성공</translation>
+        <translation type="vanished">RSA 개인키 생성 성공</translation>
     </message>
     <message>
         <source>StartDate</source>
@@ -1149,11 +1181,19 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Gen Key</source>
-        <translation></translation>
+        <translation>키 생성</translation>
     </message>
     <message>
         <source>Find Key</source>
         <translation>키 찾기</translation>
+    </message>
+    <message>
+        <source>success to create RSA private key[H:%1]</source>
+        <translation>RSA 개인키 생성 성공[H:%1]</translation>
+    </message>
+    <message>
+        <source>fail to get valid key:%1</source>
+        <translation>유효한 키 가져오기 실패: %1</translation>
     </message>
 </context>
 <context>
@@ -1244,7 +1284,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Success to create RSA public key</source>
-        <translation>RSA 공개키 생성 성공</translation>
+        <translation type="vanished">RSA 공개키 생성 성공</translation>
     </message>
     <message>
         <source>StartDate</source>
@@ -1289,6 +1329,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Trusted</source>
         <translation>Trusted</translation>
+    </message>
+    <message>
+        <source>Success to create RSA public key[H:%1]</source>
+        <translation>RSA 공개키 생성 성공[H:%1]</translation>
+    </message>
+    <message>
+        <source>fail to get valid key:%1</source>
+        <translation>유효한 키 가져오기 실패: %1</translation>
     </message>
 </context>
 <context>

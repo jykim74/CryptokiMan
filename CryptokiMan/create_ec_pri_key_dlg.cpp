@@ -342,7 +342,7 @@ void CreateECPriKeyDlg::accept()
         return;
     }
 
-    manApplet->messageBox( tr("success to create EC private key"), this );
+    manApplet->messageBox( tr("success to create EC private key[H:%1]").arg( hObject ), this );
     manApplet->showTypeList( index, HM_ITEM_TYPE_PRIVATEKEY );
 
     QDialog::accept();
@@ -415,7 +415,11 @@ void CreateECPriKeyDlg::clickFindKey()
     mECParamsText->setText( getHexString( binOID.pVal, binOID.nLen ));
     manApplet->setCurFile( fileName );
 
+    ret = 0;
+
 end :
+    if( ret != 0 ) manApplet->warningBox( tr( "fail to get valid key:%1").arg(ret), this );
+
     JS_BIN_reset( &binPri );
     JS_BIN_reset( &binOID );
     JS_PKI_resetECKeyVal( &sECKey );

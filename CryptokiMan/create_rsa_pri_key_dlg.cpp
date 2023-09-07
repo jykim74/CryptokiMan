@@ -426,7 +426,7 @@ void CreateRSAPriKeyDlg::accept()
         return;
     }
 
-    manApplet->messageBox( tr("success to create RSA private key"), this );
+    manApplet->messageBox( tr("success to create RSA private key[H:%1]").arg( hObject ), this );
     manApplet->showTypeList( index, HM_ITEM_TYPE_PRIVATEKEY );
 
     QDialog::accept();
@@ -504,10 +504,12 @@ void CreateRSAPriKeyDlg::clickFindKey()
     mCoefficientText->setText( sRSAKey.pIQMP );
 
     manApplet->setCurFile( fileName );
+    ret = 0;
 
 end :
     JS_BIN_reset( &binPri );
     JS_PKI_resetRSAKeyVal( &sRSAKey );
+    if( ret != 0 ) manApplet->warningBox( tr( "fail to get valid key:%1").arg(ret), this );
 }
 
 void CreateRSAPriKeyDlg::clickUseSKI()

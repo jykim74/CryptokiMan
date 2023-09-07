@@ -372,7 +372,7 @@ void CreateDSAPriKeyDlg::accept()
         return;
     }
 
-    manApplet->messageBox( tr("success to create DSA private key"), this );
+    manApplet->messageBox( tr("success to create DSA private key[H:%1]").arg( hObject ), this );
     manApplet->showTypeList( index, HM_ITEM_TYPE_PRIVATEKEY );
 
     QDialog::accept();
@@ -443,7 +443,11 @@ void CreateDSAPriKeyDlg::clickFindKey()
     mKeyValueText->setText( sDSAKey.pPrivate );
 
     manApplet->setCurFile( fileName );
+    ret = 0;
+
 end :
+    if( ret != 0 ) manApplet->warningBox( tr( "fail to get valid key:%1").arg(ret), this );
+
     JS_BIN_reset( &binPri );
     JS_PKI_resetDSAKeyVal( &sDSAKey );
 }

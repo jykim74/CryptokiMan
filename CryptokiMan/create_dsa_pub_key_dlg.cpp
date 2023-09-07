@@ -360,7 +360,7 @@ void CreateDSAPubKeyDlg::accept()
         return;
     }
 
-    manApplet->messageBox( tr("success to create DSA public key"), this );
+    manApplet->messageBox( tr("success to create DSA public key[H:%1]").arg( hObject ), this );
     manApplet->showTypeList( index, HM_ITEM_TYPE_PUBLICKEY );
 
     QDialog::accept();
@@ -450,8 +450,11 @@ void CreateDSAPubKeyDlg::clickFindKey()
     mPublicText->setText( sDSAKey.pPublic );
 
     manApplet->setCurFile( fileName );
+    ret = 0;
 
 end :
+    if( ret != 0 ) manApplet->warningBox( tr( "fail to get valid key:%1").arg(ret), this );
+
     JS_BIN_reset( &binKey );
     JS_PKI_resetDSAKeyVal( &sDSAKey );
 }

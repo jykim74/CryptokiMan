@@ -330,7 +330,7 @@ void CreateECPubKeyDlg::accept()
         return;
     }
 
-    manApplet->messageBox( tr("success to create EC public key"), this );
+    manApplet->messageBox( tr("success to create EC public key[H:%1]").arg( hObject ), this );
     manApplet->showTypeList( index, HM_ITEM_TYPE_PUBLICKEY );
 
     QDialog::accept();
@@ -432,11 +432,14 @@ void CreateECPubKeyDlg::clickFindKey()
     mECPointsText->setText( strPoints );
 
     manApplet->setCurFile( fileName );
+    ret = 0;
 
 end :
     JS_BIN_reset( &binKey );
     JS_BIN_reset( &binOID );
     JS_PKI_resetECKeyVal( &sECKey );
+
+    if( ret != 0 ) manApplet->warningBox( tr( "fail to get valid key:%1").arg(ret), this );
 }
 
 void CreateECPubKeyDlg::clickPrivate()

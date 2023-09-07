@@ -329,7 +329,7 @@ void CreateRSAPubKeyDlg::accept()
         return;
     }
 
-    manApplet->messageBox( tr("Success to create RSA public key"), this );
+    manApplet->messageBox( tr("Success to create RSA public key[H:%1]").arg( hObject ), this );
     manApplet->showTypeList( index, HM_ITEM_TYPE_PUBLICKEY );
 
     QDialog::accept();
@@ -410,10 +410,12 @@ void CreateRSAPubKeyDlg::clickFindKey()
     mExponentText->setText( sRSAKey.pE );
 
     manApplet->setCurFile( fileName );
+    ret = 0;
 
 end :
     JS_BIN_reset( &binKey );
     JS_PKI_resetRSAKeyVal( &sRSAKey );
+    if( ret != 0 ) manApplet->warningBox( tr( "fail to get valid key:%1").arg(ret), this );
 }
 
 void CreateRSAPubKeyDlg::clickUseSKI()
