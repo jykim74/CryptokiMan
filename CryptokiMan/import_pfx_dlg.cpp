@@ -715,6 +715,27 @@ int ImportPFXDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
         uCount++;
     }
 
+    QString strSubject;
+    BIN binSubject = {0,0};
+
+    if( mPubSubjectInCertCheck->isChecked() )
+    {
+        JS_BIN_copy( &binSubject, &der_dn_ );
+    }
+    else
+    {
+        strSubject = mPubSubjectText->text();
+        JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+    }
+
+    if( binSubject.nLen > 0 )
+    {
+        sTemplate[uCount].type = CKA_SUBJECT;
+        sTemplate[uCount].pValue = binSubject.pVal;
+        sTemplate[uCount].ulValueLen = binSubject.nLen;
+        uCount++;
+    }
+
     BIN binModulus = {0,0};
     JS_BIN_decodeHex( pRsaKeyVal->pN, &binModulus );
 
@@ -809,6 +830,7 @@ int ImportPFXDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
 
     JS_BIN_reset( &binLabel );
     JS_BIN_reset( &binID );
+    JS_BIN_reset( &binSubject );
     JS_BIN_reset( &binModulus );
     JS_BIN_reset( &binPublicExponent );
 
@@ -1176,6 +1198,27 @@ int ImportPFXDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
         uCount++;
     }
 
+    QString strSubject;
+    BIN binSubject = {0,0};
+
+    if( mPubSubjectInCertCheck->isChecked() )
+    {
+        JS_BIN_copy( &binSubject, &der_dn_ );
+    }
+    else
+    {
+        strSubject = mPubSubjectText->text();
+        JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+    }
+
+    if( binSubject.nLen > 0 )
+    {
+        sTemplate[uCount].type = CKA_SUBJECT;
+        sTemplate[uCount].pValue = binSubject.pVal;
+        sTemplate[uCount].ulValueLen = binSubject.nLen;
+        uCount++;
+    }
+
     BIN binECParam = {0,0};
     JS_PKI_getOIDFromString( pEcKeyVal->pCurveOID, &binECParam );
 
@@ -1285,6 +1328,7 @@ int ImportPFXDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
 
     JS_BIN_reset( &binLabel );
     JS_BIN_reset( &binID );
+    JS_BIN_reset( &binSubject );
     JS_BIN_reset( &binECParam );
     JS_BIN_reset( &binECPoint );
     JS_BIN_reset( &binPubX );
@@ -1584,6 +1628,27 @@ int ImportPFXDlg::createDSAPublicKey( JDSAKeyVal *pDSAKeyVal )
         uCount++;
     }
 
+    QString strSubject;
+    BIN binSubject = {0,0};
+
+    if( mPubSubjectInCertCheck->isChecked() )
+    {
+        JS_BIN_copy( &binSubject, &der_dn_ );
+    }
+    else
+    {
+        strSubject = mPubSubjectText->text();
+        JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+    }
+
+    if( binSubject.nLen > 0 )
+    {
+        sTemplate[uCount].type = CKA_SUBJECT;
+        sTemplate[uCount].pValue = binSubject.pVal;
+        sTemplate[uCount].ulValueLen = binSubject.nLen;
+        uCount++;
+    }
+
     BIN binP={0,0};
     BIN binQ = {0,0};
     BIN binG = {0,0};
@@ -1692,6 +1757,7 @@ int ImportPFXDlg::createDSAPublicKey( JDSAKeyVal *pDSAKeyVal )
 
     JS_BIN_reset( &binLabel );
     JS_BIN_reset( &binID );
+    JS_BIN_reset( &binSubject );
     JS_BIN_reset( &binP );
     JS_BIN_reset( &binG );
     JS_BIN_reset( &binQ );
