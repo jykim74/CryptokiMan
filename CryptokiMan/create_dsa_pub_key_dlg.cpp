@@ -85,6 +85,7 @@ void CreateDSAPubKeyDlg::initAttributes()
     mDeriveCombo->addItems(sFalseTrue);
     mModifiableCombo->addItems(sFalseTrue);
     mTokenCombo->addItems(sFalseTrue);
+    mTrustedCombo->addItems(sFalseTrue);
 
     QDate nowDate = QDate::currentDate();
     mStartDateEdit->setDate(nowDate);
@@ -101,6 +102,7 @@ void CreateDSAPubKeyDlg::setAttributes()
     mDeriveCombo->setEnabled(mDeriveCheck->isChecked());
     mModifiableCombo->setEnabled(mModifiableCheck->isChecked());
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
+    mTrustedCombo->setEnabled(mTrustedCheck->isChecked());
     mStartDateEdit->setEnabled(mStartDateCheck->isChecked());
     mEndDateEdit->setEnabled(mEndDateCheck->isChecked());
 }
@@ -119,6 +121,7 @@ void CreateDSAPubKeyDlg::connectAttributes()
     connect( mDeriveCheck, SIGNAL(clicked()), this, SLOT(clickDerive()));
     connect( mModifiableCheck, SIGNAL(clicked()), this, SLOT(clickModifiable()));
     connect( mTokenCheck, SIGNAL(clicked()), this, SLOT(clickToken()));
+    connect( mTrustedCheck, SIGNAL(clicked()), this, SLOT(clickTrusted()));
     connect( mStartDateCheck, SIGNAL(clicked()), this, SLOT(clickStartDate()));
     connect( mEndDateCheck, SIGNAL(clicked()), this, SLOT(clickEndDate()));
 }
@@ -287,6 +290,14 @@ void CreateDSAPubKeyDlg::accept()
     {
         sTemplate[uCount].type = CKA_TOKEN;
         sTemplate[uCount].pValue = ( mTokenCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mTrustedCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_TRUSTED;
+        sTemplate[uCount].pValue = ( mTrustedCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
         uCount++;
     }
@@ -485,6 +496,10 @@ void CreateDSAPubKeyDlg::clickToken()
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
 }
 
+void CreateDSAPubKeyDlg::clickTrusted()
+{
+    mTrustedCombo->setEnabled(mTrustedCheck->isChecked());
+}
 
 void CreateDSAPubKeyDlg::clickStartDate()
 {

@@ -28,6 +28,7 @@ private slots:
     void clickCertSensitive();
     void clickCertModifiable();
     void clickCertToken();
+    void clickCertTrusted();
     void clickCertStartDate();
     void clickCertEndDate();
 
@@ -54,6 +55,7 @@ private slots:
     void clickPubDerive();
     void clickPubModifiable();
     void clickPubToken();
+    void clickPubTrusted();
     void clickPubStartDate();
     void clickPubEndDate();
 

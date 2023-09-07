@@ -36,6 +36,7 @@ private slots:
     void clickExtractable();
     void clickStartDate();
     void clickEndDate();
+    void clickTrusted();
 
     void changeParam();
 private:

@@ -97,6 +97,7 @@ void UnwrapKeyDlg::initAttributes()
     mVerifyCombo->addItems(sFalseTrue);
     mVerifyRecoverCombo->addItems(sFalseTrue);
     mTokenCombo->addItems(sFalseTrue);
+    mTrustedCombo->addItems(sFalseTrue);
     mExtractableCombo->addItems(sFalseTrue);
     mDeriveCombo->addItems(sFalseTrue);
 
@@ -119,6 +120,7 @@ void UnwrapKeyDlg::setAttributes()
     mVerifyCombo->setEnabled(mVerifyCheck->isChecked());
     mVerifyRecoverCombo->setEnabled(mVerifyRecoverCheck->isChecked());
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
+    mTrustedCombo->setEnabled(mTrustedCheck->isChecked());
     mExtractableCombo->setEnabled(mExtractableCheck->isChecked());
     clickDerive();
     mStartDateEdit->setEnabled(mStartDateCheck->isChecked());
@@ -141,6 +143,7 @@ void UnwrapKeyDlg::connectAttributes()
     connect( mVerifyCheck, SIGNAL(clicked()), this, SLOT(clickVerify()));
     connect( mVerifyRecoverCheck, SIGNAL(clicked()), this, SLOT(clickVerifyRecover()));
     connect( mTokenCheck, SIGNAL(clicked()), this, SLOT(clickToken()));
+    connect( mTrustedCheck, SIGNAL(clicked()), this, SLOT(clickTrusted()));
     connect( mExtractableCheck, SIGNAL(clicked()), this, SLOT(clickExtractable()));
     connect( mDeriveCheck, SIGNAL(clicked()), this, SLOT(clickDerive()));
     connect( mStartDateCheck, SIGNAL(clicked()), this, SLOT(clickStartDate()));
@@ -388,6 +391,14 @@ void UnwrapKeyDlg::accept()
     {
         sTemplate[uCount].type = CKA_TOKEN;
         sTemplate[uCount].pValue = ( mTokenCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mTrustedCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_TRUSTED;
+        sTemplate[uCount].pValue = ( mTrustedCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
         uCount++;
     }
@@ -698,6 +709,11 @@ void UnwrapKeyDlg::clickVerifyRecover()
 void UnwrapKeyDlg::clickToken()
 {
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
+}
+
+void UnwrapKeyDlg::clickTrusted()
+{
+    mTrustedCombo->setEnabled(mTrustedCheck->isChecked());
 }
 
 void UnwrapKeyDlg::clickExtractable()

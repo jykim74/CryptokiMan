@@ -125,6 +125,7 @@ void GenKeyPairDlg::initAttributes()
     mPubDeriveCombo->addItems( sFalseTrue );
     mPubModifiableCombo->addItems( sFalseTrue );
     mPubTokenCombo->addItems( sFalseTrue );
+    mPubTrustedCombo->addItems( sFalseTrue );
 
     QDate nowDate = QDate::currentDate();
     mPubStartDateEdit->setDate(nowDate);
@@ -156,6 +157,7 @@ void GenKeyPairDlg::setAttributes()
     mPubDeriveCombo->setEnabled( mPubDeriveCheck->isChecked() );
     mPubModifiableCombo->setEnabled( mPubModifiableCheck->isChecked() );
     mPubTokenCombo->setEnabled( mPubTokenCheck->isChecked() );
+    mPubTrustedCombo->setEnabled( mPubTrustedCheck->isChecked() );
     mPubStartDateEdit->setEnabled( mPubStartDateCheck->isChecked() );
     mPubEndDateEdit->setEnabled( mPubEndDateCheck->isChecked() );
 }
@@ -185,6 +187,7 @@ void GenKeyPairDlg::connectAttributes()
     connect( mPubDeriveCheck, SIGNAL(clicked()), this, SLOT(clickPubDerive()));
     connect( mPubModifiableCheck, SIGNAL(clicked()), this, SLOT(clickPubModifiable()));
     connect( mPubTokenCheck, SIGNAL(clicked()), this, SLOT(clickPubToken()));
+    connect( mPubTrustedCheck, SIGNAL(clicked()), this, SLOT(clickPubTrusted()));
     connect( mPubStartDateCheck, SIGNAL(clicked()), this, SLOT(clickPubStartDate()));
     connect( mPubEndDateCheck, SIGNAL(clicked()), this, SLOT(clickPubEndDate()));
 }
@@ -398,6 +401,14 @@ void GenKeyPairDlg::accept()
     {
         sPubTemplate[uPubCount].type = CKA_TOKEN;
         sPubTemplate[uPubCount].pValue = ( mPubTokenCombo->currentIndex() ? &bTrue : &bFalse );
+        sPubTemplate[uPubCount].ulValueLen = sizeof(CK_BBOOL);
+        uPubCount++;
+    }
+
+    if( mPubTrustedCheck->isChecked() )
+    {
+        sPubTemplate[uPubCount].type = CKA_TRUSTED;
+        sPubTemplate[uPubCount].pValue = ( mPubTrustedCombo->currentIndex() ? &bTrue : &bFalse );
         sPubTemplate[uPubCount].ulValueLen = sizeof(CK_BBOOL);
         uPubCount++;
     }
@@ -795,10 +806,17 @@ void GenKeyPairDlg::clickPubModifiable()
 {
     mPubModifiableCombo->setEnabled(mPubModifiableCheck->isChecked());
 }
+
 void GenKeyPairDlg::clickPubToken()
 {
     mPubTokenCombo->setEnabled(mPubTokenCheck->isChecked());
 }
+
+void GenKeyPairDlg::clickPubTrusted()
+{
+    mPubTrustedCombo->setEnabled(mPubTrustedCheck->isChecked());
+}
+
 
 void GenKeyPairDlg::clickPubStartDate()
 {

@@ -46,6 +46,7 @@ private slots:
     void clickPubDerive();
     void clickPubModifiable();
     void clickPubToken();
+    void clickPubTrusted();
     void clickPubStartDate();
     void clickPubEndDate();
     void clickGenDHParam();

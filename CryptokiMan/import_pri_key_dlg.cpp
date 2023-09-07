@@ -76,6 +76,7 @@ void ImportPriKeyDlg::initAttributes()
     mPubDeriveCombo->addItems( sFalseTrue );
     mPubModifiableCombo->addItems( sFalseTrue );
     mPubTokenCombo->addItems( sFalseTrue );
+    mPubTrustedCombo->addItems( sFalseTrue );
 
     QDate nowDate = QDate::currentDate();
     mPriStartDateEdit->setDate(nowDate);
@@ -107,6 +108,7 @@ void ImportPriKeyDlg::setAttributes()
     mPubDeriveCombo->setEnabled( mPubDeriveCheck->isChecked() );
     mPubModifiableCombo->setEnabled( mPubModifiableCheck->isChecked() );
     mPubTokenCombo->setEnabled( mPubTokenCheck->isChecked() );
+    mPubTrustedCombo->setEnabled( mPubTrustedCheck->isChecked() );
     mPubStartDateEdit->setEnabled( mPubStartDateCheck->isChecked() );
     mPubEndDateEdit->setEnabled( mPubEndDateCheck->isChecked() );
 
@@ -137,6 +139,7 @@ void ImportPriKeyDlg::connectAttributes()
     connect( mPubDeriveCheck, SIGNAL(clicked()), this, SLOT(clickPubDerive()));
     connect( mPubModifiableCheck, SIGNAL(clicked()), this, SLOT(clickPubModifiable()));
     connect( mPubTokenCheck, SIGNAL(clicked()), this, SLOT(clickPubToken()));
+    connect( mPubTrustedCheck, SIGNAL(clicked()), this, SLOT(clickPubTrusted()));
     connect( mPubStartDateCheck, SIGNAL(clicked()), this, SLOT(clickPubStartDate()));
     connect( mPubEndDateCheck, SIGNAL(clicked()), this, SLOT(clickPubEndDate()));
 
@@ -391,9 +394,15 @@ void ImportPriKeyDlg::clickPubModifiable()
 {
     mPubModifiableCombo->setEnabled(mPubModifiableCheck->isChecked());
 }
+
 void ImportPriKeyDlg::clickPubToken()
 {
     mPubTokenCombo->setEnabled(mPubTokenCheck->isChecked());
+}
+
+void ImportPriKeyDlg::clickPubTrusted()
+{
+    mPubTrustedCombo->setEnabled(mPubTrustedCheck->isChecked());
 }
 
 void ImportPriKeyDlg::clickPubStartDate()
@@ -509,6 +518,14 @@ int ImportPriKeyDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
     {
         sTemplate[uCount].type = CKA_TOKEN;
         sTemplate[uCount].pValue = ( mPubTokenCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPubTrustedCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_TRUSTED;
+        sTemplate[uCount].pValue = ( mPubTrustedCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
         uCount++;
     }
@@ -982,6 +999,14 @@ int ImportPriKeyDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
         uCount++;
     }
 
+    if( mPubTrustedCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_TRUSTED;
+        sTemplate[uCount].pValue = ( mPubTrustedCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
     if( mPubPrivateCheck->isChecked() )
     {
         sTemplate[uCount].type = CKA_PRIVATE;
@@ -1375,6 +1400,14 @@ int ImportPriKeyDlg::createDSAPublicKey( JDSAKeyVal *pDSAKeyVal )
     {
         sTemplate[uCount].type = CKA_TOKEN;
         sTemplate[uCount].pValue = ( mPubTokenCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPubTrustedCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_TRUSTED;
+        sTemplate[uCount].pValue = ( mPubTrustedCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
         uCount++;
     }

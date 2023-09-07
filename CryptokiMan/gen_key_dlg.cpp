@@ -105,6 +105,7 @@ void GenKeyDlg::initAttributes()
     mVerifyCombo->addItems(sFalseTrue);
     mTokenCombo->addItems(sFalseTrue);
     mDeriveCombo->addItems(sFalseTrue);
+    mTrustedCombo->addItems(sFalseTrue);
     mExtractableCombo->addItems(sFalseTrue);
 
     QDate nowDate = QDate::currentDate();
@@ -126,6 +127,7 @@ void GenKeyDlg::setAttributes()
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
     mExtractableCombo->setEnabled(mExtractableCheck->isChecked());
     mDeriveCombo->setEnabled( mDeriveCheck->isChecked() );
+    mTrustedCombo->setEnabled( mTrustedCheck->isChecked() );
     mStartDateEdit->setEnabled(mStartDateCheck->isChecked());
     mEndDateEdit->setEnabled(mEndDateCheck->isChecked());
 }
@@ -145,6 +147,7 @@ void GenKeyDlg::connectAttributes()
     connect( mTokenCheck, SIGNAL(clicked()), this, SLOT(clickToken()));
     connect( mExtractableCheck, SIGNAL(clicked()), this, SLOT(clickExtractable()));
     connect( mDeriveCheck, SIGNAL(clicked()), this, SLOT(clickDerive()));
+    connect( mTrustedCheck, SIGNAL(clicked()), this, SLOT(clickTrusted()));
     connect( mStartDateCheck, SIGNAL(clicked()), this, SLOT(clickStartDate()));
     connect( mEndDateCheck, SIGNAL(clicked()), this, SLOT(clickEndDate()));
 }
@@ -341,6 +344,14 @@ void GenKeyDlg::accept()
         uCount++;
     }
 
+    if( mTrustedCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_TRUSTED;
+        sTemplate[uCount].pValue = ( mTrustedCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
     if( mStartDateCheck->isChecked() )
     {
         getCKDate( mStartDateEdit->date(), &sSDate );
@@ -435,6 +446,11 @@ void GenKeyDlg::clickToken()
 void GenKeyDlg::clickDerive()
 {
     mDeriveCombo->setEnabled(mDeriveCheck->isChecked());
+}
+
+void GenKeyDlg::clickTrusted()
+{
+    mTrustedCombo->setEnabled(mTrustedCheck->isChecked());
 }
 
 void GenKeyDlg::clickExtractable()

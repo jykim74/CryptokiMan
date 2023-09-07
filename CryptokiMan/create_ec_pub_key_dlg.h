@@ -33,6 +33,7 @@ private slots:
     void clickDerive();
     void clickModifiable();
     void clickToken();
+    void clickTrusted();
     void clickStartDate();
     void clickEndDate();
 

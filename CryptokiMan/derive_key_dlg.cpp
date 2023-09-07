@@ -271,6 +271,14 @@ void DeriveKeyDlg::accept()
         uCount++;
     }
 
+    if( mTrustedCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_TRUSTED;
+        sTemplate[uCount].pValue = ( mTrustedCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
     if( mUnwrapCheck->isChecked() )
     {
         sTemplate[uCount].type = CKA_UNWRAP;
@@ -371,6 +379,7 @@ void DeriveKeyDlg::initAttributes()
     mEncryptCombo->addItems(sFalseTrue);
     mDeriveCombo->addItems(sFalseTrue);
     mTokenCombo->addItems(sFalseTrue);
+    mTrustedCombo->addItems(sFalseTrue);
     mExtractableCombo->addItems(sFalseTrue);
 }
 
@@ -388,6 +397,7 @@ void DeriveKeyDlg::setAttributes()
     mModifiableCombo->setEnabled(mModifiableCheck->isChecked());
     mEncryptCombo->setEnabled(mEncryptCheck->isChecked());
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
+    mTrustedCombo->setEnabled(mTrustedCheck->isChecked());
     mExtractableCombo->setEnabled(mExtractableCheck->isChecked());
     clickDerive();
     mStartDateEdit->setEnabled(mStartDateCheck->isChecked());
@@ -408,6 +418,7 @@ void DeriveKeyDlg::connectAttributes()
     connect( mSensitiveCheck, SIGNAL(clicked()), this, SLOT(clickSensitive()));
     connect( mEncryptCheck, SIGNAL(clicked()), this, SLOT(clickEncrypt()));
     connect( mTokenCheck, SIGNAL(clicked()), this, SLOT(clickToken()));
+    connect( mTrustedCheck, SIGNAL(clicked()), this, SLOT(clickTrusted()));
     connect( mVerifyCheck, SIGNAL(clicked()), this, SLOT(clickVerify()));
     connect( mVerifyRecoverCheck, SIGNAL(clicked()), this, SLOT(clickVerifyRecover()));
     connect( mExtractableCheck, SIGNAL(clicked()), this, SLOT(clickExtractable()));
@@ -480,6 +491,11 @@ void DeriveKeyDlg::clickVerifyRecover()
 void DeriveKeyDlg::clickToken()
 {
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
+}
+
+void DeriveKeyDlg::clickTrusted()
+{
+    mTrustedCombo->setEnabled(mTrustedCheck->isChecked());
 }
 
 void DeriveKeyDlg::clickExtractable()

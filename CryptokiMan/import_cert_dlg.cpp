@@ -72,6 +72,7 @@ void ImportCertDlg::initAttributes()
     mSensitiveCombo->addItems(sFalseTrue);
     mModifiableCombo->addItems(sFalseTrue);
     mTokenCombo->addItems(sFalseTrue);
+    mTrustedCombo->addItems(sFalseTrue);
 
     QDate nowDate = QDate::currentDate();
     mStartDateEdit->setDate(nowDate);
@@ -84,6 +85,7 @@ void ImportCertDlg::setAttributes()
     mSensitiveCombo->setEnabled(mSensitiveCheck->isChecked());
     mModifiableCombo->setEnabled(mModifiableCheck->isChecked());
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
+    mTrustedCombo->setEnabled(mTrustedCheck->isChecked());
     mStartDateEdit->setEnabled(mStartDateCheck->isChecked());
     mEndDateEdit->setEnabled(mEndDateCheck->isChecked());
 
@@ -97,6 +99,7 @@ void ImportCertDlg::connectAttributes()
     connect( mSensitiveCheck, SIGNAL(clicked()), this, SLOT(clickSensitive()));
     connect( mModifiableCheck, SIGNAL(clicked()), this, SLOT(clickModifiable()));
     connect( mTokenCheck, SIGNAL(clicked()), this, SLOT(clickToken()));
+    connect( mTrustedCheck, SIGNAL(clicked()), this, SLOT(clickTrusted()));
     connect( mFindBtn, SIGNAL(clicked()), this, SLOT(clickFind()));
     connect( mStartDateCheck, SIGNAL(clicked()), this, SLOT(clickStartDate()));
     connect( mEndDateCheck, SIGNAL(clicked()), this, SLOT(clickEndDate()));
@@ -253,6 +256,14 @@ void ImportCertDlg::accept()
         uCount++;
     }
 
+    if( mTrustedCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_TRUSTED;
+        sTemplate[uCount].pValue = ( mTrustedCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
     rv = manApplet->cryptokiAPI()->CreateObject( hSession, sTemplate, uCount, &hObject );
 
     JS_BIN_reset( &binCert );
@@ -296,6 +307,11 @@ void ImportCertDlg::clickModifiable()
 void ImportCertDlg::clickToken()
 {
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
+}
+
+void ImportCertDlg::clickTrusted()
+{
+    mTrustedCombo->setEnabled(mTrustedCheck->isChecked());
 }
 
 void ImportCertDlg::clickStartDate()

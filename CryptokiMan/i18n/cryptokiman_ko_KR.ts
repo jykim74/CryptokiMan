@@ -504,6 +504,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>Subject</source>
         <translation>주체</translation>
     </message>
+    <message>
+        <source>Trusted</source>
+        <translation>Trusted</translation>
+    </message>
 </context>
 <context>
     <name>CreateDataDlg</name>
@@ -849,6 +853,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>Subject</source>
         <translation>주체</translation>
     </message>
+    <message>
+        <source>Trusted</source>
+        <translation>Trusted</translation>
+    </message>
 </context>
 <context>
     <name>CreateKeyDlg</name>
@@ -979,6 +987,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Use Random</source>
         <translation>랜덤 사용</translation>
+    </message>
+    <message>
+        <source>Trusted</source>
+        <translation>Trusted</translation>
     </message>
 </context>
 <context>
@@ -1273,6 +1285,10 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Subject</source>
         <translation>주체</translation>
+    </message>
+    <message>
+        <source>Trusted</source>
+        <translation>Trusted</translation>
     </message>
 </context>
 <context>
@@ -1687,6 +1703,10 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>VerifyRecover</source>
         <translation>VerifyRecover</translation>
+    </message>
+    <message>
+        <source>Trusted</source>
+        <translation>Trusted</translation>
     </message>
 </context>
 <context>
@@ -2229,6 +2249,10 @@ Do you want to delete the file and continue?</source>
         <source>Use Random</source>
         <translation>랜덤 사용</translation>
     </message>
+    <message>
+        <source>Trusted</source>
+        <translation>Trusted</translation>
+    </message>
 </context>
 <context>
     <name>GenKeyPairDlg</name>
@@ -2420,6 +2444,10 @@ Do you want to delete the file and continue?</source>
         <source>failure to set SKI(rv:%1)</source>
         <translation>SKI 설정 실패(rv:%1)</translation>
     </message>
+    <message>
+        <source>Trusted</source>
+        <translation>Trusted</translation>
+    </message>
 </context>
 <context>
     <name>ImportCertDlg</name>
@@ -2522,6 +2550,10 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>fail to read certificate:%1</source>
         <translation>인증서 읽기 실패(%1)</translation>
+    </message>
+    <message>
+        <source>Trusted</source>
+        <translation>Trusted</translation>
     </message>
 </context>
 <context>
@@ -2722,6 +2754,10 @@ Do you want to delete the file and continue?</source>
         <source>VerifyRecover</source>
         <translation>VerifyRecover</translation>
     </message>
+    <message>
+        <source>Trusted</source>
+        <translation>Trusted</translation>
+    </message>
 </context>
 <context>
     <name>ImportPriKeyDlg</name>
@@ -2912,6 +2948,10 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>VerifyRecover</source>
         <translation>VerifyRecover</translation>
+    </message>
+    <message>
+        <source>Trusted</source>
+        <translation>Trusted</translation>
     </message>
 </context>
 <context>
@@ -4794,6 +4834,10 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>VerifyRecover</source>
         <translation>VerifyRecover</translation>
+    </message>
+    <message>
+        <source>Trusted</source>
+        <translation>Trusted</translation>
     </message>
 </context>
 <context>

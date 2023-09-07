@@ -25,6 +25,7 @@ private slots:
     void clickSensitive();
     void clickModifiable();
     void clickToken();
+    void clickTrusted();
     void clickStartDate();
     void clickEndDate();
 

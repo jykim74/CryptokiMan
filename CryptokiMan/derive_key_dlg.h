@@ -38,6 +38,7 @@ private slots:
     void clickVerify();
     void clickVerifyRecover();
     void clickToken();
+    void clickTrusted();
     void clickExtractable();
     void clickDerive();
     void clickStartDate();

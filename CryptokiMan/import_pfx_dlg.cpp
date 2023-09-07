@@ -82,11 +82,13 @@ void ImportPFXDlg::initAttributes()
     mPubDeriveCombo->addItems( sFalseTrue );
     mPubModifiableCombo->addItems( sFalseTrue );
     mPubTokenCombo->addItems( sFalseTrue );
+    mPubTrustedCombo->addItems( sFalseTrue );
 
     mCertPrivateCombo->addItems( sFalseTrue );
     mCertSensitiveCombo->addItems( sFalseTrue );
     mCertModifiableCombo->addItems( sFalseTrue );
     mCertTokenCombo->addItems( sFalseTrue );
+    mCertTrustedCombo->addItems( sFalseTrue );
 
     QDate nowDate = QDate::currentDate();
     mPubStartDateEdit->setDate(nowDate);
@@ -118,6 +120,7 @@ void ImportPFXDlg::setAttributes()
     mPubDeriveCombo->setEnabled( mPubDeriveCheck->isChecked() );
     mPubModifiableCombo->setEnabled( mPubModifiableCheck->isChecked() );
     mPubTokenCombo->setEnabled( mPubTokenCheck->isChecked() );
+    mPubTrustedCombo->setEnabled( mPubTrustedCheck->isChecked() );
     mPubStartDateEdit->setEnabled( mPubStartDateCheck->isChecked() );
     mPubEndDateEdit->setEnabled( mPubEndDateCheck->isChecked() );
 
@@ -125,6 +128,7 @@ void ImportPFXDlg::setAttributes()
     mCertSensitiveCombo->setEnabled(mCertSensitiveCheck->isChecked());
     mCertModifiableCombo->setEnabled(mCertModifiableCheck->isChecked());
     mCertTokenCombo->setEnabled(mCertTokenCheck->isChecked());
+    mCertTrustedCombo->setEnabled(mCertTrustedCheck->isChecked());
     mCertStartDateEdit->setEnabled( mCertStartDateCheck->isChecked() );
     mCertEndDateEdit->setEnabled( mCertEndDateCheck->isChecked() );
 }
@@ -154,6 +158,7 @@ void ImportPFXDlg::connectAttributes()
     connect( mPubDeriveCheck, SIGNAL(clicked()), this, SLOT(clickPubDerive()));
     connect( mPubModifiableCheck, SIGNAL(clicked()), this, SLOT(clickPubModifiable()));
     connect( mPubTokenCheck, SIGNAL(clicked()), this, SLOT(clickPubToken()));
+    connect( mPubTrustedCheck, SIGNAL(clicked()), this, SLOT(clickPubTrusted()));
     connect( mPubStartDateCheck, SIGNAL(clicked()), this, SLOT(clickPubStartDate()));
     connect( mPubEndDateCheck, SIGNAL(clicked()), this, SLOT(clickPubEndDate()));
 
@@ -162,6 +167,7 @@ void ImportPFXDlg::connectAttributes()
     connect( mCertSensitiveCheck, SIGNAL(clicked()), this, SLOT(clickCertSensitive()));
     connect( mCertModifiableCheck, SIGNAL(clicked()), this, SLOT(clickCertModifiable()));
     connect( mCertTokenCheck, SIGNAL(clicked()), this, SLOT(clickCertToken()));
+    connect( mCertTrustedCheck, SIGNAL(clicked()), this, SLOT(clickCertTrusted()));
     connect( mCertStartDateCheck, SIGNAL(clicked()), this, SLOT(clickCertStartDate()));
     connect( mCertEndDateCheck, SIGNAL(clicked()), this, SLOT(clickCertEndDate()));
 
@@ -416,9 +422,15 @@ void ImportPFXDlg::clickPubModifiable()
 {
     mPubModifiableCombo->setEnabled(mPubModifiableCheck->isChecked());
 }
+
 void ImportPFXDlg::clickPubToken()
 {
     mPubTokenCombo->setEnabled(mPubTokenCheck->isChecked());
+}
+
+void ImportPFXDlg::clickPubTrusted()
+{
+    mPubTrustedCombo->setEnabled(mPubTrustedCheck->isChecked());
 }
 
 void ImportPFXDlg::clickPubStartDate()
@@ -455,6 +467,11 @@ void ImportPFXDlg::clickCertModifiable()
 void ImportPFXDlg::clickCertToken()
 {
     mCertTokenCombo->setEnabled(mCertTokenCheck->isChecked());
+}
+
+void ImportPFXDlg::clickCertTrusted()
+{
+    mCertTrustedCombo->setEnabled(mCertTrustedCheck->isChecked());
 }
 
 void ImportPFXDlg::clickCertStartDate()
@@ -620,6 +637,14 @@ int ImportPFXDlg::createCert( BIN *pCert )
         uCount++;
     }
 
+    if( mCertTrustedCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_TRUSTED;
+        sTemplate[uCount].pValue = ( mCertTrustedCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
     if( mCertStartDateCheck->isChecked() )
     {
         getCKDate( mCertStartDateEdit->date(), &sSDate );
@@ -756,6 +781,14 @@ int ImportPFXDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
     {
         sTemplate[uCount].type = CKA_TOKEN;
         sTemplate[uCount].pValue = ( mPubTokenCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPubTrustedCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_TRUSTED;
+        sTemplate[uCount].pValue = ( mPubTrustedCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
         uCount++;
     }
@@ -1258,6 +1291,14 @@ int ImportPFXDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
         uCount++;
     }
 
+    if( mPubTrustedCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_TRUSTED;
+        sTemplate[uCount].pValue = ( mPubTrustedCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
     if( mPubPrivateCheck->isChecked() )
     {
         sTemplate[uCount].type = CKA_PRIVATE;
@@ -1683,6 +1724,14 @@ int ImportPFXDlg::createDSAPublicKey( JDSAKeyVal *pDSAKeyVal )
     {
         sTemplate[uCount].type = CKA_TOKEN;
         sTemplate[uCount].pValue = ( mPubTokenCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPubTrustedCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_TRUSTED;
+        sTemplate[uCount].pValue = ( mPubTrustedCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
         uCount++;
     }

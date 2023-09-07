@@ -622,6 +622,16 @@
          <item row="4" column="3">
           <widget class="QDateEdit" name="mEndDateEdit"/>
          </item>
+         <item row="4" column="4">
+          <widget class="QCheckBox" name="mTrustedCheck">
+           <property name="text">
+            <string>Trusted</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="5">
+          <widget class="QComboBox" name="mTrustedCombo"/>
+         </item>
         </layout>
        </item>
        <item>

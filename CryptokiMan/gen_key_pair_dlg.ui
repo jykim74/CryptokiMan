@@ -1223,6 +1223,16 @@
          <item row="2" column="3">
           <widget class="QComboBox" name="mPubVerifyRecoverCombo"/>
          </item>
+         <item row="3" column="3">
+          <widget class="QComboBox" name="mPubTrustedCombo"/>
+         </item>
+         <item row="3" column="2">
+          <widget class="QCheckBox" name="mPubTrustedCheck">
+           <property name="text">
+            <string>Trusted</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </item>
        <item>

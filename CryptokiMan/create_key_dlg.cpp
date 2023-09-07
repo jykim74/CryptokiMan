@@ -103,6 +103,7 @@ void CreateKeyDlg::initAttributes()
     mSignCombo->addItems(sFalseTrue);
     mVerifyCombo->addItems(sFalseTrue);
     mTokenCombo->addItems(sFalseTrue);
+    mTrustedCombo->addItems(sFalseTrue);
     mExtractableCombo->addItems(sFalseTrue);
     mDeriveCombo->addItems(sFalseTrue);
 
@@ -123,6 +124,7 @@ void CreateKeyDlg::setAttributes()
     mSignCombo->setEnabled(mSignCheck->isChecked());
     mVerifyCombo->setEnabled(mVerifyCheck->isChecked());
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
+    mTrustedCombo->setEnabled(mTrustedCheck->isChecked());
     mExtractableCombo->setEnabled(mExtractableCheck->isChecked());
     clickDerive();
     mStartDateEdit->setEnabled(mStartDateCheck->isChecked());
@@ -144,6 +146,7 @@ void CreateKeyDlg::connectAttributes()
     connect( mSignCheck, SIGNAL(clicked()), this, SLOT(clickSign()));
     connect( mVerifyCheck, SIGNAL(clicked()), this, SLOT(clickVerify()));
     connect( mTokenCheck, SIGNAL(clicked()), this, SLOT(clickToken()));
+    connect( mTrustedCheck, SIGNAL(clicked()), this, SLOT(clickTrusted()));
     connect( mExtractableCheck, SIGNAL(clicked()), this, SLOT(clickExtractable()));
     connect( mDeriveCheck, SIGNAL(clicked()), this, SLOT(clickDerive()));
     connect( mStartDateCheck, SIGNAL(clicked()), this, SLOT(clickStartDate()));
@@ -285,6 +288,14 @@ void CreateKeyDlg::accept()
         uCount++;
     }
 
+    if( mTrustedCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_TRUSTED;
+        sTemplate[uCount].pValue = ( mTrustedCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
     if( mUnwrapCheck->isChecked() )
     {
         sTemplate[uCount].type = CKA_UNWRAP;
@@ -412,9 +423,15 @@ void CreateKeyDlg::clickVerify()
 {
     mVerifyCombo->setEnabled(mVerifyCheck->isChecked());
 }
+
 void CreateKeyDlg::clickToken()
 {
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
+}
+
+void CreateKeyDlg::clickTrusted()
+{
+    mTrustedCombo->setEnabled(mTrustedCheck->isChecked());
 }
 
 void CreateKeyDlg::clickExtractable()
