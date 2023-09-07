@@ -400,6 +400,8 @@ void CreateDSAPriKeyDlg::clickGenKey()
     mQText->setText( sDSAKey.pQ );
     mKeyValueText->setText( sDSAKey.pPrivate );
 
+//    manApplet->log( QString( "DSA Public: %1").arg( sDSAKey.pPublic ));
+
 end :
     JS_BIN_reset( &binPri );
     JS_BIN_reset( &binPub );

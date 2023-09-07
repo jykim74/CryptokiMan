@@ -685,7 +685,7 @@ int CreateRSAPriKeyDlg::getSKI( BIN *pSKI )
         goto end;
     }
 
-    ret = JS_PKI_getPubKeyFromPri( JS_PKI_KEY_TYPE_DSA, &binPri, &binPub );
+    ret = JS_PKI_getPubKeyFromPri( JS_PKI_KEY_TYPE_RSA, &binPri, &binPub );
     if( ret != 0 )
     {
         manApplet->elog( QString( "fail to get public key from private key: %1").arg(ret));
