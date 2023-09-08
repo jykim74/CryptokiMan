@@ -69,6 +69,8 @@ void CreateDSAPriKeyDlg::initialize()
 
 void CreateDSAPriKeyDlg::initAttributes()
 {
+    mSubjectTypeCombo->addItems(kDNTypeList);
+
     mParamCombo->addItems( kDSAOptionList );
 
     mPrivateCombo->addItems(sFalseTrue);
@@ -248,7 +250,11 @@ void CreateDSAPriKeyDlg::accept()
 
     if( !strSubject.isEmpty() )
     {
-        JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+        if( mSubjectTypeCombo->currentText() == "Text" )
+            JS_PKI_getDERFromDN( strSubject.toStdString().c_str(), &binSubject );
+        else
+            JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+
         sTemplate[uCount].type = CKA_SUBJECT;
         sTemplate[uCount].pValue = binSubject.pVal;
         sTemplate[uCount].ulValueLen = binSubject.nLen;

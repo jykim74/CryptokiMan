@@ -106,6 +106,8 @@ void GenKeyPairDlg::initialize()
 
 void GenKeyPairDlg::initAttributes()
 {
+    mPriSubjectTypeCombo->addItems( kDNTypeList );
+
     mPriPrivateCombo->addItems( sFalseTrue );
     mPriDecryptCombo->addItems( sFalseTrue );
     mPriSignCombo->addItems( sFalseTrue );
@@ -116,6 +118,8 @@ void GenKeyPairDlg::initAttributes()
     mPriDeriveCombo->addItems( sFalseTrue );
     mPriExtractableCombo->addItems( sFalseTrue );
     mPriTokenCombo->addItems( sFalseTrue );
+
+    mPubSubjectTypeCombo->addItems( kDNTypeList );
 
     mPubPrivateCombo->addItems( sFalseTrue );
     mPubEncryptCombo->addItems( sFalseTrue );
@@ -379,7 +383,11 @@ void GenKeyPairDlg::accept()
 
     if( !strPubSubject.isEmpty() )
     {
-        JS_BIN_set( &binPubSubject, (unsigned char *)strPubSubject.toStdString().c_str(), strPubSubject.length() );
+        if( mPubSubjectTypeCombo->currentText() == "Text" )
+            JS_PKI_getDERFromDN( strPubSubject.toStdString().c_str(), &binPubSubject );
+        else
+            JS_BIN_set( &binPubSubject, (unsigned char *)strPubSubject.toStdString().c_str(), strPubSubject.length() );
+
         sPubTemplate[uPriCount].type = CKA_SUBJECT;
         sPubTemplate[uPriCount].pValue = binPubSubject.pVal;
         sPubTemplate[uPriCount].ulValueLen = binPubSubject.nLen;
@@ -506,7 +514,11 @@ void GenKeyPairDlg::accept()
 
     if( !strPriSubject.isEmpty() )
     {
-        JS_BIN_set( &binPriSubject, (unsigned char *)strPriSubject.toStdString().c_str(), strPriSubject.length() );
+        if( mPriSubjectTypeCombo->currentText() == "Text" )
+            JS_PKI_getDERFromDN( strPubSubject.toStdString().c_str(), &binPubSubject );
+        else
+            JS_BIN_set( &binPriSubject, (unsigned char *)strPriSubject.toStdString().c_str(), strPriSubject.length() );
+
         sPriTemplate[uPriCount].type = CKA_SUBJECT;
         sPriTemplate[uPriCount].pValue = binPriSubject.pVal;
         sPriTemplate[uPriCount].ulValueLen = binPriSubject.nLen;

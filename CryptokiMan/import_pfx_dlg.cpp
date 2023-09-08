@@ -63,6 +63,8 @@ void ImportPFXDlg::initialize()
 
 void ImportPFXDlg::initAttributes()
 {
+    mPriSubjectTypeCombo->addItems( kDNTypeList );
+
     mPriPrivateCombo->addItems( sFalseTrue );
     mPriDecryptCombo->addItems( sFalseTrue );
     mPriSignCombo->addItems( sFalseTrue );
@@ -74,6 +76,8 @@ void ImportPFXDlg::initAttributes()
     mPriExtractableCombo->addItems( sFalseTrue );
     mPriTokenCombo->addItems( sFalseTrue );
 
+    mPubSubjectTypeCombo->addItems( kDNTypeList );
+
     mPubPrivateCombo->addItems( sFalseTrue );
     mPubEncryptCombo->addItems( sFalseTrue );
     mPubWrapCombo->addItems( sFalseTrue );
@@ -83,6 +87,8 @@ void ImportPFXDlg::initAttributes()
     mPubModifiableCombo->addItems( sFalseTrue );
     mPubTokenCombo->addItems( sFalseTrue );
     mPubTrustedCombo->addItems( sFalseTrue );
+
+    mCertSubjectTypeCombo->addItems( kDNTypeList );
 
     mCertPrivateCombo->addItems( sFalseTrue );
     mCertSensitiveCombo->addItems( sFalseTrue );
@@ -498,19 +504,27 @@ void ImportPFXDlg::clickCertSubjectInCertCheck()
 {
     bool bVal = mCertSubjectInCertCheck->isChecked();
 
-    mCertSubjectText->setEnabled(!bVal );
+    mCertSubjectText->setEnabled( !bVal );
+    mCertSubjectLabel->setEnabled( !bVal );
+    mCertSubjectTypeCombo->setEnabled( !bVal );
 }
 
 void ImportPFXDlg::clickPriSubjectInCertCheck()
 {
     bool bVal = mPriSubjectInCertCheck->isChecked();
+
     mPriSubjectText->setEnabled( !bVal );
+    mPriSubjectLabel->setEnabled( !bVal );
+    mPriSubjectTypeCombo->setEnabled( !bVal );
 }
 
 void ImportPFXDlg::clickPubSubjectInCertCheck()
 {
     bool bVal = mPubSubjectInCertCheck->isChecked();
+
     mPubSubjectText->setEnabled( !bVal );
+    mPubSubjectLabel->setEnabled( !bVal );
+    mPubSubjectTypeCombo->setEnabled( !bVal );
 }
 
 int ImportPFXDlg::createCert( BIN *pCert )
@@ -593,7 +607,13 @@ int ImportPFXDlg::createCert( BIN *pCert )
     else
     {
         strSubject = mCertSubjectText->text();
-        JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+        if( strSubject.length() > 0 )
+        {
+            if( mCertSubjectTypeCombo->currentText() == "Text" )
+                JS_PKI_getDERFromDN( strSubject.toStdString().c_str(), &binSubject );
+            else
+                JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+        }
     }
 
     if( binSubject.nLen > 0 )
@@ -750,7 +770,13 @@ int ImportPFXDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
     else
     {
         strSubject = mPubSubjectText->text();
-        JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+        if( strSubject.length() > 0 )
+        {
+            if( mPubSubjectTypeCombo->currentText() == "Text" )
+                JS_PKI_getDERFromDN( strSubject.toStdString().c_str(), &binSubject );
+            else
+                JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+        }
     }
 
     if( binSubject.nLen > 0 )
@@ -952,7 +978,13 @@ int ImportPFXDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
     else
     {
         strSubject = mPriSubjectText->text();
-        JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+        if( strSubject.length() > 0 )
+        {
+            if( mPriSubjectTypeCombo->currentText() == "Text" )
+                JS_PKI_getDERFromDN( strSubject.toStdString().c_str(), &binSubject );
+            else
+                JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+        }
     }
 
     if( binSubject.nLen > 0 )
@@ -1241,7 +1273,13 @@ int ImportPFXDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
     else
     {
         strSubject = mPubSubjectText->text();
-        JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+        if( strSubject.length() > 0 )
+        {
+            if( mPubSubjectTypeCombo->currentText() == "Text" )
+                JS_PKI_getDERFromDN( strSubject.toStdString().c_str(), &binSubject );
+            else
+                JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+        }
     }
 
     if( binSubject.nLen > 0 )
@@ -1461,7 +1499,13 @@ int ImportPFXDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
     else
     {
         strSubject = mPriSubjectText->text();
-        JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+        if( strSubject.length() > 0 )
+        {
+            if( mPriSubjectTypeCombo->currentText() == "Text" )
+                JS_PKI_getDERFromDN( strSubject.toStdString().c_str(), &binSubject );
+            else
+                JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+        }
     }
 
     if( binSubject.nLen > 0 )
@@ -1679,7 +1723,13 @@ int ImportPFXDlg::createDSAPublicKey( JDSAKeyVal *pDSAKeyVal )
     else
     {
         strSubject = mPubSubjectText->text();
-        JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+        if( strSubject.length() > 0 )
+        {
+            if( mPubSubjectTypeCombo->currentText() == "Text" )
+                JS_PKI_getDERFromDN( strSubject.toStdString().c_str(), &binSubject );
+            else
+                JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+        }
     }
 
     if( binSubject.nLen > 0 )
@@ -1898,7 +1948,13 @@ int ImportPFXDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
     else
     {
         strSubject = mPriSubjectText->text();
-        JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+        if( strSubject.length() > 0 )
+        {
+            if( mPriSubjectTypeCombo->currentText() == "Text" )
+                JS_PKI_getDERFromDN( strSubject.toStdString().c_str(), &binSubject );
+            else
+                JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+        }
     }
 
     if( binSubject.nLen > 0 )

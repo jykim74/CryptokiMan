@@ -172,6 +172,7 @@ static QStringList kMechGenListNoLicense = {
 };
 
 static QStringList kDataTypeList = { "String", "Hex", "Base64" };
+static QStringList kDNTypeList = { "Text", "DER" };
 
 QString findFile( QWidget *parent, int nType, const QString strPath );
 QString saveFile( QWidget *parent, int nType, const QString strPath );

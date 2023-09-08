@@ -60,6 +60,8 @@ void ImportPriKeyDlg::initialize()
 
 void ImportPriKeyDlg::initAttributes()
 {
+    mPriSubjectTypeCombo->addItems( kDNTypeList );
+
     mPriPrivateCombo->addItems( sFalseTrue );
     mPriDecryptCombo->addItems( sFalseTrue );
     mPriSignCombo->addItems( sFalseTrue );
@@ -71,6 +73,7 @@ void ImportPriKeyDlg::initAttributes()
     mPriExtractableCombo->addItems( sFalseTrue );
     mPriTokenCombo->addItems( sFalseTrue );
 
+    mPubSubjectTypeCombo->addItems( kDNTypeList );
     mPubPrivateCombo->addItems( sFalseTrue );
     mPubEncryptCombo->addItems( sFalseTrue );
     mPubWrapCombo->addItems( sFalseTrue );
@@ -506,7 +509,10 @@ int ImportPriKeyDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
 
     if( !strSubject.isEmpty() )
     {
-        JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+        if( mPubSubjectTypeCombo->currentText() == "Text" )
+            JS_PKI_getDERFromDN( strSubject.toStdString().c_str(), &binSubject );
+        else
+            JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
 
         sTemplate[uCount].type = CKA_SUBJECT;
         sTemplate[uCount].pValue = binSubject.pVal;
@@ -721,7 +727,10 @@ int ImportPriKeyDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
 
     if( !strSubject.isEmpty() )
     {
-        JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+        if( mPriSubjectTypeCombo->currentText() == "Text" )
+            JS_PKI_getDERFromDN( strSubject.toStdString().c_str(), &binSubject );
+        else
+            JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
 
         sTemplate[uCount].type = CKA_SUBJECT;
         sTemplate[uCount].pValue = binSubject.pVal;
@@ -983,7 +992,10 @@ int ImportPriKeyDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
 
     if( !strSubject.isEmpty() )
     {
-        JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+        if( mPubSubjectTypeCombo->currentText() == "Text" )
+            JS_PKI_getDERFromDN( strSubject.toStdString().c_str(), &binSubject );
+        else
+            JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
 
         sTemplate[uCount].type = CKA_SUBJECT;
         sTemplate[uCount].pValue = binSubject.pVal;
@@ -1216,7 +1228,11 @@ int ImportPriKeyDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
 
     if( !strSubject.isEmpty() )
     {
-        JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+        if( mPriSubjectTypeCombo->currentText() == "Text" )
+            JS_PKI_getDERFromDN( strSubject.toStdString().c_str(), &binSubject );
+        else
+            JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+
         sTemplate[uCount].type = CKA_SUBJECT;
         sTemplate[uCount].pValue = binSubject.pVal;
         sTemplate[uCount].ulValueLen = binSubject.nLen;
@@ -1406,7 +1422,10 @@ int ImportPriKeyDlg::createDSAPublicKey( JDSAKeyVal *pDSAKeyVal )
 
     if( !strSubject.isEmpty() )
     {
-        JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+        if( mPubSubjectTypeCombo->currentText() == "Text" )
+            JS_PKI_getDERFromDN( strSubject.toStdString().c_str(), &binSubject );
+        else
+            JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
 
         sTemplate[uCount].type = CKA_SUBJECT;
         sTemplate[uCount].pValue = binSubject.pVal;
@@ -1638,7 +1657,11 @@ int ImportPriKeyDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
 
     if( !strSubject.isEmpty() )
     {
-        JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+        if( mPriSubjectTypeCombo->currentText() == "Text" )
+            JS_PKI_getDERFromDN( strSubject.toStdString().c_str(), &binSubject );
+        else
+            JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+
         sTemplate[uCount].type = CKA_SUBJECT;
         sTemplate[uCount].pValue = binSubject.pVal;
         sTemplate[uCount].ulValueLen = binSubject.nLen;

@@ -79,6 +79,7 @@ void CreateRSAPriKeyDlg::initialize()
 void CreateRSAPriKeyDlg::initAttributes()
 {
     mParamCombo->addItems( kRSAOptionList );
+    mSubjectTypeCombo->addItems(kDNTypeList);
 
     mPrivateCombo->addItems(sFalseTrue);
     mDecryptCombo->addItems(sFalseTrue);
@@ -299,7 +300,11 @@ void CreateRSAPriKeyDlg::accept()
 
     if( !strSubject.isEmpty() )
     {
-        JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+        if( mSubjectTypeCombo->currentText() == "Text" )
+            JS_PKI_getDERFromDN( strSubject.toStdString().c_str(), &binSubject );
+        else
+            JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+
         sTemplate[uCount].type = CKA_SUBJECT;
         sTemplate[uCount].pValue = binSubject.pVal;
         sTemplate[uCount].ulValueLen = binSubject.nLen;

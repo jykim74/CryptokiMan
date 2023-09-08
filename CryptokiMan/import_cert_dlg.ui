@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>579</width>
-    <height>360</height>
+    <width>582</width>
+    <height>539</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -254,43 +254,46 @@
     </widget>
    </item>
    <item>
+    <layout class="QGridLayout" name="gridLayout_5">
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <item row="0" column="1">
+      <widget class="QCheckBox" name="mSubjectInCertCheck">
+       <property name="text">
+        <string>subject in cert</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
     <layout class="QGridLayout" name="gridLayout_2">
-     <item row="3" column="2">
-      <widget class="QPushButton" name="mFindBtn">
+     <item row="1" column="2">
+      <widget class="QCheckBox" name="mUseSKICheck">
        <property name="text">
-        <string>Find</string>
+        <string>Use SKI</string>
        </property>
       </widget>
-     </item>
-     <item row="0" column="1" colspan="2">
-      <widget class="QLineEdit" name="mLabelText"/>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_5">
-       <property name="text">
-        <string>ID</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_6">
-       <property name="text">
-        <string>Cert Path</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_10">
-       <property name="text">
-        <string>Subject</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLineEdit" name="mSubjectText"/>
      </item>
      <item row="3" column="1">
       <widget class="QLineEdit" name="mCertPathText"/>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="mSubjectText"/>
      </item>
      <item row="0" column="0">
       <widget class="QLabel" name="label_4">
@@ -305,22 +308,42 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="2">
-      <widget class="QCheckBox" name="mSubjectInCertCheck">
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_5">
        <property name="text">
-        <string>subject in cert</string>
+        <string>ID</string>
        </property>
       </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="mSubjectLabel">
+       <property name="text">
+        <string>Subject</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1" colspan="2">
+      <widget class="QLineEdit" name="mLabelText"/>
      </item>
      <item row="1" column="1">
       <widget class="QLineEdit" name="mIDText"/>
      </item>
-     <item row="1" column="2">
-      <widget class="QCheckBox" name="mUseSKICheck">
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_6">
        <property name="text">
-        <string>Use SKI</string>
+        <string>Cert Path</string>
        </property>
       </widget>
+     </item>
+     <item row="3" column="2">
+      <widget class="QPushButton" name="mFindBtn">
+       <property name="text">
+        <string>Find</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <widget class="QComboBox" name="mSubjectTypeCombo"/>
      </item>
     </layout>
    </item>
@@ -340,25 +363,17 @@
    </item>
    <item>
     <layout class="QGridLayout" name="gridLayout_3">
-     <item row="1" column="0">
-      <widget class="QCheckBox" name="mTokenCheck">
-       <property name="text">
-        <string notr="true">Token</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="4">
-      <widget class="QCheckBox" name="mModifiableCheck">
-       <property name="text">
-        <string notr="true">Modifiable</string>
-       </property>
-      </widget>
+     <item row="0" column="3">
+      <widget class="QComboBox" name="mSensitiveCombo"/>
      </item>
      <item row="0" column="1">
       <widget class="QComboBox" name="mPrivateCombo"/>
      </item>
-     <item row="0" column="3">
-      <widget class="QComboBox" name="mSensitiveCombo"/>
+     <item row="2" column="1">
+      <widget class="QComboBox" name="mTrustedCombo"/>
+     </item>
+     <item row="1" column="5">
+      <widget class="QDateEdit" name="mEndDateEdit"/>
      </item>
      <item row="0" column="0">
       <widget class="QCheckBox" name="mPrivateCheck">
@@ -370,17 +385,20 @@
      <item row="1" column="1">
       <widget class="QComboBox" name="mTokenCombo"/>
      </item>
-     <item row="1" column="2">
-      <widget class="QCheckBox" name="mStartDateCheck">
+     <item row="0" column="4">
+      <widget class="QCheckBox" name="mModifiableCheck">
        <property name="text">
-        <string>StartDate</string>
+        <string notr="true">Modifiable</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="4">
-      <widget class="QCheckBox" name="mEndDateCheck">
+     <item row="1" column="3">
+      <widget class="QDateEdit" name="mStartDateEdit"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QCheckBox" name="mTokenCheck">
        <property name="text">
-        <string>EndDate</string>
+        <string notr="true">Token</string>
        </property>
       </widget>
      </item>
@@ -391,14 +409,12 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="5">
-      <widget class="QComboBox" name="mModifiableCombo"/>
-     </item>
-     <item row="1" column="5">
-      <widget class="QDateEdit" name="mEndDateEdit"/>
-     </item>
-     <item row="1" column="3">
-      <widget class="QDateEdit" name="mStartDateEdit"/>
+     <item row="1" column="4">
+      <widget class="QCheckBox" name="mEndDateCheck">
+       <property name="text">
+        <string>EndDate</string>
+       </property>
+      </widget>
      </item>
      <item row="2" column="0">
       <widget class="QCheckBox" name="mTrustedCheck">
@@ -407,8 +423,15 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
-      <widget class="QComboBox" name="mTrustedCombo"/>
+     <item row="1" column="2">
+      <widget class="QCheckBox" name="mStartDateCheck">
+       <property name="text">
+        <string>StartDate</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="5">
+      <widget class="QComboBox" name="mModifiableCombo"/>
      </item>
     </layout>
    </item>
@@ -452,7 +475,6 @@
   <tabstop>mLabelText</tabstop>
   <tabstop>mIDText</tabstop>
   <tabstop>mSubjectText</tabstop>
-  <tabstop>mSubjectInCertCheck</tabstop>
   <tabstop>mCertPathText</tabstop>
   <tabstop>mFindBtn</tabstop>
   <tabstop>mPrivateCheck</tabstop>

@@ -68,6 +68,8 @@ void ImportCertDlg::initialize()
 
 void ImportCertDlg::initAttributes()
 {
+    mSubjectTypeCombo->addItems(kDNTypeList);
+
     mPrivateCombo->addItems(sFalseTrue);
     mSensitiveCombo->addItems(sFalseTrue);
     mModifiableCombo->addItems(sFalseTrue);
@@ -340,7 +342,9 @@ void ImportCertDlg::clickSubjectInCertCheck()
 {
     bool bVal = mSubjectInCertCheck->isChecked();
 
+    mSubjectLabel->setEnabled( !bVal );
     mSubjectText->setEnabled( !bVal );
+    mSubjectTypeCombo->setEnabled( !bVal );
 }
 
 void ImportCertDlg::setDefaults()

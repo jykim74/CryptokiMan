@@ -76,6 +76,7 @@ void CreateDSAPubKeyDlg::initialize()
 void CreateDSAPubKeyDlg::initAttributes()
 {
     mParamCombo->addItems( kDSAOptionList );
+    mSubjectTypeCombo->addItems(kDNTypeList);
 
     mPrivateCombo->addItems(sFalseTrue);
     mEncryptCombo->addItems(sFalseTrue);
@@ -227,7 +228,11 @@ void CreateDSAPubKeyDlg::accept()
 
     if( !strSubject.isEmpty() )
     {
-        JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+        if( mSubjectTypeCombo->currentText() == "Text" )
+            JS_PKI_getDERFromDN( strSubject.toStdString().c_str(), &binSubject );
+        else
+            JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+
         sTemplate[uCount].type = CKA_SUBJECT;
         sTemplate[uCount].pValue = binSubject.pVal;
         sTemplate[uCount].ulValueLen = binSubject.nLen;
