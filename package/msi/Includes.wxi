@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Include Id="CryptokiManInclude">
-  <?define CurrentCryptokiManVersion="1.2.8" ?>
+  <?define CurrentCryptokiManVersion="1.4.0" ?>
 
   <!-- CryptokiMan Product Guid  -->
-  <?define ProductGuid="d3bf5463-5f6f-48c6-baa6-6744e3d45257" ?> <!-- Version 1.2.8 -->
+  <?define ProductGuid="85e5d4ef-1d7e-4fbf-b170-f4dbb6e73446" ?> <!-- Version 1.4.0 -->
+  <!-- ?define ProductGuid="d3bf5463-5f6f-48c6-baa6-6744e3d45257" ? --> <!-- Version 1.2.8 -->
   <!-- ?define ProductGuid="cc188e09-0fd1-4268-9c0c-ac8d52ac1fc2" ? --> <!-- Version 1.2.7 -->
   <!-- ?define ProductGuid="e4711ea2-1062-431b-8811-ff649f9a73e0" ? --> <!-- Version 1.2.6 -->
   <!-- ?define ProductGuid="0c2854be-dab6-4fa6-b8ac-c5cfd64f973c" ? --> <!-- Version 1.2.5 -->
