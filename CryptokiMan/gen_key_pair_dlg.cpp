@@ -386,19 +386,23 @@ void GenKeyPairDlg::accept()
         if( mPubSubjectTypeCombo->currentText() == "Text" )
             JS_PKI_getDERFromDN( strPubSubject.toStdString().c_str(), &binPubSubject );
         else
-            JS_BIN_set( &binPubSubject, (unsigned char *)strPubSubject.toStdString().c_str(), strPubSubject.length() );
+            JS_BIN_decodeHex( strPubSubject.toStdString().c_str(), &binPubSubject );
+    }
 
-        sPubTemplate[uPriCount].type = CKA_SUBJECT;
-        sPubTemplate[uPriCount].pValue = binPubSubject.pVal;
-        sPubTemplate[uPriCount].ulValueLen = binPubSubject.nLen;
+    if( binPubSubject.nLen > 0 )
+    {
+        sPubTemplate[uPubCount].type = CKA_SUBJECT;
+        sPubTemplate[uPubCount].pValue = binPubSubject.pVal;
+        sPubTemplate[uPubCount].ulValueLen = binPubSubject.nLen;
         uPubCount++;
     }
 
     BIN binPubID = {0,0};
     QString strPubID = mPubIDText->text();
-    if( !strPubID.isEmpty() )
+    if( strPubID.length() > 0 ) JS_BIN_decodeHex( strPubID.toStdString().c_str(), &binPubID );
+
+    if( binPubID.nLen > 0 )
     {
-        JS_BIN_set( &binPubID, (unsigned char *)strPubID.toStdString().c_str(), strPubID.length());
         sPubTemplate[uPubCount].type = CKA_ID;
         sPubTemplate[uPubCount].pValue = binPubID.pVal;
         sPubTemplate[uPubCount].ulValueLen = binPubID.nLen;
@@ -515,10 +519,13 @@ void GenKeyPairDlg::accept()
     if( !strPriSubject.isEmpty() )
     {
         if( mPriSubjectTypeCombo->currentText() == "Text" )
-            JS_PKI_getDERFromDN( strPubSubject.toStdString().c_str(), &binPubSubject );
+            JS_PKI_getDERFromDN( strPriSubject.toStdString().c_str(), &binPriSubject );
         else
-            JS_BIN_set( &binPriSubject, (unsigned char *)strPriSubject.toStdString().c_str(), strPriSubject.length() );
+            JS_BIN_decodeHex( strPriSubject.toStdString().c_str(), &binPriSubject );
+    }
 
+    if( binPriSubject.nLen > 0 )
+    {
         sPriTemplate[uPriCount].type = CKA_SUBJECT;
         sPriTemplate[uPriCount].pValue = binPriSubject.pVal;
         sPriTemplate[uPriCount].ulValueLen = binPriSubject.nLen;
@@ -527,9 +534,10 @@ void GenKeyPairDlg::accept()
 
     BIN binPriID = {0,0};
     QString strPriID = mPriIDText->text();
-    if( !strPriID.isEmpty() )
+    if( strPriID.length() > 0 ) JS_BIN_decodeHex( strPriID.toStdString().c_str(), &binPriID );
+
+    if( binPriID.nLen > 0 )
     {
-        JS_BIN_set( &binPriID, (unsigned char *)strPriID.toStdString().c_str(), strPriID.length());
         sPriTemplate[uPriCount].type = CKA_ID;
         sPriTemplate[uPriCount].pValue = binPriID.pVal;
         sPriTemplate[uPriCount].ulValueLen = binPriID.nLen;
