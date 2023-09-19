@@ -50,6 +50,7 @@ void OperStateDlg::slotChanged(int index)
 
     mSlotIDText->setText( QString( "%1").arg(slotInfo.getSlotID()));
     mSessionText->setText( QString("%1").arg(slotInfo.getSessionHandle()));
+    mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
 }
 
 void OperStateDlg::setSelectedSlot(int index)

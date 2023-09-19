@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>450</width>
-    <height>196</height>
+    <width>480</width>
+    <height>276</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,7 +33,7 @@
       <widget class="QLabel" name="label">
        <property name="minimumSize">
         <size>
-         <width>90</width>
+         <width>100</width>
          <height>0</height>
         </size>
        </property>
@@ -123,7 +123,7 @@
       <widget class="QLabel" name="label_3">
        <property name="minimumSize">
         <size>
-         <width>90</width>
+         <width>100</width>
          <height>0</height>
         </size>
        </property>
@@ -297,9 +297,15 @@
      </item>
      <item row="0" column="0">
       <widget class="QComboBox" name="mObjectTypeCombo">
+       <property name="minimumSize">
+        <size>
+         <width>100</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="maximumSize">
         <size>
-         <width>90</width>
+         <width>120</width>
          <height>16777215</height>
         </size>
        </property>

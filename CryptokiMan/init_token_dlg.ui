@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>444</width>
-    <height>220</height>
+    <width>478</width>
+    <height>294</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -85,6 +85,12 @@
      </item>
      <item row="0" column="6">
       <widget class="QLineEdit" name="mLoginText">
+       <property name="minimumSize">
+        <size>
+         <width>40</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="maximumSize">
         <size>
          <width>40</width>
