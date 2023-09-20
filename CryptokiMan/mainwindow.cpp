@@ -53,6 +53,7 @@
 #include "js_pki_tools.h"
 #include "mech_mgr.h"
 #include "lcn_info_dlg.h"
+#include "copy_object_dlg.h"
 
 const int kMaxRecentFiles = 10;
 
@@ -389,6 +390,11 @@ void MainWindow::createActions()
     connect( editAttributeAct, &QAction::triggered, this, &MainWindow::editObject);
     editAttributeAct->setStatusTip(tr("PKCS11 Edit Object"));
     objectsMenu->addAction( editAttributeAct );
+
+    QAction *copyObjectAct = new QAction( deleteIcon, tr("Copy Object"), this);
+    connect( copyObjectAct, &QAction::triggered, this, &MainWindow::copyObject);
+    copyObjectAct->setStatusTip(tr("PKCS11 Copy Object"));
+    objectsMenu->addAction( copyObjectAct );
 //    objectsToolBar->addAction( editAttributeAct );
 
 
@@ -1081,6 +1087,20 @@ void MainWindow::createKey()
     CreateKeyDlg createKeyDlg;
     if( pItem ) createKeyDlg.setSelectedSlot( pItem->getSlotIndex() );
     createKeyDlg.exec();
+}
+
+void MainWindow::copyObject()
+{
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        return;
+    }
+
+    CopyObjectDlg copyObjectDlg;
+    copyObjectDlg.exec();
 }
 
 void MainWindow::deleteObject()

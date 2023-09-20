@@ -34,6 +34,7 @@ SOURCES += \
         cert_info_dlg.cpp \
         close_session_dlg.cpp \
         common.cpp \
+        copy_object_dlg.cpp \
         create_data_dlg.cpp \
         create_dsa_pri_key_dlg.cpp \
         create_dsa_pub_key_dlg.cpp \
@@ -87,6 +88,7 @@ HEADERS += \
         cert_info_dlg.h \
         close_session_dlg.h \
         common.h \
+        copy_object_dlg.h \
         create_data_dlg.h \
         create_dsa_pri_key_dlg.h \
         create_dsa_pub_key_dlg.h \
@@ -139,6 +141,7 @@ FORMS += \
         about_dlg.ui \
         cert_info_dlg.ui \
         close_session_dlg.ui \
+        copy_object_dlg.ui \
         create_data_dlg.ui \
         create_dsa_pri_key_dlg.ui \
         create_dsa_pub_key_dlg.ui \

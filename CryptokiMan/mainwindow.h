@@ -102,6 +102,7 @@ public slots:
     void createDSAPublicKey();
     void createDSAPrivateKey();
     void createKey();
+    void copyObject();
     void deleteObject();
     void editObject();
     void editAttribute();
