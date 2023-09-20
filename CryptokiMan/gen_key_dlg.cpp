@@ -101,6 +101,8 @@ void GenKeyDlg::initAttributes()
     mEncryptCombo->addItems(sFalseTrue);
     mDecryptCombo->addItems(sFalseTrue);
     mModifiableCombo->addItems(sFalseTrue);
+    mCopyableCombo->addItems(sFalseTrue);
+    mDestroyableCombo->addItems(sFalseTrue);
     mSignCombo->addItems(sFalseTrue);
     mVerifyCombo->addItems(sFalseTrue);
     mTokenCombo->addItems(sFalseTrue);
@@ -122,6 +124,8 @@ void GenKeyDlg::setAttributes()
     mEncryptCombo->setEnabled(mEncryptCheck->isChecked());
     mDecryptCombo->setEnabled(mDecryptCheck->isChecked());
     mModifiableCombo->setEnabled(mModifiableCheck->isChecked());
+    mCopyableCombo->setEnabled(mCopyableCheck->isChecked());
+    mDestroyableCombo->setEnabled(mDestroyableCheck->isChecked());
     mSignCombo->setEnabled(mSignCheck->isChecked());
     mVerifyCombo->setEnabled(mVerifyCheck->isChecked());
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
@@ -142,6 +146,8 @@ void GenKeyDlg::connectAttributes()
     connect( mEncryptCheck, SIGNAL(clicked()), this, SLOT(clickEncrypt()));
     connect( mDecryptCheck, SIGNAL(clicked()), this, SLOT(clickDecrypt()));
     connect( mModifiableCheck, SIGNAL(clicked()), this, SLOT(clickModifiable()));
+    connect( mCopyableCheck, SIGNAL(clicked()), this, SLOT(clickCopyable()));
+    connect( mDestroyableCheck, SIGNAL(clicked()), this, SLOT(clickDestroyable()));
     connect( mSignCheck, SIGNAL(clicked()), this, SLOT(clickSign()));
     connect( mVerifyCheck, SIGNAL(clicked()), this, SLOT(clickVerify()));
     connect( mTokenCheck, SIGNAL(clicked()), this, SLOT(clickToken()));
@@ -268,6 +274,22 @@ void GenKeyDlg::accept()
     {
         sTemplate[uCount].type = CKA_MODIFIABLE;
         sTemplate[uCount].pValue = ( mModifiableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mCopyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_COPYABLE;
+        sTemplate[uCount].pValue = ( mCopyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mDestroyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_DESTROYABLE;
+        sTemplate[uCount].pValue = ( mDestroyableCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
         uCount++;
     }
@@ -428,6 +450,16 @@ void GenKeyDlg::clickDecrypt()
 void GenKeyDlg::clickModifiable()
 {
     mModifiableCombo->setEnabled(mModifiableCheck->isChecked());
+}
+
+void GenKeyDlg::clickCopyable()
+{
+    mCopyableCombo->setEnabled(mCopyableCheck->isChecked());
+}
+
+void GenKeyDlg::clickDestroyable()
+{
+    mDestroyableCombo->setEnabled(mDestroyableCheck->isChecked());
 }
 
 void GenKeyDlg::clickSign()

@@ -401,6 +401,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>Use SPKI</source>
         <translation>SPKI 사용</translation>
     </message>
+    <message>
+        <source>Copyable</source>
+        <translation>Copyable</translation>
+    </message>
+    <message>
+        <source>Destroyable</source>
+        <translation>Destroyable</translation>
+    </message>
 </context>
 <context>
     <name>CreateDSAPubKeyDlg</name>
@@ -532,6 +540,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>success to create DSA public key[H:%1]</source>
         <translation>DSA 공개키 생성 성공[H:%1]</translation>
     </message>
+    <message>
+        <source>Copyable</source>
+        <translation>Copyable</translation>
+    </message>
+    <message>
+        <source>Destroyable</source>
+        <translation>Destroyable</translation>
+    </message>
 </context>
 <context>
     <name>CreateDataDlg</name>
@@ -606,6 +622,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Object ID</source>
         <translation>객체 ID</translation>
+    </message>
+    <message>
+        <source>Copyable</source>
+        <translation>Copyable</translation>
+    </message>
+    <message>
+        <source>Destroyable</source>
+        <translation>Destroyable</translation>
     </message>
 </context>
 <context>
@@ -762,6 +786,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>Use SPKI</source>
         <translation>SPKI 사용</translation>
     </message>
+    <message>
+        <source>Copyable</source>
+        <translation>Copyable</translation>
+    </message>
+    <message>
+        <source>Destroyable</source>
+        <translation>Destroyable</translation>
+    </message>
 </context>
 <context>
     <name>CreateECPubKeyDlg</name>
@@ -905,6 +937,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>fail to get valid key:%1</source>
         <translation>유효한 키 가져오기 실패: %1</translation>
     </message>
+    <message>
+        <source>Destroyable</source>
+        <translation>Destroyable</translation>
+    </message>
+    <message>
+        <source>Copyable</source>
+        <translation>Copyable</translation>
+    </message>
 </context>
 <context>
     <name>CreateKeyDlg</name>
@@ -1039,6 +1079,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>Trusted</source>
         <translation>Trusted</translation>
+    </message>
+    <message>
+        <source>Copyable</source>
+        <translation>Copyable</translation>
+    </message>
+    <message>
+        <source>Destroyable</source>
+        <translation>Destroyable</translation>
     </message>
 </context>
 <context>
@@ -1219,6 +1267,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>Use SPKI</source>
         <translation>SPKI 사용</translation>
     </message>
+    <message>
+        <source>Copyable</source>
+        <translation>Copyable</translation>
+    </message>
+    <message>
+        <source>Destroyable</source>
+        <translation>Destroyable</translation>
+    </message>
 </context>
 <context>
     <name>CreateRSAPubKeyDlg</name>
@@ -1361,6 +1417,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>fail to get valid key:%1</source>
         <translation>유효한 키 가져오기 실패: %1</translation>
+    </message>
+    <message>
+        <source>Destroyable</source>
+        <translation>Destroyable</translation>
+    </message>
+    <message>
+        <source>Copyable</source>
+        <translation>Copyable</translation>
     </message>
 </context>
 <context>
@@ -1791,6 +1855,14 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>Trusted</source>
         <translation>Trusted</translation>
+    </message>
+    <message>
+        <source>Destroyable</source>
+        <translation>Destroyable</translation>
+    </message>
+    <message>
+        <source>Copyable</source>
+        <translation>Copyable</translation>
     </message>
 </context>
 <context>
@@ -2337,6 +2409,14 @@ Do you want to delete the file and continue?</source>
         <source>Trusted</source>
         <translation>Trusted</translation>
     </message>
+    <message>
+        <source>Copyable</source>
+        <translation>Copyable</translation>
+    </message>
+    <message>
+        <source>Destroyable</source>
+        <translation>Destroyable</translation>
+    </message>
 </context>
 <context>
     <name>GenKeyPairDlg</name>
@@ -2544,6 +2624,14 @@ Do you want to delete the file and continue?</source>
         <source>failure to set SKI_SPKI(rv:%1)</source>
         <translation>SKI SPKI 설정 실패 (rv: %1)</translation>
     </message>
+    <message>
+        <source>Copyable</source>
+        <translation>Copyable</translation>
+    </message>
+    <message>
+        <source>Destroyable</source>
+        <translation>Destroyable</translation>
+    </message>
 </context>
 <context>
     <name>ImportCertDlg</name>
@@ -2658,6 +2746,14 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>Use SPKI</source>
         <translation>SPKI 사용</translation>
+    </message>
+    <message>
+        <source>Copyable</source>
+        <translation>Copyable</translation>
+    </message>
+    <message>
+        <source>Destroyable</source>
+        <translation>Destroyable</translation>
     </message>
 </context>
 <context>
@@ -2870,6 +2966,14 @@ Do you want to delete the file and continue?</source>
         <source>Use SPKI</source>
         <translation>SPKI 사용</translation>
     </message>
+    <message>
+        <source>Copyable</source>
+        <translation>Copyable</translation>
+    </message>
+    <message>
+        <source>Destroyable</source>
+        <translation>Destroyable</translation>
+    </message>
 </context>
 <context>
     <name>ImportPriKeyDlg</name>
@@ -3076,6 +3180,14 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>Use SPKI</source>
         <translation>SPKI 사용</translation>
+    </message>
+    <message>
+        <source>Copyable</source>
+        <translation>Copyable</translation>
+    </message>
+    <message>
+        <source>Destroyable</source>
+        <translation>Destroyable</translation>
     </message>
 </context>
 <context>
@@ -4970,6 +5082,14 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>Trusted</source>
         <translation>Trusted</translation>
+    </message>
+    <message>
+        <source>Destroyable</source>
+        <translation>Destroyable</translation>
+    </message>
+    <message>
+        <source>Copyable</source>
+        <translation>Copyable</translation>
     </message>
 </context>
 <context>

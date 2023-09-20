@@ -72,6 +72,9 @@ void CreateDataDlg::initAttributes()
     mPrivateCombo->addItems(sFalseTrue);
     mSensitiveCombo->addItems(sFalseTrue);
     mModifiableCombo->addItems(sFalseTrue);
+    mCopyableCombo->addItems(sFalseTrue);
+    mDestroyableCombo->addItems(sFalseTrue);
+
     mTokenCombo->addItems(sFalseTrue);
 }
 
@@ -80,6 +83,9 @@ void CreateDataDlg::setAttributes()
     mPrivateCombo->setEnabled(mPrivateCheck->isChecked());
     mSensitiveCombo->setEnabled(mSensitiveCheck->isChecked());
     mModifiableCombo->setEnabled(mModifiableCheck->isChecked());
+    mCopyableCombo->setEnabled(mCopyableCheck->isChecked());
+    mDestroyableCombo->setEnabled(mDestroyableCheck->isChecked());
+
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
 }
 
@@ -90,6 +96,9 @@ void CreateDataDlg::connectAttributes()
     connect( mPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPrivate()));
     connect( mSensitiveCheck, SIGNAL(clicked()), this, SLOT(clickSensitive()));
     connect( mModifiableCheck, SIGNAL(clicked()), this, SLOT(clickModifiable()));
+    connect( mCopyableCheck, SIGNAL(clicked()), this, SLOT(clickCopyable()));
+    connect( mDestroyableCheck, SIGNAL(clicked()), this, SLOT(clickDestroyable()));
+
     connect( mTokenCheck, SIGNAL(clicked()), this, SLOT(clickToken()));
 }
 
@@ -178,6 +187,22 @@ void CreateDataDlg::accept()
         uCount++;
     }
 
+    if( mCopyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_COPYABLE;
+        sTemplate[uCount].pValue = ( mCopyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mDestroyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_DESTROYABLE;
+        sTemplate[uCount].pValue = ( mDestroyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
     if( mPrivateCheck->isChecked() )
     {
         sTemplate[uCount].type = CKA_PRIVATE;
@@ -234,6 +259,16 @@ void CreateDataDlg::clickSensitive()
 void CreateDataDlg::clickModifiable()
 {
     mModifiableCombo->setEnabled(mModifiableCheck->isChecked());
+}
+
+void CreateDataDlg::clickCopyable()
+{
+    mCopyableCombo->setEnabled(mCopyableCheck->isChecked());
+}
+
+void CreateDataDlg::clickDestroyable()
+{
+    mDestroyableCombo->setEnabled(mDestroyableCheck->isChecked());
 }
 
 void CreateDataDlg::clickToken()

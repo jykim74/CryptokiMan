@@ -69,6 +69,8 @@ void ImportPriKeyDlg::initAttributes()
     mPriSignRecoverCombo->addItems(sFalseTrue);
     mPriUnwrapCombo->addItems( sFalseTrue );
     mPriModifiableCombo->addItems( sFalseTrue );
+    mPriCopyableCombo->addItems(sFalseTrue);
+    mPriDestroyableCombo->addItems(sFalseTrue);
     mPriSensitiveCombo->addItems( sFalseTrue );
     mPriDeriveCombo->addItems( sFalseTrue );
     mPriExtractableCombo->addItems( sFalseTrue );
@@ -82,6 +84,8 @@ void ImportPriKeyDlg::initAttributes()
     mPubVerifyRecoverCombo->addItems(sFalseTrue);
     mPubDeriveCombo->addItems( sFalseTrue );
     mPubModifiableCombo->addItems( sFalseTrue );
+    mPubCopyableCombo->addItems(sFalseTrue);
+    mPubDestroyableCombo->addItems(sFalseTrue);
     mPubTokenCombo->addItems( sFalseTrue );
     mPubTrustedCombo->addItems( sFalseTrue );
 
@@ -100,6 +104,8 @@ void ImportPriKeyDlg::setAttributes()
     mPriSignRecoverCombo->setEnabled( mPriSignRecoverCheck->isChecked());
     mPriUnwrapCombo->setEnabled( mPriUnwrapCheck->isChecked() );
     mPriModifiableCombo->setEnabled( mPriModifiableCheck->isChecked() );
+    mPriCopyableCombo->setEnabled(mPriCopyableCheck->isChecked());
+    mPriDestroyableCombo->setEnabled(mPriDestroyableCheck->isChecked());
     mPriSensitiveCombo->setEnabled( mPriSensitiveCheck->isChecked() );
     mPriDeriveCombo->setEnabled( mPriDeriveCheck->isChecked() );
     mPriExtractableCombo->setEnabled( mPriExtractableCheck->isChecked() );
@@ -114,6 +120,8 @@ void ImportPriKeyDlg::setAttributes()
     mPubVerifyRecoverCombo->setEnabled( mPubVerifyRecoverCheck->isChecked() );
     mPubDeriveCombo->setEnabled( mPubDeriveCheck->isChecked() );
     mPubModifiableCombo->setEnabled( mPubModifiableCheck->isChecked() );
+    mPubCopyableCombo->setEnabled(mPubCopyableCheck->isChecked());
+    mPubDestroyableCombo->setEnabled(mPubDestroyableCheck->isChecked());
     mPubTokenCombo->setEnabled( mPubTokenCheck->isChecked() );
     mPubTrustedCombo->setEnabled( mPubTrustedCheck->isChecked() );
     mPubStartDateEdit->setEnabled( mPubStartDateCheck->isChecked() );
@@ -134,6 +142,8 @@ void ImportPriKeyDlg::connectAttributes()
     connect( mPriSignCheck, SIGNAL(clicked()), this, SLOT(clickPriSign()));
     connect( mPriUnwrapCheck, SIGNAL(clicked()), this, SLOT(clickPriUnwrap()));
     connect( mPriModifiableCheck, SIGNAL(clicked()), this, SLOT(clickPriModifiable()));
+    connect( mPriCopyableCheck, SIGNAL(clicked()), this, SLOT(clickPriCopyable()));
+    connect( mPriDestroyableCheck, SIGNAL(clicked()), this, SLOT(clickPriDestroyable()));
     connect( mPriSensitiveCheck, SIGNAL(clicked()), this, SLOT(clickPriSensitive()));
     connect( mPriDeriveCheck, SIGNAL(clicked()), this, SLOT(clickPriDerive()));
     connect( mPriExtractableCheck, SIGNAL(clicked()), this, SLOT(clickPriExtractable()));
@@ -148,6 +158,8 @@ void ImportPriKeyDlg::connectAttributes()
     connect( mPubVerifyCheck, SIGNAL(clicked()), this, SLOT(clickPubVerify()));
     connect( mPubDeriveCheck, SIGNAL(clicked()), this, SLOT(clickPubDerive()));
     connect( mPubModifiableCheck, SIGNAL(clicked()), this, SLOT(clickPubModifiable()));
+    connect( mPubCopyableCheck, SIGNAL(clicked()), this, SLOT(clickPubCopyable()));
+    connect( mPubDestroyableCheck, SIGNAL(clicked()), this, SLOT(clickPubDestroyable()));
     connect( mPubTokenCheck, SIGNAL(clicked()), this, SLOT(clickPubToken()));
     connect( mPubTrustedCheck, SIGNAL(clicked()), this, SLOT(clickPubTrusted()));
     connect( mPubStartDateCheck, SIGNAL(clicked()), this, SLOT(clickPubStartDate()));
@@ -372,6 +384,17 @@ void ImportPriKeyDlg::clickPriModifiable()
 {
     mPriModifiableCombo->setEnabled(mPriModifiableCheck->isChecked());
 }
+
+void ImportPriKeyDlg::clickPriCopyable()
+{
+    mPriCopyableCombo->setEnabled(mPriCopyableCheck->isChecked());
+}
+
+void ImportPriKeyDlg::clickPriDestroyable()
+{
+    mPriDestroyableCombo->setEnabled(mPriDestroyableCheck->isChecked());
+}
+
 void ImportPriKeyDlg::clickPriSensitive()
 {
     mPriSensitiveCombo->setEnabled(mPriSensitiveCheck->isChecked());
@@ -435,6 +458,17 @@ void ImportPriKeyDlg::clickPubModifiable()
 {
     mPubModifiableCombo->setEnabled(mPubModifiableCheck->isChecked());
 }
+
+void ImportPriKeyDlg::clickPubCopyable()
+{
+    mPubCopyableCombo->setEnabled(mPubCopyableCheck->isChecked());
+}
+
+void ImportPriKeyDlg::clickPubDestroyable()
+{
+    mPubDestroyableCombo->setEnabled(mPubDestroyableCheck->isChecked());
+}
+
 
 void ImportPriKeyDlg::clickPubToken()
 {
@@ -626,6 +660,22 @@ int ImportPriKeyDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
     {
         sTemplate[uCount].type = CKA_MODIFIABLE;
         sTemplate[uCount].pValue = (mPubModifiableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPubCopyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_COPYABLE;
+        sTemplate[uCount].pValue = ( mPubCopyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPubDestroyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_DESTROYABLE;
+        sTemplate[uCount].pValue = ( mPubDestroyableCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
         uCount++;
     }
@@ -891,6 +941,22 @@ int ImportPriKeyDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
         uCount++;
     }
 
+    if( mPriCopyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_COPYABLE;
+        sTemplate[uCount].pValue = ( mPriCopyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPriDestroyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_DESTROYABLE;
+        sTemplate[uCount].pValue = ( mPriDestroyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
     if( mPriSensitiveCheck->isChecked() )
     {
         sTemplate[uCount].type = CKA_SENSITIVE;
@@ -1151,6 +1217,22 @@ int ImportPriKeyDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
         uCount++;
     }
 
+    if( mPubCopyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_COPYABLE;
+        sTemplate[uCount].pValue = ( mPubCopyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPubDestroyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_DESTROYABLE;
+        sTemplate[uCount].pValue = ( mPubDestroyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
     if( mPubStartDateCheck->isChecked() )
     {
         getCKDate( mPubStartDateEdit->date(), &sSDate );
@@ -1345,6 +1427,22 @@ int ImportPriKeyDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
         sTemplate[uCount].type = CKA_MODIFIABLE;
         sTemplate[uCount].pValue = (mPriModifiableCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
+        uCount++;
+    }
+
+    if( mPriCopyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_COPYABLE;
+        sTemplate[uCount].pValue = ( mPriCopyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPriDestroyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_DESTROYABLE;
+        sTemplate[uCount].pValue = ( mPriDestroyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
         uCount++;
     }
 
@@ -1601,6 +1699,22 @@ int ImportPriKeyDlg::createDSAPublicKey( JDSAKeyVal *pDSAKeyVal )
         uCount++;
     }
 
+    if( mPubCopyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_COPYABLE;
+        sTemplate[uCount].pValue = ( mPubCopyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPubDestroyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_DESTROYABLE;
+        sTemplate[uCount].pValue = ( mPubDestroyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
     if( mPubStartDateCheck->isChecked() )
     {
         getCKDate( mPubStartDateEdit->date(), &sSDate );
@@ -1812,6 +1926,22 @@ int ImportPriKeyDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
         sTemplate[uCount].type = CKA_MODIFIABLE;
         sTemplate[uCount].pValue = (mPriModifiableCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
+        uCount++;
+    }
+
+    if( mPriCopyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_COPYABLE;
+        sTemplate[uCount].pValue = ( mPriCopyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPriDestroyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_DESTROYABLE;
+        sTemplate[uCount].pValue = ( mPriDestroyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
         uCount++;
     }
 

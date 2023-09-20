@@ -61,6 +61,7 @@ const QStringList kLogLevel = { "None", "Error", "Info", "Warn", "Debug" };
 
 static QStringList kCommonAttList = {
     "CKA_LABEL", "CKA_ID", "CKA_MODIFIABLE", "CKA_TOKEN",
+    "CKA_COPYABLE", "CKA_DESTROYABLE"
 };
 
 static QStringList kCertAttList = {

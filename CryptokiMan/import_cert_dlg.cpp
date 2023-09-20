@@ -73,6 +73,8 @@ void ImportCertDlg::initAttributes()
     mPrivateCombo->addItems(sFalseTrue);
     mSensitiveCombo->addItems(sFalseTrue);
     mModifiableCombo->addItems(sFalseTrue);
+    mCopyableCombo->addItems(sFalseTrue);
+    mDestroyableCombo->addItems(sFalseTrue);
     mTokenCombo->addItems(sFalseTrue);
     mTrustedCombo->addItems(sFalseTrue);
 
@@ -86,6 +88,8 @@ void ImportCertDlg::setAttributes()
     mPrivateCombo->setEnabled(mPrivateCheck->isChecked());
     mSensitiveCombo->setEnabled(mSensitiveCheck->isChecked());
     mModifiableCombo->setEnabled(mModifiableCheck->isChecked());
+    mCopyableCombo->setEnabled(mCopyableCheck->isChecked());
+    mDestroyableCombo->setEnabled(mDestroyableCheck->isChecked());
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
     mTrustedCombo->setEnabled(mTrustedCheck->isChecked());
     mStartDateEdit->setEnabled(mStartDateCheck->isChecked());
@@ -101,6 +105,8 @@ void ImportCertDlg::connectAttributes()
     connect( mPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPrivate()));
     connect( mSensitiveCheck, SIGNAL(clicked()), this, SLOT(clickSensitive()));
     connect( mModifiableCheck, SIGNAL(clicked()), this, SLOT(clickModifiable()));
+    connect( mCopyableCheck, SIGNAL(clicked()), this, SLOT(clickCopyable()));
+    connect( mDestroyableCheck, SIGNAL(clicked()), this, SLOT(clickDestroyable()));
     connect( mTokenCheck, SIGNAL(clicked()), this, SLOT(clickToken()));
     connect( mTrustedCheck, SIGNAL(clicked()), this, SLOT(clickTrusted()));
     connect( mFindBtn, SIGNAL(clicked()), this, SLOT(clickFind()));
@@ -252,6 +258,22 @@ void ImportCertDlg::accept()
         uCount++;
     }
 
+    if( mCopyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_COPYABLE;
+        sTemplate[uCount].pValue = ( mCopyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mDestroyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_DESTROYABLE;
+        sTemplate[uCount].pValue = ( mDestroyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
     if( mPrivateCheck->isChecked() )
     {
         sTemplate[uCount].type = CKA_PRIVATE;
@@ -329,6 +351,16 @@ void ImportCertDlg::clickSensitive()
 void ImportCertDlg::clickModifiable()
 {
     mModifiableCombo->setEnabled(mModifiableCheck->isChecked());
+}
+
+void ImportCertDlg::clickCopyable()
+{
+    mCopyableCombo->setEnabled(mCopyableCheck->isChecked());
+}
+
+void ImportCertDlg::clickDestroyable()
+{
+    mDestroyableCombo->setEnabled(mDestroyableCheck->isChecked());
 }
 
 void ImportCertDlg::clickToken()

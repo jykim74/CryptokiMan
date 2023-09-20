@@ -25,6 +25,8 @@ private slots:
     void clickPrivate();
     void clickSensitive();
     void clickModifiable();
+    void clickCopyable();
+    void clickDestroyable();
     void clickToken();
 
     void changeData();

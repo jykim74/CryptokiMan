@@ -70,6 +70,8 @@ void ImportPFXDlg::initAttributes()
     mPriSignRecoverCombo->addItems( sFalseTrue );
     mPriUnwrapCombo->addItems( sFalseTrue );
     mPriModifiableCombo->addItems( sFalseTrue );
+    mPriCopyableCombo->addItems(sFalseTrue);
+    mPriDestroyableCombo->addItems(sFalseTrue);
     mPriSensitiveCombo->addItems( sFalseTrue );
     mPriDeriveCombo->addItems( sFalseTrue );
     mPriExtractableCombo->addItems( sFalseTrue );
@@ -84,6 +86,8 @@ void ImportPFXDlg::initAttributes()
     mPubVerifyRecoverCombo->addItems( sFalseTrue );
     mPubDeriveCombo->addItems( sFalseTrue );
     mPubModifiableCombo->addItems( sFalseTrue );
+    mPubCopyableCombo->addItems(sFalseTrue);
+    mPubDestroyableCombo->addItems(sFalseTrue);
     mPubTokenCombo->addItems( sFalseTrue );
     mPubTrustedCombo->addItems( sFalseTrue );
 
@@ -92,6 +96,8 @@ void ImportPFXDlg::initAttributes()
     mCertPrivateCombo->addItems( sFalseTrue );
     mCertSensitiveCombo->addItems( sFalseTrue );
     mCertModifiableCombo->addItems( sFalseTrue );
+    mCertCopyableCombo->addItems(sFalseTrue);
+    mCertDestroyableCombo->addItems(sFalseTrue);
     mCertTokenCombo->addItems( sFalseTrue );
     mCertTrustedCombo->addItems( sFalseTrue );
 
@@ -110,6 +116,8 @@ void ImportPFXDlg::setAttributes()
     mPriSignRecoverCombo->setEnabled( mPriSignRecoverCheck->isChecked() );
     mPriUnwrapCombo->setEnabled( mPriUnwrapCheck->isChecked() );
     mPriModifiableCombo->setEnabled( mPriModifiableCheck->isChecked() );
+    mPriCopyableCombo->setEnabled(mPriCopyableCheck->isChecked());
+    mPriDestroyableCombo->setEnabled(mPriDestroyableCheck->isChecked());
     mPriSensitiveCombo->setEnabled( mPriSensitiveCheck->isChecked() );
     mPriDeriveCombo->setEnabled( mPriDeriveCheck->isChecked() );
     mPriExtractableCombo->setEnabled( mPriExtractableCheck->isChecked() );
@@ -124,6 +132,8 @@ void ImportPFXDlg::setAttributes()
     mPubVerifyRecoverCombo->setEnabled( mPubVerifyRecoverCheck->isChecked() );
     mPubDeriveCombo->setEnabled( mPubDeriveCheck->isChecked() );
     mPubModifiableCombo->setEnabled( mPubModifiableCheck->isChecked() );
+    mPubCopyableCombo->setEnabled(mPubCopyableCheck->isChecked());
+    mPubDestroyableCombo->setEnabled(mPubDestroyableCheck->isChecked());
     mPubTokenCombo->setEnabled( mPubTokenCheck->isChecked() );
     mPubTrustedCombo->setEnabled( mPubTrustedCheck->isChecked() );
     mPubStartDateEdit->setEnabled( mPubStartDateCheck->isChecked() );
@@ -132,6 +142,8 @@ void ImportPFXDlg::setAttributes()
     mCertPrivateCombo->setEnabled(mCertPrivateCheck->isChecked());
     mCertSensitiveCombo->setEnabled(mCertSensitiveCheck->isChecked());
     mCertModifiableCombo->setEnabled(mCertModifiableCheck->isChecked());
+    mCertCopyableCombo->setEnabled(mCertCopyableCheck->isChecked());
+    mCertDestroyableCombo->setEnabled(mCertDestroyableCheck->isChecked());
     mCertTokenCombo->setEnabled(mCertTokenCheck->isChecked());
     mCertTrustedCombo->setEnabled(mCertTrustedCheck->isChecked());
     mCertStartDateEdit->setEnabled( mCertStartDateCheck->isChecked() );
@@ -149,6 +161,8 @@ void ImportPFXDlg::connectAttributes()
     connect( mPriSignRecoverCheck, SIGNAL(clicked()), this, SLOT(clickPriSignRecover()));
     connect( mPriUnwrapCheck, SIGNAL(clicked()), this, SLOT(clickPriUnwrap()));
     connect( mPriModifiableCheck, SIGNAL(clicked()), this, SLOT(clickPriModifiable()));
+    connect( mPriCopyableCheck, SIGNAL(clicked()), this, SLOT(clickPriCopyable()));
+    connect( mPriDestroyableCheck, SIGNAL(clicked()), this, SLOT(clickPriDestroyable()));
     connect( mPriSensitiveCheck, SIGNAL(clicked()), this, SLOT(clickPriSensitive()));
     connect( mPriDeriveCheck, SIGNAL(clicked()), this, SLOT(clickPriDerive()));
     connect( mPriExtractableCheck, SIGNAL(clicked()), this, SLOT(clickPriExtractable()));
@@ -164,6 +178,8 @@ void ImportPFXDlg::connectAttributes()
     connect( mPubVerifyRecoverCheck, SIGNAL(clicked()), this, SLOT(clickPubVerifyRecover()));
     connect( mPubDeriveCheck, SIGNAL(clicked()), this, SLOT(clickPubDerive()));
     connect( mPubModifiableCheck, SIGNAL(clicked()), this, SLOT(clickPubModifiable()));
+    connect( mPubCopyableCheck, SIGNAL(clicked()), this, SLOT(clickPubCopyable()));
+    connect( mPubDestroyableCheck, SIGNAL(clicked()), this, SLOT(clickPubDestroyable()));
     connect( mPubTokenCheck, SIGNAL(clicked()), this, SLOT(clickPubToken()));
     connect( mPubTrustedCheck, SIGNAL(clicked()), this, SLOT(clickPubTrusted()));
     connect( mPubStartDateCheck, SIGNAL(clicked()), this, SLOT(clickPubStartDate()));
@@ -175,6 +191,8 @@ void ImportPFXDlg::connectAttributes()
     connect( mCertPrivateCheck, SIGNAL(clicked()), this, SLOT(clickCertPrivate()));
     connect( mCertSensitiveCheck, SIGNAL(clicked()), this, SLOT(clickCertSensitive()));
     connect( mCertModifiableCheck, SIGNAL(clicked()), this, SLOT(clickCertModifiable()));
+    connect( mCertCopyableCheck, SIGNAL(clicked()), this, SLOT(clickCertCopyable()));
+    connect( mCertDestroyableCheck, SIGNAL(clicked()), this, SLOT(clickCertDestroyable()));
     connect( mCertTokenCheck, SIGNAL(clicked()), this, SLOT(clickCertToken()));
     connect( mCertTrustedCheck, SIGNAL(clicked()), this, SLOT(clickCertTrusted()));
     connect( mCertStartDateCheck, SIGNAL(clicked()), this, SLOT(clickCertStartDate()));
@@ -375,6 +393,17 @@ void ImportPFXDlg::clickPriModifiable()
 {
     mPriModifiableCombo->setEnabled(mPriModifiableCheck->isChecked());
 }
+
+void ImportPFXDlg::clickPriCopyable()
+{
+    mPriCopyableCombo->setEnabled(mPriCopyableCheck->isChecked());
+}
+
+void ImportPFXDlg::clickPriDestroyable()
+{
+    mPriDestroyableCombo->setEnabled(mPriDestroyableCheck->isChecked());
+}
+
 void ImportPFXDlg::clickPriSensitive()
 {
     mPriSensitiveCombo->setEnabled(mPriSensitiveCheck->isChecked());
@@ -440,6 +469,16 @@ void ImportPFXDlg::clickPubModifiable()
     mPubModifiableCombo->setEnabled(mPubModifiableCheck->isChecked());
 }
 
+void ImportPFXDlg::clickPubCopyable()
+{
+    mPubCopyableCombo->setEnabled(mPubCopyableCheck->isChecked());
+}
+
+void ImportPFXDlg::clickPubDestroyable()
+{
+    mPubDestroyableCombo->setEnabled(mPubDestroyableCheck->isChecked());
+}
+
 void ImportPFXDlg::clickPubToken()
 {
     mPubTokenCombo->setEnabled(mPubTokenCheck->isChecked());
@@ -485,6 +524,16 @@ void ImportPFXDlg::clickCertSensitive()
 void ImportPFXDlg::clickCertModifiable()
 {
     mCertModifiableCombo->setEnabled(mCertModifiableCheck->isChecked());
+}
+
+void ImportPFXDlg::clickCertCopyable()
+{
+    mCertCopyableCombo->setEnabled(mCertCopyableCheck->isChecked());
+}
+
+void ImportPFXDlg::clickCertDestroyable()
+{
+    mCertDestroyableCombo->setEnabled(mCertDestroyableCheck->isChecked());
 }
 
 void ImportPFXDlg::clickCertToken()
@@ -667,6 +716,22 @@ int ImportPFXDlg::createCert( BIN *pCert )
     {
         sTemplate[uCount].type = CKA_MODIFIABLE;
         sTemplate[uCount].pValue = ( mCertModifiableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mCertCopyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_COPYABLE;
+        sTemplate[uCount].pValue = ( mCertCopyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mCertDestroyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_DESTROYABLE;
+        sTemplate[uCount].pValue = ( mCertDestroyableCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
         uCount++;
     }
@@ -906,6 +971,22 @@ int ImportPFXDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
     {
         sTemplate[uCount].type = CKA_MODIFIABLE;
         sTemplate[uCount].pValue = (mPubModifiableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPubCopyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_COPYABLE;
+        sTemplate[uCount].pValue = ( mPubCopyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPubDestroyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_DESTROYABLE;
+        sTemplate[uCount].pValue = ( mPubDestroyableCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
         uCount++;
     }
@@ -1180,6 +1261,22 @@ int ImportPFXDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
         uCount++;
     }
 
+    if( mPriCopyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_COPYABLE;
+        sTemplate[uCount].pValue = ( mPriCopyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPriDestroyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_DESTROYABLE;
+        sTemplate[uCount].pValue = ( mPriDestroyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
     if( mPriSensitiveCheck->isChecked() )
     {
         sTemplate[uCount].type = CKA_SENSITIVE;
@@ -1450,6 +1547,22 @@ int ImportPFXDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
         uCount++;
     }
 
+    if( mPubCopyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_COPYABLE;
+        sTemplate[uCount].pValue = ( mPubCopyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPubDestroyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_DESTROYABLE;
+        sTemplate[uCount].pValue = ( mPubDestroyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
     if( mPubStartDateCheck->isChecked() )
     {
         getCKDate( mPubStartDateEdit->date(), &sSDate );
@@ -1655,6 +1768,22 @@ int ImportPFXDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
         sTemplate[uCount].type = CKA_MODIFIABLE;
         sTemplate[uCount].pValue = (mPriModifiableCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
+        uCount++;
+    }
+
+    if( mPriCopyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_COPYABLE;
+        sTemplate[uCount].pValue = ( mPriCopyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPriDestroyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_DESTROYABLE;
+        sTemplate[uCount].pValue = ( mPriDestroyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
         uCount++;
     }
 
@@ -1921,6 +2050,22 @@ int ImportPFXDlg::createDSAPublicKey( JDSAKeyVal *pDSAKeyVal )
         uCount++;
     }
 
+    if( mPubCopyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_COPYABLE;
+        sTemplate[uCount].pValue = ( mPubCopyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPubDestroyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_DESTROYABLE;
+        sTemplate[uCount].pValue = ( mPubDestroyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
     if( mPubStartDateCheck->isChecked() )
     {
         getCKDate( mPubStartDateEdit->date(), &sSDate );
@@ -2142,6 +2287,22 @@ int ImportPFXDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
         sTemplate[uCount].type = CKA_MODIFIABLE;
         sTemplate[uCount].pValue = (mPriModifiableCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
+        uCount++;
+    }
+
+    if( mPriCopyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_COPYABLE;
+        sTemplate[uCount].pValue = ( mPriCopyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPriDestroyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_DESTROYABLE;
+        sTemplate[uCount].pValue = ( mPriDestroyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
         uCount++;
     }
 

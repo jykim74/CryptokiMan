@@ -89,6 +89,8 @@ void CreateRSAPriKeyDlg::initAttributes()
     mSensitiveCombo->addItems(sFalseTrue);
     mDeriveCombo->addItems(sFalseTrue);
     mModifiableCombo->addItems(sFalseTrue);
+    mCopyableCombo->addItems(sFalseTrue);
+    mDestroyableCombo->addItems(sFalseTrue);
     mExtractableCombo->addItems(sFalseTrue);
     mTokenCombo->addItems(sFalseTrue);
 
@@ -107,6 +109,8 @@ void CreateRSAPriKeyDlg::setAttributes()
     mDeriveCombo->setEnabled(mDeriveCheck->isChecked());
     mSensitiveCombo->setEnabled(mSensitiveCheck->isChecked());
     mModifiableCombo->setEnabled(mModifiableCheck->isChecked());
+    mCopyableCombo->setEnabled(mCopyableCheck->isChecked());
+    mDestroyableCombo->setEnabled(mDestroyableCheck->isChecked());
     mExtractableCombo->setEnabled(mExtractableCheck->isChecked());
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
     mStartDateEdit->setEnabled(mStartDateCheck->isChecked());
@@ -127,6 +131,8 @@ void CreateRSAPriKeyDlg::connectAttributes()
     connect( mSignRecoverCheck, SIGNAL(clicked()), this, SLOT(clickSignRecover()));
     connect( mDeriveCheck, SIGNAL(clicked()), this, SLOT(clickDerive()));
     connect( mModifiableCheck, SIGNAL(clicked()), this, SLOT(clickModifiable()));
+    connect( mCopyableCheck, SIGNAL(clicked()), this, SLOT(clickCopyable()));
+    connect( mDestroyableCheck, SIGNAL(clicked()), this, SLOT(clickDestroyable()));
     connect( mSensitiveCheck, SIGNAL(clicked()), this, SLOT(clickSensitive()));
     connect( mExtractableCheck, SIGNAL(clicked()), this, SLOT(clickExtractable()));
     connect( mTokenCheck, SIGNAL(clicked()), this, SLOT(clickToken()));
@@ -361,6 +367,22 @@ void CreateRSAPriKeyDlg::accept()
         uCount++;
     }
 
+    if( mCopyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_COPYABLE;
+        sTemplate[uCount].pValue = ( mCopyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mDestroyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_DESTROYABLE;
+        sTemplate[uCount].pValue = ( mDestroyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
     if( mPrivateCheck->isChecked() )
     {
         sTemplate[uCount].type = CKA_PRIVATE;
@@ -576,6 +598,16 @@ void CreateRSAPriKeyDlg::clickUnwrap()
 void CreateRSAPriKeyDlg::clickModifiable()
 {
     mModifiableCombo->setEnabled(mModifiableCheck->isChecked());
+}
+
+void CreateRSAPriKeyDlg::clickCopyable()
+{
+    mCopyableCombo->setEnabled(mCopyableCheck->isChecked());
+}
+
+void CreateRSAPriKeyDlg::clickDestroyable()
+{
+    mDestroyableCombo->setEnabled(mDestroyableCheck->isChecked());
 }
 
 void CreateRSAPriKeyDlg::clickSensitive()

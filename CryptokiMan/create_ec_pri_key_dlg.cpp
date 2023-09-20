@@ -80,6 +80,8 @@ void CreateECPriKeyDlg::initAttributes()
     mSensitiveCombo->addItems(sFalseTrue);
     mDeriveCombo->addItems(sFalseTrue);
     mModifiableCombo->addItems(sFalseTrue);
+    mCopyableCombo->addItems(sFalseTrue);
+    mDestroyableCombo->addItems(sFalseTrue);
     mExtractableCombo->addItems(sFalseTrue);
     mTokenCombo->addItems(sFalseTrue);
 
@@ -98,6 +100,8 @@ void CreateECPriKeyDlg::setAttributes()
     mDeriveCombo->setEnabled(mDeriveCheck->isChecked());
     mSensitiveCombo->setEnabled(mSensitiveCheck->isChecked());
     mModifiableCombo->setEnabled(mModifiableCheck->isChecked());
+    mCopyableCombo->setEnabled(mCopyableCheck->isChecked());
+    mDestroyableCombo->setEnabled(mDestroyableCheck->isChecked());
     mExtractableCombo->setEnabled(mExtractableCheck->isChecked());
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
     mStartDateEdit->setEnabled(mStartDateCheck->isChecked());
@@ -121,6 +125,8 @@ void CreateECPriKeyDlg::connectAttributes()
     connect( mSignRecoverCheck, SIGNAL(clicked()), this, SLOT(clickSignRecover()));
     connect( mDeriveCheck, SIGNAL(clicked()), this, SLOT(clickDerive()));
     connect( mModifiableCheck, SIGNAL(clicked()), this, SLOT(clickModifiable()));
+    connect( mCopyableCheck, SIGNAL(clicked()), this, SLOT(clickCopyable()));
+    connect( mDestroyableCheck, SIGNAL(clicked()), this, SLOT(clickDestroyable()));
     connect( mSensitiveCheck, SIGNAL(clicked()), this, SLOT(clickSensitive()));
     connect( mExtractableCheck, SIGNAL(clicked()), this, SLOT(clickExtractable()));
     connect( mTokenCheck, SIGNAL(clicked()), this, SLOT(clickToken()));
@@ -279,6 +285,22 @@ void CreateECPriKeyDlg::accept()
     {
         sTemplate[uCount].type = CKA_MODIFIABLE;
         sTemplate[uCount].pValue = ( mModifiableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mCopyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_COPYABLE;
+        sTemplate[uCount].pValue = ( mCopyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mDestroyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_DESTROYABLE;
+        sTemplate[uCount].pValue = ( mDestroyableCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
         uCount++;
     }
@@ -489,6 +511,16 @@ void CreateECPriKeyDlg::clickUnwrap()
 void CreateECPriKeyDlg::clickModifiable()
 {
     mModifiableCombo->setEnabled(mModifiableCheck->isChecked());
+}
+
+void CreateECPriKeyDlg::clickCopyable()
+{
+    mCopyableCombo->setEnabled(mCopyableCheck->isChecked());
+}
+
+void CreateECPriKeyDlg::clickDestroyable()
+{
+    mDestroyableCombo->setEnabled(mDestroyableCheck->isChecked());
 }
 
 void CreateECPriKeyDlg::clickSensitive()

@@ -85,6 +85,8 @@ void CreateDSAPubKeyDlg::initAttributes()
     mVerifyRecoverCombo->addItems(sFalseTrue);
     mDeriveCombo->addItems(sFalseTrue);
     mModifiableCombo->addItems(sFalseTrue);
+    mCopyableCombo->addItems(sFalseTrue);
+    mDestroyableCombo->addItems(sFalseTrue);
     mTokenCombo->addItems(sFalseTrue);
     mTrustedCombo->addItems(sFalseTrue);
 
@@ -102,6 +104,8 @@ void CreateDSAPubKeyDlg::setAttributes()
     mVerifyRecoverCombo->setEnabled(mVerifyRecoverCheck->isChecked());
     mDeriveCombo->setEnabled(mDeriveCheck->isChecked());
     mModifiableCombo->setEnabled(mModifiableCheck->isChecked());
+    mCopyableCombo->setEnabled(mCopyableCheck->isChecked());
+    mDestroyableCombo->setEnabled(mDestroyableCheck->isChecked());
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
     mTrustedCombo->setEnabled(mTrustedCheck->isChecked());
     mStartDateEdit->setEnabled(mStartDateCheck->isChecked());
@@ -121,6 +125,8 @@ void CreateDSAPubKeyDlg::connectAttributes()
     connect( mVerifyRecoverCheck, SIGNAL(clicked()), this, SLOT(clickVerifyRecover()));
     connect( mDeriveCheck, SIGNAL(clicked()), this, SLOT(clickDerive()));
     connect( mModifiableCheck, SIGNAL(clicked()), this, SLOT(clickModifiable()));
+    connect( mCopyableCheck, SIGNAL(clicked()), this, SLOT(clickCopyable()));
+    connect( mDestroyableCheck, SIGNAL(clicked()), this, SLOT(clickDestroyable()));
     connect( mTokenCheck, SIGNAL(clicked()), this, SLOT(clickToken()));
     connect( mTrustedCheck, SIGNAL(clicked()), this, SLOT(clickTrusted()));
     connect( mStartDateCheck, SIGNAL(clicked()), this, SLOT(clickStartDate()));
@@ -279,6 +285,22 @@ void CreateDSAPubKeyDlg::accept()
     {
         sTemplate[uCount].type = CKA_MODIFIABLE;
         sTemplate[uCount].pValue = ( mModifiableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mCopyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_COPYABLE;
+        sTemplate[uCount].pValue = ( mCopyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mDestroyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_DESTROYABLE;
+        sTemplate[uCount].pValue = ( mDestroyableCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
         uCount++;
     }
@@ -498,6 +520,17 @@ void CreateDSAPubKeyDlg::clickModifiable()
 {
     mModifiableCombo->setEnabled(mModifiableCheck->isChecked());
 }
+
+void CreateDSAPubKeyDlg::clickCopyable()
+{
+    mCopyableCombo->setEnabled(mCopyableCheck->isChecked());
+}
+
+void CreateDSAPubKeyDlg::clickDestroyable()
+{
+    mDestroyableCombo->setEnabled(mDestroyableCheck->isChecked());
+}
+
 
 void CreateDSAPubKeyDlg::clickToken()
 {

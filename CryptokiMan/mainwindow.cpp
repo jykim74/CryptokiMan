@@ -1817,6 +1817,8 @@ void MainWindow::showCertificateInfoDetail( QModelIndex index )
     info( QString( "CKA_VALUE           : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_VALUE, uObj ) ));
     info( QString( "CKA_TOKEN           : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_TOKEN, uObj ) ));
     info( QString( "CKA_MODIFIABLE      : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_MODIFIABLE, uObj ) ));
+    info( QString( "CKA_COPYABLE        : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_COPYABLE, uObj ) ));
+    info( QString( "CKA_DESTROYABLE     : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_DESTROYABLE, uObj ) ));
     info( QString( "CKA_TRUSTED         : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_TRUSTED, uObj ) ));
     info( QString( "CKA_PRIVATE         : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_PRIVATE, uObj ) ));
     info( QString( "CKA_START_DATE      : %1\n" ).arg(stringAttribute( ATTR_VAL_DATE, CKA_START_DATE, uObj ) ));
@@ -1887,6 +1889,8 @@ void MainWindow::showPublicKeyInfoDetail( QModelIndex index )
     info( QString( "CKA_VERIFY_RECOVER  : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_VERIFY_RECOVER, uObj)));
     info( QString( "CKA_PRIVATE         : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_PRIVATE, uObj)));
     info( QString( "CKA_MODIFIABLE      : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_MODIFIABLE, uObj)));
+    info( QString( "CKA_COPYABLE        : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_COPYABLE, uObj ) ));
+    info( QString( "CKA_DESTROYABLE     : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_DESTROYABLE, uObj ) ));
     info( QString( "CKA_DERIVE          : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_DERIVE, uObj)));
     info( QString( "ATTR_VAL_DATE       : %1\n" ).arg(stringAttribute( ATTR_VAL_DATE, CKA_START_DATE, uObj)));
     info( QString( "ATTR_VAL_DATE       : %1\n" ).arg(stringAttribute( ATTR_VAL_DATE, CKA_END_DATE, uObj )));
@@ -1961,6 +1965,8 @@ void MainWindow::showPrivateKeyInfoDetail( QModelIndex index )
     info( QString( "CKA_SIGN_RECOVER     : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_SIGN_RECOVER, uObj)));
     info( QString( "CKA_DECRYPT          : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_DECRYPT, uObj)));
     info( QString( "CKA_MODIFIABLE       : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_MODIFIABLE, uObj)));
+    info( QString( "CKA_COPYABLE         : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_COPYABLE, uObj ) ));
+    info( QString( "CKA_DESTROYABLE      : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_DESTROYABLE, uObj ) ));
     info( QString( "CKA_DERIVE           : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_DERIVE, uObj)));
     info( QString( "CKA_EXTRACTABLE      : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_EXTRACTABLE, uObj)));
     info( QString( "CKA_START_DATE       : %1\n" ).arg(stringAttribute(  ATTR_VAL_DATE, CKA_START_DATE, uObj)));
@@ -2000,6 +2006,8 @@ void MainWindow::showSecretKeyInfoDetail( QModelIndex index )
     info( QString( "CKA_WRAP        : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_WRAP, uObj )));
     info( QString( "CKA_UNWRAP      : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_UNWRAP, uObj )));
     info( QString( "CKA_MODIFIABLE  : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_MODIFIABLE, uObj )));
+    info( QString( "CKA_COPYABLE    : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_COPYABLE, uObj ) ));
+    info( QString( "CKA_DESTROYABLE : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_DESTROYABLE, uObj ) ));
     info( QString( "CKA_DERIVE      : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_DERIVE, uObj )));
     info( QString( "CKA_EXTRACTABLE : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_EXTRACTABLE, uObj )));
     info( QString( "CKA_TRUSTED     : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_TRUSTED, uObj ) ));
@@ -2029,6 +2037,8 @@ void MainWindow::showDataInfoDetail( QModelIndex index )
     info( QString( "CKA_TOKEN       : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_TOKEN, uObj )));
     info( QString( "CKA_PRIVATE     : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_PRIVATE, uObj )));
     info( QString( "CKA_MODIFIABLE  : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_MODIFIABLE, uObj )));
+    info( QString( "CKA_COPYABLE    : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_COPYABLE, uObj ) ));
+    info( QString( "CKA_DESTROYABLE : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_DESTROYABLE, uObj ) ));
 }
 
 void MainWindow::showRightMenu(QPoint point )

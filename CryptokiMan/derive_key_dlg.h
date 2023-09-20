@@ -33,6 +33,8 @@ private slots:
     void clickEncrypt();
     void clickDecrypt();
     void clickModifiable();
+    void clickCopyable();
+    void clickDestroyable();
     void clickSign();
     void clickSignRecover();
     void clickVerify();

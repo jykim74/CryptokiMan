@@ -35,6 +35,8 @@ private slots:
     void clickPriSignRecover();
     void clickPriUnwrap();
     void clickPriModifiable();
+    void clickPriCopyable();
+    void clickPriDestroyable();
     void clickPriSensitive();
     void clickPriDerive();
     void clickPriExtractable();
@@ -50,6 +52,8 @@ private slots:
     void clickPubVerifyRecover();
     void clickPubDerive();
     void clickPubModifiable();
+    void clickPubCopyable();
+    void clickPubDestroyable();
     void clickPubToken();
     void clickPubTrusted();
     void clickPubStartDate();

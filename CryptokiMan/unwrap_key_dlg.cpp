@@ -92,6 +92,8 @@ void UnwrapKeyDlg::initAttributes()
     mEncryptCombo->addItems(sFalseTrue);
     mDecryptCombo->addItems(sFalseTrue);
     mModifiableCombo->addItems(sFalseTrue);
+    mCopyableCombo->addItems(sFalseTrue);
+    mDestroyableCombo->addItems(sFalseTrue);
     mSignCombo->addItems(sFalseTrue);
     mSignRecoverCombo->addItems(sFalseTrue);
     mVerifyCombo->addItems(sFalseTrue);
@@ -115,6 +117,8 @@ void UnwrapKeyDlg::setAttributes()
     mEncryptCombo->setEnabled(mEncryptCheck->isChecked());
     mDecryptCombo->setEnabled(mDecryptCheck->isChecked());
     mModifiableCombo->setEnabled(mModifiableCheck->isChecked());
+    mCopyableCombo->setEnabled(mCopyableCheck->isChecked());
+    mDestroyableCombo->setEnabled(mDestroyableCheck->isChecked());
     mSignCombo->setEnabled(mSignCheck->isChecked());
     mSignRecoverCombo->setEnabled(mSignRecoverCheck->isChecked());
     mVerifyCombo->setEnabled(mVerifyCheck->isChecked());
@@ -138,6 +142,8 @@ void UnwrapKeyDlg::connectAttributes()
     connect( mEncryptCheck, SIGNAL(clicked()), this, SLOT(clickEncrypt()));
     connect( mDecryptCheck, SIGNAL(clicked()), this, SLOT(clickDecrypt()));
     connect( mModifiableCheck, SIGNAL(clicked()), this, SLOT(clickModifiable()));
+    connect( mCopyableCheck, SIGNAL(clicked()), this, SLOT(clickCopyable()));
+    connect( mDestroyableCheck, SIGNAL(clicked()), this, SLOT(clickDestroyable()));
     connect( mSignCheck, SIGNAL(clicked()), this, SLOT(clickSign()));
     connect( mSignRecoverCheck, SIGNAL(clicked()), this, SLOT(clickSignRecover()));
     connect( mVerifyCheck, SIGNAL(clicked()), this, SLOT(clickVerify()));
@@ -351,6 +357,22 @@ void UnwrapKeyDlg::accept()
     {
         sTemplate[uCount].type = CKA_MODIFIABLE;
         sTemplate[uCount].pValue = ( mModifiableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mModifiableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_MODIFIABLE;
+        sTemplate[uCount].pValue = ( mModifiableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mCopyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_COPYABLE;
+        sTemplate[uCount].pValue = ( mCopyableCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
         uCount++;
     }
@@ -685,6 +707,17 @@ void UnwrapKeyDlg::clickModifiable()
 {
     mModifiableCombo->setEnabled(mModifiableCheck->isChecked());
 }
+
+void UnwrapKeyDlg::clickCopyable()
+{
+    mCopyableCombo->setEnabled(mCopyableCheck->isChecked());
+}
+
+void UnwrapKeyDlg::clickDestroyable()
+{
+    mDestroyableCombo->setEnabled(mDestroyableCheck->isChecked());
+}
+
 
 void UnwrapKeyDlg::clickSign()
 {

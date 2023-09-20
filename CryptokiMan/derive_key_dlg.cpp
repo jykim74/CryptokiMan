@@ -231,6 +231,22 @@ void DeriveKeyDlg::accept()
         uCount++;
     }
 
+    if( mCopyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_COPYABLE;
+        sTemplate[uCount].pValue = ( mCopyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mDestroyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_DESTROYABLE;
+        sTemplate[uCount].pValue = ( mDestroyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
     if( mPrivateCheck->isChecked() )
     {
         sTemplate[uCount].type = CKA_PRIVATE;
@@ -376,6 +392,8 @@ void DeriveKeyDlg::initAttributes()
     mSensitiveCombo->addItems(sFalseTrue);
     mWrapCombo->addItems(sFalseTrue);
     mModifiableCombo->addItems(sFalseTrue);
+    mCopyableCombo->addItems(sFalseTrue);
+    mDestroyableCombo->addItems(sFalseTrue);
     mEncryptCombo->addItems(sFalseTrue);
     mDeriveCombo->addItems(sFalseTrue);
     mTokenCombo->addItems(sFalseTrue);
@@ -395,6 +413,8 @@ void DeriveKeyDlg::setAttributes()
     mWrapCombo->setEnabled(mWrapCheck->isChecked());
     mSensitiveCombo->setEnabled(mSensitiveCheck->isChecked());
     mModifiableCombo->setEnabled(mModifiableCheck->isChecked());
+    mCopyableCombo->setEnabled(mCopyableCheck->isChecked());
+    mDestroyableCombo->setEnabled(mDestroyableCheck->isChecked());
     mEncryptCombo->setEnabled(mEncryptCheck->isChecked());
     mTokenCombo->setEnabled(mTokenCheck->isChecked());
     mTrustedCombo->setEnabled(mTrustedCheck->isChecked());
@@ -415,6 +435,8 @@ void DeriveKeyDlg::connectAttributes()
     connect( mSignRecoverCheck, SIGNAL(clicked()), this, SLOT(clickSignRecover()));
     connect( mWrapCheck, SIGNAL(clicked()), this, SLOT(clickWrap()));
     connect( mModifiableCheck, SIGNAL(clicked()), this, SLOT(clickModifiable()));
+    connect( mCopyableCheck, SIGNAL(clicked()), this, SLOT(clickCopyable()));
+    connect( mDestroyableCheck, SIGNAL(clicked()), this, SLOT(clickDestroyable()));
     connect( mSensitiveCheck, SIGNAL(clicked()), this, SLOT(clickSensitive()));
     connect( mEncryptCheck, SIGNAL(clicked()), this, SLOT(clickEncrypt()));
     connect( mTokenCheck, SIGNAL(clicked()), this, SLOT(clickToken()));
@@ -466,6 +488,16 @@ void DeriveKeyDlg::clickDecrypt()
 void DeriveKeyDlg::clickModifiable()
 {
     mModifiableCombo->setEnabled(mModifiableCheck->isChecked());
+}
+
+void DeriveKeyDlg::clickCopyable()
+{
+    mCopyableCombo->setEnabled(mCopyableCheck->isChecked());
+}
+
+void DeriveKeyDlg::clickDestroyable()
+{
+    mDestroyableCombo->setEnabled(mDestroyableCheck->isChecked());
 }
 
 void DeriveKeyDlg::clickSign()

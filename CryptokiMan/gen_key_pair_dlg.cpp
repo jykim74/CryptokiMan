@@ -114,6 +114,8 @@ void GenKeyPairDlg::initAttributes()
     mPriSignRecoverCombo->addItems(sFalseTrue);
     mPriUnwrapCombo->addItems( sFalseTrue );
     mPriModifiableCombo->addItems( sFalseTrue );
+    mPriCopyableCombo->addItems(sFalseTrue);
+    mPriDestroyableCombo->addItems(sFalseTrue);
     mPriSensitiveCombo->addItems( sFalseTrue );
     mPriDeriveCombo->addItems( sFalseTrue );
     mPriExtractableCombo->addItems( sFalseTrue );
@@ -128,6 +130,8 @@ void GenKeyPairDlg::initAttributes()
     mPubVerifyRecoverCombo->addItems(sFalseTrue);
     mPubDeriveCombo->addItems( sFalseTrue );
     mPubModifiableCombo->addItems( sFalseTrue );
+    mPubCopyableCombo->addItems(sFalseTrue);
+    mPubDestroyableCombo->addItems(sFalseTrue);
     mPubTokenCombo->addItems( sFalseTrue );
     mPubTrustedCombo->addItems( sFalseTrue );
 
@@ -146,6 +150,8 @@ void GenKeyPairDlg::setAttributes()
     mPriSignRecoverCombo->setEnabled( mPriSignRecoverCheck->isChecked() );
     mPriUnwrapCombo->setEnabled( mPriUnwrapCheck->isChecked() );
     mPriModifiableCombo->setEnabled( mPriModifiableCheck->isChecked() );
+    mPriCopyableCombo->setEnabled(mPriCopyableCheck->isChecked());
+    mPriDestroyableCombo->setEnabled(mPriDestroyableCheck->isChecked());
     mPriSensitiveCombo->setEnabled( mPriSensitiveCheck->isChecked() );
     mPriDeriveCombo->setEnabled( mPriDeriveCheck->isChecked() );
     mPriExtractableCombo->setEnabled( mPriExtractableCheck->isChecked() );
@@ -160,6 +166,8 @@ void GenKeyPairDlg::setAttributes()
     mPubVerifyRecoverCombo->setEnabled( mPubVerifyRecoverCheck->isChecked() );
     mPubDeriveCombo->setEnabled( mPubDeriveCheck->isChecked() );
     mPubModifiableCombo->setEnabled( mPubModifiableCheck->isChecked() );
+    mPubCopyableCombo->setEnabled(mPubCopyableCheck->isChecked());
+    mPubDestroyableCombo->setEnabled(mPubDestroyableCheck->isChecked());
     mPubTokenCombo->setEnabled( mPubTokenCheck->isChecked() );
     mPubTrustedCombo->setEnabled( mPubTrustedCheck->isChecked() );
     mPubStartDateEdit->setEnabled( mPubStartDateCheck->isChecked() );
@@ -177,6 +185,8 @@ void GenKeyPairDlg::connectAttributes()
     connect( mPriSignRecoverCheck, SIGNAL(clicked()), this, SLOT(clickPriSignRecover()));
     connect( mPriUnwrapCheck, SIGNAL(clicked()), this, SLOT(clickPriUnwrap()));
     connect( mPriModifiableCheck, SIGNAL(clicked()), this, SLOT(clickPriModifiable()));
+    connect( mPriCopyableCheck, SIGNAL(clicked()), this, SLOT(clickPriCopyable()));
+    connect( mPriDestroyableCheck, SIGNAL(clicked()), this, SLOT(clickPriDestroyable()));
     connect( mPriSensitiveCheck, SIGNAL(clicked()), this, SLOT(clickPriSensitive()));
     connect( mPriDeriveCheck, SIGNAL(clicked()), this, SLOT(clickPriDerive()));
     connect( mPriExtractableCheck, SIGNAL(clicked()), this, SLOT(clickPriExtractable()));
@@ -193,6 +203,8 @@ void GenKeyPairDlg::connectAttributes()
     connect( mPubVerifyRecoverCheck, SIGNAL(clicked()), this, SLOT(clickPubVerifyRecover()));
     connect( mPubDeriveCheck, SIGNAL(clicked()), this, SLOT(clickPubDerive()));
     connect( mPubModifiableCheck, SIGNAL(clicked()), this, SLOT(clickPubModifiable()));
+    connect( mPubCopyableCheck, SIGNAL(clicked()), this, SLOT(clickPubCopyable()));
+    connect( mPubDestroyableCheck, SIGNAL(clicked()), this, SLOT(clickPubDestroyable()));
     connect( mPubTokenCheck, SIGNAL(clicked()), this, SLOT(clickPubToken()));
     connect( mPubTrustedCheck, SIGNAL(clicked()), this, SLOT(clickPubTrusted()));
     connect( mPubStartDateCheck, SIGNAL(clicked()), this, SLOT(clickPubStartDate()));
@@ -476,6 +488,22 @@ void GenKeyPairDlg::accept()
         uPubCount++;
     }
 
+    if( mPubCopyableCheck->isChecked() )
+    {
+        sPubTemplate[uPubCount].type = CKA_COPYABLE;
+        sPubTemplate[uPubCount].pValue = ( mPubCopyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sPubTemplate[uPubCount].ulValueLen = sizeof(CK_BBOOL);
+        uPubCount++;
+    }
+
+    if( mPubDestroyableCheck->isChecked() )
+    {
+        sPubTemplate[uPubCount].type = CKA_DESTROYABLE;
+        sPubTemplate[uPubCount].pValue = ( mPubDestroyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sPubTemplate[uPubCount].ulValueLen = sizeof(CK_BBOOL);
+        uPubCount++;
+    }
+
     if( mPubStartDateCheck->isChecked() )
     {
         getCKDate( mPubStartDateEdit->date(), &sPubStart );
@@ -596,6 +624,22 @@ void GenKeyPairDlg::accept()
         sPriTemplate[uPriCount].type = CKA_MODIFIABLE;
         sPriTemplate[uPriCount].pValue = (mPriModifiableCombo->currentIndex() ? &bTrue : &bFalse );
         sPriTemplate[uPriCount].ulValueLen = sizeof( CK_BBOOL );
+        uPriCount++;
+    }
+
+    if( mPriCopyableCheck->isChecked() )
+    {
+        sPriTemplate[uPriCount].type = CKA_COPYABLE;
+        sPriTemplate[uPriCount].pValue = ( mPriCopyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sPriTemplate[uPriCount].ulValueLen = sizeof(CK_BBOOL);
+        uPriCount++;
+    }
+
+    if( mPriDestroyableCheck->isChecked() )
+    {
+        sPriTemplate[uPriCount].type = CKA_DESTROYABLE;
+        sPriTemplate[uPriCount].pValue = ( mPriDestroyableCombo->currentIndex() ? &bTrue : &bFalse );
+        sPriTemplate[uPriCount].ulValueLen = sizeof(CK_BBOOL);
         uPriCount++;
     }
 
@@ -785,6 +829,18 @@ void GenKeyPairDlg::clickPriModifiable()
 {
     mPriModifiableCombo->setEnabled(mPriModifiableCheck->isChecked());
 }
+
+void GenKeyPairDlg::clickPriCopyable()
+{
+    mPriCopyableCombo->setEnabled(mPriCopyableCheck->isChecked());
+}
+
+void GenKeyPairDlg::clickPriDestroyable()
+{
+    mPriDestroyableCombo->setEnabled(mPriDestroyableCheck->isChecked());
+}
+
+
 void GenKeyPairDlg::clickPriSensitive()
 {
     mPriSensitiveCombo->setEnabled(mPriSensitiveCheck->isChecked());
@@ -847,6 +903,16 @@ void GenKeyPairDlg::clickPubDerive()
 void GenKeyPairDlg::clickPubModifiable()
 {
     mPubModifiableCombo->setEnabled(mPubModifiableCheck->isChecked());
+}
+
+void GenKeyPairDlg::clickPubCopyable()
+{
+    mPubCopyableCombo->setEnabled(mPubCopyableCheck->isChecked());
+}
+
+void GenKeyPairDlg::clickPubDestroyable()
+{
+    mPubDestroyableCombo->setEnabled(mPubDestroyableCheck->isChecked());
 }
 
 void GenKeyPairDlg::clickPubToken()
