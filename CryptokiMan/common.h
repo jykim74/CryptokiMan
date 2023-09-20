@@ -26,6 +26,9 @@
 #define     HM_ITEM_TYPE_DATA_OBJECT        15
 */
 
+static CK_BBOOL kTrue = CK_TRUE;
+static CK_BBOOL kFalse = CK_FALSE;
+
 enum {
     DATA_STRING,
     DATA_HEX,
@@ -57,7 +60,6 @@ enum { JS_FILE_TYPE_CERT,
 const QString kTableStyle = "QHeaderView::section {background-color:#404040;color:#FFFFFF;}";
 
 const QStringList kLogLevel = { "None", "Error", "Info", "Warn", "Debug" };
-
 
 static QStringList kCommonAttList = {
     "CKA_LABEL", "CKA_ID", "CKA_MODIFIABLE", "CKA_TOKEN",

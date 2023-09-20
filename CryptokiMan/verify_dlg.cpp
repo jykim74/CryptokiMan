@@ -9,9 +9,6 @@
 #include "common.h"
 #include "settings_mgr.h"
 
-static CK_BBOOL kTrue = CK_TRUE;
-static CK_BBOOL kFalse = CK_FALSE;
-
 static QStringList sMechList = {
     "CKM_RSA_PKCS", "CKM_SHA1_RSA_PKCS", "CKM_SHA256_RSA_PKCS", "CKM_SHA384_RSA_PKCS", "CKM_SHA512_RSA_PKCS",
     "CKM_ECDSA", "CKM_ECDSA_SHA1", "CKM_ECDSA_SHA256", "CKM_ECDSA_SHA384", "CKM_ECDSA_SHA512"

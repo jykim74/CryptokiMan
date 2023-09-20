@@ -7,9 +7,6 @@
 #include "settings_mgr.h"
 #include "mech_mgr.h"
 
-static CK_BBOOL kTrue = CK_TRUE;
-static CK_BBOOL kFalse = CK_FALSE;
-
 static QStringList sFalseTrue = { "false", "true" };
 static QStringList sParamList = { "CKD_NULL", "CKD_SHA1_KDF" };
 

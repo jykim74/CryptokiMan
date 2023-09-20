@@ -9,9 +9,6 @@
 #include "settings_mgr.h"
 #include "mech_mgr.h"
 
-static CK_BBOOL kTrue = CK_TRUE;
-static CK_BBOOL kFalse = CK_FALSE;
-
 static QStringList sMechUnwrapSymList;
 static QStringList sMechUnwrapAsymList;
 

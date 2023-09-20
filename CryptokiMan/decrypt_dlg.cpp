@@ -15,7 +15,6 @@
 static QStringList sKeyList = { "SECRET", "PRIVATE" };
 static QStringList sMechEncSymList;
 static QStringList sMechEncAsymList;
-static CK_BBOOL kTrue = CK_TRUE;
 
 DecryptDlg::DecryptDlg(QWidget *parent) :
     QDialog(parent)

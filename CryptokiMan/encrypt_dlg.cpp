@@ -11,7 +11,6 @@
 #include "settings_mgr.h"
 #include "mech_mgr.h"
 
-static CK_BBOOL kTrue = CK_TRUE;
 static QStringList sKeyList = { "SECRET", "PUBLIC" };
 
 static QStringList sMechEncSymList;

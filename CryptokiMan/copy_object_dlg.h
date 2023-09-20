@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "ui_copy_object_dlg.h"
+#include "js_pkcs11.h"
 
 namespace Ui {
 class CopyObjectDlg;
@@ -22,6 +23,9 @@ private slots:
     virtual void accept();
     void slotChanged( int index );
 
+    void changeType( int index );
+    void changeLabel( int index );
+
 private:
     void initUI();
     void initialize();
@@ -29,6 +33,14 @@ private:
     void setAttributes();
     void connectAttributes();
     void setDefaults();
+
+    void readLabels( CK_OBJECT_CLASS objClass );
+
+    void readSecretKeyLabels();
+    void readPrivateKeyLabels();
+    void readPublicKeyLabels();
+    void readCertificateLabels();
+    void readDataLabels();
 
     int slot_index_;
     long session_;
