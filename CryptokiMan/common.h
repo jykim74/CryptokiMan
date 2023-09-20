@@ -65,7 +65,7 @@ static QStringList kCommonAttList = {
 
 static QStringList kCertAttList = {
     "CKA_SUBJECT", "CKA_VALUE", "CKA_TRUSTED", "CKA_PRIVATE",
-    "CKA_START_DATE", "CKA_END_DATE",
+    "CKA_START_DATE", "CKA_END_DATE", "CKA_PUBLIC_KEY_INFO"
 };
 
 static QStringList kPubKeyAttList = {
@@ -73,7 +73,8 @@ static QStringList kPubKeyAttList = {
     "CKA_ENCRYPT", "CKA_VERIFY", "CKA_PRIVATE", "CKA_DERIVE",
     "CKA_ECDSA_PARAMS", "CKA_EC_POINT", "CKA_START_DATE", "CKA_END_DATE",
     "CKA_VALUE", "CKA_BASE", "CKA_PRIME", "CKA_SUBPRIME",
-    "CKA_VERIFY_RECOVER", "CKA_SUBJECT", "CKA_TRUSTED", "CKA_LOCAL"
+    "CKA_VERIFY_RECOVER", "CKA_SUBJECT", "CKA_TRUSTED", "CKA_LOCAL",
+    "CKA_PUBLIC_KEY_INFO"
 };
 
 static QStringList kPriKetAttList = {
@@ -82,7 +83,7 @@ static QStringList kPriKetAttList = {
     "CKA_ECDSA_PARAMS", "CKA_VALUE", "CKA_SENSITIVE", "CKA_UNWARP",
     "CKA_SIGN", "CKA_DECRYPT", "CKA_DERIVE", "CKA_EXTRACTABLE",
     "CKA_START_DATE", "CKA_END_DATE", "CKA_VALUE", "CKA_SIGN_RECOVER",
-    "CKA_SUBJECT", "CKA_LOCAL"
+    "CKA_SUBJECT", "CKA_LOCAL", "CKA_PUBLIC_KEY_INFO"
 };
 
 static QStringList kSecretKeyAttList = {

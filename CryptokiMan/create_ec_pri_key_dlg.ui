@@ -277,13 +277,6 @@
          <property name="topMargin">
           <number>0</number>
          </property>
-         <item row="2" column="0">
-          <widget class="QLabel" name="label_6">
-           <property name="text">
-            <string>ID</string>
-           </property>
-          </widget>
-         </item>
          <item row="1" column="0">
           <widget class="QLabel" name="label_5">
            <property name="text">
@@ -291,8 +284,12 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="1">
-          <widget class="QLineEdit" name="mIDText"/>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_6">
+           <property name="text">
+            <string>ID</string>
+           </property>
+          </widget>
          </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label_4">
@@ -307,6 +304,18 @@
            </property>
           </widget>
          </item>
+         <item row="1" column="2">
+          <widget class="QComboBox" name="mSubjectTypeCombo"/>
+         </item>
+         <item row="0" column="1" colspan="2">
+          <widget class="QLineEdit" name="mLabelText"/>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="mIDText"/>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="mSubjectText"/>
+         </item>
          <item row="2" column="2">
           <widget class="QCheckBox" name="mUseSKICheck">
            <property name="text">
@@ -314,14 +323,22 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="1" colspan="2">
-          <widget class="QLineEdit" name="mLabelText"/>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_14">
+           <property name="text">
+            <string>PubKeyInfo</string>
+           </property>
+          </widget>
          </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="mSubjectText"/>
+         <item row="3" column="1">
+          <widget class="QLineEdit" name="mPubKeyInfoText"/>
          </item>
-         <item row="1" column="2">
-          <widget class="QComboBox" name="mSubjectTypeCombo"/>
+         <item row="3" column="2">
+          <widget class="QCheckBox" name="mUseSPKICheck">
+           <property name="text">
+            <string>Use SPKI</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>

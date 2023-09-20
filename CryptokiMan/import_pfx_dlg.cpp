@@ -13,11 +13,9 @@ static QStringList sFalseTrue = { "false", "true" };
 ImportPFXDlg::ImportPFXDlg(QWidget *parent) :
     QDialog(parent)
 {
-    der_dn_.nLen = 0;
-    der_dn_.pVal = NULL;
-
-    ski_.nLen = 0;
-    ski_.pVal = NULL;
+    memset( &der_dn_, 0x00, sizeof(BIN));
+    memset( &ski_, 0x00, sizeof(BIN));
+    memset( &spki_, 0x00, sizeof(BIN));
 
     setupUi(this);
 
@@ -36,6 +34,7 @@ ImportPFXDlg::~ImportPFXDlg()
 {
     JS_BIN_reset( &der_dn_ );
     JS_BIN_reset( &ski_ );
+    JS_BIN_reset( &spki_ );
 }
 
 void ImportPFXDlg::setSelectedSlot(int index)
@@ -142,6 +141,8 @@ void ImportPFXDlg::setAttributes()
 void ImportPFXDlg::connectAttributes()
 {
     connect( mPriUseSKICheck, SIGNAL(clicked()), this, SLOT(clickPriUseSKI()));
+    connect( mPriUseSPKICheck, SIGNAL(clicked()), this, SLOT(clickPriUseSPKI()));
+
     connect( mPriPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPriPrivate()));
     connect( mPriDecryptCheck, SIGNAL(clicked()), this, SLOT(clickPriDecrypt()));
     connect( mPriSignCheck, SIGNAL(clicked()), this, SLOT(clickPriSign()));
@@ -169,6 +170,8 @@ void ImportPFXDlg::connectAttributes()
     connect( mPubEndDateCheck, SIGNAL(clicked()), this, SLOT(clickPubEndDate()));
 
     connect( mCertUseSKICheck, SIGNAL(clicked()), this, SLOT(clickCertUseSKI()));
+    connect( mCertUseSPKICheck, SIGNAL(clicked()), this, SLOT(clickCertUseSPKI()));
+
     connect( mCertPrivateCheck, SIGNAL(clicked()), this, SLOT(clickCertPrivate()));
     connect( mCertSensitiveCheck, SIGNAL(clicked()), this, SLOT(clickCertSensitive()));
     connect( mCertModifiableCheck, SIGNAL(clicked()), this, SLOT(clickCertModifiable()));
@@ -245,6 +248,8 @@ void ImportPFXDlg::accept()
     {
         JS_PKI_getKeyIdentifier( &binPub, &ski_ );
     }
+
+    JS_BIN_copy( &spki_, &binPub );
 
     rv = createCert( &binCert );
     if( rv != CKR_OK )
@@ -334,6 +339,12 @@ void ImportPFXDlg::clickPriUseSKI()
 {
     bool bVal = mPriUseSKICheck->isChecked();
     mPriIDText->setEnabled( !bVal );
+}
+
+void ImportPFXDlg::clickPriUseSPKI()
+{
+    bool bVal = mPriUseSPKICheck->isChecked();
+    mPriPubKeyInfoText->setEnabled( !bVal );
 }
 
 void ImportPFXDlg::clickPriPrivate()
@@ -453,6 +464,12 @@ void ImportPFXDlg::clickCertUseSKI()
 {
     bool bVal = mCertUseSKICheck->isChecked();
     mCertIDText->setEnabled( !bVal );
+}
+
+void ImportPFXDlg::clickCertUseSPKI()
+{
+    bool bVal = mCertUseSPKICheck->isChecked();
+    mCertPubKeyInfoText->setEnabled( !bVal );
 }
 
 void ImportPFXDlg::clickCertPrivate()
@@ -597,6 +614,27 @@ int ImportPFXDlg::createCert( BIN *pCert )
         uCount++;
     }
 
+    QString strPubKeyInfo = mCertPubKeyInfoText->text();
+    BIN binPub = {0,0};
+
+    if( mCertUseSPKICheck->isChecked() )
+    {
+        JS_BIN_copy( &binPub, &spki_ );
+    }
+    else
+    {
+        if( strPubKeyInfo.length() > 0 )
+            JS_BIN_decodeHex( strPubKeyInfo.toStdString().c_str(), &binPub );
+    }
+
+    if( binPub.nLen > 0 )
+    {
+        sTemplate[uCount].type = CKA_PUBLIC_KEY_INFO;
+        sTemplate[uCount].pValue = binPub.pVal;
+        sTemplate[uCount].ulValueLen = binPub.nLen;
+        uCount++;
+    }
+
     QString strSubject;
     BIN binSubject = {0,0};
 
@@ -684,6 +722,11 @@ int ImportPFXDlg::createCert( BIN *pCert )
     }
 
     rv = manApplet->cryptokiAPI()->CreateObject( hSession, sTemplate, uCount, &hObject );
+
+    JS_BIN_reset( &binLabel );
+    JS_BIN_reset( &binID );
+    JS_BIN_reset( &binPub );
+    JS_BIN_reset( &binSubject );
 
     if( rv != CKR_OK )
     {
@@ -968,6 +1011,27 @@ int ImportPFXDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
         uCount++;
     }
 
+    QString strPubKeyInfo = mPriPubKeyInfoText->text();
+    BIN binPub = {0,0};
+
+    if( mPriUseSPKICheck->isChecked() )
+    {
+        JS_BIN_copy( &binPub, &spki_ );
+    }
+    else
+    {
+        if( strPubKeyInfo.length() > 0 )
+            JS_BIN_decodeHex( strPubKeyInfo.toStdString().c_str(), &binPub );
+    }
+
+    if( binPub.nLen > 0 )
+    {
+        sTemplate[uCount].type = CKA_PUBLIC_KEY_INFO;
+        sTemplate[uCount].pValue = binPub.pVal;
+        sTemplate[uCount].ulValueLen = binPub.nLen;
+        uCount++;
+    }
+
     QString strSubject;
     BIN binSubject = {0,0};
 
@@ -1178,6 +1242,7 @@ int ImportPFXDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
 
     JS_BIN_reset( &binLabel );
     JS_BIN_reset( &binID );
+    JS_BIN_reset( &binPub );
     JS_BIN_reset( &binSubject );
     JS_BIN_reset( &binPublicExponent );
     JS_BIN_reset( &binModules );
@@ -1489,6 +1554,27 @@ int ImportPFXDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
         uCount++;
     }
 
+    QString strPubKeyInfo = mPriPubKeyInfoText->text();
+    BIN binPub = {0,0};
+
+    if( mPriUseSPKICheck->isChecked() )
+    {
+        JS_BIN_copy( &binPub, &spki_ );
+    }
+    else
+    {
+        if( strPubKeyInfo.length() > 0 )
+            JS_BIN_decodeHex( strPubKeyInfo.toStdString().c_str(), &binPub );
+    }
+
+    if( binPub.nLen > 0 )
+    {
+        sTemplate[uCount].type = CKA_PUBLIC_KEY_INFO;
+        sTemplate[uCount].pValue = binPub.pVal;
+        sTemplate[uCount].ulValueLen = binPub.nLen;
+        uCount++;
+    }
+
     QString strSubject;
     BIN binSubject = {0,0};
 
@@ -1634,6 +1720,7 @@ int ImportPFXDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
 
     JS_BIN_reset( &binLabel );
     JS_BIN_reset( &binID );
+    JS_BIN_reset( &binPub );
     JS_BIN_reset( &binSubject );
     JS_BIN_reset( &binValue );
     JS_BIN_reset( &binECParam );
@@ -1938,6 +2025,27 @@ int ImportPFXDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
         uCount++;
     }
 
+    QString strPubKeyInfo = mPriPubKeyInfoText->text();
+    BIN binPub = {0,0};
+
+    if( mPriUseSPKICheck->isChecked() )
+    {
+        JS_BIN_copy( &binPub, &spki_ );
+    }
+    else
+    {
+        if( strPubKeyInfo.length() > 0 )
+            JS_BIN_decodeHex( strPubKeyInfo.toStdString().c_str(), &binPub );
+    }
+
+    if( binPub.nLen > 0 )
+    {
+        sTemplate[uCount].type = CKA_PUBLIC_KEY_INFO;
+        sTemplate[uCount].pValue = binPub.pVal;
+        sTemplate[uCount].ulValueLen = binPub.nLen;
+        uCount++;
+    }
+
     QString strSubject;
     BIN binSubject = {0,0};
 
@@ -2099,6 +2207,7 @@ int ImportPFXDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
 
     JS_BIN_reset( &binLabel );
     JS_BIN_reset( &binID );
+    JS_BIN_reset( &binPub );
     JS_BIN_reset( &binSubject );
     JS_BIN_reset( &binValue );
     JS_BIN_reset( &binP );
@@ -2128,9 +2237,11 @@ void ImportPFXDlg::setDefaults()
 
     mCertUseSKICheck->setChecked(true);
     clickCertUseSKI();
+    mCertUseSPKICheck->click();
 
     mPriUseSKICheck->setChecked(true);
     clickPriUseSKI();
+    mPriUseSPKICheck->click();
 
     mPubUseSKICheck->setChecked(true);
     clickPubUseSKI();

@@ -23,6 +23,7 @@ private slots:
     void mechChanged( int nIndex );
 
     void clickPriUseSKI();
+    void clickPriUseSPKI();
 
     void clickPriPrivate();
     void clickPriDecrypt();
@@ -38,6 +39,7 @@ private slots:
     void clickPriEndDate();
 
     void clickPubUseSKI();
+
     void clickPubPrivate();
     void clickPubEncrypt();
     void clickPubWrap();
@@ -66,7 +68,7 @@ private:
     void connectAttributes();
     void setDefaults();
 
-    int setSKI( long hSession, int nKeyType, long hPri, long hPub );
+    int setSKI_SPKI( long hSession, int nKeyType, long hPri, long hPub );
 };
 
 #endif // GEN_KEY_PAIR_DLG_H

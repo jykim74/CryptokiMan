@@ -96,6 +96,7 @@ void ImportCertDlg::setAttributes()
 void ImportCertDlg::connectAttributes()
 {
     connect( mUseSKICheck, SIGNAL(clicked()), this, SLOT(clickUseSKI()));
+    connect( mUseSPKICheck, SIGNAL(clicked()), this, SLOT(clickUseSPKI()));
 
     connect( mPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPrivate()));
     connect( mSensitiveCheck, SIGNAL(clicked()), this, SLOT(clickSensitive()));
@@ -195,13 +196,12 @@ void ImportCertDlg::accept()
 
     QString strID = mIDText->text();
     BIN binID = {0,0};
+    BIN binPub = {0,0};
 
     if( mUseSKICheck->isChecked() )
     {
-        BIN binPub = {0,0};
         JS_PKI_getPubKeyFromCert( &binCert, &binPub );
         JS_PKI_getKeyIdentifier( &binPub, &binID );
-        JS_BIN_reset( &binPub );
     }
     else
     {
@@ -215,6 +215,24 @@ void ImportCertDlg::accept()
         sTemplate[uCount].ulValueLen = binID.nLen;
         uCount++;
     }
+
+    if( mUseSPKICheck->isChecked() == false )
+    {
+        JS_BIN_reset( &binPub );
+        QString strPubKeyInfo = mPubKeyInfoText->text();
+
+        if( strPubKeyInfo.length() > 0 )
+            JS_BIN_decodeHex( strPubKeyInfo.toStdString().c_str(), &binPub );
+    }
+
+    if( binPub.nLen > 0 )
+    {
+        sTemplate[uCount].type = CKA_PUBLIC_KEY_INFO;
+        sTemplate[uCount].pValue = binPub.pVal;
+        sTemplate[uCount].ulValueLen = binPub.nLen;
+        uCount++;
+    }
+
 
 //    if( !strSubject.isEmpty() )
     if( binSubject.nLen > 0 )
@@ -271,6 +289,7 @@ void ImportCertDlg::accept()
     JS_BIN_reset( &binCert );
     JS_BIN_reset( &binLabel );
     JS_BIN_reset( &binID );
+    JS_BIN_reset( &binPub );
     JS_BIN_reset( &binSubject );
 
     if( rv != CKR_OK )
@@ -289,6 +308,12 @@ void ImportCertDlg::clickUseSKI()
 {
     bool bVal = mUseSKICheck->isChecked();
     mIDText->setEnabled(!bVal);
+}
+
+void ImportCertDlg::clickUseSPKI()
+{
+    bool bVal = mUseSPKICheck->isChecked();
+    mPubKeyInfoText->setEnabled( !bVal );
 }
 
 void ImportCertDlg::clickPrivate()
@@ -351,6 +376,7 @@ void ImportCertDlg::setDefaults()
 {
     mUseSKICheck->setChecked(true);
     clickUseSKI();
+    mUseSPKICheck->click();
 
     mLabelText->setText( "certificate label" );
     mIDText->setText( "01020304" );

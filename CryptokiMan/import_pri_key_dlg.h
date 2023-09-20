@@ -27,6 +27,7 @@ private slots:
     void checkEncPriKey();
 
     void clickPriUseSKI();
+    void clickPriUseSPKI();
 
     void clickPriPrivate();
     void clickPriDecrypt();
@@ -74,6 +75,7 @@ private:
     void setDefaults();
 
     BIN ski_;
+    BIN spki_;
 };
 
 #endif // IMPORT_PRI_KEY_DLG_H

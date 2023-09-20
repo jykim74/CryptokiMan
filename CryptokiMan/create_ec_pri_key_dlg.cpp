@@ -109,6 +109,7 @@ void CreateECPriKeyDlg::connectAttributes()
     connect( mGenKeyBtn, SIGNAL(clicked()), this, SLOT(clickGenKey()));
     connect( mFindKeyBtn, SIGNAL(clicked()), this, SLOT(clickFindKey()));
     connect( mUseSKICheck, SIGNAL(clicked()), this, SLOT(clickUseSKI()));
+    connect( mUseSPKICheck, SIGNAL(clicked()), this, SLOT(clickUseSPKI()));
 
     connect( mECParamsText, SIGNAL(textChanged(const QString&)), this, SLOT(changeECParams(const QString&)));
     connect( mKeyValueText, SIGNAL(textChanged(const QString&)), this, SLOT(changeKeyValue(const QString&)));
@@ -199,10 +200,11 @@ void CreateECPriKeyDlg::accept()
 
     QString strID = mIDText->text();
     BIN binID = {0,0};
+    BIN binPub = {0,0};
 
     if( mUseSKICheck->isChecked() )
     {
-        getSKI( &binID );
+        getSKI_SPKI( &binID, &binPub );
     }
     else
     {
@@ -214,6 +216,22 @@ void CreateECPriKeyDlg::accept()
         sTemplate[uCount].type = CKA_ID;
         sTemplate[uCount].pValue = binID.pVal;
         sTemplate[uCount].ulValueLen = binID.nLen;
+        uCount++;
+    }
+
+    if( mUseSPKICheck->isChecked() == false )
+    {
+        JS_BIN_reset( &binPub );
+        QString strPubKeyInfo = mPubKeyInfoText->text();
+
+        if( strPubKeyInfo.length() > 0 ) JS_BIN_decodeHex( strPubKeyInfo.toStdString().c_str(), &binPub );
+    }
+
+    if( binPub.nLen > 0 )
+    {
+        sTemplate[uCount].type = CKA_PUBLIC_KEY_INFO;
+        sTemplate[uCount].pValue = binPub.pVal;
+        sTemplate[uCount].ulValueLen = binPub.nLen;
         uCount++;
     }
 
@@ -339,6 +357,7 @@ void CreateECPriKeyDlg::accept()
     JS_BIN_reset( &binValue );
     JS_BIN_reset( &binLabel );
     JS_BIN_reset( &binID );
+    JS_BIN_reset( &binPub );
     JS_BIN_reset( &binSubject );
 
     if( rv != CKR_OK )
@@ -436,6 +455,11 @@ void CreateECPriKeyDlg::clickUseSKI()
     mIDText->setEnabled( !bVal );
 }
 
+void CreateECPriKeyDlg::clickUseSPKI()
+{
+    bool bVal = mUseSPKICheck->isChecked();
+    mPubKeyInfoText->setEnabled( !bVal );
+}
 
 void CreateECPriKeyDlg::clickPrivate()
 {
@@ -518,6 +542,7 @@ void CreateECPriKeyDlg::setDefaults()
 
     mUseSKICheck->setChecked(true);
     clickUseSKI();
+    mUseSPKICheck->click();
 
     mPrivateCheck->setChecked(true);
     mPrivateCombo->setEnabled(true);
@@ -543,7 +568,7 @@ void CreateECPriKeyDlg::setDefaults()
     mEndDateEdit->setDate( nowTime.date() );
 }
 
-int CreateECPriKeyDlg::getSKI( BIN *pSKI )
+int CreateECPriKeyDlg::getSKI_SPKI( BIN *pSKI, BIN *pSPKI )
 {
     int ret = 0;
     JECKeyVal sECKey;
@@ -591,6 +616,8 @@ int CreateECPriKeyDlg::getSKI( BIN *pSKI )
         manApplet->elog( QString( "fail to get key identifier: %1").arg(ret));
         goto end;
     }
+
+    JS_BIN_copy( pSPKI, &binPub );
 
 end :
     JS_PKI_resetECKeyVal( &sECKey );

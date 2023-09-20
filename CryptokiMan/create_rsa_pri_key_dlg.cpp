@@ -118,6 +118,7 @@ void CreateRSAPriKeyDlg::connectAttributes()
     connect( mFindKeyBtn, SIGNAL(clicked()), this, SLOT(clickFindKey()));
     connect( mGenKeyBtn, SIGNAL(clicked()), this, SLOT(clickGenKey()));
     connect( mUseSKICheck, SIGNAL(clicked()), this, SLOT(clickUseSKI()));
+    connect( mUseSPKICheck, SIGNAL(clicked()), this, SLOT(clickUseSPKI()));
 
     connect( mPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPrivate()));
     connect( mDecryptCheck, SIGNAL(clicked()), this, SLOT(clickDecrypt()));
@@ -277,10 +278,11 @@ void CreateRSAPriKeyDlg::accept()
 
     QString strID = mIDText->text();
     BIN binID = {0,0};
+    BIN binPub = {0,0};
 
     if( mUseSKICheck->isChecked() )
     {
-        getSKI( &binID );
+        getSKI_SPKI( &binID, &binPub );
     }
     else
     {
@@ -292,6 +294,22 @@ void CreateRSAPriKeyDlg::accept()
         sTemplate[uCount].type = CKA_ID;
         sTemplate[uCount].pValue = binID.pVal;
         sTemplate[uCount].ulValueLen = binID.nLen;
+        uCount++;
+    }
+
+    if( mUseSPKICheck->isChecked() == false )
+    {
+        JS_BIN_reset( &binPub );
+        QString strPubKeyInfo = mPubKeyInfoText->text();
+
+        if( strPubKeyInfo.length() > 0 ) JS_BIN_decodeHex( strPubKeyInfo.toStdString().c_str(), &binPub );
+    }
+
+    if( binPub.nLen > 0 )
+    {
+        sTemplate[uCount].type = CKA_PUBLIC_KEY_INFO;
+        sTemplate[uCount].pValue = binPub.pVal;
+        sTemplate[uCount].ulValueLen = binPub.nLen;
         uCount++;
     }
 
@@ -423,6 +441,7 @@ void CreateRSAPriKeyDlg::accept()
     JS_BIN_reset( &binCoefficient );
     JS_BIN_reset( &binLabel );
     JS_BIN_reset( &binID );
+    JS_BIN_reset( &binPub );
     JS_BIN_reset( &binSubject );
 
     if( rv != CKR_OK )
@@ -521,6 +540,12 @@ void CreateRSAPriKeyDlg::clickUseSKI()
 {
     bool bVal = mUseSKICheck->isChecked();
     mIDText->setEnabled( !bVal );
+}
+
+void CreateRSAPriKeyDlg::clickUseSPKI()
+{
+    bool bVal = mUseSPKICheck->isChecked();
+    mPubKeyInfoText->setEnabled( !bVal );
 }
 
 void CreateRSAPriKeyDlg::clickPrivate()
@@ -641,6 +666,7 @@ void CreateRSAPriKeyDlg::setDefaults()
 
     mUseSKICheck->setChecked(true);
     clickUseSKI();
+    mUseSPKICheck->click();
 
     mPrivateCheck->setChecked(true);
     mPrivateCombo->setEnabled(true);
@@ -666,7 +692,7 @@ void CreateRSAPriKeyDlg::setDefaults()
     mEndDateEdit->setDate( nowTime.date() );
 }
 
-int CreateRSAPriKeyDlg::getSKI( BIN *pSKI )
+int CreateRSAPriKeyDlg::getSKI_SPKI( BIN *pSKI, BIN *pSPKI )
 {
     int ret = 0;
     JRSAKeyVal  sRSAKey;
@@ -705,6 +731,8 @@ int CreateRSAPriKeyDlg::getSKI( BIN *pSKI )
         manApplet->elog( QString( "fail to get key identifier: %1").arg(ret));
         goto end;
     }
+
+    JS_BIN_copy( pSPKI, &binPub );
 
 end :
     JS_PKI_resetRSAKeyVal( &sRSAKey );

@@ -24,6 +24,8 @@ private slots:
     void slotChanged( int index );
 
     void clickCertUseSKI();
+    void clickCertUseSPKI();
+
     void clickCertPrivate();
     void clickCertSensitive();
     void clickCertModifiable();
@@ -33,6 +35,8 @@ private slots:
     void clickCertEndDate();
 
     void clickPriUseSKI();
+    void clickPriUseSPKI();
+
     void clickPriPrivate();
     void clickPriDecrypt();
     void clickPriSign();
@@ -83,6 +87,7 @@ private:
 
     BIN der_dn_;
     BIN ski_;
+    BIN spki_;
 };
 
 #endif // IMPORT_PFX_DLG_H

@@ -1811,17 +1811,17 @@ void MainWindow::showCertificateInfoDetail( QModelIndex index )
     info( "== Certificate Information\n" );
     info( "========================================================================\n" );
 
-    info( QString( "CKA_LABEL      : %1\n" ).arg(stringAttribute( ATTR_VAL_STRING, CKA_LABEL, uObj )) );
-    info( QString( "CKA_ID         : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_ID, uObj ) ));
-    info( QString( "CKA_SUBJECT    : %1 - %2\n" ).arg( strSubject ).arg( pDN ? pDN : "" ) );
-    info( QString( "CKA_VALUE      : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_VALUE, uObj ) ));
-    info( QString( "CKA_TOKEN      : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_TOKEN, uObj ) ));
-    info( QString( "CKA_MODIFIABLE : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_MODIFIABLE, uObj ) ));
-    info( QString( "CKA_TRUSTED    : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_TRUSTED, uObj ) ));
-    info( QString( "CKA_LOCAL      : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_LOCAL, uObj ) ));
-    info( QString( "CKA_PRIVATE    : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_PRIVATE, uObj ) ));
-    info( QString( "CKA_START_DATE : %1\n" ).arg(stringAttribute( ATTR_VAL_DATE, CKA_START_DATE, uObj ) ));
-    info( QString( "CKA_END_DATE   : %1\n" ).arg(stringAttribute( ATTR_VAL_DATE, CKA_END_DATE, uObj ) ));
+    info( QString( "CKA_LABEL           : %1\n" ).arg(stringAttribute( ATTR_VAL_STRING, CKA_LABEL, uObj )) );
+    info( QString( "CKA_ID              : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_ID, uObj ) ));
+    info( QString( "CKA_SUBJECT         : %1 - %2\n" ).arg( strSubject ).arg( pDN ? pDN : "" ) );
+    info( QString( "CKA_VALUE           : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_VALUE, uObj ) ));
+    info( QString( "CKA_TOKEN           : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_TOKEN, uObj ) ));
+    info( QString( "CKA_MODIFIABLE      : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_MODIFIABLE, uObj ) ));
+    info( QString( "CKA_TRUSTED         : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_TRUSTED, uObj ) ));
+    info( QString( "CKA_PRIVATE         : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_PRIVATE, uObj ) ));
+    info( QString( "CKA_START_DATE      : %1\n" ).arg(stringAttribute( ATTR_VAL_DATE, CKA_START_DATE, uObj ) ));
+    info( QString( "CKA_END_DATE        : %1\n" ).arg(stringAttribute( ATTR_VAL_DATE, CKA_END_DATE, uObj ) ));
+    info( QString( "CKA_PUBLIC_KEY_INFO : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_PUBLIC_KEY_INFO, uObj ) ));
 
     JS_BIN_reset( &binDN );
     if( pDN ) JS_free( pDN );
@@ -1890,6 +1890,7 @@ void MainWindow::showPublicKeyInfoDetail( QModelIndex index )
     info( QString( "CKA_DERIVE          : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_DERIVE, uObj)));
     info( QString( "ATTR_VAL_DATE       : %1\n" ).arg(stringAttribute( ATTR_VAL_DATE, CKA_START_DATE, uObj)));
     info( QString( "ATTR_VAL_DATE       : %1\n" ).arg(stringAttribute( ATTR_VAL_DATE, CKA_END_DATE, uObj )));
+    info( QString( "CKA_PUBLIC_KEY_INFO : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_PUBLIC_KEY_INFO, uObj ) ));
 
     JS_BIN_reset( &binDN );
     if( pDN ) JS_free( pDN );
@@ -1964,6 +1965,7 @@ void MainWindow::showPrivateKeyInfoDetail( QModelIndex index )
     info( QString( "CKA_EXTRACTABLE      : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_EXTRACTABLE, uObj)));
     info( QString( "CKA_START_DATE       : %1\n" ).arg(stringAttribute(  ATTR_VAL_DATE, CKA_START_DATE, uObj)));
     info( QString( "CKA_END_DATE         : %1\n" ).arg(stringAttribute(  ATTR_VAL_DATE, CKA_END_DATE, uObj)) );
+    info( QString( "CKA_PUBLIC_KEY_INFO  : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_PUBLIC_KEY_INFO, uObj ) ));
 
     JS_BIN_reset( &binDN );
     if( pDN ) JS_free( pDN );

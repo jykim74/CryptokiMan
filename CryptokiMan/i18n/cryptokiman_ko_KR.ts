@@ -393,6 +393,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <source>fail to get valid key:%1</source>
         <translation>유효한 키 가져오기 실패: %1</translation>
     </message>
+    <message>
+        <source>PubKeyInfo</source>
+        <translation>공개키 정보</translation>
+    </message>
+    <message>
+        <source>Use SPKI</source>
+        <translation>SPKI 사용</translation>
+    </message>
 </context>
 <context>
     <name>CreateDSAPubKeyDlg</name>
@@ -745,6 +753,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>fail to get valid key:%1</source>
         <translation>유효한 키 가져오기 실패: %1</translation>
+    </message>
+    <message>
+        <source>PubKeyInfo</source>
+        <translation>공개키 정보</translation>
+    </message>
+    <message>
+        <source>Use SPKI</source>
+        <translation>SPKI 사용</translation>
     </message>
 </context>
 <context>
@@ -1194,6 +1210,14 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <source>fail to get valid key:%1</source>
         <translation>유효한 키 가져오기 실패: %1</translation>
+    </message>
+    <message>
+        <source>PubKeyInfo</source>
+        <translation>공개키 정보</translation>
+    </message>
+    <message>
+        <source>Use SPKI</source>
+        <translation>SPKI 사용</translation>
     </message>
 </context>
 <context>
@@ -2502,11 +2526,23 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <source>failure to set SKI(rv:%1)</source>
-        <translation>SKI 설정 실패(rv:%1)</translation>
+        <translation type="vanished">SKI 설정 실패(rv:%1)</translation>
     </message>
     <message>
         <source>Trusted</source>
         <translation>Trusted</translation>
+    </message>
+    <message>
+        <source>PubKeyInfo</source>
+        <translation>공개키 정보</translation>
+    </message>
+    <message>
+        <source>Use SPKI</source>
+        <translation>SPKI 사용</translation>
+    </message>
+    <message>
+        <source>failure to set SKI_SPKI(rv:%1)</source>
+        <translation>SKI SPKI 설정 실패 (rv: %1)</translation>
     </message>
 </context>
 <context>
@@ -2614,6 +2650,14 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>Trusted</source>
         <translation>Trusted</translation>
+    </message>
+    <message>
+        <source>PubKeyInfo</source>
+        <translation>공개키 정보</translation>
+    </message>
+    <message>
+        <source>Use SPKI</source>
+        <translation>SPKI 사용</translation>
     </message>
 </context>
 <context>
@@ -2818,6 +2862,14 @@ Do you want to delete the file and continue?</source>
         <source>Trusted</source>
         <translation>Trusted</translation>
     </message>
+    <message>
+        <source>PubKeyInfo</source>
+        <translation>공개키 정보</translation>
+    </message>
+    <message>
+        <source>Use SPKI</source>
+        <translation>SPKI 사용</translation>
+    </message>
 </context>
 <context>
     <name>ImportPriKeyDlg</name>
@@ -3016,6 +3068,14 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>Use SKI</source>
         <translation>SKI 사용</translation>
+    </message>
+    <message>
+        <source>PubKeyInfo</source>
+        <translation>공개키 정보</translation>
+    </message>
+    <message>
+        <source>Use SPKI</source>
+        <translation>SPKI 사용</translation>
     </message>
 </context>
 <context>
@@ -4291,7 +4351,15 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <source>    s</source>
-        <translation>s</translation>
+        <translation type="vanished">s</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translation>로그인</translation>
+    </message>
+    <message>
+        <source>Session</source>
+        <translation>세션</translation>
     </message>
 </context>
 <context>

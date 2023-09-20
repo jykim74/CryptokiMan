@@ -26,6 +26,8 @@ private slots:
     void clickFindKey();
 
     void clickUseSKI();
+    void clickUseSPKI();
+
     void clickPrivate();
     void clickDecrypt();
     void clickSign();
@@ -54,7 +56,7 @@ private:
     void setAttributes();
     void connectAttributes();
     void setDefaults();
-    int getSKI( BIN *pSKI );
+    int getSKI_SPKI( BIN *pSKI, BIN *pSPKI );
 };
 
 #endif // GEN_RSA_PRI_KEY_DLG_H

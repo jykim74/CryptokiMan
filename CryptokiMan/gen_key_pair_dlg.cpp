@@ -169,6 +169,8 @@ void GenKeyPairDlg::setAttributes()
 void GenKeyPairDlg::connectAttributes()
 {
     connect( mPriUseSKICheck, SIGNAL(clicked()), this, SLOT(clickPriUseSKI()));
+    connect( mPriUseSPKICheck, SIGNAL(clicked()), this, SLOT(clickPriUseSPKI()));
+
     connect( mPriPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPriPrivate()));
     connect( mPriDecryptCheck, SIGNAL(clicked()), this, SLOT(clickPriDecrypt()));
     connect( mPriSignCheck, SIGNAL(clicked()), this, SLOT(clickPriSign()));
@@ -183,6 +185,7 @@ void GenKeyPairDlg::connectAttributes()
     connect( mPriEndDateCheck, SIGNAL(clicked()), this, SLOT(clickPriEndDate()));
 
     connect( mPubUseSKICheck, SIGNAL(clicked()), this, SLOT(clickPubUseSKI()));
+
     connect( mPubPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPubPrivate()));
     connect( mPubEncryptCheck, SIGNAL(clicked()), this, SLOT(clickPubEncrypt()));
     connect( mPubWrapCheck, SIGNAL(clicked()), this, SLOT(clickPubWrap()));
@@ -544,6 +547,18 @@ void GenKeyPairDlg::accept()
         uPriCount++;
     }
 
+    BIN binPriPubKeyInfo = {0,0};
+    QString strPriPubKeyInfo = mPriPubKeyInfoText->text();
+    if( strPriPubKeyInfo.length() > 0 ) JS_BIN_decodeHex( strPriPubKeyInfo.toStdString().c_str(), &binPriPubKeyInfo );
+
+    if( binPriPubKeyInfo.nLen > 0 )
+    {
+        sPriTemplate[uPriCount].type = CKA_PUBLIC_KEY_INFO;
+        sPriTemplate[uPriCount].pValue = binPriPubKeyInfo.pVal;
+        sPriTemplate[uPriCount].ulValueLen = binPriPubKeyInfo.nLen;
+        uPriCount++;
+    }
+
     if( mPriPrivateCheck->isChecked() )
     {
         sPriTemplate[uPriCount].type = CKA_PRIVATE;
@@ -654,6 +669,7 @@ void GenKeyPairDlg::accept()
     JS_BIN_reset( &binPriLabel );
     JS_BIN_reset( &binPriSubject );
     JS_BIN_reset( &binPriID );
+    JS_BIN_reset( &binPriPubKeyInfo );
     JS_BIN_reset( &binDSA_G );
     JS_BIN_reset( &binDSA_P );
     JS_BIN_reset( &binDSA_Q );
@@ -666,10 +682,10 @@ void GenKeyPairDlg::accept()
 
     if( mPriUseSKICheck->isChecked() || mPubUseSKICheck->isChecked() )
     {
-        rv = setSKI( hSession, keyType, uPriHandle, uPubHandle );
+        rv = setSKI_SPKI( hSession, keyType, uPriHandle, uPubHandle );
         if( rv != CKR_OK )
         {
-            manApplet->warningBox( tr( "failure to set SKI(rv:%1)").arg(JS_PKCS11_GetErrorMsg( rv )), this );
+            manApplet->warningBox( tr( "failure to set SKI_SPKI(rv:%1)").arg(JS_PKCS11_GetErrorMsg( rv )), this );
             return;
         }
     }
@@ -733,6 +749,12 @@ void GenKeyPairDlg::clickPriUseSKI()
 {
     bool bVal = mPriUseSKICheck->isChecked();
     mPriIDText->setEnabled( !bVal );
+}
+
+void GenKeyPairDlg::clickPriUseSPKI()
+{
+    bool bVal = mPriUseSPKICheck->isChecked();
+    mPriPubKeyInfoText->setEnabled( !bVal );
 }
 
 void GenKeyPairDlg::clickPriPrivate()
@@ -933,6 +955,8 @@ void GenKeyPairDlg::setDefaults()
     mPubUseSKICheck->setChecked(true);
     clickPubUseSKI();
 
+    mPriUseSPKICheck->click();
+
     mPubEncryptCheck->setChecked(true);
     mPubEncryptCombo->setEnabled(true);
     mPubEncryptCombo->setCurrentIndex(1);
@@ -974,7 +998,7 @@ void GenKeyPairDlg::setDefaults()
     mPubEndDateEdit->setDate( nowTime.date() );
 }
 
-int GenKeyPairDlg::setSKI( long hSession, int nKeyType, long hPri, long hPub )
+int GenKeyPairDlg::setSKI_SPKI( long hSession, int nKeyType, long hPri, long hPub )
 {
     int rv = 0;
     BIN binPub = {0,0};
@@ -1118,6 +1142,12 @@ int GenKeyPairDlg::setSKI( long hSession, int nKeyType, long hPri, long hPub )
         JS_BIN_reset( &binG );
 
         JS_PKI_resetDSAKeyVal( &sDSAKey );
+    }
+
+    if( mPriUseSPKICheck->isChecked() )
+    {
+        rv = cryptoAPI->SetAttributeValue2( hSession, hPri, CKA_PUBLIC_KEY_INFO, &binPub );
+        if( rv != 0 ) goto end;
     }
 
     JS_PKI_getKeyIdentifier( &binPub, &binSKI );

@@ -109,7 +109,9 @@ void CreateDSAPriKeyDlg::connectAttributes()
 {
     connect( mGenKeyBtn, SIGNAL(clicked()), this, SLOT(clickGenKey()));
     connect( mFindKeyBtn, SIGNAL(clicked()), this, SLOT(clickFindKey()));
+
     connect( mUseSKICheck, SIGNAL(clicked()), this, SLOT(clickUseSKI()));
+    connect( mUseSPKICheck, SIGNAL(clicked()), this, SLOT(clickUseSPKI()));
 
     connect( mPText, SIGNAL(textChanged(const QString&)), this, SLOT(changeP(const QString&)));
     connect( mQText, SIGNAL(textChanged(const QString&)), this, SLOT(changeQ(const QString&)));
@@ -227,10 +229,11 @@ void CreateDSAPriKeyDlg::accept()
 
     QString strID = mIDText->text();
     BIN binID = {0,0};
+    BIN binPub = {0,0};
 
     if( mUseSKICheck->isChecked() )
     {
-        getSKI( &binID );
+        getSKI_SPKI( &binID, &binPub );
     }
     else
     {
@@ -242,6 +245,22 @@ void CreateDSAPriKeyDlg::accept()
         sTemplate[uCount].type = CKA_ID;
         sTemplate[uCount].pValue = binID.pVal;
         sTemplate[uCount].ulValueLen = binID.nLen;
+        uCount++;
+    }
+
+    if( mUseSPKICheck->isChecked() == false )
+    {
+        JS_BIN_reset( &binPub );
+        QString strPubKeyInfo = mPubKeyInfoText->text();
+
+        if( strPubKeyInfo.length() > 0 ) JS_BIN_decodeHex( strPubKeyInfo.toStdString().c_str(), &binPub );
+    }
+
+    if( binPub.nLen > 0 )
+    {
+        sTemplate[uCount].type = CKA_PUBLIC_KEY_INFO;
+        sTemplate[uCount].pValue = binPub.pVal;
+        sTemplate[uCount].ulValueLen = binPub.nLen;
         uCount++;
     }
 
@@ -370,6 +389,7 @@ void CreateDSAPriKeyDlg::accept()
     JS_BIN_reset( &binValue );
     JS_BIN_reset( &binLabel );
     JS_BIN_reset( &binID );
+    JS_BIN_reset( &binPub );
     JS_BIN_reset( &binSubject );
 
     if( rv != CKR_OK )
@@ -462,6 +482,12 @@ void CreateDSAPriKeyDlg::clickUseSKI()
 {
     bool bVal = mUseSKICheck->isChecked();
     mIDText->setEnabled( !bVal );
+}
+
+void CreateDSAPriKeyDlg::clickUseSPKI()
+{
+    bool bVal = mUseSPKICheck->isChecked();
+    mPubKeyInfoText->setEnabled( !bVal );
 }
 
 void CreateDSAPriKeyDlg::clickPrivate()
@@ -557,6 +583,7 @@ void CreateDSAPriKeyDlg::setDefaults()
 
     mUseSKICheck->setChecked(true);
     clickUseSKI();
+    mUseSPKICheck->click();
 
     mPrivateCheck->setChecked(true);
     mPrivateCombo->setEnabled(true);
@@ -582,7 +609,7 @@ void CreateDSAPriKeyDlg::setDefaults()
     mEndDateEdit->setDate( nowTime.date() );
 }
 
-int CreateDSAPriKeyDlg::getSKI( BIN *pSKI )
+int CreateDSAPriKeyDlg::getSKI_SPKI( BIN *pSKI, BIN *pSPKI )
 {
     int ret = 0;
     JDSAKeyVal  sDSAKey;
@@ -618,6 +645,8 @@ int CreateDSAPriKeyDlg::getSKI( BIN *pSKI )
         manApplet->elog( QString( "fail to get key identifier: %1").arg(ret));
         goto end;
     }
+
+    JS_BIN_copy( pSPKI, &binPub );
 
 end :
     JS_PKI_resetDSAKeyVal( &sDSAKey );
