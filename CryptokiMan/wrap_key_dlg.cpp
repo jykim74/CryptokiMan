@@ -41,7 +41,7 @@ void WrapKeyDlg::initUI()
     connect( mLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(labelChanged(int)));
     connect( mSaveFileBtn, SIGNAL(clicked()), this, SLOT(clickSaveFile()));
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(close()));
-    connect( mOutputClearBtn, SIGNAL(clicked()), this, SLOT( clickClearOuput()));
+    connect( mOutputClearBtn, SIGNAL(clicked()), this, SLOT( clickClearOutput()));
     connect( mWrapKeyBtn, SIGNAL(clicked()), this, SLOT(clickWrapKey()));
     connect( mOutputText, SIGNAL(textChanged()), this, SLOT(changeOutput()));
 
