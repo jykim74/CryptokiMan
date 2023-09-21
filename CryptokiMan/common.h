@@ -44,8 +44,14 @@ enum {
     OBJ_DATA_IDX
 };
 
+static const QString kCertificate = "Certificate";
+static const QString kPublicKey = "PublicKey";
+static const QString kPrivateKey = "PrivateKey";
+static const QString kSecretKey = "SecretKey";
+static const QString kData = "Data";
+
 static QStringList kObjectTypeList = {
-    "Certificate", "PublicKey", "PrivateKey", "SecretKey", "Data"
+    kCertificate, kPublicKey, kPrivateKey, kSecretKey, kData
 };
 
 enum { JS_FILE_TYPE_CERT,

@@ -391,7 +391,8 @@ void MainWindow::createActions()
     editAttributeAct->setStatusTip(tr("PKCS11 Edit Object"));
     objectsMenu->addAction( editAttributeAct );
 
-    QAction *copyObjectAct = new QAction( deleteIcon, tr("Copy Object"), this);
+    const QIcon copyIcon = QIcon::fromTheme("Edit", QIcon(":/images/copy_object.png"));
+    QAction *copyObjectAct = new QAction( copyIcon, tr("Copy Object"), this);
     connect( copyObjectAct, &QAction::triggered, this, &MainWindow::copyObject);
     copyObjectAct->setStatusTip(tr("PKCS11 Copy Object"));
     objectsMenu->addAction( copyObjectAct );
@@ -1100,6 +1101,7 @@ void MainWindow::copyObject()
     }
 
     CopyObjectDlg copyObjectDlg;
+    copyObjectDlg.setSelectedSlot( pItem->getSlotIndex() );
     copyObjectDlg.exec();
 }
 

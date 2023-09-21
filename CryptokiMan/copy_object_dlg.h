@@ -19,12 +19,33 @@ public:
 
     void setSelectedSlot( int index );
 
+    void clickUseRand();
+    void clickPrivate();
+    void clickSensitive();
+    void clickWrap();
+    void clickUnwrap();
+    void clickEncrypt();
+    void clickDecrypt();
+    void clickModifiable();
+    void clickCopyable();
+    void clickDestroyable();
+    void clickSign();
+    void clickSignRecover();
+    void clickVerify();
+    void clickVerifyRecover();
+    void clickToken();
+    void clickTrusted();
+    void clickExtractable();
+    void clickDerive();
+    void clickStartDate();
+    void clickEndDate();
+
 private slots:
     virtual void accept();
     void slotChanged( int index );
 
-    void changeType( int index );
-    void changeLabel( int index );
+    void changeSrcType( int index );
+    void changeSrcLabel( int index );
 
 private:
     void initUI();
@@ -34,13 +55,13 @@ private:
     void connectAttributes();
     void setDefaults();
 
-    void readLabels( CK_OBJECT_CLASS objClass );
+    void readSrcLabels( CK_OBJECT_CLASS objClass );
 
-    void readSecretKeyLabels();
-    void readPrivateKeyLabels();
-    void readPublicKeyLabels();
-    void readCertificateLabels();
-    void readDataLabels();
+    void readSrcSecretKeyLabels();
+    void readSrcPrivateKeyLabels();
+    void readSrcPublicKeyLabels();
+    void readSrcCertificateLabels();
+    void readSrcDataLabels();
 
     int slot_index_;
     long session_;

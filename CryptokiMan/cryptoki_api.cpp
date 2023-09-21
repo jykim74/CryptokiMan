@@ -792,6 +792,33 @@ int CryptokiAPI::DestroyObject( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hOb
     return rv;
 }
 
+int CryptokiAPI::CopyObject( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_OBJECT_HANDLE_PTR phNewObject )
+{
+    int rv = 0;
+    qint64 ms = 0;
+    QElapsedTimer timer;
+    QString strIn;
+
+    timer.start();
+    rv = p11_ctx_->p11FuncList->C_CopyObject( hSession, hObject, pTemplate, ulCount, phNewObject );
+    ms = timer.elapsed();
+
+    strIn.sprintf( "C_CopyObject( SESSION_HANDLE = %u, OBJECT_HANDLE = %u, TEMPLATE = @%p ATTRIBUTE_COUNT = %d, OBJECT_HANDLE_PTR = @%p )",
+                   hSession, hObject, pTemplate, ulCount, phNewObject );
+    manApplet->dlog( strIn );
+
+    logTemplate( pTemplate, ulCount );
+
+    logResult( "C_DeriveKey", rv, ms );
+
+    if( rv == CKR_OK )
+    {
+        manApplet->dlog( QString( "New Object Handler : %1").arg( *phNewObject ));
+    }
+
+    return rv;
+}
+
 int CryptokiAPI::DigestInit( CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism )
 {
     int rv = 0;

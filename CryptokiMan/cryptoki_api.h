@@ -68,6 +68,7 @@ public:
             CK_OBJECT_HANDLE_PTR phObject );
 
     int DestroyObject( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject );
+    int CopyObject( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_OBJECT_HANDLE_PTR phNewObject );
 
     int DigestInit( CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism );
     int DigestUpdate( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen );

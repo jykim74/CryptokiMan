@@ -268,6 +268,113 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
 </context>
 <context>
+    <name>CopyObjectDlg</name>
+    <message>
+        <source>Copy Object</source>
+        <translation>객체 복사</translation>
+    </message>
+    <message>
+        <source>Copy Object Information</source>
+        <translation>복사 객체 정보</translation>
+    </message>
+    <message>
+        <source>Source</source>
+        <translation>소스</translation>
+    </message>
+    <message>
+        <source>Slot list</source>
+        <translation>슬롯 목록</translation>
+    </message>
+    <message>
+        <source>Slot status</source>
+        <translation>슬롯 상태</translation>
+    </message>
+    <message>
+        <source>Slot ID</source>
+        <translation>슬롯 ID</translation>
+    </message>
+    <message>
+        <source>Session</source>
+        <translation>세션</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translation>로그인</translation>
+    </message>
+    <message>
+        <source>Source Object Information</source>
+        <translation>소스 객체 정보</translation>
+    </message>
+    <message>
+        <source>Target</source>
+        <translation>대상</translation>
+    </message>
+    <message>
+        <source>Object Properties</source>
+        <translation>객체 속성</translation>
+    </message>
+    <message>
+        <source>Label</source>
+        <translation>라벨</translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <translation>ID</translation>
+    </message>
+    <message>
+        <source>Use Random</source>
+        <translation>랜덤 사용</translation>
+    </message>
+    <message>
+        <source>Attributes</source>
+        <translation>속성</translation>
+    </message>
+    <message>
+        <source>Derive</source>
+        <translation>유도</translation>
+    </message>
+    <message>
+        <source>SignRecover</source>
+        <translation>SignRecover</translation>
+    </message>
+    <message>
+        <source>Trusted</source>
+        <translation>Trusted</translation>
+    </message>
+    <message>
+        <source>VerifyRecover</source>
+        <translation>VerifyRecover</translation>
+    </message>
+    <message>
+        <source>StartDate</source>
+        <translation>시작 일자</translation>
+    </message>
+    <message>
+        <source>EndDate</source>
+        <translation>종료 일자</translation>
+    </message>
+    <message>
+        <source>Destroyable</source>
+        <translation>Destroyable</translation>
+    </message>
+    <message>
+        <source>Copyable</source>
+        <translation>Copyable</translation>
+    </message>
+    <message>
+        <source>There is no object handler</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>fail to run CopyObject(%1)</source>
+        <translation>CopyObject 실행 실패 (%1)</translation>
+    </message>
+    <message>
+        <source>CopyObject is success(New Object Handle:%1)</source>
+        <translation>CopyObject 성공(새로운 대상 핸들:%1)</translation>
+    </message>
+</context>
+<context>
     <name>CreateDSAPriKeyDlg</name>
     <message>
         <source>Create dsa private key</source>
@@ -4133,6 +4240,14 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>ObejctID</source>
         <translation>객체 ID</translation>
+    </message>
+    <message>
+        <source>Copy Object</source>
+        <translation>객체 복사</translation>
+    </message>
+    <message>
+        <source>PKCS11 Copy Object</source>
+        <translation>PKCS11 객체 복사</translation>
     </message>
 </context>
 <context>
