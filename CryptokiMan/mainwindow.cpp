@@ -872,10 +872,20 @@ void MainWindow::openSession()
     }
 
     OpenSessionDlg openSessionDlg;
-    if( pItem ) openSessionDlg.setSelectedSlot( pItem->getSlotIndex() );
+    openSessionDlg.setSelectedSlot( pItem->getSlotIndex() );
+    if( openSessionDlg.exec() == QDialog::Accepted )
+    {
+        int pos = openSessionDlg.mSlotsCombo->currentIndex();
 
-
-    openSessionDlg.exec();
+        ManTreeItem* root = getRootItem();
+        ManTreeItem* item = (ManTreeItem *)root->child( pos );
+        if( item != NULL )
+        {
+            QFont font = item->font();
+            font.setBold(true);
+            item->setFont( font );
+        }
+    }
 }
 
 void MainWindow::closeSession()
@@ -890,8 +900,21 @@ void MainWindow::closeSession()
 
     CloseSessionDlg closeSessionDlg;
     closeSessionDlg.setAll(false);
-    if( pItem ) closeSessionDlg.setSelectedSlot( pItem->getSlotIndex() );
-    closeSessionDlg.exec();
+    closeSessionDlg.setSelectedSlot( pItem->getSlotIndex() );
+    if( closeSessionDlg.exec() == QDialog::Accepted )
+    {
+        int pos = closeSessionDlg.mSlotsCombo->currentIndex();
+
+        ManTreeItem* root = getRootItem();
+        ManTreeItem* item = (ManTreeItem *)root->child( pos );
+        if( item != NULL )
+        {
+            QFont font = item->font();
+            font.setBold(false);
+            font.setUnderline(false);
+            item->setFont( font );
+        }
+    }
 }
 
 
@@ -907,7 +930,22 @@ void MainWindow::closeAllSessions()
 
     CloseSessionDlg closeSessionDlg;
     closeSessionDlg.setAll(true);
-    closeSessionDlg.exec();
+    if( closeSessionDlg.exec() == QDialog::Accepted )
+    {
+        ManTreeItem* root = getRootItem();
+        int nCnt = closeSessionDlg.mSlotsCombo->count();
+        for( int i = 0; i < nCnt; i++ )
+        {
+            ManTreeItem* item = (ManTreeItem *)root->child( i );
+            if( item != NULL )
+            {
+                QFont font = item->font();
+                font.setBold(false);
+                font.setUnderline(false);
+                item->setFont( font );
+            }
+        }
+    }
 }
 
 void MainWindow::login()
@@ -921,8 +959,20 @@ void MainWindow::login()
     }
 
     LoginDlg loginDlg;
-    if( pItem ) loginDlg.setSelectedSlot( pItem->getSlotIndex() );
-    loginDlg.exec();
+    loginDlg.setSelectedSlot( pItem->getSlotIndex() );
+    if( loginDlg.exec() == QDialog::Accepted )
+    {
+        int pos = loginDlg.mSlotsCombo->currentIndex();
+
+        ManTreeItem* root = getRootItem();
+        ManTreeItem* item = (ManTreeItem *)root->child( pos );
+        if( item != NULL )
+        {
+            QFont font = item->font();
+            font.setUnderline(true);
+            item->setFont( font );
+        }
+    }
 }
 
 void MainWindow::logout()
@@ -936,8 +986,20 @@ void MainWindow::logout()
     }
 
     LogoutDlg logoutDlg;
-    if( pItem ) logoutDlg.setSelectedSlot( pItem->getSlotIndex() );
-    logoutDlg.exec();
+    logoutDlg.setSelectedSlot( pItem->getSlotIndex() );
+    if( logoutDlg.exec() == QDialog::Accepted )
+    {
+        int pos = logoutDlg.mSlotsCombo->currentIndex();
+
+        ManTreeItem* root = getRootItem();
+        ManTreeItem* item = (ManTreeItem *)root->child( pos );
+        if( item != NULL )
+        {
+            QFont font = item->font();
+            font.setUnderline(false);
+            item->setFont( font );
+        }
+    }
 }
 
 void MainWindow::generateKeyPair()

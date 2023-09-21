@@ -64,12 +64,13 @@ void LogoutDlg::accept()
     {
         slotInfo.setLogin(false);
         slot_infos.replace(index, slotInfo);
+
+        QDialog::accept();
     }
     else {
         manApplet->warningBox(tr("Logout is failure"), this );
+        QDialog::reject();
     }
-
-    QDialog::accept();
 }
 
 void LogoutDlg::slotChanged(int index)

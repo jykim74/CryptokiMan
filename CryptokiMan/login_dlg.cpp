@@ -84,15 +84,16 @@ void LoginDlg::clickLogin()
         slot_infos.replace( index, slotInfo );
         manApplet->log( "Login OK" );
         manApplet->messageBox( tr( "Login OK" ), this );
+
+        QDialog::accept();
     }
     else {
         manApplet->warningBox( tr( "Login fail"), this );
         manApplet->elog( QString("C_Login fail:%1").arg(rv));
         mPinText->clear();
-        return;
-    }
 
-    QDialog::close();
+        QDialog::reject();
+    }
 }
 
 void LoginDlg::slotChanged(int index)

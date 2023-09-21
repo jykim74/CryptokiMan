@@ -50,10 +50,7 @@ void CloseSessionDlg::setSelectedSlot(int index)
 
 void CloseSessionDlg::accept()
 {
-
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int nFlags = 0;
     QString strType = "";
 
     int index = mSlotsCombo->currentIndex();
@@ -90,6 +87,7 @@ void CloseSessionDlg::accept()
         }
 
         manApplet->messageBox( tr("CloseSession(%1) is success").arg(strType), this );
+        QDialog::accept();
     }
     else {
         if( all_ )
@@ -103,8 +101,6 @@ void CloseSessionDlg::accept()
 
         return;
     }
-
-    QDialog::accept();
 }
 
 void CloseSessionDlg::slotChanged(int index)
