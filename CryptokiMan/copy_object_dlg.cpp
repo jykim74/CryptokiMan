@@ -13,6 +13,7 @@ CopyObjectDlg::CopyObjectDlg(QWidget *parent) :
 {
     slot_index_ = -1;
     session_ = -1;
+    is_fix_ = false;
 
     setupUi(this);
 
@@ -61,6 +62,31 @@ void CopyObjectDlg::setSelectedSlot(int index)
 {
     slotChanged( index );
     changeSrcType(0);
+}
+
+void CopyObjectDlg::setTypeObject( int nType, const QString strLabel, long hObj )
+{
+    is_fix_ = true;
+
+    mSrcTypeCombo->clear();
+    mSrcLabelCombo->clear();
+    mSrcObjectText->clear();
+
+    QVariant objVal = QVariant( (int)hObj );
+
+    if( nType == HM_ITEM_TYPE_DATA )
+        mSrcTypeCombo->addItem( kData );
+    else if( nType == HM_ITEM_TYPE_CERTIFICATE )
+        mSrcTypeCombo->addItem( kCertificate );
+    else if( nType == HM_ITEM_TYPE_PUBLICKEY )
+        mSrcTypeCombo->addItem( kPublicKey );
+    else if( nType == HM_ITEM_TYPE_PRIVATEKEY )
+        mSrcTypeCombo->addItem( kPrivateKey );
+    else if( nType == HM_ITEM_TYPE_SECRETKEY )
+        mSrcTypeCombo->addItem( kSecretKey );
+
+    mSrcLabelCombo->addItem( strLabel, objVal );
+    mSrcObjectText->setText( QString("%1").arg( hObj));
 }
 
 void CopyObjectDlg::initialize()
@@ -272,6 +298,8 @@ void CopyObjectDlg::readSrcLabels( CK_OBJECT_CLASS objClass )
 
 void CopyObjectDlg::readSrcSecretKeyLabels()
 {
+    if( is_fix_ == true ) return;
+
     CK_OBJECT_CLASS objClass = 0;
     objClass = CKO_SECRET_KEY;
 
@@ -280,6 +308,8 @@ void CopyObjectDlg::readSrcSecretKeyLabels()
 
 void CopyObjectDlg::readSrcPrivateKeyLabels()
 {
+    if( is_fix_ == true ) return;
+
     CK_OBJECT_CLASS objClass = 0;
     objClass = CKO_PRIVATE_KEY;
 
@@ -288,6 +318,8 @@ void CopyObjectDlg::readSrcPrivateKeyLabels()
 
 void CopyObjectDlg::readSrcPublicKeyLabels()
 {
+    if( is_fix_ == true ) return;
+
     CK_OBJECT_CLASS objClass = 0;
     objClass = CKO_PUBLIC_KEY;
 
@@ -296,6 +328,8 @@ void CopyObjectDlg::readSrcPublicKeyLabels()
 
 void CopyObjectDlg::readSrcCertificateLabels()
 {
+    if( is_fix_ == true ) return;
+
     CK_OBJECT_CLASS objClass = 0;
     objClass = CKO_CERTIFICATE;
 
@@ -304,6 +338,8 @@ void CopyObjectDlg::readSrcCertificateLabels()
 
 void CopyObjectDlg::readSrcDataLabels()
 {
+    if( is_fix_ == true ) return;
+
     CK_OBJECT_CLASS objClass = 0;
     objClass = CKO_DATA;
 

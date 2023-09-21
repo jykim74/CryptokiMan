@@ -1105,6 +1105,34 @@ void MainWindow::copyObject()
     copyObjectDlg.exec();
 }
 
+void MainWindow::copyTableObject()
+{
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        return;
+    }
+
+
+    int nType = right_type_;
+    QModelIndex index = right_table_->currentIndex();
+    int row = index.row();
+
+    QTableWidgetItem* tableItem0 = right_table_->item( row, 0 );
+    QTableWidgetItem* tableItem1 = right_table_->item( row, 1 );
+
+    QString strLabel = tableItem0->text();
+    long hObj = tableItem1->text().toLong();
+
+
+    CopyObjectDlg copyObjectDlg;
+    copyObjectDlg.setSelectedSlot( pItem->getSlotIndex() );
+    copyObjectDlg.setTypeObject( nType, strLabel, hObj );
+    copyObjectDlg.exec();
+}
+
 void MainWindow::deleteObject()
 {
     ManTreeItem *pItem = currentTreeItem();
@@ -2074,6 +2102,7 @@ void MainWindow::showRightMenu(QPoint point )
         menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
         menu.addAction( tr( "Delete Object" ), this, &MainWindow::deleteObject );
         menu.addAction( tr("View Certificate" ), this, &MainWindow::viewCert );
+        menu.addAction( tr( "Copy Object" ), this, &MainWindow::copyTableObject );
         break;
 
     case HM_ITEM_TYPE_PUBLICKEY:
@@ -2081,6 +2110,7 @@ void MainWindow::showRightMenu(QPoint point )
         menu.addAction( tr( "Delete Object" ), this, &MainWindow::deleteObject );
         menu.addAction( tr( "Verify" ), this, &MainWindow::verifyEach );
         menu.addAction( tr( "Encrypt"), this, &MainWindow::encryptEach );
+        menu.addAction( tr( "Copy Object" ), this, &MainWindow::copyTableObject );
         break;
 
     case HM_ITEM_TYPE_PRIVATEKEY:
@@ -2088,6 +2118,7 @@ void MainWindow::showRightMenu(QPoint point )
         menu.addAction( tr( "Delete Object" ), this, &MainWindow::deleteObject );
         menu.addAction( tr( "Sign" ), this, &MainWindow::signEach );
         menu.addAction( tr( "Decrypt" ), this, &MainWindow::decryptEach );
+        menu.addAction( tr( "Copy Object" ), this, &MainWindow::copyTableObject );
         break;
 
     case HM_ITEM_TYPE_SECRETKEY:
@@ -2097,11 +2128,13 @@ void MainWindow::showRightMenu(QPoint point )
         menu.addAction( tr( "Verify" ), this, &MainWindow::verifyEach );
         menu.addAction( tr( "Encrypt"), this, &MainWindow::encryptEach );
         menu.addAction( tr( "Decrypt" ), this, &MainWindow::decryptEach );
+        menu.addAction( tr( "Copy Object" ), this, &MainWindow::copyTableObject );
         break;
 
     case HM_ITEM_TYPE_DATA:
         menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
         menu.addAction( tr( "Delete Object" ), this, &MainWindow::deleteObject );
+        menu.addAction( tr( "Copy Object" ), this, &MainWindow::copyTableObject );
         break;
     }
 

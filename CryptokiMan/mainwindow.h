@@ -103,6 +103,7 @@ public slots:
     void createDSAPrivateKey();
     void createKey();
     void copyObject();
+    void copyTableObject();
     void deleteObject();
     void editObject();
     void editAttribute();

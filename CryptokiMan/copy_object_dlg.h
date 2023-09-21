@@ -18,6 +18,7 @@ public:
     ~CopyObjectDlg();
 
     void setSelectedSlot( int index );
+    void setTypeObject( int nType, const QString strLabel, long hObj );
 
 private slots:
     virtual void accept();
@@ -49,6 +50,7 @@ private:
 
     int slot_index_;
     long session_;
+    bool is_fix_;
 };
 
 #endif // COPY_OBJECT_DLG_H
