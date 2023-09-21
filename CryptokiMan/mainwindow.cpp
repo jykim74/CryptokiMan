@@ -3442,7 +3442,7 @@ void MainWindow::showInfoCommon( CK_OBJECT_HANDLE hObj )
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
 
-        info( QString( "%1 : %2\n" ).arg( strName ).arg( stringAttribute( nType, uAttrType, hObj)));
+        info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
     }
 }
 
@@ -3463,7 +3463,7 @@ void MainWindow::showInfoData( CK_OBJECT_HANDLE hObj )
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
 
-        info( QString( "%1 : %2\n" ).arg( strName ).arg( stringAttribute( nType, uAttrType, hObj)));
+        info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
     }
 }
 
@@ -3484,7 +3484,7 @@ void MainWindow::showInfoCertCommon( CK_OBJECT_HANDLE hObj )
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
 
-        info( QString( "%1 : %2\n" ).arg( strName ).arg( stringAttribute( nType, uAttrType, hObj)));
+        info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
     }
 }
 
@@ -3514,17 +3514,15 @@ void MainWindow::showInfoX509Cert( CK_OBJECT_HANDLE hObj )
             JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binDN );
             JS_PKI_getTextDN( &binDN, &pDN );
 
-            info( QString( "%1 : %2 - %3\n" )
-                  .arg( strName )
-                  .arg( stringAttribute( nType, uAttrType, hObj))
-                  .arg( pDN ? pDN : ""));
+            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
+            if( pDN ) info( QString( "%1 : %2\n" ).arg( "CKA_SUBJECT[String]", 30 ).arg( pDN ));
 
             JS_BIN_reset( &binDN );
             if( pDN ) JS_free( pDN );
         }
         else
         {
-            info( QString( "%1 : %2\n" ).arg( strName ).arg( stringAttribute( nType, uAttrType, hObj)));
+            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
         }
     }
 }
@@ -3546,7 +3544,7 @@ void MainWindow::showInfoKeyCommon( CK_OBJECT_HANDLE hObj )
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
 
-        info( QString( "%1 : %2\n" ).arg( strName ).arg( stringAttribute( nType, uAttrType, hObj)));
+        info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
     }
 }
 
@@ -3576,17 +3574,15 @@ void MainWindow::showInfoPublicKey( CK_OBJECT_HANDLE hObj )
             JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binDN );
             JS_PKI_getTextDN( &binDN, &pDN );
 
-            info( QString( "%1 : %2 - %3\n" )
-                  .arg( strName )
-                  .arg( stringAttribute( nType, uAttrType, hObj))
-                  .arg( pDN ? pDN : ""));
+            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
+            if( pDN ) info( QString( "%1 : %2\n" ).arg( "CKA_SUBJECT[String]", 30 ).arg( pDN ));
 
             JS_BIN_reset( &binDN );
             if( pDN ) JS_free( pDN );
         }
         else
         {
-            info( QString( "%1 : %2\n" ).arg( strName ).arg( stringAttribute( nType, uAttrType, hObj)));
+            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
         }
     }
 }
@@ -3617,17 +3613,15 @@ void MainWindow::showInfoPrivateKey( CK_OBJECT_HANDLE hObj )
             JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binDN );
             JS_PKI_getTextDN( &binDN, &pDN );
 
-            info( QString( "%1 : %2 - %3\n" )
-                  .arg( strName )
-                  .arg( stringAttribute( nType, uAttrType, hObj))
-                  .arg( pDN ? pDN : ""));
+            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
+            if( pDN ) info( QString( "%1 : %2\n" ).arg( "CKA_SUBJECT[String]", 30 ).arg( pDN ));
 
             JS_BIN_reset( &binDN );
             if( pDN ) JS_free( pDN );
         }
         else
         {
-            info( QString( "%1 : %2\n" ).arg( strName ).arg( stringAttribute( nType, uAttrType, hObj)));
+            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
         }
     }
 }
@@ -3649,7 +3643,7 @@ void MainWindow::showInfoSecretKey( CK_OBJECT_HANDLE hObj )
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
 
-        info( QString( "%1 : %2\n" ).arg( strName ).arg( stringAttribute( nType, uAttrType, hObj)));
+        info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
     }
 }
 
@@ -3677,7 +3671,7 @@ void MainWindow::showInfoRSAValue( CK_OBJECT_HANDLE hObj, bool bPub )
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
 
-        info( QString( "%1 : %2\n" ).arg( strName ).arg( stringAttribute( nType, uAttrType, hObj)));
+        info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
     }
 }
 
@@ -3697,7 +3691,7 @@ void MainWindow::showInfoDSAValue( CK_OBJECT_HANDLE hObj, bool bPub )
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
 
-        info( QString( "%1 : %2\n" ).arg( strName ).arg( stringAttribute( nType, uAttrType, hObj)));
+        info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
     }
 }
 
@@ -3717,7 +3711,7 @@ void MainWindow::showInfoECCValue( CK_OBJECT_HANDLE hObj, bool bPub )
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
 
-        info( QString( "%1 : %2\n" ).arg( strName ).arg( stringAttribute( nType, uAttrType, hObj)));
+        info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
     }
 }
 
@@ -3737,7 +3731,7 @@ void MainWindow::showInfoDHValue( CK_OBJECT_HANDLE hObj, bool bPub )
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
 
-        info( QString( "%1 : %2\n" ).arg( strName ).arg( stringAttribute( nType, uAttrType, hObj)));
+        info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
     }
 }
 
@@ -3757,6 +3751,6 @@ void MainWindow::showInfoSecretValue( CK_OBJECT_HANDLE hObj)
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
 
-        info( QString( "%1 : %2\n" ).arg( strName ).arg( stringAttribute( nType, uAttrType, hObj)));
+        info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
     }
 }
