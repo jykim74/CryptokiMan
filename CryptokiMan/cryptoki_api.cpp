@@ -41,6 +41,9 @@ int CryptokiAPI::getAttrType( CK_ATTRIBUTE_TYPE nType )
 
     case CKA_VALUE_LEN:
     case CKA_VALUE_BITS:
+    case CKA_MODULUS_BITS:
+    case CKA_PRIME_BITS:
+    case CKA_SUBPRIME_BITS:
         return ATTR_VAL_LEN;
 
     case CKA_START_DATE:

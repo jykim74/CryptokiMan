@@ -3427,7 +3427,6 @@ void MainWindow::showDataInfoList( int index, long hObject )
 
 void MainWindow::showInfoCommon( CK_OBJECT_HANDLE hObj )
 {
-    info( "------------------------------------------------------------------------\n" );
     info( "-- Common\n" );
     info( "------------------------------------------------------------------------\n" );
 
@@ -3444,11 +3443,12 @@ void MainWindow::showInfoCommon( CK_OBJECT_HANDLE hObj )
 
         info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
     }
+
+    info( "------------------------------------------------------------------------\n" );
 }
 
 void MainWindow::showInfoData( CK_OBJECT_HANDLE hObj )
 {
-    info( "------------------------------------------------------------------------\n" );
     info( "-- Data\n" );
     info( "------------------------------------------------------------------------\n" );
 
@@ -3463,13 +3463,34 @@ void MainWindow::showInfoData( CK_OBJECT_HANDLE hObj )
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
 
-        info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
+        QString strMsg = stringAttribute( nType, uAttrType, hObj);
+
+        if( uAttrType == CKA_OBJECT_ID )
+        {
+            char sOID[128];
+            BIN binOID = {0,0};
+
+            memset( sOID, 0x00, sizeof(sOID));
+
+            JS_BIN_decodeHex( strMsg.toStdString().c_str(), &binOID );
+            JS_PKI_getStringFromOID( &binOID, sOID );
+
+            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strMsg));
+            if( sOID[0] != 0x00 ) info( QString( "%1 : %2\n" ).arg( "CKA_OBJECT_ID[String]", 30 ).arg( sOID ));
+
+            JS_BIN_reset( &binOID );
+        }
+        else
+        {
+            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strMsg ));
+        }
     }
+
+    info( "------------------------------------------------------------------------\n" );
 }
 
 void MainWindow::showInfoCertCommon( CK_OBJECT_HANDLE hObj )
 {
-    info( "------------------------------------------------------------------------\n" );
     info( "-- Certificate Common\n" );
     info( "------------------------------------------------------------------------\n" );
 
@@ -3484,13 +3505,15 @@ void MainWindow::showInfoCertCommon( CK_OBJECT_HANDLE hObj )
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
 
-        info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
+        QString strMsg = stringAttribute( nType, uAttrType, hObj);
+        info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strMsg ));
     }
+
+    info( "------------------------------------------------------------------------\n" );
 }
 
 void MainWindow::showInfoX509Cert( CK_OBJECT_HANDLE hObj )
 {
-    info( "------------------------------------------------------------------------\n" );
     info( "-- X509 Certificate\n" );
     info( "------------------------------------------------------------------------\n" );
 
@@ -3514,7 +3537,7 @@ void MainWindow::showInfoX509Cert( CK_OBJECT_HANDLE hObj )
             JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binDN );
             JS_PKI_getTextDN( &binDN, &pDN );
 
-            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
+            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strSubject ));
             if( pDN ) info( QString( "%1 : %2\n" ).arg( "CKA_SUBJECT[String]", 30 ).arg( pDN ));
 
             JS_BIN_reset( &binDN );
@@ -3525,11 +3548,12 @@ void MainWindow::showInfoX509Cert( CK_OBJECT_HANDLE hObj )
             info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
         }
     }
+
+    info( "------------------------------------------------------------------------\n" );
 }
 
 void MainWindow::showInfoKeyCommon( CK_OBJECT_HANDLE hObj )
 {
-    info( "------------------------------------------------------------------------\n" );
     info( "-- Key Common\n" );
     info( "------------------------------------------------------------------------\n" );
 
@@ -3546,11 +3570,12 @@ void MainWindow::showInfoKeyCommon( CK_OBJECT_HANDLE hObj )
 
         info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
     }
+
+    info( "------------------------------------------------------------------------\n" );
 }
 
 void MainWindow::showInfoPublicKey( CK_OBJECT_HANDLE hObj )
 {
-    info( "------------------------------------------------------------------------\n" );
     info( "-- Public Key\n" );
     info( "------------------------------------------------------------------------\n" );
 
@@ -3574,7 +3599,7 @@ void MainWindow::showInfoPublicKey( CK_OBJECT_HANDLE hObj )
             JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binDN );
             JS_PKI_getTextDN( &binDN, &pDN );
 
-            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
+            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strSubject ));
             if( pDN ) info( QString( "%1 : %2\n" ).arg( "CKA_SUBJECT[String]", 30 ).arg( pDN ));
 
             JS_BIN_reset( &binDN );
@@ -3585,11 +3610,12 @@ void MainWindow::showInfoPublicKey( CK_OBJECT_HANDLE hObj )
             info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
         }
     }
+
+    info( "------------------------------------------------------------------------\n" );
 }
 
 void MainWindow::showInfoPrivateKey( CK_OBJECT_HANDLE hObj )
 {
-    info( "------------------------------------------------------------------------\n" );
     info( "-- Private Key\n" );
     info( "------------------------------------------------------------------------\n" );
 
@@ -3613,7 +3639,7 @@ void MainWindow::showInfoPrivateKey( CK_OBJECT_HANDLE hObj )
             JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binDN );
             JS_PKI_getTextDN( &binDN, &pDN );
 
-            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
+            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strSubject ));
             if( pDN ) info( QString( "%1 : %2\n" ).arg( "CKA_SUBJECT[String]", 30 ).arg( pDN ));
 
             JS_BIN_reset( &binDN );
@@ -3624,11 +3650,12 @@ void MainWindow::showInfoPrivateKey( CK_OBJECT_HANDLE hObj )
             info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
         }
     }
+
+    info( "------------------------------------------------------------------------\n" );
 }
 
 void MainWindow::showInfoSecretKey( CK_OBJECT_HANDLE hObj )
 {
-    info( "------------------------------------------------------------------------\n" );
     info( "-- Secret Key\n" );
     info( "------------------------------------------------------------------------\n" );
 
@@ -3645,12 +3672,13 @@ void MainWindow::showInfoSecretKey( CK_OBJECT_HANDLE hObj )
 
         info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
     }
+
+    info( "------------------------------------------------------------------------\n" );
 }
 
 
 void MainWindow::showInfoRSAValue( CK_OBJECT_HANDLE hObj, bool bPub )
 {
-    info( "------------------------------------------------------------------------\n" );
     info( "-- RSA Key Value\n" );
     info( "------------------------------------------------------------------------\n" );
 
@@ -3673,11 +3701,12 @@ void MainWindow::showInfoRSAValue( CK_OBJECT_HANDLE hObj, bool bPub )
 
         info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
     }
+
+    info( "------------------------------------------------------------------------\n" );
 }
 
 void MainWindow::showInfoDSAValue( CK_OBJECT_HANDLE hObj, bool bPub )
 {
-    info( "------------------------------------------------------------------------\n" );
     info( "-- DSA Key Value\n" );
     info( "------------------------------------------------------------------------\n" );
 
@@ -3693,11 +3722,12 @@ void MainWindow::showInfoDSAValue( CK_OBJECT_HANDLE hObj, bool bPub )
 
         info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
     }
+
+    info( "------------------------------------------------------------------------\n" );
 }
 
 void MainWindow::showInfoECCValue( CK_OBJECT_HANDLE hObj, bool bPub )
 {
-    info( "------------------------------------------------------------------------\n" );
     info( "-- ECC Key Value\n" );
     info( "------------------------------------------------------------------------\n" );
 
@@ -3713,11 +3743,12 @@ void MainWindow::showInfoECCValue( CK_OBJECT_HANDLE hObj, bool bPub )
 
         info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
     }
+
+    info( "------------------------------------------------------------------------\n" );
 }
 
 void MainWindow::showInfoDHValue( CK_OBJECT_HANDLE hObj, bool bPub )
 {
-    info( "------------------------------------------------------------------------\n" );
     info( "-- DH Key Value\n" );
     info( "------------------------------------------------------------------------\n" );
 
@@ -3733,11 +3764,12 @@ void MainWindow::showInfoDHValue( CK_OBJECT_HANDLE hObj, bool bPub )
 
         info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
     }
+
+    info( "------------------------------------------------------------------------\n" );
 }
 
 void MainWindow::showInfoSecretValue( CK_OBJECT_HANDLE hObj)
 {
-    info( "------------------------------------------------------------------------\n" );
     info( "-- Secret Key Value\n" );
     info( "------------------------------------------------------------------------\n" );
 
@@ -3753,4 +3785,6 @@ void MainWindow::showInfoSecretValue( CK_OBJECT_HANDLE hObj)
 
         info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
     }
+
+    info( "------------------------------------------------------------------------\n" );
 }

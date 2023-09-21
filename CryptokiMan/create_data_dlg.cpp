@@ -290,6 +290,9 @@ void CreateDataDlg::setDefaults()
     mPrivateCheck->setChecked(true);
     mPrivateCombo->setEnabled(true);
     mPrivateCombo->setCurrentIndex(1);
+
+    mTokenCheck->click();
+    mTokenCombo->setCurrentIndex(1);
 }
 
 void CreateDataDlg::getOID( BIN *pOID )
