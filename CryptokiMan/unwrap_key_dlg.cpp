@@ -358,10 +358,10 @@ void UnwrapKeyDlg::accept()
         uCount++;
     }
 
-    if( mModifiableCheck->isChecked() )
+    if( mDestroyableCheck->isChecked() )
     {
-        sTemplate[uCount].type = CKA_MODIFIABLE;
-        sTemplate[uCount].pValue = ( mModifiableCombo->currentIndex() ? &bTrue : &bFalse );
+        sTemplate[uCount].type = CKA_DESTROYABLE;
+        sTemplate[uCount].pValue = ( mDestroyableCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
         uCount++;
     }

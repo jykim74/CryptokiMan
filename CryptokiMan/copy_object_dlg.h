@@ -26,26 +26,10 @@ private slots:
     void changeSrcType( int index );
     void changeSrcLabel( int index );
 
-    void clickUseRand();
     void clickPrivate();
-    void clickSensitive();
-    void clickWrap();
-    void clickUnwrap();
-    void clickEncrypt();
-    void clickDecrypt();
     void clickModifiable();
-    void clickCopyable();
     void clickDestroyable();
-    void clickSign();
-    void clickSignRecover();
-    void clickVerify();
-    void clickVerifyRecover();
     void clickToken();
-    void clickTrusted();
-    void clickExtractable();
-    void clickDerive();
-    void clickStartDate();
-    void clickEndDate();
 
 private:
     void initUI();
