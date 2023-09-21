@@ -160,6 +160,21 @@ private:
     void showAttribute( int nValType, CK_ATTRIBUTE_TYPE uAttribute, CK_OBJECT_HANDLE hObj );
     QString stringAttribute( int nValType, CK_ATTRIBUTE_TYPE uAttribute, CK_OBJECT_HANDLE hObj );
 
+    void showInfoCommon( CK_OBJECT_HANDLE hObj );
+    void showInfoData( CK_OBJECT_HANDLE hObj );
+    void showInfoCertCommon( CK_OBJECT_HANDLE hObj );
+    void showInfoX509Cert( CK_OBJECT_HANDLE hObj );
+    void showInfoKeyCommon( CK_OBJECT_HANDLE hObj );
+    void showInfoPublicKey( CK_OBJECT_HANDLE hObj );
+    void showInfoPrivateKey( CK_OBJECT_HANDLE hObj );
+    void showInfoSecretKey( CK_OBJECT_HANDLE hObj );
+
+    void showInfoRSAValue( CK_OBJECT_HANDLE hObj, bool bPub = false );
+    void showInfoDSAValue( CK_OBJECT_HANDLE hObj, bool bPub = false );
+    void showInfoECCValue( CK_OBJECT_HANDLE hObj, bool bPub = false );
+    void showInfoDHValue( CK_OBJECT_HANDLE hObj, bool bPub = false );
+    void showInfoSecretValue( CK_OBJECT_HANDLE hObj);
+
     QList<QAction *>  recent_file_list_;
 
     QSplitter       *hsplitter_;

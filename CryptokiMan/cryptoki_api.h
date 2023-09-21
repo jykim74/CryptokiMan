@@ -5,6 +5,7 @@
 #include <QString>
 #include "js_pkcs11.h"
 
+enum { ATTR_VAL_BOOL, ATTR_VAL_STRING, ATTR_VAL_HEX, ATTR_VAL_KEY_NAME, ATTR_VAL_LEN, ATTR_VAL_DATE };
 
 class CryptokiAPI : public QObject
 {
@@ -15,6 +16,8 @@ public:
     void setCTX( JP11_CTX *pCTX );
     CK_SESSION_HANDLE getSessionHandle();
     JP11_CTX* getCTX() { return p11_ctx_; };
+
+    static int getAttrType( CK_ATTRIBUTE_TYPE nType );
 
     bool isInit() { return init_; };
 

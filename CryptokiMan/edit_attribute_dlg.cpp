@@ -111,21 +111,25 @@ void EditAttributeDlg::objectTypeChanged( int type )
     else if( type == OBJ_CERT_IDX )
     {
         objClass = CKO_CERTIFICATE;
-        mAttributeCombo->addItems( kCertAttList );
+        mAttributeCombo->addItems( kCommonCertAttList );
+        mAttributeCombo->addItems( kX509CertAttList );
     }
     else if( type == OBJ_PUBKEY_IDX )
     {
         objClass = CKO_PUBLIC_KEY;
+        mAttributeCombo->addItems( kCommonKeyAttList );
         mAttributeCombo->addItems( kPubKeyAttList );
     }
     else if( type == OBJ_PRIKEY_IDX )
     {
         objClass = CKO_PRIVATE_KEY;
-        mAttributeCombo->addItems( kPriKetAttList );
+        mAttributeCombo->addItems( kCommonKeyAttList );
+        mAttributeCombo->addItems( kPriKeyAttList );
     }
     else if( type == OBJ_SECRET_IDX )
     {
         objClass = CKO_SECRET_KEY;
+        mAttributeCombo->addItems( kCommonKeyAttList );
         mAttributeCombo->addItems( kSecretKeyAttList );
     }
 

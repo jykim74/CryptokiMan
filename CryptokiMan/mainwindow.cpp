@@ -1861,19 +1861,9 @@ void MainWindow::showCertificateInfoDetail( QModelIndex index )
     info( "== Certificate Information\n" );
     info( "========================================================================\n" );
 
-    info( QString( "CKA_LABEL           : %1\n" ).arg(stringAttribute( ATTR_VAL_STRING, CKA_LABEL, uObj )) );
-    info( QString( "CKA_ID              : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_ID, uObj ) ));
-    info( QString( "CKA_SUBJECT         : %1 - %2\n" ).arg( strSubject ).arg( pDN ? pDN : "" ) );
-    info( QString( "CKA_VALUE           : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_VALUE, uObj ) ));
-    info( QString( "CKA_TOKEN           : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_TOKEN, uObj ) ));
-    info( QString( "CKA_MODIFIABLE      : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_MODIFIABLE, uObj ) ));
-    info( QString( "CKA_COPYABLE        : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_COPYABLE, uObj ) ));
-    info( QString( "CKA_DESTROYABLE     : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_DESTROYABLE, uObj ) ));
-    info( QString( "CKA_TRUSTED         : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_TRUSTED, uObj ) ));
-    info( QString( "CKA_PRIVATE         : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_PRIVATE, uObj ) ));
-    info( QString( "CKA_START_DATE      : %1\n" ).arg(stringAttribute( ATTR_VAL_DATE, CKA_START_DATE, uObj ) ));
-    info( QString( "CKA_END_DATE        : %1\n" ).arg(stringAttribute( ATTR_VAL_DATE, CKA_END_DATE, uObj ) ));
-    info( QString( "CKA_PUBLIC_KEY_INFO : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_PUBLIC_KEY_INFO, uObj ) ));
+    showInfoCommon( uObj );
+    showInfoCertCommon( uObj );
+    showInfoX509Cert( uObj );
 
     JS_BIN_reset( &binDN );
     if( pDN ) JS_free( pDN );
@@ -1896,55 +1886,32 @@ void MainWindow::showPublicKeyInfoDetail( QModelIndex index )
 
     info_text_->clear();
 
+    strKeyType = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, uObj );
+
     info( "========================================================================\n" );
-    info( "== PublicKey Information\n" );
+    info( QString( "== PublicKey(%1) Information\n").arg( strKeyType) );
     info( "========================================================================\n" );
 
-    info( QString( "CKA_LABEL           : %1\n" ).arg(stringAttribute( ATTR_VAL_STRING, CKA_LABEL, uObj)) );
-    strKeyType = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, uObj );
-    info( QString( "CKA_KEY_TYPE        : %1\n").arg( strKeyType ));
-    info( QString( "CKA_SUBJECT         : %1 - %2\n" ).arg( strSubject ).arg( pDN ? pDN : "" ) );
-    info( QString( "CKA_ID              : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_ID, uObj ) ));
-    info( QString( "CKA_TRUSTED         : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_TRUSTED, uObj ) ));
-    info( QString( "CKA_LOCAL           : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_LOCAL, uObj ) ));
+    showInfoCommon( uObj );
+    showInfoKeyCommon( uObj );
+    showInfoPublicKey( uObj );
 
     if( strKeyType == "CKK_RSA" )
     {
-        info( QString( "CKA_MODULUS         : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_MODULUS, uObj) ));
-        info( QString( "CKA_PUBLIC_EXPONENT : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_PUBLIC_EXPONENT, uObj )));
+        showInfoRSAValue( uObj, true );
     }
     else if( strKeyType == "CKK_EC" || strKeyType == "CKK_ECDSA" )
     {
-        info( QString( "CKA_EC_PARAMS       : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_EC_PARAMS, uObj)));
-        info( QString( "CKA_EC_POINT        : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_EC_POINT, uObj)));
+        showInfoECCValue( uObj, true );
     }
     else if( strKeyType == "CKK_DSA" )
     {
-        info( QString( "CKA_PRIME           : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_PRIME, uObj)));
-        info( QString( "CKA_SUBPRIME        : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_SUBPRIME, uObj)));
-        info( QString( "CKA_BASE            : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_BASE, uObj)));
-        info( QString( "CKA_VALUE           : %1\n" ).arg(stringAttribute(  ATTR_VAL_HEX, CKA_VALUE, uObj)) );
+        showInfoDSAValue( uObj, true );
     }
     else if( strKeyType == "CKK_DH" )
     {
-        info( QString( "CKA_PRIME           : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_PRIME, uObj)));
-        info( QString( "CKA_BASE            : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_BASE, uObj)));
-        info( QString( "CKA_VALUE           : %1\n" ).arg(stringAttribute(  ATTR_VAL_HEX, CKA_VALUE, uObj)) );
+        showInfoDHValue( uObj, true );
     }
-
-    info( QString( "CKA_TOKEN           : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_TOKEN, uObj)));
-    info( QString( "CKA_WRAP            : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_WRAP, uObj)));
-    info( QString( "CKA_ENCRYPT         : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_ENCRYPT, uObj)));
-    info( QString( "CKA_VERIFY          : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_VERIFY, uObj)));
-    info( QString( "CKA_VERIFY_RECOVER  : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_VERIFY_RECOVER, uObj)));
-    info( QString( "CKA_PRIVATE         : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_PRIVATE, uObj)));
-    info( QString( "CKA_MODIFIABLE      : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_MODIFIABLE, uObj)));
-    info( QString( "CKA_COPYABLE        : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_COPYABLE, uObj ) ));
-    info( QString( "CKA_DESTROYABLE     : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_DESTROYABLE, uObj ) ));
-    info( QString( "CKA_DERIVE          : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_DERIVE, uObj)));
-    info( QString( "ATTR_VAL_DATE       : %1\n" ).arg(stringAttribute( ATTR_VAL_DATE, CKA_START_DATE, uObj)));
-    info( QString( "ATTR_VAL_DATE       : %1\n" ).arg(stringAttribute( ATTR_VAL_DATE, CKA_END_DATE, uObj )));
-    info( QString( "CKA_PUBLIC_KEY_INFO : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_PUBLIC_KEY_INFO, uObj ) ));
 
     JS_BIN_reset( &binDN );
     if( pDN ) JS_free( pDN );
@@ -1965,63 +1932,34 @@ void MainWindow::showPrivateKeyInfoDetail( QModelIndex index )
     JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binDN );
     JS_PKI_getTextDN( &binDN, &pDN );
 
+    strKeyType = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, uObj );
+
     info_text_->clear();
 
     info( "========================================================================\n" );
-    info( "== PrivateKey Information\n" );
+    info( QString( "== PrivateKey(%1)) Information\n").arg( strKeyType) );
     info( "========================================================================\n" );
 
-
-    info( QString( "CKA_LABEL            : %1\n" ).arg(stringAttribute(ATTR_VAL_STRING, CKA_LABEL, uObj)) );
-
-    strKeyType = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, uObj );
-    info( QString( "CKA_KEY_TYPE         : %1\n").arg( strKeyType ));
-    info( QString( "CKA_SUBJECT          : %1 - %2\n" ).arg( strSubject ).arg( pDN ? pDN : "" ) );
-    info( QString( "CKA_ID               : %1\n" ).arg(stringAttribute(ATTR_VAL_HEX, CKA_ID, uObj)) );
-    info( QString( "CKA_SUBJECT          : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_SUBJECT, uObj)));
-    info( QString( "CKA_LOCAL            : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_LOCAL, uObj ) ));
+    showInfoCommon( uObj );
+    showInfoKeyCommon( uObj );
+    showInfoPrivateKey( uObj );
 
     if( strKeyType == "CKK_RSA" )
     {
-        info( QString( "CKA_MODULUS          : %1\n" ).arg(stringAttribute(ATTR_VAL_HEX, CKA_MODULUS, uObj)));
-        info( QString( "CKA_PUBLIC_EXPONENT  : %1\n" ).arg(stringAttribute(ATTR_VAL_HEX, CKA_PUBLIC_EXPONENT, uObj)));
-        info( QString( "CKA_PRIVATE_EXPONENT : %1\n" ).arg(stringAttribute(ATTR_VAL_HEX, CKA_PRIVATE_EXPONENT, uObj)));
-        info( QString( "CKA_PRIME_1          : %1\n" ).arg(stringAttribute(ATTR_VAL_HEX, CKA_PRIME_1, uObj)));
-        info( QString( "CKA_PRIME_2          : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_PRIME_2, uObj)));
-        info( QString( "CKA_EXPONENT_1       : %1\n" ).arg(stringAttribute(  ATTR_VAL_HEX, CKA_EXPONENT_1, uObj)));
-        info( QString( "CKA_EXPONENT_2       : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_EXPONENT_2, uObj)));
+        showInfoRSAValue( uObj, false );
     }
     else if( strKeyType == "CKK_EC" || strKeyType == "CKK_ECDSA" )
     {
-        info( QString( "CKA_EC_PARAMS        : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_EC_PARAMS, uObj)));
-        info( QString( "CKA_VALUE            : %1\n" ).arg(stringAttribute(  ATTR_VAL_HEX, CKA_VALUE, uObj)) );
+        showInfoECCValue( uObj, false );
     }
     else if( strKeyType == "CKK_DSA" )
     {
-        info( QString( "CKA_PRIME           : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_PRIME, uObj)));
-        info( QString( "CKA_SUBPRIME        : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_SUBPRIME, uObj)));
-        info( QString( "CKA_BASE            : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_BASE, uObj)));
-        info( QString( "CKA_VALUE            : %1\n" ).arg(stringAttribute(  ATTR_VAL_HEX, CKA_VALUE, uObj)) );
+        showInfoDSAValue( uObj, false );
     }
-    else
+    else if( strKeyType == "CKK_DH" )
     {
-        info( QString( "CKA_VALUE            : %1\n" ).arg(stringAttribute(  ATTR_VAL_HEX, CKA_VALUE, uObj)) );
+        showInfoDHValue( uObj, false );
     }
-
-    info( QString( "CKA_TOKEN            : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_TOKEN, uObj)));
-    info( QString( "CKA_SENSITIVE        : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_SENSITIVE, uObj)));
-    info( QString( "CKA_UNWRAP           : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_UNWRAP, uObj)));
-    info( QString( "CKA_SIGN             : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_SIGN, uObj)));
-    info( QString( "CKA_SIGN_RECOVER     : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_SIGN_RECOVER, uObj)));
-    info( QString( "CKA_DECRYPT          : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_DECRYPT, uObj)));
-    info( QString( "CKA_MODIFIABLE       : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_MODIFIABLE, uObj)));
-    info( QString( "CKA_COPYABLE         : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_COPYABLE, uObj ) ));
-    info( QString( "CKA_DESTROYABLE      : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_DESTROYABLE, uObj ) ));
-    info( QString( "CKA_DERIVE           : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_DERIVE, uObj)));
-    info( QString( "CKA_EXTRACTABLE      : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_EXTRACTABLE, uObj)));
-    info( QString( "CKA_START_DATE       : %1\n" ).arg(stringAttribute(  ATTR_VAL_DATE, CKA_START_DATE, uObj)));
-    info( QString( "CKA_END_DATE         : %1\n" ).arg(stringAttribute(  ATTR_VAL_DATE, CKA_END_DATE, uObj)) );
-    info( QString( "CKA_PUBLIC_KEY_INFO  : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_PUBLIC_KEY_INFO, uObj ) ));
 
     JS_BIN_reset( &binDN );
     if( pDN ) JS_free( pDN );
@@ -2034,36 +1972,18 @@ void MainWindow::showSecretKeyInfoDetail( QModelIndex index )
 
     QTableWidgetItem *item1 = right_table_->item( row, 1 );
     uObj = item1->text().toLong();
+    QString strKeyType = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, uObj );
 
     info_text_->clear();
 
     info( "========================================================================\n" );
-    info( "== SecretKey Information\n" );
+    info( QString("== SecretKey Information(%1)\n").arg( strKeyType) );
     info( "========================================================================\n" );
 
-    info( QString( "CKA_LABEL       : %1\n" ).arg(stringAttribute( ATTR_VAL_STRING, CKA_LABEL, uObj )));
-    info( QString( "CKA_KEY_TYPE    : %1\n" ).arg(stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, uObj )));
-    info( QString( "CKA_ID          : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_ID, uObj )));
-    info( QString( "CKA_VALUE       : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_VALUE, uObj )));
-    info( QString( "CKA_VALUE_LEN   : %1\n" ).arg(stringAttribute( ATTR_VAL_LEN, CKA_VALUE_LEN, uObj )));
-    info( QString( "CKA_TOKEN       : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_TOKEN, uObj )));
-    info( QString( "CKA_PRIVATE     : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_PRIVATE, uObj )));
-    info( QString( "CKA_SENSITIVE   : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_SENSITIVE, uObj )));
-    info( QString( "CKA_ENCRYPT     : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_ENCRYPT, uObj )));
-    info( QString( "CKA_DECRYPT     : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_DECRYPT, uObj )));
-    info( QString( "CKA_SIGN        : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_SIGN, uObj )));
-    info( QString( "CKA_VERIFY      : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_VERIFY, uObj )));
-    info( QString( "CKA_WRAP        : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_WRAP, uObj )));
-    info( QString( "CKA_UNWRAP      : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_UNWRAP, uObj )));
-    info( QString( "CKA_MODIFIABLE  : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_MODIFIABLE, uObj )));
-    info( QString( "CKA_COPYABLE    : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_COPYABLE, uObj ) ));
-    info( QString( "CKA_DESTROYABLE : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_DESTROYABLE, uObj ) ));
-    info( QString( "CKA_DERIVE      : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_DERIVE, uObj )));
-    info( QString( "CKA_EXTRACTABLE : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_EXTRACTABLE, uObj )));
-    info( QString( "CKA_TRUSTED     : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_TRUSTED, uObj ) ));
-    info( QString( "CKA_LOCAL       : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_LOCAL, uObj ) ));
-    info( QString( "CKA_START_DATE  : %1\n" ).arg(stringAttribute( ATTR_VAL_DATE, CKA_START_DATE, uObj )));
-    info( QString( "CKA_END_DATE    : %1\n" ).arg(stringAttribute( ATTR_VAL_DATE, CKA_END_DATE, uObj )) );
+    showInfoCommon( uObj );
+    showInfoKeyCommon( uObj );
+    showInfoSecretKey( uObj );
+    showInfoSecretValue( uObj );
 }
 
 void MainWindow::showDataInfoDetail( QModelIndex index )
@@ -2080,15 +2000,8 @@ void MainWindow::showDataInfoDetail( QModelIndex index )
     info( "== Data Information\n" );
     info( "========================================================================\n" );
 
-    info( QString( "CKA_LABEL       : %1\n" ).arg(stringAttribute( ATTR_VAL_STRING, CKA_LABEL, uObj )) );
-    info( QString( "CKA_APPLICATION : %1\n" ).arg(stringAttribute( ATTR_VAL_STRING, CKA_APPLICATION, uObj )) );
-    info( QString( "CKA_OBJECT_ID   : %1\n" ).arg(stringAttribute( ATTR_VAL_HEX, CKA_OBJECT_ID, uObj )));
-    info( QString( "CKA_VALUE       : %1\n" ).arg(stringAttribute(  ATTR_VAL_HEX, CKA_VALUE, uObj )));
-    info( QString( "CKA_TOKEN       : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_TOKEN, uObj )));
-    info( QString( "CKA_PRIVATE     : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_PRIVATE, uObj )));
-    info( QString( "CKA_MODIFIABLE  : %1\n" ).arg(stringAttribute(  ATTR_VAL_BOOL, CKA_MODIFIABLE, uObj )));
-    info( QString( "CKA_COPYABLE    : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_COPYABLE, uObj ) ));
-    info( QString( "CKA_DESTROYABLE : %1\n" ).arg(stringAttribute( ATTR_VAL_BOOL, CKA_DESTROYABLE, uObj ) ));
+    showInfoCommon( uObj );
+    showInfoData( uObj );
 }
 
 void MainWindow::showRightMenu(QPoint point )
@@ -3509,5 +3422,341 @@ void MainWindow::showDataInfoList( int index, long hObject )
         right_table_->setItem( row, 3, new QTableWidgetItem(strMsg) );
 
         row++;
+    }
+}
+
+void MainWindow::showInfoCommon( CK_OBJECT_HANDLE hObj )
+{
+    info( "------------------------------------------------------------------------\n" );
+    info( "-- Common\n" );
+    info( "------------------------------------------------------------------------\n" );
+
+    QString strName;
+    int nType = -1;
+    CK_ATTRIBUTE_TYPE uAttrType = -1;
+
+    for( int i = 0; i < kCommonAttList.size(); i++ )
+    {
+        strName = kCommonAttList.at(i);
+
+        uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
+        nType = CryptokiAPI::getAttrType( uAttrType);
+
+        info( QString( "%1 : %2\n" ).arg( strName ).arg( stringAttribute( nType, uAttrType, hObj)));
+    }
+}
+
+void MainWindow::showInfoData( CK_OBJECT_HANDLE hObj )
+{
+    info( "------------------------------------------------------------------------\n" );
+    info( "-- Data\n" );
+    info( "------------------------------------------------------------------------\n" );
+
+    QString strName;
+    int nType = -1;
+    CK_ATTRIBUTE_TYPE uAttrType = -1;
+
+    for( int i = 0; i < kDataAttList.size(); i++ )
+    {
+        strName = kDataAttList.at(i);
+
+        uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
+        nType = CryptokiAPI::getAttrType( uAttrType);
+
+        info( QString( "%1 : %2\n" ).arg( strName ).arg( stringAttribute( nType, uAttrType, hObj)));
+    }
+}
+
+void MainWindow::showInfoCertCommon( CK_OBJECT_HANDLE hObj )
+{
+    info( "------------------------------------------------------------------------\n" );
+    info( "-- Certificate Common\n" );
+    info( "------------------------------------------------------------------------\n" );
+
+    QString strName;
+    int nType = -1;
+    CK_ATTRIBUTE_TYPE uAttrType = -1;
+
+    for( int i = 0; i < kCommonCertAttList.size(); i++ )
+    {
+        strName = kCommonCertAttList.at(i);
+
+        uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
+        nType = CryptokiAPI::getAttrType( uAttrType);
+
+        info( QString( "%1 : %2\n" ).arg( strName ).arg( stringAttribute( nType, uAttrType, hObj)));
+    }
+}
+
+void MainWindow::showInfoX509Cert( CK_OBJECT_HANDLE hObj )
+{
+    info( "------------------------------------------------------------------------\n" );
+    info( "-- X509 Certificate\n" );
+    info( "------------------------------------------------------------------------\n" );
+
+    QString strName;
+    int nType = -1;
+    CK_ATTRIBUTE_TYPE uAttrType = -1;
+
+    for( int i = 0; i < kX509CertAttList.size(); i++ )
+    {
+        strName = kX509CertAttList.at(i);
+
+        uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
+        nType = CryptokiAPI::getAttrType( uAttrType);
+
+        if( uAttrType == CKA_SUBJECT )
+        {
+            BIN binDN = {0,0};
+            char *pDN = NULL;
+
+            QString strSubject = stringAttribute( nType, uAttrType, hObj );
+            JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binDN );
+            JS_PKI_getTextDN( &binDN, &pDN );
+
+            info( QString( "%1 : %2 - %3\n" )
+                  .arg( strName )
+                  .arg( stringAttribute( nType, uAttrType, hObj))
+                  .arg( pDN ? pDN : ""));
+
+            JS_BIN_reset( &binDN );
+            if( pDN ) JS_free( pDN );
+        }
+        else
+        {
+            info( QString( "%1 : %2\n" ).arg( strName ).arg( stringAttribute( nType, uAttrType, hObj)));
+        }
+    }
+}
+
+void MainWindow::showInfoKeyCommon( CK_OBJECT_HANDLE hObj )
+{
+    info( "------------------------------------------------------------------------\n" );
+    info( "-- Key Common\n" );
+    info( "------------------------------------------------------------------------\n" );
+
+    QString strName;
+    int nType = -1;
+    CK_ATTRIBUTE_TYPE uAttrType = -1;
+
+    for( int i = 0; i < kCommonKeyAttList.size(); i++ )
+    {
+        strName = kCommonKeyAttList.at(i);
+
+        uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
+        nType = CryptokiAPI::getAttrType( uAttrType);
+
+        info( QString( "%1 : %2\n" ).arg( strName ).arg( stringAttribute( nType, uAttrType, hObj)));
+    }
+}
+
+void MainWindow::showInfoPublicKey( CK_OBJECT_HANDLE hObj )
+{
+    info( "------------------------------------------------------------------------\n" );
+    info( "-- Public Key\n" );
+    info( "------------------------------------------------------------------------\n" );
+
+    QString strName;
+    int nType = -1;
+    CK_ATTRIBUTE_TYPE uAttrType = -1;
+
+    for( int i = 0; i < kPubKeyAttList.size(); i++ )
+    {
+        strName = kPubKeyAttList.at(i);
+
+        uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
+        nType = CryptokiAPI::getAttrType( uAttrType);
+
+        if( uAttrType == CKA_SUBJECT )
+        {
+            BIN binDN = {0,0};
+            char *pDN = NULL;
+
+            QString strSubject = stringAttribute( nType, uAttrType, hObj );
+            JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binDN );
+            JS_PKI_getTextDN( &binDN, &pDN );
+
+            info( QString( "%1 : %2 - %3\n" )
+                  .arg( strName )
+                  .arg( stringAttribute( nType, uAttrType, hObj))
+                  .arg( pDN ? pDN : ""));
+
+            JS_BIN_reset( &binDN );
+            if( pDN ) JS_free( pDN );
+        }
+        else
+        {
+            info( QString( "%1 : %2\n" ).arg( strName ).arg( stringAttribute( nType, uAttrType, hObj)));
+        }
+    }
+}
+
+void MainWindow::showInfoPrivateKey( CK_OBJECT_HANDLE hObj )
+{
+    info( "------------------------------------------------------------------------\n" );
+    info( "-- Private Key\n" );
+    info( "------------------------------------------------------------------------\n" );
+
+    QString strName;
+    int nType = -1;
+    CK_ATTRIBUTE_TYPE uAttrType = -1;
+
+    for( int i = 0; i < kPriKeyAttList.size(); i++ )
+    {
+        strName = kPriKeyAttList.at(i);
+
+        uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
+        nType = CryptokiAPI::getAttrType( uAttrType);
+
+        if( uAttrType == CKA_SUBJECT )
+        {
+            BIN binDN = {0,0};
+            char *pDN = NULL;
+
+            QString strSubject = stringAttribute( nType, uAttrType, hObj );
+            JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binDN );
+            JS_PKI_getTextDN( &binDN, &pDN );
+
+            info( QString( "%1 : %2 - %3\n" )
+                  .arg( strName )
+                  .arg( stringAttribute( nType, uAttrType, hObj))
+                  .arg( pDN ? pDN : ""));
+
+            JS_BIN_reset( &binDN );
+            if( pDN ) JS_free( pDN );
+        }
+        else
+        {
+            info( QString( "%1 : %2\n" ).arg( strName ).arg( stringAttribute( nType, uAttrType, hObj)));
+        }
+    }
+}
+
+void MainWindow::showInfoSecretKey( CK_OBJECT_HANDLE hObj )
+{
+    info( "------------------------------------------------------------------------\n" );
+    info( "-- Secret Key\n" );
+    info( "------------------------------------------------------------------------\n" );
+
+    QString strName;
+    int nType = -1;
+    CK_ATTRIBUTE_TYPE uAttrType = -1;
+
+    for( int i = 0; i < kSecretKeyAttList.size(); i++ )
+    {
+        strName = kSecretKeyAttList.at(i);
+
+        uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
+        nType = CryptokiAPI::getAttrType( uAttrType);
+
+        info( QString( "%1 : %2\n" ).arg( strName ).arg( stringAttribute( nType, uAttrType, hObj)));
+    }
+}
+
+
+void MainWindow::showInfoRSAValue( CK_OBJECT_HANDLE hObj, bool bPub )
+{
+    info( "------------------------------------------------------------------------\n" );
+    info( "-- RSA Key Value\n" );
+    info( "------------------------------------------------------------------------\n" );
+
+    QString strName;
+    int nType = -1;
+    CK_ATTRIBUTE_TYPE uAttrType = -1;
+
+    for( int i = 0; i < kRSAKeyAttList.size(); i++ )
+    {
+        strName = kRSAKeyAttList.at(i);
+
+        if( bPub == true )
+        {
+            if( strName != "CKA_MODULUS" && strName != "CKA_PUBLIC_EXPONENT" )
+                continue;
+        }
+
+        uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
+        nType = CryptokiAPI::getAttrType( uAttrType);
+
+        info( QString( "%1 : %2\n" ).arg( strName ).arg( stringAttribute( nType, uAttrType, hObj)));
+    }
+}
+
+void MainWindow::showInfoDSAValue( CK_OBJECT_HANDLE hObj, bool bPub )
+{
+    info( "------------------------------------------------------------------------\n" );
+    info( "-- DSA Key Value\n" );
+    info( "------------------------------------------------------------------------\n" );
+
+    QString strName;
+    int nType = -1;
+    CK_ATTRIBUTE_TYPE uAttrType = -1;
+
+    for( int i = 0; i < kDSAKeyAttList.size(); i++ )
+    {
+        strName = kDSAKeyAttList.at(i);
+        uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
+        nType = CryptokiAPI::getAttrType( uAttrType);
+
+        info( QString( "%1 : %2\n" ).arg( strName ).arg( stringAttribute( nType, uAttrType, hObj)));
+    }
+}
+
+void MainWindow::showInfoECCValue( CK_OBJECT_HANDLE hObj, bool bPub )
+{
+    info( "------------------------------------------------------------------------\n" );
+    info( "-- ECC Key Value\n" );
+    info( "------------------------------------------------------------------------\n" );
+
+    QString strName;
+    int nType = -1;
+    CK_ATTRIBUTE_TYPE uAttrType = -1;
+
+    for( int i = 0; i < kECCKeyAttList.size(); i++ )
+    {
+        strName = kECCKeyAttList.at(i);
+        uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
+        nType = CryptokiAPI::getAttrType( uAttrType);
+
+        info( QString( "%1 : %2\n" ).arg( strName ).arg( stringAttribute( nType, uAttrType, hObj)));
+    }
+}
+
+void MainWindow::showInfoDHValue( CK_OBJECT_HANDLE hObj, bool bPub )
+{
+    info( "------------------------------------------------------------------------\n" );
+    info( "-- DH Key Value\n" );
+    info( "------------------------------------------------------------------------\n" );
+
+    QString strName;
+    int nType = -1;
+    CK_ATTRIBUTE_TYPE uAttrType = -1;
+
+    for( int i = 0; i < kDHKeyAttList.size(); i++ )
+    {
+        strName = kDHKeyAttList.at(i);
+        uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
+        nType = CryptokiAPI::getAttrType( uAttrType);
+
+        info( QString( "%1 : %2\n" ).arg( strName ).arg( stringAttribute( nType, uAttrType, hObj)));
+    }
+}
+
+void MainWindow::showInfoSecretValue( CK_OBJECT_HANDLE hObj)
+{
+    info( "------------------------------------------------------------------------\n" );
+    info( "-- Secret Key Value\n" );
+    info( "------------------------------------------------------------------------\n" );
+
+    QString strName;
+    int nType = -1;
+    CK_ATTRIBUTE_TYPE uAttrType = -1;
+
+    for( int i = 0; i < kSecretValueAttList.size(); i++ )
+    {
+        strName = kSecretValueAttList.at(i);
+        uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
+        nType = CryptokiAPI::getAttrType( uAttrType);
+
+        info( QString( "%1 : %2\n" ).arg( strName ).arg( stringAttribute( nType, uAttrType, hObj)));
     }
 }

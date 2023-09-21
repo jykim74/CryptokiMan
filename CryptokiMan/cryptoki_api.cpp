@@ -28,6 +28,54 @@ CK_SESSION_HANDLE CryptokiAPI::getSessionHandle()
     return p11_ctx_->hSession;
 }
 
+int CryptokiAPI::getAttrType( CK_ATTRIBUTE_TYPE nType )
+{
+    switch ( nType ) {
+    case CKA_KEY_TYPE :
+        return ATTR_VAL_KEY_NAME;
+
+    case CKA_LABEL :
+    case CKA_APPLICATION:
+    case CKA_URL :
+        return ATTR_VAL_STRING;
+
+    case CKA_VALUE_LEN:
+    case CKA_VALUE_BITS:
+        return ATTR_VAL_LEN;
+
+    case CKA_START_DATE:
+    case CKA_END_DATE:
+        return ATTR_VAL_DATE;
+
+    case CKA_TOKEN:
+    case CKA_PRIVATE:
+    case CKA_MODIFIABLE:
+    case CKA_COPYABLE:
+    case CKA_DESTROYABLE:
+    case CKA_TRUSTED:
+    case CKA_LOCAL:
+    case CKA_DERIVE:
+    case CKA_ENCRYPT:
+    case CKA_VERIFY:
+    case CKA_VERIFY_RECOVER:
+    case CKA_WRAP:
+    case CKA_SENSITIVE:
+    case CKA_DECRYPT:
+    case CKA_SIGN:
+    case CKA_SIGN_RECOVER:
+    case CKA_UNWRAP:
+    case CKA_EXTRACTABLE:
+    case CKA_ALWAYS_SENSITIVE:
+    case CKA_NEVER_EXTRACTABLE:
+    case CKA_WRAP_WITH_TRUSTED:
+    case CKA_ALWAYS_AUTHENTICATE:
+        return ATTR_VAL_BOOL;
+
+    default:
+        return ATTR_VAL_HEX;
+    }
+}
+
 int CryptokiAPI::openLibrary( const QString strPath )
 {
     int ret = 0;
