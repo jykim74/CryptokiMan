@@ -279,7 +279,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Source</source>
-        <translation>소스</translation>
+        <translation type="vanished">소스</translation>
     </message>
     <message>
         <source>Slot list</source>
@@ -307,23 +307,23 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Target</source>
-        <translation>대상</translation>
+        <translation type="vanished">대상</translation>
     </message>
     <message>
         <source>Object Properties</source>
-        <translation>객체 속성</translation>
+        <translation type="vanished">객체 속성</translation>
     </message>
     <message>
         <source>Label</source>
-        <translation>라벨</translation>
+        <translation type="vanished">라벨</translation>
     </message>
     <message>
         <source>ID</source>
-        <translation>ID</translation>
+        <translation type="vanished">ID</translation>
     </message>
     <message>
         <source>Use Random</source>
-        <translation>랜덤 사용</translation>
+        <translation type="vanished">랜덤 사용</translation>
     </message>
     <message>
         <source>Attributes</source>
@@ -331,27 +331,27 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Derive</source>
-        <translation>유도</translation>
+        <translation type="vanished">유도</translation>
     </message>
     <message>
         <source>SignRecover</source>
-        <translation>SignRecover</translation>
+        <translation type="vanished">SignRecover</translation>
     </message>
     <message>
         <source>Trusted</source>
-        <translation>Trusted</translation>
+        <translation type="vanished">Trusted</translation>
     </message>
     <message>
         <source>VerifyRecover</source>
-        <translation>VerifyRecover</translation>
+        <translation type="vanished">VerifyRecover</translation>
     </message>
     <message>
         <source>StartDate</source>
-        <translation>시작 일자</translation>
+        <translation type="vanished">시작 일자</translation>
     </message>
     <message>
         <source>EndDate</source>
-        <translation>종료 일자</translation>
+        <translation type="vanished">종료 일자</translation>
     </message>
     <message>
         <source>Destroyable</source>
@@ -359,7 +359,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <source>Copyable</source>
-        <translation>Copyable</translation>
+        <translation type="vanished">Copyable</translation>
     </message>
     <message>
         <source>There is no object handler</source>
