@@ -19,6 +19,13 @@ public:
 
     void setSelectedSlot( int index );
 
+private slots:
+    virtual void accept();
+    void slotChanged( int index );
+
+    void changeSrcType( int index );
+    void changeSrcLabel( int index );
+
     void clickUseRand();
     void clickPrivate();
     void clickSensitive();
@@ -39,13 +46,6 @@ public:
     void clickDerive();
     void clickStartDate();
     void clickEndDate();
-
-private slots:
-    virtual void accept();
-    void slotChanged( int index );
-
-    void changeSrcType( int index );
-    void changeSrcLabel( int index );
 
 private:
     void initUI();
