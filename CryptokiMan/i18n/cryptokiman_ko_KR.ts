@@ -2739,6 +2739,10 @@ Do you want to delete the file and continue?</source>
         <source>Destroyable</source>
         <translation>Destroyable</translation>
     </message>
+    <message>
+        <source>DH algorithm does not support &apos;Use SKI or Use SPKI&apos; option</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ImportCertDlg</name>

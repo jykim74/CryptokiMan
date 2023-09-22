@@ -724,13 +724,20 @@ void GenKeyPairDlg::accept()
         return;
     }
 
-    if( mPriUseSKICheck->isChecked() || mPubUseSKICheck->isChecked() )
+    if( mPriUseSKICheck->isChecked() || mPubUseSKICheck->isChecked() || mPriUseSPKICheck->isChecked() )
     {
-        rv = setSKI_SPKI( hSession, keyType, uPriHandle, uPubHandle );
-        if( rv != CKR_OK )
+        if( keyType == CKK_DH )
         {
-            manApplet->warningBox( tr( "failure to set SKI_SPKI(rv:%1)").arg(JS_PKCS11_GetErrorMsg( rv )), this );
-            return;
+            manApplet->wlog( "DH algorithm does not support 'Use SKI or Use SPKI' option" );
+        }
+        else
+        {
+            rv = setSKI_SPKI( hSession, keyType, uPriHandle, uPubHandle );
+            if( rv != CKR_OK )
+            {
+                manApplet->warningBox( tr( "failure to set SKI_SPKI(rv:%1)").arg(JS_PKCS11_GetErrorMsg( rv )), this );
+                return;
+            }
         }
     }
 
