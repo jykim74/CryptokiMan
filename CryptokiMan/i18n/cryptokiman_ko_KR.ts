@@ -4249,6 +4249,14 @@ Do you want to delete the file and continue?</source>
         <source>PKCS11 Copy Object</source>
         <translation>PKCS11 객체 복사</translation>
     </message>
+    <message>
+        <source>&amp;Log Halt</source>
+        <translation>로그 중지(&amp;L)</translation>
+    </message>
+    <message>
+        <source>Log Halt</source>
+        <translation>로그 중지</translation>
+    </message>
 </context>
 <context>
     <name>ManApplet</name>

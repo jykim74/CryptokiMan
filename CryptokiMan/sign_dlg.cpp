@@ -47,6 +47,7 @@ void SignDlg::initUI()
 
     connect( mKeyTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(keyTypeChanged(int)));
     connect( mLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(labelChanged(int)));
+    connect( mParamText, SIGNAL(textChanged(const QString)), this, SLOT(changeParam(const QString)));
 
     connect( mInitBtn, SIGNAL(clicked()), this, SLOT(clickInit()));
     connect( mUpdateBtn, SIGNAL(clicked()), this, SLOT(clickUpdate()));
@@ -225,6 +226,12 @@ void SignDlg::changeOutput()
     int nLen = getDataLen( DATA_HEX, mOutputText->toPlainText() );
 
     mOutputLenText->setText( QString("%1").arg( nLen ));
+}
+
+void SignDlg::changeParam( const QString text )
+{
+    int nLen = getDataLen( DATA_HEX, mParamText->text() );
+    mParamLenText->setText( QString("%1").arg( nLen ));
 }
 
 void SignDlg::labelChanged( int index )

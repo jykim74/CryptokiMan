@@ -70,6 +70,7 @@ MainWindow::MainWindow(QWidget *parent) :
     setAcceptDrops(true);
     right_type_ = -1;
     slot_index_ = -1;
+    log_halt_ = false;
 }
 
 MainWindow::~MainWindow()
@@ -546,6 +547,14 @@ void MainWindow::createActions()
         clearAct->setStatusTip(tr("clear log"));
         helpMenu->addAction( clearAct );
         helpToolBar->addAction( clearAct );
+
+        QIcon logIcon = QIcon::fromTheme( "log-halt", QIcon(":/images/log_halt.png" ));
+        QAction *logAct = new QAction( logIcon, tr( "&Log Halt" ), this );
+        connect( logAct, &QAction::triggered, this, &MainWindow::logToggle );
+        logAct->setCheckable(true);
+        logAct->setStatusTip( tr( "Log Halt" ));
+        helpMenu->addAction( logAct );
+        helpToolBar->addAction( logAct );
     }
 
     const QIcon settingIcon = QIcon::fromTheme("setting", QIcon(":/images/setting.png"));
@@ -1821,6 +1830,20 @@ void MainWindow::logClear()
     log_text_->clear();
 }
 
+void MainWindow::logToggle()
+{
+    if( log_halt_ == true )
+    {
+        log_halt_ = false;
+        log( "Log is enable" );
+    }
+    else
+    {
+        dlog( "Log is halt" );
+        log_halt_ = true;
+    }
+}
+
 void MainWindow::showDock()
 {
     dock_->show();
@@ -2201,6 +2224,8 @@ void MainWindow::info( QString strInfo )
 
 void MainWindow::log( QString strLog )
 {
+    if( log_halt_ == true ) return;
+
     if( text_tab_->count() <= 1 ) return;
 
     int nLevel = manApplet->settingsMgr()->logLevel();
@@ -2231,6 +2256,8 @@ void MainWindow::ilog( const QString strLog )
 
 void MainWindow::elog( const QString strLog )
 {
+    if( log_halt_ == true ) return;
+
     if( text_tab_->count() <= 1 ) return;
 
     int nLevel = manApplet->settingsMgr()->logLevel();
@@ -2255,6 +2282,8 @@ void MainWindow::elog( const QString strLog )
 
 void MainWindow::wlog( const QString strLog )
 {
+    if( log_halt_ == true ) return;
+
     if( text_tab_->count() <= 1 ) return;
 
     int nLevel = manApplet->settingsMgr()->logLevel();
@@ -2280,6 +2309,8 @@ void MainWindow::wlog( const QString strLog )
 
 void MainWindow::dlog( const QString strLog )
 {
+    if( log_halt_ == true ) return;
+
     if( text_tab_->count() <= 1 ) return;
 
     int nLevel = manApplet->settingsMgr()->logLevel();
@@ -2305,6 +2336,8 @@ void MainWindow::dlog( const QString strLog )
 
 void MainWindow::write( const QString strLog )
 {
+    if( log_halt_ == true ) return;
+
     if( text_tab_->count() <= 1 ) return;
 
     QTextCursor cursor = log_text_->textCursor();

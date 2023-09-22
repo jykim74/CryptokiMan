@@ -38,6 +38,7 @@ private slots:
 
     void changeInput();
     void changeOutput();
+    void changeParam( const QString text );
 
     void clickInputClear();
     void clickOutputClear();

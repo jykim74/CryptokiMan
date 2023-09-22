@@ -35,6 +35,7 @@ private slots:
 
     void keyTypeChanged( int index );
     void labelChanged( int index );
+    void changeParam(const QString text );
 
     void changeInput();
     void changeSign();

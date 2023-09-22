@@ -140,6 +140,7 @@ public slots:
     void settings();
     void operationState();
     void logClear();
+    void logToggle();
     void showDock();
 
     void rightTableClick( QModelIndex index );
@@ -194,6 +195,8 @@ private:
     QList<SlotInfo> slot_infos_;
     int             slot_index_;
     ThreadWork      *th_work_;
+
+    bool            log_halt_;
 };
 
 #endif // MAINWINDOW_H

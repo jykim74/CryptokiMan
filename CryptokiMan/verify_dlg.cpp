@@ -47,6 +47,7 @@ void VerifyDlg::initUI()
 
     connect( mKeyTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(keyTypeChanged(int)));
     connect( mLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(labelChanged(int)));
+    connect( mParamText, SIGNAL(textChanged(const QString)), this, SLOT(changeParam(const QString)));
 
     connect( mInitBtn, SIGNAL(clicked()), this, SLOT(clickInit()));
     connect( mUpdateBtn, SIGNAL(clicked()), this, SLOT(clickUpdate()));
@@ -213,6 +214,12 @@ void VerifyDlg::labelChanged( int index )
     QString strHandle = QString("%1").arg( objVal.toInt() );
 
     mObjectText->setText( strHandle );
+}
+
+void VerifyDlg::changeParam(const QString text )
+{
+    int nLen = getDataLen( DATA_HEX, text );
+    mParamLenText->setText( QString("%1").arg( nLen ));
 }
 
 void VerifyDlg::changeInput()
