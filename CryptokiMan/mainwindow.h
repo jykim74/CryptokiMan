@@ -34,14 +34,14 @@ public:
     ManTreeItem* currentTreeItem();
     ManTreeItem* getRootItem();
 
-    void info( QString strInfo );
+    void info( QString strInfo, QColor cr = QColor(0x00, 0x00, 0x00) );
+    void info_w( QString strInfo );
 
     void log( const QString strLog );
-    void ilog( const QString strLog );
     void elog( const QString strLog );
     void wlog( const QString strLog );
     void dlog( const QString strLog );
-    void write( const QString strLog );
+    void write( const QString strLog, QColor cr = QColor(0x00, 0x00, 0x00) );
 
     void showTypeList( int nSlotIndex, int nType );
 

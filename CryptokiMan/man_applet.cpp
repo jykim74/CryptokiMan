@@ -206,11 +206,6 @@ void ManApplet::log( const QString strLog )
     main_win_->log( strLog );
 }
 
-void ManApplet::ilog( const QString strLog )
-{
-    main_win_->ilog( strLog );
-}
-
 void ManApplet::elog( const QString strLog )
 {
     main_win_->elog( strLog );

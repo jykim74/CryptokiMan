@@ -2209,11 +2209,12 @@ ManTreeItem*MainWindow:: getRootItem()
     return (ManTreeItem*)left_model_->item(0,0);
 }
 
-void MainWindow::info( QString strInfo )
+void MainWindow::info( QString strInfo, QColor cr )
 {
     QTextCursor cursor = info_text_->textCursor();
 
     QTextCharFormat format;
+    format.setForeground( cr );
     cursor.mergeCharFormat(format);
 
     cursor.insertText( strInfo );
@@ -2222,10 +2223,14 @@ void MainWindow::info( QString strInfo )
     info_text_->repaint();
 }
 
+void MainWindow::info_w( QString strInfo )
+{
+    info( strInfo, Qt::darkRed );
+}
+
 void MainWindow::log( QString strLog )
 {
     if( log_halt_ == true ) return;
-
     if( text_tab_->count() <= 1 ) return;
 
     int nLevel = manApplet->settingsMgr()->logLevel();
@@ -2236,28 +2241,12 @@ void MainWindow::log( QString strLog )
     QString strMsg;
 
     strMsg = QString("[I][%1] %2\n" ).arg( date.toString( "HH:mm:ss") ).arg( strLog );
-
-    QTextCursor cursor = log_text_->textCursor();
-
-    QTextCharFormat format;
-    format.setForeground(QColor(0x00,0x00,0x00));
-    cursor.mergeCharFormat(format);
-
-    cursor.insertText( strMsg );
-    cursor.movePosition(QTextCursor::End);
-    log_text_->setTextCursor( cursor );
-    log_text_->repaint();
-}
-
-void MainWindow::ilog( const QString strLog )
-{
-    log( strLog );
+    write( strMsg );
 }
 
 void MainWindow::elog( const QString strLog )
 {
     if( log_halt_ == true ) return;
-
     if( text_tab_->count() <= 1 ) return;
 
     int nLevel = manApplet->settingsMgr()->logLevel();
@@ -2268,22 +2257,12 @@ void MainWindow::elog( const QString strLog )
     QString strMsg;
 
     strMsg = QString("[E][%1] %2\n" ).arg( date.toString( "HH:mm:ss") ).arg( strLog );
-
-    QTextCursor cursor = log_text_->textCursor();
-    QTextCharFormat format;
-    format.setForeground(QColor(0xFF,0x00,0x00));
-    cursor.mergeCharFormat(format);
-
-    cursor.insertText( strMsg );
-    cursor.movePosition(QTextCursor::End);
-    log_text_->setTextCursor( cursor );
-    log_text_->repaint();
+    write( strMsg, QColor(0xFF, 0x00, 0x00));
 }
 
 void MainWindow::wlog( const QString strLog )
 {
     if( log_halt_ == true ) return;
-
     if( text_tab_->count() <= 1 ) return;
 
     int nLevel = manApplet->settingsMgr()->logLevel();
@@ -2294,23 +2273,12 @@ void MainWindow::wlog( const QString strLog )
     QString strMsg;
 
     strMsg = QString("[W][%1] %2\n" ).arg( date.toString( "HH:mm:ss") ).arg( strLog );
-
-    QTextCursor cursor = log_text_->textCursor();
-
-    QTextCharFormat format;
-    format.setForeground(QColor(0x66, 0x33, 0x00));
-    cursor.mergeCharFormat(format);
-
-    cursor.insertText( strMsg );
-    cursor.movePosition(QTextCursor::End);
-    log_text_->setTextCursor( cursor );
-    log_text_->repaint();
+    write( strMsg, QColor(0x66, 0x33, 0x00));
 }
 
 void MainWindow::dlog( const QString strLog )
 {
     if( log_halt_ == true ) return;
-
     if( text_tab_->count() <= 1 ) return;
 
     int nLevel = manApplet->settingsMgr()->logLevel();
@@ -2321,29 +2289,18 @@ void MainWindow::dlog( const QString strLog )
     QString strMsg;
 
     strMsg = QString("[D][%1] %2\n" ).arg( date.toString( "HH:mm:ss") ).arg( strLog );
-
-    QTextCursor cursor = log_text_->textCursor();
-
-    QTextCharFormat format;
-    format.setForeground(QColor(0x00,0x00,0xFF));
-    cursor.mergeCharFormat(format);
-
-    cursor.insertText( strMsg );
-    cursor.movePosition(QTextCursor::End);
-    log_text_->setTextCursor( cursor );
-    log_text_->repaint();
+    write( strMsg, QColor( 0x00, 0x00, 0xFF ));
 }
 
-void MainWindow::write( const QString strLog )
+void MainWindow::write( const QString strLog, QColor cr )
 {
     if( log_halt_ == true ) return;
-
     if( text_tab_->count() <= 1 ) return;
 
     QTextCursor cursor = log_text_->textCursor();
 
     QTextCharFormat format;
-    format.setForeground(QColor(0x00,0x00,0x00));
+    format.setForeground( cr );
     cursor.mergeCharFormat(format);
 
     cursor.insertText( strLog );
@@ -3528,15 +3485,19 @@ void MainWindow::showInfoCommon( CK_OBJECT_HANDLE hObj )
     QString strName;
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
+    QString strValue;
 
     for( int i = 0; i < kCommonAttList.size(); i++ )
     {
         strName = kCommonAttList.at(i);
-
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
+        strValue = stringAttribute( nType, uAttrType, hObj);
 
-        info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
+        if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
+            info_w( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ) );
+        else
+            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
     }
 
     info( "------------------------------------------------------------------------\n" );
@@ -3548,6 +3509,8 @@ void MainWindow::showInfoData( CK_OBJECT_HANDLE hObj )
     info( "------------------------------------------------------------------------\n" );
 
     QString strName;
+    QString strValue;
+
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
 
@@ -3557,27 +3520,33 @@ void MainWindow::showInfoData( CK_OBJECT_HANDLE hObj )
 
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
+        strValue = stringAttribute( nType, uAttrType, hObj);
 
-        QString strMsg = stringAttribute( nType, uAttrType, hObj);
-
-        if( uAttrType == CKA_OBJECT_ID )
+        if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
         {
-            char sOID[128];
-            BIN binOID = {0,0};
-
-            memset( sOID, 0x00, sizeof(sOID));
-
-            JS_BIN_decodeHex( strMsg.toStdString().c_str(), &binOID );
-            JS_PKI_getStringFromOID( &binOID, sOID );
-
-            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strMsg));
-            if( sOID[0] != 0x00 ) info( QString( "%1 : %2\n" ).arg( "CKA_OBJECT_ID[String]", 30 ).arg( sOID ));
-
-            JS_BIN_reset( &binOID );
+            info_w( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
         }
         else
         {
-            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strMsg ));
+            if( uAttrType == CKA_OBJECT_ID )
+            {
+                char sOID[128];
+                BIN binOID = {0,0};
+
+                memset( sOID, 0x00, sizeof(sOID));
+
+                JS_BIN_decodeHex( strValue.toStdString().c_str(), &binOID );
+                JS_PKI_getStringFromOID( &binOID, sOID );
+
+                info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
+                if( sOID[0] != 0x00 ) info( QString( "%1 : %2\n" ).arg( "CKA_OBJECT_ID[String]", 30 ).arg( sOID ));
+
+                JS_BIN_reset( &binOID );
+            }
+            else
+            {
+                info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
+            }
         }
     }
 
@@ -3590,6 +3559,7 @@ void MainWindow::showInfoCertCommon( CK_OBJECT_HANDLE hObj )
     info( "------------------------------------------------------------------------\n" );
 
     QString strName;
+    QString strValue;
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
 
@@ -3599,9 +3569,12 @@ void MainWindow::showInfoCertCommon( CK_OBJECT_HANDLE hObj )
 
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
+        strValue = stringAttribute( nType, uAttrType, hObj);
 
-        QString strMsg = stringAttribute( nType, uAttrType, hObj);
-        info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strMsg ));
+        if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
+            info_w( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ) );
+        else
+            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
     }
 
     info( "------------------------------------------------------------------------\n" );
@@ -3613,6 +3586,8 @@ void MainWindow::showInfoX509Cert( CK_OBJECT_HANDLE hObj )
     info( "------------------------------------------------------------------------\n" );
 
     QString strName;
+    QString strValue;
+
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
 
@@ -3622,25 +3597,32 @@ void MainWindow::showInfoX509Cert( CK_OBJECT_HANDLE hObj )
 
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
+        strValue = stringAttribute( nType, uAttrType, hObj );
 
-        if( uAttrType == CKA_SUBJECT )
+        if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
         {
-            BIN binDN = {0,0};
-            char *pDN = NULL;
-
-            QString strSubject = stringAttribute( nType, uAttrType, hObj );
-            JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binDN );
-            JS_PKI_getTextDN( &binDN, &pDN );
-
-            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strSubject ));
-            if( pDN ) info( QString( "%1 : %2\n" ).arg( "CKA_SUBJECT[String]", 30 ).arg( pDN ));
-
-            JS_BIN_reset( &binDN );
-            if( pDN ) JS_free( pDN );
+            info_w( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
         }
         else
         {
-            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
+            if( uAttrType == CKA_SUBJECT )
+            {
+                BIN binDN = {0,0};
+                char *pDN = NULL;
+
+                JS_BIN_decodeHex( strValue.toStdString().c_str(), &binDN );
+                JS_PKI_getTextDN( &binDN, &pDN );
+
+                info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
+                if( pDN ) info( QString( "%1 : %2\n" ).arg( "CKA_SUBJECT[String]", 30 ).arg( pDN ));
+
+                JS_BIN_reset( &binDN );
+                if( pDN ) JS_free( pDN );
+            }
+            else
+            {
+                info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
+            }
         }
     }
 
@@ -3653,6 +3635,8 @@ void MainWindow::showInfoKeyCommon( CK_OBJECT_HANDLE hObj )
     info( "------------------------------------------------------------------------\n" );
 
     QString strName;
+    QString strValue;
+
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
 
@@ -3662,8 +3646,12 @@ void MainWindow::showInfoKeyCommon( CK_OBJECT_HANDLE hObj )
 
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
+        strValue = stringAttribute( nType, uAttrType, hObj);
 
-        info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
+        if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
+            info_w( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ) );
+        else
+            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
     }
 
     info( "------------------------------------------------------------------------\n" );
@@ -3675,6 +3663,8 @@ void MainWindow::showInfoPublicKey( CK_OBJECT_HANDLE hObj )
     info( "------------------------------------------------------------------------\n" );
 
     QString strName;
+    QString strValue;
+
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
 
@@ -3684,25 +3674,32 @@ void MainWindow::showInfoPublicKey( CK_OBJECT_HANDLE hObj )
 
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
+        strValue = stringAttribute( nType, uAttrType, hObj );
 
-        if( uAttrType == CKA_SUBJECT )
+        if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
         {
-            BIN binDN = {0,0};
-            char *pDN = NULL;
-
-            QString strSubject = stringAttribute( nType, uAttrType, hObj );
-            JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binDN );
-            JS_PKI_getTextDN( &binDN, &pDN );
-
-            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strSubject ));
-            if( pDN ) info( QString( "%1 : %2\n" ).arg( "CKA_SUBJECT[String]", 30 ).arg( pDN ));
-
-            JS_BIN_reset( &binDN );
-            if( pDN ) JS_free( pDN );
+            info_w( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
         }
         else
         {
-            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
+            if( uAttrType == CKA_SUBJECT )
+            {
+                BIN binDN = {0,0};
+                char *pDN = NULL;
+
+                JS_BIN_decodeHex( strValue.toStdString().c_str(), &binDN );
+                JS_PKI_getTextDN( &binDN, &pDN );
+
+                info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
+                if( pDN ) info( QString( "%1 : %2\n" ).arg( "CKA_SUBJECT[String]", 30 ).arg( pDN ));
+
+                JS_BIN_reset( &binDN );
+                if( pDN ) JS_free( pDN );
+            }
+            else
+            {
+                info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
+            }
         }
     }
 
@@ -3715,6 +3712,8 @@ void MainWindow::showInfoPrivateKey( CK_OBJECT_HANDLE hObj )
     info( "------------------------------------------------------------------------\n" );
 
     QString strName;
+    QString strValue;
+
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
 
@@ -3724,25 +3723,32 @@ void MainWindow::showInfoPrivateKey( CK_OBJECT_HANDLE hObj )
 
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
+        strValue = stringAttribute( nType, uAttrType, hObj );
 
-        if( uAttrType == CKA_SUBJECT )
+        if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
         {
-            BIN binDN = {0,0};
-            char *pDN = NULL;
-
-            QString strSubject = stringAttribute( nType, uAttrType, hObj );
-            JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binDN );
-            JS_PKI_getTextDN( &binDN, &pDN );
-
-            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strSubject ));
-            if( pDN ) info( QString( "%1 : %2\n" ).arg( "CKA_SUBJECT[String]", 30 ).arg( pDN ));
-
-            JS_BIN_reset( &binDN );
-            if( pDN ) JS_free( pDN );
+            info_w( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
         }
         else
         {
-            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
+            if( uAttrType == CKA_SUBJECT )
+            {
+                BIN binDN = {0,0};
+                char *pDN = NULL;
+
+                JS_BIN_decodeHex( strValue.toStdString().c_str(), &binDN );
+                JS_PKI_getTextDN( &binDN, &pDN );
+
+                info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
+                if( pDN ) info( QString( "%1 : %2\n" ).arg( "CKA_SUBJECT[String]", 30 ).arg( pDN ));
+
+                JS_BIN_reset( &binDN );
+                if( pDN ) JS_free( pDN );
+            }
+            else
+            {
+                info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
+            }
         }
     }
 
@@ -3755,6 +3761,8 @@ void MainWindow::showInfoSecretKey( CK_OBJECT_HANDLE hObj )
     info( "------------------------------------------------------------------------\n" );
 
     QString strName;
+    QString strValue;
+
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
 
@@ -3764,8 +3772,13 @@ void MainWindow::showInfoSecretKey( CK_OBJECT_HANDLE hObj )
 
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
+        strValue = stringAttribute( nType, uAttrType, hObj);
 
-        info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
+        if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
+            info_w( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ) );
+        else
+            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
+
     }
 
     info( "------------------------------------------------------------------------\n" );
@@ -3778,6 +3791,8 @@ void MainWindow::showInfoRSAValue( CK_OBJECT_HANDLE hObj, bool bPub )
     info( "------------------------------------------------------------------------\n" );
 
     QString strName;
+    QString strValue;
+
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
 
@@ -3794,7 +3809,11 @@ void MainWindow::showInfoRSAValue( CK_OBJECT_HANDLE hObj, bool bPub )
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
 
-        info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
+        strValue = stringAttribute( nType, uAttrType, hObj);
+        if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
+            info_w( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ) );
+        else
+            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
     }
 
     info( "------------------------------------------------------------------------\n" );
@@ -3806,6 +3825,8 @@ void MainWindow::showInfoDSAValue( CK_OBJECT_HANDLE hObj, bool bPub )
     info( "------------------------------------------------------------------------\n" );
 
     QString strName;
+    QString strValue;
+
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
 
@@ -3815,7 +3836,12 @@ void MainWindow::showInfoDSAValue( CK_OBJECT_HANDLE hObj, bool bPub )
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
 
-        info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
+        strValue = stringAttribute( nType, uAttrType, hObj);
+        if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
+            info_w( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ) );
+        else
+            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
+
     }
 
     info( "------------------------------------------------------------------------\n" );
@@ -3827,6 +3853,8 @@ void MainWindow::showInfoECCValue( CK_OBJECT_HANDLE hObj, bool bPub )
     info( "------------------------------------------------------------------------\n" );
 
     QString strName;
+    QString strValue;
+
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
 
@@ -3836,8 +3864,12 @@ void MainWindow::showInfoECCValue( CK_OBJECT_HANDLE hObj, bool bPub )
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
 
-        info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
-    }
+        strValue = stringAttribute( nType, uAttrType, hObj);
+        if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
+            info_w( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ) );
+        else
+            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
+     }
 
     info( "------------------------------------------------------------------------\n" );
 }
@@ -3848,6 +3880,8 @@ void MainWindow::showInfoDHValue( CK_OBJECT_HANDLE hObj, bool bPub )
     info( "------------------------------------------------------------------------\n" );
 
     QString strName;
+    QString strValue;
+
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
 
@@ -3857,7 +3891,11 @@ void MainWindow::showInfoDHValue( CK_OBJECT_HANDLE hObj, bool bPub )
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
 
-        info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
+        strValue = stringAttribute( nType, uAttrType, hObj);
+        if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
+            info_w( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ) );
+        else
+            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
     }
 
     info( "------------------------------------------------------------------------\n" );
@@ -3869,6 +3907,8 @@ void MainWindow::showInfoSecretValue( CK_OBJECT_HANDLE hObj)
     info( "------------------------------------------------------------------------\n" );
 
     QString strName;
+    QString strValue;
+
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
 
@@ -3878,7 +3918,11 @@ void MainWindow::showInfoSecretValue( CK_OBJECT_HANDLE hObj)
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
 
-        info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( stringAttribute( nType, uAttrType, hObj)));
+        strValue = stringAttribute( nType, uAttrType, hObj);
+        if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
+            info_w( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ) );
+        else
+            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
     }
 
     info( "------------------------------------------------------------------------\n" );
