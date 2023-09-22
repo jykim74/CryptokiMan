@@ -99,6 +99,7 @@ HEADERS += \
         create_rsa_pub_key_dlg.h \
         cryptoki_api.h \
         decrypt_dlg.h \
+        define.h \
         del_object_dlg.h \
         derive_key_dlg.h \
         digest_dlg.h \
