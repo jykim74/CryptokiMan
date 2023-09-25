@@ -75,5 +75,6 @@
         <file>images/copy_object.png</file>
         <file>images/log_halt.png</file>
         <file>images/log_en.png</file>
+        <file>cm.rc</file>
     </qresource>
 </RCC>
