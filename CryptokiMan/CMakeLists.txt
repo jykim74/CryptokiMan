@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(CryptokiMan VERSION 0.1 LANGUAGES CXX)
+project(CryptokiMan LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -8,8 +8,8 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # When using Qt 6.3, you can replace the code block below with
 # qt_standard_project_setup()
 set(CMAKE_AUTOMOC ON)
-include(GNUInstallDirs)
 set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
 
 find_package(QT NAMES Qt5 Qt6 REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui)
@@ -182,6 +182,8 @@ add_executable(CryptokiMan
     cm.rc
 )
 
+target_link_options( CryptokiMan PRIVATE -mwindows -MD )
+
 if(WIN32)
 include_directories( ../../PKILib
     "c:/msys64/mingw64/include"
@@ -266,3 +268,6 @@ target_compile_definitions( CryptokiMan PRIVATE
     _AUTO_UPDATE )
 
 
+find_package(Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
+set(TS_FILES cryptokiman_ko_KR.ts)
+qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
