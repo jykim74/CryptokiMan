@@ -226,10 +226,10 @@ elseif(APPLE)
 
     # And the following tells CMake where to find and install the file itself.
     set(app_icon_macos "${CMAKE_CURRENT_SOURCE_DIR}/images/cryptokiman.icns")
-    set_source_files_properties(${app_icon_macos} PROPERTIES MACOSX_PACKAGE_LOCATION "images")
+    set_source_files_properties(${app_icon_macos} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
 
     set_target_properties( ${PROJECT_NAME},
-        MACOSX_BUNDLE_ICON_FILE, ${app_icon_macos}
+        MACOSX_BUNDLE_ICON_FILE, crytpokiman.icns
         MACOSX_BUNDLE_INFO_PLIST Info.plist )
 
     SET(platform_specific_sources ${platform_specific_sources} mac_sparkle_support.mm)
