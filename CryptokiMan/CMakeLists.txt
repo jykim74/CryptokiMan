@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
 project(CryptokiMan
-    VERSION 1.4.3
+    VERSION 1.4.6
     DESCRIPTION "CryptokiMan Application"
     LANGUAGES CXX )
 
@@ -13,10 +13,19 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
+include(GNUInstallDirs)
 
 find_package(QT NAMES Qt5 Qt6 REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui)
 find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS Widgets)
+
+if(APPLE)
+    SET(platform_specific_sources ${platform_specific_sources} mac_sparkle_support.mm)
+    SET(platform_specific_headers ${platform_specific_headers} mac_sparkle_support.h)
+    SET_SOURCE_FILES_PROPERTIES(mac_sparkle_support.mm PROPERTIES COMPILE_FLAGS -fobjc-arc)
+    SET(SPARKLE_FRAMEWORK /usr/local/Sparkle.framework)
+    INCLUDE_DIRECTORIES(${SPARKLE_FRAMEWORK}/Headers)
+endif()
 
 set(PROJECT_SRC
     about_dlg.cpp
@@ -225,22 +234,15 @@ elseif(APPLE)
     # without the path.
 
     # And the following tells CMake where to find and install the file itself.
-    set(app_icon_macos "${CMAKE_CURRENT_SOURCE_DIR}/images/cryptokiman.icns")
-    set_source_files_properties(${app_icon_macos} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
 
-    set_target_properties( ${PROJECT_NAME},
-        MACOSX_BUNDLE_ICON_FILE, crytpokiman.icns
-        MACOSX_BUNDLE_INFO_PLIST Info.plist )
-
-    SET(platform_specific_sources ${platform_specific_sources} mac_sparkle_support.mm)
-    SET(platform_specific_headers ${platform_specific_headers} mac_sparkle_support.h)
-    SET_SOURCE_FILES_PROPERTIES(mac_sparkle_support.mm PROPERTIES COMPILE_FLAGS -fobjc-arc)
-    SET(SPARKLE_FRAMEWORK /usr/local/Sparkle.framework)
-    INCLUDE_DIRECTORIES(${SPARKLE_FRAMEWORK}/Headers)
+    set_source_files_properties(cryptokiman.icns PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
 
-    FIND_LIBRARY(COCOA_LIBRARY Cocoa)
-    MARK_AS_ADVANCED (COCOA_LIBRARY)
+    SET_TARGET_PROPERTIES(${PROJECT_NAME} PROPERTIES
+      MACOSX_BUNDLE true
+      MACOSX_BUNDLE_ICON_FILE cryptokiman.icns
+      MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/Info.plist
+    )
 
     include_directories( ../../PKILib
         /usr/local/include )
@@ -261,7 +263,12 @@ elseif(APPLE)
 
     target_link_libraries(${PROJECT_NAME} PRIVATE
         Qt${QT_VERSION_MAJOR}::Widgets
-        PKILib crypto ssl ltdl "-framework Sparkle" )
+        PKILib crypto ssl ltdl
+        "-framework AppKit"
+        "-framework Carbon"
+        "-framework Foundation"
+        "-framework ApplicationServices"
+        "-framework Sparkle" )
 
     target_compile_definitions( ${PROJECT_NAME} PRIVATE _AUTO_UPDATE )
 

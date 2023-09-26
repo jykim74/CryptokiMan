@@ -7,7 +7,7 @@
 	<key>CFBundleGetInfoString</key>
         <string>CryptokiMan Application</string>
 	<key>CFBundleIconFile</key>
-        <string>cryptokiman</string>
+        <string>cryptokiman.icns</string>
 	<key>CFBundleIdentifier</key>
         <string>com.jsinc.cryptokiman</string>
 	<key>CFBundlePackageType</key>
@@ -15,9 +15,9 @@
 	<key>CFBundleName</key>
         <string>CryptokiMan</string>
 	<key>CFBundleShortVersionString</key>
-        <string>1.4.3</string>
+        <string>1.4.6</string>
 	<key>CFBundleVersion</key>
-        <string>1.4.3</string>
+        <string>1.4.6</string>
 	<key>CFBundleSignature</key>
         <string>hbwr</string>
         <key>SUPublicEDKey</key>
