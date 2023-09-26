@@ -75,5 +75,7 @@
         <file>images/log_halt.png</file>
         <file>images/log_en.png</file>
         <file>cm.rc</file>
+        <file>cryptokiman.icns</file>
+        <file>cryptokiman.ico</file>
     </qresource>
 </RCC>
