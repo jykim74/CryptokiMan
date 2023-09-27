@@ -235,7 +235,7 @@ elseif(APPLE)
 
     # And the following tells CMake where to find and install the file itself.
 
-    set_source_files_properties(cryptokiman.icns PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+    set_source_files_properties(cryptokiman.icns PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
 
 
     SET_TARGET_PROPERTIES(${PROJECT_NAME} PROPERTIES
