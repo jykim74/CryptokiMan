@@ -8,15 +8,10 @@
 #include "cryptoki_api.h"
 #include "common.h"
 #include "settings_mgr.h"
+#include "mech_mgr.h"
 
-static QStringList sMechList = {
-    "CKM_RSA_PKCS", "CKM_SHA1_RSA_PKCS", "CKM_SHA256_RSA_PKCS", "CKM_SHA384_RSA_PKCS", "CKM_SHA512_RSA_PKCS",
-    "CKM_ECDSA", "CKM_ECDSA_SHA1", "CKM_ECDSA_SHA256", "CKM_ECDSA_SHA384", "CKM_ECDSA_SHA512"
-};
-
-static QStringList sSecretMechList = {
-    "CKM_MD5_HMAC", "CKM_SHA_1_HMAC", "CKM_SHA256_HMAC", "CKM_SHA384_HMAC", "CKM_SHA512_HMAC"
-};
+static QStringList sMechSignSymList;
+static QStringList sMechSignAsymList;
 
 static QStringList sKeyList = { "PUBLIC", "SECRET" };
 
@@ -42,8 +37,19 @@ VerifyDlg::~VerifyDlg()
 
 void VerifyDlg::initUI()
 {
+    if( manApplet->settingsMgr()->useDeviceMech() )
+    {
+        sMechSignSymList = manApplet->mechMgr()->getSignList( MECH_TYPE_SYM );
+        sMechSignAsymList = manApplet->mechMgr()->getSignList( MECH_TYPE_ASYM );
+    }
+    else
+    {
+        sMechSignSymList = kMechSignSymList;
+        sMechSignAsymList = kMechSignAsymList;
+    }
+
     mKeyTypeCombo->addItems(sKeyList);
-    mMechCombo->addItems( sMechList );
+    mMechCombo->addItems( sMechSignAsymList );
 
     connect( mKeyTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(keyTypeChanged(int)));
     connect( mLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(labelChanged(int)));
@@ -157,12 +163,12 @@ void VerifyDlg::keyTypeChanged( int index )
     if( mKeyTypeCombo->currentText() == sKeyList[0] )
     {
         objClass = CKO_PUBLIC_KEY;
-        mMechCombo->addItems( sMechList );
+        mMechCombo->addItems( sMechSignAsymList );
     }
     else if( mKeyTypeCombo->currentText() == sKeyList[1] )
     {
         objClass = CKO_SECRET_KEY;
-        mMechCombo->addItems( sSecretMechList );
+        mMechCombo->addItems( sMechSignSymList );
     }
 
     sTemplate[uCnt].type = CKA_CLASS;

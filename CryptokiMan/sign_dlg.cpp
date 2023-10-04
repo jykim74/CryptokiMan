@@ -41,6 +41,11 @@ void SignDlg::initUI()
         sMechSignSymList = manApplet->mechMgr()->getSignList( MECH_TYPE_SYM );
         sMechSignAsymList = manApplet->mechMgr()->getSignList( MECH_TYPE_ASYM );
     }
+    else
+    {
+        sMechSignSymList = kMechSignSymList;
+        sMechSignAsymList = kMechSignAsymList;
+    }
 
     mKeyTypeCombo->addItems(sKeyList);
     mMechCombo->addItems( sMechSignAsymList );
