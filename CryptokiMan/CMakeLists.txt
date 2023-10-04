@@ -187,7 +187,9 @@ set(PROJECT_SOURCES
     ${PROJECT_SRC} ${PROJECT_HEADER} ${PROJECT_FORM}
 )
 
-
+find_package(Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
+set(TS_FILES i18n/cryptokiman_ko_KR.ts)
+qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 
 set(RESOURCE ${CMAKE_SOURCE_DIR}/cryptokiman.qrc)
 qt5_add_resources(RESOURCE_ADDED ${RESOURCE})
@@ -197,7 +199,7 @@ add_executable(${PROJECT_NAME}
     ${RESOURCE_ADDED}
     cm.rc
     cryptokiman.icns
-    ${QM_FILES}
+    ${TS_FILES}
 )
 
 target_link_options( ${PROJECT_NAME} PRIVATE -mwindows -MD )
@@ -307,9 +309,7 @@ target_compile_definitions( ${PROJECT_NAME} PRIVATE
     QT_DEPRECATED_WARNINGS
 )
 
-find_package(Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
-set(TS_FILES cryptokiman_ko_KR.ts)
-qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
+
 
 
 if(WIN32)
