@@ -36,14 +36,22 @@ DecryptDlg::~DecryptDlg()
 
 void DecryptDlg::initUI()
 {
-    if( manApplet->settingsMgr()->useDeviceMech() )
+    if( manApplet->isLicense() == true )
     {
-        sMechEncSymList = manApplet->mechMgr()->getDecList( MECH_TYPE_SYM );
-        sMechEncAsymList = manApplet->mechMgr()->getDecList( MECH_TYPE_ASYM );
+        if( manApplet->settingsMgr()->useDeviceMech() )
+        {
+            sMechEncSymList = manApplet->mechMgr()->getDecList( MECH_TYPE_SYM );
+            sMechEncAsymList = manApplet->mechMgr()->getDecList( MECH_TYPE_ASYM );
+        }
+        else
+        {
+            sMechEncSymList = kMechEncSymList;
+            sMechEncAsymList = kMechEncAsymList;
+        }
     }
     else
     {
-        sMechEncSymList = kMechEncSymList;
+        sMechEncSymList = kMechEncSymNoLicenseList;
         sMechEncAsymList = kMechEncAsymList;
     }
 

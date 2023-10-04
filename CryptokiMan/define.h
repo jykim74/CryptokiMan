@@ -125,6 +125,10 @@ static QStringList kMechEncSymList = {
     "CKM_AES_ECB", "CKM_AES_CBC","CKM_AES_CBC_PAD", "CKM_AES_CTR", "CKM_AES_GCM"
 };
 
+static QStringList kMechEncSymNoLicenseList = {
+    "CKM_AES_ECB", "CKM_AES_CBC","CKM_AES_CBC_PAD", "CKM_AES_CTR", "CKM_AES_GCM"
+};
+
 static QStringList kMechEncAsymList = {
     "CKM_RSA_PKCS"
 };
