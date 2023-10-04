@@ -249,10 +249,22 @@ void ImportPFXDlg::accept()
     if( rv != 0 )
     {
         manApplet->warningBox( tr( "fail to decode PFX"), this );
+        JS_BIN_reset( &binPFX );
         return;
     }
 
     key_type = JS_PKI_getPriKeyType( &binPri );
+    if( manApplet->isLicense() == false )
+    {
+        if( key_type != JS_PKI_KEY_TYPE_RSA )
+        {
+            manApplet->warningBox( tr( "RSA only support in no license mode" ), this );
+            JS_BIN_reset( &binPri );
+            JS_BIN_reset( &binPFX );
+            JS_BIN_reset( &binCert );
+            return;
+        }
+    }
 
     rv = JS_PKI_getCertInfo( &binCert, &sCertInfo, NULL );
     if( rv == 0 )

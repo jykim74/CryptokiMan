@@ -3081,6 +3081,10 @@ Do you want to delete the file and continue?</source>
         <source>Destroyable</source>
         <translation>Destroyable</translation>
     </message>
+    <message>
+        <source>RSA only support in no license mode</source>
+        <translation>라이선스가 없으면 RSA 알고리즘만 지원 합니다</translation>
+    </message>
 </context>
 <context>
     <name>ImportPriKeyDlg</name>
@@ -3295,6 +3299,10 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>Destroyable</source>
         <translation>Destroyable</translation>
+    </message>
+    <message>
+        <source>RSA only support in no license mode</source>
+        <translation>라이선스가 없으면 RSA 알고리즘만 지원 합니다</translation>
     </message>
 </context>
 <context>
