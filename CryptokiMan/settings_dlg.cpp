@@ -35,17 +35,17 @@ void SettingsDlg::updateSettings()
     {
         mgr->setShowLogTab( mShowLogTabCheck->checkState() == Qt::Checked );
         manApplet->mainWindow()->logView( mShowLogTabCheck->checkState() == Qt::Checked );
+
+        if( mUseDeviceMechCheck->isChecked() )
+        {
+            MechMgr* mechMgr = manApplet->mechMgr();
+            mechMgr->loadMechList();
+        }
     }
 
     mgr->setLogLevel( mLogLevelCombo->currentIndex() );
     mgr->setFileReadSize( mFileReadSizeText->text().toInt() );
     mgr->setUseDeviceMech( mUseDeviceMechCheck->isChecked() );
-
-    if( mUseDeviceMechCheck->isChecked() )
-    {
-        MechMgr* mechMgr = manApplet->mechMgr();
-        mechMgr->loadMechList();
-    }
 
     mgr->setFontFamily( mFontFamilyCombo->currentText() );
 

@@ -36,15 +36,23 @@ SignDlg::~SignDlg()
 
 void SignDlg::initUI()
 {
-    if( manApplet->settingsMgr()->useDeviceMech() )
+    if( manApplet->isLicense() )
     {
-        sMechSignSymList = manApplet->mechMgr()->getSignList( MECH_TYPE_SYM );
-        sMechSignAsymList = manApplet->mechMgr()->getSignList( MECH_TYPE_ASYM );
+        if( manApplet->settingsMgr()->useDeviceMech() )
+        {
+            sMechSignSymList = manApplet->mechMgr()->getSignList( MECH_TYPE_SYM );
+            sMechSignAsymList = manApplet->mechMgr()->getSignList( MECH_TYPE_ASYM );
+        }
+        else
+        {
+            sMechSignSymList = kMechSignSymList;
+            sMechSignAsymList = kMechSignAsymList;
+        }
     }
     else
     {
         sMechSignSymList = kMechSignSymList;
-        sMechSignAsymList = kMechSignAsymList;
+        sMechSignAsymList = kMechSignAsymNoLicenseList;
     }
 
     mKeyTypeCombo->addItems(sKeyList);
