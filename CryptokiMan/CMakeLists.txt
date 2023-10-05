@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
 project(CryptokiMan
-    VERSION 1.4.7
+    VERSION 1.4.8
     DESCRIPTION "CryptokiMan Application"
     LANGUAGES CXX )
 
@@ -188,7 +188,7 @@ set(PROJECT_SOURCES
 )
 
 find_package(Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
-set(TS_FILES i18n/cryptokiman_ko_KR.ts)
+set(TS_FILES cryptokiman_ko_KR.ts)
 qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 
 set(RESOURCE ${CMAKE_SOURCE_DIR}/cryptokiman.qrc)
@@ -199,7 +199,6 @@ add_executable(${PROJECT_NAME}
     ${RESOURCE_ADDED}
     cm.rc
     cryptokiman.icns
-    ${TS_FILES}
 )
 
 target_link_options( ${PROJECT_NAME} PRIVATE -mwindows -MD )
