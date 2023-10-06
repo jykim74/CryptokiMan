@@ -5,6 +5,7 @@
 
 #include <QFileDialog>
 #include <QDate>
+#include <QRegularExpression>
 
 #include "common.h"
 #include "man_tree_item.h"
@@ -779,7 +780,7 @@ int getDataLen( int nType, const QString strData )
 
     if( nType != DATA_STRING )
     {
-        strMsg.remove( QRegExp("[\t\r\n\\s]") );
+        strMsg.remove( QRegularExpression("[\t\r\n\\s]") );
     }
 
     if( nType == DATA_HEX )
@@ -840,12 +841,12 @@ void getBINFromString( BIN *pBin, int nType, const QString& strString )
 
     if( nType == DATA_HEX )
     {
-        srcString.remove( QRegExp("[\t\r\n\\s]") );
+        srcString.remove( QRegularExpression("[\t\r\n\\s]") );
         JS_BIN_decodeHex( srcString.toStdString().c_str(), pBin );
     }
     else if( nType == DATA_BASE64 )
     {
-        srcString.remove( QRegExp("[\t\r\n\\s]") );
+        srcString.remove( QRegularExpression("[\t\r\n\\s]") );
         JS_BIN_decodeBase64( srcString.toStdString().c_str(), pBin );
     }
     else if( nType == DATA_URL )

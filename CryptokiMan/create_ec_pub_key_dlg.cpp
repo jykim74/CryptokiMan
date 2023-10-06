@@ -570,7 +570,7 @@ void CreateECPubKeyDlg::setDefaults()
     mVerifyCombo->setCurrentIndex(1);
 
     QDateTime nowTime;
-    nowTime.setTime_t( time(NULL) );
+    nowTime.setSecsSinceEpoch( time(NULL) );
 
     mStartDateEdit->setDate( nowTime.date() );
     mEndDateEdit->setDate( nowTime.date() );

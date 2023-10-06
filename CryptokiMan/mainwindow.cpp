@@ -2237,7 +2237,7 @@ void MainWindow::log( QString strLog )
     if( nLevel < 2 ) return;
 
     QDateTime date;
-    date.setTime_t( time(NULL));
+    date.setSecsSinceEpoch( time(NULL));
     QString strMsg;
 
     strMsg = QString("[I][%1] %2\n" ).arg( date.toString( "HH:mm:ss") ).arg( strLog );
@@ -2253,7 +2253,7 @@ void MainWindow::elog( const QString strLog )
     if( nLevel < 1 ) return;
 
     QDateTime date;
-    date.setTime_t( time(NULL));
+    date.setSecsSinceEpoch( time(NULL));
     QString strMsg;
 
     strMsg = QString("[E][%1] %2\n" ).arg( date.toString( "HH:mm:ss") ).arg( strLog );
@@ -2269,7 +2269,7 @@ void MainWindow::wlog( const QString strLog )
     if( nLevel < 3 ) return;
 
     QDateTime date;
-    date.setTime_t( time(NULL));
+    date.setSecsSinceEpoch( time(NULL));
     QString strMsg;
 
     strMsg = QString("[W][%1] %2\n" ).arg( date.toString( "HH:mm:ss") ).arg( strLog );
@@ -2285,7 +2285,7 @@ void MainWindow::dlog( const QString strLog )
     if( nLevel < 4 ) return;
 
     QDateTime date;
-    date.setTime_t( time(NULL));
+    date.setSecsSinceEpoch( time(NULL));
     QString strMsg;
 
     strMsg = QString("[D][%1] %2\n" ).arg( date.toString( "HH:mm:ss") ).arg( strLog );

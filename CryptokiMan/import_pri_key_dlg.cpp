@@ -2084,7 +2084,7 @@ void ImportPriKeyDlg::setDefaults()
     mPriTokenCombo->setCurrentIndex(1);
 
     QDateTime nowTime;
-    nowTime.setTime_t( time(NULL) );
+    nowTime.setSecsSinceEpoch( time(NULL) );
 
     mPriStartDateEdit->setDate( nowTime.date() );
     mPriEndDateEdit->setDate( nowTime.date() );

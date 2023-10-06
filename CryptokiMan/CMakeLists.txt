@@ -187,12 +187,12 @@ set(PROJECT_SOURCES
     ${PROJECT_SRC} ${PROJECT_HEADER} ${PROJECT_FORM}
 )
 
-find_package(Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets LinguistTools REQUIRED)
 set(TS_FILES cryptokiman_ko_KR.ts)
-qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
+qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 
 set(RESOURCE ${CMAKE_SOURCE_DIR}/cryptokiman.qrc)
-qt5_add_resources(RESOURCE_ADDED ${RESOURCE})
+qt_add_resources(RESOURCE_ADDED ${RESOURCE})
 
 add_executable(${PROJECT_NAME}
     ${PROJECT_SOURCES}
