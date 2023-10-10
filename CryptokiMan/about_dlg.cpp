@@ -35,9 +35,9 @@ AboutDlg::AboutDlg(QWidget *parent) :
     strAbout += "<br><br>OpenSSL Version 3.0.8";
 
 #ifdef Q_OS_WIN
-    strAbout += "<br>QT Version 5.13.2";
+    strAbout += "<br>QT Version 6.5.3";
 #else
-    strAbout += "<br>QT Version 5.15.2";
+    strAbout += "<br>QT Version 6.5.3";
 #endif
 
 

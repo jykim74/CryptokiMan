@@ -187,18 +187,28 @@ set(PROJECT_SOURCES
     ${PROJECT_SRC} ${PROJECT_HEADER} ${PROJECT_FORM}
 )
 
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets LinguistTools REQUIRED)
-set(TS_FILES cryptokiman_ko_KR.ts)
-qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
+
+
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools )
+#qt_add_lupdate(${PROJECT_NAME} TS_FILES "i18n/cryptokiman_ko_KR.ts")
+#qt_add_translations( ${PROJECT_NAME} TS_FILES cryptokiman_ko_KR.ts RESOURCE_PREFIX "i18n")
+#set(TS_FILES cryptokiman_ko_KR.ts)
+#qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
+
+qt6_add_lupdate(${PROJECT_NAME} TS_FILES ${CMAKE_SOURCE_DIR}/cryptokiman_ko_KR.ts)
+#qt_add_lrelease(${PROJECT_NAME}
+#    TS_FILES cryptokiman_ko_KR.ts
+#    QM_FILES_OUTPUT_VARIABLE qm_files)
 
 set(RESOURCE ${CMAKE_SOURCE_DIR}/cryptokiman.qrc)
-qt_add_resources(RESOURCE_ADDED ${RESOURCE})
+
 
 add_executable(${PROJECT_NAME}
     ${PROJECT_SOURCES}
     ${RESOURCE_ADDED}
     cm.rc
     cryptokiman.icns
+    ${TS_FILES}
 )
 
 target_link_options( ${PROJECT_NAME} PRIVATE -mwindows -MD )
