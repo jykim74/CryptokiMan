@@ -35,6 +35,10 @@ public:
 
     void setLicense( const QString strLicense );
     QString getLicense();
+
+    void setFindMaxObjectsCount( int nCounts );
+    int getFindMaxObjectsCount();
+    int findMaxObjectsCount() { return find_max_objects_count_; };
 signals:
 
 public slots:
@@ -43,6 +47,7 @@ private:
     void initialize();
     int file_read_size_;
     bool use_device_mech_;
+    int find_max_objects_count_;
 
     Q_DISABLE_COPY(SettingsMgr)
 };

@@ -86,8 +86,9 @@ void DigestDlg::setKeyList()
 
     CK_ATTRIBUTE sTemplate[1];
     CK_ULONG uCnt = 0;
-    CK_OBJECT_HANDLE sObjects[20];
-    CK_ULONG uMaxObjCnt = 20;
+
+    CK_ULONG uMaxObjCnt = manApplet->settingsMgr()->findMaxObjectsCount();
+    CK_OBJECT_HANDLE sObjects[uMaxObjCnt];
     CK_ULONG uObjCnt = 0;
 
     CK_OBJECT_CLASS objClass = 0;

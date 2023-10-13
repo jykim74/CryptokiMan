@@ -4,8 +4,6 @@
 
 namespace  {
     const char *kBehaviorGroup = "CryptokiMan";
-    const char *kSlotID = "slotId";
-    const char *kP11LibPath = "p11LibPath";
     const char *kShowLogTab = "showLogTab";
     const char *kLogLevel = "logLevel";
     const char *kFileReadSize = "fileReadSize";
@@ -14,6 +12,7 @@ namespace  {
     const char *kMisc = "Misc";
     const char *kEmail = "email";
     const char *kLicense = "license";
+    const char *kFindMaxObjectsCount = "findMaxObjectsCount";
 }
 
 SettingsMgr::SettingsMgr( QObject *parent) : QObject (parent)
@@ -29,6 +28,7 @@ void SettingsMgr::initialize()
     getLogLevel();
     getFileReadSize();
     getUseDeviceMech();
+    getFindMaxObjectsCount();
 }
 
 void SettingsMgr::setShowLogTab( bool bVal )
@@ -177,4 +177,25 @@ QString SettingsMgr::getLicense()
     sets.endGroup();
 
     return strLicense;
+}
+
+void SettingsMgr::setFindMaxObjectsCount( int nCounts )
+{
+    QSettings sets;
+    sets.beginGroup( kBehaviorGroup );
+    sets.setValue( kFindMaxObjectsCount, nCounts );
+    sets.endGroup();
+
+    find_max_objects_count_ = nCounts;
+}
+
+int SettingsMgr::getFindMaxObjectsCount()
+{
+    QSettings sets;
+
+    sets.beginGroup( kBehaviorGroup );
+    find_max_objects_count_ = sets.value( kFindMaxObjectsCount, 10 ).toInt();
+    sets.endGroup();
+
+    return find_max_objects_count_;
 }

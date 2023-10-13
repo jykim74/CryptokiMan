@@ -43,6 +43,7 @@ void SettingsDlg::updateSettings()
         }
     }
 
+    mgr->setFindMaxObjectsCount( mFindMaxObjectsCountText->text().toInt() );
     mgr->setLogLevel( mLogLevelCombo->currentIndex() );
     mgr->setFileReadSize( mFileReadSizeText->text().toInt() );
     mgr->setUseDeviceMech( mUseDeviceMechCheck->isChecked() );
@@ -111,6 +112,7 @@ void SettingsDlg::initialize()
 
     mLogLevelCombo->addItems( kLogLevel );
     mLogLevelCombo->setCurrentIndex( mgr->getLogLevel() );
+    mFindMaxObjectsCountText->setText( QString( "%1").arg( mgr->getFindMaxObjectsCount() ) );
 
     QIntValidator *intVal = new QIntValidator( 0, 999999 );
     mFileReadSizeText->setValidator( intVal );

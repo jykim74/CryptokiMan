@@ -6,6 +6,7 @@
 #include "common.h"
 #include "man_tree_item.h"
 #include "cryptoki_api.h"
+#include "settings_mgr.h"
 
 DelObjectDlg::DelObjectDlg(QWidget *parent) :
     QDialog(parent)
@@ -141,8 +142,9 @@ void DelObjectDlg::deleteAllObj()
     CK_ATTRIBUTE sTemplate[1];
     long uCount = 0;
     CK_OBJECT_CLASS objClass = 0;
-    CK_OBJECT_HANDLE sObjects[20];
-    CK_ULONG uMaxObjCnt = 20;
+
+    CK_ULONG uMaxObjCnt = manApplet->settingsMgr()->findMaxObjectsCount();
+    CK_OBJECT_HANDLE sObjects[uMaxObjCnt];
     CK_ULONG uObjCnt = 0;
     int nDataType = -1;
 
@@ -238,8 +240,9 @@ void DelObjectDlg::objectTypeChanged( int type )
     CK_ATTRIBUTE sTemplate[1];
     long uCount = 0;
     CK_OBJECT_CLASS objClass = 0;
-    CK_OBJECT_HANDLE sObjects[20];
-    CK_ULONG uMaxObjCnt = 20;
+
+    CK_ULONG uMaxObjCnt = manApplet->settingsMgr()->findMaxObjectsCount();
+    CK_OBJECT_HANDLE sObjects[uMaxObjCnt];
     CK_ULONG uObjCnt = 0;
 
     if( type == OBJ_DATA_IDX )

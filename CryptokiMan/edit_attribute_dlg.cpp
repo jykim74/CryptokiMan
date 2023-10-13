@@ -4,6 +4,7 @@
 #include "mainwindow.h"
 #include "js_pkcs11.h"
 #include "cryptoki_api.h"
+#include "settings_mgr.h"
 
 const QStringList kTypeList = { "String", "Hex", "Base64" };
 
@@ -96,8 +97,9 @@ void EditAttributeDlg::objectTypeChanged( int type )
     CK_ATTRIBUTE sTemplate[1];
     long uCount = 0;
     CK_OBJECT_CLASS objClass = 0;
-    CK_OBJECT_HANDLE sObjects[20];
-    CK_ULONG uMaxObjCnt = 20;
+
+    CK_ULONG uMaxObjCnt = manApplet->settingsMgr()->findMaxObjectsCount();
+    CK_OBJECT_HANDLE sObjects[uMaxObjCnt];
     CK_ULONG uObjCnt = 0;
 
     mAttributeCombo->clear();
