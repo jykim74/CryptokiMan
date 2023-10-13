@@ -831,10 +831,16 @@ void DeriveKeyDlg::setSrcLabelList()
 
     uCnt = 0;
     uObjCnt = 0;
+
     objClass = CKO_PRIVATE_KEY;
     sTemplate[uCnt].type = CKA_CLASS;
     sTemplate[uCnt].pValue = &objClass;
     sTemplate[uCnt].ulValueLen = sizeof(objClass);
+    uCnt++;
+
+    sTemplate[uCnt].type = CKA_DERIVE;
+    sTemplate[uCnt].pValue = &kTrue;
+    sTemplate[uCnt].ulValueLen = sizeof(CK_BBOOL);
     uCnt++;
 
     rv = manApplet->cryptokiAPI()->FindObjectsInit( session_, sTemplate, uCnt );

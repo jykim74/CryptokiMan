@@ -195,12 +195,15 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools )
 #set(TS_FILES cryptokiman_ko_KR.ts)
 #qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 
-qt6_add_lupdate(${PROJECT_NAME} TS_FILES ${CMAKE_SOURCE_DIR}/cryptokiman_ko_KR.ts)
 #qt_add_lrelease(${PROJECT_NAME}
 #    TS_FILES cryptokiman_ko_KR.ts
 #    QM_FILES_OUTPUT_VARIABLE qm_files)
 
 set(RESOURCE ${CMAKE_SOURCE_DIR}/cryptokiman.qrc)
+qt_add_resources(RESOURCE_ADDED ${RESOURCE})
+
+#qt_add_translations(${PROJECT_NAME} TS_FILES ${CMAKE_SOURCE_DIR}/cryptokiman_ko_KR.ts )
+qt_add_lupdate(${PROJECT_NAME} TS_FILES ${CMAKE_SOURCE_DIR}/cryptokiman_ko_KR.ts )
 
 
 add_executable(${PROJECT_NAME}
