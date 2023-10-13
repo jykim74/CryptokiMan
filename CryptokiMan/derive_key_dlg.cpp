@@ -99,13 +99,20 @@ void DeriveKeyDlg::setSelectedSlot(int index)
 
 void DeriveKeyDlg::initUI()
 {
-    if( manApplet->settingsMgr()->useDeviceMech() == true )
+    if( manApplet->isLicense() == true )
     {
-        sMechDeriveList = manApplet->mechMgr()->getDeriveList();
+        if( manApplet->settingsMgr()->useDeviceMech() == true )
+        {
+            sMechDeriveList = manApplet->mechMgr()->getDeriveList();
+        }
+        else
+        {
+            sMechDeriveList = kMechDeriveList;
+        }
     }
     else
     {
-        sMechDeriveList = kMechDeriveList;
+        sMechDeriveList = kMechDeriveNoLicenseList;
     }
 
     mSrcMethodCombo->addItems(sMechDeriveList);

@@ -74,7 +74,7 @@ void WrapKeyDlg::setSelectedSlot(int index)
 
 void WrapKeyDlg::initialize()
 {
-    if( manApplet->settingsMgr()->useDeviceMech() == true )
+    if( manApplet->isLicense() == true && manApplet->settingsMgr()->useDeviceMech() == true )
     {
         sMechWrapSymList = manApplet->mechMgr()->getWrapList( MECH_TYPE_SYM );
         sMechWrapAsymList = manApplet->mechMgr()->getWrapList( MECH_TYPE_ASYM );

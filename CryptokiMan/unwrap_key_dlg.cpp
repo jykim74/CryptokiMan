@@ -63,7 +63,7 @@ UnwrapKeyDlg::~UnwrapKeyDlg()
 
 void UnwrapKeyDlg::initUI()
 {
-    if( manApplet->settingsMgr()->useDeviceMech() == true )
+    if( manApplet->isLicense() == true && manApplet->settingsMgr()->useDeviceMech() == true )
     {
         sMechUnwrapSymList = manApplet->mechMgr()->getUnwrapList( MECH_TYPE_SYM );
         sMechUnwrapAsymList = manApplet->mechMgr()->getUnwrapList( MECH_TYPE_ASYM );
