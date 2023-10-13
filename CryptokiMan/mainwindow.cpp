@@ -160,6 +160,13 @@ void MainWindow::initialize()
     dock_ = new QDockWidget( tr( "Information And Log Window" ), this );
     addDockWidget(Qt::BottomDockWidgetArea, dock_ );
     dock_->setWidget( text_tab_ );
+
+    QFont font;
+    QString strFont = manApplet->settingsMgr()->getFontFamily();
+
+    font.setFamily( strFont );
+    info_text_->setFont( font );
+    log_text_->setFont( font );
 }
 
 
@@ -3495,9 +3502,9 @@ void MainWindow::showInfoCommon( CK_OBJECT_HANDLE hObj )
         strValue = stringAttribute( nType, uAttrType, hObj);
 
         if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
-            info_w( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ) );
+            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
         else
-            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
+            info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
     }
 
     info( "------------------------------------------------------------------------\n" );
@@ -3524,7 +3531,7 @@ void MainWindow::showInfoData( CK_OBJECT_HANDLE hObj )
 
         if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
         {
-            info_w( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
+            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
         }
         else
         {
@@ -3538,14 +3545,14 @@ void MainWindow::showInfoData( CK_OBJECT_HANDLE hObj )
                 JS_BIN_decodeHex( strValue.toStdString().c_str(), &binOID );
                 JS_PKI_getStringFromOID( &binOID, sOID );
 
-                info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
-                if( sOID[0] != 0x00 ) info( QString( "%1 : %2\n" ).arg( "CKA_OBJECT_ID[String]", 30 ).arg( sOID ));
+                info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+                if( sOID[0] != 0x00 ) info( QString( "%1 : %2\n" ).arg( "CKA_OBJECT_ID[String]", kNameWidth ).arg( sOID ));
 
                 JS_BIN_reset( &binOID );
             }
             else
             {
-                info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
+                info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
             }
         }
     }
@@ -3572,9 +3579,9 @@ void MainWindow::showInfoCertCommon( CK_OBJECT_HANDLE hObj )
         strValue = stringAttribute( nType, uAttrType, hObj);
 
         if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
-            info_w( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ) );
+            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
         else
-            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
+            info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
     }
 
     info( "------------------------------------------------------------------------\n" );
@@ -3601,7 +3608,7 @@ void MainWindow::showInfoX509Cert( CK_OBJECT_HANDLE hObj )
 
         if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
         {
-            info_w( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
+            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
         }
         else
         {
@@ -3613,15 +3620,15 @@ void MainWindow::showInfoX509Cert( CK_OBJECT_HANDLE hObj )
                 JS_BIN_decodeHex( strValue.toStdString().c_str(), &binDN );
                 JS_PKI_getTextDN( &binDN, &pDN );
 
-                info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
-                if( pDN ) info( QString( "%1 : %2\n" ).arg( "CKA_SUBJECT[String]", 30 ).arg( pDN ));
+                info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+                if( pDN ) info( QString( "%1 : %2\n" ).arg( "CKA_SUBJECT[String]", kNameWidth ).arg( pDN ));
 
                 JS_BIN_reset( &binDN );
                 if( pDN ) JS_free( pDN );
             }
             else
             {
-                info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
+                info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
             }
         }
     }
@@ -3649,9 +3656,9 @@ void MainWindow::showInfoKeyCommon( CK_OBJECT_HANDLE hObj )
         strValue = stringAttribute( nType, uAttrType, hObj);
 
         if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
-            info_w( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ) );
+            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
         else
-            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
+            info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
     }
 
     info( "------------------------------------------------------------------------\n" );
@@ -3678,7 +3685,7 @@ void MainWindow::showInfoPublicKey( CK_OBJECT_HANDLE hObj )
 
         if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
         {
-            info_w( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
+            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
         }
         else
         {
@@ -3690,15 +3697,15 @@ void MainWindow::showInfoPublicKey( CK_OBJECT_HANDLE hObj )
                 JS_BIN_decodeHex( strValue.toStdString().c_str(), &binDN );
                 JS_PKI_getTextDN( &binDN, &pDN );
 
-                info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
-                if( pDN ) info( QString( "%1 : %2\n" ).arg( "CKA_SUBJECT[String]", 30 ).arg( pDN ));
+                info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+                if( pDN ) info( QString( "%1 : %2\n" ).arg( "CKA_SUBJECT[String]", kNameWidth ).arg( pDN ));
 
                 JS_BIN_reset( &binDN );
                 if( pDN ) JS_free( pDN );
             }
             else
             {
-                info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
+                info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
             }
         }
     }
@@ -3727,7 +3734,7 @@ void MainWindow::showInfoPrivateKey( CK_OBJECT_HANDLE hObj )
 
         if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
         {
-            info_w( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
+            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
         }
         else
         {
@@ -3739,15 +3746,15 @@ void MainWindow::showInfoPrivateKey( CK_OBJECT_HANDLE hObj )
                 JS_BIN_decodeHex( strValue.toStdString().c_str(), &binDN );
                 JS_PKI_getTextDN( &binDN, &pDN );
 
-                info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
-                if( pDN ) info( QString( "%1 : %2\n" ).arg( "CKA_SUBJECT[String]", 30 ).arg( pDN ));
+                info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+                if( pDN ) info( QString( "%1 : %2\n" ).arg( "CKA_SUBJECT[String]", kNameWidth ).arg( pDN ));
 
                 JS_BIN_reset( &binDN );
                 if( pDN ) JS_free( pDN );
             }
             else
             {
-                info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
+                info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
             }
         }
     }
@@ -3775,9 +3782,9 @@ void MainWindow::showInfoSecretKey( CK_OBJECT_HANDLE hObj )
         strValue = stringAttribute( nType, uAttrType, hObj);
 
         if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
-            info_w( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ) );
+            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
         else
-            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
+            info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
 
     }
 
@@ -3811,9 +3818,9 @@ void MainWindow::showInfoRSAValue( CK_OBJECT_HANDLE hObj, bool bPub )
 
         strValue = stringAttribute( nType, uAttrType, hObj);
         if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
-            info_w( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ) );
+            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
         else
-            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
+            info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
     }
 
     info( "------------------------------------------------------------------------\n" );
@@ -3838,9 +3845,9 @@ void MainWindow::showInfoDSAValue( CK_OBJECT_HANDLE hObj, bool bPub )
 
         strValue = stringAttribute( nType, uAttrType, hObj);
         if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
-            info_w( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ) );
+            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
         else
-            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
+            info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
 
     }
 
@@ -3866,9 +3873,9 @@ void MainWindow::showInfoECCValue( CK_OBJECT_HANDLE hObj, bool bPub )
 
         strValue = stringAttribute( nType, uAttrType, hObj);
         if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
-            info_w( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ) );
+            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
         else
-            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
+            info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
      }
 
     info( "------------------------------------------------------------------------\n" );
@@ -3893,9 +3900,9 @@ void MainWindow::showInfoDHValue( CK_OBJECT_HANDLE hObj, bool bPub )
 
         strValue = stringAttribute( nType, uAttrType, hObj);
         if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
-            info_w( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ) );
+            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
         else
-            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
+            info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
     }
 
     info( "------------------------------------------------------------------------\n" );
@@ -3920,9 +3927,9 @@ void MainWindow::showInfoSecretValue( CK_OBJECT_HANDLE hObj)
 
         strValue = stringAttribute( nType, uAttrType, hObj);
         if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
-            info_w( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ) );
+            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
         else
-            info( QString( "%1 : %2\n" ).arg( strName, 30 ).arg( strValue ));
+            info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
     }
 
     info( "------------------------------------------------------------------------\n" );

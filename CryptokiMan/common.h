@@ -29,6 +29,7 @@
 
 static CK_BBOOL kTrue = CK_TRUE;
 static CK_BBOOL kFalse = CK_FALSE;
+static int kNameWidth = -30;
 
 enum {
     DATA_STRING,
