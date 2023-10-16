@@ -69,8 +69,6 @@
         <file>images/dp2.png</file>
         <file>images/license.png</file>
         <file>Info.plist</file>
-        <file>qt-mac.css</file>
-        <file>qt-win.css</file>
         <file>images/copy_object.png</file>
         <file>images/log_halt.png</file>
         <file>images/log_en.png</file>

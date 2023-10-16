@@ -160,13 +160,6 @@ void MainWindow::initialize()
     dock_ = new QDockWidget( tr( "Information And Log Window" ), this );
     addDockWidget(Qt::BottomDockWidgetArea, dock_ );
     dock_->setWidget( text_tab_ );
-
-    QFont font;
-    QString strFont = manApplet->settingsMgr()->getFontFamily();
-
-    font.setFamily( strFont );
-    info_text_->setFont( font );
-    log_text_->setFont( font );
 }
 
 

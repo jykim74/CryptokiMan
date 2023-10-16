@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
     qss.open( QFile::ReadOnly );
     app.setStyleSheet(qss.readAll());
 #else
-    setQss( &app );
+//    setQss( &app );
 #endif
 
     QCommandLineParser parser;

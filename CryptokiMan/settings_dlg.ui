@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -212,11 +212,6 @@
              <width>80</width>
              <height>16777215</height>
             </size>
-           </property>
-           <property name="font">
-            <font>
-             <family>굴림체</family>
-            </font>
            </property>
           </widget>
          </item>

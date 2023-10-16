@@ -1,4 +1,5 @@
 #include <QMenu>
+#include <QFile>
 #include <QStandardItemModel>
 #include <QTreeView>
 
@@ -8,6 +9,7 @@
 #include "man_applet.h"
 #include "mainwindow.h"
 #include "cryptoki_api.h"
+#include "settings_mgr.h"
 
 ManTreeView::ManTreeView( QWidget *parent )
     : QTreeView (parent)
@@ -18,6 +20,16 @@ ManTreeView::ManTreeView( QWidget *parent )
 
     connect( this, SIGNAL(clicked(const QModelIndex&)), SLOT(onItemClicked(const QModelIndex&)));
     connect( this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
+
+    QFile qss(":/cryptokiman.qss");
+    qss.open( QFile::ReadOnly );
+    setStyleSheet(qss.readAll());
+    qss.close();
+
+    static QFont font;
+    QString strFont = manApplet->settingsMgr()->getFontFamily();
+    font.setFamily( strFont );
+    setFont(font);
 }
 
 void ManTreeView::onItemClicked( const QModelIndex& index )
