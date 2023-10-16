@@ -68,8 +68,9 @@ void LoginDlg::clickLogin()
     }
 
     int rv = -1;
-    CK_UTF8CHAR *pPin = (CK_UTF8CHAR *)mPinText->text().toUtf8().toStdString().c_str();
-    CK_ULONG uPinLen = mPinText->text().toUtf8().length();
+ //   CK_UTF8CHAR *pPin = (CK_UTF8CHAR *)mPinText->text().toUtf8().toStdString().c_str();
+    CK_UTF8CHAR *pPin = (CK_UTF8CHAR *)mPinText->text().toStdString().c_str();
+    CK_ULONG uPinLen = mPinText->text().length();
 
     if( mTypeCombo->currentText() == "SO" )
         nType = CKU_SO;
