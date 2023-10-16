@@ -489,7 +489,8 @@ int CryptokiAPI::GetAttributeValue( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE
     rv = p11_ctx_->p11FuncList->C_GetAttributeValue( hSession, hObject, pAttribute, uAttributeCnt );
     ms = timer.elapsed();
 
-    strIn = QString( "C_GetAttributeValue( SESSION_HANDLE = %1, OBJECT_HANDLE = %2 )").arg( hSession ).arg( hObject );
+    strIn = QString( "C_GetAttributeValue( SESSION_HANDLE = %1, OBJECT_HANDLE = %2, ATTRIBUTE_PTR = @0x%3 ATTRIBUTE_COUNT = %4 )")
+                .arg( hSession ).arg( hObject ).arg( (quintptr)pAttribute ).arg( uAttributeCnt );
     manApplet->dlog( strIn );
 
     logTemplate( pAttribute, uAttributeCnt );
@@ -561,7 +562,8 @@ int CryptokiAPI::SetAttributeValue( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE
     rv = p11_ctx_->p11FuncList->C_SetAttributeValue( hSession, hObject, pAttribute, uAttributeCnt );
     ms = timer.elapsed();
 
-    strIn = QString( "C_SetAttributeValue( SESSION_HANDLE = %1, OBJECT_HANDLE = %2 )").arg( hSession ).arg( hObject );
+    strIn = QString( "C_SetAttributeValue( SESSION_HANDLE = %1, OBJECT_HANDLE = %2, ATTRIBUTE_PTR = @0x%3 ATTRIBUTE_COUNT = %4 )")
+                .arg( hSession ).arg( hObject ).arg( (quintptr)pAttribute ).arg( uAttributeCnt );
     manApplet->dlog( strIn );
 
     logTemplate( pAttribute, uAttributeCnt );
