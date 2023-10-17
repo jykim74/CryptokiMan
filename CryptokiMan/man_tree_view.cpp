@@ -35,6 +35,7 @@ ManTreeView::ManTreeView( QWidget *parent )
 void ManTreeView::onItemClicked( const QModelIndex& index )
 {
     ManTreeItem *item = currentItem();
+    if( item == NULL ) return;
 
     showTypeList( item->getSlotIndex(), item->getType() );
 }
@@ -203,6 +204,8 @@ ManTreeItem* ManTreeView::currentItem()
     QModelIndex index = currentIndex();
 
     ManTreeModel *tree_model = (ManTreeModel *)model();
+    if( tree_model == NULL ) return NULL;
+
     ManTreeItem *item = (ManTreeItem *)tree_model->itemFromIndex(index);
 
     return item;

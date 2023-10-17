@@ -200,10 +200,10 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools )
 #    QM_FILES_OUTPUT_VARIABLE qm_files)
 
 set(RESOURCE ${CMAKE_SOURCE_DIR}/cryptokiman.qrc)
-qt_add_resources(RESOURCE_ADDED ${RESOURCE})
+qt5_add_resources(RESOURCE_ADDED ${RESOURCE})
 
 #qt_add_translations(${PROJECT_NAME} TS_FILES ${CMAKE_SOURCE_DIR}/cryptokiman_ko_KR.ts )
-qt_add_lupdate(${PROJECT_NAME} TS_FILES ${CMAKE_SOURCE_DIR}/cryptokiman_ko_KR.ts )
+#qt5_add_lupdate(${PROJECT_NAME} TS_FILES ${CMAKE_SOURCE_DIR}/cryptokiman_ko_KR.ts )
 
 
 add_executable(${PROJECT_NAME}
@@ -223,7 +223,7 @@ include_directories( ../../PKILib
 
 if(Debug)
     target_link_directories( ${PROJECT_NAME} PRIVATE
-    ../../build-PKILib-Desktop_Qt_6_5_3_MinGW_64_bit-Debug
+    ../../build-PKILib-Desktop_Qt_5_13_2_MinGW_64_bit-Debug
     ../../PKILib/lib/win64/debug/openssl3/lib64
     ../../PKILib/lib/win64/winsparkle/x64/Release
     "C:/msys64/mingw64/lib" )
@@ -231,7 +231,7 @@ endif()
 
 if(NOT Debug)
     target_link_directories( ${PROJECT_NAME} PRIVATE
-    ../../build-PKILib-Desktop_Qt_6_5_3_MinGW_64_bit-Release
+    ../../build-PKILib-Desktop_Qt_5_13_2_MinGW_64_bit-Release
     ../../PKILib/lib/win64/openssl3/lib64
     ../../PKILib/lib/win64/winsparkle/x64/Release
     "C:/msys64/mingw64/lib" )
