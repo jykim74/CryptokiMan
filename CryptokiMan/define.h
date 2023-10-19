@@ -190,6 +190,22 @@ static QStringList kMechGenListNoLicense = {
     "CKM_AES_KEY_GEN", "CKM_GENERIC_SECRET_KEY_GEN"
 };
 
+static QStringList kSymTypeList = {
+    "CKK_DES", "CKK_DES3", "CKK_AES", "CKK_GENERIC_SECRET"
+};
+
+static QStringList kSymTypeListNoLicense = {
+    "CKK_AES", "CKK_GENERIC_SECRET"
+};
+
+static QStringList kAsymTypeList = {
+    "CKK_RSA", "CKK_DSA", "CKK_ECDSA", "CKK_EC",
+};
+
+static QStringList kAsymTypeListNoLicense = {
+    "CKK_RSA",
+};
+
 static QStringList kDataTypeList = { "String", "Hex", "Base64" };
 static QStringList kDNTypeList = { "Text", "DER" };
 

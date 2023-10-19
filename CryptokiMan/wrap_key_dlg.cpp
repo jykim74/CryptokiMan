@@ -74,6 +74,8 @@ void WrapKeyDlg::setSelectedSlot(int index)
 
 void WrapKeyDlg::initialize()
 {
+    /* kMechWrapSymList 와 kMechWrapAsymList 는 라이선스와 상관없이 동일 함 */
+
     if( manApplet->isLicense() == true && manApplet->settingsMgr()->useDeviceMech() == true )
     {
         sMechWrapSymList = manApplet->mechMgr()->getWrapList( MECH_TYPE_SYM );

@@ -11,6 +11,8 @@
 
 static QStringList sMechUnwrapSymList;
 static QStringList sMechUnwrapAsymList;
+static QStringList sSymTypeList;
+static QStringList sAsymTypeList;
 
 static QStringList sFalseTrue = { "false", "true" };
 
@@ -19,13 +21,7 @@ static QStringList sClassList = {
 };
 
 
-static QStringList sSymTypeList = {
-    "CKK_DES", "CKK_DES3", "CKK_AES", "CKK_GENERIC_SECRET"
-};
 
-static QStringList sAsymTypeList = {
-    "CKK_RSA", "CKK_DSA", "CKK_ECDSA", "CKK_EC",
-};
 
 UnwrapKeyDlg::UnwrapKeyDlg(QWidget *parent) :
     QDialog(parent)
@@ -63,15 +59,31 @@ UnwrapKeyDlg::~UnwrapKeyDlg()
 
 void UnwrapKeyDlg::initUI()
 {
-    if( manApplet->isLicense() == true && manApplet->settingsMgr()->useDeviceMech() == true )
+    /* kMechWrapSymList 와 kMechWrapAsymList 는 라이선스와 상관없이 동일 함 */
+
+    if( manApplet->isLicense() == true )
     {
-        sMechUnwrapSymList = manApplet->mechMgr()->getUnwrapList( MECH_TYPE_SYM );
-        sMechUnwrapAsymList = manApplet->mechMgr()->getUnwrapList( MECH_TYPE_ASYM );
+        if( manApplet->settingsMgr()->useDeviceMech() == true )
+        {
+            sMechUnwrapSymList = manApplet->mechMgr()->getUnwrapList( MECH_TYPE_SYM );
+            sMechUnwrapAsymList = manApplet->mechMgr()->getUnwrapList( MECH_TYPE_ASYM );
+        }
+        else
+        {
+            sMechUnwrapSymList = kMechWrapSymList;
+            sMechUnwrapAsymList = kMechWrapAsymList;
+        }
+
+        sSymTypeList = kSymTypeList;
+        sAsymTypeList = kAsymTypeList;
     }
     else
     {
         sMechUnwrapSymList = kMechWrapSymList;
         sMechUnwrapAsymList = kMechWrapAsymList;
+
+        sSymTypeList = kSymTypeListNoLicense;
+        sAsymTypeList = kAsymTypeListNoLicense;
     }
 
     mUnwrapMechCombo->addItems(sMechUnwrapSymList);
