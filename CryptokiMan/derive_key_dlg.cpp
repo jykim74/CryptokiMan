@@ -8,7 +8,7 @@
 #include "mech_mgr.h"
 
 static QStringList sFalseTrue = { "false", "true" };
-static QStringList sParamList = { "CKD_NULL", "CKD_SHA1_KDF" };
+static QStringList sParamList = { "CKD_NULL", "CKD_SHA1_KDF", "CKD_SHA224_KDF", "CKD_SHA256_KDF", "CKD_SHA348_KDF", "CKD_SHA512_KDF" };
 
 static QStringList sMechDeriveList;
 
