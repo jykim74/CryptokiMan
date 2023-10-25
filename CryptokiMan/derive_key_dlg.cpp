@@ -638,6 +638,14 @@ void DeriveKeyDlg::setMechanism( void *pMech )
             ecdh1Param->kdf = CKD_NULL;
         else if( strParam == "CKD_SHA1_KDF" )
             ecdh1Param->kdf = CKD_SHA1_KDF;
+        else if( strParam == "CKD_SHA224_KDF" )
+            ecdh1Param->kdf = CKD_SHA224_KDF;
+        else if( strParam == "CKD_SHA256_KDF" )
+            ecdh1Param->kdf = CKD_SHA256_KDF;
+        else if( strParam == "CKD_SHA384_KDF" )
+            ecdh1Param->kdf = CKD_SHA384_KDF;
+        else if( strParam == "CKD_SHA512_KDF" )
+            ecdh1Param->kdf = CKD_SHA512_KDF;
 
         JS_BIN_decodeHex( strPubData.toStdString().c_str(), &binPubData );
         ecdh1Param->pPublicData = binPubData.pVal;
