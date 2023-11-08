@@ -718,7 +718,7 @@ void MainWindow::P11Initialize()
         return;
     }
 
-    ret = manApplet->cryptokiAPI()->GetSlotList2( CK_TRUE, sSlotList, &uSlotCnt );
+    ret = manApplet->cryptokiAPI()->GetSlotList2( CK_FALSE, sSlotList, &uSlotCnt );
 
     if( ret == 0 )
     {
