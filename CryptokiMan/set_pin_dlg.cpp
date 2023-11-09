@@ -78,6 +78,15 @@ void SetPinDlg::accept()
         return;
     }
 
+    QString strPinConf = mPinConfText->text();
+    if( strNewPin != strPinConf )
+    {
+        manApplet->warningBox( tr( "New PIN and PIN Confirm are different" ), this );
+        mPinConfText->setFocus();
+
+        return;
+    }
+
     BIN binOldPin = {0,0};
     BIN binNewPin = { 0,0 };
 

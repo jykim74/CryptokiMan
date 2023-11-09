@@ -69,6 +69,15 @@ void InitPinDlg::accept()
         return;
     }
 
+    QString strPinConf = mPinConfText->text();
+    if( strPin != strPinConf )
+    {
+        manApplet->warningBox( tr( "PIN and PIN Confirm are different" ), this );
+        mPinConfText->setFocus();
+
+        return;
+    }
+
     BIN binPin = {0,0};
     JS_BIN_set( &binPin, (unsigned char *)strPin.toStdString().c_str(), strPin.length() );
 

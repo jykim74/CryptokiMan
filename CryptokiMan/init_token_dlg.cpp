@@ -71,6 +71,15 @@ void InitTokenDlg::accept()
         return;
     }
 
+    QString strPINConf = mPinConfText->text();
+    if( strPIN != strPINConf )
+    {
+        manApplet->warningBox( tr( "PIN and PIN Confirm are different" ), this );
+        mPinConfText->setFocus();
+
+        return;
+    }
+
     QString strLabel = mLabelText->text();
     if( strLabel.isEmpty() )
     {
