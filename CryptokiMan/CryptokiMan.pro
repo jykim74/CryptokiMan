@@ -18,7 +18,7 @@ PROJECT_VERSION = "1.4.9"
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
 DEFINES += CRYPTOKIMAN_VERSION=$$PROJECT_VERSION
-DEFINES += _AUTO_UPDATE
+
 
 # You can also make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -191,6 +191,7 @@ TRANSLATIONS += i18n/cryptokiman_ko_KR.ts
 INCLUDEPATH += "../../PKILib"
 
 mac {
+    DEFINES += _AUTO_UPDATE
     QMAKE_INFO_PLIST = info.plist
     ICON = cryptokiman.icns
 
@@ -222,6 +223,7 @@ mac {
 }
 
 win32 {
+    DEFINES += _AUTO_UPDATE
     RC_ICONS = cryptokiman.ico
 
     contains(QT_ARCH, i386) {
