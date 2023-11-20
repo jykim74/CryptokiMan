@@ -246,14 +246,14 @@ void MainWindow::createActions()
     moduleToolBar->layout()->setSpacing(0);
 #endif
 
-    const QIcon initIcon = QIcon::fromTheme("document-init", QIcon(":/images/init.png"));
+    const QIcon initIcon = QIcon::fromTheme("init", QIcon(":/images/init.png"));
     QAction *initAct = new QAction( initIcon, tr("P11Initialize"), this );
     connect( initAct, &QAction::triggered, this, &MainWindow::P11Initialize );
     initAct->setStatusTip(tr("PKCS11 initialize"));
     moduleMenu->addAction( initAct );
     moduleToolBar->addAction( initAct );
 
-    const QIcon finalIcon = QIcon::fromTheme("document-final", QIcon(":/images/final.png"));
+    const QIcon finalIcon = QIcon::fromTheme("final", QIcon(":/images/final.png"));
     QAction *finalAct = new QAction( finalIcon, tr("P11Finalize"), this );
     connect( finalAct, &QAction::triggered, this, &MainWindow::P11Finalize );
     finalAct->setStatusTip(tr("PKCS11 finalize"));
@@ -488,7 +488,7 @@ void MainWindow::createActions()
         toolsMenu->addAction( initTokenAct );
 //      toolsToolBar->addAction( initTokenAct );
 
-        const QIcon operIcon = QIcon::fromTheme( "document-operation", QIcon(":/images/operation.png"));
+        const QIcon operIcon = QIcon::fromTheme( "operation1", QIcon(":/images/operation.png"));
         QAction *operStateAct = new QAction( operIcon, tr("OperationState"), this );
         connect( operStateAct, &QAction::triggered, this, &MainWindow::operationState );
         operStateAct->setStatusTip( tr( "Operation state tool" ));

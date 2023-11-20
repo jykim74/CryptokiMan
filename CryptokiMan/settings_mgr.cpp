@@ -130,12 +130,13 @@ QString SettingsMgr::getFontFamily()
 
 #ifdef Q_OS_MAC
     QString strDefault = "Monaco";
-#elif Q_OS_LINUX
-    QString strDefault = "Monospaced";
+#else
+#ifdef Q_OS_LINUX
+    QString strDefault = "Monospace";
 #else
     QString strDefault = "Consolas";
 #endif
-
+#endif
     sets.beginGroup( kBehaviorGroup );
     QString strFamily = sets.value( kFontFamily, strDefault ).toString();
     sets.endGroup();
