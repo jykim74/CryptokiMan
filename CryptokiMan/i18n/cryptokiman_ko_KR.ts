@@ -4039,7 +4039,7 @@ Do you want to delete the file and continue?</source>
     <message>
         <location filename="../init_pin_dlg.ui" line="299"/>
         <source>PIN Confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>PIN 확인</translation>
     </message>
     <message>
         <location filename="../init_pin_dlg.ui" line="31"/>
@@ -4059,7 +4059,7 @@ Do you want to delete the file and continue?</source>
     <message>
         <location filename="../init_pin_dlg.cpp" line="75"/>
         <source>PIN and PIN Confirm are different</source>
-        <translation type="unfinished"></translation>
+        <translation>PIN 과 PIN 확인이 다릅니다</translation>
     </message>
     <message>
         <location filename="../init_pin_dlg.cpp" line="88"/>
@@ -4112,7 +4112,7 @@ Do you want to delete the file and continue?</source>
     <message>
         <location filename="../init_token_dlg.ui" line="313"/>
         <source>PIN Confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>PIN 확인</translation>
     </message>
     <message>
         <location filename="../init_token_dlg.ui" line="57"/>
@@ -4132,7 +4132,7 @@ Do you want to delete the file and continue?</source>
     <message>
         <location filename="../init_token_dlg.cpp" line="77"/>
         <source>PIN and PIN Confirm are different</source>
-        <translation type="unfinished"></translation>
+        <translation>PIN 과 PIN 확인이 다릅니다</translation>
     </message>
     <message>
         <location filename="../init_token_dlg.cpp" line="86"/>
@@ -5894,7 +5894,7 @@ Do you want to delete the file and continue?</source>
     <message>
         <location filename="../set_pin_dlg.ui" line="332"/>
         <source>Pin Confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>PIN 확인</translation>
     </message>
     <message>
         <location filename="../set_pin_dlg.ui" line="286"/>
@@ -5939,7 +5939,7 @@ Do you want to delete the file and continue?</source>
     <message>
         <location filename="../set_pin_dlg.cpp" line="84"/>
         <source>New PIN and PIN Confirm are different</source>
-        <translation type="unfinished"></translation>
+        <translation>새로운 PIN 과 PIN 확인이 다릅니다</translation>
     </message>
     <message>
         <location filename="../set_pin_dlg.cpp" line="101"/>
