@@ -18,6 +18,8 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationDomain( "jssoft.com" );
     QCoreApplication::setApplicationName( "CryptokiMan" );
 
+    QGuiApplication::setWindowIcon(QIcon(":/images/cryptokiman.png"));
+
     QCommandLineParser parser;
     parser.setApplicationDescription( QCoreApplication::applicationName() );
     parser.addHelpOption();
