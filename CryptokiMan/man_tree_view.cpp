@@ -46,7 +46,7 @@ int ManTreeView::currentSlotIndex()
     return item->getSlotIndex();
 }
 
-int ManTreeView::showTypeList( int nSlotIndex, int nType )
+void ManTreeView::showTypeList( int nSlotIndex, int nType )
 {
     ulong hObject = -1;
     manApplet->mainWindow()->setRightType( nType );

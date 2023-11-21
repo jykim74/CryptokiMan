@@ -18,7 +18,7 @@ private slots:
     void showContextMenu( QPoint point );
 
 public slots:
-    int showTypeList( int nSlotIndex, int nType );
+    void showTypeList( int nSlotIndex, int nType );
 
 private:
     ManTreeItem* currentItem();
