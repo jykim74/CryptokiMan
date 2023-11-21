@@ -24,7 +24,6 @@ private slots:
 #endif
 
 private:
-//    Ui::AboutDlg *ui;
     Q_DISABLE_COPY(AboutDlg)
     QString version_label_;
     QString getBuild();
