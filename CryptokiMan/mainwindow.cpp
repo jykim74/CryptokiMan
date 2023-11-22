@@ -657,9 +657,16 @@ void MainWindow::open()
 
 void MainWindow::openRecent()
 {
+    int ret = 0;
     QAction *action = qobject_cast<QAction *>(sender());
     if( action )
-        openLibrary( action->data().toString() );
+    {
+        ret = openLibrary( action->data().toString() );
+        if( ret != 0 ) return;
+
+        manApplet->setLibPath( action->data().toString() );
+        manApplet->log( QString("Cryptoki open successfully[%1]").arg( action->data().toString() ) );
+    }
 }
 
 void MainWindow::quit()
