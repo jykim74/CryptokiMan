@@ -615,7 +615,7 @@ void CreateDSAPriKeyDlg::setDefaults()
 
     mUseSKICheck->setChecked(true);
     clickUseSKI();
-    mUseSPKICheck->click();
+//    mUseSPKICheck->click();
 
     mPrivateCheck->setChecked(true);
     mPrivateCombo->setEnabled(true);

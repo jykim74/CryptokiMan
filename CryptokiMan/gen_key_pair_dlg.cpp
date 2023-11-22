@@ -11,7 +11,7 @@
 #include "settings_mgr.h"
 
 static QStringList sMechGenKeyPairList;
-static QStringList sRSAOptionList = { "1024", "2048", "3096", "4082" };
+static QStringList sRSAOptionList = { "1024", "2048", "3072", "4096" };
 static QStringList sDHOptionList = { "512", "1024", "2048" };
 static QStringList sDH_GList = { "02", "05" };
 
@@ -82,7 +82,7 @@ void GenKeyPairDlg::initUI()
     mMechCombo->addItems( sMechGenKeyPairList );
 
     mOptionCombo->addItems( sRSAOptionList );
-    mOptionCombo->setEditable( true );
+//    mOptionCombo->setEditable( true );
 
     mDH_GCombo->addItems( sDH_GList );
     mParamTab->setDisabled(true);
@@ -1028,7 +1028,7 @@ void GenKeyPairDlg::setDefaults()
     mPubUseSKICheck->setChecked(true);
     clickPubUseSKI();
 
-    mPriUseSPKICheck->click();
+//    mPriUseSPKICheck->click();
 
     mPubEncryptCheck->setChecked(true);
     mPubEncryptCombo->setEnabled(true);

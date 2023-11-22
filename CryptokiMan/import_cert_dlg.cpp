@@ -408,7 +408,7 @@ void ImportCertDlg::setDefaults()
 {
     mUseSKICheck->setChecked(true);
     clickUseSKI();
-    mUseSPKICheck->click();
+//    mUseSPKICheck->click();
 
     mLabelText->setText( "certificate label" );
     mIDText->setText( "01020304" );

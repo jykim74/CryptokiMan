@@ -2042,7 +2042,7 @@ void ImportPriKeyDlg::setDefaults()
     mPriUseSKICheck->setChecked(true);
     clickPriUseSKI();
 
-    mPriUseSPKICheck->click();
+//    mPriUseSPKICheck->click();
 
     mPubUseSKICheck->setChecked(true);
     clickPubUseSKI();
