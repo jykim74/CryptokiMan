@@ -130,7 +130,7 @@ static QStringList kMechEncSymNoLicenseList = {
 };
 
 static QStringList kMechEncAsymList = {
-    "CKM_RSA_PKCS"
+    "CKM_RSA_PKCS", "CKM_RSA_PKCS_OAEP"
 };
 
 static QStringList kMechSignAsymList = {
