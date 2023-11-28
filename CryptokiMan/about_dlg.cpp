@@ -14,7 +14,11 @@ AboutDlg::AboutDlg(QWidget *parent) :
 
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(close()));
 
-    version_label_ = tr( "About %1 [Ver %2]").arg( "CryptokiMan").arg(STRINGIZE(CRYPTOKIMAN_VERSION));
+    if( manApplet->isLicense() )
+        version_label_ = tr( "%1 [Ver %2]").arg(manApplet->getBrand()).arg(STRINGIZE(CRYPTOKIMAN_VERSION));
+    else
+        version_label_ = tr( "%1 (Unlicensed Version) [Ver %2]").arg(manApplet->getBrand()).arg(STRINGIZE(CRYPTOKIMAN_VERSION));
+
     mVersionLabel->setText( version_label_ );
 
 

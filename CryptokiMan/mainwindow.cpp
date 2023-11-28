@@ -2319,8 +2319,14 @@ void MainWindow::write( const QString strLog, QColor cr )
 
 void MainWindow::setTitle(const QString strName)
 {
-    QString strWinTitle = QString( "%1 - %2").arg( manApplet->getBrand() ).arg( strName );
-    setWindowTitle(strWinTitle);
+    QString strTitle;
+
+    if( manApplet->isLicense() )
+        strTitle = QString( "%1 - %2" ).arg( manApplet->getBrand() ).arg( strName );
+    else
+        strTitle = QString( "%1 (Unlicensed Version) - %2" ).arg( manApplet->getBrand() ).arg( strName );
+
+    setWindowTitle( strTitle );
 }
 
 void MainWindow::removeAllRightTable()
