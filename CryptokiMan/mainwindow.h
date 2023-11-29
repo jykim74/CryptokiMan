@@ -136,7 +136,7 @@ public slots:
     void bugIssueReport();
     void qnaDiscussion();
     void about();
-    void logView( bool bShow = true );
+    void useLog( bool bEnable = true );
     void settings();
     void operationState();
     void logClear();

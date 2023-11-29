@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -32,9 +32,9 @@
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="mShowLogTabCheck">
+        <widget class="QCheckBox" name="mUseLogTabCheck">
          <property name="text">
-          <string>Show log view tab at startup</string>
+          <string>Use log tab at startup</string>
          </property>
         </widget>
        </item>
@@ -267,7 +267,7 @@
  <tabstops>
   <tabstop>tabWidget</tabstop>
   <tabstop>mCheckLatestVersionCheck</tabstop>
-  <tabstop>mShowLogTabCheck</tabstop>
+  <tabstop>mUseLogTabCheck</tabstop>
   <tabstop>mUseDeviceMechCheck</tabstop>
   <tabstop>mFontFamilyCombo</tabstop>
   <tabstop>mLangCombo</tabstop>

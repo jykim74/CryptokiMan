@@ -33,8 +33,8 @@ void SettingsDlg::updateSettings()
 
     if( manApplet->isLicense() )
     {
-        mgr->setShowLogTab( mShowLogTabCheck->checkState() == Qt::Checked );
-        manApplet->mainWindow()->logView( mShowLogTabCheck->checkState() == Qt::Checked );
+        mgr->setUseLogTab( mUseLogTabCheck->checkState() == Qt::Checked );
+        manApplet->mainWindow()->useLog( mUseLogTabCheck->checkState() == Qt::Checked );
 
         if( mUseDeviceMechCheck->isChecked() )
         {
@@ -90,17 +90,17 @@ void SettingsDlg::initialize()
 
     if( manApplet->isLicense() )
     {
-        state = mgr->showLogTab() ? Qt::Checked : Qt::Unchecked;
-        mShowLogTabCheck->setCheckState(state);
+        state = mgr->getUseLogTab() ? Qt::Checked : Qt::Unchecked;
+        mUseLogTabCheck->setCheckState(state);
     }
     else
     {
-        mShowLogTabCheck->hide();
-        mUseDeviceMechCheck->hide();
+        mUseLogTabCheck->setEnabled(false);
+        mUseDeviceMechCheck->setEnabled(false);
         mgr->setUseDeviceMech(false);
-        mgr->setShowLogTab(false);
-        mFileReadSizeGroup->hide();
-        mLogLevelGroup->hide();
+        mgr->setUseLogTab(false);
+        mFileReadSizeGroup->setEnabled(false);
+        mLogLevelGroup->setEnabled(false);
     }
 
 #ifdef _AUTO_UPDATE

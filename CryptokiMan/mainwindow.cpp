@@ -136,6 +136,12 @@ void MainWindow::initialize()
     text_tab_ = new QTabWidget;
     text_tab_->setTabPosition( QTabWidget::South );
     text_tab_->addTab( info_text_, tr("information") );
+    text_tab_->addTab( log_text_, tr( "Log" ));
+
+    if( manApplet->isLicense() == false )
+    {
+        text_tab_->setTabEnabled( 1, false );
+    }
 
     right_table_->setSelectionBehavior(QAbstractItemView::SelectRows);
     right_table_->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -343,35 +349,36 @@ void MainWindow::createActions()
     objectsMenu->addAction( createRSAPriKeyAct );
 //    objectsToolBar->addAction( createRSAPriKeyAct );
 
-    if( manApplet->isLicense() )
+    const QIcon ep1Icon = QIcon::fromTheme("EC-Public", QIcon(":/images/ep1.png"));
+    QAction *createECPubKeyAct = new QAction( ep1Icon, tr("Create EC Public Key"), this);
+    connect( createECPubKeyAct, &QAction::triggered, this, &MainWindow::createECPublicKey);
+    createECPubKeyAct->setStatusTip(tr("PKCS11 Create EC Public key"));
+    objectsMenu->addAction( createECPubKeyAct );
+
+    const QIcon ep2Icon = QIcon::fromTheme("EC-Private", QIcon(":/images/ep2.png"));
+    QAction *createECPriKeyAct = new QAction( ep2Icon, tr("Create EC Private Key"), this);
+    connect( createECPriKeyAct, &QAction::triggered, this, &MainWindow::createECPrivateKey);
+    createECPriKeyAct->setStatusTip(tr("PKCS11 Create EC Private key"));
+    objectsMenu->addAction( createECPriKeyAct );
+
+    const QIcon dp1Icon = QIcon::fromTheme("DSA-Public", QIcon(":/images/dp1.png"));
+    QAction *createDSAPubKeyAct = new QAction( dp1Icon, tr("Create DSA Public Key"), this);
+    connect( createDSAPubKeyAct, &QAction::triggered, this, &MainWindow::createDSAPublicKey);
+    createDSAPubKeyAct->setStatusTip(tr("PKCS11 Create DSA Public key"));
+    objectsMenu->addAction( createDSAPubKeyAct );
+
+    const QIcon dp2Icon = QIcon::fromTheme("DSA-Private", QIcon(":/images/dp2.png"));
+    QAction *createDSAPriKeyAct = new QAction( dp2Icon, tr("Create DSA Private Key"), this);
+    connect( createDSAPriKeyAct, &QAction::triggered, this, &MainWindow::createDSAPrivateKey);
+    createDSAPriKeyAct->setStatusTip(tr("PKCS11 Create DSA Private key"));
+    objectsMenu->addAction( createDSAPriKeyAct );
+
+    if( manApplet->isLicense() == false )
     {
-        const QIcon ep1Icon = QIcon::fromTheme("EC-Public", QIcon(":/images/ep1.png"));
-        QAction *createECPubKeyAct = new QAction( ep1Icon, tr("Create EC Public Key"), this);
-        connect( createECPubKeyAct, &QAction::triggered, this, &MainWindow::createECPublicKey);
-        createECPubKeyAct->setStatusTip(tr("PKCS11 Create EC Public key"));
-        objectsMenu->addAction( createECPubKeyAct );
-//      objectsToolBar->addAction( createECPubKeyAct );
-
-        const QIcon ep2Icon = QIcon::fromTheme("EC-Private", QIcon(":/images/ep2.png"));
-        QAction *createECPriKeyAct = new QAction( ep2Icon, tr("Create EC Private Key"), this);
-        connect( createECPriKeyAct, &QAction::triggered, this, &MainWindow::createECPrivateKey);
-        createECPriKeyAct->setStatusTip(tr("PKCS11 Create EC Private key"));
-        objectsMenu->addAction( createECPriKeyAct );
-//      objectsToolBar->addAction( createECPriKeyAct );
-
-        const QIcon dp1Icon = QIcon::fromTheme("DSA-Public", QIcon(":/images/dp1.png"));
-        QAction *createDSAPubKeyAct = new QAction( dp1Icon, tr("Create DSA Public Key"), this);
-        connect( createDSAPubKeyAct, &QAction::triggered, this, &MainWindow::createDSAPublicKey);
-        createDSAPubKeyAct->setStatusTip(tr("PKCS11 Create DSA Public key"));
-        objectsMenu->addAction( createDSAPubKeyAct );
-//      objectsToolBar->addAction( createDSAPubKeyAct );
-
-        const QIcon dp2Icon = QIcon::fromTheme("DSA-Private", QIcon(":/images/dp2.png"));
-        QAction *createDSAPriKeyAct = new QAction( dp2Icon, tr("Create DSA Private Key"), this);
-        connect( createDSAPriKeyAct, &QAction::triggered, this, &MainWindow::createDSAPrivateKey);
-        createDSAPriKeyAct->setStatusTip(tr("PKCS11 Create DSA Private key"));
-        objectsMenu->addAction( createDSAPriKeyAct );
-//      objectsToolBar->addAction( createDSAPriKeyAct );
+        createECPubKeyAct->setEnabled( false );
+        createECPriKeyAct->setEnabled( false );
+        createDSAPubKeyAct->setEnabled( false );
+        createDSAPriKeyAct->setEnabled( false );
     }
 
     const QIcon keyGenIcon = QIcon::fromTheme("KeyGen", QIcon(":/images/key_gen.png"));
@@ -453,84 +460,92 @@ void MainWindow::createActions()
     cryptMenu->addAction( decryptAct );
     cryptToolBar->addAction( decryptAct );
 
-    if( manApplet->isLicense() )
-    {
-        QMenu *importMenu = menuBar()->addMenu(tr("&Import"));
 
-        const QIcon certIcon = QIcon::fromTheme("cert", QIcon(":/images/cert.png"));
-        QAction *importCertAct = new QAction( certIcon, tr("Import certificate"), this);
-        connect( importCertAct, &QAction::triggered, this, &MainWindow::importCert);
-        importCertAct->setStatusTip(tr("PKCS11 import certificate"));
-        importMenu->addAction( importCertAct );
+    QMenu *importMenu = menuBar()->addMenu(tr("&Import"));
 
-        const QIcon pfxIcon = QIcon::fromTheme("PFX", QIcon(":/images/pfx.png"));
-        QAction *importPFXAct = new QAction( pfxIcon, tr("Import PFX"), this);
-        connect( importPFXAct, &QAction::triggered, this, &MainWindow::importPFX);
-        importPFXAct->setStatusTip(tr("PKCS11 import PFX"));
-        importMenu->addAction( importPFXAct );
+    const QIcon certIcon = QIcon::fromTheme("cert", QIcon(":/images/cert.png"));
+    QAction *importCertAct = new QAction( certIcon, tr("Import certificate"), this);
+    connect( importCertAct, &QAction::triggered, this, &MainWindow::importCert);
+    importCertAct->setStatusTip(tr("PKCS11 import certificate"));
+    importMenu->addAction( importCertAct );
 
-        const QIcon priKeyIcon = QIcon::fromTheme("PrivateKey", QIcon(":/images/prikey.png"));
-        QAction *importPriKeyAct = new QAction( priKeyIcon, tr("Import Private Key"), this);
-        connect( importPriKeyAct, &QAction::triggered, this, &MainWindow::improtPrivateKey);
-        importPriKeyAct->setStatusTip(tr("PKCS11 import private key"));
-        importMenu->addAction( importPriKeyAct );
+    const QIcon pfxIcon = QIcon::fromTheme("PFX", QIcon(":/images/pfx.png"));
+    QAction *importPFXAct = new QAction( pfxIcon, tr("Import PFX"), this);
+    connect( importPFXAct, &QAction::triggered, this, &MainWindow::importPFX);
+    importPFXAct->setStatusTip(tr("PKCS11 import PFX"));
+    importMenu->addAction( importPFXAct );
 
-        QMenu *toolsMenu = menuBar()->addMenu(tr("&Tools"));
-        QToolBar *toolsToolBar = addToolBar(tr("Tools"));
+    const QIcon priKeyIcon = QIcon::fromTheme("PrivateKey", QIcon(":/images/prikey.png"));
+    QAction *importPriKeyAct = new QAction( priKeyIcon, tr("Import Private Key"), this);
+    connect( importPriKeyAct, &QAction::triggered, this, &MainWindow::improtPrivateKey);
+    importPriKeyAct->setStatusTip(tr("PKCS11 import private key"));
+    importMenu->addAction( importPriKeyAct );
+
+    QMenu *toolsMenu = menuBar()->addMenu(tr("&Tools"));
+    QToolBar *toolsToolBar = addToolBar(tr("Tools"));
 
 #ifdef Q_OS_MAC
-        toolsToolBar->setIconSize( QSize(24,24));
-        toolsToolBar->layout()->setSpacing(0);
+    toolsToolBar->setIconSize( QSize(24,24));
+    toolsToolBar->layout()->setSpacing(0);
 #endif
 
-        const QIcon tokenIcon = QIcon::fromTheme("token", QIcon(":/images/token.png"));
-        QAction *initTokenAct = new QAction( tokenIcon, tr("Initialize Token"), this);
-        connect( initTokenAct, &QAction::triggered, this, &MainWindow::initToken);
-        initTokenAct->setStatusTip(tr("PKCS11 Initialize token"));
-        toolsMenu->addAction( initTokenAct );
-//      toolsToolBar->addAction( initTokenAct );
+    const QIcon tokenIcon = QIcon::fromTheme("token", QIcon(":/images/token.png"));
+    QAction *initTokenAct = new QAction( tokenIcon, tr("Initialize Token"), this);
+    connect( initTokenAct, &QAction::triggered, this, &MainWindow::initToken);
+    initTokenAct->setStatusTip(tr("PKCS11 Initialize token"));
+    toolsMenu->addAction( initTokenAct );
 
-        const QIcon operIcon = QIcon::fromTheme( "operation1", QIcon(":/images/operation.png"));
-        QAction *operStateAct = new QAction( operIcon, tr("OperationState"), this );
-        connect( operStateAct, &QAction::triggered, this, &MainWindow::operationState );
-        operStateAct->setStatusTip( tr( "Operation state tool" ));
-        toolsMenu->addAction( operStateAct );
-        toolsToolBar->addAction( operStateAct );
+    const QIcon operIcon = QIcon::fromTheme( "operation1", QIcon(":/images/operation.png"));
+    QAction *operStateAct = new QAction( operIcon, tr("OperationState"), this );
+    connect( operStateAct, &QAction::triggered, this, &MainWindow::operationState );
+    operStateAct->setStatusTip( tr( "Operation state tool" ));
+    toolsMenu->addAction( operStateAct );
+    toolsToolBar->addAction( operStateAct );
 
-        const QIcon pin1Icon = QIcon::fromTheme("Set PIN", QIcon(":/images/pin1.png"));
-        QAction *setPinAct = new QAction( pin1Icon, tr("Set PIN"), this);
-        connect( setPinAct, &QAction::triggered, this, &MainWindow::setPin);
-        setPinAct->setStatusTip(tr("PKCS11 set PIN"));
-        toolsMenu->addAction( setPinAct );
-//      toolsToolBar->addAction( setPinAct );
+    const QIcon pin1Icon = QIcon::fromTheme("Set PIN", QIcon(":/images/pin1.png"));
+    QAction *setPinAct = new QAction( pin1Icon, tr("Set PIN"), this);
+    connect( setPinAct, &QAction::triggered, this, &MainWindow::setPin);
+    setPinAct->setStatusTip(tr("PKCS11 set PIN"));
+    toolsMenu->addAction( setPinAct );
 
-        const QIcon pin2Icon = QIcon::fromTheme("Init PIN", QIcon(":/images/pin2.png"));
-        QAction *initPinAct = new QAction( pin2Icon, tr("Init PIN"), this);
-        connect( initPinAct, &QAction::triggered, this, &MainWindow::initPin);
-        initPinAct->setStatusTip(tr("PKCS11 init PIN"));
-        toolsMenu->addAction( initPinAct );
-//      toolsToolBar->addAction( initPinAct );
+    const QIcon pin2Icon = QIcon::fromTheme("Init PIN", QIcon(":/images/pin2.png"));
+    QAction *initPinAct = new QAction( pin2Icon, tr("Init PIN"), this);
+    connect( initPinAct, &QAction::triggered, this, &MainWindow::initPin);
+    initPinAct->setStatusTip(tr("PKCS11 init PIN"));
+    toolsMenu->addAction( initPinAct );
 
-        const QIcon wkIcon = QIcon::fromTheme("WrapKey", QIcon(":/images/wk.png"));
-        QAction *wrapKeyAct = new QAction( wkIcon, tr("Wrap Key"), this);
-        connect( wrapKeyAct, &QAction::triggered, this, &MainWindow::wrapKey);
-        wrapKeyAct->setStatusTip(tr("PKCS11 wrap key"));
-        toolsMenu->addAction( wrapKeyAct );
-//      toolsToolBar->addAction( wrapKeyAct );
+    const QIcon wkIcon = QIcon::fromTheme("WrapKey", QIcon(":/images/wk.png"));
+    QAction *wrapKeyAct = new QAction( wkIcon, tr("Wrap Key"), this);
+    connect( wrapKeyAct, &QAction::triggered, this, &MainWindow::wrapKey);
+    wrapKeyAct->setStatusTip(tr("PKCS11 wrap key"));
+    toolsMenu->addAction( wrapKeyAct );
 
-        const QIcon ukIcon = QIcon::fromTheme("UnwrapKey", QIcon(":/images/uk.png"));
-        QAction *unwrapKeyAct = new QAction( ukIcon, tr("Unwrap Key"), this);
-        connect( unwrapKeyAct, &QAction::triggered, this, &MainWindow::unwrapKey);
-        unwrapKeyAct->setStatusTip(tr("PKCS11 unwrap key"));
-        toolsMenu->addAction( unwrapKeyAct );
-//      toolsToolBar->addAction( unwrapKeyAct );
+    const QIcon ukIcon = QIcon::fromTheme("UnwrapKey", QIcon(":/images/uk.png"));
+    QAction *unwrapKeyAct = new QAction( ukIcon, tr("Unwrap Key"), this);
+    connect( unwrapKeyAct, &QAction::triggered, this, &MainWindow::unwrapKey);
+    unwrapKeyAct->setStatusTip(tr("PKCS11 unwrap key"));
+    toolsMenu->addAction( unwrapKeyAct );
 
-        const QIcon dkIcon = QIcon::fromTheme("DeriveKey", QIcon(":/images/dk.png"));
-        QAction *deriveKeyAct = new QAction( dkIcon, tr("Derive Key"), this);
-        connect( deriveKeyAct, &QAction::triggered, this, &MainWindow::deriveKey);
-        deriveKeyAct->setStatusTip(tr("PKCS11 derive key"));
-        toolsMenu->addAction( deriveKeyAct );
-//      toolsToolBar->addAction( deriveKeyAct );
+    const QIcon dkIcon = QIcon::fromTheme("DeriveKey", QIcon(":/images/dk.png"));
+    QAction *deriveKeyAct = new QAction( dkIcon, tr("Derive Key"), this);
+    connect( deriveKeyAct, &QAction::triggered, this, &MainWindow::deriveKey);
+    deriveKeyAct->setStatusTip(tr("PKCS11 derive key"));
+    toolsMenu->addAction( deriveKeyAct );
+
+    if( manApplet->isLicense() == false )
+    {
+        importCertAct->setEnabled( false );
+        importPFXAct->setEnabled( false );
+        importPriKeyAct->setEnabled( false );
+
+        initTokenAct->setEnabled( false );
+        operStateAct->setEnabled( false );
+        setPinAct->setEnabled( false );
+        initPinAct->setEnabled( false );
+
+        wrapKeyAct->setEnabled( false );
+        unwrapKeyAct->setEnabled( false );
+        deriveKeyAct->setEnabled( false );
     }
 
     QMenu *helpMenu = menuBar()->addMenu(tr("&Help"));
@@ -1679,18 +1694,9 @@ void MainWindow::about()
     aboutDlg.exec();
 }
 
-void MainWindow::logView( bool bShow )
+void MainWindow::useLog( bool bEnable )
 {
-    if( bShow == true )
-    {
-        if( text_tab_->count() <= 1 )
-            text_tab_->addTab( log_text_, tr("log") );
-    }
-    else
-    {
-        if( text_tab_->count() == 2 )
-            text_tab_->removeTab(1);
-    }
+    text_tab_->setTabEnabled( 1, bEnable );
 }
 
 void MainWindow::initToken()
@@ -2241,7 +2247,8 @@ void MainWindow::info_w( QString strInfo )
 void MainWindow::log( QString strLog )
 {
     if( log_halt_ == true ) return;
-    if( text_tab_->count() <= 1 ) return;
+//    if( text_tab_->count() <= 1 ) return;
+    if( text_tab_->isTabEnabled( 1 ) == false ) return;
 
     int nLevel = manApplet->settingsMgr()->logLevel();
     if( nLevel < 2 ) return;

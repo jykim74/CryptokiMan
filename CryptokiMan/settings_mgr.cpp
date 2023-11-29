@@ -4,7 +4,7 @@
 
 namespace  {
     const char *kBehaviorGroup = "CryptokiMan";
-    const char *kShowLogTab = "showLogTab";
+    const char *kUseLogTab = "useLogTab";
     const char *kLogLevel = "logLevel";
     const char *kFileReadSize = "fileReadSize";
     const char *kUseDeviceMech = "useDeviceMech";
@@ -31,23 +31,23 @@ void SettingsMgr::initialize()
     getFindMaxObjectsCount();
 }
 
-void SettingsMgr::setShowLogTab( bool bVal )
+void SettingsMgr::setUseLogTab( bool bVal )
 {
     QSettings settings;
 
     settings.beginGroup( kBehaviorGroup );
-    settings.setValue( kShowLogTab, bVal );
+    settings.setValue( kUseLogTab, bVal );
     settings.endGroup();
 }
 
-bool SettingsMgr::showLogTab()
+bool SettingsMgr::getUseLogTab()
 {
     QSettings settings;
 
     bool val;
 
     settings.beginGroup(kBehaviorGroup);
-    val = settings.value( kShowLogTab, false).toBool();
+    val = settings.value( kUseLogTab, false).toBool();
     settings.endGroup();
 
     return val;

@@ -96,11 +96,15 @@ void ManTreeView::showContextMenu( QPoint point )
     }
     else if( item->getType() == HM_ITEM_TYPE_TOKEN )
     {
-        if( manApplet->isLicense() )
+        QAction* pInitTokenAct = menu.addAction( tr("InitializeToken"), manApplet->mainWindow(), &MainWindow::initToken );
+        QAction* pInitPinAct = menu.addAction( tr("InitPin"), manApplet->mainWindow(), &MainWindow::initPin );
+        QAction* pSetPinAct = menu.addAction( tr("SetPin"), manApplet->mainWindow(), &MainWindow::setPin );
+
+        if( manApplet->isLicense() == false )
         {
-            menu.addAction( tr("InitializeToken"), manApplet->mainWindow(), &MainWindow::initToken );
-            menu.addAction( tr("InitPin"), manApplet->mainWindow(), &MainWindow::initPin );
-            menu.addAction( tr("SetPin"), manApplet->mainWindow(), &MainWindow::setPin );
+            pInitTokenAct->setEnabled( false );
+            pInitPinAct->setEnabled( false );
+            pSetPinAct->setEnabled( false );
         }
 
         menu.addAction( tr("Digest"), manApplet->mainWindow(), &MainWindow::digest );
@@ -125,11 +129,15 @@ void ManTreeView::showContextMenu( QPoint point )
         menu.addAction( tr("CreateECPrivateKey"), manApplet->mainWindow(), &MainWindow::createECPrivateKey );
         menu.addAction( tr("CreateKey"), manApplet->mainWindow(), &MainWindow::createKey );
 
-        if( manApplet->isLicense() )
+        QAction* pImportPFXAct = menu.addAction( tr("ImportPFX"), manApplet->mainWindow(), &MainWindow::importPFX );
+        QAction* pImportCertAct = menu.addAction( tr("ImportCert"), manApplet->mainWindow(), &MainWindow::importCert );
+        QAction* pImportPriKeyAct = menu.addAction( tr("ImportPrivateKey"), manApplet->mainWindow(), &MainWindow::improtPrivateKey );
+
+        if( manApplet->isLicense() == false )
         {
-            menu.addAction( tr("ImportPFX"), manApplet->mainWindow(), &MainWindow::importPFX );
-            menu.addAction( tr("ImportCert"), manApplet->mainWindow(), &MainWindow::importCert );
-            menu.addAction( tr("ImportPrivateKey"), manApplet->mainWindow(), &MainWindow::improtPrivateKey );
+            pImportPFXAct->setEnabled( false );
+            pImportCertAct->setEnabled( false );
+            pImportPriKeyAct->setEnabled( false );
         }
     }
     else if( item->getType() == HM_ITEM_TYPE_CERTIFICATE )
@@ -137,9 +145,11 @@ void ManTreeView::showContextMenu( QPoint point )
         menu.addAction( tr( "DeleteObject" ), manApplet->mainWindow(), &MainWindow::deleteObject );
         menu.addAction( tr("EditObject"), manApplet->mainWindow(), &MainWindow::editObject );
 
-        if( manApplet->isLicense() )
+        QAction* pImportCertAct = menu.addAction( tr("ImportCert" ), manApplet->mainWindow(), &MainWindow::importCert );
+
+        if( manApplet->isLicense() == false )
         {
-            menu.addAction( tr("ImportCert" ), manApplet->mainWindow(), &MainWindow::importCert );
+            pImportCertAct->setEnabled( false );
         }
     }
     else if( item->getType() == HM_ITEM_TYPE_PUBLICKEY )
@@ -163,9 +173,11 @@ void ManTreeView::showContextMenu( QPoint point )
         menu.addAction( tr( "CreateRSAPrivateKey"), manApplet->mainWindow(), &MainWindow::createRSAPrivateKey );
         menu.addAction( tr("CreateECPrivateKey"), manApplet->mainWindow(), &MainWindow::createECPrivateKey );
 
-        if( manApplet->isLicense() )
+        QAction* pImportPriKeyAct = menu.addAction( tr("ImportPrivateKey"), manApplet->mainWindow(), &MainWindow::improtPrivateKey );
+
+        if( manApplet->isLicense() == false )
         {
-            menu.addAction( tr( "ImportPrivateKey"), manApplet->mainWindow(), &MainWindow::improtPrivateKey );
+            pImportPriKeyAct->setEnabled( false );
         }
     }
     else if( item->getType() == HM_ITEM_TYPE_SECRETKEY )
@@ -182,11 +194,15 @@ void ManTreeView::showContextMenu( QPoint point )
         menu.addAction( tr( "CreateKey"), manApplet->mainWindow(), &MainWindow::createKey );
         menu.addAction( tr( "GenerateKey"), manApplet->mainWindow(), &MainWindow::generateKey );
 
-        if( manApplet->isLicense() )
+        QAction* pWrapAct = menu.addAction(  tr("WrapKey"), manApplet->mainWindow(), &MainWindow::wrapKey );
+        QAction* pUnwrapAct = menu.addAction( tr("UnwrapKey"), manApplet->mainWindow(), &MainWindow::unwrapKey );
+        QAction* pDeriveAct = menu.addAction( tr("DeriveKey"), manApplet->mainWindow(), &MainWindow::deriveKey );
+
+        if( manApplet->isLicense() == false )
         {
-            menu.addAction(  tr("WrapKey"), manApplet->mainWindow(), &MainWindow::wrapKey );
-            menu.addAction( tr("UnwrapKey"), manApplet->mainWindow(), &MainWindow::unwrapKey );
-            menu.addAction( tr("DeriveKey"), manApplet->mainWindow(), &MainWindow::deriveKey );
+            pWrapAct->setEnabled( false );
+            pUnwrapAct->setEnabled( false );
+            pDeriveAct->setEnabled( false );
         }
     }
     else if( item->getType() == HM_ITEM_TYPE_DATA )

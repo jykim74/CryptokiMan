@@ -185,6 +185,9 @@ void EditAttributeDlg::initialize()
 {
     mValueTypeCombo->addItems( kTypeList );
     mValueTypeCombo->setCurrentText( "Hex" );
+
+    if( manApplet->isLicense() == false )
+        mSetAttrBtn->setEnabled( false );
 }
 
 void EditAttributeDlg::initAttributes()

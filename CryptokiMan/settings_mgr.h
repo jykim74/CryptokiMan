@@ -12,8 +12,8 @@ private:
 public:
     SettingsMgr( QObject *parent = nullptr );
 
-    void setShowLogTab( bool bVal );
-    bool showLogTab();
+    void setUseLogTab( bool bVal );
+    bool getUseLogTab();
 
     int logLevel() { return log_level_; };
     void setLogLevel( int nLevel );
