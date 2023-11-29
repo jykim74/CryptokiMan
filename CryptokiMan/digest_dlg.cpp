@@ -174,6 +174,8 @@ void DigestDlg::initialize()
 
     mInitAutoCheck->setChecked(true);
     mInputTab->setCurrentIndex(0);
+
+    if( manApplet->isLicense() == false ) mInputTab->setTabEnabled( 1, false );
 }
 
 void DigestDlg::appendStatusLabel( const QString& strLabel )
