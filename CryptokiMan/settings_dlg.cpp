@@ -41,13 +41,13 @@ void SettingsDlg::updateSettings()
             MechMgr* mechMgr = manApplet->mechMgr();
             mechMgr->loadMechList();
         }
+
+        mgr->setFileReadSize( mFileReadSizeText->text().toInt() );
+        mgr->setLogLevel( mLogLevelCombo->currentIndex() );
     }
 
     mgr->setFindMaxObjectsCount( mFindMaxObjectsCountText->text().toInt() );
-    mgr->setLogLevel( mLogLevelCombo->currentIndex() );
-    mgr->setFileReadSize( mFileReadSizeText->text().toInt() );
     mgr->setUseDeviceMech( mUseDeviceMechCheck->isChecked() );
-
     mgr->setFontFamily( mFontFamilyCombo->currentText() );
 
 #ifdef _AUTO_UPDATE
@@ -99,6 +99,8 @@ void SettingsDlg::initialize()
         mUseDeviceMechCheck->hide();
         mgr->setUseDeviceMech(false);
         mgr->setShowLogTab(false);
+        mFileReadSizeGroup->hide();
+        mLogLevelGroup->hide();
     }
 
 #ifdef _AUTO_UPDATE

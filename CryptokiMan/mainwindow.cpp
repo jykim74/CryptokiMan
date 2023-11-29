@@ -160,6 +160,8 @@ void MainWindow::initialize()
     dock_ = new QDockWidget( tr( "Information And Log Window" ), this );
     addDockWidget(Qt::BottomDockWidgetArea, dock_ );
     dock_->setWidget( text_tab_ );
+
+    setTitle( "" );
 }
 
 
@@ -2319,12 +2321,13 @@ void MainWindow::write( const QString strLog, QColor cr )
 
 void MainWindow::setTitle(const QString strName)
 {
-    QString strTitle;
+    QString strTitle = manApplet->getBrand();
 
-    if( manApplet->isLicense() )
-        strTitle = QString( "%1 - %2" ).arg( manApplet->getBrand() ).arg( strName );
-    else
-        strTitle = QString( "%1 (Unlicensed Version) - %2" ).arg( manApplet->getBrand() ).arg( strName );
+    if( manApplet->isLicense() == false )
+        strTitle += " (Unlicensed version)";
+
+    if( strName.length() >= 1 )
+        strTitle += QString( " - %1" ).arg( strName );
 
     setWindowTitle( strTitle );
 }
