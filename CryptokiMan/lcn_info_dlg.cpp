@@ -87,6 +87,7 @@ void LCNInfoDlg::initialize()
 
 //    mReqGroup->setEnabled( !mCurGroup->isEnabled() );
     mUpdateBtn->setEnabled( mCurGroup->isEnabled() );
+    mUseFileCheck->click();
 }
 
 void LCNInfoDlg::settingsLCN( const QString strSID, const BIN *pLCN )
@@ -365,6 +366,7 @@ end :
 void LCNInfoDlg::checkUseFile()
 {
     bool bVal = mUseFileCheck->isChecked();
+    mReqGroup->setEnabled(!bVal);
 
     if( bVal )
     {
