@@ -45,6 +45,8 @@ QString findFile( QWidget *parent, int nType, const QString strPath )
 #endif
     else if( nType == JS_FILE_TYPE_PFX )
         strType = QObject::tr("PFX Files (*.pfx *.p12 *.pem);;All Files(*.*)");
+    else if( nType == JS_FILE_TYPE_LCN )
+        strType = QObject::tr( "License Files (*.lcn *.txt);;All Files (*.*)" );
     else if( nType == JS_FILE_TYPE_ALL )
         strType = QObject::tr("All Files(*.*)" );
 

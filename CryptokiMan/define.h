@@ -20,6 +20,7 @@ enum { JS_FILE_TYPE_CERT,
        JS_FILE_TYPE_BIN,
        JS_FILE_TYPE_DLL,
        JS_FILE_TYPE_PFX,
+       JS_FILE_TYPE_LCN,
        JS_FILE_TYPE_ALL };
 
 const QString kTableStyle = "QHeaderView::section {background-color:#404040;color:#FFFFFF;}";
