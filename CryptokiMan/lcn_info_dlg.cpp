@@ -31,6 +31,11 @@ LCNInfoDlg::~LCNInfoDlg()
 
 }
 
+void LCNInfoDlg::setCurTab(int index)
+{
+    tabWidget->setCurrentIndex(index);
+}
+
 QString LCNInfoDlg::getLicenseURI()
 {
     QString url_from_env = qgetenv("JS_INC_LICENSE_URI");
@@ -50,11 +55,11 @@ void LCNInfoDlg::initialize()
 {
     int ret = 0;
     mUpdateBtn->setEnabled( false );
+    JS_LICENSE_INFO sLicenseInfo = manApplet->LicenseInfo();
 
     if( manApplet->isLicense() )
     {
         QString strExt;
-        JS_LICENSE_INFO sLicenseInfo = manApplet->LicenseInfo();
 
         QDateTime issueTime = QDateTime::fromString( sLicenseInfo.sIssued, JS_LCN_TIME_FORMAT);
         QDateTime expireTime = QDateTime::fromString( sLicenseInfo.sExpire, JS_LCN_TIME_FORMAT );
@@ -79,15 +84,32 @@ void LCNInfoDlg::initialize()
         {
             mCurGroup->setEnabled( false );
         }
+
+        mMessageLabel->setText( tr("This CryptokiMan is licensed version") );
     }
     else
     {
+        QString strMsg = tr( "This CertMan is unlicensed version.\r\n" );
+        QString strAppend;
+
+        if( sLicenseInfo.nVersion > 0 )
+        {
+            strAppend = tr( "Expired Date: %1").arg( sLicenseInfo.sExpire );
+        }
+        else
+        {
+            strAppend = tr( "The license is not issued." );
+        }
+
+        strMsg += strAppend;
+        mMessageLabel->setText( strMsg );
+
         mCurGroup->setEnabled( false );
     }
 
-//    mReqGroup->setEnabled( !mCurGroup->isEnabled() );
     mUpdateBtn->setEnabled( mCurGroup->isEnabled() );
     mUseFileCheck->click();
+    tabWidget->setCurrentIndex(0);
 }
 
 void LCNInfoDlg::settingsLCN( const QString strSID, const BIN *pLCN )

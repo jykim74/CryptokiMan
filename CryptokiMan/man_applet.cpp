@@ -43,6 +43,7 @@
 #include "common.h"
 #include "cryptoki_api.h"
 #include "js_net.h"
+#include "lcn_info_dlg.h"
 
 ManApplet *manApplet;
 
@@ -94,6 +95,9 @@ void ManApplet::start()
     else
     {
         info( "The CryptokiMan is not licensed" );
+        LCNInfoDlg lcnInfo;
+        lcnInfo.setCurTab(1);
+        lcnInfo.exec();
     }
 
     QString strVersion = STRINGIZE(CRYPTOKIMAN_VERSION);
