@@ -36,6 +36,9 @@ public:
     void setLicense( const QString strLicense );
     QString getLicense();
 
+    void setStopMessage( time_t tLastTime );
+    time_t getStopMessage();
+
     void setFindMaxObjectsCount( int nCounts );
     int getFindMaxObjectsCount();
     int findMaxObjectsCount() { return find_max_objects_count_; };

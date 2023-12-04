@@ -95,9 +95,24 @@ void ManApplet::start()
     else
     {
         info( "The CryptokiMan is not licensed" );
-        LCNInfoDlg lcnInfo;
-        lcnInfo.setCurTab(1);
-        lcnInfo.exec();
+        time_t tLastTime = manApplet->settings_mgr_->getStopMessage();
+        if( tLastTime > 0 )
+        {
+            time_t now_t = time(NULL);
+            if( now_t > ( tLastTime + 7 * 86400 ) )
+            {
+                manApplet->settings_mgr_->setStopMessage( now_t );
+                LCNInfoDlg lcnInfo;
+                lcnInfo.setCurTab(1);
+                lcnInfo.exec();
+            }
+        }
+        else
+        {
+            LCNInfoDlg lcnInfo;
+            lcnInfo.setCurTab(1);
+            lcnInfo.exec();
+        }
     }
 
     QString strVersion = STRINGIZE(CRYPTOKIMAN_VERSION);
