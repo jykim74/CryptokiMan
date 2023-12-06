@@ -2108,20 +2108,21 @@ void MainWindow::showDataInfoDetail( QModelIndex index )
 void MainWindow::showRightMenu(QPoint point )
 {
     QMenu menu(this);
+    QAction *delAct = NULL;
 
     manApplet->log( QString("RightType: %1").arg(right_type_));
 
     switch ( right_type_ ) {
     case HM_ITEM_TYPE_CERTIFICATE:
         menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
-        menu.addAction( tr( "Delete Object" ), this, &MainWindow::deleteObject );
+        delAct = menu.addAction( tr( "Delete Object" ), this, &MainWindow::deleteObject );
         menu.addAction( tr("View Certificate" ), this, &MainWindow::viewCert );
         menu.addAction( tr( "Copy Object" ), this, &MainWindow::copyTableObject );
         break;
 
     case HM_ITEM_TYPE_PUBLICKEY:
         menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
-        menu.addAction( tr( "Delete Object" ), this, &MainWindow::deleteObject );
+        delAct = menu.addAction( tr( "Delete Object" ), this, &MainWindow::deleteObject );
         menu.addAction( tr( "Verify" ), this, &MainWindow::verifyEach );
         menu.addAction( tr( "Encrypt"), this, &MainWindow::encryptEach );
         menu.addAction( tr( "Copy Object" ), this, &MainWindow::copyTableObject );
@@ -2129,7 +2130,7 @@ void MainWindow::showRightMenu(QPoint point )
 
     case HM_ITEM_TYPE_PRIVATEKEY:
         menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
-        menu.addAction( tr( "Delete Object" ), this, &MainWindow::deleteObject );
+        delAct = menu.addAction( tr( "Delete Object" ), this, &MainWindow::deleteObject );
         menu.addAction( tr( "Sign" ), this, &MainWindow::signEach );
         menu.addAction( tr( "Decrypt" ), this, &MainWindow::decryptEach );
         menu.addAction( tr( "Copy Object" ), this, &MainWindow::copyTableObject );
@@ -2137,7 +2138,7 @@ void MainWindow::showRightMenu(QPoint point )
 
     case HM_ITEM_TYPE_SECRETKEY:
         menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
-        menu.addAction( tr( "Delete Object" ), this, &MainWindow::deleteObject );
+        delAct = menu.addAction( tr( "Delete Object" ), this, &MainWindow::deleteObject );
         menu.addAction( tr( "Sign" ), this, &MainWindow::signEach );
         menu.addAction( tr( "Verify" ), this, &MainWindow::verifyEach );
         menu.addAction( tr( "Encrypt"), this, &MainWindow::encryptEach );
@@ -2147,9 +2148,14 @@ void MainWindow::showRightMenu(QPoint point )
 
     case HM_ITEM_TYPE_DATA:
         menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
-        menu.addAction( tr( "Delete Object" ), this, &MainWindow::deleteObject );
+        delAct = menu.addAction( tr( "Delete Object" ), this, &MainWindow::deleteObject );
         menu.addAction( tr( "Copy Object" ), this, &MainWindow::copyTableObject );
         break;
+    }
+
+    if( manApplet->isLicense() == false )
+    {
+        if( delAct ) delAct->setEnabled(false);
     }
 
     menu.exec(QCursor::pos());
