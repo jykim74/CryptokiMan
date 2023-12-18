@@ -51,11 +51,14 @@ public:
     void showMechanismInfoList( int index );
     void showSessionInfoList( int index );
     void showObjectsInfoList( int index );
+
     void showCertificateInfoList( int index, long hObject = -1 );
     void showPublicKeyInfoList( int index, long hObject = -1 );
     void showPrivateKeyInfoList( int index, long hObject = -1 );
     void showSecretKeyInfoList( int index, long hObject = -1 );
     void showDataInfoList( int index, long hObject = -1 );
+
+    void showFindInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *pAttrList, int nAttrCnt );
 
     void showMechaismInfoDetail( QModelIndex index );
     void showObjectsInfoDetail( QModelIndex index );
@@ -64,6 +67,8 @@ public:
     void showPrivateKeyInfoDetail( QModelIndex index );
     void showSecretKeyInfoDetail( QModelIndex index );
     void showDataInfoDetail( QModelIndex index );
+
+
 
     void setRightTable( QTableWidget *right_table );
     void removeAllRightTable();
@@ -103,6 +108,7 @@ public slots:
     void createDSAPrivateKey();
     void createKey();
     void copyObject();
+    void findObject();
     void copyTableObject();
     void deleteObject();
     void editObject();
@@ -175,6 +181,13 @@ private:
     void showInfoECCValue( CK_OBJECT_HANDLE hObj, bool bPub = false );
     void showInfoDHValue( CK_OBJECT_HANDLE hObj, bool bPub = false );
     void showInfoSecretValue( CK_OBJECT_HANDLE hObj);
+
+
+    void certificateInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *pAttrList, int nAttrCnt );
+    void publicKeyInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *pAttrList, int nAttrCnt );
+    void privateKeyInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *pAttrList, int nAttrCnt );
+    void secretKeyInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *pAttrList, int nAttrCnt );
+    void dataInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *pAttrList, int nAttrCnt );
 
     QList<QAction *>  recent_file_list_;
 

@@ -26,6 +26,7 @@ enum { JS_FILE_TYPE_CERT,
 const QString kTableStyle = "QHeaderView::section {background-color:#404040;color:#FFFFFF;}";
 
 const QStringList kLogLevel = { "None", "Error", "Info", "Warn", "Debug" };
+static QStringList kClassList = { "CKO_SECRET_KEY", "CKO_PRIVATE_KEY", "CKO_PUBLIC_KEY", "CKO_CERTIFICATE", "CKO_DATA" };
 
 static QStringList kCommonAttList = {
     "CKA_TOKEN", "CKA_PRIVATE", "CKA_MODIFIABLE",

@@ -75,5 +75,6 @@
         <file>cm.rc</file>
         <file>cryptokiman.icns</file>
         <file>cryptokiman.ico</file>
+        <file>images/find.png</file>
     </qresource>
 </RCC>

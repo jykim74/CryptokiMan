@@ -54,6 +54,7 @@
 #include "mech_mgr.h"
 #include "lcn_info_dlg.h"
 #include "copy_object_dlg.h"
+#include "find_object_dlg.h"
 
 const int kMaxRecentFiles = 10;
 
@@ -406,7 +407,14 @@ void MainWindow::createActions()
     connect( copyObjectAct, &QAction::triggered, this, &MainWindow::copyObject);
     copyObjectAct->setStatusTip(tr("PKCS11 Copy Object"));
     objectsMenu->addAction( copyObjectAct );
-//    objectsToolBar->addAction( editAttributeAct );
+//    objectsToolBar->addAction( copyObjectAct );
+
+    const QIcon findIcon = QIcon::fromTheme("document-find", QIcon(":/images/find.png"));
+    QAction *findObjectAct = new QAction( findIcon, tr("Find Object"), this);
+    connect( findObjectAct, &QAction::triggered, this, &MainWindow::findObject);
+    findObjectAct->setStatusTip(tr("PKCS11 Find Object"));
+    objectsMenu->addAction( findObjectAct );
+    objectsToolBar->addAction( findObjectAct );
 
 
     QMenu *cryptMenu = menuBar()->addMenu(tr("&Cryptogram"));
@@ -1198,6 +1206,21 @@ void MainWindow::copyObject()
     CopyObjectDlg copyObjectDlg;
     copyObjectDlg.setSelectedSlot( pItem->getSlotIndex() );
     copyObjectDlg.exec();
+}
+
+void MainWindow::findObject()
+{
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        return;
+    }
+
+    FindObjectDlg findObjectDlg;
+    findObjectDlg.setSelectedSlot( pItem->getSlotIndex() );
+    findObjectDlg.exec();
 }
 
 void MainWindow::copyTableObject()
@@ -3507,6 +3530,24 @@ void MainWindow::showDataInfoList( int index, long hObject )
     }
 }
 
+void MainWindow::showFindInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *pAttrList, int nAttrCnt )
+{
+    if( nAttrCnt < 1 ) return;
+    CK_OBJECT_CLASS objClass;
+    memcpy( &objClass, pAttrList[0].pValue, pAttrList[0].ulValueLen );
+
+    if( objClass == CKO_DATA )
+        dataInfoList( hSession, nMaxCnt, pAttrList, nAttrCnt );
+    else if( objClass == CKO_CERTIFICATE )
+        certificateInfoList( hSession, nMaxCnt, pAttrList, nAttrCnt );
+    else if( objClass == CKO_SECRET_KEY )
+        secretKeyInfoList( hSession, nMaxCnt, pAttrList, nAttrCnt );
+    else if( objClass == CKO_PRIVATE_KEY )
+        privateKeyInfoList( hSession, nMaxCnt, pAttrList, nAttrCnt );
+    else if( objClass == CKO_PUBLIC_KEY )
+        publicKeyInfoList( hSession, nMaxCnt, pAttrList, nAttrCnt );
+}
+
 void MainWindow::showInfoCommon( CK_OBJECT_HANDLE hObj )
 {
     info( "-- Common\n" );
@@ -3956,4 +3997,315 @@ void MainWindow::showInfoSecretValue( CK_OBJECT_HANDLE hObj)
     }
 
     info( "------------------------------------------------------------------------\n" );
+}
+
+void MainWindow::certificateInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *pAttrList, int nAttrCnt )
+{
+    CK_ULONG uObjCnt = 0;
+    CK_OBJECT_HANDLE hObjects[nMaxCnt];
+    int rv = 0;
+
+    removeAllRightTable();
+
+    QStringList headerList = { tr("Label"), tr("Handle"), tr("ID"), tr( "Subject") };
+
+    right_table_->clear();
+    right_table_->horizontalHeader()->setStretchLastSection(true);
+    QString style = "QHeaderView::section {background-color:#404040;color:#FFFFFF;}";
+    right_table_->horizontalHeader()->setStyleSheet( style );
+
+    right_table_->setColumnCount(headerList.size());
+    right_table_->setHorizontalHeaderLabels( headerList );
+    right_table_->verticalHeader()->setVisible(false);
+
+    right_table_->setColumnWidth( 0, 200 );
+    right_table_->setColumnWidth( 1, 60 );
+    right_table_->setColumnWidth( 2, 120 );
+
+    rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, pAttrList, nAttrCnt );
+    if( rv != CKR_OK ) return;
+
+    rv = manApplet->cryptokiAPI()->FindObjects( hSession, hObjects, nMaxCnt, &uObjCnt );
+    if( rv != CKR_OK ) return;
+
+    rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
+    if( rv != CKR_OK ) return;
+
+    int row = 0;
+
+    for( int i=0; i < uObjCnt; i++ )
+    {
+        QString strMsg;
+        BIN binName = {0,0};
+        char *pDN = NULL;
+
+        right_table_->insertRow( row );
+        right_table_->setRowHeight( row, 10 );
+
+        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_LABEL, hObjects[i] );
+
+        QTableWidgetItem *item = new QTableWidgetItem( strMsg );
+        item->setIcon( QIcon(":/images/cert.png"));
+        right_table_->setItem( row, 0, item );
+
+        strMsg = QString("%1").arg( hObjects[i] );
+        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
+
+        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_ID, hObjects[i] );
+        right_table_->setItem( row, 2, new QTableWidgetItem(strMsg) );
+
+        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_SUBJECT, hObjects[i] );
+        JS_BIN_decodeHex( strMsg.toStdString().c_str(), &binName );
+        JS_PKI_getTextDN( &binName, &pDN );
+        if( pDN )
+        {
+            strMsg = pDN;
+            JS_free( pDN );
+        }
+        JS_BIN_reset( &binName );
+        right_table_->setItem( row, 3, new QTableWidgetItem(strMsg) );
+
+        row++;
+    }
+}
+
+void MainWindow::publicKeyInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *pAttrList, int nAttrCnt )
+{
+    CK_ULONG uObjCnt = 0;
+    CK_OBJECT_HANDLE hObjects[nMaxCnt];
+    int rv = 0;
+
+    removeAllRightTable();
+    QStringList headerList = { tr("Label"), tr("Handle"), tr("KeyType"), tr( "ID") };
+
+    right_table_->clear();
+    right_table_->horizontalHeader()->setStretchLastSection(true);
+    QString style = "QHeaderView::section {background-color:#404040;color:#FFFFFF;}";
+    right_table_->horizontalHeader()->setStyleSheet( style );
+
+    right_table_->setColumnCount(headerList.size());
+    right_table_->setHorizontalHeaderLabels( headerList );
+    right_table_->verticalHeader()->setVisible(false);
+
+    right_table_->setColumnWidth( 0, 200 );
+    right_table_->setColumnWidth( 1, 60 );
+    right_table_->setColumnWidth( 2, 100 );
+
+    rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, pAttrList, nAttrCnt );
+    if( rv != CKR_OK ) return;
+
+    rv = manApplet->cryptokiAPI()->FindObjects( hSession, hObjects, nMaxCnt, &uObjCnt );
+    if( rv != CKR_OK ) return;
+
+    rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
+    if( rv != CKR_OK ) return;
+
+    QString strMsg = "";
+    int row = 0;
+
+
+    for( int i=0; i < uObjCnt; i++ )
+    {
+        right_table_->insertRow( row );
+        right_table_->setRowHeight( row, 10 );
+
+        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_LABEL, hObjects[i] );
+
+        QTableWidgetItem *item = new QTableWidgetItem( strMsg );
+        item->setIcon( QIcon(":/images/pubkey.png"));
+        right_table_->setItem( row, 0, item );
+
+        strMsg = QString("%1").arg( hObjects[i] );
+        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
+
+        strMsg = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, hObjects[i] );
+        right_table_->setItem( row, 2, new QTableWidgetItem( strMsg ));
+
+        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_ID, hObjects[i] );
+        right_table_->setItem( row, 3, new QTableWidgetItem( strMsg ));
+
+        row++;
+    }
+}
+
+void MainWindow::privateKeyInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *pAttrList, int nAttrCnt )
+{
+    CK_ULONG uObjCnt = 0;
+    CK_OBJECT_HANDLE hObjects[nMaxCnt];
+    int rv = 0;
+
+    removeAllRightTable();
+
+    QStringList headerList = { tr("Label"), tr("Handle"), tr("KeyType"), tr( "ID") };
+
+    right_table_->clear();
+    right_table_->horizontalHeader()->setStretchLastSection(true);
+    QString style = "QHeaderView::section {background-color:#404040;color:#FFFFFF;}";
+    right_table_->horizontalHeader()->setStyleSheet( style );
+
+    right_table_->setColumnCount(headerList.size());
+    right_table_->setHorizontalHeaderLabels( headerList );
+    right_table_->verticalHeader()->setVisible(false);
+
+    right_table_->setColumnWidth( 0, 200 );
+    right_table_->setColumnWidth( 1, 60 );
+    right_table_->setColumnWidth( 2, 100 );
+
+    rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, pAttrList, nAttrCnt );
+    if( rv != CKR_OK ) return;
+
+    rv = manApplet->cryptokiAPI()->FindObjects( hSession, hObjects, nMaxCnt, &uObjCnt );
+    if( rv != CKR_OK ) return;
+
+    rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
+    if( rv != CKR_OK ) return;
+
+    QString strMsg = "";
+    int row = 0;
+
+    for( int i=0; i < uObjCnt; i++ )
+    {
+        right_table_->insertRow( row );
+        right_table_->setRowHeight( row, 10 );
+
+        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_LABEL, hObjects[i] );
+
+        QTableWidgetItem *item = new QTableWidgetItem( strMsg );
+        item->setIcon( QIcon(":/images/prikey.png"));
+        right_table_->setItem( row, 0, item );
+
+        strMsg = QString("%1").arg( hObjects[i] );
+        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
+
+        strMsg = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, hObjects[i] );
+        right_table_->setItem( row, 2, new QTableWidgetItem( strMsg ));
+
+        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_ID, hObjects[i] );
+        right_table_->setItem( row, 3, new QTableWidgetItem( strMsg ));
+
+        row++;
+    }
+}
+
+void MainWindow::secretKeyInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *pAttrList, int nAttrCnt )
+{
+    CK_ULONG uObjCnt = 0;
+    CK_OBJECT_HANDLE hObjects[nMaxCnt];
+    int rv = 0;
+
+    removeAllRightTable();
+    QStringList headerList = { tr("Label"), tr("Handle"), tr("KeyType"), tr( "ID") };
+
+    right_table_->clear();
+    right_table_->horizontalHeader()->setStretchLastSection(true);
+    QString style = "QHeaderView::section {background-color:#404040;color:#FFFFFF;}";
+    right_table_->horizontalHeader()->setStyleSheet( style );
+
+    right_table_->setColumnCount(headerList.size());
+    right_table_->setHorizontalHeaderLabels( headerList );
+    right_table_->verticalHeader()->setVisible(false);
+
+    right_table_->setColumnWidth( 0, 200 );
+    right_table_->setColumnWidth( 1, 60 );
+    right_table_->setColumnWidth( 2, 100 );
+
+    rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, pAttrList, nAttrCnt );
+    if( rv != CKR_OK ) return;
+
+    rv = manApplet->cryptokiAPI()->FindObjects( hSession, hObjects, nMaxCnt, &uObjCnt );
+    if( rv != CKR_OK ) return;
+
+    rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
+    if( rv != CKR_OK ) return;
+
+    int row = 0;
+    QString strMsg = "";
+
+    for( int i=0; i < uObjCnt; i++ )
+    {
+        right_table_->insertRow( row );
+        right_table_->setRowHeight( row, 10 );
+
+        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_LABEL, hObjects[i] );
+
+        QTableWidgetItem *item = new QTableWidgetItem( strMsg );
+        item->setIcon( QIcon(":/images/key.png"));
+        right_table_->setItem( row, 0, item );
+
+        strMsg = QString("%1").arg( hObjects[i] );
+        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
+
+        strMsg = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, hObjects[i] );
+        right_table_->setItem( row, 2, new QTableWidgetItem( strMsg ));
+
+        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_ID, hObjects[i] );
+        right_table_->setItem( row, 3, new QTableWidgetItem( strMsg ));
+
+        row++;
+    }
+}
+
+void MainWindow::dataInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *pAttrList, int nAttrCnt )
+{
+    CK_ULONG uObjCnt = 0;
+    CK_OBJECT_HANDLE hObjects[nMaxCnt];
+    int rv = 0;
+
+    removeAllRightTable();
+    QStringList headerList = { tr("Label"), tr("Handle"), tr( "ObejctID" ), tr( "Application") };
+
+    right_table_->clear();
+    right_table_->horizontalHeader()->setStretchLastSection(true);
+    QString style = "QHeaderView::section {background-color:#404040;color:#FFFFFF;}";
+    right_table_->horizontalHeader()->setStyleSheet( style );
+
+    right_table_->setColumnCount(headerList.size());
+    right_table_->setHorizontalHeaderLabels( headerList );
+    right_table_->verticalHeader()->setVisible(false);
+
+    right_table_->setColumnWidth( 1, 60 );
+
+    rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, pAttrList, nAttrCnt );
+    if( rv != CKR_OK ) return;
+
+    rv = manApplet->cryptokiAPI()->FindObjects( hSession, hObjects, nMaxCnt, &uObjCnt );
+    if( rv != CKR_OK ) return;
+
+    rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
+    if( rv != CKR_OK ) return;
+
+    int row = 0;
+    QString strMsg = "";
+
+    for( int i=0; i < uObjCnt; i++ )
+    {
+        BIN binOID = {0,0};
+        char sOID[128];
+
+        memset( sOID, 0x00, sizeof(sOID));
+
+        right_table_->insertRow( row );
+        right_table_->setRowHeight( row, 10 );
+
+        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_LABEL, hObjects[i] );
+
+        QTableWidgetItem *item = new QTableWidgetItem( strMsg );
+        item->setIcon( QIcon(":/images/data_add.png"));
+        right_table_->setItem( row, 0, item );
+
+        strMsg = QString("%1").arg( hObjects[i] );
+        right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
+
+        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_OBJECT_ID, hObjects[i] );
+        JS_BIN_decodeHex( strMsg.toStdString().c_str(), &binOID );
+        JS_PKI_getStringFromOID( &binOID, sOID );
+        JS_BIN_reset( &binOID );
+
+        right_table_->setItem( row, 2, new QTableWidgetItem(sOID) );
+
+        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_APPLICATION, hObjects[i] );
+        right_table_->setItem( row, 3, new QTableWidgetItem(strMsg) );
+
+        row++;
+    }
 }
