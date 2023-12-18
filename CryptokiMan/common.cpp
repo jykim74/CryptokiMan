@@ -2,6 +2,7 @@
 #include "js_pki_ext.h"
 #include "js_pki_x509.h"
 #include "js_pki_tools.h"
+#include "js_http.h"
 
 #include <QFileDialog>
 #include <QDate>
@@ -1052,3 +1053,4 @@ const QString getItemTypeName( int nType )
 
     return "Unknown";
 }
+

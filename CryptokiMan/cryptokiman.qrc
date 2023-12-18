@@ -76,5 +76,7 @@
         <file>cryptokiman.icns</file>
         <file>cryptokiman.ico</file>
         <file>images/find.png</file>
+        <file>images/cert_revoked.png</file>
+        <file>images/root_cert.png</file>
     </qresource>
 </RCC>
