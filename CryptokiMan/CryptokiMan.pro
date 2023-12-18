@@ -80,7 +80,8 @@ SOURCES += \
         slot_info.cpp \
         unwrap_key_dlg.cpp \
         verify_dlg.cpp \
-        wrap_key_dlg.cpp
+        wrap_key_dlg.cpp \
+        find_object_dlg.cpp
 
 HEADERS += \
         about_dlg.h \
@@ -136,7 +137,8 @@ HEADERS += \
         temp_array.h \
         unwrap_key_dlg.h \
         verify_dlg.h \
-        wrap_key_dlg.h
+        wrap_key_dlg.h \
+        find_object_dlg.h
 
 FORMS += \
         about_dlg.ui \
@@ -176,7 +178,8 @@ FORMS += \
         sign_dlg.ui \
         unwrap_key_dlg.ui \
         verify_dlg.ui \
-        wrap_key_dlg.ui
+        wrap_key_dlg.ui \
+        find_object_dlg.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -231,10 +234,10 @@ win32 {
         INCLUDEPATH += "C:\msys64\mingw32\include"
 
         Debug {
-            LIBS += -L"../../build-PKILib-Desktop_Qt_5_13_2_MinGW_32_bit-Debug/debug" -lPKILib
+            LIBS += -L"../../build-PKILib-Desktop_Qt_5_13_2_MinGW_32_bit-Debug" -lPKILib
             LIBS += -L"../../PKILib/lib/win32/debug/openssl3/lib" -lcrypto -lssl
         } else {
-            LIBS += -L"../../build-PKILib-Desktop_Qt_5_13_2_MinGW_32_bit-Release/release" -lPKILib
+            LIBS += -L"../../build-PKILib-Desktop_Qt_5_13_2_MinGW_32_bit-Release" -lPKILib
             LIBS += -L"../../PKILib/lib/win32/openssl3/lib" -lcrypto -lssl
         }
 
@@ -245,10 +248,10 @@ win32 {
         INCLUDEPATH += "C:\msys64\mingw64\include"
 
         Debug {
-            LIBS += -L"../../build-PKILib-Desktop_Qt_5_13_2_MinGW_64_bit-Debug/debug" -lPKILib
+            LIBS += -L"../../build-PKILib-Desktop_Qt_5_13_2_MinGW_64_bit-Debug" -lPKILib
             LIBS += -L"../../PKILib/lib/win64/debug/openssl3/lib64" -lcrypto -lssl
         } else {
-            LIBS += -L"../../build-PKILib-Desktop_Qt_5_13_2_MinGW_64_bit-Release/release" -lPKILib
+            LIBS += -L"../../build-PKILib-Desktop_Qt_5_13_2_MinGW_64_bit-Release" -lPKILib
             LIBS += -L"../../PKILib/lib/win64/openssl3/lib64" -lcrypto -lssl
         }
 

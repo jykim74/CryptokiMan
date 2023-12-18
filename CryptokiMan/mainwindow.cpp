@@ -4005,6 +4005,8 @@ void MainWindow::certificateInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *
     CK_OBJECT_HANDLE hObjects[nMaxCnt];
     int rv = 0;
 
+    setRightType( HM_ITEM_TYPE_CERTIFICATE );
+
     removeAllRightTable();
 
     QStringList headerList = { tr("Label"), tr("Handle"), tr("ID"), tr( "Subject") };
@@ -4075,6 +4077,8 @@ void MainWindow::publicKeyInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *pA
     CK_OBJECT_HANDLE hObjects[nMaxCnt];
     int rv = 0;
 
+    setRightType( HM_ITEM_TYPE_PUBLICKEY );
+
     removeAllRightTable();
     QStringList headerList = { tr("Label"), tr("Handle"), tr("KeyType"), tr( "ID") };
 
@@ -4134,6 +4138,7 @@ void MainWindow::privateKeyInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *p
     CK_OBJECT_HANDLE hObjects[nMaxCnt];
     int rv = 0;
 
+    setRightType( HM_ITEM_TYPE_PRIVATEKEY );
     removeAllRightTable();
 
     QStringList headerList = { tr("Label"), tr("Handle"), tr("KeyType"), tr( "ID") };
@@ -4193,6 +4198,8 @@ void MainWindow::secretKeyInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *pA
     CK_OBJECT_HANDLE hObjects[nMaxCnt];
     int rv = 0;
 
+    setRightType( HM_ITEM_TYPE_SECRETKEY );
+
     removeAllRightTable();
     QStringList headerList = { tr("Label"), tr("Handle"), tr("KeyType"), tr( "ID") };
 
@@ -4250,6 +4257,8 @@ void MainWindow::dataInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *pAttrLi
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[nMaxCnt];
     int rv = 0;
+
+    setRightType( HM_ITEM_TYPE_DATA );
 
     removeAllRightTable();
     QStringList headerList = { tr("Label"), tr("Handle"), tr( "ObejctID" ), tr( "Application") };

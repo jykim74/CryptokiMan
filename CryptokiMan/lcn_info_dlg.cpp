@@ -91,7 +91,7 @@ void LCNInfoDlg::initialize()
     }
     else
     {
-        QString strMsg = tr( "This CertMan is unlicensed version.\r\n" );
+        QString strMsg = tr( "This CryptokiMan is unlicensed version.\r\n" );
         QString strAppend;
 
         if( sLicenseInfo.nVersion > 0 )
