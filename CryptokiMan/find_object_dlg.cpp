@@ -80,6 +80,7 @@ void FindObjectDlg::changeClass( int index )
     long uClass = JS_PKCS11_GetCKOType( strClass.toStdString().c_str() );
 
     mKeyTypeCombo->clear();
+    mKeyTypeCombo->addItem( "" );
 
     mIDLabel->setEnabled( false );
     mIDText->setEnabled( false );
@@ -159,6 +160,7 @@ void FindObjectDlg::initUI()
         sAsymKeyTypeList = kAsymTypeList;
     }
 
+    mKeyTypeCombo->addItem( "" );
     mKeyTypeCombo->addItems( sSymKeyTypeList );
 }
 
@@ -353,11 +355,14 @@ void FindObjectDlg::clickFindObjects()
     {
         QString strKeyType = mKeyTypeCombo->currentText();
 
-        CK_KEY_TYPE keyType = JS_PKCS11_GetCKKType( strKeyType.toStdString().c_str() );
-        sTemplate[uCount].type = CKA_KEY_TYPE;
-        sTemplate[uCount].pValue = &keyType;
-        sTemplate[uCount].ulValueLen = sizeof(keyType);
-        uCount++;
+        if( strKeyType.length() > 1 )
+        {
+            CK_KEY_TYPE keyType = JS_PKCS11_GetCKKType( strKeyType.toStdString().c_str() );
+            sTemplate[uCount].type = CKA_KEY_TYPE;
+            sTemplate[uCount].pValue = &keyType;
+            sTemplate[uCount].ulValueLen = sizeof(keyType);
+            uCount++;
+        }
     }
 
     if( keyClass == CKO_DATA )
