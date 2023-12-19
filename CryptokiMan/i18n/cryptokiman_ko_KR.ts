@@ -4435,22 +4435,22 @@ Do you want to delete the file and continue?</source>
         <translation>CryptokiMan 은 라이선스가 없는 버전입니다</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="260"/>
+        <location filename="../lcn_info_dlg.cpp" line="270"/>
         <source>fail to get license:%1</source>
         <translation>라이선스 가져오기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="272"/>
+        <location filename="../lcn_info_dlg.cpp" line="282"/>
         <source>fail to parse license:%1</source>
         <translation>라이선스 파싱 실패: %1</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="281"/>
+        <location filename="../lcn_info_dlg.cpp" line="291"/>
         <source>license is not valid:%1</source>
         <translation>라이선스가 유효하지 않습니다: %1</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="336"/>
+        <location filename="../lcn_info_dlg.cpp" line="346"/>
         <source>There is no current license</source>
         <translation>현재 라이선스가 없습니다</translation>
     </message>
@@ -4460,13 +4460,13 @@ Do you want to delete the file and continue?</source>
         <translation>발급 일자</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="347"/>
+        <location filename="../lcn_info_dlg.cpp" line="357"/>
         <source>fail to renew license:%1</source>
         <translation>라이선스 갱신 실패: %1</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="295"/>
-        <location filename="../lcn_info_dlg.cpp" line="359"/>
+        <location filename="../lcn_info_dlg.cpp" line="305"/>
+        <location filename="../lcn_info_dlg.cpp" line="369"/>
         <source>The current license is longer period</source>
         <translation>현재 라이선스가 더 긴 기간의 라이선스입니다</translation>
     </message>
@@ -4486,12 +4486,18 @@ Do you want to delete the file and continue?</source>
         <translation>라이선스가 발급 되지 않았습니다.</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="247"/>
+        <location filename="../lcn_info_dlg.cpp" line="189"/>
+        <location filename="../lcn_info_dlg.cpp" line="251"/>
+        <source>This service is not yet supported.</source>
+        <translation>아직 지원하지 않는 서비스 입니다</translation>
+    </message>
+    <message>
+        <location filename="../lcn_info_dlg.cpp" line="257"/>
         <source>You have to input email</source>
         <translation>이메일을 입력하세요</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="253"/>
+        <location filename="../lcn_info_dlg.cpp" line="263"/>
         <source>You have to input license key</source>
         <translation>라이선스 키를 입력하세요</translation>
     </message>

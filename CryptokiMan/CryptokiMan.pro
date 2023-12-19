@@ -10,7 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = CryptokiMan
 TEMPLATE = app
-PROJECT_VERSION = "1.5.2"
+PROJECT_VERSION = "1.6.0"
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -18,6 +18,8 @@ PROJECT_VERSION = "1.5.2"
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
 DEFINES += CRYPTOKIMAN_VERSION=$$PROJECT_VERSION
+
+DEFINES += _USE_RC_LCN
 
 
 # You can also make your code fail to compile if you use deprecated APIs.
