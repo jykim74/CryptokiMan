@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>581</width>
-    <height>420</height>
+    <width>680</width>
+    <height>527</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>3</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -479,22 +479,8 @@
          <property name="topMargin">
           <number>0</number>
          </property>
-         <item row="0" column="4">
-          <widget class="QCheckBox" name="mCertModifiableCheck">
-           <property name="text">
-            <string notr="true">Modifiable</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="4">
-          <widget class="QCheckBox" name="mCertEndDateCheck">
-           <property name="text">
-            <string>EndDate</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="3">
-          <widget class="QComboBox" name="mCertSensitiveCombo"/>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="mCertPrivateCombo"/>
          </item>
          <item row="0" column="0">
           <widget class="QCheckBox" name="mCertPrivateCheck">
@@ -503,70 +489,74 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
-          <widget class="QComboBox" name="mCertPrivateCombo"/>
+         <item row="0" column="4">
+          <widget class="QCheckBox" name="mCertModifiableCheck">
+           <property name="text">
+            <string notr="true">Modifiable</string>
+           </property>
+          </widget>
          </item>
-         <item row="1" column="0">
+         <item row="0" column="5">
+          <widget class="QComboBox" name="mCertModifiableCombo"/>
+         </item>
+         <item row="0" column="2">
           <widget class="QCheckBox" name="mCertTokenCheck">
            <property name="text">
             <string notr="true">Token</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="5">
-          <widget class="QDateEdit" name="mCertEndDateEdit"/>
-         </item>
-         <item row="0" column="2">
-          <widget class="QCheckBox" name="mCertSensitiveCheck">
-           <property name="text">
-            <string notr="true">Sensitive</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
+         <item row="0" column="3">
           <widget class="QComboBox" name="mCertTokenCombo"/>
          </item>
-         <item row="0" column="5">
-          <widget class="QComboBox" name="mCertModifiableCombo"/>
-         </item>
-         <item row="1" column="2">
-          <widget class="QCheckBox" name="mCertStartDateCheck">
-           <property name="text">
-            <string>StartDate</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="3">
-          <widget class="QDateEdit" name="mCertStartDateEdit"/>
-         </item>
-         <item row="2" column="0">
+         <item row="1" column="0">
           <widget class="QCheckBox" name="mCertTrustedCheck">
            <property name="text">
             <string>Trusted</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="1">
+         <item row="1" column="1">
           <widget class="QComboBox" name="mCertTrustedCombo"/>
          </item>
-         <item row="2" column="2">
+         <item row="2" column="0">
+          <widget class="QCheckBox" name="mCertStartDateCheck">
+           <property name="text">
+            <string>StartDate</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QDateEdit" name="mCertStartDateEdit"/>
+         </item>
+         <item row="1" column="2">
           <widget class="QCheckBox" name="mCertCopyableCheck">
            <property name="text">
             <string>Copyable</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="4">
+         <item row="1" column="3">
+          <widget class="QComboBox" name="mCertCopyableCombo"/>
+         </item>
+         <item row="2" column="2">
+          <widget class="QCheckBox" name="mCertEndDateCheck">
+           <property name="text">
+            <string>EndDate</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="3">
+          <widget class="QDateEdit" name="mCertEndDateEdit"/>
+         </item>
+         <item row="1" column="4">
           <widget class="QCheckBox" name="mCertDestroyableCheck">
            <property name="text">
             <string>Destroyable</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="3">
-          <widget class="QComboBox" name="mCertCopyableCombo"/>
-         </item>
-         <item row="2" column="5">
+         <item row="1" column="5">
           <widget class="QComboBox" name="mCertDestroyableCombo"/>
          </item>
         </layout>
@@ -1171,16 +1161,8 @@
   <tabstop>mCertSubjectText</tabstop>
   <tabstop>mCertPrivateCheck</tabstop>
   <tabstop>mCertPrivateCombo</tabstop>
-  <tabstop>mCertSensitiveCheck</tabstop>
-  <tabstop>mCertSensitiveCombo</tabstop>
   <tabstop>mCertModifiableCheck</tabstop>
   <tabstop>mCertModifiableCombo</tabstop>
-  <tabstop>mCertTokenCheck</tabstop>
-  <tabstop>mCertTokenCombo</tabstop>
-  <tabstop>mCertStartDateCheck</tabstop>
-  <tabstop>mCertStartDateEdit</tabstop>
-  <tabstop>mCertEndDateCheck</tabstop>
-  <tabstop>mCertEndDateEdit</tabstop>
   <tabstop>mPriLabelText</tabstop>
   <tabstop>mPriIDText</tabstop>
   <tabstop>mPriSubjectText</tabstop>

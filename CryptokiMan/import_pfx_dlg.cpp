@@ -94,7 +94,6 @@ void ImportPFXDlg::initAttributes()
     mCertSubjectTypeCombo->addItems( kDNTypeList );
 
     mCertPrivateCombo->addItems( sFalseTrue );
-    mCertSensitiveCombo->addItems( sFalseTrue );
     mCertModifiableCombo->addItems( sFalseTrue );
     mCertCopyableCombo->addItems(sFalseTrue);
     mCertDestroyableCombo->addItems(sFalseTrue);
@@ -140,7 +139,6 @@ void ImportPFXDlg::setAttributes()
     mPubEndDateEdit->setEnabled( mPubEndDateCheck->isChecked() );
 
     mCertPrivateCombo->setEnabled(mCertPrivateCheck->isChecked());
-    mCertSensitiveCombo->setEnabled(mCertSensitiveCheck->isChecked());
     mCertModifiableCombo->setEnabled(mCertModifiableCheck->isChecked());
     mCertCopyableCombo->setEnabled(mCertCopyableCheck->isChecked());
     mCertDestroyableCombo->setEnabled(mCertDestroyableCheck->isChecked());
@@ -189,7 +187,6 @@ void ImportPFXDlg::connectAttributes()
     connect( mCertUseSPKICheck, SIGNAL(clicked()), this, SLOT(clickCertUseSPKI()));
 
     connect( mCertPrivateCheck, SIGNAL(clicked()), this, SLOT(clickCertPrivate()));
-    connect( mCertSensitiveCheck, SIGNAL(clicked()), this, SLOT(clickCertSensitive()));
     connect( mCertModifiableCheck, SIGNAL(clicked()), this, SLOT(clickCertModifiable()));
     connect( mCertCopyableCheck, SIGNAL(clicked()), this, SLOT(clickCertCopyable()));
     connect( mCertDestroyableCheck, SIGNAL(clicked()), this, SLOT(clickCertDestroyable()));
@@ -528,11 +525,6 @@ void ImportPFXDlg::clickCertPrivate()
     mCertPrivateCombo->setEnabled(mCertPrivateCheck->isChecked());
 }
 
-void ImportPFXDlg::clickCertSensitive()
-{
-    mCertSensitiveCombo->setEnabled(mCertSensitiveCheck->isChecked());
-}
-
 void ImportPFXDlg::clickCertModifiable()
 {
     mCertModifiableCombo->setEnabled(mCertModifiableCheck->isChecked());
@@ -752,14 +744,6 @@ int ImportPFXDlg::createCert( BIN *pCert )
     {
         sTemplate[uCount].type = CKA_PRIVATE;
         sTemplate[uCount].pValue = ( mCertPrivateCombo->currentIndex() ? &bTrue : &bFalse );
-        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
-        uCount++;
-    }
-
-    if( mCertSensitiveCheck->isChecked() )
-    {
-        sTemplate[uCount].type = CKA_SENSITIVE;
-        sTemplate[uCount].pValue = (mCertSensitiveCombo->currentIndex() ? &bTrue : &bFalse );
         sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
         uCount++;
     }

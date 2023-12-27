@@ -949,7 +949,7 @@ QString getStringFromBIN( const BIN *pBin, int nType, bool bSeenOnly )
 
 QString getMechFlagString( unsigned long uFlag )
 {
-    QString strFlag = QString( "%1" ).arg( uFlag );
+    QString strFlag = QString( "0x%1" ).arg( uFlag, -8, 16, QLatin1Char( ' ' ) );
 
     if( uFlag & CKF_DECRYPT ) strFlag += " | Decrypt";
     if( uFlag & CKF_DERIVE ) strFlag += " | Derive";

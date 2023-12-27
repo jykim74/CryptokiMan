@@ -27,7 +27,6 @@ private slots:
     void clickCertUseSPKI();
 
     void clickCertPrivate();
-    void clickCertSensitive();
     void clickCertModifiable();
     void clickCertCopyable();
     void clickCertDestroyable();
