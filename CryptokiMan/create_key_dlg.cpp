@@ -8,7 +8,7 @@
 #include "mech_mgr.h"
 
 
-static QStringList sMechList;
+static QStringList sSymTypeList;
 static QStringList sFalseTrue = { "false", "true" };
 static QStringList sKeyList = { "String", "Hex", "Base64" };
 
@@ -56,21 +56,14 @@ void CreateKeyDlg::initUI()
 {
     if( manApplet->isLicense() )
     {
-        if( manApplet->settingsMgr()->useDeviceMech() )
-        {
-            sMechList = manApplet->mechMgr()->getGenerateList();
-        }
-        else
-        {
-            sMechList = kMechGenList;
-        }
+        sSymTypeList = kSymTypeList;
     }
     else
     {
-        sMechList = kMechGenListNoLicense;
+        sSymTypeList = kSymTypeListNoLicense;
     }
 
-    mMechCombo->addItems(sMechList);
+    mKeyTypeCombo->addItems( sSymTypeList );
 }
 
 void CreateKeyDlg::initialize()
@@ -182,8 +175,7 @@ void CreateKeyDlg::accept()
 
     CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
-    int nKeyPos = mMechCombo->currentIndex();
-    keyType = JS_PKCS11_GetCKKType( sMechList.at(nKeyPos).toStdString().c_str());
+    keyType = JS_PKCS11_GetCKKType( mKeyTypeCombo->currentText().toStdString().c_str());
 
 
     sTemplate[uCount].type = CKA_CLASS;
