@@ -70,7 +70,6 @@ void CreateDataDlg::initAttributes()
     mDataCombo->addItems(sDataList);
 
     mPrivateCombo->addItems(sFalseTrue);
-    mSensitiveCombo->addItems(sFalseTrue);
     mModifiableCombo->addItems(sFalseTrue);
     mCopyableCombo->addItems(sFalseTrue);
     mDestroyableCombo->addItems(sFalseTrue);
@@ -81,7 +80,6 @@ void CreateDataDlg::initAttributes()
 void CreateDataDlg::setAttributes()
 {
     mPrivateCombo->setEnabled(mPrivateCheck->isChecked());
-    mSensitiveCombo->setEnabled(mSensitiveCheck->isChecked());
     mModifiableCombo->setEnabled(mModifiableCheck->isChecked());
     mCopyableCombo->setEnabled(mCopyableCheck->isChecked());
     mDestroyableCombo->setEnabled(mDestroyableCheck->isChecked());
@@ -94,7 +92,6 @@ void CreateDataDlg::connectAttributes()
     connect( mDataText, SIGNAL(textChanged()), this, SLOT(changeData()));
 
     connect( mPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPrivate()));
-    connect( mSensitiveCheck, SIGNAL(clicked()), this, SLOT(clickSensitive()));
     connect( mModifiableCheck, SIGNAL(clicked()), this, SLOT(clickModifiable()));
     connect( mCopyableCheck, SIGNAL(clicked()), this, SLOT(clickCopyable()));
     connect( mDestroyableCheck, SIGNAL(clicked()), this, SLOT(clickDestroyable()));
@@ -211,14 +208,6 @@ void CreateDataDlg::accept()
         uCount++;
     }
 
-    if( mSensitiveCheck->isChecked() )
-    {
-        sTemplate[uCount].type = CKA_SENSITIVE;
-        sTemplate[uCount].pValue = ( mSensitiveCombo->currentIndex() ? &bTrue : &bFalse );
-        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
-        uCount++;
-    }
-
     if( mTokenCheck->isChecked() )
     {
         sTemplate[uCount].type = CKA_TOKEN;
@@ -249,11 +238,6 @@ void CreateDataDlg::accept()
 void CreateDataDlg::clickPrivate()
 {
     mPrivateCombo->setEnabled(mPrivateCheck->isChecked());
-}
-
-void CreateDataDlg::clickSensitive()
-{
-    mSensitiveCombo->setEnabled(mSensitiveCheck->isChecked());
 }
 
 void CreateDataDlg::clickModifiable()

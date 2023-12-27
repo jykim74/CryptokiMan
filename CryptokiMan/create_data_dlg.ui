@@ -366,18 +366,8 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="5">
-      <widget class="QComboBox" name="mSensitiveCombo"/>
-     </item>
      <item row="0" column="1">
       <widget class="QComboBox" name="mPrivateCombo"/>
-     </item>
-     <item row="0" column="4">
-      <widget class="QCheckBox" name="mSensitiveCheck">
-       <property name="text">
-        <string notr="true">Sensitive</string>
-       </property>
-      </widget>
      </item>
      <item row="0" column="3">
       <widget class="QComboBox" name="mModifiableCombo"/>
@@ -389,24 +379,27 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
+     <item row="0" column="4">
       <widget class="QCheckBox" name="mTokenCheck">
        <property name="text">
         <string notr="true">Token</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
+     <item row="0" column="5">
       <widget class="QComboBox" name="mTokenCombo"/>
      </item>
-     <item row="1" column="2">
+     <item row="1" column="0">
       <widget class="QCheckBox" name="mCopyableCheck">
        <property name="text">
         <string>Copyable</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="4">
+     <item row="1" column="1">
+      <widget class="QComboBox" name="mCopyableCombo"/>
+     </item>
+     <item row="1" column="2">
       <widget class="QCheckBox" name="mDestroyableCheck">
        <property name="text">
         <string>Destroyable</string>
@@ -414,9 +407,6 @@
       </widget>
      </item>
      <item row="1" column="3">
-      <widget class="QComboBox" name="mCopyableCombo"/>
-     </item>
-     <item row="1" column="5">
       <widget class="QComboBox" name="mDestroyableCombo"/>
      </item>
     </layout>
@@ -565,10 +555,6 @@
   <tabstop>mPrivateCombo</tabstop>
   <tabstop>mModifiableCheck</tabstop>
   <tabstop>mModifiableCombo</tabstop>
-  <tabstop>mSensitiveCheck</tabstop>
-  <tabstop>mSensitiveCombo</tabstop>
-  <tabstop>mTokenCheck</tabstop>
-  <tabstop>mTokenCombo</tabstop>
   <tabstop>mDataCombo</tabstop>
   <tabstop>mDataText</tabstop>
  </tabstops>
