@@ -159,8 +159,17 @@ void ManTreeView::showContextMenu( QPoint point )
 
         menu.addAction( tr("Verify"), manApplet->mainWindow(), &MainWindow::verifyType );
         menu.addAction( tr("Encrypt"), manApplet->mainWindow(), &MainWindow::encryptType );
+
         menu.addAction( tr( "CreateRSAPublicKey"), manApplet->mainWindow(), &MainWindow::createRSAPublicKey );
-        menu.addAction( tr("CreateECPublicKey"), manApplet->mainWindow(), &MainWindow::createECPublicKey );
+
+        QAction* pCreateECPubAct = menu.addAction( tr("CreateECPublicKey"), manApplet->mainWindow(), &MainWindow::createECPublicKey );
+        QAction* pCreateDSAPubAct = menu.addAction( tr("CreateDSAPublicKey"), manApplet->mainWindow(), &MainWindow::createDSAPublicKey );
+
+        if( manApplet->isLicense() == false )
+        {
+            pCreateECPubAct->setEnabled( false );
+            pCreateDSAPubAct->setEnabled( false );
+        }
     }
     else if( item->getType() == HM_ITEM_TYPE_PRIVATEKEY )
     {
@@ -171,12 +180,15 @@ void ManTreeView::showContextMenu( QPoint point )
         menu.addAction( tr( "Decrypt" ), manApplet->mainWindow(), &MainWindow::decryptType );
 
         menu.addAction( tr( "CreateRSAPrivateKey"), manApplet->mainWindow(), &MainWindow::createRSAPrivateKey );
-        menu.addAction( tr("CreateECPrivateKey"), manApplet->mainWindow(), &MainWindow::createECPrivateKey );
 
+        QAction* pCreateECPriAct = menu.addAction( tr("CreateECPrivateKey"), manApplet->mainWindow(), &MainWindow::createECPrivateKey );
+        QAction* pCreateDSAPriAct = menu.addAction( tr("CreateDSAPrivateKey"), manApplet->mainWindow(), &MainWindow::createDSAPrivateKey );
         QAction* pImportPriKeyAct = menu.addAction( tr("ImportPrivateKey"), manApplet->mainWindow(), &MainWindow::improtPrivateKey );
 
         if( manApplet->isLicense() == false )
         {
+            pCreateECPriAct->setEnabled( false );
+            pCreateDSAPriAct->setEnabled( false );
             pImportPriKeyAct->setEnabled( false );
         }
     }
