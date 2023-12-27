@@ -24,7 +24,6 @@ private slots:
     void clickUseSPKI();
 
     void clickPrivate();
-    void clickSensitive();
     void clickModifiable();
     void clickCopyable();
     void clickDestroyable();

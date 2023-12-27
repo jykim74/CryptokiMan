@@ -71,7 +71,6 @@ void ImportCertDlg::initAttributes()
     mSubjectTypeCombo->addItems(kDNTypeList);
 
     mPrivateCombo->addItems(sFalseTrue);
-    mSensitiveCombo->addItems(sFalseTrue);
     mModifiableCombo->addItems(sFalseTrue);
     mCopyableCombo->addItems(sFalseTrue);
     mDestroyableCombo->addItems(sFalseTrue);
@@ -86,7 +85,6 @@ void ImportCertDlg::initAttributes()
 void ImportCertDlg::setAttributes()
 {
     mPrivateCombo->setEnabled(mPrivateCheck->isChecked());
-    mSensitiveCombo->setEnabled(mSensitiveCheck->isChecked());
     mModifiableCombo->setEnabled(mModifiableCheck->isChecked());
     mCopyableCombo->setEnabled(mCopyableCheck->isChecked());
     mDestroyableCombo->setEnabled(mDestroyableCheck->isChecked());
@@ -103,7 +101,6 @@ void ImportCertDlg::connectAttributes()
     connect( mUseSPKICheck, SIGNAL(clicked()), this, SLOT(clickUseSPKI()));
 
     connect( mPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPrivate()));
-    connect( mSensitiveCheck, SIGNAL(clicked()), this, SLOT(clickSensitive()));
     connect( mModifiableCheck, SIGNAL(clicked()), this, SLOT(clickModifiable()));
     connect( mCopyableCheck, SIGNAL(clicked()), this, SLOT(clickCopyable()));
     connect( mDestroyableCheck, SIGNAL(clicked()), this, SLOT(clickDestroyable()));
@@ -282,14 +279,6 @@ void ImportCertDlg::accept()
         uCount++;
     }
 
-    if( mSensitiveCheck->isChecked() )
-    {
-        sTemplate[uCount].type = CKA_SENSITIVE;
-        sTemplate[uCount].pValue = ( mSensitiveCombo->currentIndex() ? &bTrue : &bFalse );
-        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
-        uCount++;
-    }
-
     if( mTokenCheck->isChecked() )
     {
         sTemplate[uCount].type = CKA_TOKEN;
@@ -341,11 +330,6 @@ void ImportCertDlg::clickUseSPKI()
 void ImportCertDlg::clickPrivate()
 {
     mPrivateCombo->setEnabled(mPrivateCheck->isChecked());
-}
-
-void ImportCertDlg::clickSensitive()
-{
-    mSensitiveCombo->setEnabled(mSensitiveCheck->isChecked());
 }
 
 void ImportCertDlg::clickModifiable()
