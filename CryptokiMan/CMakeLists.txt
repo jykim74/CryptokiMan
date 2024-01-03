@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
 project(CryptokiMan
-    VERSION 1.6.2
+    VERSION 1.6.3
     DESCRIPTION "CryptokiMan Application"
     LANGUAGES CXX )
 
@@ -217,7 +217,7 @@ add_executable(${PROJECT_NAME}
 )
 
 target_link_options( ${PROJECT_NAME} PRIVATE -mwindows -MD )
-add_definitions( -D_USE_RC_LCN )
+# add_definitions( -D_USE_RC_LCN )
 
 if(WIN32)
     include_directories( ../../PKILib

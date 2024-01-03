@@ -1015,11 +1015,16 @@ QString getSessionStateString( unsigned long uState )
 {
     QString strState = QString( "%1" ).arg( uState );
 
-    if( uState & CKS_RO_PUBLIC_SESSION ) strState += " | RO_PUBLIC_SESSION";
-    if( uState & CKS_RO_USER_FUNCTIONS ) strState += " | RO_USER_FUNCTIONS";
-    if( uState & CKS_RW_PUBLIC_SESSION ) strState += " | RW_PUBLIC_SESSION";
-    if( uState & CKS_RW_SO_FUNCTIONS ) strState += " | RW_SO_FUNCTIONS";
-    if( uState & CKS_RW_USER_FUNCTIONS ) strState += " | RW_USER_FUNCTIONS";
+    if( uState == CKS_RO_PUBLIC_SESSION )
+        strState += " | RO_PUBLIC_SESSION";
+    else if( uState == CKS_RO_USER_FUNCTIONS)
+        strState += " | RO_USER_FUNCTIONS";
+    else if( uState == CKS_RW_PUBLIC_SESSION )
+        strState += " | RW_PUBLIC_SESSION";
+    else if( uState == CKS_RW_SO_FUNCTIONS )
+        strState += " | RW_SO_FUNCTIONS";
+    else if( uState == CKS_RW_USER_FUNCTIONS )
+        strState += " | RW_USER_FUNCTIONS";
 
     return strState;
 }
