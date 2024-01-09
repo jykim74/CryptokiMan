@@ -2053,6 +2053,7 @@ void ImportPriKeyDlg::setDefaults()
     mPriLabelText->setText( "Private Label" );
     mPriIDText->setText( strDefaultID );
 
+    /*
     mPubEncryptCheck->setChecked(true);
     mPubEncryptCombo->setEnabled(true);
     mPubEncryptCombo->setCurrentIndex(1);
@@ -2082,6 +2083,7 @@ void ImportPriKeyDlg::setDefaults()
     mPriTokenCheck->setChecked(true);
     mPriTokenCombo->setEnabled(true);
     mPriTokenCombo->setCurrentIndex(1);
+    */
 
     QDateTime nowTime;
     nowTime.setSecsSinceEpoch( time(NULL) );

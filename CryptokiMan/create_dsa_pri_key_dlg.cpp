@@ -617,6 +617,7 @@ void CreateDSAPriKeyDlg::setDefaults()
     clickUseSKI();
 //    mUseSPKICheck->click();
 
+    /*
     mPrivateCheck->setChecked(true);
     mPrivateCombo->setEnabled(true);
     mPrivateCombo->setCurrentIndex(1);
@@ -633,6 +634,7 @@ void CreateDSAPriKeyDlg::setDefaults()
     mTokenCheck->setChecked(true);
     mTokenCombo->setEnabled(true);
     mTokenCombo->setCurrentIndex(1);
+    */
 
     QDateTime nowTime;
     nowTime.setSecsSinceEpoch( time(NULL) );

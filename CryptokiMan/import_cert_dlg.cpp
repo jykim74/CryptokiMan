@@ -397,9 +397,11 @@ void ImportCertDlg::setDefaults()
     mLabelText->setText( "certificate label" );
     mIDText->setText( "01020304" );
 
+    /*
     mTokenCheck->setChecked(true);
     mTokenCombo->setEnabled(true);
     mTokenCombo->setCurrentIndex(1);
+    */
 
     QDateTime nowTime;
     nowTime.setSecsSinceEpoch( time(NULL) );

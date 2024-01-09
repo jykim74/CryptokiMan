@@ -586,6 +586,7 @@ void CreateDSAPubKeyDlg::setDefaults()
     mUseSKICheck->setChecked(true);
     clickUseSKI();
 
+    /*
     mEncryptCheck->setChecked(true);
     mEncryptCombo->setEnabled(true);
     mEncryptCombo->setCurrentIndex(1);
@@ -598,6 +599,7 @@ void CreateDSAPubKeyDlg::setDefaults()
     mVerifyCheck->setChecked(true);
     mVerifyCombo->setEnabled(true);
     mVerifyCombo->setCurrentIndex(1);
+    */
 
     QDateTime nowTime;
     nowTime.setSecsSinceEpoch( time(NULL) );

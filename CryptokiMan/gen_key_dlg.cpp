@@ -514,7 +514,7 @@ void GenKeyDlg::setDefaults()
 
     mUseRandCheck->setChecked(true);
     clickUseRand();
-
+/*
     mPrivateCheck->setChecked(true);
     mPrivateCombo->setEnabled(true);
     mPrivateCombo->setCurrentIndex(1);
@@ -530,6 +530,7 @@ void GenKeyDlg::setDefaults()
     mTokenCheck->setChecked(true);
     mTokenCombo->setEnabled(true);
     mTokenCombo->setCurrentIndex(1);
+*/
 
     mKeySizeText->setText( "16" );
 

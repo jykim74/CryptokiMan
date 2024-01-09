@@ -1029,7 +1029,7 @@ void GenKeyPairDlg::setDefaults()
     clickPubUseSKI();
 
 //    mPriUseSPKICheck->click();
-
+/*
     mPubEncryptCheck->setChecked(true);
     mPubEncryptCombo->setEnabled(true);
     mPubEncryptCombo->setCurrentIndex(1);
@@ -1060,6 +1060,7 @@ void GenKeyPairDlg::setDefaults()
     mPriTokenCheck->setChecked(true);
     mPriTokenCombo->setEnabled(true);
     mPriTokenCombo->setCurrentIndex(1);
+*/
 
     QDateTime nowTime;
     nowTime.setSecsSinceEpoch( time(NULL) );

@@ -120,6 +120,7 @@ void CopyObjectDlg::connectAttributes()
 
 void CopyObjectDlg::setDefaults()
 {
+    /*
     mPrivateCheck->setChecked(true);
     mPrivateCombo->setEnabled(true);
     mPrivateCombo->setCurrentIndex(1);
@@ -127,6 +128,7 @@ void CopyObjectDlg::setDefaults()
     mTokenCheck->setChecked(true);
     mTokenCombo->setEnabled(true);
     mTokenCombo->setCurrentIndex(1);
+    */
 }
 
 void CopyObjectDlg::accept()

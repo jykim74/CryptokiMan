@@ -534,6 +534,7 @@ void CreateRSAPubKeyDlg::setDefaults()
     mUseSKICheck->setChecked(true);
     clickUseSKI();
 
+    /*
     mEncryptCheck->setChecked(true);
     mEncryptCombo->setEnabled(true);
     mEncryptCombo->setCurrentIndex(1);
@@ -546,6 +547,7 @@ void CreateRSAPubKeyDlg::setDefaults()
     mVerifyCheck->setChecked(true);
     mVerifyCombo->setEnabled(true);
     mVerifyCombo->setCurrentIndex(1);
+    */
 
     QDateTime nowTime;
     nowTime.setSecsSinceEpoch( time(NULL) );
