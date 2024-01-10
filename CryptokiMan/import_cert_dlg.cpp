@@ -71,11 +71,22 @@ void ImportCertDlg::initAttributes()
     mSubjectTypeCombo->addItems(kDNTypeList);
 
     mPrivateCombo->addItems(sFalseTrue);
+    mPrivateCombo->setCurrentIndex(1);
+
     mModifiableCombo->addItems(sFalseTrue);
+    mModifiableCombo->setCurrentIndex(1);
+
     mCopyableCombo->addItems(sFalseTrue);
+    mCopyableCombo->setCurrentIndex(1);
+
     mDestroyableCombo->addItems(sFalseTrue);
+    mDestroyableCombo->setCurrentIndex(1);
+
     mTokenCombo->addItems(sFalseTrue);
+    mTokenCombo->setCurrentIndex(1);
+
     mTrustedCombo->addItems(sFalseTrue);
+    mTrustedCombo->setCurrentIndex(1);
 
     QDate nowDate = QDate::currentDate();
     mStartDateEdit->setDate(nowDate);

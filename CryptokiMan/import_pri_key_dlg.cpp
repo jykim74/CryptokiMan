@@ -64,30 +64,75 @@ void ImportPriKeyDlg::initAttributes()
     mPriSubjectTypeCombo->addItems( kDNTypeList );
 
     mPriPrivateCombo->addItems( sFalseTrue );
+    mPriPrivateCombo->setCurrentIndex(1);
+
     mPriDecryptCombo->addItems( sFalseTrue );
+    mPriDecryptCombo->setCurrentIndex(1);
+
     mPriSignCombo->addItems( sFalseTrue );
+    mPriSignCombo->setCurrentIndex(1);
+
     mPriSignRecoverCombo->addItems(sFalseTrue);
+    mPriSignRecoverCombo->setCurrentIndex(1);
+
     mPriUnwrapCombo->addItems( sFalseTrue );
+    mPriUnwrapCombo->setCurrentIndex(1);
+
     mPriModifiableCombo->addItems( sFalseTrue );
+    mPriModifiableCombo->setCurrentIndex(1);
+
     mPriCopyableCombo->addItems(sFalseTrue);
+    mPriCopyableCombo->setCurrentIndex(1);
+
     mPriDestroyableCombo->addItems(sFalseTrue);
+    mPriDestroyableCombo->setCurrentIndex(1);
+
     mPriSensitiveCombo->addItems( sFalseTrue );
+    mPriSensitiveCombo->setCurrentIndex(1);
+
     mPriDeriveCombo->addItems( sFalseTrue );
+    mPriDeriveCombo->setCurrentIndex(1);
+
     mPriExtractableCombo->addItems( sFalseTrue );
+    mPriExtractableCombo->setCurrentIndex(1);
+
     mPriTokenCombo->addItems( sFalseTrue );
+    mPriTokenCombo->setCurrentIndex(1);
 
     mPubSubjectTypeCombo->addItems( kDNTypeList );
+
     mPubPrivateCombo->addItems( sFalseTrue );
+    mPubPrivateCombo->setCurrentIndex(1);
+
     mPubEncryptCombo->addItems( sFalseTrue );
+    mPubEncryptCombo->setCurrentIndex(1);
+
     mPubWrapCombo->addItems( sFalseTrue );
+    mPubWrapCombo->setCurrentIndex(1);
+
     mPubVerifyCombo->addItems( sFalseTrue );
+    mPubVerifyCombo->setCurrentIndex(1);
+
     mPubVerifyRecoverCombo->addItems(sFalseTrue);
+    mPubVerifyRecoverCombo->setCurrentIndex(1);
+
     mPubDeriveCombo->addItems( sFalseTrue );
+    mPubDeriveCombo->setCurrentIndex(1);
+
     mPubModifiableCombo->addItems( sFalseTrue );
+    mPubModifiableCombo->setCurrentIndex(1);
+
     mPubCopyableCombo->addItems(sFalseTrue);
+    mPubCopyableCombo->setCurrentIndex(1);
+
     mPubDestroyableCombo->addItems(sFalseTrue);
+    mPubDestroyableCombo->setCurrentIndex(1);
+
     mPubTokenCombo->addItems( sFalseTrue );
+    mPubTokenCombo->setCurrentIndex(1);
+
     mPubTrustedCombo->addItems( sFalseTrue );
+    mPubTrustedCombo->setCurrentIndex(1);
 
     QDate nowDate = QDate::currentDate();
     mPriStartDateEdit->setDate(nowDate);

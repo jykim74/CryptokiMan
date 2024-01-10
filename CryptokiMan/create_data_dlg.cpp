@@ -70,11 +70,19 @@ void CreateDataDlg::initAttributes()
     mDataCombo->addItems(sDataList);
 
     mPrivateCombo->addItems(sFalseTrue);
+    mPrivateCombo->setCurrentIndex(1);
+
     mModifiableCombo->addItems(sFalseTrue);
+    mModifiableCombo->setCurrentIndex(1);
+
     mCopyableCombo->addItems(sFalseTrue);
+    mCopyableCombo->setCurrentIndex(1);
+
     mDestroyableCombo->addItems(sFalseTrue);
+    mDestroyableCombo->setCurrentIndex(1);
 
     mTokenCombo->addItems(sFalseTrue);
+    mTokenCombo->setCurrentIndex(1);
 }
 
 void CreateDataDlg::setAttributes()

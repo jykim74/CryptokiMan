@@ -97,9 +97,16 @@ void CopyObjectDlg::initialize()
 void CopyObjectDlg::initAttributes()
 {
     mPrivateCombo->addItems(sFalseTrue);
+    mPrivateCombo->setCurrentIndex(1);
+
     mModifiableCombo->addItems(sFalseTrue);
+    mModifiableCombo->setCurrentIndex(1);
+
     mDestroyableCombo->addItems(sFalseTrue);
+    mDestroyableCombo->setCurrentIndex(1);
+
     mTokenCombo->addItems(sFalseTrue);
+    mTokenCombo->setCurrentIndex(1);
 }
 
 void CopyObjectDlg::setAttributes()

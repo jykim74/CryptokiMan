@@ -74,17 +74,40 @@ void CreateDSAPriKeyDlg::initAttributes()
     mParamCombo->addItems( kDSAOptionList );
 
     mPrivateCombo->addItems(sFalseTrue);
+    mPrivateCombo->setCurrentIndex(1);
+
     mDecryptCombo->addItems(sFalseTrue);
+    mDecryptCombo->setCurrentIndex(1);
+
     mSignCombo->addItems(sFalseTrue);
+    mSignCombo->setCurrentIndex(1);
+
     mSignRecoverCombo->addItems(sFalseTrue);
+    mSignRecoverCombo->setCurrentIndex(1);
+
     mUnwrapCombo->addItems(sFalseTrue);
+    mUnwrapCombo->setCurrentIndex(1);
+
     mSensitiveCombo->addItems(sFalseTrue);
+    mSensitiveCombo->setCurrentIndex(1);
+
     mDeriveCombo->addItems(sFalseTrue);
+    mDeriveCombo->setCurrentIndex(1);
+
     mModifiableCombo->addItems(sFalseTrue);
+    mModifiableCombo->setCurrentIndex(1);
+
     mCopyableCombo->addItems(sFalseTrue);
+    mCopyableCombo->setCurrentIndex(1);
+
     mDestroyableCombo->addItems(sFalseTrue);
+    mDestroyableCombo->setCurrentIndex(1);
+
     mExtractableCombo->addItems(sFalseTrue);
+    mExtractableCombo->setCurrentIndex(1);
+
     mTokenCombo->addItems(sFalseTrue);
+    mTokenCombo->setCurrentIndex(1);
 
     QDate nowDate = QDate::currentDate();
     mStartDateEdit->setDate(nowDate);

@@ -73,16 +73,37 @@ void CreateRSAPubKeyDlg::initAttributes()
     mSubjectTypeCombo->addItems(kDNTypeList);
 
     mPrivateCombo->addItems(sFalseTrue);
+    mPrivateCombo->setCurrentIndex(1);
+
     mEncryptCombo->addItems(sFalseTrue);
+    mEncryptCombo->setCurrentIndex(1);
+
     mWrapCombo->addItems(sFalseTrue);
+    mWrapCombo->setCurrentIndex(1);
+
     mVerifyCombo->addItems(sFalseTrue);
+    mVerifyCombo->setCurrentIndex(1);
+
     mVerifyRecoverCombo->addItems(sFalseTrue);
+    mVerifyRecoverCombo->setCurrentIndex(1);
+
     mDeriveCombo->addItems(sFalseTrue);
+    mDeriveCombo->setCurrentIndex(1);
+
     mModifiableCombo->addItems(sFalseTrue);
+    mModifiableCombo->setCurrentIndex(1);
+
     mCopyableCombo->addItems(sFalseTrue);
+    mCopyableCombo->setCurrentIndex(1);
+
     mDestroyableCombo->addItems(sFalseTrue);
+    mDestroyableCombo->setCurrentIndex(1);
+
     mTokenCombo->addItems(sFalseTrue);
+    mTokenCombo->setCurrentIndex(1);
+
     mTrustedCombo->addItems(sFalseTrue);
+    mTrustedCombo->setCurrentIndex(1);
 
     QDate nowDate = QDate::currentDate();
     mStartDateEdit->setDate(nowDate);
