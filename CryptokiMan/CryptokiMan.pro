@@ -10,7 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = CryptokiMan
 TEMPLATE = app
-PROJECT_VERSION = "1.6.3"
+PROJECT_VERSION = "1.6.4"
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
