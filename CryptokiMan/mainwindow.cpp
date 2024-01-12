@@ -1361,11 +1361,10 @@ void MainWindow::editAttributeList()
     }
 
     EditAttributeListDlg editAttrListDlg;
-    /*
+
     editAttrListDlg.setSlotIndex( slot_index_ );
     editAttrListDlg.setObjectType( getDataType( right_type_ ));
     editAttrListDlg.setObjectID( item1->text().toLong());
-    */
 
     editAttrListDlg.exec();
 

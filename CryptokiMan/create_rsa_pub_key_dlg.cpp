@@ -347,7 +347,7 @@ void CreateRSAPubKeyDlg::accept()
 
     if( mStartDateCheck->isChecked() )
     {
-        getCKDate( mStartDateEdit->date(), &sSDate );
+        getQDateToCKDate( mStartDateEdit->date(), &sSDate );
         sTemplate[uCount].type = CKA_START_DATE;
         sTemplate[uCount].pValue = &sSDate;
         sTemplate[uCount].ulValueLen = sizeof(sSDate);
@@ -356,7 +356,7 @@ void CreateRSAPubKeyDlg::accept()
 
     if( mEndDateCheck->isChecked() )
     {
-        getCKDate( mEndDateEdit->date(), &sEDate );
+        getQDateToCKDate( mEndDateEdit->date(), &sEDate );
         sTemplate[uCount].type = CKA_END_DATE;
         sTemplate[uCount].pValue = &sEDate;
         sTemplate[uCount].ulValueLen = sizeof(sEDate);

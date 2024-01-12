@@ -821,7 +821,7 @@ int ImportPFXDlg::createCert( BIN *pCert )
 
     if( mCertStartDateCheck->isChecked() )
     {
-        getCKDate( mCertStartDateEdit->date(), &sSDate );
+        getQDateToCKDate( mCertStartDateEdit->date(), &sSDate );
         sTemplate[uCount].type = CKA_START_DATE;
         sTemplate[uCount].pValue = &sSDate;
         sTemplate[uCount].ulValueLen = sizeof(sSDate);
@@ -830,7 +830,7 @@ int ImportPFXDlg::createCert( BIN *pCert )
 
     if( mCertEndDateCheck->isChecked() )
     {
-        getCKDate( mCertEndDateEdit->date(), &sEDate );
+        getQDateToCKDate( mCertEndDateEdit->date(), &sEDate );
         sTemplate[uCount].type = CKA_END_DATE;
         sTemplate[uCount].pValue = &sEDate;
         sTemplate[uCount].ulValueLen = sizeof(sEDate);
@@ -1044,7 +1044,7 @@ int ImportPFXDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
 
     if( mPubStartDateCheck->isChecked() )
     {
-        getCKDate( mPubStartDateEdit->date(), &sSDate );
+        getQDateToCKDate( mPubStartDateEdit->date(), &sSDate );
         sTemplate[uCount].type = CKA_START_DATE;
         sTemplate[uCount].pValue = &sSDate;
         sTemplate[uCount].ulValueLen = sizeof(sSDate);
@@ -1053,7 +1053,7 @@ int ImportPFXDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
 
     if( mPubEndDateCheck->isChecked() )
     {
-        getCKDate( mPubEndDateEdit->date(), &sEDate );
+        getQDateToCKDate( mPubEndDateEdit->date(), &sEDate );
         sTemplate[uCount].type = CKA_END_DATE;
         sTemplate[uCount].pValue = &sEDate;
         sTemplate[uCount].ulValueLen = sizeof(sEDate);
@@ -1370,7 +1370,7 @@ int ImportPFXDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
 
     if( mPriStartDateCheck->isChecked() )
     {
-        getCKDate( mPriStartDateEdit->date(), &sSDate );
+        getQDateToCKDate( mPriStartDateEdit->date(), &sSDate );
         sTemplate[uCount].type = CKA_START_DATE;
         sTemplate[uCount].pValue = &sSDate;
         sTemplate[uCount].ulValueLen = sizeof(sSDate);
@@ -1379,7 +1379,7 @@ int ImportPFXDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
 
     if( mPriEndDateCheck->isChecked() )
     {
-        getCKDate( mPriEndDateEdit->date(), &sEDate );
+        getQDateToCKDate( mPriEndDateEdit->date(), &sEDate );
         sTemplate[uCount].type = CKA_END_DATE;
         sTemplate[uCount].pValue = &sEDate;
         sTemplate[uCount].ulValueLen = sizeof(sEDate);
@@ -1616,7 +1616,7 @@ int ImportPFXDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
 
     if( mPubStartDateCheck->isChecked() )
     {
-        getCKDate( mPubStartDateEdit->date(), &sSDate );
+        getQDateToCKDate( mPubStartDateEdit->date(), &sSDate );
         sTemplate[uCount].type = CKA_START_DATE;
         sTemplate[uCount].pValue = &sSDate;
         sTemplate[uCount].ulValueLen = sizeof(sSDate);
@@ -1625,7 +1625,7 @@ int ImportPFXDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
 
     if( mPubEndDateCheck->isChecked() )
     {
-        getCKDate( mPubEndDateEdit->date(), &sEDate );
+        getQDateToCKDate( mPubEndDateEdit->date(), &sEDate );
         sTemplate[uCount].type = CKA_END_DATE;
         sTemplate[uCount].pValue = &sEDate;
         sTemplate[uCount].ulValueLen = sizeof(sEDate);
@@ -1880,7 +1880,7 @@ int ImportPFXDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
 
     if( mPriStartDateCheck->isChecked() )
     {
-        getCKDate( mPriStartDateEdit->date(), &sSDate );
+        getQDateToCKDate( mPriStartDateEdit->date(), &sSDate );
         sTemplate[uCount].type = CKA_START_DATE;
         sTemplate[uCount].pValue = &sSDate;
         sTemplate[uCount].ulValueLen = sizeof(sSDate);
@@ -1889,7 +1889,7 @@ int ImportPFXDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
 
     if( mPriEndDateCheck->isChecked() )
     {
-        getCKDate( mPriEndDateEdit->date(), &sEDate );
+        getQDateToCKDate( mPriEndDateEdit->date(), &sEDate );
         sTemplate[uCount].type = CKA_END_DATE;
         sTemplate[uCount].pValue = &sEDate;
         sTemplate[uCount].ulValueLen = sizeof(sEDate);
@@ -2119,7 +2119,7 @@ int ImportPFXDlg::createDSAPublicKey( JDSAKeyVal *pDSAKeyVal )
 
     if( mPubStartDateCheck->isChecked() )
     {
-        getCKDate( mPubStartDateEdit->date(), &sSDate );
+        getQDateToCKDate( mPubStartDateEdit->date(), &sSDate );
         sTemplate[uCount].type = CKA_START_DATE;
         sTemplate[uCount].pValue = &sSDate;
         sTemplate[uCount].ulValueLen = sizeof(sSDate);
@@ -2128,7 +2128,7 @@ int ImportPFXDlg::createDSAPublicKey( JDSAKeyVal *pDSAKeyVal )
 
     if( mPubEndDateCheck->isChecked() )
     {
-        getCKDate( mPubEndDateEdit->date(), &sEDate );
+        getQDateToCKDate( mPubEndDateEdit->date(), &sEDate );
         sTemplate[uCount].type = CKA_END_DATE;
         sTemplate[uCount].pValue = &sEDate;
         sTemplate[uCount].ulValueLen = sizeof(sEDate);
@@ -2399,7 +2399,7 @@ int ImportPFXDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
 
     if( mPriStartDateCheck->isChecked() )
     {
-        getCKDate( mPriStartDateEdit->date(), &sSDate );
+        getQDateToCKDate( mPriStartDateEdit->date(), &sSDate );
         sTemplate[uCount].type = CKA_START_DATE;
         sTemplate[uCount].pValue = &sSDate;
         sTemplate[uCount].ulValueLen = sizeof(sSDate);
@@ -2408,7 +2408,7 @@ int ImportPFXDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
 
     if( mPriEndDateCheck->isChecked() )
     {
-        getCKDate( mPriEndDateEdit->date(), &sEDate );
+        getQDateToCKDate( mPriEndDateEdit->date(), &sEDate );
         sTemplate[uCount].type = CKA_END_DATE;
         sTemplate[uCount].pValue = &sEDate;
         sTemplate[uCount].ulValueLen = sizeof(sEDate);

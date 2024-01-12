@@ -550,7 +550,7 @@ void GenKeyPairDlg::accept()
 
     if( mPubStartDateCheck->isChecked() )
     {
-        getCKDate( mPubStartDateEdit->date(), &sPubStart );
+        getQDateToCKDate( mPubStartDateEdit->date(), &sPubStart );
         sPubTemplate[uPubCount].type = CKA_START_DATE;
         sPubTemplate[uPubCount].pValue = &sPubStart;
         sPubTemplate[uPubCount].ulValueLen = sizeof(sPubStart);
@@ -559,7 +559,7 @@ void GenKeyPairDlg::accept()
 
     if( mPubEndDateCheck->isChecked() )
     {
-        getCKDate( mPubEndDateEdit->date(), &sPubEnd );
+        getQDateToCKDate( mPubEndDateEdit->date(), &sPubEnd );
         sPubTemplate[uPubCount].type = CKA_END_DATE;
         sPubTemplate[uPubCount].pValue = &sPubEnd;
         sPubTemplate[uPubCount].ulValueLen = sizeof(sPubEnd);
@@ -729,7 +729,7 @@ void GenKeyPairDlg::accept()
 
     if( mPriStartDateCheck->isChecked() )
     {
-        getCKDate( mPriStartDateEdit->date(), &sPriStart );
+        getQDateToCKDate( mPriStartDateEdit->date(), &sPriStart );
         sPriTemplate[uPriCount].type = CKA_START_DATE;
         sPriTemplate[uPriCount].pValue = &sPriStart;
         sPriTemplate[uPriCount].ulValueLen = sizeof(sPriStart);
@@ -738,7 +738,7 @@ void GenKeyPairDlg::accept()
 
     if( mPriEndDateCheck->isChecked() )
     {
-        getCKDate( mPriEndDateEdit->date(), &sPriEnd );
+        getQDateToCKDate( mPriEndDateEdit->date(), &sPriEnd );
         sPriTemplate[uPriCount].type = CKA_END_DATE;
         sPriTemplate[uPriCount].pValue = &sPriEnd;
         sPriTemplate[uPriCount].ulValueLen = sizeof(sPriEnd);

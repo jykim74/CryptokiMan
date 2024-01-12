@@ -738,7 +738,7 @@ int ImportPriKeyDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
 
     if( mPubStartDateCheck->isChecked() )
     {
-        getCKDate( mPubStartDateEdit->date(), &sSDate );
+        getQDateToCKDate( mPubStartDateEdit->date(), &sSDate );
         sTemplate[uCount].type = CKA_START_DATE;
         sTemplate[uCount].pValue = &sSDate;
         sTemplate[uCount].ulValueLen = sizeof(sSDate);
@@ -747,7 +747,7 @@ int ImportPriKeyDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
 
     if( mPubEndDateCheck->isChecked() )
     {
-        getCKDate( mPubEndDateEdit->date(), &sEDate );
+        getQDateToCKDate( mPubEndDateEdit->date(), &sEDate );
         sTemplate[uCount].type = CKA_END_DATE;
         sTemplate[uCount].pValue = &sEDate;
         sTemplate[uCount].ulValueLen = sizeof(sEDate);
@@ -1055,7 +1055,7 @@ int ImportPriKeyDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
 
     if( mPriStartDateCheck->isChecked() )
     {
-        getCKDate( mPriStartDateEdit->date(), &sSDate );
+        getQDateToCKDate( mPriStartDateEdit->date(), &sSDate );
         sTemplate[uCount].type = CKA_START_DATE;
         sTemplate[uCount].pValue = &sSDate;
         sTemplate[uCount].ulValueLen = sizeof(sSDate);
@@ -1064,7 +1064,7 @@ int ImportPriKeyDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
 
     if( mPriEndDateCheck->isChecked() )
     {
-        getCKDate( mPriEndDateEdit->date(), &sEDate );
+        getQDateToCKDate( mPriEndDateEdit->date(), &sEDate );
         sTemplate[uCount].type = CKA_END_DATE;
         sTemplate[uCount].pValue = &sEDate;
         sTemplate[uCount].ulValueLen = sizeof(sEDate);
@@ -1291,7 +1291,7 @@ int ImportPriKeyDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
 
     if( mPubStartDateCheck->isChecked() )
     {
-        getCKDate( mPubStartDateEdit->date(), &sSDate );
+        getQDateToCKDate( mPubStartDateEdit->date(), &sSDate );
         sTemplate[uCount].type = CKA_START_DATE;
         sTemplate[uCount].pValue = &sSDate;
         sTemplate[uCount].ulValueLen = sizeof(sSDate);
@@ -1300,7 +1300,7 @@ int ImportPriKeyDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
 
     if( mPubEndDateCheck->isChecked() )
     {
-        getCKDate( mPubEndDateEdit->date(), &sEDate );
+        getQDateToCKDate( mPubEndDateEdit->date(), &sEDate );
         sTemplate[uCount].type = CKA_END_DATE;
         sTemplate[uCount].pValue = &sEDate;
         sTemplate[uCount].ulValueLen = sizeof(sEDate);
@@ -1544,7 +1544,7 @@ int ImportPriKeyDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
 
     if( mPriStartDateCheck->isChecked() )
     {
-        getCKDate( mPriStartDateEdit->date(), &sSDate );
+        getQDateToCKDate( mPriStartDateEdit->date(), &sSDate );
         sTemplate[uCount].type = CKA_START_DATE;
         sTemplate[uCount].pValue = &sSDate;
         sTemplate[uCount].ulValueLen = sizeof(sSDate);
@@ -1553,7 +1553,7 @@ int ImportPriKeyDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
 
     if( mPriEndDateCheck->isChecked() )
     {
-        getCKDate( mPriEndDateEdit->date(), &sEDate );
+        getQDateToCKDate( mPriEndDateEdit->date(), &sEDate );
         sTemplate[uCount].type = CKA_END_DATE;
         sTemplate[uCount].pValue = &sEDate;
         sTemplate[uCount].ulValueLen = sizeof(sEDate);
@@ -1773,7 +1773,7 @@ int ImportPriKeyDlg::createDSAPublicKey( JDSAKeyVal *pDSAKeyVal )
 
     if( mPubStartDateCheck->isChecked() )
     {
-        getCKDate( mPubStartDateEdit->date(), &sSDate );
+        getQDateToCKDate( mPubStartDateEdit->date(), &sSDate );
         sTemplate[uCount].type = CKA_START_DATE;
         sTemplate[uCount].pValue = &sSDate;
         sTemplate[uCount].ulValueLen = sizeof(sSDate);
@@ -1782,7 +1782,7 @@ int ImportPriKeyDlg::createDSAPublicKey( JDSAKeyVal *pDSAKeyVal )
 
     if( mPubEndDateCheck->isChecked() )
     {
-        getCKDate( mPubEndDateEdit->date(), &sEDate );
+        getQDateToCKDate( mPubEndDateEdit->date(), &sEDate );
         sTemplate[uCount].type = CKA_END_DATE;
         sTemplate[uCount].pValue = &sEDate;
         sTemplate[uCount].ulValueLen = sizeof(sEDate);
@@ -2043,7 +2043,7 @@ int ImportPriKeyDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
 
     if( mPriStartDateCheck->isChecked() )
     {
-        getCKDate( mPriStartDateEdit->date(), &sSDate );
+        getQDateToCKDate( mPriStartDateEdit->date(), &sSDate );
         sTemplate[uCount].type = CKA_START_DATE;
         sTemplate[uCount].pValue = &sSDate;
         sTemplate[uCount].ulValueLen = sizeof(sSDate);
@@ -2052,7 +2052,7 @@ int ImportPriKeyDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
 
     if( mPriEndDateCheck->isChecked() )
     {
-        getCKDate( mPriEndDateEdit->date(), &sEDate );
+        getQDateToCKDate( mPriEndDateEdit->date(), &sEDate );
         sTemplate[uCount].type = CKA_END_DATE;
         sTemplate[uCount].pValue = &sEDate;
         sTemplate[uCount].ulValueLen = sizeof(sEDate);

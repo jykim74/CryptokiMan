@@ -100,7 +100,7 @@ QString saveFile( QWidget *parent, int nType, const QString strPath )
     return fileName;
 }
 
-void getCKDate( const QDate date, CK_DATE *pCKDate )
+void getQDateToCKDate( const QDate date, CK_DATE *pCKDate )
 {
     if( pCKDate == NULL ) return;
 
@@ -119,6 +119,25 @@ void getCKDate( const QDate date, CK_DATE *pCKDate )
     memcpy( pCKDate->year, sYear, 4 );
     memcpy( pCKDate->month, sMonth, 2 );
     memcpy( pCKDate->day, sDay, 2 );
+}
+
+void getCKDateToQDate( const CK_DATE *pCKDate, QDate *pQDate )
+{
+    if( pCKDate == NULL || pQDate == NULL ) return;
+
+    char    sYear[5];
+    char    sMonth[3];
+    char    sDay[3];
+
+    memset( sYear, 0x00, sizeof(sYear));
+    memset( sMonth, 0x00, sizeof(sMonth));
+    memset( sDay, 0x00, sizeof(sDay));
+
+    memcpy( sYear, pCKDate->year, 4 );
+    memcpy( sMonth, pCKDate->month, 2 );
+    memcpy( sDay, pCKDate->day, 2 );
+
+    pQDate->setDate( atoi(sYear), atoi(sMonth), atoi(sDay));
 }
 
 QString getBool( const BIN *pBin )

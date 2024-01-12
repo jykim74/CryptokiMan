@@ -50,7 +50,8 @@ enum {
 QString findFile( QWidget *parent, int nType, const QString strPath );
 QString saveFile( QWidget *parent, int nType, const QString strPath );
 
-void getCKDate( const QDate date, CK_DATE *pCKDate );
+void getQDateToCKDate( const QDate date, CK_DATE *pCKDate );
+void getCKDateToQDate( const CK_DATE *pCKDate, QDate *pQDate );
 QString getBool( const BIN *pBin );
 QString getHexString( const BIN *pBin );
 QString getHexString( unsigned char *pData, int nDataLen );
