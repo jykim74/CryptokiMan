@@ -403,6 +403,11 @@ void MainWindow::createActions()
     editAttributeAct->setStatusTip(tr("PKCS11 Edit Object"));
     objectsMenu->addAction( editAttributeAct );
 
+    QAction *editAttributeListAct = new QAction( editIcon, tr("Edit Attribute List"), this);
+    connect( editAttributeListAct, &QAction::triggered, this, &MainWindow::editAttributeList2 );
+    editAttributeListAct->setStatusTip(tr("PKCS11 Edit Attribute List"));
+    objectsMenu->addAction( editAttributeListAct );
+
     const QIcon copyIcon = QIcon::fromTheme("Edit", QIcon(":/images/copy_object.png"));
     QAction *copyObjectAct = new QAction( copyIcon, tr("Copy Object"), this);
     connect( copyObjectAct, &QAction::triggered, this, &MainWindow::copyObject);
@@ -1369,6 +1374,28 @@ void MainWindow::editAttributeList()
     editAttrListDlg.exec();
 
     manApplet->log( QString( QString("Name: %1 Value: %2").arg( item0->text() ).arg( item1->text() )));
+}
+
+void MainWindow::editAttributeList2()
+{
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        return;
+    }
+
+    EditAttributeListDlg editAttrListDlg;
+    if( pItem )
+    {
+        editAttrListDlg.setSlotIndex( pItem->getSlotIndex() );
+        editAttrListDlg.setObjectType( getDataType( pItem->getType() ));
+        long obj_id = pItem->data().toInt();
+        if( obj_id > 0 ) editAttrListDlg.setObjectID( obj_id );
+    }
+
+    editAttrListDlg.exec();
 }
 
 void MainWindow::digest()

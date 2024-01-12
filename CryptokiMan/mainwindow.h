@@ -113,6 +113,7 @@ public slots:
     void deleteObject();
     void editObject();
     void editAttribute();
+    void editAttributeList2();
     void editAttributeList();
     void digest();
     void sign();
