@@ -10,7 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = CryptokiMan
 TEMPLATE = app
-PROJECT_VERSION = "1.6.4"
+PROJECT_VERSION = "1.6.5"
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -51,6 +51,7 @@ SOURCES += \
         derive_key_dlg.cpp \
         digest_dlg.cpp \
         edit_attribute_dlg.cpp \
+        edit_attribute_list_dlg.cpp \
         encrypt_dlg.cpp \
         gen_key_dlg.cpp \
         gen_key_pair_dlg.cpp \
@@ -107,6 +108,7 @@ HEADERS += \
         derive_key_dlg.h \
         digest_dlg.h \
         edit_attribute_dlg.h \
+        edit_attribute_list_dlg.h \
         encrypt_dlg.h \
         gen_key_dlg.h \
         gen_key_pair_dlg.h \
@@ -160,6 +162,7 @@ FORMS += \
         derive_key_dlg.ui \
         digest_dlg.ui \
         edit_attribute_dlg.ui \
+        edit_attribute_list_dlg.ui \
         encrypt_dlg.ui \
         gen_key_dlg.ui \
         gen_key_pair_dlg.ui \

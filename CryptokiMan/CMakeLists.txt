@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
 project(CryptokiMan
-    VERSION 1.6.4
+    VERSION 1.6.5
     DESCRIPTION "CryptokiMan Application"
     LANGUAGES CXX )
 
@@ -214,6 +214,7 @@ add_executable(${PROJECT_NAME}
     ${TS_FILES}
     find_object_dlg.h find_object_dlg.cpp find_object_dlg.ui
     CryptokiMan.pro
+    edit_attribute_list_dlg.h edit_attribute_list_dlg.cpp edit_attribute_list_dlg.ui
 )
 
 target_link_options( ${PROJECT_NAME} PRIVATE -mwindows -MD )

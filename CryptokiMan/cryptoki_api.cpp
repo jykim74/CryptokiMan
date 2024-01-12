@@ -551,6 +551,32 @@ int CryptokiAPI::GetAttributeValue2( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDL
     return rv;
 }
 
+int CryptokiAPI::GetAttributeListValue( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject, CK_ATTRIBUTE_PTR pAttribute, CK_ULONG uAttributeCnt )
+{
+    int rv;
+    if( hSession <= 0 ) return -1;
+
+    rv = GetAttributeValue( hSession, hObject, pAttribute, uAttributeCnt );
+
+    if( rv != CKR_OK )
+    {
+        fprintf( stderr, "fail to run C_GetAttributeValue(%s:%d)\n", JS_PKCS11_GetErrorMsg(rv), rv );
+        return rv;
+    }
+
+    for( int i = 0; i < uAttributeCnt; i++ )
+    {
+        if( pAttribute[i].ulValueLen > 0 && pAttribute[i].pValue == NULL )
+        {
+            pAttribute[i].pValue = (CK_BYTE_PTR)JS_calloc( 1, pAttribute[i].ulValueLen );
+        }
+    }
+
+    rv = GetAttributeValue( hSession, hObject, pAttribute, uAttributeCnt );
+
+    return rv;
+}
+
 int CryptokiAPI::SetAttributeValue( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject, CK_ATTRIBUTE_PTR pAttribute, CK_ULONG uAttributeCnt )
 {
     int rv = 0;

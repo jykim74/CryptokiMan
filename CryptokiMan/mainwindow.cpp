@@ -29,6 +29,7 @@
 #include "create_key_dlg.h"
 #include "del_object_dlg.h"
 #include "edit_attribute_dlg.h"
+#include "edit_attribute_list_dlg.h"
 #include "digest_dlg.h"
 #include "sign_dlg.h"
 #include "verify_dlg.h"
@@ -1337,6 +1338,40 @@ void MainWindow::editAttribute()
     manApplet->log( QString( QString("Name: %1 Value: %2").arg( item0->text() ).arg( item1->text() )));
 }
 
+void MainWindow::editAttributeList()
+{
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        return;
+    }
+
+    QModelIndex index = right_table_->currentIndex();
+    int row = index.row();
+
+    QTableWidgetItem* item0 = right_table_->item( row, 0 );
+    QTableWidgetItem* item1 = right_table_->item( row, 1 );
+
+    if( item0 == NULL || item1 == NULL )
+    {
+        manApplet->warningBox( tr( "There is no object to be selected" ), this );
+        return;
+    }
+
+    EditAttributeListDlg editAttrListDlg;
+    /*
+    editAttrListDlg.setSlotIndex( slot_index_ );
+    editAttrListDlg.setObjectType( getDataType( right_type_ ));
+    editAttrListDlg.setObjectID( item1->text().toLong());
+    */
+
+    editAttrListDlg.exec();
+
+    manApplet->log( QString( QString("Name: %1 Value: %2").arg( item0->text() ).arg( item1->text() )));
+}
+
 void MainWindow::digest()
 {
     ManTreeItem *pItem = currentTreeItem();
@@ -2135,33 +2170,29 @@ void MainWindow::showRightMenu(QPoint point )
 
     manApplet->log( QString("RightType: %1").arg(right_type_));
 
+    menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
+    menu.addAction( tr("Edit AttributeList"), this, &MainWindow::editAttributeList );
+    delAct = menu.addAction( tr( "Delete Object" ), this, &MainWindow::deleteObject );
+
     switch ( right_type_ ) {
     case HM_ITEM_TYPE_CERTIFICATE:
-        menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
-        delAct = menu.addAction( tr( "Delete Object" ), this, &MainWindow::deleteObject );
         menu.addAction( tr("View Certificate" ), this, &MainWindow::viewCert );
         menu.addAction( tr( "Copy Object" ), this, &MainWindow::copyTableObject );
         break;
 
     case HM_ITEM_TYPE_PUBLICKEY:
-        menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
-        delAct = menu.addAction( tr( "Delete Object" ), this, &MainWindow::deleteObject );
         menu.addAction( tr( "Verify" ), this, &MainWindow::verifyEach );
         menu.addAction( tr( "Encrypt"), this, &MainWindow::encryptEach );
         menu.addAction( tr( "Copy Object" ), this, &MainWindow::copyTableObject );
         break;
 
     case HM_ITEM_TYPE_PRIVATEKEY:
-        menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
-        delAct = menu.addAction( tr( "Delete Object" ), this, &MainWindow::deleteObject );
         menu.addAction( tr( "Sign" ), this, &MainWindow::signEach );
         menu.addAction( tr( "Decrypt" ), this, &MainWindow::decryptEach );
         menu.addAction( tr( "Copy Object" ), this, &MainWindow::copyTableObject );
         break;
 
     case HM_ITEM_TYPE_SECRETKEY:
-        menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
-        delAct = menu.addAction( tr( "Delete Object" ), this, &MainWindow::deleteObject );
         menu.addAction( tr( "Sign" ), this, &MainWindow::signEach );
         menu.addAction( tr( "Verify" ), this, &MainWindow::verifyEach );
         menu.addAction( tr( "Encrypt"), this, &MainWindow::encryptEach );
@@ -2170,8 +2201,6 @@ void MainWindow::showRightMenu(QPoint point )
         break;
 
     case HM_ITEM_TYPE_DATA:
-        menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
-        delAct = menu.addAction( tr( "Delete Object" ), this, &MainWindow::deleteObject );
         menu.addAction( tr( "Copy Object" ), this, &MainWindow::copyTableObject );
         break;
     }
