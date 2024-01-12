@@ -38,6 +38,9 @@ private slots:
     void clickApplication();
     void clickObjectID();
 
+    void clickClass();
+    void clickKeyType();
+
     void clickPrivate();
     void clickSensitive();
     void clickWrap();

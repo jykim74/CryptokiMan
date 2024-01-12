@@ -3083,7 +3083,13 @@ QString MainWindow::stringAttribute( int nValType, CK_ATTRIBUTE_TYPE uAttribute,
         {
             long uVal = 0;
             memcpy( &uVal, binVal.pVal, binVal.nLen );
-            strMsg = JS_PKCS11_GetCKKName( uVal );
+            strMsg = QString( "%1 (0x%2)" ).arg( JS_PKCS11_GetCKKName( uVal ) ).arg( uVal, 8, 16, QLatin1Char( '0' ) );
+        }
+        else if( nValType == ATTR_VAL_OBJECT_NAME )
+        {
+            long uVal = 0;
+            memcpy( &uVal, binVal.pVal, binVal.nLen );
+            strMsg = QString( "%1 (0x%2)" ).arg( JS_PKCS11_GetCKOName( uVal ) ).arg( uVal, 8, 16, QLatin1Char( '0' ));
         }
         else if( nValType == ATTR_VAL_LEN )
         {

@@ -240,6 +240,16 @@ void EditAttributeListDlg::clickObjectID()
     mObjectIDText->setEnabled( mObjectIDCheck->isChecked() );
 }
 
+void EditAttributeListDlg::clickClass()
+{
+    mClassText->setEnabled( mClassCheck->isChecked() );
+}
+
+void EditAttributeListDlg::clickKeyType()
+{
+    mKeyTypeText->setEnabled( mKeyTypeCheck->isCheckable() );
+}
+
 void EditAttributeListDlg::clickPrivate()
 {
     mPrivateCombo->setEnabled(mPrivateCheck->isChecked());
@@ -410,6 +420,9 @@ void EditAttributeListDlg::connectAttributes()
     connect( mApplicationCheck, SIGNAL(clicked()), this, SLOT(clickApplication()));
     connect( mObjectIDCheck, SIGNAL(clicked()), this, SLOT(clickObjectID()));
 
+    connect( mClassCheck, SIGNAL(clicked()), this, SLOT(clickClass()));
+    connect( mKeyTypeCheck, SIGNAL(clicked()), this, SLOT(clickKeyType()));
+
     connect( mPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPrivate()));
     connect( mSensitiveCheck, SIGNAL(clicked()), this, SLOT(clickSensitive()));
     connect( mWrapCheck, SIGNAL(clicked()), this, SLOT(clickWrap()));
@@ -435,6 +448,9 @@ void EditAttributeListDlg::setDataAttributes()
     mIDCheck->setEnabled( false );
     mApplicationCheck->setEnabled( true );
     mObjectIDCheck->setEnabled( true );
+
+    mClassCheck->setEnabled( true );
+    mKeyTypeCheck->setEnabled( false );
 
     mTokenCheck->setEnabled(true);
     mPrivateCheck->setEnabled(true);
@@ -463,6 +479,9 @@ void EditAttributeListDlg::setCertAttributes()
     mApplicationCheck->setEnabled( false );
     mObjectIDCheck->setEnabled( false );
 
+    mClassCheck->setEnabled( true );
+    mKeyTypeCheck->setEnabled( false );
+
     mTokenCheck->setEnabled(true);
     mPrivateCheck->setEnabled(true);
     mModifiableCheck->setEnabled(true);
@@ -490,6 +509,9 @@ void EditAttributeListDlg::setSecretAttributes()
     mApplicationCheck->setEnabled( false );
     mObjectIDCheck->setEnabled( false );
 
+    mClassCheck->setEnabled( true );
+    mKeyTypeCheck->setEnabled( true );
+
     mPrivateCheck->setEnabled(true);
     mSensitiveCheck->setEnabled(true);
     mWrapCheck->setEnabled(true);
@@ -515,6 +537,9 @@ void EditAttributeListDlg::setPublicAttributes()
     mIDCheck->setEnabled( true );
     mApplicationCheck->setEnabled( false );
     mObjectIDCheck->setEnabled( false );
+
+    mClassCheck->setEnabled( true );
+    mKeyTypeCheck->setEnabled( true );
 
     mPrivateCheck->setEnabled(true);
     mWrapCheck->setEnabled(true);
@@ -542,6 +567,9 @@ void EditAttributeListDlg::setPrivateAttributes()
     mIDCheck->setEnabled( true );
     mApplicationCheck->setEnabled( false );
     mObjectIDCheck->setEnabled( false );
+
+    mClassCheck->setEnabled( true );
+    mKeyTypeCheck->setEnabled( true );
 
     mPrivateCheck->setEnabled(true);
     mSensitiveCheck->setEnabled(true);
@@ -575,8 +603,9 @@ void EditAttributeListDlg::clickGetAttribute()
     long uCount = 0;
     CK_BBOOL bTrue = CK_TRUE;
     CK_BBOOL bFalse = CK_FALSE;
-    CK_OBJECT_CLASS objClass = CKO_SECRET_KEY;
-    CK_KEY_TYPE keyType = 0;
+
+    CK_OBJECT_CLASS objClass = -1;
+    CK_KEY_TYPE keyType = -1;
 
     CK_DATE sSDate;
     CK_DATE sEDate;
@@ -610,6 +639,18 @@ void EditAttributeListDlg::clickGetAttribute()
     if( mObjectIDCheck->isChecked() )
     {
         sTemplate[uCount].type = CKA_OBJECT_ID;
+        uCount++;
+    }
+
+    if( mClassCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_CLASS;
+        uCount++;
+    }
+
+    if( mKeyTypeCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_KEY_TYPE;
         uCount++;
     }
 
@@ -741,6 +782,14 @@ void EditAttributeListDlg::clickGetAttribute()
             mApplicationText->setText( QString("%1").arg(getHexString( (unsigned char *)sTemplate[i].pValue, sTemplate[i].ulValueLen)));
         }
         else if( sTemplate[i].type == CKA_OBJECT_ID )
+        {
+            mObjectIDText->setText( QString("%1").arg(getHexString( (unsigned char *)sTemplate[i].pValue, sTemplate[i].ulValueLen)));
+        }
+        else if( sTemplate[i].type == CKA_CLASS )
+        {
+            mObjectIDText->setText( QString("%1").arg(getHexString( (unsigned char *)sTemplate[i].pValue, sTemplate[i].ulValueLen)));
+        }
+        else if( sTemplate[i].type == CKA_KEY_TYPE )
         {
             mObjectIDText->setText( QString("%1").arg(getHexString( (unsigned char *)sTemplate[i].pValue, sTemplate[i].ulValueLen)));
         }
@@ -925,10 +974,15 @@ void EditAttributeListDlg::clickSetAttribute()
     BIN binApplication = {0,0};
     BIN binOID = {0,0};
 
+    BIN binClass = {0,0};
+    BIN binKeyType = {0,0};
+
     QString strLabel = mLabelText->text();
     QString strID = mIDText->text();
     QString strApplication = mApplicationText->text();
     QString strOID = mObjectIDText->text();
+    QString strClass = mClassText->text();
+    QString strKeyType = mKeyTypeText->text();
 
 
     if( mLabelCheck->isChecked() )
@@ -958,6 +1012,36 @@ void EditAttributeListDlg::clickSetAttribute()
         sTemplate[uCount].type = CKA_APPLICATION;
         sTemplate[uCount].pValue = binApplication.pVal;
         sTemplate[uCount].ulValueLen = binApplication.nLen;
+        uCount++;
+    }
+
+    if( mObjectIDCheck->isChecked() )
+    {
+        JS_BIN_decodeHex( strOID.toStdString().c_str(), &binOID );
+
+        sTemplate[uCount].type = CKA_OBJECT_ID;
+        sTemplate[uCount].pValue = binOID.pVal;
+        sTemplate[uCount].ulValueLen = binOID.nLen;
+        uCount++;
+    }
+
+    if( mClassCheck->isChecked() )
+    {
+        JS_BIN_decodeHex( strClass.toStdString().c_str(), &binClass );
+
+        sTemplate[uCount].type = CKA_CLASS;
+        sTemplate[uCount].pValue = binClass.pVal;
+        sTemplate[uCount].ulValueLen = binClass.nLen;
+        uCount++;
+    }
+
+    if( mKeyTypeCheck->isChecked() )
+    {
+        JS_BIN_decodeHex( strKeyType.toStdString().c_str(), &binKeyType );
+
+        sTemplate[uCount].type = CKA_KEY_TYPE;
+        sTemplate[uCount].pValue = binKeyType.pVal;
+        sTemplate[uCount].ulValueLen = binKeyType.nLen;
         uCount++;
     }
 
@@ -1115,6 +1199,8 @@ void EditAttributeListDlg::clickSetAttribute()
     JS_BIN_reset( &binID );
     JS_BIN_reset( &binApplication );
     JS_BIN_reset( &binOID );
+    JS_BIN_reset( &binClass );
+    JS_BIN_reset( &binKeyType );
 
     if( rv != CKR_OK )
     {

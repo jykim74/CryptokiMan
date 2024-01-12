@@ -34,6 +34,9 @@ int CryptokiAPI::getAttrType( CK_ATTRIBUTE_TYPE nType )
     case CKA_KEY_TYPE :
         return ATTR_VAL_KEY_NAME;
 
+    case CKA_CLASS :
+        return ATTR_VAL_OBJECT_NAME;
+
     case CKA_LABEL :
     case CKA_APPLICATION:
     case CKA_URL :
