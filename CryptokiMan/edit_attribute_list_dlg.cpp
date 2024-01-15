@@ -787,11 +787,11 @@ void EditAttributeListDlg::clickGetAttribute()
         }
         else if( sTemplate[i].type == CKA_CLASS )
         {
-            mObjectIDText->setText( QString("%1").arg(getHexString( (unsigned char *)sTemplate[i].pValue, sTemplate[i].ulValueLen)));
+            mClassText->setText( QString("%1").arg(getHexString( (unsigned char *)sTemplate[i].pValue, sTemplate[i].ulValueLen)));
         }
         else if( sTemplate[i].type == CKA_KEY_TYPE )
         {
-            mObjectIDText->setText( QString("%1").arg(getHexString( (unsigned char *)sTemplate[i].pValue, sTemplate[i].ulValueLen)));
+            mKeyTypeText->setText( QString("%1").arg(getHexString( (unsigned char *)sTemplate[i].pValue, sTemplate[i].ulValueLen)));
         }
         else if( sTemplate[i].type == CKA_DECRYPT )
         {
