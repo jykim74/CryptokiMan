@@ -104,6 +104,7 @@ void EditAttributeDlg::objectTypeChanged( int type )
 
     mAttributeCombo->clear();
     mAttributeCombo->addItems( kCommonAttList );
+    mAttributeCombo->addItem( "CKA_VALUE_LEN" );
 
     if( type == OBJ_DATA_IDX )
     {
@@ -194,6 +195,7 @@ void EditAttributeDlg::initAttributes()
 {
 //    mAttributeCombo->addItems(sAttributeList);
     mAttributeCombo->addItems( kCommonAttList );
+    mAttributeCombo->addItem( "CKA_VALUE_LEN" );
 }
 
 void EditAttributeDlg::accept()
