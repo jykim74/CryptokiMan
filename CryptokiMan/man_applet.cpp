@@ -255,6 +255,18 @@ void ManApplet::info( const QString strInfo )
     main_win_->info( strInfo );
 }
 
+void ManApplet::messageLog( const QString strLog, QWidget *parent )
+{
+    messageBox( strLog, parent );
+    log( strLog );
+}
+
+void ManApplet::warnLog( const QString strLog, QWidget *parent )
+{
+    warningBox( strLog, parent );
+    elog( strLog );
+}
+
 QString ManApplet::getBrand()
 {
     return QString::fromUtf8( "CryptokiMan" );

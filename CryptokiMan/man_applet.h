@@ -63,6 +63,9 @@ public:
 
     bool isLicense() { return  is_license_; };
 
+    void messageLog( const QString strLog, QWidget *parent=0 );
+    void warnLog( const QString strLog, QWidget *parent=0 );
+
     QString curFile() { return cur_file_; };
     QString curFolder();
     void setCurFile( const QString& strFile );

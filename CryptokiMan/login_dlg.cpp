@@ -83,14 +83,12 @@ void LoginDlg::clickLogin()
     {
         slotInfo.setLogin(true);
         slot_infos.replace( index, slotInfo );
-        manApplet->log( "Login OK" );
-        manApplet->messageBox( tr( "Login OK" ), this );
+        manApplet->messageLog( tr( "Login OK" ), this );
 
         QDialog::accept();
     }
     else {
-        manApplet->warningBox( tr( "Login fail(%1:%2)").arg( JS_PKCS11_GetErrorMsg(rv)).arg(rv), this );
-        manApplet->elog( QString("C_Login fail:%1").arg(rv));
+        manApplet->warnLog( tr( "Login fail(%1:%2)").arg( JS_PKCS11_GetErrorMsg(rv)).arg(rv), this );
         mPinText->clear();
 
         QDialog::reject();

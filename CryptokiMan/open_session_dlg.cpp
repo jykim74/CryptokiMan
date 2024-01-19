@@ -66,12 +66,10 @@ void OpenSessionDlg::accept()
         slotInfo.setSessionHandle( hSession );
         slot_infos.replace(index, slotInfo);
 
-        manApplet->log( "OpenSssion OK" );
-        manApplet->messageBox( tr( "OpenSession OK"), this );
+        manApplet->messageLog( tr( "OpenSession OK"), this );
     }
     else {
-        manApplet->log( QString( "OpenSession fail: %1").arg( rv ));
-        manApplet->warningBox( tr("OpenSession is failure(%1:%2)").arg( JS_PKCS11_GetErrorMsg(rv)).arg(rv), this );
+        manApplet->warnLog( tr("OpenSession is failure(%1:%2)").arg( JS_PKCS11_GetErrorMsg(rv)).arg(rv), this );
         return;
     }
 
