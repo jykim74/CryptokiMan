@@ -71,7 +71,7 @@ void OpenSessionDlg::accept()
     }
     else {
         manApplet->log( QString( "OpenSession fail: %1").arg( rv ));
-        manApplet->warningBox( tr("OpenSession is failure"), this );
+        manApplet->warningBox( tr("OpenSession is failure(%1:%2)").arg( JS_PKCS11_GetErrorMsg(rv)).arg(rv), this );
         return;
     }
 

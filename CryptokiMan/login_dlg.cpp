@@ -89,7 +89,7 @@ void LoginDlg::clickLogin()
         QDialog::accept();
     }
     else {
-        manApplet->warningBox( tr( "Login fail"), this );
+        manApplet->warningBox( tr( "Login fail(%1:%2)").arg( JS_PKCS11_GetErrorMsg(rv)).arg(rv), this );
         manApplet->elog( QString("C_Login fail:%1").arg(rv));
         mPinText->clear();
 
