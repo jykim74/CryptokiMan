@@ -408,6 +408,11 @@ void MainWindow::createActions()
     editAttributeListAct->setStatusTip(tr("PKCS11 Edit Attribute List"));
     objectsMenu->addAction( editAttributeListAct );
 
+    if( manApplet->isLicense() == false )
+    {
+        editAttributeListAct->setEnabled( false );
+    }
+
     const QIcon copyIcon = QIcon::fromTheme("Edit", QIcon(":/images/copy_object.png"));
     QAction *copyObjectAct = new QAction( copyIcon, tr("Copy Object"), this);
     connect( copyObjectAct, &QAction::triggered, this, &MainWindow::copyObject);
