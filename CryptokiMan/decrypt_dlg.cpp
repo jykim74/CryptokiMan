@@ -439,7 +439,7 @@ int DecryptDlg::clickInit()
     {
         mOutputText->setPlainText("");
         mStatusLabel->setText("");
-        manApplet->warningBox( tr("fail to run DecryptInit(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("DecryptInit execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return rv;
     }
 
@@ -459,7 +459,7 @@ void DecryptDlg::clickUpdate()
 
     if( strInput.isEmpty() )
     {
-        manApplet->warningBox( tr("You have to insert data."), this );
+        manApplet->warningBox( tr("Enter your data."), this );
         mInputText->setFocus();
         return;
     }
@@ -482,7 +482,7 @@ void DecryptDlg::clickUpdate()
     {
         if( pDecPart ) JS_free( pDecPart );
         mOutputText->setPlainText("");
-        manApplet->warningBox( tr("fail to run DecryptUpdate(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this);
+        manApplet->warningBox( tr("DecryptUpdate execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this);
         return;
     }
 
@@ -511,7 +511,7 @@ void DecryptDlg::clickFinal()
     {
         if( pDecPart ) JS_free( pDecPart );
         mOutputText->setPlainText("");
-        manApplet->warningBox( tr("fail to run DecryptFinal(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("DecryptFinal execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
@@ -527,7 +527,7 @@ void DecryptDlg::clickFinal()
     {
         if( pDecPart ) JS_free( pDecPart );
         mOutputText->setPlainText("");
-        manApplet->warningBox( tr("fail to run DecryptFinal(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("DecryptFinal execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
@@ -577,7 +577,7 @@ void DecryptDlg::runDataDecrypt()
     QString strInput = mInputText->toPlainText();
     if( strInput.isEmpty() )
     {
-        manApplet->warningBox( tr("You have to insert data"), this );
+        manApplet->warningBox( tr("Enter your data"), this );
         mInputText->setFocus();
         return;
     }
@@ -602,7 +602,7 @@ void DecryptDlg::runDataDecrypt()
     {
         if( pDecData ) JS_free( pDecData );
         mOutputText->setPlainText( "" );
-        manApplet->warningBox( tr("fail to run Decrypt(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("Decrypt execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
@@ -648,7 +648,7 @@ void DecryptDlg::runFileDecrypt()
 
     if( QFile::exists( strDstFile ) )
     {
-        QString strMsg = tr( "Dst file[%1] is already exist.\nDo you want to delete the file and continue?" ).arg( strDstFile );
+        QString strMsg = tr( "The destination file(%1) already exists.\nDo you want to delete the file and continue?" ).arg( strDstFile );
         bool bVal = manApplet->yesOrNoBox( strMsg, this, false );
 
         if( bVal == true )
@@ -665,7 +665,7 @@ void DecryptDlg::runFileDecrypt()
     FILE *fp = fopen( strSrcFile.toLocal8Bit().toStdString().c_str(), "rb" );
     if( fp == NULL )
     {
-        manApplet->elog( QString( "fail to read file:%1").arg( strSrcFile ));
+        manApplet->elog( QString( "failed to open file (%1)").arg( strSrcFile ));
         goto end;
     }
 
@@ -698,7 +698,7 @@ void DecryptDlg::runFileDecrypt()
         if( rv != CKR_OK )
         {
             if( pDecPart ) JS_free( pDecPart );
-            manApplet->warningBox( tr("fail to run DecryptUpdate(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+            manApplet->warningBox( tr("DecryptUpdate execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
             goto end;
         }
 

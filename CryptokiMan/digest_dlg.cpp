@@ -202,7 +202,7 @@ void DigestDlg::clickDigestKey()
     }
     else
     {
-        manApplet->warningBox( tr("fail to run DigestKey(%1)").arg( JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("DigestKey execution failure [%1]").arg( JS_PKCS11_GetErrorMsg(rv)), this );
         mOutputText->setText("");
     }
 }
@@ -237,7 +237,7 @@ int DigestDlg::clickInit()
     }
     else
     {
-        manApplet->warningBox( tr("fail to run DigestInit(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("DigestInit execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         mStatusLabel->setText("");
         mOutputText->setText("");
     }
@@ -257,7 +257,7 @@ void DigestDlg::clickUpdate()
     QString strInput = mInputText->toPlainText();
     if( strInput.isEmpty() )
     {
-        manApplet->warningBox(tr("Insert input value."), this );
+        manApplet->warningBox(tr("Enter input value."), this );
         mInputText->setFocus();
 
         return;
@@ -279,7 +279,7 @@ void DigestDlg::clickUpdate()
     }
     else
     {
-        manApplet->warningBox( tr("fail to run DigestUpdate(%1)").arg( JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("DigestUpdate execution failure [%1]").arg( JS_PKCS11_GetErrorMsg(rv)), this );
         mOutputText->setText("");
     }
 }
@@ -311,7 +311,7 @@ void DigestDlg::clickFinal()
     }
     else
     {
-        manApplet->warningBox( tr("fail to run DigestFinal(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("DigestFinal execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         mOutputText->setText("");
     }
 
@@ -347,7 +347,7 @@ void DigestDlg::runDataDigest()
     QString strInput = mInputText->toPlainText();
     if( strInput.isEmpty() )
     {
-        manApplet->warningBox( tr("You have to insert input value"), this );
+        manApplet->warningBox( tr("Enter input value"), this );
         return;
     }
 
@@ -382,7 +382,7 @@ void DigestDlg::runDataDigest()
     }
     else
     {
-        manApplet->warningBox( tr("fail run Digest(%1)").arg( JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("Digest execution failure [%1]").arg( JS_PKCS11_GetErrorMsg(rv)), this );
         mOutputText->setText("");
     }
 }
@@ -418,7 +418,7 @@ void DigestDlg::runFileDigest()
         ret = clickInit();
         if( ret != CKR_OK )
         {
-            manApplet->warningBox( tr("fail to initialize digest:%1").arg(ret), this );
+            manApplet->warningBox( tr("failed to initialize digest [%1]").arg(ret), this );
             return;
         }
     }
@@ -427,7 +427,7 @@ void DigestDlg::runFileDigest()
 
     if( fp == NULL )
     {
-        manApplet->elog( QString( "fail to read file:%1").arg( strSrcFile ));
+        manApplet->elog( QString( "failed to read file [%1]").arg( strSrcFile ));
         goto end;
     }
 
@@ -450,7 +450,7 @@ void DigestDlg::runFileDigest()
         ret = manApplet->cryptokiAPI()->DigestUpdate( hSession, binPart.pVal, binPart.nLen );
         if( ret != CKR_OK )
         {
-            manApplet->warningBox( tr("fail to run DigestUpdate(%1)").arg( JS_PKCS11_GetErrorMsg(ret)), this );
+            manApplet->warningBox( tr("DigestUpdate execution failure [%1]").arg( JS_PKCS11_GetErrorMsg(ret)), this );
             goto end;
         }
 

@@ -1204,9 +1204,9 @@ void EditAttributeListDlg::clickSetAttribute()
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr( "fail to set attribute values(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr( "SetAttributeValue execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
-    manApplet->messageBox( tr("Success to set attribute values"), this );
+    manApplet->messageBox( tr("SetAttributeValue execution successful"), this );
 }

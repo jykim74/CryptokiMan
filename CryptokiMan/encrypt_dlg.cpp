@@ -437,7 +437,7 @@ int EncryptDlg::clickInit()
     {
         mStatusLabel->setText("");
         mOutputText->setPlainText("");
-        manApplet->warningBox( tr("fail to run EncryptInit(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("EncryptInit execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return rv;
     }
 
@@ -457,7 +457,7 @@ void EncryptDlg::clickUpdate()
 
     if( strInput.isEmpty() )
     {
-        manApplet->warningBox( tr("You have to insert data."), this );
+        manApplet->warningBox( tr("Enter your data."), this );
         mInputText->setFocus();
         return;
     }
@@ -483,7 +483,7 @@ void EncryptDlg::clickUpdate()
     {
         mOutputText->setPlainText("");
         if( pEncPart ) JS_free( pEncPart );
-        manApplet->warningBox( tr("fail to run EncryptUpdate(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("EncryptUpdate execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
@@ -511,7 +511,7 @@ void EncryptDlg::clickFinal()
     {
         mOutputText->setPlainText( "" );
         if( pEncPart ) JS_free( pEncPart );
-        manApplet->warningBox( tr("fail to run EncryptFinal(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("EncryptFinal execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
@@ -527,7 +527,7 @@ void EncryptDlg::clickFinal()
     {
         mOutputText->setPlainText( "" );
         if( pEncPart ) JS_free( pEncPart );
-        manApplet->warningBox( tr("fail to run EncryptFinal(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("EncryptFinal execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
@@ -579,7 +579,7 @@ void EncryptDlg::runDataEncrypt()
 
     if( strInput.isEmpty() )
     {
-        manApplet->warningBox( tr( "You have to insert data."), this );
+        manApplet->warningBox( tr( "Enter your data"), this );
         mInputText->setFocus();
         return;
     }
@@ -612,7 +612,7 @@ void EncryptDlg::runDataEncrypt()
     {
         mOutputText->setPlainText( "" );
         if( pEncData ) JS_free( pEncData );
-        manApplet->warningBox( tr("fail to run Encrypt(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("Encrypt execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
@@ -658,7 +658,7 @@ void EncryptDlg::runFileEncrypt()
 
     if( QFile::exists( strDstFile ) )
     {
-        QString strMsg = tr( "Dst file[%1] is already exist.\nDo you want to delete the file and continue?" ).arg( strDstFile );
+        QString strMsg = tr( "Destination file[%1] is already exist.\nDo you want to delete the file and continue?" ).arg( strDstFile );
         bool bVal = manApplet->yesOrNoBox( strMsg, this, false );
 
         if( bVal == true )
@@ -675,7 +675,7 @@ void EncryptDlg::runFileEncrypt()
     FILE *fp = fopen( strSrcFile.toLocal8Bit().toStdString().c_str(), "rb" );
     if( fp == NULL )
     {
-        manApplet->elog( QString( "fail to read file:%1").arg( strSrcFile ));
+        manApplet->elog( QString( "failed to open file (%1)").arg( strSrcFile ));
         goto end;
     }
 
@@ -707,7 +707,7 @@ void EncryptDlg::runFileEncrypt()
         if( rv != CKR_OK )
         {
             if( pEncPart ) JS_free( pEncPart );
-            manApplet->warningBox( tr("fail to run EncryptUpdate(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+            manApplet->warningBox( tr("EncryptUpdate execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
             goto end;
         }
 

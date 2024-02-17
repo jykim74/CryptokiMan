@@ -94,7 +94,7 @@ int CryptokiAPI::openLibrary( const QString strPath )
 int CryptokiAPI::unloadLibrary()
 {
     if( p11_ctx_ ) JS_PKCS11_ReleaseLibrry( (JP11_CTX **)&p11_ctx_ );
-    manApplet->log( "library is released" );
+    manApplet->log( "Crytoki library has been released" );
     return 0;
 }
 

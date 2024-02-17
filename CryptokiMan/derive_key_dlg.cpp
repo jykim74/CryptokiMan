@@ -372,14 +372,14 @@ void DeriveKeyDlg::accept()
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr("fail to run DeriveKey(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this);
+        manApplet->warningBox( tr("DeriveKey execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this);
         freeMechanism( &sMech );
         return;
     }
 
     QString strHandle = QString("%1").arg( uObj );
 
-    manApplet->messageBox(tr("success to derive key(%1)").arg(strHandle), this );
+    manApplet->messageBox(tr("DeriveKey execution successful [Handle: %1]").arg(strHandle), this );
     freeMechanism( &sMech );
     QDialog::accept();
 }

@@ -101,11 +101,11 @@ void DelObjectDlg::deleteObj()
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr("fail to delete object(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("DestroyObject execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
-    manApplet->messageBox( tr("success to delete object"), this );
+    manApplet->messageBox( tr("DestroyObject execution successful"), this );
 
     QString strType = mObjectTypeCombo->currentText();
     int nDataType = -1;
@@ -205,12 +205,12 @@ void DelObjectDlg::deleteAllObj()
         rv = manApplet->cryptokiAPI()->DestroyObject( session_, sObjects[i] );
         if( rv != CKR_OK )
         {
-            manApplet->elog( QString( "fail to delete object: %1").arg( sObjects[i] ));
+            manApplet->elog( QString( "DestoryObject execution failure [%1]").arg( sObjects[i] ));
             break;
         }
         else
         {
-            manApplet->log( QString( "object(%1) is deleted").arg( sObjects[i] ));
+            manApplet->log( QString( "The object(%1) has been deleted").arg( sObjects[i] ));
         }
     }
 

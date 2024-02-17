@@ -268,7 +268,7 @@ void EditAttributeDlg::clickGetAttribute()
 
     if( hObject <= 0 )
     {
-        manApplet->warningBox( tr("insert object handle"), this );
+        manApplet->warningBox( tr("Enter the handle value of the source"), this );
         return;
     }
 
@@ -284,7 +284,7 @@ void EditAttributeDlg::clickGetAttribute()
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr("fail to get attributes(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("GetAttributeValue2 execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
@@ -303,7 +303,7 @@ void EditAttributeDlg::clickSetAttribute()
 
     if( hObject <= 0 )
     {
-        manApplet->warningBox( tr("insert object handle"), this );
+        manApplet->warningBox( tr("Enter the handle value of the source"), this );
         return;
     }
 
@@ -322,11 +322,11 @@ void EditAttributeDlg::clickSetAttribute()
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr("fail to set attributes(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("SetAttributeValue2 execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
-    manApplet->messageBox( tr("success to set attributes"), this );
+    manApplet->messageBox( tr("SetAttributeValue2 execution successful"), this );
     QMessageBox::information( this ,"EditAttribute", "SetAttribute success" );
 }
 
