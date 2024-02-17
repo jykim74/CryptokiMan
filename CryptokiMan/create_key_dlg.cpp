@@ -407,11 +407,11 @@ void CreateKeyDlg::accept()
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr( "fail to create key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr( "Secret key creation failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
-    manApplet->messageBox( tr("Success to create key"), this );
+    manApplet->messageBox( tr("Secret key creation successful"), this );
     manApplet->showTypeList( index, HM_ITEM_TYPE_SECRETKEY );
 
     QDialog::accept();

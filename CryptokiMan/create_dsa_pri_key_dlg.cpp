@@ -439,11 +439,11 @@ void CreateDSAPriKeyDlg::accept()
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr("fail to create DSA private key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("DSA private key creation failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
-    manApplet->messageBox( tr("success to create DSA private key[H:%1]").arg( hObject ), this );
+    manApplet->messageBox( tr("DSA private key creation successful [Handle: %1]").arg( hObject ), this );
     manApplet->showTypeList( index, HM_ITEM_TYPE_PRIVATEKEY );
 
     QDialog::accept();
@@ -494,14 +494,14 @@ void CreateDSAPriKeyDlg::clickFindKey()
     ret = JS_BIN_fileReadBER( fileName.toLocal8Bit().toStdString().c_str(), &binPri );
     if( ret < 0 )
     {
-        manApplet->elog( QString( "fail to read private key:%1").arg( ret) );
+        manApplet->elog( QString( "failed to read private key [%1]").arg( ret) );
         goto end;
     }
 
     nKeyType = JS_PKI_getPriKeyType( &binPri );
     if( nKeyType != JS_PKI_KEY_TYPE_DSA )
     {
-        manApplet->elog( QString( "invalid private key type: %1").arg( nKeyType ));
+        manApplet->elog( QString( "invalid private key type(%1)").arg( nKeyType ));
         goto end;
     }
 
@@ -517,7 +517,7 @@ void CreateDSAPriKeyDlg::clickFindKey()
     ret = 0;
 
 end :
-    if( ret != 0 ) manApplet->warningBox( tr( "fail to get valid key:%1").arg(ret), this );
+    if( ret != 0 ) manApplet->warningBox( tr( "failed to get key value [%1]").arg(ret), this );
 
     JS_BIN_reset( &binPri );
     JS_PKI_resetDSAKeyVal( &sDSAKey );
@@ -685,21 +685,21 @@ int CreateDSAPriKeyDlg::getSKI_SPKI( BIN *pSKI, BIN *pSPKI )
     ret = JS_PKI_encodeDSAPrivateKey( &sDSAKey, &binPri );
     if( ret != 0 )
     {
-        manApplet->elog( QString( "fail to encode private key: %d").arg(ret));
+        manApplet->elog( QString( "failed to encode private key [%1]").arg(ret));
         goto end;
     }
 
     ret = JS_PKI_getPubKeyFromPri( JS_PKI_KEY_TYPE_DSA, &binPri, &binPub );
     if( ret != 0 )
     {
-        manApplet->elog( QString( "fail to get public key from private key: %1").arg(ret));
+        manApplet->elog( QString( "failed to get public key from private key [%1]").arg(ret));
         goto end;
     }
 
     ret = JS_PKI_getKeyIdentifier( &binPub, pSKI );
     if( ret != 0 )
     {
-        manApplet->elog( QString( "fail to get key identifier: %1").arg(ret));
+        manApplet->elog( QString( "failed to get key identifier [%1]").arg(ret));
         goto end;
     }
 

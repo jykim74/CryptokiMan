@@ -373,11 +373,11 @@ void CreateRSAPubKeyDlg::accept()
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr("fail to create RSA public key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("RSA public key creation failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
-    manApplet->messageBox( tr("Success to create RSA public key[H:%1]").arg( hObject ), this );
+    manApplet->messageBox( tr("RSA public key creation successful [Handle: %1]").arg( hObject ), this );
     manApplet->showTypeList( index, HM_ITEM_TYPE_PUBLICKEY );
 
     QDialog::accept();
@@ -426,7 +426,7 @@ void CreateRSAPubKeyDlg::clickFindKey()
     ret = JS_BIN_fileReadBER( fileName.toLocal8Bit().toStdString().c_str(), &binKey );
     if( ret < 0 )
     {
-        manApplet->elog( QString( "fail to read key:%1").arg( ret) );
+        manApplet->elog( QString( "failed to read key [%1]").arg( ret) );
         goto end;
     }
 
@@ -436,7 +436,7 @@ void CreateRSAPubKeyDlg::clickFindKey()
         nKeyType = JS_PKI_getPubKeyType( &binKey );
         if( nKeyType != JS_PKI_KEY_TYPE_RSA )
         {
-            manApplet->elog( QString( "invalid public key type: %1").arg( nKeyType ));
+            manApplet->elog( QString( "invalid public key type (%1)").arg( nKeyType ));
             goto end;
         }
 
@@ -445,7 +445,7 @@ void CreateRSAPubKeyDlg::clickFindKey()
     }
     else if( nKeyType != JS_PKI_KEY_TYPE_RSA )
     {
-        manApplet->elog( QString( "invalid private key type: %1").arg( nKeyType ));
+        manApplet->elog( QString( "invalid private key type (%1)").arg( nKeyType ));
         goto end;
     }
     else
@@ -463,7 +463,7 @@ void CreateRSAPubKeyDlg::clickFindKey()
 end :
     JS_BIN_reset( &binKey );
     JS_PKI_resetRSAKeyVal( &sRSAKey );
-    if( ret != 0 ) manApplet->warningBox( tr( "fail to get valid key:%1").arg(ret), this );
+    if( ret != 0 ) manApplet->warningBox( tr( "failed to get key value [%1]").arg(ret), this );
 }
 
 void CreateRSAPubKeyDlg::clickUseSKI()
@@ -598,14 +598,14 @@ int CreateRSAPubKeyDlg::getSKI( BIN *pSKI )
     ret = JS_PKI_encodeRSAPublicKey( &sRSAKey, &binPub );
     if( ret != 0 )
     {
-        manApplet->elog( QString( "fail to encode private key: %d").arg(ret));
+        manApplet->elog( QString( "failed to encode private key [%1]").arg(ret));
         goto end;
     }
 
     ret = JS_PKI_getKeyIdentifier( &binPub, pSKI );
     if( ret != 0 )
     {
-        manApplet->elog( QString( "fail to get key identifier: %1").arg(ret));
+        manApplet->elog( QString( "failed to get key identifier [%1]").arg(ret));
         goto end;
     }
 

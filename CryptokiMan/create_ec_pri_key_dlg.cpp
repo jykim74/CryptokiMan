@@ -407,11 +407,11 @@ void CreateECPriKeyDlg::accept()
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr("fail to create EC private key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("EC private key creation failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
-    manApplet->messageBox( tr("success to create EC private key[H:%1]").arg( hObject ), this );
+    manApplet->messageBox( tr("EC private key creation successful [Handle: %1]").arg( hObject ), this );
     manApplet->showTypeList( index, HM_ITEM_TYPE_PRIVATEKEY );
 
     QDialog::accept();
@@ -464,14 +464,14 @@ void CreateECPriKeyDlg::clickFindKey()
     ret = JS_BIN_fileReadBER( fileName.toLocal8Bit().toStdString().c_str(), &binPri );
     if( ret < 0 )
     {
-        manApplet->elog( QString( "fail to read private key:%1").arg( ret) );
+        manApplet->elog( QString( "failed to read private key [%1]").arg( ret) );
         goto end;
     }
 
     nKeyType = JS_PKI_getPriKeyType( &binPri );
     if( nKeyType != JS_PKI_KEY_TYPE_ECC )
     {
-        manApplet->elog( QString( "invalid private key type: %1").arg( nKeyType ));
+        manApplet->elog( QString( "invalid private key type (%1)").arg( nKeyType ));
         goto end;
     }
 
@@ -487,7 +487,7 @@ void CreateECPriKeyDlg::clickFindKey()
     ret = 0;
 
 end :
-    if( ret != 0 ) manApplet->warningBox( tr( "fail to get valid key:%1").arg(ret), this );
+    if( ret != 0 ) manApplet->warningBox( tr( "failed to get key value [%1]").arg(ret), this );
 
     JS_BIN_reset( &binPri );
     JS_BIN_reset( &binOID );
@@ -597,26 +597,6 @@ void CreateECPriKeyDlg::setDefaults()
 
     mUseSKICheck->setChecked(true);
     clickUseSKI();
-//    mUseSPKICheck->click();
-
-    /*
-    mPrivateCheck->setChecked(true);
-    mPrivateCombo->setEnabled(true);
-    mPrivateCombo->setCurrentIndex(1);
-
-
-    mSignCheck->setChecked(true);
-    mSignCombo->setEnabled(true);
-    mSignCombo->setCurrentIndex(1);
-
-    mDecryptCheck->setChecked(true);
-    mDecryptCombo->setEnabled(true);
-    mDecryptCombo->setCurrentIndex(1);
-
-    mTokenCheck->setChecked(true);
-    mTokenCombo->setEnabled(true);
-    mTokenCombo->setCurrentIndex(1);
-    */
 
     QDateTime nowTime;
     nowTime.setSecsSinceEpoch( time(NULL) );
@@ -643,7 +623,7 @@ int CreateECPriKeyDlg::getSKI_SPKI( BIN *pSKI, BIN *pSPKI )
     ret = JS_PKI_getStringFromOID( &binOID, sOID );
     if( ret != 0 )
     {
-        manApplet->elog( QString( "invalid parameters: %1").arg(ret));
+        manApplet->elog( QString( "invalid parameters [%1]").arg(ret));
         goto end;
     }
 
@@ -656,21 +636,21 @@ int CreateECPriKeyDlg::getSKI_SPKI( BIN *pSKI, BIN *pSPKI )
     ret = JS_PKI_encodeECPrivateKey( &sECKey, &binPri );
     if( ret != 0 )
     {
-        manApplet->elog( QString( "fail to encode private key: %d").arg(ret));
+        manApplet->elog( QString( "failed to encode private key [%1]").arg(ret));
         goto end;
     }
 
     ret = JS_PKI_getPubKeyFromPri( JS_PKI_KEY_TYPE_ECC, &binPri, &binPub );
     if( ret != 0 )
     {
-        manApplet->elog( QString( "fail to get public key from private key: %1").arg(ret));
+        manApplet->elog( QString( "failed to get public key from private key [%1]").arg(ret));
         goto end;
     }
 
     ret = JS_PKI_getKeyIdentifier( &binPub, pSKI );
     if( ret != 0 )
     {
-        manApplet->elog( QString( "fail to get key identifier: %1").arg(ret));
+        manApplet->elog( QString( "failed to get key identifier [%1]").arg(ret));
         goto end;
     }
 

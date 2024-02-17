@@ -404,11 +404,11 @@ void CreateDSAPubKeyDlg::accept()
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr( "fail to create DSA public key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr( "DSA public key creation failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
-    manApplet->messageBox( tr("success to create DSA public key[H:%1]").arg( hObject ), this );
+    manApplet->messageBox( tr("DSA public key creation successful [Handle: %1]").arg( hObject ), this );
     manApplet->showTypeList( index, HM_ITEM_TYPE_PUBLICKEY );
 
     QDialog::accept();
@@ -464,7 +464,7 @@ void CreateDSAPubKeyDlg::clickFindKey()
     ret = JS_BIN_fileReadBER( fileName.toLocal8Bit().toStdString().c_str(), &binKey );
     if( ret < 0 )
     {
-        manApplet->elog( QString( "fail to read key:%1").arg( ret) );
+        manApplet->elog( QString( "failed to read private key:%1").arg( ret) );
         goto end;
     }
 
@@ -501,7 +501,7 @@ void CreateDSAPubKeyDlg::clickFindKey()
     ret = 0;
 
 end :
-    if( ret != 0 ) manApplet->warningBox( tr( "fail to get valid key:%1").arg(ret), this );
+    if( ret != 0 ) manApplet->warningBox( tr( "fail to get key value [%1]").arg(ret), this );
 
     JS_BIN_reset( &binKey );
     JS_PKI_resetDSAKeyVal( &sDSAKey );
@@ -607,21 +607,6 @@ void CreateDSAPubKeyDlg::setDefaults()
     mUseSKICheck->setChecked(true);
     clickUseSKI();
 
-    /*
-    mEncryptCheck->setChecked(true);
-    mEncryptCombo->setEnabled(true);
-    mEncryptCombo->setCurrentIndex(1);
-
-
-    mTokenCheck->setChecked(true);
-    mTokenCombo->setEnabled(true);
-    mTokenCombo->setCurrentIndex(1);
-
-    mVerifyCheck->setChecked(true);
-    mVerifyCombo->setEnabled(true);
-    mVerifyCombo->setCurrentIndex(1);
-    */
-
     QDateTime nowTime;
     nowTime.setSecsSinceEpoch( time(NULL) );
 
@@ -647,14 +632,14 @@ int CreateDSAPubKeyDlg::getSKI( BIN *pSKI )
     ret = JS_PKI_encodeDSAPublicKey( &sDSAKey, &binPub );
     if( ret != 0 )
     {
-        manApplet->elog( QString( "fail to encode private key: %d").arg(ret));
+        manApplet->elog( QString( "failed to encode private key [%1]").arg(ret));
         goto end;
     }
 
     ret = JS_PKI_getKeyIdentifier( &binPub, pSKI );
     if( ret != 0 )
     {
-        manApplet->elog( QString( "fail to get key identifier: %1").arg(ret));
+        manApplet->elog( QString( "failed to get key identifier [%1]").arg(ret));
         goto end;
     }
 

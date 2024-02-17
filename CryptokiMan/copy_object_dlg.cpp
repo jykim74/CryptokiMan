@@ -147,7 +147,7 @@ void CopyObjectDlg::accept()
 
     if( strSrcObject.toInt() <= 0  )
     {
-        QMessageBox::warning( this, "Copy Object", tr("There is no object handler") );
+        QMessageBox::warning( this, "Copy Object", tr("There is no handler for the source.") );
         return;
     }
 
@@ -194,14 +194,14 @@ void CopyObjectDlg::accept()
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr( "fail to run CopyObject(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr( "CopyObject execution failed [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
     QString strNewObject = QString("%1").arg( uNewObj );
     QString strSrcType = mSrcTypeCombo->currentText();
 
-    manApplet->messageBox( tr("CopyObject is success(New Object Handle:%1)").arg( strNewObject), this );
+    manApplet->messageBox( tr("CopyObject successful [New Object Handle: %1]").arg( strNewObject), this );
 
     if( strSrcType == kCertificate )
         manApplet->showTypeList( index, HM_ITEM_TYPE_CERTIFICATE );
