@@ -764,7 +764,7 @@ void GenKeyPairDlg::accept()
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr( "failure to generate key pairs(rv:%1)").arg(JS_PKCS11_GetErrorMsg( rv )), this );
+        manApplet->warningBox( tr( "GenerateKeyPair execution failure [%1]").arg(JS_PKCS11_GetErrorMsg( rv )), this );
         return;
     }
 
@@ -779,13 +779,13 @@ void GenKeyPairDlg::accept()
             rv = setSKI_SPKI( hSession, keyType, uPriHandle, uPubHandle );
             if( rv != CKR_OK )
             {
-                manApplet->warningBox( tr( "failure to set SKI_SPKI(rv:%1)").arg(JS_PKCS11_GetErrorMsg( rv )), this );
+                manApplet->warningBox( tr( "failure to set SKI_SPKI [%1]").arg(JS_PKCS11_GetErrorMsg( rv )), this );
                 return;
             }
         }
     }
 
-    manApplet->messageBox( tr("Success to generate key pairs"), this );
+    manApplet->messageBox( tr("GenerateKeyPair execution successful"), this );
     manApplet->showTypeList( index, HM_ITEM_TYPE_PRIVATEKEY );
 
     QDialog::accept();

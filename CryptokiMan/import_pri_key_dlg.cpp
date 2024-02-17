@@ -226,7 +226,7 @@ int ImportPriKeyDlg::readPrivateKey( BIN *pPriKey )
     ret = JS_BIN_fileReadBER( strPriPath.toLocal8Bit().toStdString().c_str(), &binData );
     if( ret <= 0 )
     {
-        manApplet->warningBox( tr( "fail to read private key: %1").arg( ret ), this );
+        manApplet->warningBox( tr( "failed to read private key: %1").arg( ret ), this );
         return  -1;
     }
 
@@ -235,7 +235,7 @@ int ImportPriKeyDlg::readPrivateKey( BIN *pPriKey )
         QString strPasswd = mPasswdText->text();
         if( strPasswd.length() < 1 )
         {
-            manApplet->warningBox( tr( "You have to insert password"), this );
+            manApplet->warningBox( tr( "Enter a password"), this );
             ret = -1;
             goto end;
         }
@@ -243,7 +243,7 @@ int ImportPriKeyDlg::readPrivateKey( BIN *pPriKey )
         ret = JS_PKI_decryptPrivateKey( strPasswd.toStdString().c_str(), &binData, &binInfo, &binDec );
         if( ret != 0 )
         {
-            manApplet->warningBox( tr( "fail to decrypt private key:%1").arg( ret ), this );
+            manApplet->warningBox( tr( "failed to decrypt private key [%1]").arg( ret ), this );
             mPasswdText->setFocus();
             ret = -1;
             goto end;
@@ -294,7 +294,7 @@ void ImportPriKeyDlg::accept()
     {
         if( nKeyType != JS_PKI_KEY_TYPE_RSA )
         {
-            manApplet->warningBox( tr( "RSA only support in no license mode" ), this );
+            manApplet->warningBox( tr( "Without a license, only RSA algorithms are supported." ), this );
             JS_BIN_reset( &binPri );
             return;
         }
@@ -349,7 +349,7 @@ void ImportPriKeyDlg::accept()
     }
     else
     {
-        manApplet->elog( QString( "Not support key type: %1").arg(nKeyType));
+        manApplet->elog( QString( "Key type not supported (%1)").arg(nKeyType));
         rv = -1;
         goto end;
     }
@@ -363,11 +363,11 @@ end :
 
     if( rv != 0 )
     {
-        manApplet->warningBox( tr("fail to get key information."), this );
+        manApplet->warningBox( tr("failed to get key information."), this );
         return;
     }
 
-    manApplet->messageBox( tr("success to import private key"), this );
+    manApplet->messageBox( tr("Private key import successful"), this );
     manApplet->showTypeList( index, HM_ITEM_TYPE_PRIVATEKEY );
 
     QDialog::accept();
@@ -765,7 +765,7 @@ int ImportPriKeyDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr("fail to create RSA public key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("CreateObject execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return rv;
     }
 
@@ -1088,7 +1088,7 @@ int ImportPriKeyDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr("fail to create RSA private key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("CreateObject execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return rv;
     }
 
@@ -1319,7 +1319,7 @@ int ImportPriKeyDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr("fail to create EC public key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("CreateObject execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return rv;
     }
 
@@ -1571,7 +1571,7 @@ int ImportPriKeyDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr("fail to create EC private key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this);
+        manApplet->warningBox( tr("CreateObject execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this);
         return rv;
     }
 
@@ -1801,7 +1801,7 @@ int ImportPriKeyDlg::createDSAPublicKey( JDSAKeyVal *pDSAKeyVal )
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr("fail to create DSA public key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this);
+        manApplet->warningBox( tr("CreateObject execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this);
         return rv;
     }
 
@@ -2072,7 +2072,7 @@ int ImportPriKeyDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr("fail to create DSA private key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this);
+        manApplet->warningBox( tr("CreateObject execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this);
         return rv;
     }
 

@@ -270,7 +270,7 @@ void ImportPFXDlg::accept()
 
     if( strPFXPath.isEmpty() )
     {
-        manApplet->warningBox( tr("You have to select pfx file."), this );
+        manApplet->warningBox( tr("Select a pfx file"), this );
         return;
     }
 
@@ -279,7 +279,7 @@ void ImportPFXDlg::accept()
     QString strPasswd = mPasswordText->text();
     if( strPasswd.isEmpty() )
     {
-        manApplet->warningBox( tr("You have to insert password."), this );
+        manApplet->warningBox( tr("Enter a password"), this );
         mPasswordText->setFocus();;
         return;
     }
@@ -300,7 +300,7 @@ void ImportPFXDlg::accept()
     rv = JS_PKI_decodePFX( &binPFX, strPasswd.toStdString().c_str(), &binPri, &binCert );
     if( rv != 0 )
     {
-        manApplet->warningBox( tr( "fail to decode PFX"), this );
+        manApplet->warningBox( tr( "failed to decode PFX"), this );
         JS_BIN_reset( &binPFX );
         return;
     }
@@ -310,7 +310,7 @@ void ImportPFXDlg::accept()
     {
         if( key_type != JS_PKI_KEY_TYPE_RSA )
         {
-            manApplet->warningBox( tr( "RSA only support in no license mode" ), this );
+            manApplet->warningBox( tr( "Without a license, only RSA algorithms are supported." ), this );
             JS_BIN_reset( &binPri );
             JS_BIN_reset( &binPFX );
             JS_BIN_reset( &binCert );
@@ -336,7 +336,7 @@ void ImportPFXDlg::accept()
     rv = createCert( &binCert );
     if( rv != CKR_OK )
     {
-        manApplet->elog( "fail to create certificate" );
+        manApplet->elog( QString( "failed to create certificate [%1]" ).arg( rv) );
         goto end;
     }
 
@@ -379,7 +379,7 @@ void ImportPFXDlg::accept()
     }
     else
     {
-        manApplet->elog( QString("not support key type: %1").arg(key_type));
+        manApplet->elog( QString("Key type not supported (%1)").arg(key_type));
         rv = -1;
     }
 
@@ -394,13 +394,13 @@ end :
 
     if( rv == 0 )
     {
-        manApplet->messageBox(tr("success to import pfx file"), this );
+        manApplet->messageBox(tr("PFX import successful"), this );
         manApplet->showTypeList( index, HM_ITEM_TYPE_PRIVATEKEY );
         QDialog::accept();
     }
     else
     {
-        manApplet->warningBox( tr("fail to import pfx"), this );
+        manApplet->warningBox( tr("PFX import failed [%1]").arg(rv), this );
         QDialog::reject();
     }
 }
@@ -846,7 +846,7 @@ int ImportPFXDlg::createCert( BIN *pCert )
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr("fail to create certificate(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("CreateObject execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return -1;
     }
 
@@ -1403,7 +1403,7 @@ int ImportPFXDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr("fail to create RSA private key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("CreateObject execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return rv;
     }
 
@@ -1644,7 +1644,7 @@ int ImportPFXDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr("fail to create EC public key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this);
+        manApplet->warningBox( tr("CreateObject execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this);
         return rv;
     }
 
@@ -1907,7 +1907,7 @@ int ImportPFXDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr("fail to create EC private key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this);
+        manApplet->warningBox( tr("CreateObject execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this);
         return rv;
     }
 
@@ -2147,7 +2147,7 @@ int ImportPFXDlg::createDSAPublicKey( JDSAKeyVal *pDSAKeyVal )
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr("fail to create DSA public key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this);
+        manApplet->warningBox( tr("CreateObject execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this);
         return rv;
     }
 
@@ -2428,7 +2428,7 @@ int ImportPFXDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr("fail to create DSA private key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this);
+        manApplet->warningBox( tr("CreateObject execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this);
         return rv;
     }
 

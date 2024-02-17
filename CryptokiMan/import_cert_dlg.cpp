@@ -141,14 +141,14 @@ void ImportCertDlg::accept()
 
     if( strCertPath.isEmpty() )
     {
-        manApplet->warningBox( tr("You have to select certificate file."), this );
+        manApplet->warningBox( tr("Select a certificate file."), this );
         return;
     }
 
     rv = JS_BIN_fileReadBER( strCertPath.toLocal8Bit().toStdString().c_str(), &binCert );
     if( rv < 0 )
     {
-        manApplet->warningBox( tr( "fail to read certificate:%1").arg( ret ));
+        manApplet->warningBox( tr( "failed to read certificate [%1]").arg( ret ));
         return;
     }
 
@@ -162,7 +162,7 @@ void ImportCertDlg::accept()
         ret = JS_PKI_getCertSubjetDN( &binCert, &binSubject );
         if( ret != 0 )
         {
-            manApplet->elog( QString( "fail to decode certificate: %1" ).arg(ret) );
+            manApplet->elog( QString( "failed to decode certificate [%1]" ).arg(ret) );
             JS_BIN_reset( &binCert );
             return;
         }
@@ -316,11 +316,11 @@ void ImportCertDlg::accept()
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr("fail to create certificate(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("CreateObject execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
-    manApplet->messageBox(tr("success to create certificate"), this );
+    manApplet->messageBox(tr("CreationObject execution successful"), this );
     manApplet->showTypeList( index, HM_ITEM_TYPE_CERTIFICATE );
 
     QDialog::accept();
