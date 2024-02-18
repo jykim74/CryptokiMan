@@ -304,7 +304,7 @@ void SignDlg::clickUpdate()
 
     if( strInput.isEmpty() )
     {
-        manApplet->warningBox(tr( "You have to insert data."), this );
+        manApplet->warningBox(tr( "Please enter your data."), this );
         return;
     }
 
@@ -321,7 +321,7 @@ void SignDlg::clickUpdate()
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox(tr("fail to run SignUpdate(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox(tr("SignUpdate execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
@@ -339,7 +339,7 @@ void SignDlg::clickFinal()
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr("fail to run SignFinal(%1)").arg( JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("SignFinal execution failure [%1]").arg( JS_PKCS11_GetErrorMsg(rv)), this );
         mOutputText->setPlainText("");
         return;
     }
@@ -380,7 +380,7 @@ void SignDlg::runDataSign()
 
     if( strInput.isEmpty() )
     {
-        manApplet->warningBox( tr("You have to insert data."), this );
+        manApplet->warningBox( tr("Please enter your data."), this );
         return;
     }
 
@@ -407,7 +407,7 @@ void SignDlg::runDataSign()
     if( rv != CKR_OK )
     {
         mOutputText->setPlainText("");
-        manApplet->warningBox( tr("fail to run Sign(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("Sign execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
@@ -455,7 +455,7 @@ void SignDlg::runFileSign()
         ret = clickInit();
         if( ret != CKR_OK )
         {
-            manApplet->warningBox( tr("fail to initialize sign:%1").arg(ret), this );
+            manApplet->warningBox( tr("failed to initialize sign [%1]").arg(ret), this );
             return;
         }
     }
@@ -463,7 +463,7 @@ void SignDlg::runFileSign()
     FILE *fp = fopen( strSrcFile.toLocal8Bit().toStdString().c_str(), "rb" );
     if( fp == NULL )
     {
-        manApplet->elog( QString( "fail to read file:%1").arg( strSrcFile ));
+        manApplet->elog( QString( "failed to open file (%1)").arg( strSrcFile ));
         goto end;
     }
 
@@ -485,7 +485,7 @@ void SignDlg::runFileSign()
         ret = manApplet->cryptokiAPI()->SignUpdate( session_, binPart.pVal, binPart.nLen );
         if( ret != CKR_OK )
         {
-            manApplet->warningBox( tr("fail to run SignUpdate(%1)").arg( JS_PKCS11_GetErrorMsg(ret)), this );
+            manApplet->warningBox( tr("SignUpdate execution failure [%1]").arg( JS_PKCS11_GetErrorMsg(ret)), this );
             goto end;
         }
 
@@ -553,7 +553,7 @@ void SignDlg::clickSignRecoverInit()
     {
         mOutputText->setPlainText( "" );
         mStatusLabel->setText( "" );
-        manApplet->warningBox( tr("fail to run SignRecoverInit(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("SignRecoverInit execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
     }
     else
     {
@@ -570,7 +570,7 @@ void SignDlg::clickSignRecover()
 
     if( strInput.isEmpty() )
     {
-        manApplet->warningBox( tr("You have to insert data."), this );
+        manApplet->warningBox( tr("Please enter your data."), this );
         return;
     }
 
@@ -591,7 +591,7 @@ void SignDlg::clickSignRecover()
     if( rv != CKR_OK )
     {
         mOutputText->setPlainText("");
-        manApplet->warningBox( tr("fail to run SignRecover(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("SignRecover execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 

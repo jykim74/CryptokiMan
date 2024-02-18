@@ -63,7 +63,7 @@ void LoginDlg::clickLogin()
 
     if( (long)hSession == -1 )
     {
-        manApplet->warningBox( tr( "need to open session" ), this );
+        manApplet->warningBox( tr( "OpenSession is required" ), this );
         return;
     }
 
@@ -83,12 +83,12 @@ void LoginDlg::clickLogin()
     {
         slotInfo.setLogin(true);
         slot_infos.replace( index, slotInfo );
-        manApplet->messageLog( tr( "Login OK" ), this );
+        manApplet->messageLog( tr( "Login succeed" ), this );
 
         QDialog::accept();
     }
     else {
-        manApplet->warnLog( tr( "Login fail(%1:%2)").arg( JS_PKCS11_GetErrorMsg(rv)).arg(rv), this );
+        manApplet->warnLog( tr( "Login failure [%1:%2]").arg( JS_PKCS11_GetErrorMsg(rv)).arg(rv), this );
         mPinText->clear();
 
         QDialog::reject();

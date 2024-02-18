@@ -49,7 +49,7 @@ int MechMgr::loadMechList()
     int rv = manApplet->cryptokiAPI()->GetMechanismList( slot_id_, pMechType, &ulMechCnt );
     if( rv != CKR_OK )
     {
-        manApplet->elog( QString("fail to get mechanism list: %1").arg( rv ));
+        manApplet->elog( QString("failed to get mechanism list [%1]").arg( rv ));
         return rv;
     }
 
@@ -58,7 +58,7 @@ int MechMgr::loadMechList()
 
     if( rv != CKR_OK )
     {
-        manApplet->elog( QString("fail to get mechanism list2: %1").arg( rv ));
+        manApplet->elog( QString("failed to get mechanism list2 [%1]").arg( rv ));
         return rv;
     }
 

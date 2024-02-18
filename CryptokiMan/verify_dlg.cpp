@@ -283,7 +283,7 @@ int VerifyDlg::clickInit()
     if( rv != CKR_OK )
     {
         mStatusLabel->setText("");
-        manApplet->warningBox( tr("fail to run VerifyInit(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("VerifyInit execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return rv;
     }
 
@@ -299,7 +299,7 @@ void VerifyDlg::clickUpdate()
 
     if( strInput.isEmpty() )
     {
-        manApplet->warningBox( tr("You have to insert data."), this );
+        manApplet->warningBox( tr("Please enter your data."), this );
         return;
     }
 
@@ -316,7 +316,7 @@ void VerifyDlg::clickUpdate()
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr("fail to run VerifyUpdate(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("VerifyUpdate execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
@@ -331,7 +331,7 @@ void VerifyDlg::clickFinal()
 
     if( strSign.isEmpty() )
     {
-        manApplet->warningBox( tr( "You have to insert signature."), this );
+        manApplet->warningBox( tr( "Enter signature."), this );
         return;
     }
 
@@ -342,11 +342,11 @@ void VerifyDlg::clickFinal()
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr("Signature is bad(%1).").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("Signature value is incorrect [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
     }
     else
     {
-        manApplet->messageBox( tr("Signature is good."), this );
+        manApplet->messageBox( tr("Signature value is correct"), this );
     }
 
     appendStatusLabel( "|Final" );
@@ -379,14 +379,14 @@ void VerifyDlg::runDataVerify()
 
     if( strInput.isEmpty() )
     {
-        manApplet->warningBox( tr("You have to insert data."), this );
+        manApplet->warningBox( tr("Please enter your data."), this );
         return;
     }
 
     QString strSign = mSignText->toPlainText();
     if( strSign.isEmpty() )
     {
-        manApplet->warningBox(tr( "You have to insert signature." ), this );
+        manApplet->warningBox(tr( "Please enter signature." ), this );
         return;
     }
 
@@ -411,9 +411,9 @@ void VerifyDlg::runDataVerify()
     rv = manApplet->cryptokiAPI()->Verify( session_, binInput.pVal, binInput.nLen, binSign.pVal, binSign.nLen );
 
     if( rv != CKR_OK )
-        manApplet->warningBox( tr( "Signature is bad(%1)." ).arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr( "Signature value is incorrect [%1]" ).arg(JS_PKCS11_GetErrorMsg(rv)), this );
     else
-        manApplet->messageBox( tr( "Signature is good." ), this );
+        manApplet->messageBox( tr( "Signature value is correct" ), this );
 
     QString strRes = mStatusLabel->text();
     strRes += "|Verify";
@@ -449,7 +449,7 @@ void VerifyDlg::runFileVerify()
     QString strSign = mSignText->toPlainText();
     if( strSign.isEmpty() )
     {
-        manApplet->warningBox(tr( "You have to insert signature." ), this );
+        manApplet->warningBox(tr( "Please enter signature." ), this );
         return;
     }
 
@@ -458,7 +458,7 @@ void VerifyDlg::runFileVerify()
         ret = clickInit();
         if( ret != CKR_OK )
         {
-            manApplet->warningBox( tr("fail to initialize verify:%1").arg(ret), this );
+            manApplet->warningBox( tr("failed to initialize verify:%1").arg(ret), this );
             return;
         }
     }
@@ -466,7 +466,7 @@ void VerifyDlg::runFileVerify()
     FILE *fp = fopen( strSrcFile.toLocal8Bit().toStdString().c_str(), "rb" );
     if( fp == NULL )
     {
-        manApplet->elog( QString( "fail to read file:%1").arg( strSrcFile ));
+        manApplet->elog( QString( "failed to open file (%1)").arg( strSrcFile ));
         goto end;
     }
 
@@ -488,7 +488,7 @@ void VerifyDlg::runFileVerify()
         ret = manApplet->cryptokiAPI()->VerifyUpdate( session_, binPart.pVal, binPart.nLen );
         if( ret != CKR_OK )
         {
-            manApplet->warningBox( tr("fail to run VerifyUpdate(%1)").arg( JS_PKCS11_GetErrorMsg(ret)), this );
+            manApplet->warningBox( tr("VerifyUpdate execution failure [%1]").arg( JS_PKCS11_GetErrorMsg(ret)), this );
             goto end;
         }
 
@@ -553,7 +553,7 @@ void VerifyDlg::clickVerifyRecoverInit()
     if( rv != CKR_OK )
     {
         mStatusLabel->setText("");
-        manApplet->warningBox( tr("fail to run VerifyRecoverInit(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("VerifyRecoverInit execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
@@ -570,7 +570,7 @@ void VerifyDlg::clickVerifyRecover()
     QString strSign = mSignText->toPlainText();
     if( strSign.isEmpty() )
     {
-        manApplet->warningBox(tr( "You have to insert signature." ), this );
+        manApplet->warningBox(tr( "Please enter signature." ), this );
         return;
     }
 
@@ -581,13 +581,13 @@ void VerifyDlg::clickVerifyRecover()
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr( "Signature is bad(%1)." ).arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr( "Signature value is incorrect [%1]" ).arg(JS_PKCS11_GetErrorMsg(rv)), this );
     }
     else
     {
         mInputHexRadio->setChecked(true);
         mInputText->setPlainText( getHexString( sData, ulDataLen ));
-        manApplet->messageBox( tr( "Signature is good." ), this );
+        manApplet->messageBox( tr( "Signature value is correct" ), this );
     }
 
     QString strRes = mStatusLabel->text();

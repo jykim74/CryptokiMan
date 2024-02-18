@@ -54,7 +54,7 @@ void LogoutDlg::accept()
 
     if( (long)hSession == -1 )
     {
-        manApplet->warningBox( tr( "need to open session" ), this );
+        manApplet->warningBox( tr( "OpenSession is required" ), this );
         return;
     }
 
@@ -68,7 +68,7 @@ void LogoutDlg::accept()
         QDialog::accept();
     }
     else {
-        manApplet->warningBox(tr("Logout is failure"), this );
+        manApplet->warningBox(tr("Logout failure [%1]").arg(rv), this );
         QDialog::reject();
     }
 }

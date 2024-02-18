@@ -65,7 +65,7 @@ void SetPinDlg::accept()
 
     if( strOldPin.isEmpty() )
     {
-        manApplet->warningBox( tr( "Insert old pin value"), this );
+        manApplet->warningBox( tr( "Please enter old PIN"), this );
         mOldPinText->setFocus();;
         return;
     }
@@ -73,7 +73,7 @@ void SetPinDlg::accept()
     QString strNewPin = mNewPinText->text();
     if( strNewPin.isEmpty() )
     {
-        manApplet->warningBox( tr(" Insert new pin value"), this );
+        manApplet->warningBox( tr("Please enter new PIN"), this );
         mNewPinText->setFocus();;
         return;
     }
@@ -81,7 +81,7 @@ void SetPinDlg::accept()
     QString strPinConf = mPinConfText->text();
     if( strNewPin != strPinConf )
     {
-        manApplet->warningBox( tr( "New PIN and PIN Confirm are different" ), this );
+        manApplet->warningBox( tr( "New PIN and PIN confirm values are different" ), this );
         mPinConfText->setFocus();
 
         return;
@@ -98,13 +98,13 @@ void SetPinDlg::accept()
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr( "fail to run C_SetPIN(%1)").arg(rv), this );
+        manApplet->warningBox( tr( "SetPIN execution failure [%1]").arg(rv), this );
         JS_BIN_reset( &binOldPin );
         JS_BIN_reset( &binNewPin );
         return;
     }
 
-    manApplet->messageBox( tr( "success to run C_SetPIN"), this );
+    manApplet->messageBox( tr( "SetPIN execution successful"), this );
     JS_BIN_reset( &binNewPin );
     JS_BIN_reset( &binOldPin );
     QDialog::accept();

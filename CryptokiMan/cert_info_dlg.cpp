@@ -117,7 +117,7 @@ void CertInfoDlg::getFields()
     ret = JS_PKI_getCertInfo( &binCert, &sCertInfo, &pExtInfoList );
     if( ret != 0 )
     {
-        manApplet->warningBox( tr("fail to get certificate information"), this );
+        manApplet->warningBox( tr("failed to get certificate information"), this );
         JS_BIN_reset( &binCert );
         this->hide();
         return;

@@ -96,11 +96,11 @@ void LCNInfoDlg::initialize()
 
         if( sLicenseInfo.nVersion > 0 )
         {
-            strAppend = tr( "Expired Date: %1").arg( sLicenseInfo.sExpire );
+            strAppend = tr( "Expiration Date: %1").arg( sLicenseInfo.sExpire );
         }
         else
         {
-            strAppend = tr( "The license is not issued." );
+            strAppend = tr( "The license is not a valid license." );
         }
 
         strMsg += strAppend;
@@ -161,7 +161,7 @@ int LCNInfoDlg::getLCN( const QString& strEmail, const QString& strKey, BIN *pLC
 
     if( status != JS_HTTP_STATUS_OK)
     {
-        manApplet->elog( QString("Get ret:%1 status: %2").arg( ret ).arg( status ));
+        manApplet->elog( QString("HTTP get ret:%1 status: %2").arg( ret ).arg( status ));
         return -1;
     }
 
@@ -213,7 +213,7 @@ int LCNInfoDlg::updateLCN( const QString strEmail, const QString strKey, BIN *pL
 
     if( status != JS_HTTP_STATUS_OK)
     {
-        manApplet->elog( QString("Get ret:%1 status: %2").arg( ret ).arg( status ));
+        manApplet->elog( QString("HTTP get ret:%1 status: %2").arg( ret ).arg( status ));
         return -1;
     }
 
@@ -254,20 +254,20 @@ void LCNInfoDlg::clickGet()
 
         if( strEmail.length() < 1 )
         {
-            manApplet->warningBox( tr("You have to input email"), this );
+            manApplet->warningBox( tr("Please enter a email"), this );
             return;
         }
 
         if( strKey.length() < 1 )
         {
-            manApplet->warningBox( tr("You have to input license key"), this );
+            manApplet->warningBox( tr("Please enter a license key"), this );
             return;
         }
 
         ret = getLCN( strEmail, strKey, &binLCN );
         if( ret != 0 )
         {
-            strErr = tr( "fail to get license:%1").arg( ret );
+            strErr = tr( "failed to get license [%1]").arg( ret );
             manApplet->elog( strErr );
             manApplet->warningBox( strErr, this );
             goto end;
@@ -279,7 +279,7 @@ void LCNInfoDlg::clickGet()
     ret = JS_LCN_ParseBIN( &binLCN, &sInfo );
     if( ret != 0 )
     {
-        strErr = tr( "fail to parse license:%1").arg( ret );
+        strErr = tr( "failed to parse license [%1]").arg( ret );
         manApplet->elog( strErr );
         manApplet->warningBox( strErr, this );
         goto end;
@@ -288,7 +288,7 @@ void LCNInfoDlg::clickGet()
     ret = JS_LCN_IsValid( &sInfo, JS_LCN_PRODUCT_CRYPTOKIMAN_NAME, sInfo.sSID, time(NULL) );
     if( ret != JS_LCN_VALID )
     {
-        strErr = tr("license is not valid:%1").arg(ret);
+        strErr = tr("license is not valid [%1]").arg(ret);
 
         manApplet->elog( strErr );
         manApplet->warningBox( strErr, this );
@@ -302,7 +302,7 @@ void LCNInfoDlg::clickGet()
 
         if( memcmp( sLicenseInfo.sExpire, sInfo.sExpire, sizeof(sLicenseInfo.sExpire) ) > 0 )
         {
-            strErr = tr( "The current license is longer period" );
+            strErr = tr( "Your current license has a longer usage period." );
             manApplet->elog( strErr );
             manApplet->warningBox( strErr, this );
             ret = -1;
@@ -343,7 +343,7 @@ void LCNInfoDlg::clickUpdate()
 
     if( strLicense.length() <= 0 )
     {
-        manApplet->warningBox( tr( "There is no current license" ), this );
+        manApplet->warningBox( tr( "There is currently no license" ), this );
         return;
     }
 
@@ -354,7 +354,7 @@ void LCNInfoDlg::clickUpdate()
         ret = updateLCN( sInfo.sSID, sInfo.sKey, &binNewLCN );
         if( ret != 0 )
         {
-            strErr = tr( "fail to renew license:%1").arg( ret );
+            strErr = tr( "failed to renew license [%1]").arg( ret );
             manApplet->elog( strErr );
             manApplet->warningBox( strErr, this );
             goto end;
@@ -366,7 +366,7 @@ void LCNInfoDlg::clickUpdate()
 
             if( memcmp( sLicenseInfo.sExpire, sInfo.sExpire, sizeof(sLicenseInfo.sExpire) ) > 0 )
             {
-                strErr = tr( "The current license is longer period" );
+                strErr = tr( "Your current license has a longer usage period." );
                 manApplet->elog( strErr );
                 manApplet->warningBox( strErr, this );
                 ret = -1;
@@ -375,8 +375,6 @@ void LCNInfoDlg::clickUpdate()
         }
 
         settingsLCN( QString( sInfo.sSID ), &binLCN );
-//        manApplet->settingsMgr()->setEmail( sInfo.sUser );
-//        manApplet->settingsMgr()->setLicense( getHexString( &binNewLCN ));
         ret = 0;
     }
     else

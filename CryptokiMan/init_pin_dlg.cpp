@@ -63,7 +63,7 @@ void InitPinDlg::accept()
 
     if( strPin.isEmpty() )
     {
-        manApplet->warningBox( tr( "Insert pin value"), this );
+        manApplet->warningBox( tr( "Enter a PIN"), this );
         mPinText->setFocus();;
 
         return;
@@ -72,7 +72,7 @@ void InitPinDlg::accept()
     QString strPinConf = mPinConfText->text();
     if( strPin != strPinConf )
     {
-        manApplet->warningBox( tr( "PIN and PIN Confirm are different" ), this );
+        manApplet->warningBox( tr( "PIN and PIN confirm values are different" ), this );
         mPinConfText->setFocus();
 
         return;
@@ -85,12 +85,12 @@ void InitPinDlg::accept()
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr( "fail to run InitPIN(%1)").arg(rv), this );
+        manApplet->warningBox( tr( "InitPIN execution failure [%1]").arg(rv), this );
         JS_BIN_reset( &binPin );
         return;
     }
 
-    manApplet->messageBox( tr( "Success to run InitPIN"), this );
+    manApplet->messageBox( tr( "InitPIN execution successful"), this );
     JS_BIN_reset( &binPin );
     QDialog::accept();
 }

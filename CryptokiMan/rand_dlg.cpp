@@ -85,7 +85,7 @@ void RandDlg::clickGenRand()
 
     if( strLen.isEmpty() )
     {
-        manApplet->warningBox( tr("You have to insert length value"), this );
+        manApplet->warningBox( tr("Please enter length"), this );
         return;
     }
 
@@ -98,7 +98,7 @@ void RandDlg::clickGenRand()
     if( rv != CKR_OK )
     {
         if( pRand ) JS_free( pRand );
-        manApplet->warningBox( tr( "fail to generate random(%1)").arg(rv), this );
+        manApplet->warningBox( tr( "GenerateRandom execution failure [%1]").arg(rv), this );
         return;
     }
 
@@ -126,7 +126,7 @@ void RandDlg::clickSeed()
 
     if( strSeed.isEmpty() )
     {
-        manApplet->warningBox(tr("You have to insert seed value."), this );
+        manApplet->warningBox(tr("Please enter a seed value."), this );
         return;
     }
 
@@ -142,11 +142,11 @@ void RandDlg::clickSeed()
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr("fail to run SeedRandom(%1)").arg(rv), this );
+        manApplet->warningBox( tr("SeedRandom execution failure [%1]").arg(rv), this );
         return;
     }
 
-    manApplet->warningBox( tr("SeedRandom is OK"), this );
+    manApplet->warningBox( tr("SeedRandom execution successful"), this );
 }
 
 void RandDlg::clickSeedClear()

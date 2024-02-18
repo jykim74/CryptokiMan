@@ -94,7 +94,7 @@ int CryptokiAPI::openLibrary( const QString strPath )
 int CryptokiAPI::unloadLibrary()
 {
     if( p11_ctx_ ) JS_PKCS11_ReleaseLibrry( (JP11_CTX **)&p11_ctx_ );
-    manApplet->log( "Crytoki library has been released" );
+    manApplet->log( "Cryptoki library has been released" );
     return 0;
 }
 
@@ -524,7 +524,7 @@ int CryptokiAPI::GetAttributeValue2( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDL
 
     if( rv != CKR_OK )
     {
-        fprintf( stderr, "fail to run C_GetAttributeValue(%s:%s:%d)\n", JS_PKCS11_GetCKAName(attrType),JS_PKCS11_GetErrorMsg(rv), rv );
+        fprintf( stderr, "failed to execute C_GetAttributeValue(%s:%s:%d)\n", JS_PKCS11_GetCKAName(attrType),JS_PKCS11_GetErrorMsg(rv), rv );
         return rv;
     }
 
@@ -563,7 +563,7 @@ int CryptokiAPI::GetAttributeListValue( CK_SESSION_HANDLE hSession, CK_OBJECT_HA
 
     if( rv != CKR_OK )
     {
-        fprintf( stderr, "fail to run C_GetAttributeValue(%s:%d)\n", JS_PKCS11_GetErrorMsg(rv), rv );
+        fprintf( stderr, "failed to execute C_GetAttributeValue(%s:%d)\n", JS_PKCS11_GetErrorMsg(rv), rv );
         return rv;
     }
 

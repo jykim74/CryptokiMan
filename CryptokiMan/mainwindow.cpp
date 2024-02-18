@@ -664,7 +664,7 @@ int MainWindow::openLibrary(const QString libPath)
     }
     else
     {
-        manApplet->elog( QString("fail to open cryptoki library ret:%1").arg(ret));
+        manApplet->elog( QString("failed to open cryptoki library [%1]").arg(ret));
     }
 
     return ret;
@@ -687,7 +687,7 @@ void MainWindow::open()
         if( ret != 0 ) return;
 
         manApplet->setLibPath( fileName );
-        manApplet->log( QString("Cryptoki open successfully[%1]").arg( fileName) );
+        manApplet->log( QString("Successfully opened Cryptoki library [%1]").arg( fileName) );
     }
 }
 
@@ -701,7 +701,7 @@ void MainWindow::openRecent()
         if( ret != 0 ) return;
 
         manApplet->setLibPath( action->data().toString() );
-        manApplet->log( QString("Cryptoki open successfully[%1]").arg( action->data().toString() ) );
+        manApplet->log( QString("Successfully opened Cryptoki library [%1]").arg( action->data().toString() ) );
     }
 }
 
@@ -718,14 +718,14 @@ void MainWindow::unload()
 
     if( P11 == NULL || P11->getCTX() == NULL )
     {
-        manApplet->warningBox( tr( "Cryptoki Library is not loaded"), this );
+        manApplet->warningBox( tr( "Cryptoki library not loaded"), this );
         return;
     }
 
     ret = manApplet->cryptokiAPI()->unloadLibrary();
     if( ret == 0 )
     {
-        manApplet->messageBox( tr( "Cryptoki library is unloaded successfully" ), this );
+        manApplet->messageBox( tr( "Cryptoki library has been unloaded successfully" ), this );
 
         ManTreeItem *item = getRootItem();
         if( item )
@@ -742,7 +742,7 @@ void MainWindow::P11Initialize()
 
     if( manApplet->cryptokiAPI()->getCTX() == NULL )
     {
-        manApplet->warningBox( tr( "You have load Cryptoki Library at first" ), this );
+        manApplet->warningBox( tr( "Load the Cryptoki library first" ), this );
         return;
     }
 
@@ -875,7 +875,7 @@ void MainWindow::P11Initialize()
 
         ret = mechMgr->loadMechList();
         if( ret == CKR_OK )
-            manApplet->log( "load mechanism list successfully" );
+            manApplet->log( "loading mechanism list execution successful" );
     }
 }
 
@@ -885,7 +885,7 @@ void MainWindow::P11Finalize()
 
     if( manApplet->cryptokiAPI()->getCTX() == NULL )
     {
-        manApplet->warningBox( tr( "You have load Cryptoki Library at first" ), this );
+        manApplet->warningBox( tr( "Cryptoki library not loaded" ), this );
         return;
     }
 
@@ -893,7 +893,7 @@ void MainWindow::P11Finalize()
 
     if( ret == 0 )
     {
-        manApplet->messageBox( tr( "finalized successfully"), this );
+        manApplet->messageBox( tr( "Finalize execution successful"), this );
 
         ManTreeItem* root = getRootItem();
 
@@ -919,7 +919,7 @@ void MainWindow::openSession()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -946,7 +946,7 @@ void MainWindow::closeSession()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -976,7 +976,7 @@ void MainWindow::closeAllSessions()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1006,7 +1006,7 @@ void MainWindow::login()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1033,7 +1033,7 @@ void MainWindow::logout()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1060,7 +1060,7 @@ void MainWindow::generateKeyPair()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1075,7 +1075,7 @@ void MainWindow::generateKey()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1090,7 +1090,7 @@ void MainWindow::createData()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1105,7 +1105,7 @@ void MainWindow::createRSAPublicKey()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1120,7 +1120,7 @@ void MainWindow::createRSAPrivateKey()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1135,7 +1135,7 @@ void MainWindow::createECPublicKey()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1150,7 +1150,7 @@ void MainWindow::createECPrivateKey()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1165,7 +1165,7 @@ void MainWindow::createDSAPublicKey()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1180,7 +1180,7 @@ void MainWindow::createDSAPrivateKey()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1195,7 +1195,7 @@ void MainWindow::createKey()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1210,7 +1210,7 @@ void MainWindow::copyObject()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1225,7 +1225,7 @@ void MainWindow::findObject()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1240,7 +1240,7 @@ void MainWindow::copyTableObject()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1268,7 +1268,7 @@ void MainWindow::deleteObject()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1280,7 +1280,7 @@ void MainWindow::deleteObject()
 
     if( item0 == NULL || item1 == NULL )
     {
-        manApplet->warningBox( tr( "There is no object to be selected" ), this );
+        manApplet->warningBox( tr( "No object selected" ), this );
         return;
     }
 
@@ -1299,7 +1299,7 @@ void MainWindow::editObject()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1321,7 +1321,7 @@ void MainWindow::editAttribute()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1333,7 +1333,7 @@ void MainWindow::editAttribute()
 
     if( item0 == NULL || item1 == NULL )
     {
-        manApplet->warningBox( tr( "There is no object to be selected" ), this );
+        manApplet->warningBox( tr( "No object selected" ), this );
         return;
     }
 
@@ -1354,7 +1354,7 @@ void MainWindow::editAttributeList()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1366,7 +1366,7 @@ void MainWindow::editAttributeList()
 
     if( item0 == NULL || item1 == NULL )
     {
-        manApplet->warningBox( tr( "There is no object to be selected" ), this );
+        manApplet->warningBox( tr( "No object selected" ), this );
         return;
     }
 
@@ -1387,7 +1387,7 @@ void MainWindow::editAttributeList2()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1409,7 +1409,7 @@ void MainWindow::digest()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1426,7 +1426,7 @@ void MainWindow::sign()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1441,7 +1441,7 @@ void MainWindow::signType()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1459,7 +1459,7 @@ void MainWindow::signEach()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1488,7 +1488,7 @@ void MainWindow::verify()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1505,7 +1505,7 @@ void MainWindow::verifyType()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1524,7 +1524,7 @@ void MainWindow::verifyEach()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1551,7 +1551,7 @@ void MainWindow::encrypt()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1569,7 +1569,7 @@ void MainWindow::encryptType()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1590,7 +1590,7 @@ void MainWindow::encryptEach()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1618,7 +1618,7 @@ void MainWindow::decrypt()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1634,7 +1634,7 @@ void MainWindow::decryptType()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1655,7 +1655,7 @@ void MainWindow::decryptEach()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1683,7 +1683,7 @@ void MainWindow::importCert()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1725,7 +1725,7 @@ void MainWindow::importPFX()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1742,7 +1742,7 @@ void MainWindow::improtPrivateKey()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1758,7 +1758,7 @@ void MainWindow::licenseInfo()
     LCNInfoDlg lcnInfoDlg;
     if( lcnInfoDlg.exec() == QDialog::Accepted )
     {
-        if( manApplet->yesOrNoBox(tr("You have changed license. Restart to apply it?"), this, true))
+        if( manApplet->yesOrNoBox(tr("The license has been changed. Restart to apply it?"), this, true))
             manApplet->restartApp();
     }
 }
@@ -1794,7 +1794,7 @@ void MainWindow::initToken()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1811,7 +1811,7 @@ void MainWindow::rand()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1828,7 +1828,7 @@ void MainWindow::setPin()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1845,7 +1845,7 @@ void MainWindow::initPin()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1862,7 +1862,7 @@ void MainWindow::wrapKey()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1879,7 +1879,7 @@ void MainWindow::unwrapKey()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1896,7 +1896,7 @@ void MainWindow::deriveKey()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 
@@ -1919,7 +1919,7 @@ void MainWindow::operationState()
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
-        manApplet->warningBox( tr( "There is no slot to be selected" ), this );
+        manApplet->warningBox( tr( "No slot selected" ), this );
         return;
     }
 

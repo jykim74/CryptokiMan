@@ -65,7 +65,7 @@ void InitTokenDlg::accept()
 
     if( strPIN.isEmpty() )
     {
-        manApplet->warningBox( tr("You have to insert PIN."), this );
+        manApplet->warningBox( tr("Enter a PIN"), this );
         mPinText->setFocus();
 
         return;
@@ -74,7 +74,7 @@ void InitTokenDlg::accept()
     QString strPINConf = mPinConfText->text();
     if( strPIN != strPINConf )
     {
-        manApplet->warningBox( tr( "PIN and PIN Confirm are different" ), this );
+        manApplet->warningBox( tr( "PIN and PIN confirm values are different" ), this );
         mPinConfText->setFocus();
 
         return;
@@ -83,7 +83,7 @@ void InitTokenDlg::accept()
     QString strLabel = mLabelText->text();
     if( strLabel.isEmpty() )
     {
-        manApplet->warningBox( tr("You have to insert label."), this );
+        manApplet->warningBox( tr("Please enter a label"), this );
         mLabelText->setFocus();
 
         return;
@@ -97,7 +97,7 @@ void InitTokenDlg::accept()
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr( "fail to initialize token(%1)").arg(rv), this );
+        manApplet->warningBox( tr( "InitToken execution failure [%1]").arg(rv), this );
         return;
     }
 

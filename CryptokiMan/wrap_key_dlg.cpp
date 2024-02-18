@@ -120,7 +120,7 @@ void WrapKeyDlg::clickWrapKey()
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr("fail to wrap key(%1)").arg( JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("WrapKey execution failure [%1]").arg( JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
@@ -134,7 +134,7 @@ void WrapKeyDlg::clickWrapKey()
     if( rv != CKR_OK )
     {
         if( pData ) JS_free( pData );
-        manApplet->warningBox( tr("fail to wrap key(%1)").arg( JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("WrapKey execution failure [%1]").arg( JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
@@ -146,8 +146,7 @@ void WrapKeyDlg::clickWrapKey()
     if( pData ) JS_free( pData );
     JS_BIN_reset( &binWrapped );
 
-    manApplet->messageBox( "WrapKey is success", this );
-    manApplet->log( "WrapKey is success" );
+    manApplet->messageLog( "WrapKey execution successful", this );
 }
 
 
@@ -192,7 +191,7 @@ void WrapKeyDlg::clickSaveFile()
 
     if( strOutput.length() < 1 )
     {
-        manApplet->warningBox( tr( "There is no output data"), this );
+        manApplet->warningBox( tr( "No result data"), this );
         return;
     }
 

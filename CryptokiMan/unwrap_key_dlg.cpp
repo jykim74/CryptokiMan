@@ -266,7 +266,7 @@ void UnwrapKeyDlg::accept()
 
     if( strInput.length() < 1 )
     {
-        QMessageBox::warning( this, "UnwrapKey", tr("You have to insert wraped key value") );
+        QMessageBox::warning( this, "UnwrapKey", tr("Enter wraped key value") );
         return;
     }
 
@@ -520,13 +520,13 @@ void UnwrapKeyDlg::accept()
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr( "fail to unwrapkey(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr( "UnwrapKey execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
     QString strObject = QString("%1").arg( uObj );
 
-    manApplet->messageBox( tr("UnwrapKey is success(Object Handle:%1)").arg( strObject), this );
+    manApplet->messageBox( tr( "UnwrapKey execution successful [Object Handle: %1]" ).arg( strObject), this );
     QDialog::accept();
 }
 

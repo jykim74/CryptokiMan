@@ -79,7 +79,7 @@ void OperStateDlg::clickGetOperationState()
     if( ret != CKR_OK )
     {
         mOperationStateText->clear();
-        manApplet->warningBox( tr( "fail to run GetOperationState:%1").arg(ret));
+        manApplet->warningBox( tr( "GetOperationState execution failure [%1]").arg(ret));
         return;
     }
 
@@ -111,11 +111,11 @@ void OperStateDlg::clickSetOperationState()
     if( ret != CKR_OK )
     {
         mOperationStateText->clear();
-        manApplet->warningBox( tr( "fail to run SetOperationState:%1").arg(ret));
+        manApplet->warningBox( tr( "SetOperationState execution failure [%1]").arg(ret));
     }
     else
     {
-        manApplet->messageBox( tr("SetOperation OK" ), this );
+        manApplet->messageBox( tr("SetOperation execution successful" ), this );
     }
 
     JS_BIN_reset( &binOperState );
