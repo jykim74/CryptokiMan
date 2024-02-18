@@ -197,7 +197,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <location filename="../cert_info_dlg.cpp" line="120"/>
         <source>failed to get certificate information</source>
-        <translation type="unfinished"></translation>
+        <translation>인증서 정보 얻기에 실패 하였습니다</translation>
     </message>
     <message>
         <source>fail to get certificate information</source>
@@ -337,17 +337,17 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <location filename="../close_session_dlg.cpp" line="89"/>
         <source>CloseSession(%1) successful</source>
-        <translation type="unfinished"></translation>
+        <translation>CloseSession(%1) 성공</translation>
     </message>
     <message>
         <location filename="../close_session_dlg.cpp" line="95"/>
         <source>CloseAllSessions(%1) failure [%2]</source>
-        <translation type="unfinished"></translation>
+        <translation>CloseAllSessions(%1) 실패[%2]</translation>
     </message>
     <message>
         <location filename="../close_session_dlg.cpp" line="99"/>
         <source>CloseSession(%1) failure [%2]</source>
-        <translation type="unfinished"></translation>
+        <translation>CloseSessions(%1) 실패[%2]</translation>
     </message>
 </context>
 <context>
@@ -465,17 +465,17 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <location filename="../copy_object_dlg.cpp" line="150"/>
         <source>There is no handler for the source.</source>
-        <translation type="unfinished"></translation>
+        <translation>소스에 대한 핸들러가 없습니다</translation>
     </message>
     <message>
         <location filename="../copy_object_dlg.cpp" line="197"/>
         <source>CopyObject execution failed [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>CopyObject 실행 실패 [%1]</translation>
     </message>
     <message>
         <location filename="../copy_object_dlg.cpp" line="204"/>
         <source>CopyObject successful [New Object Handle: %1]</source>
-        <translation type="unfinished"></translation>
+        <translation>CopyObject 성공 [새로운 대상 핸들:%1]</translation>
     </message>
 </context>
 <context>
@@ -651,17 +651,17 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <location filename="../create_dsa_pri_key_dlg.cpp" line="442"/>
         <source>DSA private key creation failure [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>DSA 개인키 생성 실패(%1)</translation>
     </message>
     <message>
         <location filename="../create_dsa_pri_key_dlg.cpp" line="446"/>
         <source>DSA private key creation successful [Handle: %1]</source>
-        <translation type="unfinished"></translation>
+        <translation>DSA 개인키 생성 성공[Handle:%1]</translation>
     </message>
     <message>
         <location filename="../create_dsa_pri_key_dlg.cpp" line="520"/>
         <source>failed to get key value [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>유효한 키 가져오기 실패: [%1]</translation>
     </message>
 </context>
 <context>
@@ -832,17 +832,17 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <location filename="../create_dsa_pub_key_dlg.cpp" line="407"/>
         <source>DSA public key creation failure [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>DSA 공개키 생성 실패(%1)</translation>
     </message>
     <message>
         <location filename="../create_dsa_pub_key_dlg.cpp" line="411"/>
         <source>DSA public key creation successful [Handle: %1]</source>
-        <translation type="unfinished"></translation>
+        <translation>DSA 공개키 생성 성공[Handle:%1]</translation>
     </message>
     <message>
         <location filename="../create_dsa_pub_key_dlg.cpp" line="504"/>
         <source>fail to get key value [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>유효한 키 가져오기 실패: [%1]</translation>
     </message>
 </context>
 <context>
@@ -914,7 +914,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <location filename="../create_data_dlg.cpp" line="236"/>
         <source>failed to create data [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>데이타 생성 실패(%1)</translation>
     </message>
     <message>
         <location filename="../create_data_dlg.cpp" line="240"/>
@@ -1138,17 +1138,17 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <location filename="../create_ec_pri_key_dlg.cpp" line="410"/>
         <source>EC private key creation failure [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>EC 개인키 생성 실패(%1)</translation>
     </message>
     <message>
         <location filename="../create_ec_pri_key_dlg.cpp" line="414"/>
         <source>EC private key creation successful [Handle: %1]</source>
-        <translation type="unfinished"></translation>
+        <translation>ECC 개인키 생성 성공[Handle:%1]</translation>
     </message>
     <message>
         <location filename="../create_ec_pri_key_dlg.cpp" line="490"/>
         <source>failed to get key value [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>유효한 키 가져오기 실패: [%1]</translation>
     </message>
 </context>
 <context>
@@ -1329,17 +1329,17 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <location filename="../create_ec_pub_key_dlg.cpp" line="377"/>
         <source>EC public key creation failure [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>EC 공개키 생성 실패 [%1]</translation>
     </message>
     <message>
         <location filename="../create_ec_pub_key_dlg.cpp" line="381"/>
         <source>EC public key creation successful [Handle: %1]</source>
-        <translation type="unfinished"></translation>
+        <translation>ECC 공개키 생성 성공[Handle:%1]</translation>
     </message>
     <message>
         <location filename="../create_ec_pub_key_dlg.cpp" line="490"/>
         <source>failed to get key value [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1509,12 +1509,12 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <location filename="../create_key_dlg.cpp" line="410"/>
         <source>Secret key creation failure [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>비밀키 생성 실패 [%1]</translation>
     </message>
     <message>
         <location filename="../create_key_dlg.cpp" line="414"/>
         <source>Secret key creation successful</source>
-        <translation type="unfinished"></translation>
+        <translation>비밀키 생성 성공</translation>
     </message>
 </context>
 <context>
@@ -1739,17 +1739,17 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <location filename="../create_rsa_pri_key_dlg.cpp" line="494"/>
         <source>RSA private key creation failure [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>RSA 개인키 생성 실패(%1)</translation>
     </message>
     <message>
         <location filename="../create_rsa_pri_key_dlg.cpp" line="498"/>
         <source>RSA private key creation successful [Handle: %1]</source>
-        <translation type="unfinished"></translation>
+        <translation>RSA 개인키 생성 성공[Handle:%1]</translation>
     </message>
     <message>
         <location filename="../create_rsa_pri_key_dlg.cpp" line="581"/>
         <source>failed to get key value [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>키 값 가져오기 싪패 [%1]</translation>
     </message>
 </context>
 <context>
@@ -1931,17 +1931,17 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <location filename="../create_rsa_pub_key_dlg.cpp" line="376"/>
         <source>RSA public key creation failure [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>RSA 공개키 생성 실패(%1)</translation>
     </message>
     <message>
         <location filename="../create_rsa_pub_key_dlg.cpp" line="380"/>
         <source>RSA public key creation successful [Handle: %1]</source>
-        <translation type="unfinished"></translation>
+        <translation>RSA 공개키 생성 성공[Handle:%1]</translation>
     </message>
     <message>
         <location filename="../create_rsa_pub_key_dlg.cpp" line="466"/>
         <source>failed to get key value [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>키 값 가져오기 싪패 [%1]</translation>
     </message>
 </context>
 <context>
@@ -2135,24 +2135,24 @@ Do you want to delete the file and continue?</source>
     <message>
         <location filename="../decrypt_dlg.cpp" line="442"/>
         <source>DecryptInit execution failure [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>DecryptInit 실행 실패 [%1]</translation>
     </message>
     <message>
         <location filename="../decrypt_dlg.cpp" line="462"/>
         <source>Enter your data.</source>
-        <translation type="unfinished"></translation>
+        <translation>데이타를 입력하세요</translation>
     </message>
     <message>
         <location filename="../decrypt_dlg.cpp" line="485"/>
         <location filename="../decrypt_dlg.cpp" line="701"/>
         <source>DecryptUpdate execution failure [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>DecryptUpdate 실행 실패 [%1]</translation>
     </message>
     <message>
         <location filename="../decrypt_dlg.cpp" line="514"/>
         <location filename="../decrypt_dlg.cpp" line="530"/>
         <source>DecryptFinal execution failure [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>DecryptFinal 실행 실패 [%1]</translation>
     </message>
     <message>
         <location filename="../decrypt_dlg.cpp" line="564"/>
@@ -2162,18 +2162,18 @@ Do you want to delete the file and continue?</source>
     <message>
         <location filename="../decrypt_dlg.cpp" line="580"/>
         <source>Enter your data</source>
-        <translation type="unfinished"></translation>
+        <translation>데이타를 입력하세요</translation>
     </message>
     <message>
         <location filename="../decrypt_dlg.cpp" line="605"/>
         <source>Decrypt execution failure [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Decrypt 실행 실패 [%1]</translation>
     </message>
     <message>
         <location filename="../decrypt_dlg.cpp" line="651"/>
         <source>The destination file(%1) already exists.
 Do you want to delete the file and continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>대상 파일(%1)이 이미 존재합니다. 삭제 후 계속 하시겠습니까?</translation>
     </message>
     <message>
         <location filename="../decrypt_dlg.ui" line="327"/>
