@@ -115,7 +115,7 @@ void OperStateDlg::clickSetOperationState()
     }
     else
     {
-        manApplet->messageBox( tr("SetOperation execution successful" ), this );
+        manApplet->messageBox( tr("SetOperationState execution successful" ), this );
     }
 
     JS_BIN_reset( &binOperState );
