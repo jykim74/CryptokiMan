@@ -24,13 +24,31 @@
     </message>
     <message>
         <location filename="../about_dlg.cpp" line="18"/>
-        <source>%1 [Ver %2]</source>
+        <source>%1 [Version %2]</source>
         <translation>%1 [버전 %2]</translation>
     </message>
     <message>
         <location filename="../about_dlg.cpp" line="20"/>
+        <source>%1 [Unlicensed Version %2]</source>
+        <translation>%1 [Unlicensed 버전 %2]</translation>
+    </message>
+    <message>
+        <location filename="../about_dlg.cpp" line="35"/>
+        <source>This program is a freeware tool created using open source.If you do not use this for commercial purposes, you can use it freely </source>
+        <translation>본 프로그램은 오픈소스를 이용하여 제작된 프리웨어 도구입니다. 상업적인 목적으로 사용하지 않으시면 자유롭게 사용하셔도 됩니다.</translation>
+    </message>
+    <message>
+        <location filename="../about_dlg.cpp" line="40"/>
+        <source>Third party software that may be contained in this application.</source>
+        <translation>이 애플리케이션에 포함될 수 있는 타사 소프트웨어.</translation>
+    </message>
+    <message>
+        <source>%1 [Ver %2]</source>
+        <translation type="vanished">%1 [버전 %2]</translation>
+    </message>
+    <message>
         <source>%1 (Unlicensed Version) [Ver %2]</source>
-        <translation>%1 (Unlicensed 버전) [버전 %2]</translation>
+        <translation type="vanished">%1 (Unlicensed 버전) [버전 %2]</translation>
     </message>
     <message>
         <source>About %1 (%2)</source>
@@ -47,9 +65,8 @@
         <translation type="vanished">이 프로그램은 상업적으로 이용하지 않는다면 cryptoki 모듈 테스트를 자유롭게 사용하는 프리웨어 소프트웨어이다. 요구 사항이나 의견이 있으면 메일로 연락주세요.</translation>
     </message>
     <message>
-        <location filename="../about_dlg.cpp" line="35"/>
         <source>This is freeware tool to test cryptoki library If you do not use this for commercial purposes, you can use it freely If you have any opinions on this tool, please send me a mail.</source>
-        <translation>이 프로그램은 상업적으로 이용하지 않는다면 cryptoki 모듈 테스트를 자유롭게 사용하는 프리웨어 소프트웨어이다. 요구 사항이나 의견이 있으면 메일로 연락주세요.</translation>
+        <translation type="vanished">이 프로그램은 상업적으로 이용하지 않는다면 cryptoki 모듈 테스트를 자유롭게 사용하는 프리웨어 소프트웨어이다. 요구 사항이나 의견이 있으면 메일로 연락주세요.</translation>
     </message>
     <message>
         <source><byte value="xd"/>
@@ -60,9 +77,8 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
 메일: jykim74@gmail.com</translation>
     </message>
     <message>
-        <location filename="../about_dlg.cpp" line="55"/>
         <source>Library:</source>
-        <translation>라이브러리:</translation>
+        <translation type="vanished">라이브러리:</translation>
     </message>
     <message>
         <source>Copyright (C) 2019 ~ 2020 JongYeob Kim</source>
