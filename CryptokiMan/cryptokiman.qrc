@@ -78,5 +78,6 @@
         <file>images/find.png</file>
         <file>images/cert_revoked.png</file>
         <file>images/root_cert.png</file>
+        <file>../LICENSE</file>
     </qresource>
 </RCC>
