@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2024 JayKim <jykim74@gmail.com>
+ *
+ * All rights reserved.
+ */
 #ifndef DEL_OBJECT_DLG_H
 #define DEL_OBJECT_DLG_H
 

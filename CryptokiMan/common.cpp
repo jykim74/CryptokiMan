@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2024 JayKim <jykim74@gmail.com>
+ *
+ * All rights reserved.
+ */
 #include "js_pki.h"
 #include "js_pki_ext.h"
 #include "js_pki_x509.h"

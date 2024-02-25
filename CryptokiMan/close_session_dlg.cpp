@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2024 JayKim <jykim74@gmail.com>
+ *
+ * All rights reserved.
+ */
 #include "close_session_dlg.h"
 #include "js_pkcs11.h"
 #include "mainwindow.h"

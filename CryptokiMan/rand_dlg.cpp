@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2024 JayKim <jykim74@gmail.com>
+ *
+ * All rights reserved.
+ */
 #include "rand_dlg.h"
 #include "mainwindow.h"
 #include "man_applet.h"

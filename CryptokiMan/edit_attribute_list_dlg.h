@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2024 JayKim <jykim74@gmail.com>
+ *
+ * All rights reserved.
+ */
 #ifndef EDIT_ATTRIBUTE_LIST_DLG_H
 #define EDIT_ATTRIBUTE_LIST_DLG_H
 

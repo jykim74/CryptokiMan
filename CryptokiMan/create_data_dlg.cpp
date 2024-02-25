@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2024 JayKim <jykim74@gmail.com>
+ *
+ * All rights reserved.
+ */
 #include "create_data_dlg.h"
 #include "man_applet.h"
 #include "mainwindow.h"

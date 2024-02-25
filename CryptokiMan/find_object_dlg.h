@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2024 JayKim <jykim74@gmail.com>
+ *
+ * All rights reserved.
+ */
 #ifndef FIND_OBJECT_DLG_H
 #define FIND_OBJECT_DLG_H
 

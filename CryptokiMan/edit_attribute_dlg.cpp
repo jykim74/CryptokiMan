@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2024 JayKim <jykim74@gmail.com>
+ *
+ * All rights reserved.
+ */
 #include "common.h"
 #include "edit_attribute_dlg.h"
 #include "man_applet.h"

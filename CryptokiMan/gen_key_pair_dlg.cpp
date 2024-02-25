@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2024 JayKim <jykim74@gmail.com>
+ *
+ * All rights reserved.
+ */
 #include "man_applet.h"
 #include "mainwindow.h"
 #include "gen_key_pair_dlg.h"

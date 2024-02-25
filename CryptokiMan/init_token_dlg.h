@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2024 JayKim <jykim74@gmail.com>
+ *
+ * All rights reserved.
+ */
 #ifndef INIT_TOKEN_DLG_H
 #define INIT_TOKEN_DLG_H
 

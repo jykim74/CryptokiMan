@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2024 JayKim <jykim74@gmail.com>
+ *
+ * All rights reserved.
+ */
 #ifndef CLOSE_SESSION_DLG_H
 #define CLOSE_SESSION_DLG_H
 

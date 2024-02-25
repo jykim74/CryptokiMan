@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2024 JayKim <jykim74@gmail.com>
+ *
+ * All rights reserved.
+ */
 #ifndef OPEN_SESSION_DLG_H
 #define OPEN_SESSION_DLG_H
 

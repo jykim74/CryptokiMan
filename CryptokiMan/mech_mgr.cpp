@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2024 JayKim <jykim74@gmail.com>
+ *
+ * All rights reserved.
+ */
 #include "mech_rec.h"
 #include "mech_mgr.h"
 #include "mainwindow.h"

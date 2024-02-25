@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2024 JayKim <jykim74@gmail.com>
+ *
+ * All rights reserved.
+ */
 #ifndef WRAP_KEY_DLG_H
 #define WRAP_KEY_DLG_H
 
