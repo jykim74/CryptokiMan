@@ -33,6 +33,9 @@ private:
     QString version_label_;
     QString getBuild();
     void initialize();
+
+    void showInfo();
+    void showCopyright();
 };
 
 #endif // ABOUT_DLG_H

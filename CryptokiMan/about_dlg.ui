@@ -62,7 +62,31 @@
     </layout>
    </item>
    <item>
-    <widget class="QTextBrowser" name="mAboutText"/>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>1</number>
+     </property>
+     <widget class="QWidget" name="tab">
+      <attribute name="title">
+       <string>Information</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QTextBrowser" name="mAboutText"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_2">
+      <attribute name="title">
+       <string>Copyright</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QTextBrowser" name="mCopyRightText"/>
+       </item>
+      </layout>
+     </widget>
+    </widget>
    </item>
    <item>
     <layout class="QGridLayout" name="gridLayout">
@@ -102,7 +126,6 @@
  </widget>
  <tabstops>
   <tabstop>pushButton</tabstop>
-  <tabstop>mAboutText</tabstop>
   <tabstop>mCheckUpdateBtn</tabstop>
  </tabstops>
  <resources>
