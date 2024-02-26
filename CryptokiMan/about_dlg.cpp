@@ -109,6 +109,14 @@ void AboutDlg::showCopyright()
     strCopyRight += "<br>- https://www.qt.io";
     strCopyRight += "<br>- <a href=https://www.qt.io/licensing/open-source-lgpl-obligations>LGPL 3.0 License</a>";
 
+    strCopyRight += "<br><br><b>ltdl</b>";
+    strCopyRight += "<br>- https://www.gnu.org/software/libtool";
+    strCopyRight += "<br>- <a href=https://www.gnu.org/licenses/lgpl-3.0.en.html>LGPL 3.0 Licese</a>";
+
+    strCopyRight += "<br><br><b>OpenLDAP</b>";
+    strCopyRight += "<br>- https://www.openldap.org";
+    strCopyRight += "<br>- <a href=https://www.openldap.org/doc/admin20/license.html>The OpenLDAP Public License</a>";
+
 #ifdef Q_OS_WIN
     strAbout += "<br><br><b>WinSparkle</b>";
     strAbout += "<br>- https://winsparkle.org";
