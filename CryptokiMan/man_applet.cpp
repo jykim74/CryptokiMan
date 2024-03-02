@@ -48,6 +48,7 @@
 #include "common.h"
 #include "cryptoki_api.h"
 #include "js_net.h"
+#include "js_error.h"
 #include "lcn_info_dlg.h"
 
 ManApplet *manApplet;
@@ -184,7 +185,7 @@ int ManApplet::checkLicense()
 
     ret = JS_LCN_IsValid( &license_info_, JS_LCN_PRODUCT_CRYPTOKIMAN_NAME, NULL, ntp_t );
 
-    if( ret == JS_LCN_VALID )
+    if( ret == JSR_VALID )
         is_license_ = true;
 
 end :
