@@ -10,7 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = CryptokiMan
 TEMPLATE = app
-PROJECT_VERSION = "1.6.5"
+PROJECT_VERSION = "1.7.0"
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -218,13 +218,13 @@ mac {
     CONFIG( debug, debug | release ) {
         message( "CryptokiMan Debug" );
         LIBS += -L"../../build-PKILib-Desktop_Qt_5_15_2_clang_64bit-Debug" -lPKILib
-        LIBS += -L"../../PKILib/lib/mac/debug/openssl3/lib" -lcrypto -lssl
-        INCLUDEPATH += "../../PKILib/lib/mac/debug/openssl3/include"
+        LIBS += -L"../../lib/mac/debug/openssl3/lib" -lcrypto -lssl
+        INCLUDEPATH += "../../lib/mac/debug/openssl3/include"
     } else {
         message( "CryptokiMan Release" );
         LIBS += -L"../../build-PKILib-Desktop_Qt_5_15_2_clang_64bit-Release" -lPKILib
-        LIBS += -L"../../PKILib/lib/mac/openssl3/lib" -lcrypto -lssl
-        INCLUDEPATH += "../../PKILib/lib/mac/openssl3/include"
+        LIBS += -L"../../lib/mac/openssl3/lib" -lcrypto -lssl
+        INCLUDEPATH += "../../lib/mac/openssl3/include"
     }
 
     LIBS += -L"/usr/local/lib" -lltdl
@@ -240,10 +240,10 @@ win32 {
 
         Debug {
             LIBS += -L"../../build-PKILib-Desktop_Qt_5_13_2_MinGW_32_bit-Debug" -lPKILib
-            LIBS += -L"../../PKILib/lib/win32/debug/openssl3/lib" -lcrypto -lssl
+            LIBS += -L"../../lib/win32/debug/openssl3/lib" -lcrypto -lssl
         } else {
             LIBS += -L"../../build-PKILib-Desktop_Qt_5_13_2_MinGW_32_bit-Release" -lPKILib
-            LIBS += -L"../../PKILib/lib/win32/openssl3/lib" -lcrypto -lssl
+            LIBS += -L"../../lib/win32/openssl3/lib" -lcrypto -lssl
         }
 
         LIBS += -L"C:\msys64\mingw32\lib" -lltdl -lws2_32
@@ -254,10 +254,10 @@ win32 {
 
         Debug {
             LIBS += -L"../../build-PKILib-Desktop_Qt_5_13_2_MinGW_64_bit-Debug" -lPKILib
-            LIBS += -L"../../PKILib/lib/win64/debug/openssl3/lib64" -lcrypto -lssl
+            LIBS += -L"../../lib/win64/debug/openssl3/lib64" -lcrypto -lssl
         } else {
             LIBS += -L"../../build-PKILib-Desktop_Qt_5_13_2_MinGW_64_bit-Release" -lPKILib
-            LIBS += -L"../../PKILib/lib/win64/openssl3/lib64" -lcrypto -lssl
+            LIBS += -L"../../lib/win64/openssl3/lib64" -lcrypto -lssl
         }
 
         LIBS += -L"C:\msys64\mingw64\lib" -lltdl -lws2_32
@@ -268,11 +268,11 @@ win32 {
 linux {
     CONFIG( debug, debug | release ) {
         LIBS += -L"../../build-PKILib-Desktop_Qt_5_13_2_GCC_64bit-Debug" -lPKILib
-        LIBS += -L"../../PKILib/lib/linux/debug/openssl3/lib64" -lcrypto -lssl
+        LIBS += -L"../../lib/linux/debug/openssl3/lib64" -lcrypto -lssl
 
     } else {
         LIBS += -L"../../build-PKILib-Desktop_Qt_5_13_2_GCC_64bit-Release" -lPKILib
-        LIBS += -L"../../PKILib/lib/linux/openssl3/lib64" -lcrypto -lssl
+        LIBS += -L"../../lib/linux/openssl3/lib64" -lcrypto -lssl
     }
 
     LIBS += -lltdl
