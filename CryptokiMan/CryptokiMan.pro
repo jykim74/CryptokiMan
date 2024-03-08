@@ -247,7 +247,7 @@ win32 {
         }
 
         LIBS += -L"C:\msys64\mingw32\lib" -lltdl -lws2_32
-        LIBS += -L"../../PKILib/lib/win32/winsparkle/Release" -lWinSparkle
+        LIBS += -L"../../lib/win32/winsparkle/lib" -lWinSparkle
     } else {
         INCLUDEPATH += "../../PKILib/lib/win64/winsparkle/include"
         INCLUDEPATH += "C:\msys64\mingw64\include"
@@ -261,7 +261,7 @@ win32 {
         }
 
         LIBS += -L"C:\msys64\mingw64\lib" -lltdl -lws2_32
-        LIBS += -L"../../PKILib/lib/win64/winsparkle/x64/Release" -lWinSparkle
+        LIBS += -L"../../lib/win64/winsparkle/lib" -lWinSparkle
     }
 }
 
