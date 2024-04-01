@@ -586,12 +586,14 @@ void MainWindow::createActions()
         QAction *clearAct = new QAction( clearIcon, tr("&Clear Log"), this );
         connect( clearAct, &QAction::triggered, this, &MainWindow::logClear );
         clearAct->setStatusTip(tr("clear log"));
+        clearAct->setShortcut( QKeySequence(Qt::Key_F9));
         helpMenu->addAction( clearAct );
         helpToolBar->addAction( clearAct );
 
         QIcon logIcon = QIcon::fromTheme( "log-halt", QIcon(":/images/log_halt.png" ));
         QAction *logAct = new QAction( logIcon, tr( "&Log Halt" ), this );
         connect( logAct, &QAction::triggered, this, &MainWindow::logToggle );
+        logAct->setShortcut( QKeySequence(Qt::Key_F10));
         logAct->setCheckable(true);
         logAct->setStatusTip( tr( "Log Halt" ));
         helpMenu->addAction( logAct );
@@ -625,6 +627,7 @@ void MainWindow::createActions()
 
     QAction *aboutAct = new QAction( cryptokiManIcon, tr("About CryptokiMan"), this );
     connect( aboutAct, &QAction::triggered, this, &MainWindow::about);
+    aboutAct->setShortcut( QKeySequence(Qt::Key_F1));
     aboutAct->setStatusTip(tr("About CryptokiMan"));
     helpMenu->addAction( aboutAct );
     helpToolBar->addAction( aboutAct );
