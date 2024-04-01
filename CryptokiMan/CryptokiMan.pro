@@ -235,7 +235,7 @@ win32 {
     RC_ICONS = cryptokiman.ico
 
     contains(QT_ARCH, i386) {
-        INCLUDEPATH += "../../PKILib/lib/win32/winsparkle/include"
+        INCLUDEPATH += "../../lib/win32/winsparkle/include"
         INCLUDEPATH += "C:\msys64\mingw32\include"
 
         Debug {
@@ -246,10 +246,10 @@ win32 {
             LIBS += -L"../../lib/win32/openssl3/lib" -lcrypto -lssl
         }
 
-        LIBS += -L"C:\msys64\mingw32\lib" -lltdl -lws2_32
+        LIBS += -L"../../lib/win32" -lltdl -lws2_32
         LIBS += -L"../../lib/win32/winsparkle/lib" -lWinSparkle
     } else {
-        INCLUDEPATH += "../../PKILib/lib/win64/winsparkle/include"
+        INCLUDEPATH += "../../lib/win64/winsparkle/include"
         INCLUDEPATH += "C:\msys64\mingw64\include"
 
         Debug {
@@ -260,7 +260,7 @@ win32 {
             LIBS += -L"../../lib/win64/openssl3/lib64" -lcrypto -lssl
         }
 
-        LIBS += -L"C:\msys64\mingw64\lib" -lltdl -lws2_32
+        LIBS += -L"../../lib/win64" -lltdl -lws2_32
         LIBS += -L"../../lib/win64/winsparkle/lib" -lWinSparkle
     }
 }

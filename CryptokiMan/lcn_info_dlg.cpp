@@ -326,6 +326,9 @@ end :
 
     if( ret == 0 )
     {
+        if( manApplet->yesOrNoBox(tr("You have changed license. Restart to apply it?"), this, true))
+            manApplet->restartApp();
+
         QDialog::accept();
     }
     else

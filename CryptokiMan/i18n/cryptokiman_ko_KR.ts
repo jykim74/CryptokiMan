@@ -5082,17 +5082,22 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../lcn_info_dlg.cpp" line="311"/>
-        <location filename="../lcn_info_dlg.cpp" line="375"/>
+        <location filename="../lcn_info_dlg.cpp" line="378"/>
         <source>Your current license has a longer usage period.</source>
         <translation>현재 라이선스가 더 긴 기간의 라이선스입니다</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="352"/>
+        <location filename="../lcn_info_dlg.cpp" line="329"/>
+        <source>You have changed license. Restart to apply it?</source>
+        <translation>라이선스가 변경 되었습니다.적용을 위해 다시 시작 하시겠습니까?</translation>
+    </message>
+    <message>
+        <location filename="../lcn_info_dlg.cpp" line="355"/>
         <source>There is currently no license</source>
         <translation>현재 라이선스가 없습니다</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="363"/>
+        <location filename="../lcn_info_dlg.cpp" line="366"/>
         <source>failed to renew license [%1]</source>
         <translation>라이선스 갱신 실패 [%1]</translation>
     </message>
@@ -6279,29 +6284,29 @@ Do you want to delete the file and continue?</source>
 <context>
     <name>ManApplet</name>
     <message>
-        <location filename="../man_applet.cpp" line="307"/>
-        <location filename="../man_applet.cpp" line="322"/>
+        <location filename="../man_applet.cpp" line="310"/>
+        <location filename="../man_applet.cpp" line="325"/>
         <source>OK</source>
         <translation>확인</translation>
     </message>
     <message>
-        <location filename="../man_applet.cpp" line="333"/>
-        <location filename="../man_applet.cpp" line="347"/>
-        <location filename="../man_applet.cpp" line="363"/>
-        <location filename="../man_applet.cpp" line="387"/>
+        <location filename="../man_applet.cpp" line="336"/>
+        <location filename="../man_applet.cpp" line="350"/>
+        <location filename="../man_applet.cpp" line="366"/>
+        <location filename="../man_applet.cpp" line="390"/>
         <source>Yes</source>
         <translation>예</translation>
     </message>
     <message>
-        <location filename="../man_applet.cpp" line="334"/>
-        <location filename="../man_applet.cpp" line="364"/>
-        <location filename="../man_applet.cpp" line="388"/>
+        <location filename="../man_applet.cpp" line="337"/>
+        <location filename="../man_applet.cpp" line="367"/>
+        <location filename="../man_applet.cpp" line="391"/>
         <source>No</source>
         <translation>아니오</translation>
     </message>
     <message>
-        <location filename="../man_applet.cpp" line="348"/>
-        <location filename="../man_applet.cpp" line="365"/>
+        <location filename="../man_applet.cpp" line="351"/>
+        <location filename="../man_applet.cpp" line="368"/>
         <source>Cancel</source>
         <translation>취소</translation>
     </message>
