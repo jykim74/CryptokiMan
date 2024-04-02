@@ -386,7 +386,7 @@ void MainWindow::createActions()
 
     const QIcon dp1Icon = QIcon::fromTheme("DSA-Public", QIcon(":/images/dp1.png"));
     QAction *createDSAPubKeyAct = new QAction( dp1Icon, tr("Create DSA Public Key"), this);
-    createDSAPubKeyAct->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_H));
+    createDSAPubKeyAct->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_R));
     connect( createDSAPubKeyAct, &QAction::triggered, this, &MainWindow::createDSAPublicKey);
     createDSAPubKeyAct->setStatusTip(tr("PKCS11 Create DSA Public key"));
     objectsMenu->addAction( createDSAPubKeyAct );
