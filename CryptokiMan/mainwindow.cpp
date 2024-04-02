@@ -219,6 +219,7 @@ void MainWindow::createActions()
     fileToolBar->addAction(openAct);
 
     QAction *unloadAct = new QAction( tr("Unload"), this );
+    unloadAct->setShortcut(QKeySequence::Close);
     unloadAct->setStatusTip(tr("Unload cryptoki library"));
     connect( unloadAct, &QAction::triggered, this, &MainWindow::unload );
     fileMenu->addAction(unloadAct);
@@ -249,6 +250,7 @@ void MainWindow::createActions()
     fileMenu->addSeparator();
 
     QAction *quitAct = new QAction( tr("&Quit"), this );
+    quitAct->setShortcut(QKeySequence::Quit);
     quitAct->setStatusTip( tr( "Quit CryptokiMan" ) );
     connect( quitAct, &QAction::triggered, this, &MainWindow::quit );
     fileMenu->addAction(quitAct);
@@ -263,6 +265,7 @@ void MainWindow::createActions()
 
     const QIcon initIcon = QIcon::fromTheme("init", QIcon(":/images/init.png"));
     QAction *initAct = new QAction( initIcon, tr("P11Initialize"), this );
+    initAct->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_I));
     connect( initAct, &QAction::triggered, this, &MainWindow::P11Initialize );
     initAct->setStatusTip(tr("PKCS11 initialize"));
     moduleMenu->addAction( initAct );
@@ -270,6 +273,7 @@ void MainWindow::createActions()
 
     const QIcon finalIcon = QIcon::fromTheme("final", QIcon(":/images/final.png"));
     QAction *finalAct = new QAction( finalIcon, tr("P11Finalize"), this );
+    finalAct->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_F));
     connect( finalAct, &QAction::triggered, this, &MainWindow::P11Finalize );
     finalAct->setStatusTip(tr("PKCS11 finalize"));
     moduleMenu->addAction( finalAct );
@@ -277,6 +281,7 @@ void MainWindow::createActions()
 
     const QIcon openSessIcon = QIcon::fromTheme("open_session", QIcon(":/images/open_s.png"));
     QAction *openSessAct = new QAction( openSessIcon, tr("Open Session"), this );
+    openSessAct->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_O));
     connect( openSessAct, &QAction::triggered, this, &MainWindow::openSession );
     openSessAct->setStatusTip(tr("PKCS11 Open Session"));
     moduleMenu->addAction( openSessAct );
@@ -284,6 +289,7 @@ void MainWindow::createActions()
 
     const QIcon closeSessIcon = QIcon::fromTheme("close_session", QIcon(":/images/close_s.png"));
     QAction *closeSessAct = new QAction( closeSessIcon, tr("Close Session"), this );
+    closeSessAct->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_C));
     connect( closeSessAct, &QAction::triggered, this, &MainWindow::closeSession );
     closeSessAct->setStatusTip(tr("PKCS11 Close Session"));
     moduleMenu->addAction( closeSessAct );
@@ -291,6 +297,7 @@ void MainWindow::createActions()
 
     const QIcon closeAllIcon = QIcon::fromTheme("close_session", QIcon(":/images/close_all.png"));
     QAction *closeAllSessAct = new QAction( closeAllIcon, tr("Close All Sessions"), this );
+    closeAllSessAct->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_Q));
     connect( closeAllSessAct, &QAction::triggered, this, &MainWindow::closeAllSessions );
     closeAllSessAct->setStatusTip(tr("PKCS11 Close All Sessions"));
     moduleMenu->addAction( closeAllSessAct );
@@ -298,6 +305,7 @@ void MainWindow::createActions()
 
     const QIcon loginIcon = QIcon::fromTheme("login", QIcon(":/images/login.png"));
     QAction *loginAct = new QAction( loginIcon, tr("Login"), this );
+    loginAct->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_L));
     connect( loginAct, &QAction::triggered, this, &MainWindow::login );
     loginAct->setStatusTip(tr("PKCS11 Login"));
     moduleMenu->addAction( loginAct );
@@ -305,6 +313,7 @@ void MainWindow::createActions()
 
     const QIcon logoutIcon = QIcon::fromTheme("close_session", QIcon(":/images/logout.png"));
     QAction *logoutAct = new QAction( logoutIcon, tr("Logout"), this );
+    logoutAct->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_T));
     connect( logoutAct, &QAction::triggered, this, &MainWindow::logout );
     logoutAct->setStatusTip(tr("PKCS11 Logout"));
     moduleMenu->addAction( logoutAct );
@@ -321,6 +330,7 @@ void MainWindow::createActions()
 
     const QIcon keypairIcon = QIcon::fromTheme("keypair", QIcon(":/images/keypair.png"));
     QAction *genKeyPairAct = new QAction( keypairIcon, tr("Generate Key Pair"), this);
+    genKeyPairAct->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_A));
     connect( genKeyPairAct, &QAction::triggered, this, &MainWindow::generateKeyPair);
     genKeyPairAct->setStatusTip(tr("PKCS11 Generate KeyPair"));
     objectsMenu->addAction( genKeyPairAct );
@@ -328,6 +338,7 @@ void MainWindow::createActions()
 
     const QIcon keyIcon = QIcon::fromTheme("key", QIcon(":/images/key_add.png"));
     QAction *genKeyAct = new QAction( keyIcon, tr("Generate Key"), this);
+    genKeyAct->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_B));
     connect( genKeyAct, &QAction::triggered, this, &MainWindow::generateKey);
     genKeyAct->setStatusTip(tr("PKCS11 Generate Key"));
     objectsMenu->addAction( genKeyAct );
@@ -336,6 +347,7 @@ void MainWindow::createActions()
 
     const QIcon dataIcon = QIcon::fromTheme("data", QIcon(":/images/data_add.png"));
     QAction *createDataAct = new QAction( dataIcon, tr("Create Data"), this);
+    createDataAct->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_C));
     connect( createDataAct, &QAction::triggered, this, &MainWindow::createData);
     createDataAct->setStatusTip(tr("PKCS11 Create Data"));
     objectsMenu->addAction( createDataAct );
@@ -344,6 +356,7 @@ void MainWindow::createActions()
 
     const QIcon rp1Icon = QIcon::fromTheme("RSA-Public", QIcon(":/images/rp1.png"));
     QAction *createRSAPubKeyAct = new QAction( rp1Icon, tr("Create RSA Public Key"), this);
+    createRSAPubKeyAct->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_D));
     connect( createRSAPubKeyAct, &QAction::triggered, this, &MainWindow::createRSAPublicKey);
     createRSAPubKeyAct->setStatusTip(tr("PKCS11 Create RSA Public key"));
     objectsMenu->addAction( createRSAPubKeyAct );
@@ -351,6 +364,7 @@ void MainWindow::createActions()
 
     const QIcon rp2Icon = QIcon::fromTheme("RSA-Private", QIcon(":/images/rp2.png"));
     QAction *createRSAPriKeyAct = new QAction( rp2Icon, tr("Create RSA Private Key"), this);
+    createRSAPriKeyAct->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_E));
     connect( createRSAPriKeyAct, &QAction::triggered, this, &MainWindow::createRSAPrivateKey);
     createRSAPriKeyAct->setStatusTip(tr("PKCS11 Create RSA Private key"));
     objectsMenu->addAction( createRSAPriKeyAct );
@@ -358,24 +372,28 @@ void MainWindow::createActions()
 
     const QIcon ep1Icon = QIcon::fromTheme("EC-Public", QIcon(":/images/ep1.png"));
     QAction *createECPubKeyAct = new QAction( ep1Icon, tr("Create EC Public Key"), this);
+    createECPubKeyAct->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_F));
     connect( createECPubKeyAct, &QAction::triggered, this, &MainWindow::createECPublicKey);
     createECPubKeyAct->setStatusTip(tr("PKCS11 Create EC Public key"));
     objectsMenu->addAction( createECPubKeyAct );
 
     const QIcon ep2Icon = QIcon::fromTheme("EC-Private", QIcon(":/images/ep2.png"));
     QAction *createECPriKeyAct = new QAction( ep2Icon, tr("Create EC Private Key"), this);
+    createECPriKeyAct->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_G));
     connect( createECPriKeyAct, &QAction::triggered, this, &MainWindow::createECPrivateKey);
     createECPriKeyAct->setStatusTip(tr("PKCS11 Create EC Private key"));
     objectsMenu->addAction( createECPriKeyAct );
 
     const QIcon dp1Icon = QIcon::fromTheme("DSA-Public", QIcon(":/images/dp1.png"));
     QAction *createDSAPubKeyAct = new QAction( dp1Icon, tr("Create DSA Public Key"), this);
+    createDSAPubKeyAct->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_H));
     connect( createDSAPubKeyAct, &QAction::triggered, this, &MainWindow::createDSAPublicKey);
     createDSAPubKeyAct->setStatusTip(tr("PKCS11 Create DSA Public key"));
     objectsMenu->addAction( createDSAPubKeyAct );
 
     const QIcon dp2Icon = QIcon::fromTheme("DSA-Private", QIcon(":/images/dp2.png"));
     QAction *createDSAPriKeyAct = new QAction( dp2Icon, tr("Create DSA Private Key"), this);
+    createDSAPriKeyAct->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_I));
     connect( createDSAPriKeyAct, &QAction::triggered, this, &MainWindow::createDSAPrivateKey);
     createDSAPriKeyAct->setStatusTip(tr("PKCS11 Create DSA Private key"));
     objectsMenu->addAction( createDSAPriKeyAct );
@@ -390,6 +408,7 @@ void MainWindow::createActions()
 
     const QIcon keyGenIcon = QIcon::fromTheme("KeyGen", QIcon(":/images/key_gen.png"));
     QAction *createKeyAct = new QAction( keyGenIcon, tr("Create Key"), this);
+    createKeyAct->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_J));
     connect( createKeyAct, &QAction::triggered, this, &MainWindow::createKey);
     createKeyAct->setStatusTip(tr("PKCS11 Create Key"));
     objectsMenu->addAction( createKeyAct );
@@ -397,6 +416,7 @@ void MainWindow::createActions()
 
     const QIcon deleteIcon = QIcon::fromTheme("Delete", QIcon(":/images/delete.png"));
     QAction *delObjectAct = new QAction( deleteIcon, tr("Delete Object"), this);
+    delObjectAct->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_K));
     connect( delObjectAct, &QAction::triggered, this, &MainWindow::deleteObject);
     delObjectAct->setStatusTip(tr("PKCS11 Delete Object"));
     objectsMenu->addAction( delObjectAct );
@@ -404,11 +424,13 @@ void MainWindow::createActions()
 
     const QIcon editIcon = QIcon::fromTheme("Edit", QIcon(":/images/edit.png"));
     QAction *editAttributeAct = new QAction( editIcon, tr("Edit Object"), this);
+    editAttributeAct->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_L));
     connect( editAttributeAct, &QAction::triggered, this, &MainWindow::editObject);
     editAttributeAct->setStatusTip(tr("PKCS11 Edit Object"));
     objectsMenu->addAction( editAttributeAct );
 
     QAction *editAttributeListAct = new QAction( editIcon, tr("Edit Attribute List"), this);
+    editAttributeListAct->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_M));
     connect( editAttributeListAct, &QAction::triggered, this, &MainWindow::editAttributeList2 );
     editAttributeListAct->setStatusTip(tr("PKCS11 Edit Attribute List"));
     objectsMenu->addAction( editAttributeListAct );
@@ -420,6 +442,7 @@ void MainWindow::createActions()
 
     const QIcon copyIcon = QIcon::fromTheme("Edit", QIcon(":/images/copy_object.png"));
     QAction *copyObjectAct = new QAction( copyIcon, tr("Copy Object"), this);
+    copyObjectAct->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_N));
     connect( copyObjectAct, &QAction::triggered, this, &MainWindow::copyObject);
     copyObjectAct->setStatusTip(tr("PKCS11 Copy Object"));
     objectsMenu->addAction( copyObjectAct );
@@ -427,6 +450,7 @@ void MainWindow::createActions()
 
     const QIcon findIcon = QIcon::fromTheme("document-find", QIcon(":/images/find.png"));
     QAction *findObjectAct = new QAction( findIcon, tr("Find Object"), this);
+    findObjectAct->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_O));
     connect( findObjectAct, &QAction::triggered, this, &MainWindow::findObject);
     findObjectAct->setStatusTip(tr("PKCS11 Find Object"));
     objectsMenu->addAction( findObjectAct );
@@ -443,6 +467,7 @@ void MainWindow::createActions()
 
     const QIcon diceIcon = QIcon::fromTheme("Dice", QIcon(":/images/dice.png"));
     QAction *randAct = new QAction( diceIcon, tr("Random"), this);
+    randAct->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_R));
     connect( randAct, &QAction::triggered, this, &MainWindow::rand);
     randAct->setStatusTip(tr("PKCS11 Random"));
     cryptMenu->addAction( randAct );
@@ -450,6 +475,7 @@ void MainWindow::createActions()
 
     const QIcon hashIcon = QIcon::fromTheme("hash", QIcon(":/images/hash.png"));
     QAction *digestAct = new QAction( hashIcon, tr("Digest"), this);
+    digestAct->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_H));
     connect( digestAct, &QAction::triggered, this, &MainWindow::digest);
     digestAct->setStatusTip(tr("PKCS11 Digest"));
     cryptMenu->addAction( digestAct );
@@ -457,6 +483,7 @@ void MainWindow::createActions()
 
     const QIcon signIcon = QIcon::fromTheme("sign", QIcon(":/images/sign.png"));
     QAction *signAct = new QAction( signIcon, tr("Signature"), this);
+    signAct->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_S));
     connect( signAct, &QAction::triggered, this, &MainWindow::sign);
     signAct->setStatusTip(tr("PKCS11 Signature"));
     cryptMenu->addAction( signAct );
@@ -465,6 +492,7 @@ void MainWindow::createActions()
 
     const QIcon verifyIcon = QIcon::fromTheme("Verify", QIcon(":/images/verify.png"));
     QAction *verifyAct = new QAction( verifyIcon, tr("Verify"), this);
+    verifyAct->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_V));
     connect( verifyAct, &QAction::triggered, this, &MainWindow::verify);
     verifyAct->setStatusTip(tr("PKCS11 Verify"));
     cryptMenu->addAction( verifyAct );
@@ -472,6 +500,7 @@ void MainWindow::createActions()
 
     const QIcon encryptIcon = QIcon::fromTheme("Encrypt", QIcon(":/images/encrypt.png"));
     QAction *encryptAct = new QAction( encryptIcon, tr("Encrypt"), this);
+    encryptAct->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_E));
     connect( encryptAct, &QAction::triggered, this, &MainWindow::encrypt);
     encryptAct->setStatusTip(tr("PKCS11 Encrypt"));
     cryptMenu->addAction( encryptAct );
@@ -479,6 +508,7 @@ void MainWindow::createActions()
 
     const QIcon decryptIcon = QIcon::fromTheme("Decrypt", QIcon(":/images/decrypt.png"));
     QAction *decryptAct = new QAction( decryptIcon, tr("Decrypt"), this);
+    decryptAct->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_D));
     connect( decryptAct, &QAction::triggered, this, &MainWindow::decrypt);
     decryptAct->setStatusTip(tr("PKCS11 Decrypt"));
     cryptMenu->addAction( decryptAct );
@@ -489,18 +519,21 @@ void MainWindow::createActions()
 
     const QIcon certIcon = QIcon::fromTheme("cert", QIcon(":/images/cert.png"));
     QAction *importCertAct = new QAction( certIcon, tr("Import certificate"), this);
+    importCertAct->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_C));
     connect( importCertAct, &QAction::triggered, this, &MainWindow::importCert);
     importCertAct->setStatusTip(tr("PKCS11 import certificate"));
     importMenu->addAction( importCertAct );
 
     const QIcon pfxIcon = QIcon::fromTheme("PFX", QIcon(":/images/pfx.png"));
     QAction *importPFXAct = new QAction( pfxIcon, tr("Import PFX"), this);
+    importPFXAct->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_X));
     connect( importPFXAct, &QAction::triggered, this, &MainWindow::importPFX);
     importPFXAct->setStatusTip(tr("PKCS11 import PFX"));
     importMenu->addAction( importPFXAct );
 
     const QIcon priKeyIcon = QIcon::fromTheme("PrivateKey", QIcon(":/images/prikey.png"));
     QAction *importPriKeyAct = new QAction( priKeyIcon, tr("Import Private Key"), this);
+    importPriKeyAct->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_P));
     connect( importPriKeyAct, &QAction::triggered, this, &MainWindow::improtPrivateKey);
     importPriKeyAct->setStatusTip(tr("PKCS11 import private key"));
     importMenu->addAction( importPriKeyAct );
@@ -515,12 +548,14 @@ void MainWindow::createActions()
 
     const QIcon tokenIcon = QIcon::fromTheme("token", QIcon(":/images/token.png"));
     QAction *initTokenAct = new QAction( tokenIcon, tr("Initialize Token"), this);
+    initTokenAct->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_I));
     connect( initTokenAct, &QAction::triggered, this, &MainWindow::initToken);
     initTokenAct->setStatusTip(tr("PKCS11 Initialize token"));
     toolsMenu->addAction( initTokenAct );
 
     const QIcon operIcon = QIcon::fromTheme( "operation1", QIcon(":/images/operation.png"));
     QAction *operStateAct = new QAction( operIcon, tr("OperationState"), this );
+    operStateAct->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_O));
     connect( operStateAct, &QAction::triggered, this, &MainWindow::operationState );
     operStateAct->setStatusTip( tr( "Operation state tool" ));
     toolsMenu->addAction( operStateAct );
@@ -528,30 +563,35 @@ void MainWindow::createActions()
 
     const QIcon pin1Icon = QIcon::fromTheme("Set PIN", QIcon(":/images/pin1.png"));
     QAction *setPinAct = new QAction( pin1Icon, tr("Set PIN"), this);
+    setPinAct->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_S));
     connect( setPinAct, &QAction::triggered, this, &MainWindow::setPin);
     setPinAct->setStatusTip(tr("PKCS11 set PIN"));
     toolsMenu->addAction( setPinAct );
 
     const QIcon pin2Icon = QIcon::fromTheme("Init PIN", QIcon(":/images/pin2.png"));
     QAction *initPinAct = new QAction( pin2Icon, tr("Init PIN"), this);
+    initPinAct->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_N));
     connect( initPinAct, &QAction::triggered, this, &MainWindow::initPin);
     initPinAct->setStatusTip(tr("PKCS11 init PIN"));
     toolsMenu->addAction( initPinAct );
 
     const QIcon wkIcon = QIcon::fromTheme("WrapKey", QIcon(":/images/wk.png"));
     QAction *wrapKeyAct = new QAction( wkIcon, tr("Wrap Key"), this);
+    wrapKeyAct->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_W));
     connect( wrapKeyAct, &QAction::triggered, this, &MainWindow::wrapKey);
     wrapKeyAct->setStatusTip(tr("PKCS11 wrap key"));
     toolsMenu->addAction( wrapKeyAct );
 
     const QIcon ukIcon = QIcon::fromTheme("UnwrapKey", QIcon(":/images/uk.png"));
     QAction *unwrapKeyAct = new QAction( ukIcon, tr("Unwrap Key"), this);
+    unwrapKeyAct->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_U));
     connect( unwrapKeyAct, &QAction::triggered, this, &MainWindow::unwrapKey);
     unwrapKeyAct->setStatusTip(tr("PKCS11 unwrap key"));
     toolsMenu->addAction( unwrapKeyAct );
 
     const QIcon dkIcon = QIcon::fromTheme("DeriveKey", QIcon(":/images/dk.png"));
     QAction *deriveKeyAct = new QAction( dkIcon, tr("Derive Key"), this);
+    deriveKeyAct->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_D));
     connect( deriveKeyAct, &QAction::triggered, this, &MainWindow::deriveKey);
     deriveKeyAct->setStatusTip(tr("PKCS11 derive key"));
     toolsMenu->addAction( deriveKeyAct );
