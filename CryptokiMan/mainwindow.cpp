@@ -194,13 +194,15 @@ void MainWindow::baseTableHeader()
 
 void MainWindow::createActions()
 {
+    int nWidth = 24;
+    int nHeight = 24;
+    int nSpacing = 0;
+
     QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
     QToolBar *fileToolBar = addToolBar(tr("File"));
 
-#ifdef Q_OS_MAC
-    fileToolBar->setIconSize( QSize(24,24));
-    fileToolBar->layout()->setSpacing(0);
-#endif
+    fileToolBar->setIconSize( QSize(nWidth,nHeight));
+    fileToolBar->layout()->setSpacing(nSpacing);
 
     const QIcon newIcon = QIcon::fromTheme("document-new", QIcon(":/images/new.png"));
     QAction *newAct = new QAction( newIcon, tr("&New"), this);
@@ -258,10 +260,8 @@ void MainWindow::createActions()
     QMenu *moduleMenu = menuBar()->addMenu(tr("&Module"));
     QToolBar *moduleToolBar = addToolBar(tr("Module"));
 
-#ifdef Q_OS_MAC
-    moduleToolBar->setIconSize( QSize(24,24));
-    moduleToolBar->layout()->setSpacing(0);
-#endif
+    moduleToolBar->setIconSize( QSize(nWidth,nHeight));
+    moduleToolBar->layout()->setSpacing(nSpacing);
 
     const QIcon initIcon = QIcon::fromTheme("init", QIcon(":/images/init.png"));
     QAction *initAct = new QAction( initIcon, tr("P11Initialize"), this );
@@ -323,10 +323,10 @@ void MainWindow::createActions()
     QMenu *objectsMenu = menuBar()->addMenu(tr("&Objects"));
     QToolBar *objectsToolBar = addToolBar(tr("Objects"));
 
-#ifdef Q_OS_MAC
-    objectsToolBar->setIconSize( QSize(24,24));
-    objectsToolBar->layout()->setSpacing(0);
-#endif
+
+    objectsToolBar->setIconSize( QSize(nWidth,nHeight));
+    objectsToolBar->layout()->setSpacing(nSpacing);
+
 
     const QIcon keypairIcon = QIcon::fromTheme("keypair", QIcon(":/images/keypair.png"));
     QAction *genKeyPairAct = new QAction( keypairIcon, tr("Generate Key Pair"), this);
@@ -460,10 +460,8 @@ void MainWindow::createActions()
     QMenu *cryptMenu = menuBar()->addMenu(tr("&Cryptogram"));
     QToolBar *cryptToolBar = addToolBar(tr("Cryptogram"));
 
-#ifdef Q_OS_MAC
-    cryptToolBar->setIconSize( QSize(24,24));
-    cryptToolBar->layout()->setSpacing(0);
-#endif
+    cryptToolBar->setIconSize( QSize(nWidth,nHeight));
+    cryptToolBar->layout()->setSpacing(nSpacing);
 
     const QIcon diceIcon = QIcon::fromTheme("Dice", QIcon(":/images/dice.png"));
     QAction *randAct = new QAction( diceIcon, tr("Random"), this);
@@ -541,10 +539,8 @@ void MainWindow::createActions()
     QMenu *toolsMenu = menuBar()->addMenu(tr("&Tools"));
     QToolBar *toolsToolBar = addToolBar(tr("Tools"));
 
-#ifdef Q_OS_MAC
-    toolsToolBar->setIconSize( QSize(24,24));
-    toolsToolBar->layout()->setSpacing(0);
-#endif
+    toolsToolBar->setIconSize( QSize(nWidth,nHeight));
+    toolsToolBar->layout()->setSpacing(nSpacing);
 
     const QIcon tokenIcon = QIcon::fromTheme("token", QIcon(":/images/token.png"));
     QAction *initTokenAct = new QAction( tokenIcon, tr("Initialize Token"), this);
@@ -615,10 +611,8 @@ void MainWindow::createActions()
     QMenu *helpMenu = menuBar()->addMenu(tr("&Help"));
     QToolBar *helpToolBar = addToolBar(tr("Help"));
 
-#ifdef Q_OS_MAC
-    helpToolBar->setIconSize( QSize(24,24));
-    helpToolBar->layout()->setSpacing(0);
-#endif
+    helpToolBar->setIconSize( QSize(nWidth,nHeight));
+    helpToolBar->layout()->setSpacing(nSpacing);
 
     if( manApplet->isLicense() )
     {
