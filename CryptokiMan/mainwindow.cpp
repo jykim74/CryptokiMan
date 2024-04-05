@@ -226,7 +226,8 @@ void MainWindow::createActions()
     connect( unloadAct, &QAction::triggered, this, &MainWindow::unload );
     fileMenu->addAction(unloadAct);
 
-    QAction *showDockAct = new QAction( tr( "Show Info"), this );
+    QAction *showDockAct = new QAction( tr( "Show Information"), this );
+    showDockAct->setShortcut( QKeySequence(Qt::Key_F2));
     showDockAct->setStatusTip(tr("Show Information"));
     connect( showDockAct, &QAction::triggered, this, &MainWindow::showDock);
     fileMenu->addAction(showDockAct);
@@ -1993,7 +1994,12 @@ void MainWindow::logToggle()
 
 void MainWindow::showDock()
 {
-    dock_->show();
+    if( dock_->isHidden() == true )
+        dock_->show();
+    else
+    {
+        manApplet->log( QString( "The information window is already open" ));
+    }
 }
 
 void MainWindow::rightTableClick(QModelIndex index)
