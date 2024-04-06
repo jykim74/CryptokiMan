@@ -195,6 +195,46 @@ QString getHexString( unsigned char *pData, int nDataLen )
     return strHex;
 }
 
+const QString getHexStringArea( unsigned char *pData, int nDataLen, int nWidth  )
+{
+    QString strMsg = getHexString( pData, nDataLen );
+
+    return getHexStringArea( strMsg, nWidth );
+}
+
+const QString getHexStringArea( const BIN *pData, int nWidth )
+{
+    QString strMsg = getHexString( pData );
+
+    return getHexStringArea( strMsg, nWidth );
+}
+
+const QString getHexStringArea( const QString strMsg, int nWidth )
+{
+    int nBlock = 0;
+    int nPos = 0;
+    QString strAreaMsg = nullptr;
+
+    int nLen = strMsg.length();
+    if( nWidth <= 0 ) return strMsg;
+
+    while( nLen > 0 )
+    {
+        if( nLen >= nWidth )
+            nBlock = nWidth;
+        else
+            nBlock = nLen;
+
+        strAreaMsg += strMsg.mid( nPos, nBlock );
+        strAreaMsg += "\n";
+
+        nLen -= nBlock;
+        nPos += nBlock;
+    }
+
+    return strAreaMsg;
+}
+
 static int _getKeyUsage( const BIN *pBinExt, bool bShow, QString& strVal )
 {
     int     ret = 0;

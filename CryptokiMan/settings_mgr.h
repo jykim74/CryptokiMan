@@ -47,6 +47,11 @@ public:
     void setFindMaxObjectsCount( int nCounts );
     int getFindMaxObjectsCount();
     int findMaxObjectsCount() { return find_max_objects_count_; };
+
+    void setHexAreaWidth( int width );
+    int getHexAreaWidth();
+    int hexAreaWidth() { return hex_area_width_; };
+
 signals:
 
 public slots:
@@ -56,6 +61,7 @@ private:
     int file_read_size_;
     bool use_device_mech_;
     int find_max_objects_count_;
+    int hex_area_width_;
 
     Q_DISABLE_COPY(SettingsMgr)
 };

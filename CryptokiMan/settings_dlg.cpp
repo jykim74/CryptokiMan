@@ -54,6 +54,7 @@ void SettingsDlg::updateSettings()
     mgr->setFindMaxObjectsCount( mFindMaxObjectsCountText->text().toInt() );
     mgr->setUseDeviceMech( mUseDeviceMechCheck->isChecked() );
     mgr->setFontFamily( mFontFamilyCombo->currentText() );
+    mgr->setHexAreaWidth( mHexAreaWidthCombo->currentText().toInt());
 
 #ifdef _AUTO_UPDATE
     if( AutoUpdateService::instance()->shouldSupportAutoUpdate() ) {
@@ -92,6 +93,12 @@ void SettingsDlg::initialize()
     SettingsMgr *mgr = manApplet->settingsMgr();
 
     Qt::CheckState state;
+
+    const QStringList sHexWidthList = { "", "8", "16", "32", "64", "80" };
+
+    mHexAreaWidthCombo->addItems(sHexWidthList);
+    mHexAreaWidthCombo->setCurrentText( QString("%1").arg( mgr->getHexAreaWidth() ));
+
 
     if( manApplet->isLicense() )
     {

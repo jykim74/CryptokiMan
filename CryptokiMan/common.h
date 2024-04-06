@@ -60,6 +60,11 @@ void getCKDateToQDate( const CK_DATE *pCKDate, QDate *pQDate );
 QString getBool( const BIN *pBin );
 QString getHexString( const BIN *pBin );
 QString getHexString( unsigned char *pData, int nDataLen );
+
+const QString getHexStringArea( unsigned char *pData, int nDataLen, int nWidth = -1 );
+const QString getHexStringArea( const BIN *pData, int nWidth = -1 );
+const QString getHexStringArea( const QString strMsg, int nWidth = -1);
+
 void getInfoValue( const JExtensionInfo *pExtInfo, QString& strVal );
 
 int getDataType( int nItemType );

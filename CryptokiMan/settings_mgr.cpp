@@ -19,6 +19,7 @@ namespace  {
     const char *kLicense = "license";
     const char *kStopMessage = "stopMessage";
     const char *kFindMaxObjectsCount = "findMaxObjectsCount";
+    const char *kHexAreaWidth = "hexAreaWidth";
 }
 
 SettingsMgr::SettingsMgr( QObject *parent) : QObject (parent)
@@ -35,6 +36,7 @@ void SettingsMgr::initialize()
     getFileReadSize();
     getUseDeviceMech();
     getFindMaxObjectsCount();
+    getHexAreaWidth();
 }
 
 void SettingsMgr::setUseLogTab( bool bVal )
@@ -229,4 +231,25 @@ int SettingsMgr::getFindMaxObjectsCount()
     sets.endGroup();
 
     return find_max_objects_count_;
+}
+
+void SettingsMgr::setHexAreaWidth( int width )
+{
+    QSettings sets;
+    sets.beginGroup( kBehaviorGroup );
+    sets.setValue( kHexAreaWidth, width );
+    sets.endGroup();
+
+    hex_area_width_ = width;
+}
+
+int SettingsMgr::getHexAreaWidth()
+{
+    QSettings sets;
+
+    sets.beginGroup( kBehaviorGroup );
+    hex_area_width_ = sets.value( kHexAreaWidth, -1 ).toInt();
+    sets.endGroup();
+
+    return hex_area_width_;
 }
