@@ -3671,18 +3671,25 @@ void MainWindow::showInfoCommon( CK_OBJECT_HANDLE hObj )
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
     QString strValue;
+    int nWidth = manApplet->settingsMgr()->hexAreaWidth();
 
     for( int i = 0; i < kCommonAttList.size(); i++ )
     {
         strName = kCommonAttList.at(i);
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
+
         strValue = stringAttribute( nType, uAttrType, hObj);
+
+
 
         if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
             info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
         else
+        {
+            if( nType == ATTR_VAL_HEX ) strValue = getHexStringArea( strValue, nWidth );
             info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+        }
     }
 
     info( "------------------------------------------------------------------------\n" );
@@ -3698,6 +3705,7 @@ void MainWindow::showInfoData( CK_OBJECT_HANDLE hObj )
 
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
+    int nWidth = manApplet->settingsMgr()->hexAreaWidth();
 
     for( int i = 0; i < kDataAttList.size(); i++ )
     {
@@ -3713,6 +3721,8 @@ void MainWindow::showInfoData( CK_OBJECT_HANDLE hObj )
         }
         else
         {
+            if( nType == ATTR_VAL_HEX ) strValue = getHexStringArea( strValue, nWidth );
+
             if( uAttrType == CKA_OBJECT_ID )
             {
                 char sOID[128];
@@ -3747,6 +3757,7 @@ void MainWindow::showInfoCertCommon( CK_OBJECT_HANDLE hObj )
     QString strValue;
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
+    int nWidth = manApplet->settingsMgr()->hexAreaWidth();
 
     for( int i = 0; i < kCommonCertAttList.size(); i++ )
     {
@@ -3756,10 +3767,14 @@ void MainWindow::showInfoCertCommon( CK_OBJECT_HANDLE hObj )
         nType = CryptokiAPI::getAttrType( uAttrType);
         strValue = stringAttribute( nType, uAttrType, hObj);
 
+
         if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
             info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
         else
+        {
+            if( nType == ATTR_VAL_HEX ) strValue = getHexStringArea( strValue, nWidth );
             info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+        }
     }
 
     info( "------------------------------------------------------------------------\n" );
@@ -3775,6 +3790,7 @@ void MainWindow::showInfoX509Cert( CK_OBJECT_HANDLE hObj )
 
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
+    int nWidth = manApplet->settingsMgr()->hexAreaWidth();
 
     for( int i = 0; i < kX509CertAttList.size(); i++ )
     {
@@ -3806,6 +3822,7 @@ void MainWindow::showInfoX509Cert( CK_OBJECT_HANDLE hObj )
             }
             else
             {
+                if( nType == ATTR_VAL_HEX ) strValue = getHexStringArea( strValue, nWidth );
                 info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
             }
         }
@@ -3824,6 +3841,7 @@ void MainWindow::showInfoKeyCommon( CK_OBJECT_HANDLE hObj )
 
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
+    int nWidth = manApplet->settingsMgr()->hexAreaWidth();
 
     for( int i = 0; i < kCommonKeyAttList.size(); i++ )
     {
@@ -3836,7 +3854,10 @@ void MainWindow::showInfoKeyCommon( CK_OBJECT_HANDLE hObj )
         if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
             info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
         else
+        {
+            if( nType == ATTR_VAL_HEX ) strValue = getHexStringArea( strValue, nWidth );
             info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+        }
     }
 
     info( "------------------------------------------------------------------------\n" );
@@ -3852,6 +3873,7 @@ void MainWindow::showInfoPublicKey( CK_OBJECT_HANDLE hObj )
 
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
+    int nWidth = manApplet->settingsMgr()->hexAreaWidth();
 
     for( int i = 0; i < kPubKeyAttList.size(); i++ )
     {
@@ -3883,6 +3905,7 @@ void MainWindow::showInfoPublicKey( CK_OBJECT_HANDLE hObj )
             }
             else
             {
+                if( nType == ATTR_VAL_HEX ) strValue = getHexStringArea( strValue, nWidth );
                 info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
             }
         }
@@ -3901,6 +3924,7 @@ void MainWindow::showInfoPrivateKey( CK_OBJECT_HANDLE hObj )
 
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
+    int nWidth = manApplet->settingsMgr()->hexAreaWidth();
 
     for( int i = 0; i < kPriKeyAttList.size(); i++ )
     {
@@ -3932,6 +3956,7 @@ void MainWindow::showInfoPrivateKey( CK_OBJECT_HANDLE hObj )
             }
             else
             {
+                if( nType == ATTR_VAL_HEX ) strValue = getHexStringArea( strValue, nWidth );
                 info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
             }
         }
@@ -3950,6 +3975,7 @@ void MainWindow::showInfoSecretKey( CK_OBJECT_HANDLE hObj )
 
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
+    int nWidth = manApplet->settingsMgr()->hexAreaWidth();
 
     for( int i = 0; i < kSecretKeyAttList.size(); i++ )
     {
@@ -3962,7 +3988,10 @@ void MainWindow::showInfoSecretKey( CK_OBJECT_HANDLE hObj )
         if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
             info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
         else
+        {
+            if( nType == ATTR_VAL_HEX ) strValue = getHexStringArea( strValue, nWidth );
             info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+        }
 
     }
 
@@ -3980,6 +4009,7 @@ void MainWindow::showInfoRSAValue( CK_OBJECT_HANDLE hObj, bool bPub )
 
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
+    int nWidth = manApplet->settingsMgr()->hexAreaWidth();
 
     for( int i = 0; i < kRSAKeyAttList.size(); i++ )
     {
@@ -3998,7 +4028,10 @@ void MainWindow::showInfoRSAValue( CK_OBJECT_HANDLE hObj, bool bPub )
         if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
             info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
         else
+        {
+            if( nType == ATTR_VAL_HEX ) strValue = getHexStringArea( strValue, nWidth );
             info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+        }
     }
 
     info( "------------------------------------------------------------------------\n" );
@@ -4014,6 +4047,7 @@ void MainWindow::showInfoDSAValue( CK_OBJECT_HANDLE hObj, bool bPub )
 
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
+    int nWidth = manApplet->settingsMgr()->hexAreaWidth();
 
     for( int i = 0; i < kDSAKeyAttList.size(); i++ )
     {
@@ -4025,7 +4059,10 @@ void MainWindow::showInfoDSAValue( CK_OBJECT_HANDLE hObj, bool bPub )
         if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
             info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
         else
+        {
+            if( nType == ATTR_VAL_HEX ) strValue = getHexStringArea( strValue, nWidth );
             info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+        }
 
     }
 
@@ -4042,6 +4079,7 @@ void MainWindow::showInfoECCValue( CK_OBJECT_HANDLE hObj, bool bPub )
 
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
+    int nWidth = manApplet->settingsMgr()->hexAreaWidth();
 
     for( int i = 0; i < kECCKeyAttList.size(); i++ )
     {
@@ -4053,7 +4091,10 @@ void MainWindow::showInfoECCValue( CK_OBJECT_HANDLE hObj, bool bPub )
         if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
             info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
         else
+        {
+            if( nType == ATTR_VAL_HEX ) strValue = getHexStringArea( strValue, nWidth );
             info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+        }
      }
 
     info( "------------------------------------------------------------------------\n" );
@@ -4069,6 +4110,7 @@ void MainWindow::showInfoDHValue( CK_OBJECT_HANDLE hObj, bool bPub )
 
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
+    int nWidth = manApplet->settingsMgr()->hexAreaWidth();
 
     for( int i = 0; i < kDHKeyAttList.size(); i++ )
     {
@@ -4080,7 +4122,10 @@ void MainWindow::showInfoDHValue( CK_OBJECT_HANDLE hObj, bool bPub )
         if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
             info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
         else
+        {
+            if( nType == ATTR_VAL_HEX ) strValue = getHexStringArea( strValue, nWidth );
             info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+        }
     }
 
     info( "------------------------------------------------------------------------\n" );
@@ -4096,6 +4141,7 @@ void MainWindow::showInfoSecretValue( CK_OBJECT_HANDLE hObj)
 
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
+    int nWidth = manApplet->settingsMgr()->hexAreaWidth();
 
     for( int i = 0; i < kSecretValueAttList.size(); i++ )
     {
@@ -4107,7 +4153,10 @@ void MainWindow::showInfoSecretValue( CK_OBJECT_HANDLE hObj)
         if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
             info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
         else
+        {
+            if( nType == ATTR_VAL_HEX ) strValue = getHexStringArea( strValue, nWidth );
             info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+        }
     }
 
     info( "------------------------------------------------------------------------\n" );
