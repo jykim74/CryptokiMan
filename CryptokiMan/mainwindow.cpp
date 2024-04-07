@@ -3681,13 +3681,10 @@ void MainWindow::showInfoCommon( CK_OBJECT_HANDLE hObj )
 
         strValue = stringAttribute( nType, uAttrType, hObj);
 
-
-
         if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
             info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
         else
         {
-            if( nType == ATTR_VAL_HEX ) strValue = getHexStringArea( strValue, nWidth );
             info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
         }
     }
@@ -3721,8 +3718,6 @@ void MainWindow::showInfoData( CK_OBJECT_HANDLE hObj )
         }
         else
         {
-            if( nType == ATTR_VAL_HEX ) strValue = getHexStringArea( strValue, nWidth );
-
             if( uAttrType == CKA_OBJECT_ID )
             {
                 char sOID[128];
@@ -3740,7 +3735,15 @@ void MainWindow::showInfoData( CK_OBJECT_HANDLE hObj )
             }
             else
             {
-                info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+                if( uAttrType == CKA_VALUE && nWidth > 0 )
+                {
+                    strValue = getHexStringArea( strValue, nWidth );
+                    info( QString( "%1 : \n%2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+                }
+                else
+                {
+                    info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+                }
             }
         }
     }
@@ -3772,8 +3775,15 @@ void MainWindow::showInfoCertCommon( CK_OBJECT_HANDLE hObj )
             info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
         else
         {
-            if( nType == ATTR_VAL_HEX ) strValue = getHexStringArea( strValue, nWidth );
-            info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+            if( uAttrType == CKA_VALUE && nWidth > 0 )
+            {
+                strValue = getHexStringArea( strValue, nWidth );
+                info( QString( "%1 : \n%2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+            }
+            else
+            {
+                info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+            }
         }
     }
 
@@ -3822,8 +3832,15 @@ void MainWindow::showInfoX509Cert( CK_OBJECT_HANDLE hObj )
             }
             else
             {
-                if( nType == ATTR_VAL_HEX ) strValue = getHexStringArea( strValue, nWidth );
-                info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+                if( uAttrType == CKA_VALUE && nWidth > 0 )
+                {
+                    strValue = getHexStringArea( strValue, nWidth );
+                    info( QString( "%1 : \n%2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+                }
+                else
+                {
+                    info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+                }
             }
         }
     }
@@ -3855,7 +3872,6 @@ void MainWindow::showInfoKeyCommon( CK_OBJECT_HANDLE hObj )
             info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
         else
         {
-            if( nType == ATTR_VAL_HEX ) strValue = getHexStringArea( strValue, nWidth );
             info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
         }
     }
@@ -3905,8 +3921,15 @@ void MainWindow::showInfoPublicKey( CK_OBJECT_HANDLE hObj )
             }
             else
             {
-                if( nType == ATTR_VAL_HEX ) strValue = getHexStringArea( strValue, nWidth );
-                info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+                if( uAttrType == CKA_VALUE && nWidth > 0 )
+                {
+                    strValue = getHexStringArea( strValue, nWidth );
+                    info( QString( "%1 : \n%2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+                }
+                else
+                {
+                    info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+                }
             }
         }
     }
@@ -3956,8 +3979,15 @@ void MainWindow::showInfoPrivateKey( CK_OBJECT_HANDLE hObj )
             }
             else
             {
-                if( nType == ATTR_VAL_HEX ) strValue = getHexStringArea( strValue, nWidth );
-                info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+                if( uAttrType == CKA_VALUE && nWidth > 0 )
+                {
+                    strValue = getHexStringArea( strValue, nWidth );
+                    info( QString( "%1 : \n%2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+                }
+                else
+                {
+                    info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+                }
             }
         }
     }
@@ -3989,8 +4019,15 @@ void MainWindow::showInfoSecretKey( CK_OBJECT_HANDLE hObj )
             info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
         else
         {
-            if( nType == ATTR_VAL_HEX ) strValue = getHexStringArea( strValue, nWidth );
-            info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+            if( uAttrType == CKA_VALUE && nWidth > 0  )
+            {
+                strValue = getHexStringArea( strValue, nWidth );
+                info( QString( "%1 : \n%2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+            }
+            else
+            {
+                info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+            }
         }
 
     }
@@ -4029,7 +4066,6 @@ void MainWindow::showInfoRSAValue( CK_OBJECT_HANDLE hObj, bool bPub )
             info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
         else
         {
-            if( nType == ATTR_VAL_HEX ) strValue = getHexStringArea( strValue, nWidth );
             info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
         }
     }
@@ -4060,7 +4096,6 @@ void MainWindow::showInfoDSAValue( CK_OBJECT_HANDLE hObj, bool bPub )
             info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
         else
         {
-            if( nType == ATTR_VAL_HEX ) strValue = getHexStringArea( strValue, nWidth );
             info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
         }
 
@@ -4092,7 +4127,6 @@ void MainWindow::showInfoECCValue( CK_OBJECT_HANDLE hObj, bool bPub )
             info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
         else
         {
-            if( nType == ATTR_VAL_HEX ) strValue = getHexStringArea( strValue, nWidth );
             info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
         }
      }
@@ -4123,7 +4157,6 @@ void MainWindow::showInfoDHValue( CK_OBJECT_HANDLE hObj, bool bPub )
             info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
         else
         {
-            if( nType == ATTR_VAL_HEX ) strValue = getHexStringArea( strValue, nWidth );
             info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
         }
     }
@@ -4154,8 +4187,15 @@ void MainWindow::showInfoSecretValue( CK_OBJECT_HANDLE hObj)
             info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
         else
         {
-            if( nType == ATTR_VAL_HEX ) strValue = getHexStringArea( strValue, nWidth );
-            info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+            if( uAttrType == CKA_VALUE )
+            {
+                strValue = getHexStringArea( strValue, nWidth );
+                info( QString( "%1 : \n%2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+            }
+            else
+            {
+                info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+            }
         }
     }
 
