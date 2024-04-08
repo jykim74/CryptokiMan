@@ -3824,7 +3824,16 @@ void MainWindow::showInfoX509Cert( CK_OBJECT_HANDLE hObj )
                 JS_BIN_decodeHex( strValue.toStdString().c_str(), &binDN );
                 JS_PKI_getTextDN( &binDN, &pDN );
 
-                info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+                if( nWidth > 0 )
+                {
+                    strValue = getHexStringArea( strValue, nWidth );
+                    info( QString( "%1 : \n%2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+                }
+                else
+                {
+                    info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+                }
+
                 if( pDN ) info( QString( "%1 : %2\n" ).arg( "CKA_SUBJECT[String]", kNameWidth ).arg( pDN ));
 
                 JS_BIN_reset( &binDN );
@@ -3913,7 +3922,16 @@ void MainWindow::showInfoPublicKey( CK_OBJECT_HANDLE hObj )
                 JS_BIN_decodeHex( strValue.toStdString().c_str(), &binDN );
                 JS_PKI_getTextDN( &binDN, &pDN );
 
-                info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+                if( nWidth > 0 )
+                {
+                    strValue = getHexStringArea( strValue, nWidth );
+                    info( QString( "%1 : \n%2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+                }
+                else
+                {
+                    info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+                }
+
                 if( pDN ) info( QString( "%1 : %2\n" ).arg( "CKA_SUBJECT[String]", kNameWidth ).arg( pDN ));
 
                 JS_BIN_reset( &binDN );
@@ -3971,7 +3989,16 @@ void MainWindow::showInfoPrivateKey( CK_OBJECT_HANDLE hObj )
                 JS_BIN_decodeHex( strValue.toStdString().c_str(), &binDN );
                 JS_PKI_getTextDN( &binDN, &pDN );
 
-                info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+                if( nWidth > 0 )
+                {
+                    strValue = getHexStringArea( strValue, nWidth );
+                    info( QString( "%1 : \n%2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+                }
+                else
+                {
+                    info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+                }
+
                 if( pDN ) info( QString( "%1 : %2\n" ).arg( "CKA_SUBJECT[String]", kNameWidth ).arg( pDN ));
 
                 JS_BIN_reset( &binDN );

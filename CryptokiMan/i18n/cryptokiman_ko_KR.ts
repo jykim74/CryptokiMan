@@ -6054,11 +6054,11 @@ Do you want to delete the file and continue?</source>
         <location filename="../mainwindow.cpp" line="3411"/>
         <location filename="../mainwindow.cpp" line="3500"/>
         <location filename="../mainwindow.cpp" line="3575"/>
-        <location filename="../mainwindow.cpp" line="4126"/>
-        <location filename="../mainwindow.cpp" line="4197"/>
-        <location filename="../mainwindow.cpp" line="4258"/>
-        <location filename="../mainwindow.cpp" line="4318"/>
-        <location filename="../mainwindow.cpp" line="4378"/>
+        <location filename="../mainwindow.cpp" line="4215"/>
+        <location filename="../mainwindow.cpp" line="4286"/>
+        <location filename="../mainwindow.cpp" line="4347"/>
+        <location filename="../mainwindow.cpp" line="4407"/>
+        <location filename="../mainwindow.cpp" line="4467"/>
         <source>Handle</source>
         <translation>핸들</translation>
     </message>
@@ -6068,11 +6068,11 @@ Do you want to delete the file and continue?</source>
         <location filename="../mainwindow.cpp" line="3411"/>
         <location filename="../mainwindow.cpp" line="3500"/>
         <location filename="../mainwindow.cpp" line="3575"/>
-        <location filename="../mainwindow.cpp" line="4126"/>
-        <location filename="../mainwindow.cpp" line="4197"/>
-        <location filename="../mainwindow.cpp" line="4258"/>
-        <location filename="../mainwindow.cpp" line="4318"/>
-        <location filename="../mainwindow.cpp" line="4378"/>
+        <location filename="../mainwindow.cpp" line="4215"/>
+        <location filename="../mainwindow.cpp" line="4286"/>
+        <location filename="../mainwindow.cpp" line="4347"/>
+        <location filename="../mainwindow.cpp" line="4407"/>
+        <location filename="../mainwindow.cpp" line="4467"/>
         <source>Label</source>
         <translation>라벨</translation>
     </message>
@@ -6081,16 +6081,16 @@ Do you want to delete the file and continue?</source>
         <location filename="../mainwindow.cpp" line="3319"/>
         <location filename="../mainwindow.cpp" line="3411"/>
         <location filename="../mainwindow.cpp" line="3500"/>
-        <location filename="../mainwindow.cpp" line="4126"/>
-        <location filename="../mainwindow.cpp" line="4197"/>
-        <location filename="../mainwindow.cpp" line="4258"/>
-        <location filename="../mainwindow.cpp" line="4318"/>
+        <location filename="../mainwindow.cpp" line="4215"/>
+        <location filename="../mainwindow.cpp" line="4286"/>
+        <location filename="../mainwindow.cpp" line="4347"/>
+        <location filename="../mainwindow.cpp" line="4407"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="3230"/>
-        <location filename="../mainwindow.cpp" line="4126"/>
+        <location filename="../mainwindow.cpp" line="4215"/>
         <source>Subject</source>
         <translation>주체</translation>
     </message>
@@ -6098,9 +6098,9 @@ Do you want to delete the file and continue?</source>
         <location filename="../mainwindow.cpp" line="3319"/>
         <location filename="../mainwindow.cpp" line="3411"/>
         <location filename="../mainwindow.cpp" line="3500"/>
-        <location filename="../mainwindow.cpp" line="4197"/>
-        <location filename="../mainwindow.cpp" line="4258"/>
-        <location filename="../mainwindow.cpp" line="4318"/>
+        <location filename="../mainwindow.cpp" line="4286"/>
+        <location filename="../mainwindow.cpp" line="4347"/>
+        <location filename="../mainwindow.cpp" line="4407"/>
         <source>KeyType</source>
         <translation>키 타입</translation>
     </message>
@@ -6245,13 +6245,13 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="3575"/>
-        <location filename="../mainwindow.cpp" line="4378"/>
+        <location filename="../mainwindow.cpp" line="4467"/>
         <source>Application</source>
         <translation>어플리케이션</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="3575"/>
-        <location filename="../mainwindow.cpp" line="4378"/>
+        <location filename="../mainwindow.cpp" line="4467"/>
         <source>ObejctID</source>
         <translation>객체 ID</translation>
     </message>
@@ -7066,7 +7066,17 @@ Do you want to delete the file and continue?</source>
         <translation>언어(재시동 필요함)</translation>
     </message>
     <message>
-        <location filename="../settings_dlg.cpp" line="73"/>
+        <location filename="../settings_dlg.ui" line="188"/>
+        <source>Characters</source>
+        <translation>문자</translation>
+    </message>
+    <message>
+        <location filename="../settings_dlg.ui" line="195"/>
+        <source>Use fixed hex area</source>
+        <translation>헥사 값 넓이 고정</translation>
+    </message>
+    <message>
+        <location filename="../settings_dlg.cpp" line="74"/>
         <source>You have changed language. Restart to apply it?</source>
         <translation>언어가 바꼈습니다. 다시 시작 하겠습니까?</translation>
     </message>
@@ -7088,17 +7098,17 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">시작 시 로그탭 보이기</translation>
     </message>
     <message>
-        <location filename="../settings_dlg.ui" line="189"/>
+        <location filename="../settings_dlg.ui" line="226"/>
         <source>Log Level</source>
         <translation>로그 레벨</translation>
     </message>
     <message>
-        <location filename="../settings_dlg.ui" line="208"/>
+        <location filename="../settings_dlg.ui" line="245"/>
         <source>File Read Size</source>
         <translation>파일 읽기 크기</translation>
     </message>
     <message>
-        <location filename="../settings_dlg.ui" line="231"/>
+        <location filename="../settings_dlg.ui" line="268"/>
         <source>The size of the file to be read at one time</source>
         <translation>한번에 읽을 파일 블록 크기</translation>
     </message>
