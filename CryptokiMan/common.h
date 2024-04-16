@@ -51,6 +51,7 @@ enum {
     OBJ_DATA_IDX
 };
 
+const QString GetSystemID();
 
 QString findFile( QWidget *parent, int nType, const QString strPath );
 QString saveFile( QWidget *parent, int nType, const QString strPath );

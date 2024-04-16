@@ -18,6 +18,7 @@ include(GNUInstallDirs)
 find_package(QT NAMES Qt5 Qt6 REQUIRED COMPONENTS Core )
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui)
 find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS Widgets)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Network)
 
 if(APPLE)
     SET(platform_specific_sources ${platform_specific_sources} mac_sparkle_support.mm)
@@ -241,6 +242,7 @@ if(WIN32)
 
     target_link_libraries(${PROJECT_NAME} PRIVATE
         Qt${QT_VERSION_MAJOR}::Widgets
+        Qt${QT_VERSION_MAJOR}::Network
         PKILib ltdl crypto ssl ws2_32 WinSparkle )
 
     target_compile_definitions( ${PROJECT_NAME} PRIVATE _AUTO_UPDATE )
@@ -282,6 +284,7 @@ elseif(APPLE)
 
     target_link_libraries(${PROJECT_NAME} PRIVATE
         Qt${QT_VERSION_MAJOR}::Widgets
+        Qt${QT_VERSION_MAJOR}::Network
         PKILib crypto ssl ltdl
         "-framework AppKit"
         "-framework Carbon"
@@ -311,6 +314,7 @@ elseif(LINUX)
 
     target_link_libraries(${PROJECT_NAME} PRIVATE
         Qt${QT_VERSION_MAJOR}::Widgets
+        Qt${QT_VERSION_MAJOR}::Network
         PKILib crypto ssl ltdl )
 endif()
 
