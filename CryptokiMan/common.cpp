@@ -46,7 +46,7 @@ const QString GetSystemID()
                         strID = netIFT.hardwareAddress();
                     else
                     {
-                        strID += QString( ":%1" ).arg( netIFT.hardwareAddress() );
+                        strID += QString( "|%1" ).arg( netIFT.hardwareAddress() );
                     }
                 }
             }

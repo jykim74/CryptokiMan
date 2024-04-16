@@ -63,6 +63,8 @@ void LCNInfoDlg::initialize()
     int ret = 0;
     mUpdateBtn->setEnabled( false );
     JS_LICENSE_INFO sLicenseInfo = manApplet->LicenseInfo();
+    QString strEmail = manApplet->settingsMgr()->getEmail();
+    QString strSID = GetSystemID();
 
     if( manApplet->isLicense() )
     {
@@ -81,7 +83,7 @@ void LCNInfoDlg::initialize()
         mCurIssueDateText->setText( issueTime.toString( "yyyy-MM-dd HH:mm:ss") );
         mCurExpireDateText->setText( expireTime.toString( "yyyy-MM-dd HH:mm:ss") );
 
-        ret = JS_LCN_IsValid( &sLicenseInfo, JS_LCN_PRODUCT_CRYPTOKIMAN_NAME, sLicenseInfo.sSID, time(NULL) );
+        ret = JS_LCN_IsValid( &sLicenseInfo, strEmail.toStdString().c_str(), JS_LCN_PRODUCT_CRYPTOKIMAN_NAME, strSID.toStdString().c_str(), time(NULL) );
         if( ret == JSR_VALID )
         {
             mCurGroup->setEnabled( true );
@@ -317,7 +319,7 @@ void LCNInfoDlg::clickGet()
         goto end;
     }
 
-    ret = JS_LCN_IsValid( &sInfo, JS_LCN_PRODUCT_CRYPTOKIMAN_NAME, sInfo.sSID, time(NULL) );
+    ret = JS_LCN_IsValid( &sInfo, sInfo.sUser, JS_LCN_PRODUCT_CRYPTOKIMAN_NAME, sInfo.sSID, time(NULL) );
     if( ret != JSR_VALID )
     {
         strErr = tr("license is not valid [%1]").arg(ret);

@@ -157,6 +157,7 @@ int ManApplet::checkLicense()
 
     QString strEmail = settings_mgr_->getEmail();
     QString strLicense = settings_mgr_->getLicense();
+    QString strSID = GetSystemID();
 
     JS_BIN_decodeHex( strLicense.toStdString().c_str(), &binEncLCN );
     if( binEncLCN.nLen > 0 ) JS_LCN_dec( strEmail.toStdString().c_str(), &binEncLCN, &binLCN );
@@ -186,7 +187,7 @@ int ManApplet::checkLicense()
 
     if( ntp_t <= 0 ) ntp_t = time(NULL);
 
-    ret = JS_LCN_IsValid( &license_info_, JS_LCN_PRODUCT_CRYPTOKIMAN_NAME, NULL, ntp_t );
+    ret = JS_LCN_IsValid( &license_info_, strEmail.toStdString().c_str(), JS_LCN_PRODUCT_CRYPTOKIMAN_NAME, strSID.toStdString().c_str(), ntp_t );
 
     if( ret == JSR_VALID )
         is_license_ = true;
