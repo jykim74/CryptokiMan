@@ -16,7 +16,7 @@
 #include "js_cc.h"
 #include "js_error.h"
 
-const QString kLicenseURI = "http://34.64.56.160";
+const QString kLicenseURI = "http://localhost";
 
 
 LCNInfoDlg::LCNInfoDlg(QWidget *parent) :
