@@ -30,6 +30,15 @@ SettingsMgr::SettingsMgr( QObject *parent) : QObject (parent)
     initialize();
 }
 
+void SettingsMgr::removeSet( const QString& group, const QString& name )
+{
+    QSettings settings;
+
+    settings.beginGroup(group);
+    settings.remove( name );
+    settings.endGroup();
+}
+
 void SettingsMgr::initialize()
 {
     getLogLevel();

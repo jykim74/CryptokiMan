@@ -16,6 +16,7 @@ private:
 
 public:
     SettingsMgr( QObject *parent = nullptr );
+    void removeSet( const QString& group, const QString& name );
 
     void setUseLogTab( bool bVal );
     bool getUseLogTab();

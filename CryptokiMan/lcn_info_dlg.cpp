@@ -26,6 +26,7 @@ LCNInfoDlg::LCNInfoDlg(QWidget *parent) :
 
     connect( mGetBtn, SIGNAL(clicked()), this, SLOT(clickGet()));
     connect( mUpdateBtn, SIGNAL(clicked()), this, SLOT(clickUpdate()));
+    connect( mRemoveBtn, SIGNAL(clicked()), this, SLOT(clickRemove()));
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(close()));
     connect( mUseFileCheck, SIGNAL(clicked()), this, SLOT(checkUseFile()));
     connect( mStopMessageCheck, SIGNAL(clicked()), this, SLOT(checkStopMessage()));
@@ -88,6 +89,7 @@ void LCNInfoDlg::initialize()
         {
             mCurGroup->setEnabled( true );
             mUpdateBtn->setEnabled( true );
+            mRemoveBtn->setEnabled( false );
         }
         else
         {
@@ -430,6 +432,18 @@ end :
     {
         QDialog::reject();
     }
+}
+
+void LCNInfoDlg::clickRemove()
+{
+    QString strMsg = tr( "Are you sure you want to remove invalid license information?");
+
+    bool bVal = manApplet->yesOrNoBox( strMsg, this );
+    if( bVal == false ) return;
+
+    manApplet->settingsMgr()->removeSet( "Misc", "email" );
+    manApplet->settingsMgr()->removeSet( "Misc", "license" );
+    manApplet->messageBox( tr( "Remove invalid license settings" ), this );
 }
 
 void LCNInfoDlg::checkUseFile()
