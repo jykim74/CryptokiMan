@@ -64,7 +64,7 @@ void LCNInfoDlg::initialize()
     mUpdateBtn->setEnabled( false );
     JS_LICENSE_INFO sLicenseInfo = manApplet->LicenseInfo();
     QString strEmail = manApplet->settingsMgr()->getEmail();
-    QString strSID = GetSystemID();
+    SID_ = GetSystemID();
 
     if( manApplet->isLicense() )
     {
@@ -83,7 +83,7 @@ void LCNInfoDlg::initialize()
         mCurIssueDateText->setText( issueTime.toString( "yyyy-MM-dd HH:mm:ss") );
         mCurExpireDateText->setText( expireTime.toString( "yyyy-MM-dd HH:mm:ss") );
 
-        ret = JS_LCN_IsValid( &sLicenseInfo, strEmail.toStdString().c_str(), JS_LCN_PRODUCT_CRYPTOKIMAN_NAME, strSID.toStdString().c_str(), time(NULL) );
+        ret = JS_LCN_IsValid( &sLicenseInfo, strEmail.toStdString().c_str(), JS_LCN_PRODUCT_CRYPTOKIMAN_NAME, SID_.toStdString().c_str(), time(NULL) );
         if( ret == JSR_VALID )
         {
             mCurGroup->setEnabled( true );
@@ -124,12 +124,12 @@ void LCNInfoDlg::initialize()
     tabWidget->setCurrentIndex(0);
 }
 
-void LCNInfoDlg::settingsLCN( const QString strSID, const BIN *pLCN )
+void LCNInfoDlg::settingsLCN( const QString strUser, const BIN *pLCN )
 {
     BIN binEncLCN = {0,0};
 
-    JS_LCN_enc( strSID.toStdString().c_str(), pLCN, &binEncLCN );
-    manApplet->settingsMgr()->setEmail( strSID );
+    JS_LCN_enc( strUser.toStdString().c_str(), pLCN, &binEncLCN );
+    manApplet->settingsMgr()->setEmail( strUser );
     manApplet->settingsMgr()->setLicense( getHexString( &binEncLCN ));
 
     JS_BIN_reset( &binEncLCN );
@@ -206,7 +206,6 @@ int LCNInfoDlg::updateLCN( const QString strEmail, const QString strKey, BIN *pL
     char *pRsp = NULL;
     JCC_NameVal sNameVal;
     QString strProduct = manApplet->getBrand();
-    QString strSID = GetSystemID();
 
 #ifndef _USE_LCN_SRV
     manApplet->warningBox( tr( "This service is not yet supported." ), this );
@@ -222,7 +221,7 @@ int LCNInfoDlg::updateLCN( const QString strEmail, const QString strKey, BIN *pL
     QString strBody = QString( "email=%1&key=%2&product=%3&sid=%4")
                           .arg( strEmail )
                           .arg( strKey )
-                          .arg(strProduct).arg( strSID );
+                          .arg(strProduct).arg( SID_ );
 
     ret = JS_HTTP_requestPost2(
         strURL.toStdString().c_str(),
@@ -344,9 +343,8 @@ void LCNInfoDlg::clickGet()
         }
     }
 
-    settingsLCN( QString( sInfo.sSID ), &binLCN );
-//    manApplet->settingsMgr()->setEmail( sInfo.sSID );
-//    manApplet->settingsMgr()->setLicense( getHexString( &binLCN ));
+    settingsLCN( QString( sInfo.sUser ), &binLCN );
+
     ret = 0;
 
 end :

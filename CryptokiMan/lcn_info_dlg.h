@@ -22,6 +22,7 @@ public:
     explicit LCNInfoDlg(QWidget *parent = nullptr);
     ~LCNInfoDlg();
     void setCurTab( int index );
+    const QString getSID() { return SID_; };
 
 private slots:
     void clickGet();
@@ -36,6 +37,7 @@ private:
     int updateLCN( const QString strEmail, const QString strKey, BIN *pLCN );
 
     void settingsLCN( const QString strSID, const BIN *pLCN );
+    QString SID_;
 };
 
 #endif // LCN_INFO_DLG_H
