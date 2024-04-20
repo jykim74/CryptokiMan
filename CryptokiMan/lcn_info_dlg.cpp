@@ -17,8 +17,8 @@
 #include "js_cc.h"
 #include "js_error.h"
 
-//const QString kLicenseURI = "http://localhost";
-const QString kLicenseURI = "http://jykim74.mycafe24.com";
+const QString kLicenseURI = "http://localhost";
+//const QString kLicenseURI = "http://jykim74.mycafe24.com";
 
 LCNInfoDlg::LCNInfoDlg(QWidget *parent) :
     QDialog(parent)
@@ -104,7 +104,7 @@ void LCNInfoDlg::initialize()
     }
     else
     {
-        QString strMsg = tr( "This CryptokiMan is unlicensed version.\r\n" );
+        QString strMsg = tr( "This CryptokiMan is unlicensed version\n" );
         QString strAppend;
 
         if( sLicenseInfo.nVersion > 0 )
