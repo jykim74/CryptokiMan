@@ -5007,7 +5007,7 @@ Do you want to delete the file and continue?</source>
     <message>
         <location filename="../lcn_info_dlg.ui" line="261"/>
         <source>Do stop showing this message for the time being</source>
-        <translation>당분가 이 메세지 표시 안함</translation>
+        <translation>당분간 이 메세지 표시 안함</translation>
     </message>
     <message>
         <location filename="../lcn_info_dlg.ui" line="272"/>
@@ -5022,7 +5022,7 @@ Do you want to delete the file and continue?</source>
     <message>
         <location filename="../lcn_info_dlg.ui" line="309"/>
         <source>Get</source>
-        <translation>가겨오기</translation>
+        <translation>가져오기</translation>
     </message>
     <message>
         <location filename="../lcn_info_dlg.ui" line="329"/>
@@ -5045,20 +5045,17 @@ Do you want to delete the file and continue?</source>
         <translation>갱신</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="107"/>
         <source>This CryptokiMan is unlicensed version.<byte value="xd"/>
 </source>
-        <translation>CryptokiMan 은 라이선스가 없는 버전입니다</translation>
+        <translation type="vanished">CryptokiMan 은 라이선스가 없는 버전입니다</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="112"/>
         <source>Expiration Date: %1</source>
-        <translation>만료일 : %1</translation>
+        <translation type="vanished">만료일 : %1</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="116"/>
         <source>The license is not a valid license.</source>
-        <translation>라이선스가 유효하지 않습니다</translation>
+        <translation type="vanished">라이선스가 유효하지 않습니다</translation>
     </message>
     <message>
         <location filename="../lcn_info_dlg.cpp" line="327"/>
@@ -5083,6 +5080,21 @@ Do you want to delete the file and continue?</source>
     <message>
         <source>failed to get license [%1]</source>
         <translation type="vanished">라이선스 가져오기 실패 [%1]</translation>
+    </message>
+    <message>
+        <location filename="../lcn_info_dlg.cpp" line="107"/>
+        <source>This CryptokiMan is unlicensed version</source>
+        <translation>CryptokiMan 은 라이선스가 없는 버전입니다</translation>
+    </message>
+    <message>
+        <location filename="../lcn_info_dlg.cpp" line="112"/>
+        <source>[Expired:%1]</source>
+        <translation>[만료일 : %1]</translation>
+    </message>
+    <message>
+        <location filename="../lcn_info_dlg.cpp" line="116"/>
+        <source>[No license]</source>
+        <translation>[라이선스 없음]</translation>
     </message>
     <message>
         <location filename="../lcn_info_dlg.cpp" line="352"/>
@@ -5725,9 +5737,8 @@ Do you want to delete the file and continue?</source>
         <translation>선택한 객체가 없습니다</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1804"/>
         <source>The license has been changed. Restart to apply it?</source>
-        <translation>라이선스가 변경 되었습니다.적용을 위해 다시 시작 하시겠습니까?</translation>
+        <translation type="vanished">라이선스가 변경 되었습니다.적용을 위해 다시 시작 하시겠습니까?</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2252"/>
