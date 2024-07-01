@@ -9,6 +9,8 @@
 #include <QDialog>
 #include "ui_digest_dlg.h"
 
+class DigestThread;
+
 namespace Ui {
 class DigestDlg;
 }
@@ -42,6 +44,11 @@ private slots:
     void clickOutputClear();
     void clickFindSrcFile();
 
+    void runFileDigestThread();
+    void startTask();
+    void onTaskFinished();
+    void onTaskUpdate( int nUpdate );
+
 private:
     void initialize();
     void appendStatusLabel( const QString& strLabel );
@@ -49,6 +56,8 @@ private:
     void setKeyList();
 
     long getSessionHandle();
+
+    DigestThread* thread_;
 };
 
 #endif // DIGEST_DLG_H

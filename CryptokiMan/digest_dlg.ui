@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>539</width>
-    <height>486</height>
+    <height>661</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -984,7 +984,39 @@
      <property name="topMargin">
       <number>0</number>
      </property>
-     <item row="0" column="2">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_9">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>80</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Digest</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <spacer name="horizontalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="0" column="3">
       <widget class="QLineEdit" name="mOutputLenText">
        <property name="minimumSize">
         <size>
@@ -1040,37 +1072,12 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_9">
-       <property name="minimumSize">
-        <size>
-         <width>80</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>80</width>
-         <height>16777215</height>
-        </size>
-       </property>
+     <item row="0" column="2">
+      <widget class="QPushButton" name="mOutputClearBtn">
        <property name="text">
-        <string>Digest</string>
+        <string>Output Clear</string>
        </property>
       </widget>
-     </item>
-     <item row="0" column="1">
-      <spacer name="horizontalSpacer_4">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
      </item>
     </layout>
    </item>
@@ -1117,9 +1124,9 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="mOutputClearBtn">
+      <widget class="QPushButton" name="mDigestThreadBtn">
        <property name="text">
-        <string>Output Clear</string>
+        <string>Digest Thread</string>
        </property>
       </widget>
      </item>
@@ -1197,7 +1204,6 @@
   <tabstop>mInitBtn</tabstop>
   <tabstop>mInitAutoCheck</tabstop>
   <tabstop>mDigestBtn</tabstop>
-  <tabstop>mOutputClearBtn</tabstop>
   <tabstop>mCloseBtn</tabstop>
  </tabstops>
  <resources/>

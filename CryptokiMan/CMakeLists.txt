@@ -218,6 +218,7 @@ add_executable(${PROJECT_NAME}
     find_object_dlg.h find_object_dlg.cpp find_object_dlg.ui
     CryptokiMan.pro
     edit_attribute_list_dlg.h edit_attribute_list_dlg.cpp edit_attribute_list_dlg.ui
+    digest_thread.h digest_thread.cpp
 )
 
 target_link_options( ${PROJECT_NAME} PRIVATE -mwindows -MD )

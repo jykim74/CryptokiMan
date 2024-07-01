@@ -14,6 +14,7 @@
 #include "common.h"
 #include "settings_mgr.h"
 #include "mech_mgr.h"
+#include "digest_thread.h"
 
 static QStringList sMechDigestList;
 
@@ -24,6 +25,7 @@ static QStringList sInputList = {
 DigestDlg::DigestDlg(QWidget *parent) :
     QDialog(parent)
 {
+    thread_ = NULL;
     setupUi(this);
 
     initUI();
@@ -32,7 +34,7 @@ DigestDlg::DigestDlg(QWidget *parent) :
 
 DigestDlg::~DigestDlg()
 {
-
+    if( thread_ ) delete thread_;
 }
 
 void DigestDlg::initUI()
@@ -66,6 +68,8 @@ void DigestDlg::initUI()
     connect( mInputClearBtn, SIGNAL(clicked()), this, SLOT(clickInputClear()));
     connect( mOutputClearBtn, SIGNAL(clicked()), this, SLOT(clickOutputClear()));
     connect( mFindSrcFileBtn, SIGNAL(clicked()), this, SLOT(clickFindSrcFile()));
+
+    connect( mDigestThreadBtn, SIGNAL(clicked()), this, SLOT(runFileDigestThread()));
 
 #if defined(Q_OS_MAC)
     layout()->setSpacing(3);
@@ -544,4 +548,31 @@ void DigestDlg::clickFindSrcFile()
         mFileReadSizeText->clear();
         mFileTotalSizeText->clear();
     }
+}
+
+void DigestDlg::runFileDigestThread()
+{
+    startTask();
+}
+
+void DigestDlg::startTask()
+{
+    if( thread_ != nullptr ) delete thread_;
+
+    thread_ = new DigestThread;
+
+    connect(thread_, &DigestThread::taskFinished, this, &DigestDlg::onTaskFinished);
+    connect( thread_, &DigestThread::taskUpdate, this, &DigestDlg::onTaskUpdate);
+
+    thread_->start();
+}
+
+void DigestDlg::onTaskFinished()
+{
+    manApplet->log("Task finished");
+}
+
+void DigestDlg::onTaskUpdate( int nUpdate )
+{
+    manApplet->log( QString("Update: %1").arg( nUpdate ));
 }
