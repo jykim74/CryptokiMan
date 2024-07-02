@@ -84,7 +84,12 @@ SOURCES += \
         unwrap_key_dlg.cpp \
         verify_dlg.cpp \
         wrap_key_dlg.cpp \
-        find_object_dlg.cpp
+        find_object_dlg.cpp \
+        digest_thread.cpp \
+        sign_thread.cpp \
+        verify_thread.cpp \
+        encrypt_thread.cpp \
+        decrypt_thread.cpp
 
 HEADERS += \
         about_dlg.h \
@@ -142,7 +147,12 @@ HEADERS += \
         unwrap_key_dlg.h \
         verify_dlg.h \
         wrap_key_dlg.h \
-        find_object_dlg.h
+        find_object_dlg.h \
+        digest_thread.h \
+        sign_thread.h \
+        verify_thread.h \
+        encrypt_thread.h \
+        decrypt_thread.h
 
 FORMS += \
         about_dlg.ui \

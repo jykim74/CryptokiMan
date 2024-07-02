@@ -1,14 +1,15 @@
-#ifndef DIGESTTHREAD_H
-#define DIGESTTHREAD_H
+#ifndef VERIFYTHREAD_H
+#define VERIFYTHREAD_H
 
 #include <QThread>
 
-class DigestThread : public QThread
+class VerifyThread : public QThread
 {
     Q_OBJECT
 public:
-    DigestThread();
-    ~DigestThread();
+    VerifyThread();
+    ~VerifyThread();
+
     void setSession( long uSession );
     void setSrcFile( const QString strSrcFile );
 
@@ -22,4 +23,4 @@ protected:
     QString src_file_;
 };
 
-#endif // DIGESTTHREAD_H
+#endif // VERIFYTHREAD_H

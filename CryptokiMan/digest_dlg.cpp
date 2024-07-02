@@ -26,6 +26,7 @@ DigestDlg::DigestDlg(QWidget *parent) :
     QDialog(parent)
 {
     thread_ = NULL;
+    update_cnt_ = 0;
     setupUi(this);
 
     initUI();
@@ -72,8 +73,9 @@ void DigestDlg::initUI()
     connect( mDigestThreadBtn, SIGNAL(clicked()), this, SLOT(runFileDigestThread()));
 
 #if defined(Q_OS_MAC)
-    layout()->setSpacing(3);
+    layout()->setSpacing(5);
 #endif
+    resize(width(), minimumSizeHint().height());
 }
 
 long DigestDlg::getSessionHandle()
@@ -219,6 +221,8 @@ void DigestDlg::clickDigestKey()
 int DigestDlg::clickInit()
 {
     int rv = -1;
+    update_cnt_ = 0;
+
     CK_SESSION_HANDLE hSession = getSessionHandle();
 
     BIN binParam = {0,0};
@@ -407,7 +411,7 @@ void DigestDlg::runFileDigest()
     int nLeft = 0;
     int nOffset = 0;
     int nPercent = 0;
-    int nUpdateCnt = 0;
+
     QString strSrcFile = mSrcFileText->text();
     BIN binPart = {0,0};
 
@@ -451,11 +455,6 @@ void DigestDlg::runFileDigest()
         nRead = JS_BIN_fileReadPartFP( fp, nOffset, nPartSize, &binPart );
         if( nRead <= 0 ) break;
 
-        if( mWriteLogCheck->isChecked() )
-        {
-            manApplet->log( QString( "Read[%1:%2] %3").arg( nOffset ).arg( nRead ).arg( getHexString(binPart.pVal, binPart.nLen)));
-        }
-
         ret = manApplet->cryptokiAPI()->DigestUpdate( hSession, binPart.pVal, binPart.nLen );
         if( ret != CKR_OK )
         {
@@ -463,7 +462,7 @@ void DigestDlg::runFileDigest()
             goto end;
         }
 
-        nUpdateCnt++;
+        update_cnt_++;
         nReadSize += nRead;
         nPercent = ( nReadSize * 100 ) / fileSize;
 
@@ -486,7 +485,7 @@ void DigestDlg::runFileDigest()
 
         if( ret == CKR_OK )
         {
-            QString strMsg = QString( "|Update X %1" ).arg( nUpdateCnt );
+            QString strMsg = QString( "|Update X %1" ).arg( update_cnt_ );
             appendStatusLabel( strMsg );
             clickFinal();
         }
@@ -552,6 +551,18 @@ void DigestDlg::clickFindSrcFile()
 
 void DigestDlg::runFileDigestThread()
 {
+    int ret = 0;
+
+    if( mInitAutoCheck->isChecked() )
+    {
+        ret = clickInit();
+        if( ret != CKR_OK )
+        {
+            manApplet->warningBox( tr("failed to initialize digest [%1]").arg(ret), this );
+            return;
+        }
+    }
+
     startTask();
 }
 
@@ -561,18 +572,55 @@ void DigestDlg::startTask()
 
     thread_ = new DigestThread;
 
+    CK_SESSION_HANDLE hSession = getSessionHandle();
+
+    QString strSrcFile = mSrcFileText->text();
+
+    if( strSrcFile.length() < 1)
+    {
+        manApplet->warningBox( tr( "Find source file"), this );
+        return;
+    }
+
+    QFileInfo fileInfo;
+    fileInfo.setFile( strSrcFile );
+
+    qint64 fileSize = fileInfo.size();
+
+    mFileTotalSizeText->setText( QString("%1").arg( fileSize ));
+    mFileReadSizeText->setText( "0" );
+
     connect(thread_, &DigestThread::taskFinished, this, &DigestDlg::onTaskFinished);
     connect( thread_, &DigestThread::taskUpdate, this, &DigestDlg::onTaskUpdate);
 
+    thread_->setSession( hSession );
+    thread_->setSrcFile( strSrcFile );
     thread_->start();
 }
 
 void DigestDlg::onTaskFinished()
 {
     manApplet->log("Task finished");
+
+
+    QString strStatus = QString( "|Update X %1").arg( update_cnt_ );
+    appendStatusLabel( strStatus );
+
+    clickFinal();
+
+    thread_->quit();
+    thread_->wait();
+    thread_->deleteLater();
+    thread_ = nullptr;
 }
 
 void DigestDlg::onTaskUpdate( int nUpdate )
 {
     manApplet->log( QString("Update: %1").arg( nUpdate ));
+    int nFileSize = mFileTotalSizeText->text().toInt();
+    int nPercent = (nUpdate * 100) / nFileSize;
+    update_cnt_++;
+
+    mFileReadSizeText->setText( QString("%1").arg( nUpdate ));
+    mHashProgBar->setValue( nPercent );
 }

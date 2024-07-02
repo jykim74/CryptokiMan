@@ -1,14 +1,16 @@
-#ifndef DIGESTTHREAD_H
-#define DIGESTTHREAD_H
+#ifndef SIGNTHREAD_H
+#define SIGNTHREAD_H
 
 #include <QThread>
 
-class DigestThread : public QThread
+class SignThread : public QThread
 {
     Q_OBJECT
+
 public:
-    DigestThread();
-    ~DigestThread();
+    SignThread();
+    ~SignThread();
+
     void setSession( long uSession );
     void setSrcFile( const QString strSrcFile );
 
@@ -22,4 +24,4 @@ protected:
     QString src_file_;
 };
 
-#endif // DIGESTTHREAD_H
+#endif // SIGNTHREAD_H

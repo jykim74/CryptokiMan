@@ -14,6 +14,7 @@
 #include "common.h"
 #include "settings_mgr.h"
 #include "mech_mgr.h"
+#include "verify_thread.h"
 
 static QStringList sMechSignSymList;
 static QStringList sMechSignAsymList;
@@ -26,6 +27,8 @@ VerifyDlg::VerifyDlg(QWidget *parent) :
 {
     slot_index_ = -1;
     session_ = -1;
+    update_cnt_ = 0;
+    thread_ = NULL;
 
     setupUi(this);
 
@@ -37,7 +40,7 @@ VerifyDlg::VerifyDlg(QWidget *parent) :
 
 VerifyDlg::~VerifyDlg()
 {
-
+    if( thread_ ) delete thread_;
 }
 
 void VerifyDlg::initUI()
@@ -83,6 +86,7 @@ void VerifyDlg::initUI()
     connect( mInputClearBtn, SIGNAL(clicked()), this, SLOT(clickInputClear()));
     connect( mSignClearBtn, SIGNAL(clicked()), this, SLOT(clickSignClear()));
     connect( mFindSrcFileBtn, SIGNAL(clicked()), this, SLOT(clickFindSrcFile()));
+    connect( mVerifyThreadBtn, SIGNAL(clicked()), this, SLOT(runFileVerifyThread()));
 
 
     initialize();
@@ -268,6 +272,7 @@ void VerifyDlg::changeSign()
 int VerifyDlg::clickInit()
 {
     int rv = -1;
+    update_cnt_ = 0;
 
     CK_MECHANISM sMech;
     BIN binParam = {0,0};
@@ -436,7 +441,7 @@ void VerifyDlg::runFileVerify()
     int nLeft = 0;
     int nOffset = 0;
     int nPercent = 0;
-    int nUpdateCnt = 0;
+
     QString strSrcFile = mSrcFileText->text();
     BIN binPart = {0,0};
 
@@ -485,11 +490,6 @@ void VerifyDlg::runFileVerify()
         nRead = JS_BIN_fileReadPartFP( fp, nOffset, nPartSize, &binPart );
         if( nRead <= 0 ) break;
 
-        if( mWriteLogCheck->isChecked() )
-        {
-            manApplet->log( QString( "Read[%1:%2] %3").arg( nOffset ).arg( nRead ).arg( getHexString(binPart.pVal, binPart.nLen)));
-        }
-
         ret = manApplet->cryptokiAPI()->VerifyUpdate( session_, binPart.pVal, binPart.nLen );
         if( ret != CKR_OK )
         {
@@ -497,7 +497,7 @@ void VerifyDlg::runFileVerify()
             goto end;
         }
 
-        nUpdateCnt++;
+        update_cnt_++;
         nReadSize += nRead;
         nPercent = ( nReadSize * 100 ) / fileSize;
 
@@ -520,7 +520,7 @@ void VerifyDlg::runFileVerify()
 
         if( ret == CKR_OK )
         {   
-            QString strMsg = QString( "|Update X %1").arg( nUpdateCnt );
+            QString strMsg = QString( "|Update X %1").arg( update_cnt_ );
             appendStatusLabel( strMsg );
             clickFinal();
         }
@@ -634,4 +634,78 @@ void VerifyDlg::clickFindSrcFile()
         mFileReadSizeText->clear();
         mFileTotalSizeText->clear();
     }
+}
+
+void VerifyDlg::runFileVerifyThread()
+{
+    int ret = 0;
+
+    if( mInitAutoCheck->isChecked() )
+    {
+        ret = clickInit();
+        if( ret != CKR_OK )
+        {
+            manApplet->warningBox( tr("failed to initialize digest [%1]").arg(ret), this );
+            return;
+        }
+    }
+
+    startTask();
+}
+
+void VerifyDlg::startTask()
+{
+    if( thread_ != nullptr ) delete thread_;
+
+    thread_ = new VerifyThread;
+
+    QString strSrcFile = mSrcFileText->text();
+
+    if( strSrcFile.length() < 1)
+    {
+        manApplet->warningBox( tr( "Find source file"), this );
+        return;
+    }
+
+    QFileInfo fileInfo;
+    fileInfo.setFile( strSrcFile );
+
+    qint64 fileSize = fileInfo.size();
+
+    mFileTotalSizeText->setText( QString("%1").arg( fileSize ));
+    mFileReadSizeText->setText( "0" );
+
+    connect(thread_, &VerifyThread::taskFinished, this, &VerifyDlg::onTaskFinished);
+    connect( thread_, &VerifyThread::taskUpdate, this, &VerifyDlg::onTaskUpdate);
+
+    thread_->setSession( session_ );
+    thread_->setSrcFile( strSrcFile );
+    thread_->start();
+}
+
+void VerifyDlg::onTaskFinished()
+{
+    manApplet->log("Task finished");
+
+
+    QString strStatus = QString( "|Update X %1").arg( update_cnt_ );
+    appendStatusLabel( strStatus );
+
+    clickFinal();
+
+    thread_->quit();
+    thread_->wait();
+    thread_->deleteLater();
+    thread_ = nullptr;
+}
+
+void VerifyDlg::onTaskUpdate( int nUpdate )
+{
+    manApplet->log( QString("Update: %1").arg( nUpdate ));
+    int nFileSize = mFileTotalSizeText->text().toInt();
+    int nPercent = (nUpdate * 100) / nFileSize;
+    update_cnt_++;
+
+    mFileReadSizeText->setText( QString("%1").arg( nUpdate ));
+    mVerifyProgBar->setValue( nPercent );
 }

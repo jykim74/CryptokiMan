@@ -607,7 +607,7 @@
    <item>
     <widget class="QTabWidget" name="mInputTab">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -1104,13 +1104,6 @@
        </item>
        <item>
         <layout class="QGridLayout" name="gridLayout_12">
-         <item row="0" column="1">
-          <widget class="QProgressBar" name="mEncProgBar">
-           <property name="value">
-            <number>0</number>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label_15">
            <property name="minimumSize">
@@ -1130,16 +1123,17 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="2">
-          <widget class="QCheckBox" name="mWriteLogCheck">
-           <property name="minimumSize">
-            <size>
-             <width>80</width>
-             <height>0</height>
-            </size>
+         <item row="0" column="1">
+          <widget class="QProgressBar" name="mEncProgBar">
+           <property name="value">
+            <number>0</number>
            </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="mEncThreadBtn">
            <property name="text">
-            <string>Write log</string>
+            <string>EncThread</string>
            </property>
           </widget>
          </item>
@@ -1565,7 +1559,6 @@
   <tabstop>mSrcFileSizeText</tabstop>
   <tabstop>mFileTotalSizeText</tabstop>
   <tabstop>mFileReadSizeText</tabstop>
-  <tabstop>mWriteLogCheck</tabstop>
   <tabstop>mDstFileText</tabstop>
   <tabstop>mFindDstFileBtn</tabstop>
   <tabstop>mDstFileInfoText</tabstop>

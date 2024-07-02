@@ -14,6 +14,7 @@
 #include "common.h"
 #include "settings_mgr.h"
 #include "mech_mgr.h"
+#include "sign_thread.h"
 
 static QStringList sMechSignAsymList;
 static QStringList sMechSignSymList;
@@ -25,6 +26,8 @@ SignDlg::SignDlg(QWidget *parent) :
 {
     session_ = -1;
     slot_index_ = -1;
+    update_cnt_ = 0;
+    thread_ = NULL;
 
     setupUi(this);
 
@@ -36,7 +39,7 @@ SignDlg::SignDlg(QWidget *parent) :
 
 SignDlg::~SignDlg()
 {
-
+    if( thread_ ) delete thread_;
 }
 
 void SignDlg::initUI()
@@ -82,6 +85,7 @@ void SignDlg::initUI()
     connect( mInputClearBtn, SIGNAL(clicked()), this, SLOT(clickInputClear()));
     connect( mOutputClearBtn, SIGNAL(clicked()), this, SLOT(clickOutputClear()));
     connect( mFindSrcFileBtn, SIGNAL(clicked()), this, SLOT(clickFindSrcFile()));
+    connect( mSignThreadBtn, SIGNAL(clicked()), this, SLOT(runFileSignThread()));
 
     initialize();
     keyTypeChanged(0);
@@ -267,6 +271,7 @@ void SignDlg::labelChanged( int index )
 int SignDlg::clickInit()
 {
     int rv = -1;
+    update_cnt_ = 0;
 
     CK_MECHANISM sMech;
     BIN binParam = {0,0};
@@ -440,7 +445,7 @@ void SignDlg::runFileSign()
     int nLeft = 0;
     int nOffset = 0;
     int nPercent = 0;
-    int nUpdateCnt = 0;
+
     QString strSrcFile = mSrcFileText->text();
     BIN binPart = {0,0};
 
@@ -482,11 +487,6 @@ void SignDlg::runFileSign()
         nRead = JS_BIN_fileReadPartFP( fp, nOffset, nPartSize, &binPart );
         if( nRead <= 0 ) break;
 
-        if( mWriteLogCheck->isChecked() )
-        {
-            manApplet->log( QString( "Read[%1:%2] %3").arg( nOffset ).arg( nRead ).arg( getHexString(binPart.pVal, binPart.nLen)));
-        }
-
         ret = manApplet->cryptokiAPI()->SignUpdate( session_, binPart.pVal, binPart.nLen );
         if( ret != CKR_OK )
         {
@@ -494,7 +494,7 @@ void SignDlg::runFileSign()
             goto end;
         }
 
-        nUpdateCnt++;
+        update_cnt_++;
         nReadSize += nRead;
         nPercent = ( nReadSize * 100 ) / fileSize;
 
@@ -517,7 +517,7 @@ void SignDlg::runFileSign()
 
         if( ret == CKR_OK )
         {
-            QString strMsg = QString( "|Update X %1").arg( nUpdateCnt );
+            QString strMsg = QString( "|Update X %1").arg( update_cnt_ );
             appendStatusLabel( strMsg );
 
             clickFinal();
@@ -647,4 +647,78 @@ void SignDlg::clickFindSrcFile()
         mFileReadSizeText->clear();
         mFileTotalSizeText->clear();
     }
+}
+
+void SignDlg::runFileSignThread()
+{
+    int ret = 0;
+
+    if( mInitAutoCheck->isChecked() )
+    {
+        ret = clickInit();
+        if( ret != CKR_OK )
+        {
+            manApplet->warningBox( tr("failed to initialize digest [%1]").arg(ret), this );
+            return;
+        }
+    }
+
+    startTask();
+}
+
+void SignDlg::startTask()
+{
+    if( thread_ != nullptr ) delete thread_;
+
+    thread_ = new SignThread;
+
+    QString strSrcFile = mSrcFileText->text();
+
+    if( strSrcFile.length() < 1)
+    {
+        manApplet->warningBox( tr( "Find source file"), this );
+        return;
+    }
+
+    QFileInfo fileInfo;
+    fileInfo.setFile( strSrcFile );
+
+    qint64 fileSize = fileInfo.size();
+
+    mFileTotalSizeText->setText( QString("%1").arg( fileSize ));
+    mFileReadSizeText->setText( "0" );
+
+    connect(thread_, &SignThread::taskFinished, this, &SignDlg::onTaskFinished);
+    connect( thread_, &SignThread::taskUpdate, this, &SignDlg::onTaskUpdate);
+
+    thread_->setSession( session_ );
+    thread_->setSrcFile( strSrcFile );
+    thread_->start();
+}
+
+void SignDlg::onTaskFinished()
+{
+    manApplet->log("Task finished");
+
+
+    QString strStatus = QString( "|Update X %1").arg( update_cnt_ );
+    appendStatusLabel( strStatus );
+
+    clickFinal();
+
+    thread_->quit();
+    thread_->wait();
+    thread_->deleteLater();
+    thread_ = nullptr;
+}
+
+void SignDlg::onTaskUpdate( int nUpdate )
+{
+    manApplet->log( QString("Update: %1").arg( nUpdate ));
+    int nFileSize = mFileTotalSizeText->text().toInt();
+    int nPercent = (nUpdate * 100) / nFileSize;
+    update_cnt_++;
+
+    mFileReadSizeText->setText( QString("%1").arg( nUpdate ));
+    mSignProgBar->setValue( nPercent );
 }

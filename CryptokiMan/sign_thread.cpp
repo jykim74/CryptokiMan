@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "digest_thread.h"
+#include "sign_thread.h"
 #include "man_applet.h"
 #include "mainwindow.h"
 #include "common.h"
@@ -10,27 +7,27 @@
 
 #include <QFileInfo>
 
-DigestThread::DigestThread()
-{
-    session_ = -1;
-}
-
-DigestThread::~DigestThread()
+SignThread::SignThread()
 {
 
 }
 
-void DigestThread::setSession( long uSession )
+SignThread::~SignThread()
+{
+
+}
+
+void SignThread::setSession( long uSession )
 {
     session_ = uSession;
 }
 
-void DigestThread::setSrcFile( const QString strSrcFile )
+void SignThread::setSrcFile( const QString strSrcFile )
 {
     src_file_ = strSrcFile;
 }
 
-void DigestThread::run()
+void SignThread::run()
 {
     int ret = -1;
 
@@ -66,10 +63,10 @@ void DigestThread::run()
         if( nRead <= 0 ) break;
 
 
-        ret = manApplet->cryptokiAPI()->DigestUpdate( session_, binPart.pVal, binPart.nLen, false );
+        ret = manApplet->cryptokiAPI()->SignUpdate( session_, binPart.pVal, binPart.nLen, false );
         if( ret != CKR_OK )
         {
-            fprintf( stderr, "DigestUpdate execution failure [%s:%d]\n", JS_PKCS11_GetErrorMsg(ret), ret);
+            fprintf( stderr, "SignUpdate execution failure [%s:%d]\n", JS_PKCS11_GetErrorMsg(ret), ret);
             goto end;
         }
 

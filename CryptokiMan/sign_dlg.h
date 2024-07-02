@@ -9,6 +9,8 @@
 #include <QDialog>
 #include "ui_sign_dlg.h"
 
+class SignThread;
+
 namespace Ui {
 class SignDlg;
 }
@@ -49,6 +51,11 @@ private slots:
     void clickOutputClear();
     void clickFindSrcFile();
 
+    void runFileSignThread();
+    void startTask();
+    void onTaskFinished();
+    void onTaskUpdate( int nUpdate );
+
 private:
     void initialize();
     void appendStatusLabel( const QString& strLabel );
@@ -56,6 +63,8 @@ private:
 
     long session_;
     int slot_index_;
+    SignThread* thread_;
+    int update_cnt_;
 };
 
 #endif // SIGN_DLG_H

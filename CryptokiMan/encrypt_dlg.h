@@ -9,6 +9,8 @@
 #include <QDialog>
 #include "ui_encrypt_dlg.h"
 
+class EncryptThread;
+
 namespace Ui {
 class EncryptDlg;
 }
@@ -50,6 +52,11 @@ private slots:
     void clickFindSrcFile();
     void clickFindDstFile();
 
+    void runFileEncryptThread();
+    void startTask();
+    void onTaskFinished();
+    void onTaskUpdate( int nUpdate );
+
 private:
     void initialize();
     void appendStatusLabel( const QString& strLabel );
@@ -59,6 +66,8 @@ private:
 
     int slot_index_;
     long session_;
+    EncryptThread* thread_;
+    int update_cnt_;
 };
 
 #endif // ENCRYPT_DLG_H

@@ -932,7 +932,7 @@ int CryptokiAPI::DigestInit( CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMecha
     return rv;
 }
 
-int CryptokiAPI::DigestUpdate( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen )
+int CryptokiAPI::DigestUpdate( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen, bool bLog )
 {
     int rv = 0;
     qint64 ms = 0;
@@ -942,6 +942,8 @@ int CryptokiAPI::DigestUpdate( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK
     timer.start();
     rv = p11_ctx_->p11FuncList->C_DigestUpdate( hSession, pPart, ulPartLen );
     ms = timer.elapsed();
+
+    if( bLog == false ) return rv;
 
     strIn = QString( "C_DigestUpdate( SESSION_HANDLE = %1, PART_PTR = @0x%2, PART_LEN = %3 )")
                 .arg(hSession).arg((quintptr) pPart).arg( ulPartLen );
@@ -1070,7 +1072,7 @@ int CryptokiAPI::SignInit( CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechani
     return rv;
 }
 
-int CryptokiAPI::SignUpdate( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen )
+int CryptokiAPI::SignUpdate( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen, bool bLog )
 {
     int rv = 0;
     qint64 ms = 0;
@@ -1080,6 +1082,8 @@ int CryptokiAPI::SignUpdate( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_U
     timer.start();
     rv = p11_ctx_->p11FuncList->C_SignUpdate( hSession, pPart, ulPartLen );
     ms = timer.elapsed();
+
+    if( bLog == false ) return rv;
 
     strIn = QString( "C_SignUpdate( SESSION_HANDLE = %1, PART_PTR = @0x%2, PART_LEN = %3 )")
                 .arg(hSession).arg((quintptr) pPart).arg( ulPartLen );
@@ -1233,7 +1237,7 @@ int CryptokiAPI::VerifyInit( CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMecha
     return rv;
 }
 
-int CryptokiAPI::VerifyUpdate( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen )
+int CryptokiAPI::VerifyUpdate( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen, bool bLog )
 {
     int rv = 0;
     qint64 ms = 0;
@@ -1243,6 +1247,8 @@ int CryptokiAPI::VerifyUpdate( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK
     timer.start();
     rv = p11_ctx_->p11FuncList->C_VerifyUpdate( hSession, pPart, ulPartLen );
     ms = timer.elapsed();
+
+    if( bLog == false ) return rv;
 
     strIn = QString( "C_VerifyUpdate( SESSION_HANDLE = %1, PART_PTR = @0x%2, PART_LEN = %3 )")
                 .arg(hSession).arg((quintptr) pPart).arg( ulPartLen );
@@ -1387,7 +1393,7 @@ int CryptokiAPI::EncryptInit( CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMech
     return rv;
 }
 
-int CryptokiAPI::EncryptUpdate( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen, CK_BYTE_PTR pEncPart, CK_ULONG_PTR pulEncPartLen )
+int CryptokiAPI::EncryptUpdate( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen, CK_BYTE_PTR pEncPart, CK_ULONG_PTR pulEncPartLen, bool bLog )
 {
     int rv = 0;
     qint64 ms = 0;
@@ -1397,6 +1403,8 @@ int CryptokiAPI::EncryptUpdate( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, C
     timer.start();
     rv = p11_ctx_->p11FuncList->C_EncryptUpdate( hSession, pPart, ulPartLen, pEncPart, pulEncPartLen );
     ms = timer.elapsed();
+
+    if( bLog == false ) return rv;
 
     strIn = QString( "C_EncryptUpdate( SESSION_HANDLE = %1, PART_PTR = @0x%2, PART_LEN = %3, ENC_PART_PTR = @0x%4, ENC_PART_LEN_PTR = @0x%5 )")
                 .arg(hSession).arg((quintptr) pPart).arg( ulPartLen).arg((quintptr) pEncPart).arg((quintptr) pulEncPartLen );
@@ -1501,7 +1509,7 @@ int CryptokiAPI::DecryptInit( CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMech
     return rv;
 }
 
-int CryptokiAPI::DecryptUpdate( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pEncPart, CK_ULONG ulEncPartLen, CK_BYTE_PTR pPart, CK_ULONG_PTR pulPartLen )
+int CryptokiAPI::DecryptUpdate( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pEncPart, CK_ULONG ulEncPartLen, CK_BYTE_PTR pPart, CK_ULONG_PTR pulPartLen, bool bLog )
 {
     int rv = 0;
     qint64 ms = 0;
@@ -1511,6 +1519,8 @@ int CryptokiAPI::DecryptUpdate( CK_SESSION_HANDLE hSession, CK_BYTE_PTR pEncPart
     timer.start();
     rv = p11_ctx_->p11FuncList->C_DecryptUpdate( hSession, pEncPart, ulEncPartLen, pPart, pulPartLen );
     ms = timer.elapsed();
+
+    if( bLog == false ) return rv;
 
     strIn = QString( "C_DecryptUpdate( SESSION_HANDLE = %1, ENC_PART_PTR = @0x%2, ENC_PART_LEN = %3, PART_PTR = @0x%4, PART_LEN_PTR = @0x%5 )")
                 .arg(hSession).arg((quintptr) pEncPart).arg( ulEncPartLen ).arg((quintptr) pPart).arg((quintptr) pulPartLen );

@@ -58,6 +58,7 @@ private:
     long getSessionHandle();
 
     DigestThread* thread_;
+    int update_cnt_;
 };
 
 #endif // DIGEST_DLG_H

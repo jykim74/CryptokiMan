@@ -219,6 +219,10 @@ add_executable(${PROJECT_NAME}
     CryptokiMan.pro
     edit_attribute_list_dlg.h edit_attribute_list_dlg.cpp edit_attribute_list_dlg.ui
     digest_thread.h digest_thread.cpp
+    sign_thread.h sign_thread.cpp
+    verify_thread.h verify_thread.cpp
+    encrypt_thread.h encrypt_thread.cpp
+    decrypt_thread.h decrypt_thread.cpp
 )
 
 target_link_options( ${PROJECT_NAME} PRIVATE -mwindows -MD )

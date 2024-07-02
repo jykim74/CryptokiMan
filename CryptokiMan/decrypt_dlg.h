@@ -9,6 +9,8 @@
 #include <QDialog>
 #include "ui_decrypt_dlg.h"
 
+class DecryptThread;
+
 namespace Ui {
 class DecryptDlg;
 }
@@ -51,6 +53,10 @@ private slots:
     void clickFindSrcFile();
     void clickFindDstFile();
 
+    void runFileDecryptThread();
+    void startTask();
+    void onTaskFinished();
+    void onTaskUpdate( int nUpdate );
 private:
     void initialize();
     void appendStatusLabel( const QString& strLabel );
@@ -60,6 +66,8 @@ private:
 
     int slot_index_ = -1;
     long session_ = -1;
+    DecryptThread* thread_;
+    int update_cnt_;
 };
 
 #endif // DECRYPT_DLG_H

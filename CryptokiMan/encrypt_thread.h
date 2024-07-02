@@ -1,16 +1,18 @@
-#ifndef DIGESTTHREAD_H
-#define DIGESTTHREAD_H
+#ifndef ENCRYPTTHREAD_H
+#define ENCRYPTTHREAD_H
 
 #include <QThread>
 
-class DigestThread : public QThread
+class EncryptThread : public QThread
 {
     Q_OBJECT
 public:
-    DigestThread();
-    ~DigestThread();
+    EncryptThread();
+    ~EncryptThread();
+
     void setSession( long uSession );
     void setSrcFile( const QString strSrcFile );
+    void setDstFile( const QString strDstFile );
 
 signals:
     void taskFinished();
@@ -20,6 +22,7 @@ protected:
     void run() override;
     long session_;
     QString src_file_;
+    QString dst_file_;
 };
 
-#endif // DIGESTTHREAD_H
+#endif // ENCRYPTTHREAD_H

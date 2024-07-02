@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>491</width>
-    <height>526</height>
+    <height>547</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -990,13 +990,6 @@
        </item>
        <item>
         <layout class="QGridLayout" name="gridLayout_11">
-         <item row="0" column="1">
-          <widget class="QProgressBar" name="mSignProgBar">
-           <property name="value">
-            <number>0</number>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label_15">
            <property name="minimumSize">
@@ -1016,16 +1009,17 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="2">
-          <widget class="QCheckBox" name="mWriteLogCheck">
-           <property name="minimumSize">
-            <size>
-             <width>80</width>
-             <height>0</height>
-            </size>
+         <item row="0" column="1">
+          <widget class="QProgressBar" name="mSignProgBar">
+           <property name="value">
+            <number>0</number>
            </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="mSignThreadBtn">
            <property name="text">
-            <string>Write log</string>
+            <string>SignThread</string>
            </property>
           </widget>
          </item>
@@ -1300,7 +1294,6 @@
   <tabstop>mSrcFileSizeText</tabstop>
   <tabstop>mFileTotalSizeText</tabstop>
   <tabstop>mFileReadSizeText</tabstop>
-  <tabstop>mWriteLogCheck</tabstop>
   <tabstop>mOutputLenText</tabstop>
   <tabstop>mOutputText</tabstop>
   <tabstop>mInitBtn</tabstop>

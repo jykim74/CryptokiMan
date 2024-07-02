@@ -9,6 +9,8 @@
 #include <QDialog>
 #include "ui_verify_dlg.h"
 
+class VerifyThread;
+
 namespace Ui {
 class VerifyDlg;
 }
@@ -49,6 +51,10 @@ private slots:
     void clickSignClear();
     void clickFindSrcFile();
 
+    void runFileVerifyThread();
+    void startTask();
+    void onTaskFinished();
+    void onTaskUpdate( int nUpdate );
 private:
     void initialize();
     void appendStatusLabel( const QString& strLabel );
@@ -56,6 +62,8 @@ private:
 
     int slot_index_;
     long session_;
+    VerifyThread* thread_;
+    int update_cnt_;
 };
 
 #endif // VERIFY_DLG_H

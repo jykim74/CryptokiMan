@@ -15,6 +15,7 @@
 #include "common.h"
 #include "settings_mgr.h"
 #include "mech_mgr.h"
+#include "encrypt_thread.h"
 
 static QStringList sKeyList = { "SECRET", "PUBLIC" };
 
@@ -83,6 +84,7 @@ void EncryptDlg::initUI()
     connect( mOutputClearBtn, SIGNAL(clicked()), this, SLOT(clickOutputClear()));
     connect( mFindSrcFileBtn, SIGNAL(clicked()), this, SLOT(clickFindSrcFile()));
     connect( mFindDstFileBtn, SIGNAL(clicked()), this, SLOT(clickFindDstFile()));
+    connect( mEncThreadBtn, SIGNAL(clicked()), this, SLOT(runFileEncryptThread()));
 
     connect( mMechCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(mechChanged(int)));
 
@@ -417,9 +419,8 @@ void EncryptDlg::clickFindDstFile()
 int EncryptDlg::clickInit()
 {
     int rv = -1;
-
     CK_MECHANISM sMech;
-
+    update_cnt_ = 0;
 
     long hObject = mObjectText->text().toLong();
 #if 0
@@ -644,7 +645,7 @@ void EncryptDlg::runFileEncrypt()
     int nLeft = 0;
     int nOffset = 0;
     int nPercent = 0;
-    int nUpdateCnt = 0;
+
     QString strSrcFile = mSrcFileText->text();
     BIN binPart = {0,0};
     BIN binDst = {0,0};
@@ -697,11 +698,6 @@ void EncryptDlg::runFileEncrypt()
         nRead = JS_BIN_fileReadPartFP( fp, nOffset, nPartSize, &binPart );
         if( nRead <= 0 ) break;
 
-        if( mWriteLogCheck->isChecked() )
-        {
-            manApplet->log( QString( "Read[%1:%2] %3").arg( nOffset ).arg( nRead ).arg( getHexString(binPart.pVal, binPart.nLen)));
-        }
-
         uEncPartLen = binPart.nLen + 64;
 
         pEncPart = (unsigned char *)JS_malloc( binPart.nLen + 64 );
@@ -718,7 +714,7 @@ void EncryptDlg::runFileEncrypt()
 
 
 
-        nUpdateCnt++;
+        update_cnt_++;
 
         if( uEncPartLen > 0 )
         {
@@ -726,11 +722,6 @@ void EncryptDlg::runFileEncrypt()
             JS_free( pEncPart );
             pEncPart = NULL;
             uEncPartLen = 0;
-        }
-
-        if( mWriteLogCheck->isChecked() )
-        {
-            manApplet->log( QString( "Enc[%1:%2] %3").arg( nOffset ).arg( binDst.nLen ).arg( getHexString(binDst.pVal, binDst.nLen)));
         }
 
         if( binDst.nLen > 0 )
@@ -759,7 +750,7 @@ void EncryptDlg::runFileEncrypt()
 
         if( rv == 0 )
         {
-            QString strMsg = QString( "|Update X %1").arg( nUpdateCnt );
+            QString strMsg = QString( "|Update X %1").arg( update_cnt_ );
             appendStatusLabel( strMsg );
             clickFinal();
 
@@ -782,4 +773,95 @@ end :
 void EncryptDlg::clickClose()
 {
     this->hide();
+}
+
+void EncryptDlg::runFileEncryptThread()
+{
+    int ret = 0;
+
+    if( mInitAutoCheck->isChecked() )
+    {
+        ret = clickInit();
+        if( ret != CKR_OK )
+        {
+            manApplet->warningBox( tr("failed to initialize digest [%1]").arg(ret), this );
+            return;
+        }
+    }
+
+    startTask();
+}
+
+void EncryptDlg::startTask()
+{
+    if( thread_ != nullptr ) delete thread_;
+
+    thread_ = new EncryptThread;
+
+    QString strSrcFile = mSrcFileText->text();
+
+    if( strSrcFile.length() < 1)
+    {
+        manApplet->warningBox( tr( "Find source file"), this );
+        return;
+    }
+
+    QString strDstFile = mDstFileText->text();
+
+    if( QFile::exists( strDstFile ) )
+    {
+        QString strMsg = tr( "The target file[%1] is already exist.\nDo you want to delete the file and continue?" ).arg( strDstFile );
+        bool bVal = manApplet->yesOrNoBox( strMsg, this, false );
+
+        if( bVal == true )
+        {
+            QFile::remove( strDstFile );
+        }
+        else
+            return;
+    }
+
+
+    QFileInfo fileInfo;
+    fileInfo.setFile( strSrcFile );
+
+    qint64 fileSize = fileInfo.size();
+
+    mFileTotalSizeText->setText( QString("%1").arg( fileSize ));
+    mFileReadSizeText->setText( "0" );
+
+    connect(thread_, &EncryptThread::taskFinished, this, &EncryptDlg::onTaskFinished);
+    connect( thread_, &EncryptThread::taskUpdate, this, &EncryptDlg::onTaskUpdate);
+
+    thread_->setSession( session_ );
+    thread_->setSrcFile( strSrcFile );
+    thread_->setDstFile( strDstFile );
+    thread_->start();
+}
+
+void EncryptDlg::onTaskFinished()
+{
+    manApplet->log("Task finished");
+
+
+    QString strStatus = QString( "|Update X %1").arg( update_cnt_ );
+    appendStatusLabel( strStatus );
+
+    clickFinal();
+
+    thread_->quit();
+    thread_->wait();
+    thread_->deleteLater();
+    thread_ = nullptr;
+}
+
+void EncryptDlg::onTaskUpdate( int nUpdate )
+{
+    manApplet->log( QString("Update: %1").arg( nUpdate ));
+    int nFileSize = mFileTotalSizeText->text().toInt();
+    int nPercent = (nUpdate * 100) / nFileSize;
+    update_cnt_++;
+
+    mFileReadSizeText->setText( QString("%1").arg( nUpdate ));
+    mEncProgBar->setValue( nPercent );
 }
