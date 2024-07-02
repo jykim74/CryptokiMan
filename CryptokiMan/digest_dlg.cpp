@@ -526,7 +526,7 @@ void DigestDlg::clickOutputClear()
 
 void DigestDlg::clickFindSrcFile()
 {
-    QString strPath;
+    QString strPath = mSrcFileText->text();
     QString strSrcFile = findFile( this, JS_FILE_TYPE_ALL, strPath );
 
     if( strSrcFile.length() > 0 )

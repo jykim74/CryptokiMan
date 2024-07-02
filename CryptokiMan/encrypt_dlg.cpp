@@ -789,7 +789,7 @@ void EncryptDlg::runFileEncryptThread()
         ret = clickInit();
         if( ret != CKR_OK )
         {
-            manApplet->warningBox( tr("failed to initialize digest [%1]").arg(ret), this );
+            manApplet->warningBox( tr("failed to initialize [%1]").arg(ret), this );
             return;
         }
     }

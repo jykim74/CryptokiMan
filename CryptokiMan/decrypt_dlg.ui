@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>601</width>
-    <height>629</height>
+    <height>775</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1147,7 +1147,7 @@
          <item row="0" column="2">
           <widget class="QPushButton" name="mDecThreadBtn">
            <property name="text">
-            <string>DecThread</string>
+            <string>RunThread</string>
            </property>
           </widget>
          </item>

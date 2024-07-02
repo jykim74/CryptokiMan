@@ -631,7 +631,7 @@ void SignDlg::clickOutputClear()
 
 void SignDlg::clickFindSrcFile()
 {
-    QString strPath;
+    QString strPath = mSrcFileText->text();
     QString strSrcFile = findFile( this, JS_FILE_TYPE_ALL, strPath );
 
     if( strSrcFile.length() > 0 )
@@ -663,7 +663,7 @@ void SignDlg::runFileSignThread()
         ret = clickInit();
         if( ret != CKR_OK )
         {
-            manApplet->warningBox( tr("failed to initialize digest [%1]").arg(ret), this );
+            manApplet->warningBox( tr("failed to initialize [%1]").arg(ret), this );
             return;
         }
     }
