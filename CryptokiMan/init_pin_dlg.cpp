@@ -15,6 +15,11 @@ InitPinDlg::InitPinDlg(QWidget *parent) :
     setupUi(this);
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
     initialize();
+
+#if defined(Q_OS_MAC)
+    layout()->setSpacing(5);
+#endif
+    resize(width(), minimumSizeHint().height());
 }
 
 InitPinDlg::~InitPinDlg()

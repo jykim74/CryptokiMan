@@ -48,6 +48,11 @@ AboutDlg::AboutDlg(QWidget *parent) :
 #endif
 
     mCloseBtn->setDefault(true);
+
+#if defined(Q_OS_MAC)
+    layout()->setSpacing(5);
+#endif
+    resize(width(), minimumSizeHint().height());
 }
 
 AboutDlg::~AboutDlg()

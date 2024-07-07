@@ -33,6 +33,11 @@ CreateKeyDlg::CreateKeyDlg(QWidget *parent) :
     initialize();
     setDefaults();
     tabWidget->setCurrentIndex(0);
+
+#if defined(Q_OS_MAC)
+    layout()->setSpacing(5);
+#endif
+    resize(width(), minimumSizeHint().height());
 }
 
 CreateKeyDlg::~CreateKeyDlg()

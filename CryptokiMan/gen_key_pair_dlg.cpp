@@ -51,8 +51,9 @@ GenKeyPairDlg::GenKeyPairDlg(QWidget *parent) :
     tabWidget->setCurrentIndex(0);
 
 #if defined(Q_OS_MAC)
-    layout()->setSpacing(3);
+    layout()->setSpacing(5);
 #endif
+    resize(width(), minimumSizeHint().height());
 }
 
 GenKeyPairDlg::~GenKeyPairDlg()

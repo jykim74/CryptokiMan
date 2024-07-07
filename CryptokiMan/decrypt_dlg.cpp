@@ -32,9 +32,11 @@ DecryptDlg::DecryptDlg(QWidget *parent) :
 
     setupUi(this);
     initUI();
+
 #if defined(Q_OS_MAC)
-    layout()->setSpacing(3);
+    layout()->setSpacing(5);
 #endif
+    resize(width(), minimumSizeHint().height());
 }
 
 DecryptDlg::~DecryptDlg()

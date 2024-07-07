@@ -30,6 +30,11 @@ DelObjectDlg::DelObjectDlg(QWidget *parent) :
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(close()));
     connect( mDeleteBtn, SIGNAL(clicked()), this, SLOT(deleteObj()));
     connect( mDeleteAllBtn, SIGNAL(clicked()), this, SLOT(deleteAllObj()));
+
+#if defined(Q_OS_MAC)
+    layout()->setSpacing(5);
+#endif
+    resize(width(), minimumSizeHint().height());
 }
 
 DelObjectDlg::~DelObjectDlg()

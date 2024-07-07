@@ -29,6 +29,11 @@ WrapKeyDlg::WrapKeyDlg(QWidget *parent) :
     connect( mWrappingParamText, SIGNAL(textChanged(const QString&)), this, SLOT(changeWrappingParam(const QString&)));
 
     initUI();
+
+#if defined(Q_OS_MAC)
+    layout()->setSpacing(5);
+#endif
+    resize(width(), minimumSizeHint().height());
 }
 
 WrapKeyDlg::~WrapKeyDlg()

@@ -23,6 +23,11 @@ OperStateDlg::OperStateDlg(QWidget *parent) :
     connect( mOperationStateText, SIGNAL(textChanged()), this, SLOT(changeOperationState()));
 
     initialize();
+
+#if defined(Q_OS_MAC)
+    layout()->setSpacing(5);
+#endif
+    resize(width(), minimumSizeHint().height());
 }
 
 OperStateDlg::~OperStateDlg()

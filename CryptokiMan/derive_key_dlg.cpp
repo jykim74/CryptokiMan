@@ -50,6 +50,11 @@ DeriveKeyDlg::DeriveKeyDlg(QWidget *parent) :
 
     initialize();
     setDefaults();
+
+#if defined(Q_OS_MAC)
+    layout()->setSpacing(5);
+#endif
+    resize(width(), minimumSizeHint().height());
 }
 
 DeriveKeyDlg::~DeriveKeyDlg()

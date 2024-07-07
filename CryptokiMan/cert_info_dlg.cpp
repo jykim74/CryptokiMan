@@ -60,8 +60,12 @@ QTableWidgetItem* CertInfoDlg::getExtNameItem( const QString strSN )
     else
         item = new QTableWidgetItem( strSN );
 
-
     return item;
+
+#if defined(Q_OS_MAC)
+    layout()->setSpacing(5);
+#endif
+    resize(width(), minimumSizeHint().height());
 }
 
 
