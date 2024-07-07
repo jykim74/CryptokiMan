@@ -86,7 +86,6 @@ void EncryptDlg::initUI()
     connect( mOutputClearBtn, SIGNAL(clicked()), this, SLOT(clickOutputClear()));
     connect( mFindSrcFileBtn, SIGNAL(clicked()), this, SLOT(clickFindSrcFile()));
     connect( mFindDstFileBtn, SIGNAL(clicked()), this, SLOT(clickFindDstFile()));
-    connect( mEncThreadBtn, SIGNAL(clicked()), this, SLOT(runFileEncryptThread()));
 
     connect( mMechCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(mechChanged(int)));
 
@@ -580,7 +579,10 @@ void EncryptDlg::clickEncrypt()
             return;
         }
 
-        runFileEncrypt();
+        if( mRunThreadCheck->isChecked() )
+            runFileEncryptThread();
+        else
+            runFileEncrypt();
     }
 }
 

@@ -86,7 +86,6 @@ void SignDlg::initUI()
     connect( mInputClearBtn, SIGNAL(clicked()), this, SLOT(clickInputClear()));
     connect( mOutputClearBtn, SIGNAL(clicked()), this, SLOT(clickOutputClear()));
     connect( mFindSrcFileBtn, SIGNAL(clicked()), this, SLOT(clickFindSrcFile()));
-    connect( mSignThreadBtn, SIGNAL(clicked()), this, SLOT(runFileSignThread()));
 
     initialize();
     keyTypeChanged(0);
@@ -384,7 +383,10 @@ void SignDlg::clickSign()
             return;
         }
 
-        runFileSign();
+        if( mRunThreadCheck->isChecked() )
+            runFileSignThread();
+        else
+            runFileSign();
     }
 }
 

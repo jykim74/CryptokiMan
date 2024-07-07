@@ -88,7 +88,6 @@ void DecryptDlg::initUI()
     connect( mOutputClearBtn, SIGNAL(clicked()), this, SLOT(clickOutputClear()));
     connect( mFindSrcFileBtn, SIGNAL(clicked()), this, SLOT(clickFindSrcFile()));
     connect( mFindDstFileBtn, SIGNAL(clicked()), this, SLOT(clickFindDstFile()));
-    connect( mDecThreadBtn, SIGNAL(clicked()), this, SLOT(runFileDecryptThread()));
 
     connect( mMechCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(mechChanged(int)));
 
@@ -583,7 +582,10 @@ void DecryptDlg::clickDecrypt()
             return;
         }
 
-        runFileDecrypt();
+        if( mRunThreadCheck->isChecked() )
+            runFileDecryptThread();
+        else
+            runFileDecrypt();
     }
 }
 

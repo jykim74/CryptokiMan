@@ -87,7 +87,6 @@ void VerifyDlg::initUI()
     connect( mInputClearBtn, SIGNAL(clicked()), this, SLOT(clickInputClear()));
     connect( mSignClearBtn, SIGNAL(clicked()), this, SLOT(clickSignClear()));
     connect( mFindSrcFileBtn, SIGNAL(clicked()), this, SLOT(clickFindSrcFile()));
-    connect( mVerifyThreadBtn, SIGNAL(clicked()), this, SLOT(runFileVerifyThread()));
 
 
     initialize();
@@ -382,7 +381,10 @@ void VerifyDlg::clickVerify()
             return;
         }
 
-        runFileVerify();
+        if( mRunThreadCheck->isChecked() )
+            runFileVerifyThread();
+        else
+            runFileVerify();
     }
 }
 

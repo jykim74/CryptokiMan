@@ -1118,13 +1118,6 @@
        </item>
        <item>
         <layout class="QGridLayout" name="gridLayout_12">
-         <item row="0" column="1">
-          <widget class="QProgressBar" name="mDecProgBar">
-           <property name="value">
-            <number>0</number>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label_15">
            <property name="minimumSize">
@@ -1144,8 +1137,15 @@
            </property>
           </widget>
          </item>
+         <item row="0" column="1">
+          <widget class="QProgressBar" name="mDecProgBar">
+           <property name="value">
+            <number>0</number>
+           </property>
+          </widget>
+         </item>
          <item row="0" column="2">
-          <widget class="QPushButton" name="mDecThreadBtn">
+          <widget class="QCheckBox" name="mRunThreadCheck">
            <property name="text">
             <string>RunThread</string>
            </property>

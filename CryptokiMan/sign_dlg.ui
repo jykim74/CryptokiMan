@@ -1017,7 +1017,7 @@
           </widget>
          </item>
          <item row="0" column="2">
-          <widget class="QPushButton" name="mSignThreadBtn">
+          <widget class="QCheckBox" name="mRunThreadCheck">
            <property name="text">
             <string>RunThread</string>
            </property>
