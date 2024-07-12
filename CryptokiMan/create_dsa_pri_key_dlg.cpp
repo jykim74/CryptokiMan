@@ -617,26 +617,26 @@ void CreateDSAPriKeyDlg::clickEndDate()
 
 void CreateDSAPriKeyDlg::changeP( const QString& text )
 {
-    int nLen = getDataLen( DATA_HEX, text );
-    mPLenText->setText( QString("%1").arg(nLen));
+    QString strLen = getDataLenString( DATA_HEX, text );
+    mPLenText->setText( QString("%1").arg(strLen));
 }
 
 void CreateDSAPriKeyDlg::changeQ( const QString& text )
 {
-    int nLen = getDataLen( DATA_HEX, text );
-    mQLenText->setText( QString("%1").arg(nLen));
+    QString strLen = getDataLenString( DATA_HEX, text );
+    mQLenText->setText( QString("%1").arg(strLen));
 }
 
 void CreateDSAPriKeyDlg::changeG( const QString& text )
 {
-    int nLen = getDataLen( DATA_HEX, text );
-    mGLenText->setText( QString("%1").arg(nLen));
+    QString strLen = getDataLenString( DATA_HEX, text );
+    mGLenText->setText( QString("%1").arg(strLen));
 }
 
 void CreateDSAPriKeyDlg::changeKeyValue( const QString& text )
 {
-    int nLen = getDataLen( DATA_HEX, text );
-    mKeyValueLenText->setText( QString("%1").arg( nLen ));
+    QString strLen = getDataLenString( DATA_HEX, text );
+    mKeyValueLenText->setText( QString("%1").arg( strLen ));
 }
 
 void CreateDSAPriKeyDlg::setDefaults()

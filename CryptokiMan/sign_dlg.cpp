@@ -246,22 +246,22 @@ void SignDlg::changeInput()
     else if( mInputBase64Radio->isChecked() )
         nType = DATA_BASE64;
 
-    int nLen = getDataLen( nType, mInputText->toPlainText() );
+    QString strLen = getDataLenString( nType, mInputText->toPlainText() );
 
-    mInputLenText->setText( QString("%1").arg( nLen ));
+    mInputLenText->setText( QString("%1").arg( strLen ));
 }
 
 void SignDlg::changeOutput()
 {
-    int nLen = getDataLen( DATA_HEX, mOutputText->toPlainText() );
+    QString strLen = getDataLenString( DATA_HEX, mOutputText->toPlainText() );
 
-    mOutputLenText->setText( QString("%1").arg( nLen ));
+    mOutputLenText->setText( QString("%1").arg( strLen ));
 }
 
 void SignDlg::changeParam( const QString text )
 {
-    int nLen = getDataLen( DATA_HEX, mParamText->text() );
-    mParamLenText->setText( QString("%1").arg( nLen ));
+    QString strLen = getDataLenString( DATA_HEX, mParamText->text() );
+    mParamLenText->setText( QString("%1").arg( strLen ));
 }
 
 void SignDlg::labelChanged( int index )

@@ -549,8 +549,8 @@ void CreateRSAPubKeyDlg::clickEndDate()
 
 void CreateRSAPubKeyDlg::changeModules( const QString& text )
 {
-    int nLen = getDataLen( DATA_HEX, text );
-    mModulesLenText->setText( QString("%1").arg(nLen));
+    QString strLen = getDataLenString( DATA_HEX, text );
+    mModulesLenText->setText( QString("%1").arg(strLen));
 }
 
 void CreateRSAPubKeyDlg::setDefaults()

@@ -644,16 +644,14 @@ void DeriveKeyDlg::changeMechanism( int index )
 
 void DeriveKeyDlg::changeParam1( const QString& text )
 {
-    int nLen = text.length() / 2;
-
-    mParam1LenText->setText( QString("%1").arg( nLen ));
+    QString strLen = getDataLenString( DATA_HEX, text );
+    mParam1LenText->setText( QString("%1").arg( strLen ));
 }
 
 void DeriveKeyDlg::changeParam2( const QString& text )
 {
-    int nLen = text.length() / 2;
-
-    mParam2LenText->setText( QString("%1").arg( nLen ));
+    QString strLen = getDataLenString( DATA_HEX, text );
+    mParam2LenText->setText( QString("%1").arg( strLen ));
 }
 
 void DeriveKeyDlg::setMechanism( void *pMech )

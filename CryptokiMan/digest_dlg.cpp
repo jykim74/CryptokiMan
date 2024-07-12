@@ -509,15 +509,15 @@ void DigestDlg::clickClose()
 void DigestDlg::inputChanged()
 {
     QString strInput = mInputText->toPlainText();
-    int nLen = getDataLen( mInputCombo->currentText(), strInput );
-    mInputLenText->setText( QString("%1").arg( nLen ));
+    QString strLen = getDataLenString( mInputCombo->currentText(), strInput );
+    mInputLenText->setText( QString("%1").arg( strLen ));
 }
 
 void DigestDlg::outputChanged()
 {
     QString strOutput = mOutputText->text();
-    int nLen = getDataLen( DATA_HEX, strOutput );
-    mOutputLenText->setText( QString("%1").arg(nLen));
+    QString strLen = getDataLenString( DATA_HEX, strOutput );
+    mOutputLenText->setText( QString("%1").arg(strLen));
 }
 
 void DigestDlg::clickInputClear()

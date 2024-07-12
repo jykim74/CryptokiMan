@@ -584,26 +584,26 @@ void CreateDSAPubKeyDlg::clickEndDate()
 
 void CreateDSAPubKeyDlg::changeP( const QString& text )
 {
-    int nLen = getDataLen( DATA_HEX, text );
-    mPLenText->setText( QString("%1").arg(nLen));
+    QString strLen = getDataLenString( DATA_HEX, text );
+    mPLenText->setText( QString("%1").arg(strLen));
 }
 
 void CreateDSAPubKeyDlg::changeQ( const QString& text )
 {
-    int nLen = getDataLen( DATA_HEX, text );
-    mQLenText->setText( QString("%1").arg(nLen));
+    QString strLen = getDataLenString( DATA_HEX, text );
+    mQLenText->setText( QString("%1").arg(strLen));
 }
 
 void CreateDSAPubKeyDlg::changeG( const QString& text )
 {
-    int nLen = getDataLen( DATA_HEX, text );
-    mGLenText->setText( QString("%1").arg(nLen));
+    QString strLen = getDataLenString( DATA_HEX, text );
+    mGLenText->setText( QString("%1").arg(strLen));
 }
 
 void CreateDSAPubKeyDlg::changePublic( const QString& text )
 {
-    int nLen = getDataLen( DATA_HEX, text );
-    mPublicLenText->setText( QString("%1").arg(nLen));
+    QString strLen = getDataLenString( DATA_HEX, text );
+    mPublicLenText->setText( QString("%1").arg(strLen));
 }
 
 void CreateDSAPubKeyDlg::setDefaults()

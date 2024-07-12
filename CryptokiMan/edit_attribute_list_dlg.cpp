@@ -208,26 +208,26 @@ void EditAttributeListDlg::objectTypeChanged( int type )
 
 void EditAttributeListDlg::changeLabel( const QString& text )
 {
-    int len = text.length() / 2;
-    mLabelLenText->setText( QString("%1").arg( len ));
+    QString strLen = getDataLenString( DATA_HEX, text );
+    mLabelLenText->setText( QString("%1").arg( strLen ));
 }
 
 void EditAttributeListDlg::changeID( const QString& text )
 {
-    int len = text.length() / 2;
-    mIDLenText->setText( QString("%1").arg( len ));
+    QString strLen = getDataLenString( DATA_HEX, text );
+    mIDLenText->setText( QString("%1").arg( strLen ));
 }
 
 void EditAttributeListDlg::changeApplication( const QString& text )
 {
-    int len = text.length() / 2;
-    mApplicationLenText->setText( QString("%1").arg( len ));
+    QString strLen = getDataLenString( DATA_HEX, text );
+    mApplicationLenText->setText( QString("%1").arg( strLen ));
 }
 
 void EditAttributeListDlg::changeObjectID( const QString& text )
 {
-    int len = text.length() / 2;
-    mObjectIDLenText->setText( QString("%1").arg( len ));
+    QString strLen = getDataLenString( DATA_HEX, text );
+    mObjectIDLenText->setText( QString("%1").arg( strLen ));
 }
 
 void EditAttributeListDlg::clickLabel()

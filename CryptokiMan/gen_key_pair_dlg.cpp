@@ -1046,22 +1046,22 @@ void GenKeyPairDlg::clickClearDSAParam()
 void GenKeyPairDlg::changeDSA_P()
 {
     QString strP = mDSA_PText->toPlainText();
-    int nLen = getDataLen( DATA_HEX, strP );
-    mDSA_PLenText->setText( QString("%1").arg(nLen));
+    QString strLen = getDataLenString( DATA_HEX, strP );
+    mDSA_PLenText->setText( QString("%1").arg(strLen));
 }
 
 void GenKeyPairDlg::changeDSA_G()
 {
     QString strG = mDSA_GText->toPlainText();
-    int nLen = getDataLen( DATA_HEX, strG );
-    mDSA_GLenText->setText( QString("%1").arg(nLen));
+    QString strLen = getDataLenString( DATA_HEX, strG );
+    mDSA_GLenText->setText( QString("%1").arg(strLen));
 }
 
 void GenKeyPairDlg::changeDSA_Q()
 {
     QString strQ = mDSA_QText->text();
-    int nLen = getDataLen( DATA_HEX, strQ );
-    mDSA_QLenText->setText( QString("%1").arg(nLen));
+    QString strLen = getDataLenString( DATA_HEX, strQ );
+    mDSA_QLenText->setText( QString("%1").arg(strLen));
 }
 
 void GenKeyPairDlg::setDefaults()

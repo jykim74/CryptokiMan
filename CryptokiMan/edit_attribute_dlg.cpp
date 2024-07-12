@@ -344,6 +344,6 @@ void EditAttributeDlg::changeValue()
 {
     QString strValue = mValueText->toPlainText();
 
-    int nLen = getDataLen( mValueTypeCombo->currentText(), strValue );
-    mValueLenText->setText( QString( "%1" ).arg(nLen) );
+    QString strLen = getDataLenString( mValueTypeCombo->currentText(), strValue );
+    mValueLenText->setText( QString( "%1" ).arg(strLen) );
 }

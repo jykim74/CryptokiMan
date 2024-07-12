@@ -675,50 +675,50 @@ void CreateRSAPriKeyDlg::clickEndDate()
 
 void CreateRSAPriKeyDlg::changeModules( const QString& text )
 {
-    int nLen = getDataLen( DATA_HEX, text );
-    mModulesLenText->setText( QString("%1").arg(nLen));
+    QString strLen = getDataLenString( DATA_HEX, text );
+    mModulesLenText->setText( QString("%1").arg(strLen));
 }
 
 void CreateRSAPriKeyDlg::changePubExponent( const QString& text )
 {
-    int nLen = getDataLen( DATA_HEX, text );
-    mPubExponentLenText->setText( QString("%1").arg(nLen));
+    QString strLen = getDataLenString( DATA_HEX, text );
+    mPubExponentLenText->setText( QString("%1").arg(strLen));
 }
 
 void CreateRSAPriKeyDlg::changePriExponent( const QString& text )
 {
-    int nLen = getDataLen( DATA_HEX, text );
-    mPriExponentLenText->setText( QString("%1").arg(nLen));
+    QString strLen = getDataLenString( DATA_HEX, text );
+    mPriExponentLenText->setText( QString("%1").arg(strLen));
 }
 
 void CreateRSAPriKeyDlg::changePrime1( const QString& text )
 {
-    int nLen = getDataLen( DATA_HEX, text );
-    mPrime1LenText->setText( QString("%1").arg(nLen));
+    QString strLen = getDataLenString( DATA_HEX, text );
+    mPrime1LenText->setText( QString("%1").arg(strLen));
 }
 
 void CreateRSAPriKeyDlg::changePrime2( const QString& text )
 {
-    int nLen = getDataLen( DATA_HEX, text );
-    mPrime2LenText->setText( QString("%1").arg(nLen));
+    QString strLen = getDataLenString( DATA_HEX, text );
+    mPrime2LenText->setText( QString("%1").arg(strLen));
 }
 
 void CreateRSAPriKeyDlg::changeExponent1( const QString& text )
 {
-    int nLen = getDataLen( DATA_HEX, text );
-    mExponent1LenText->setText( QString("%1").arg(nLen));
+    QString strLen = getDataLenString( DATA_HEX, text );
+    mExponent1LenText->setText( QString("%1").arg(strLen));
 }
 
 void CreateRSAPriKeyDlg::changeExponent2( const QString& text )
 {
-    int nLen = getDataLen( DATA_HEX, text );
-    mExponent2LenText->setText( QString("%1").arg(nLen));
+    QString strLen = getDataLenString( DATA_HEX, text );
+    mExponent2LenText->setText( QString("%1").arg(strLen));
 }
 
 void CreateRSAPriKeyDlg::changeCoefficient( const QString& text )
 {
-    int nLen = getDataLen( DATA_HEX, text );
-    mCoefficientLenText->setText( QString("%1").arg(nLen));
+    QString strLen = getDataLenString( DATA_HEX, text );
+    mCoefficientLenText->setText( QString("%1").arg(strLen));
 }
 
 void CreateRSAPriKeyDlg::setDefaults()

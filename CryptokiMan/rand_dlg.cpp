@@ -173,6 +173,6 @@ void RandDlg::changeSeed()
 {
     QString strSeed = mSeedText->toPlainText();
 
-    int nLen = getDataLen( mSeedCombo->currentText(), strSeed );
-    mSeedLenText->setText( QString("%1").arg(nLen ));
+    QString strLen = getDataLenString( mSeedCombo->currentText(), strSeed );
+    mSeedLenText->setText( QString("%1").arg(strLen ));
 }

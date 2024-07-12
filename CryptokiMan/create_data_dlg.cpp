@@ -281,8 +281,8 @@ void CreateDataDlg::clickToken()
 void CreateDataDlg::changeData()
 {
     QString strData = mDataText->toPlainText();
-    int nLen = getDataLen( mDataCombo->currentText(), strData );
-    mDataLenText->setText( QString("%1").arg(nLen));
+    QString strLen = getDataLenString( mDataCombo->currentText(), strData );
+    mDataLenText->setText( QString("%1").arg(strLen));
 }
 
 void CreateDataDlg::setDefaults()

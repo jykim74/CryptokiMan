@@ -822,8 +822,8 @@ void UnwrapKeyDlg::clickEndDate()
 
 void UnwrapKeyDlg::changeUnwrapParam( const QString& text )
 {
-    int nLen = getDataLen( DATA_HEX, text );
-    mUnwrapParamLenText->setText( QString("%1").arg(nLen));
+    QString strLen = getDataLenString( DATA_HEX, text );
+    mUnwrapParamLenText->setText( QString("%1").arg(strLen));
 }
 
 void UnwrapKeyDlg::clickInputClear()
@@ -834,6 +834,6 @@ void UnwrapKeyDlg::clickInputClear()
 void UnwrapKeyDlg::changeInput()
 {
     QString strInput = mInputText->toPlainText();
-    int nLen = getDataLen( DATA_HEX, strInput );
-    mInputLenText->setText( QString("%1").arg(nLen));
+    QString strLen = getDataLenString( DATA_HEX, strInput );
+    mInputLenText->setText( QString("%1").arg(strLen));
 }

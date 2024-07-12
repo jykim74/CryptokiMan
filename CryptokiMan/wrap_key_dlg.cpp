@@ -227,14 +227,14 @@ void WrapKeyDlg::clickClearOutput()
 void WrapKeyDlg::changeOutput()
 {
     QString strOut = mOutputText->toPlainText();
-    int nLen = getDataLen( DATA_HEX, strOut );
-    mOutputLenText->setText( QString("%1").arg(nLen));
+    QString strLen = getDataLenString( DATA_HEX, strOut );
+    mOutputLenText->setText( QString("%1").arg(strLen));
 }
 
 void WrapKeyDlg::changeWrappingParam(const QString& text )
 {
-    int nLen = getDataLen( DATA_HEX, text );
-    mWrappingParamLenText->setText( QString("%1").arg(nLen));
+    QString strLen = getDataLenString( DATA_HEX, text );
+    mWrappingParamLenText->setText( QString("%1").arg(strLen));
 }
 
 void WrapKeyDlg::setWrappingSecretLabel()

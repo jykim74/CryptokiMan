@@ -521,8 +521,8 @@ void CreateKeyDlg::clickEndDate()
 void CreateKeyDlg::changeKey()
 {
     QString strKey = mKeyText->toPlainText();
-    int nLen = getDataLen( mKeyCombo->currentText(), strKey );
-    mKeyLenText->setText( QString("%1").arg(nLen));
+    QString strLen = getDataLenString( mKeyCombo->currentText(), strKey );
+    mKeyLenText->setText( QString("%1").arg(strLen));
 }
 
 void CreateKeyDlg::setDefaults()

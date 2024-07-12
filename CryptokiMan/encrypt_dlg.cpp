@@ -332,29 +332,29 @@ void EncryptDlg::labelChanged( int index )
 void EncryptDlg::inputChanged()
 {
     QString strInput = mInputText->toPlainText();
-    int nLen = getDataLen( mInputCombo->currentText(), strInput );
-    mInputLenText->setText( QString("%1").arg( nLen ));
+    QString strLen = getDataLenString( mInputCombo->currentText(), strInput );
+    mInputLenText->setText( QString("%1").arg( strLen ));
 }
 
 void EncryptDlg::outputChanged()
 {
     QString strOutput = mOutputText->toPlainText();
-    int nLen = getDataLen( DATA_HEX, strOutput );
-    mOutputLenText->setText( QString("%1").arg(nLen));
+    QString strLen = getDataLenString( DATA_HEX, strOutput );
+    mOutputLenText->setText( QString("%1").arg(strLen));
 }
 
 void EncryptDlg::paramChanged()
 {
     QString strParam = mParamText->text();
-    int nLen = getDataLen( DATA_HEX, strParam );
-    mParamLenText->setText( QString("%1").arg(nLen));
+    QString strLen = getDataLenString( DATA_HEX, strParam );
+    mParamLenText->setText( QString("%1").arg(strLen));
 }
 
 void EncryptDlg::aadChanged()
 {
     QString strAAD = mAADText->text();
-    int nLen = getDataLen( mAADTypeCombo->currentText(), strAAD );
-    mAADLenText->setText( QString("%1").arg(nLen));
+    QString strLen = getDataLenString( mAADTypeCombo->currentText(), strAAD );
+    mAADLenText->setText( QString("%1").arg(strLen));
 }
 
 void EncryptDlg::clickInputClear()

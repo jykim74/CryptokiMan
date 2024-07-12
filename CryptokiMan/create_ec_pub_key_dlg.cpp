@@ -567,14 +567,14 @@ void CreateECPubKeyDlg::clickEndDate()
 
 void CreateECPubKeyDlg::changeECPoints( const QString& text )
 {
-    int nLen = getDataLen( DATA_HEX, text );
-    mECPointsLenText->setText( QString("%1").arg(nLen));
+    QString strLen = getDataLenString( DATA_HEX, text );
+    mECPointsLenText->setText( QString("%1").arg(strLen));
 }
 
 void CreateECPubKeyDlg::changeECParams( const QString& text )
 {
-    int nLen = getDataLen( DATA_HEX, text );
-    mECParamsLenText->setText( QString("%1").arg(nLen));
+    QString strLen = getDataLenString( DATA_HEX, text );
+    mECParamsLenText->setText( QString("%1").arg(strLen));
 }
 
 void CreateECPubKeyDlg::setDefaults()

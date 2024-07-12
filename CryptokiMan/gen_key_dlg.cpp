@@ -543,8 +543,8 @@ void GenKeyDlg::changeParam()
 {
     QString strParam = mParamText->toPlainText();
 
-    int nLen = getDataLen( mParamCombo->currentText(), strParam );
-    mParamLenText->setText( QString("%1").arg(nLen));
+    QString strLen = getDataLenString( mParamCombo->currentText(), strParam );
+    mParamLenText->setText( QString("%1").arg(strLen));
 }
 
 void GenKeyDlg::setDefaults()

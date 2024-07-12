@@ -248,8 +248,8 @@ void VerifyDlg::labelChanged( int index )
 
 void VerifyDlg::changeParam(const QString text )
 {
-    int nLen = getDataLen( DATA_HEX, text );
-    mParamLenText->setText( QString("%1").arg( nLen ));
+    QString strLen = getDataLenString( DATA_HEX, text );
+    mParamLenText->setText( QString("%1").arg( strLen ));
 }
 
 void VerifyDlg::changeInput()
@@ -261,16 +261,16 @@ void VerifyDlg::changeInput()
     else if( mInputBase64Radio->isChecked() )
         nType = DATA_BASE64;
 
-    int nLen = getDataLen( nType, mInputText->toPlainText() );
+    QString strLen = getDataLenString( nType, mInputText->toPlainText() );
 
-    mInputLenText->setText( QString("%1").arg( nLen ));
+    mInputLenText->setText( QString("%1").arg( strLen ));
 }
 
 void VerifyDlg::changeSign()
 {
-    int nLen = getDataLen( DATA_HEX, mSignText->toPlainText() );
+    QString strLen = getDataLenString( DATA_HEX, mSignText->toPlainText() );
 
-    mSignLenText->setText( QString("%1").arg( nLen ));
+    mSignLenText->setText( QString("%1").arg( strLen ));
 }
 
 int VerifyDlg::clickInit()
