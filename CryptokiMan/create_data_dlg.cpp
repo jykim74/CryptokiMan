@@ -147,7 +147,7 @@ void CreateDataDlg::accept()
 
     if( !strLabel.isEmpty() )
     {
-        JS_BIN_set( &binLabel, (unsigned char *)strLabel.toStdString().c_str(), strLabel.length() );
+        JS_BIN_set( &binLabel, (unsigned char *)strLabel.toStdString().c_str(), strLabel.toUtf8().length() );
         sTemplate[uCount].type = CKA_LABEL;
         sTemplate[uCount].pValue = binLabel.pVal;
         sTemplate[uCount].ulValueLen = binLabel.nLen;
@@ -159,7 +159,7 @@ void CreateDataDlg::accept()
 
     if( !strApplication.isEmpty() )
     {
-        JS_BIN_set( &binApplication, (unsigned char *)strApplication.toStdString().c_str(), strApplication.length() );
+        JS_BIN_set( &binApplication, (unsigned char *)strApplication.toStdString().c_str(), strApplication.toUtf8().length() );
         sTemplate[uCount].type = CKA_APPLICATION;
         sTemplate[uCount].pValue = binApplication.pVal;
         sTemplate[uCount].ulValueLen = binApplication.nLen;
