@@ -88,4 +88,9 @@ QString getSessionStateString( unsigned long uState );
 
 const QString getItemTypeName( int nType );
 
+bool isValidNumFormat( const QString strInput, int nNumber );
+bool isEmail( const QString strEmail );
+bool isHex( const QString strHexString );
+bool isBase64( const QString strBase64String );
+
 #endif // COMMON_H
