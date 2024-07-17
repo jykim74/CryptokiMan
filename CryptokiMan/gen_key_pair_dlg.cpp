@@ -436,7 +436,7 @@ void GenKeyPairDlg::accept()
     QString strPubLabel = mPubLabelText->text();
     if( !strPubLabel.isEmpty() )
     {
-        JS_BIN_set( &binPubLabel, (unsigned char *)strPubLabel.toStdString().c_str(), strPubLabel.length());
+        JS_BIN_set( &binPubLabel, (unsigned char *)strPubLabel.toStdString().c_str(), strPubLabel.toUtf8().length());
         sPubTemplate[uPubCount].type = CKA_LABEL;
         sPubTemplate[uPubCount].pValue = binPubLabel.pVal;
         sPubTemplate[uPubCount].ulValueLen = binPubLabel.nLen;
@@ -587,7 +587,7 @@ void GenKeyPairDlg::accept()
 
     if( !strPriLabel.isEmpty() )
     {
-        JS_BIN_set( &binPriLabel, (unsigned char *)strPriLabel.toStdString().c_str(), strPriLabel.length());
+        JS_BIN_set( &binPriLabel, (unsigned char *)strPriLabel.toStdString().c_str(), strPriLabel.toUtf8().length());
         sPriTemplate[uPriCount].type = CKA_LABEL;
         sPriTemplate[uPriCount].pValue = binPriLabel.pVal;
         sPriTemplate[uPriCount].ulValueLen = binPriLabel.nLen;
