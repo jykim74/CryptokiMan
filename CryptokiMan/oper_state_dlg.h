@@ -24,6 +24,8 @@ public:
 
 private slots:
     void slotChanged(int index );
+    void clickGetFunctionStatus();
+    void clickCancelFunction();
     void clickGetOperationState();
     void clickSetOperationState();
     void changeOperationState();

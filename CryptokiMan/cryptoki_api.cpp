@@ -1912,6 +1912,54 @@ int CryptokiAPI::WaitForSlotEvent( CK_FLAGS uFlags, CK_SLOT_ID_PTR pSlot, CK_VOI
     return rv;
 }
 
+int CryptokiAPI::GetFunctionStatus( CK_SESSION_HANDLE hSession )
+{
+    int rv = 0;
+    qint64 ms = 0;
+    QElapsedTimer timer;
+    QString strIn;
+
+    timer.start();
+    rv = p11_ctx_->p11FuncList->C_GetFunctionStatus( hSession );
+    ms = timer.elapsed();
+
+    strIn = QString( "C_GetFunctionStatus( SESSION_HANDLE = %1 )").arg( hSession );
+    manApplet->dlog( strIn );
+
+    logResult( "C_GetFunctionStatus", rv, ms );
+
+    if( rv == CKR_OK )
+    {
+
+    }
+
+    return rv;
+}
+
+int CryptokiAPI::CancelFunction( CK_SESSION_HANDLE hSession )
+{
+    int rv = 0;
+    qint64 ms = 0;
+    QElapsedTimer timer;
+    QString strIn;
+
+    timer.start();
+    rv = p11_ctx_->p11FuncList->C_CancelFunction( hSession );
+    ms = timer.elapsed();
+
+    strIn = QString( "C_CancelFunction( SESSION_HANDLE = %1 )").arg( hSession );
+    manApplet->dlog( strIn );
+
+    logResult( "C_CancelFunction", rv, ms );
+
+    if( rv == CKR_OK )
+    {
+
+    }
+
+    return rv;
+}
+
 QString CryptokiAPI::getLastError()
 {
     QString strError = p11_ctx_->sLastLog;

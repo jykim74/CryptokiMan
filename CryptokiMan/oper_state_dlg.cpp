@@ -18,6 +18,8 @@ OperStateDlg::OperStateDlg(QWidget *parent) :
 
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(close()));
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
+    connect( mGetFunctionStatusBtn, SIGNAL(clicked()), this, SLOT(clickGetFunctionStatus()));
+    connect( mCancelFunctionBtn, SIGNAL(clicked()), this, SLOT(clickCancelFunction()));
     connect( mGetOperationStateBtn, SIGNAL(clicked()), this, SLOT(clickGetOperationState()));
     connect( mSetOperationStateBtn, SIGNAL(clicked()), this, SLOT(clickSetOperationState()));
     connect( mOperationStateText, SIGNAL(textChanged()), this, SLOT(changeOperationState()));
@@ -68,6 +70,47 @@ void OperStateDlg::setSelectedSlot(int index)
     if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
 }
 
+void OperStateDlg::clickGetFunctionStatus()
+{
+    int ret = 0;
+    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
+
+    int index = mSlotsCombo->currentIndex();
+    SlotInfo slotInfo = slot_infos.at(index);
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+
+    ret = manApplet->cryptokiAPI()->GetFunctionStatus( hSession );
+    if( ret != CKR_OK )
+    {
+        manApplet->warningBox( tr( "GetFunctionStatus execution failure [%1]").arg(ret));
+        return;
+    }
+    else
+    {
+        manApplet->messageBox( tr("GetFunctionStatus execution successful" ), this );
+    }
+}
+
+void OperStateDlg::clickCancelFunction()
+{
+    int ret = 0;
+    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
+
+    int index = mSlotsCombo->currentIndex();
+    SlotInfo slotInfo = slot_infos.at(index);
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+
+    ret = manApplet->cryptokiAPI()->CancelFunction( hSession );
+    if( ret != CKR_OK )
+    {
+        manApplet->warningBox( tr( "CancelFunction execution failure [%1]").arg(ret));
+        return;
+    }
+    else
+    {
+        manApplet->messageBox( tr("CancelFunction execution successful" ), this );
+    }
+}
 
 void OperStateDlg::clickGetOperationState()
 {

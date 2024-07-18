@@ -145,6 +145,8 @@ public:
                    CK_OBJECT_HANDLE_PTR phKey );
 
     int WaitForSlotEvent( CK_FLAGS uFlags, CK_SLOT_ID_PTR pSlot, CK_VOID_PTR pReserved );
+    int GetFunctionStatus( CK_SESSION_HANDLE hSession );
+    int CancelFunction( CK_SESSION_HANDLE hSession );
 
     QString getLastError();
 
