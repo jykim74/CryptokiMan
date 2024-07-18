@@ -130,11 +130,12 @@ static QStringList kMechDigestList = {
 
 static QStringList kMechEncSymList = {
     "CKM_DES3_ECB", "CKM_DES3_CBC", "CKM_DES3_CBC_PAD",
-    "CKM_AES_ECB", "CKM_AES_CBC","CKM_AES_CBC_PAD", "CKM_AES_CTR", "CKM_AES_GCM"
+    "CKM_AES_ECB", "CKM_AES_CBC","CKM_AES_CBC_PAD", "CKM_AES_CTR",
+    "CKM_AES_OFB", "CKM_AES_CFB128", "CKM_AES_GCM", "CKM_AES_CCM"
 };
 
 static QStringList kMechEncSymNoLicenseList = {
-    "CKM_AES_ECB", "CKM_AES_CBC","CKM_AES_CBC_PAD", "CKM_AES_CTR", "CKM_AES_GCM", "CKM_AES_CCM"
+    "CKM_AES_ECB", "CKM_AES_CBC","CKM_AES_CBC_PAD"
 };
 
 static QStringList kMechEncAsymList = {
