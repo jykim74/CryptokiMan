@@ -61,7 +61,7 @@ void VerifyDlg::initUI()
     }
     else
     {
-        sMechSignSymList = kMechSignSymList;
+        sMechSignSymList = kMechSignSymNoLicenseList;
         sMechSignAsymList = kMechSignAsymNoLicenseList;
     }
 
@@ -94,7 +94,7 @@ void VerifyDlg::initUI()
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);
 #endif
-    resize(width(), minimumSizeHint().height());
+    resize(minimumSizeHint().width(), minimumSizeHint().height());
 }
 
 void VerifyDlg::slotChanged(int index)

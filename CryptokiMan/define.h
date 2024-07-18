@@ -134,7 +134,7 @@ static QStringList kMechEncSymList = {
 };
 
 static QStringList kMechEncSymNoLicenseList = {
-    "CKM_AES_ECB", "CKM_AES_CBC","CKM_AES_CBC_PAD", "CKM_AES_CTR", "CKM_AES_GCM"
+    "CKM_AES_ECB", "CKM_AES_CBC","CKM_AES_CBC_PAD", "CKM_AES_CTR", "CKM_AES_GCM", "CKM_AES_CCM"
 };
 
 static QStringList kMechEncAsymList = {
@@ -154,8 +154,14 @@ static QStringList kMechSignAsymNoLicenseList = {
 };
 
 static QStringList kMechSignSymList = {
+    "CKM_MD5_HMAC", "CKM_SHA_1_HMAC", "CKM_SHA256_HMAC", "CKM_SHA384_HMAC", "CKM_SHA512_HMAC",
+    "CKM_AES_MAC", "CKM_AES_GMAC", "CKM_AES_CMAC"
+};
+
+static QStringList kMechSignSymNoLicenseList = {
     "CKM_MD5_HMAC", "CKM_SHA_1_HMAC", "CKM_SHA256_HMAC", "CKM_SHA384_HMAC", "CKM_SHA512_HMAC"
 };
+
 
 static QStringList kMechWrapSymList = {
     "CKM_AES_KEY_WRAP", "CKM_AES_KEY_WRAP_PAD"

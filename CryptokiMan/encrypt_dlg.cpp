@@ -34,7 +34,7 @@ EncryptDlg::EncryptDlg(QWidget *parent) :
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);
 #endif
-    resize(width(), minimumSizeHint().height());
+    resize(minimumSizeHint().width(), minimumSizeHint().height());
 }
 
 EncryptDlg::~EncryptDlg()
@@ -106,7 +106,7 @@ void EncryptDlg::setMechanism( void *pMech )
 
     pPtr->mechanism = nMech;
 
-    if( nMech == CKM_AES_GCM || nMech == CKM_AES_CCM )
+    if( nMech == CKM_AES_GCM )
     {
         BIN binIV = {0,0};
         BIN binAAD = {0,0};
@@ -131,6 +131,31 @@ void EncryptDlg::setMechanism( void *pMech )
         pPtr->pParameter = gcmParam;
         pPtr->ulParameterLen = sizeof(CK_GCM_PARAMS);
     }
+    else if( nMech == CKM_AES_CCM )
+    {
+        BIN binIV = {0,0};
+        BIN binAAD = {0,0};
+
+        int nReqLen = mReqTagLenText->text().toInt();
+        int nSrcLen = mSrcLengthText->text().toInt();
+
+        QString strIV = mParamText->text();
+        QString strAAD = mAADText->text();
+
+        JS_BIN_decodeHex( strIV.toStdString().c_str(), &binIV );
+        getBINFromString( &binAAD, mAADTypeCombo->currentText(), strAAD );
+
+        CK_CCM_PARAMS_PTR ccmParam;
+        ccmParam->ulDataLen = nSrcLen;
+        ccmParam->pNonce = binIV.pVal;
+        ccmParam->ulNonceLen = binIV.nLen;
+        ccmParam->pAAD = binAAD.pVal;
+        ccmParam->ulAADLen = binAAD.nLen;
+        ccmParam->ulMACLen = nReqLen;
+
+        pPtr->pParameter = ccmParam;
+        pPtr->ulParameterLen = sizeof(CK_CCM_PARAMS);
+    }
     else
     {
         BIN binParam = {0,0};
@@ -146,12 +171,19 @@ void EncryptDlg::freeMechanism( void *pMech )
 {
     CK_MECHANISM_PTR pPtr = (CK_MECHANISM_PTR)pMech;
 
-    if( pPtr->mechanism == CKM_AES_GCM || pPtr->mechanism == CKM_AES_CBC )
+    if( pPtr->mechanism == CKM_AES_GCM )
     {
         CK_GCM_PARAMS_PTR gcmParam = (CK_GCM_PARAMS_PTR)pPtr->pParameter;
 
         if( gcmParam->pIv ) JS_free( gcmParam->pIv );
         if( gcmParam->pAAD ) JS_free( gcmParam->pAAD );
+    }
+    else if( pPtr->mechanism == CKM_AES_CCM )
+    {
+        CK_CCM_PARAMS_PTR ccmParam = (CK_CCM_PARAMS_PTR)pPtr->pParameter;
+
+        if( ccmParam->pNonce ) JS_free( ccmParam->pNonce );
+        if( ccmParam->pAAD ) JS_free( ccmParam->pAAD );
     }
     else
     {
@@ -189,6 +221,17 @@ void EncryptDlg::mechChanged( int index )
     if( strLast == "GCM" || strLast == "CCM" )
     {
         mAEGroup->setEnabled(true);
+
+        if( strLast == "CCM" )
+        {
+            mSrcLengthLabel->setEnabled( true );
+            mSrcLengthText->setEnabled( true );
+        }
+        else
+        {
+            mSrcLengthLabel->setEnabled( false );
+            mSrcLengthText->setEnabled( false );
+        }
     }
     else
     {
