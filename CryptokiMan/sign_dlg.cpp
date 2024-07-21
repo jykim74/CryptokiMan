@@ -30,8 +30,10 @@ SignDlg::SignDlg(QWidget *parent) :
     thread_ = NULL;
 
     setupUi(this);
-
     initUI();
+
+    mSignBtn->setDefault( true );
+
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);
 #endif
@@ -399,6 +401,7 @@ void SignDlg::runDataSign()
     if( strInput.isEmpty() )
     {
         manApplet->warningBox( tr("Please enter your data."), this );
+        mInputText->setFocus();
         return;
     }
 

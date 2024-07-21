@@ -22,6 +22,7 @@ RandDlg::RandDlg(QWidget *parent) :
     layout()->setSpacing(5);
 #endif
     resize(width(), minimumSizeHint().height());
+    mGenRandBtn->setDefault(true);
 }
 
 RandDlg::~RandDlg()
@@ -96,6 +97,7 @@ void RandDlg::clickGenRand()
     if( strLen.isEmpty() )
     {
         manApplet->warningBox( tr("Please enter length"), this );
+        mLengthText->setFocus();
         return;
     }
 
@@ -137,6 +139,7 @@ void RandDlg::clickSeed()
     if( strSeed.isEmpty() )
     {
         manApplet->warningBox(tr("Please enter a seed value."), this );
+        mSeedText->setFocus();
         return;
     }
 

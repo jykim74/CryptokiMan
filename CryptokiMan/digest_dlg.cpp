@@ -31,6 +31,7 @@ DigestDlg::DigestDlg(QWidget *parent) :
 
     initUI();
     initialize();
+    mDigestBtn->setDefault(true);
 
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);
@@ -364,9 +365,11 @@ void DigestDlg::runDataDigest()
     CK_SESSION_HANDLE hSession = getSessionHandle();
 
     QString strInput = mInputText->toPlainText();
+
     if( strInput.isEmpty() )
     {
         manApplet->warningBox( tr("Enter input value"), this );
+        mInputText->setFocus();
         return;
     }
 
