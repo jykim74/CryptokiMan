@@ -37,6 +37,7 @@ FindObjectDlg::FindObjectDlg(QWidget *parent) :
     initialize();
     setDefaults();
     tabWidget->setCurrentIndex(0);
+    mFindObjectsBtn->setDefault(true);
 
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);

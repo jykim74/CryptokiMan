@@ -20,7 +20,7 @@ OpenSessionDlg::OpenSessionDlg(QWidget *parent) :
 
     initialize();
 
-    mOpenSessionBtn->setFocus();
+    mOpenSessionBtn->setDefault(true);
 
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);

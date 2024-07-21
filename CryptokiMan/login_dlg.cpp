@@ -21,6 +21,7 @@ LoginDlg::LoginDlg(QWidget *parent) :
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(close()));
 
     initialize();
+    mLoginBtn->setDefault(true);
 
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);
@@ -57,7 +58,7 @@ void LoginDlg::initialize()
 
     mTypeCombo->addItems( kLoginType );
     mTypeCombo->setCurrentIndex(1);
-    mLoginBtn->setDefault(true);
+
     mPinText->setFocus();
 }
 
@@ -81,6 +82,13 @@ void LoginDlg::clickLogin()
  //   CK_UTF8CHAR *pPin = (CK_UTF8CHAR *)mPinText->text().toUtf8().toStdString().c_str();
     CK_UTF8CHAR *pPin = (CK_UTF8CHAR *)mPinText->text().toStdString().c_str();
     CK_ULONG uPinLen = mPinText->text().length();
+
+    if( mPinText->text().length() < 1 )
+    {
+        manApplet->warningBox( tr( "Enter a PIN" ), this );
+        mPinText->setFocus();
+        return;
+    }
 
     if( mTypeCombo->currentText() == "SO" )
         nType = CKU_SO;
