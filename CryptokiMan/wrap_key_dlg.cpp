@@ -29,6 +29,7 @@ WrapKeyDlg::WrapKeyDlg(QWidget *parent) :
     connect( mWrappingParamText, SIGNAL(textChanged(const QString&)), this, SLOT(changeWrappingParam(const QString&)));
 
     initUI();
+    mWrapKeyBtn->setDefault( true );
 
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);
@@ -112,6 +113,20 @@ void WrapKeyDlg::clickWrapKey()
 
     memset( &sMech, 0x00, sizeof(sMech));
     sMech.mechanism = JS_PKCS11_GetCKMType( mWrappingMechCombo->currentText().toStdString().c_str());
+
+    if( mWrappingObjectText->text().length() < 1 )
+    {
+        manApplet->warningBox( tr( "Select a wrapping object" ), this );
+        mWrappingLabelCombo->setFocus();
+        return;
+    }
+
+    if( mObjectText->text().length() < 1 )
+    {
+        manApplet->warningBox( tr( "Select object" ), this );
+        mLabelCombo->setFocus();
+        return;
+    }
 
     QString strParam = mWrappingParamText->text();
     BIN binParam = {0,0};

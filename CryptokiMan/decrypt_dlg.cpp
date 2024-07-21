@@ -32,6 +32,7 @@ DecryptDlg::DecryptDlg(QWidget *parent) :
 
     setupUi(this);
     initUI();
+    mDecryptBtn->setDefault(true);
 
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);

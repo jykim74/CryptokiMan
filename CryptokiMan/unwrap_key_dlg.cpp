@@ -272,6 +272,7 @@ void UnwrapKeyDlg::accept()
     if( strInput.length() < 1 )
     {
         QMessageBox::warning( this, "UnwrapKey", tr("Enter wraped key value") );
+        mInputText->setFocus();
         return;
     }
 
@@ -290,6 +291,13 @@ void UnwrapKeyDlg::accept()
 
     memset( &sSDate, 0x00, sizeof(sSDate));
     memset( &sEDate, 0x00, sizeof(sEDate));
+
+    if( mUnwrapObjectText->text().length() < 1 )
+    {
+        manApplet->warningBox( tr( "Select unwrap key" ), this );
+        mUnwrapLabelCombo->setFocus();
+        return;
+    }
 
     hUnwrappingKey = mUnwrapObjectText->text().toLong();
 

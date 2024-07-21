@@ -281,6 +281,7 @@ void ImportPFXDlg::accept()
     if( strPFXPath.isEmpty() )
     {
         manApplet->warningBox( tr("Select a pfx file"), this );
+        mPFXPathText->setFocus();
         return;
     }
 

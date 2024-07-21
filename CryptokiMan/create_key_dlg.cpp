@@ -214,6 +214,15 @@ void CreateKeyDlg::accept()
 
     CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
+    QString strKey = mKeyText->toPlainText();
+
+    if( strKey.length() < 1 )
+    {
+        manApplet->warningBox( tr( "Enter a key" ), this );
+        mKeyText->setFocus();
+        return;
+    }
+
     keyType = JS_PKCS11_GetCKKType( mKeyTypeCombo->currentText().toStdString().c_str());
 
 
@@ -259,7 +268,7 @@ void CreateKeyDlg::accept()
         uCount++;
     }
 
-    QString strKey = mKeyText->toPlainText();
+
     BIN binKey = {0,0};
 
     getBINFromString( &binKey, mKeyCombo->currentText(), strKey );

@@ -70,9 +70,16 @@ void InitTokenDlg::accept()
     CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
     int rv = -1;
 
+    QString strLabel = mLabelText->text();
+    if( strLabel.isEmpty() )
+    {
+        manApplet->warningBox( tr("Please enter a label"), this );
+        mLabelText->setFocus();
+
+        return;
+    }
 
     QString strPIN = mPinText->text();
-
     if( strPIN.isEmpty() )
     {
         manApplet->warningBox( tr("Enter a PIN"), this );
@@ -86,15 +93,6 @@ void InitTokenDlg::accept()
     {
         manApplet->warningBox( tr( "PIN and PIN confirm values are different" ), this );
         mPinConfText->setFocus();
-
-        return;
-    }
-
-    QString strLabel = mLabelText->text();
-    if( strLabel.isEmpty() )
-    {
-        manApplet->warningBox( tr("Please enter a label"), this );
-        mLabelText->setFocus();
 
         return;
     }

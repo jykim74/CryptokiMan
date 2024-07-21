@@ -31,6 +31,8 @@ DelObjectDlg::DelObjectDlg(QWidget *parent) :
     connect( mDeleteBtn, SIGNAL(clicked()), this, SLOT(deleteObj()));
     connect( mDeleteAllBtn, SIGNAL(clicked()), this, SLOT(deleteAllObj()));
 
+    mDeleteBtn->setDefault(true);
+
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);
 #endif
@@ -106,6 +108,9 @@ void DelObjectDlg::deleteObj()
     int rv = -1;
 
     long hObject = mObjectText->text().toLong();
+
+    bool bVal = manApplet->yesOrNoBox( tr( "Are you sure to delete %1 object?").arg( hObject ), this, false );
+    if( bVal == false ) return;
 
     rv = manApplet->cryptokiAPI()->DestroyObject( session_, hObject );
 

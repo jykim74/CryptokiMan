@@ -160,6 +160,12 @@ void DeriveKeyDlg::accept()
 
     memset( &sMech, 0x00, sizeof(sMech));
 
+    if( mSrcObjectText->text().length() < 1 )
+    {
+        manApplet->warningBox( tr( "Select a key" ), this );
+        mSrcLabelCombo->setFocus();
+        return;
+    }
 
     hSrcKey = mSrcObjectText->text().toLong();
     setMechanism( &sMech );

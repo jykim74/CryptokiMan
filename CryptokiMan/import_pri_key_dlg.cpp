@@ -232,6 +232,12 @@ int ImportPriKeyDlg::readPrivateKey( BIN *pPriKey )
     BIN binInfo = {0,0};
 
     QString strPriPath = mPathText->text();
+    if( strPriPath.length() < 1 )
+    {
+        manApplet->warningBox( tr( "find a private key" ), this );
+        mPathText->setFocus();
+        return -1;
+    }
 
     ret = JS_BIN_fileReadBER( strPriPath.toLocal8Bit().toStdString().c_str(), &binData );
     if( ret <= 0 )

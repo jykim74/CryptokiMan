@@ -25,6 +25,7 @@ OperStateDlg::OperStateDlg(QWidget *parent) :
     connect( mOperationStateText, SIGNAL(textChanged()), this, SLOT(changeOperationState()));
 
     initialize();
+    mGetOperationStateBtn->setDefault(true);
 
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);
@@ -156,6 +157,12 @@ void OperStateDlg::clickSetOperationState()
     CK_SESSION_HANDLE hAuthKey = mAuthKeyText->text().toLong();
 
     QString strOperState = mOperationStateText->toPlainText();
+    if( strOperState.length() < 1 )
+    {
+        manApplet->warningBox( tr( "Enter a state" ), this );
+        mOperationStateLenText->setFocus();
+        return;
+    }
 
     JS_BIN_decodeHex( strOperState.toStdString().c_str(), &binOperState );
 

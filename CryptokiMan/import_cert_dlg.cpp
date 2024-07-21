@@ -150,6 +150,7 @@ void ImportCertDlg::accept()
     if( strCertPath.isEmpty() )
     {
         manApplet->warningBox( tr("Select a certificate file."), this );
+        mCertPathText->setFocus();
         return;
     }
 

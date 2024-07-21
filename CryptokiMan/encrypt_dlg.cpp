@@ -30,6 +30,7 @@ EncryptDlg::EncryptDlg(QWidget *parent) :
 
     setupUi(this);
     initUI();
+    mEncryptBtn->setDefault(true);
 
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);

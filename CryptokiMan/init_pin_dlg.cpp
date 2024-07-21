@@ -80,6 +80,14 @@ void InitPinDlg::accept()
     }
 
     QString strPinConf = mPinConfText->text();
+    if( strPinConf.length() < 1 )
+    {
+        manApplet->warningBox( tr( "Enter a confirm PIN" ), this );
+        mPinConfText->setFocus();
+
+        return;
+    }
+
     if( strPin != strPinConf )
     {
         manApplet->warningBox( tr( "PIN and PIN confirm values are different" ), this );

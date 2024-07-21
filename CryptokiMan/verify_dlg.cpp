@@ -91,6 +91,8 @@ void VerifyDlg::initUI()
 
     initialize();
     keyTypeChanged(0);
+    mVerifyBtn->setDefault(true);
+
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);
 #endif
@@ -397,6 +399,7 @@ void VerifyDlg::runDataVerify()
     if( strInput.isEmpty() )
     {
         manApplet->warningBox( tr("Please enter your data."), this );
+        mInputText->setFocus();
         return;
     }
 
@@ -404,6 +407,7 @@ void VerifyDlg::runDataVerify()
     if( strSign.isEmpty() )
     {
         manApplet->warningBox(tr( "Please enter signature." ), this );
+        mSignText->setFocus();
         return;
     }
 
