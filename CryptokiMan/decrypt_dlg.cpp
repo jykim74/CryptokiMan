@@ -697,6 +697,13 @@ void DecryptDlg::runFileDecrypt()
     BIN binPart = {0,0};
     BIN binDst = {0,0};
 
+    if( strSrcFile.length() < 1)
+    {
+        manApplet->warningBox( tr( "Find source file"), this );
+        mSrcFileText->setFocus();
+        return;
+    }
+
     QFileInfo fileInfo;
     fileInfo.setFile( strSrcFile );
 
@@ -708,6 +715,12 @@ void DecryptDlg::runFileDecrypt()
 
     nLeft = fileSize;
     QString strDstFile = mDstFileText->text();
+    if( strDstFile.length() < 1 )
+    {
+        manApplet->warningBox( tr( "Find destination file"), this );
+        mDstFileText->setFocus();
+        return;
+    }
 
     if( QFile::exists( strDstFile ) )
     {
@@ -849,10 +862,17 @@ void DecryptDlg::startTask()
     if( strSrcFile.length() < 1)
     {
         manApplet->warningBox( tr( "Find source file"), this );
+        mSrcFileText->setFocus();
         return;
     }
 
     QString strDstFile = mDstFileText->text();
+    if( strDstFile.length() < 1 )
+    {
+        manApplet->warningBox( tr( "Find destination file"), this );
+        mDstFileText->setFocus();
+        return;
+    }
 
     if( QFile::exists( strDstFile ) )
     {

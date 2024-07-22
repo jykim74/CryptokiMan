@@ -424,6 +424,13 @@ void DigestDlg::runFileDigest()
     QString strSrcFile = mSrcFileText->text();
     BIN binPart = {0,0};
 
+    if( strSrcFile.length() < 1)
+    {
+        manApplet->warningBox( tr( "Find source file"), this );
+        mSrcFileText->setFocus();
+        return;
+    }
+
     QFileInfo fileInfo;
     fileInfo.setFile( strSrcFile );
 
@@ -588,6 +595,7 @@ void DigestDlg::startTask()
     if( strSrcFile.length() < 1)
     {
         manApplet->warningBox( tr( "Find source file"), this );
+        mSrcFileText->setFocus();
         return;
     }
 
