@@ -45,6 +45,10 @@ void RandDlg::initUI()
     connect( mSeedCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changeSeed()));
 
     initialize();
+#if defined(Q_OS_MAC)
+    layout()->setSpacing(5);
+#endif
+    resize(minimumSizeHint().width(), minimumSizeHint().height());
 }
 
 void RandDlg::slotChanged(int index)

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>502</width>
+    <width>426</width>
     <height>290</height>
    </rect>
   </property>
@@ -65,6 +65,12 @@
      </property>
      <item row="0" column="1">
       <widget class="QLineEdit" name="mSlotIDText">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="maximumSize">
         <size>
          <width>100</width>
@@ -192,6 +198,12 @@
      </item>
      <item row="0" column="3">
       <widget class="QLineEdit" name="mSessionText">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="maximumSize">
         <size>
          <width>80</width>
@@ -277,7 +289,14 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QComboBox" name="mLabelCombo"/>
+      <widget class="QComboBox" name="mLabelCombo">
+       <property name="minimumSize">
+        <size>
+         <width>200</width>
+         <height>0</height>
+        </size>
+       </property>
+      </widget>
      </item>
      <item row="0" column="2">
       <widget class="QLineEdit" name="mObjectText">
