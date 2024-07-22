@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>572</width>
-    <height>432</height>
+    <height>441</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -319,7 +319,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -621,6 +621,58 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>mSlotsCombo</tabstop>
+  <tabstop>mSlotIDText</tabstop>
+  <tabstop>mSessionText</tabstop>
+  <tabstop>mLoginText</tabstop>
+  <tabstop>mClassCombo</tabstop>
+  <tabstop>mKeyTypeCombo</tabstop>
+  <tabstop>mMaxText</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>mLabelText</tabstop>
+  <tabstop>mIDText</tabstop>
+  <tabstop>mSubjectText</tabstop>
+  <tabstop>mPubKeyInfoText</tabstop>
+  <tabstop>mApplicationText</tabstop>
+  <tabstop>mObjectIDText</tabstop>
+  <tabstop>mPrivateCheck</tabstop>
+  <tabstop>mPrivateCombo</tabstop>
+  <tabstop>mSensitiveCheck</tabstop>
+  <tabstop>mSensitiveCombo</tabstop>
+  <tabstop>mWrapCheck</tabstop>
+  <tabstop>mWrapCombo</tabstop>
+  <tabstop>mUnwrapCheck</tabstop>
+  <tabstop>mUnwrapCombo</tabstop>
+  <tabstop>mEncryptCheck</tabstop>
+  <tabstop>mEncryptCombo</tabstop>
+  <tabstop>mDecryptCheck</tabstop>
+  <tabstop>mDecryptCombo</tabstop>
+  <tabstop>mModifiableCheck</tabstop>
+  <tabstop>mModifiableCombo</tabstop>
+  <tabstop>mSignCheck</tabstop>
+  <tabstop>mSignCombo</tabstop>
+  <tabstop>mVerifyCheck</tabstop>
+  <tabstop>mVerifyCombo</tabstop>
+  <tabstop>mTokenCheck</tabstop>
+  <tabstop>mTokenCombo</tabstop>
+  <tabstop>mExtractableCheck</tabstop>
+  <tabstop>mExtractableCombo</tabstop>
+  <tabstop>mDeriveCheck</tabstop>
+  <tabstop>mDeriveCombo</tabstop>
+  <tabstop>mStartDateCheck</tabstop>
+  <tabstop>mStartDateEdit</tabstop>
+  <tabstop>mEndDateCheck</tabstop>
+  <tabstop>mEndDateEdit</tabstop>
+  <tabstop>mTrustedCheck</tabstop>
+  <tabstop>mTrustedCombo</tabstop>
+  <tabstop>mCopyableCheck</tabstop>
+  <tabstop>mCopyableCombo</tabstop>
+  <tabstop>mDestroyableCheck</tabstop>
+  <tabstop>mDestroyableCombo</tabstop>
+  <tabstop>mFindObjectsBtn</tabstop>
+  <tabstop>mCloseBtn</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

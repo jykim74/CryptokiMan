@@ -149,6 +149,7 @@
  </widget>
  <tabstops>
   <tabstop>tabWidget</tabstop>
+  <tabstop>mFieldTypeCombo</tabstop>
   <tabstop>mFieldTable</tabstop>
   <tabstop>mDetailText</tabstop>
   <tabstop>mCloseBtn</tabstop>

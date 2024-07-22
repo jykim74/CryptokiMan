@@ -551,11 +551,21 @@
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
   <tabstop>mLabelText</tabstop>
+  <tabstop>mApplicationText</tabstop>
+  <tabstop>mObjectIDTypeCombo</tabstop>
+  <tabstop>mObjectIDText</tabstop>
   <tabstop>mPrivateCheck</tabstop>
   <tabstop>mPrivateCombo</tabstop>
   <tabstop>mModifiableCheck</tabstop>
   <tabstop>mModifiableCombo</tabstop>
+  <tabstop>mTokenCheck</tabstop>
+  <tabstop>mTokenCombo</tabstop>
+  <tabstop>mCopyableCheck</tabstop>
+  <tabstop>mCopyableCombo</tabstop>
+  <tabstop>mDestroyableCheck</tabstop>
+  <tabstop>mDestroyableCombo</tabstop>
   <tabstop>mDataCombo</tabstop>
+  <tabstop>mDataLenText</tabstop>
   <tabstop>mDataText</tabstop>
  </tabstops>
  <resources/>

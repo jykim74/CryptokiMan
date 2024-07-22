@@ -1568,6 +1568,7 @@
   <tabstop>mMechCombo</tabstop>
   <tabstop>mParamText</tabstop>
   <tabstop>mParamLenText</tabstop>
+  <tabstop>mSrcLengthText</tabstop>
   <tabstop>mReqTagLenText</tabstop>
   <tabstop>mAADTypeCombo</tabstop>
   <tabstop>mAADText</tabstop>
@@ -1586,6 +1587,7 @@
   <tabstop>mSrcFileSizeText</tabstop>
   <tabstop>mFileTotalSizeText</tabstop>
   <tabstop>mFileReadSizeText</tabstop>
+  <tabstop>mRunThreadCheck</tabstop>
   <tabstop>mDstFileText</tabstop>
   <tabstop>mFindDstFileBtn</tabstop>
   <tabstop>mDstFileInfoText</tabstop>
@@ -1597,6 +1599,7 @@
   <tabstop>mInitAutoCheck</tabstop>
   <tabstop>mDecryptBtn</tabstop>
   <tabstop>mOutputClearBtn</tabstop>
+  <tabstop>mCloseBtn</tabstop>
  </tabstops>
  <resources/>
  <connections/>

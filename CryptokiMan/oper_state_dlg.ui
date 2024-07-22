@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>449</width>
-    <height>322</height>
+    <height>331</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1033,6 +1033,9 @@
   <tabstop>mSlotsCombo</tabstop>
   <tabstop>mSlotIDText</tabstop>
   <tabstop>mSessionText</tabstop>
+  <tabstop>mLoginText</tabstop>
+  <tabstop>mGetFunctionStatusBtn</tabstop>
+  <tabstop>mCancelFunctionBtn</tabstop>
   <tabstop>mOperationStateLenText</tabstop>
   <tabstop>mOperationStateText</tabstop>
   <tabstop>mEncKeyText</tabstop>

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>512</width>
-    <height>302</height>
+    <height>329</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -447,6 +447,23 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>mSlotsCombo</tabstop>
+  <tabstop>mSlotIDText</tabstop>
+  <tabstop>mSessionText</tabstop>
+  <tabstop>mLoginText</tabstop>
+  <tabstop>mSrcTypeCombo</tabstop>
+  <tabstop>mSrcLabelCombo</tabstop>
+  <tabstop>mSrcObjectText</tabstop>
+  <tabstop>mPrivateCheck</tabstop>
+  <tabstop>mPrivateCombo</tabstop>
+  <tabstop>mTokenCheck</tabstop>
+  <tabstop>mTokenCombo</tabstop>
+  <tabstop>mModifiableCheck</tabstop>
+  <tabstop>mModifiableCombo</tabstop>
+  <tabstop>mDestroyableCheck</tabstop>
+  <tabstop>mDestroyableCombo</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

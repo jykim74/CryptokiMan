@@ -306,8 +306,12 @@
   <tabstop>mCheckLatestVersionCheck</tabstop>
   <tabstop>mUseLogTabCheck</tabstop>
   <tabstop>mUseDeviceMechCheck</tabstop>
+  <tabstop>mFindMaxObjectsCountText</tabstop>
   <tabstop>mFontFamilyCombo</tabstop>
   <tabstop>mLangCombo</tabstop>
+  <tabstop>mHexAreaWidthCombo</tabstop>
+  <tabstop>mLogLevelCombo</tabstop>
+  <tabstop>mFileReadSizeText</tabstop>
  </tabstops>
  <resources/>
  <connections>

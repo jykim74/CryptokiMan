@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -996,8 +996,10 @@
   <tabstop>mParam2LenText</tabstop>
   <tabstop>mClassCombo</tabstop>
   <tabstop>mTypeCombo</tabstop>
+  <tabstop>mKeySizeText</tabstop>
   <tabstop>mLabelText</tabstop>
   <tabstop>mIDText</tabstop>
+  <tabstop>mUseRandCheck</tabstop>
   <tabstop>mPrivateCheck</tabstop>
   <tabstop>mPrivateCombo</tabstop>
   <tabstop>mSensitiveCheck</tabstop>
@@ -1022,6 +1024,20 @@
   <tabstop>mExtractableCombo</tabstop>
   <tabstop>mDeriveCheck</tabstop>
   <tabstop>mDeriveCombo</tabstop>
+  <tabstop>mSignRecoverCheck</tabstop>
+  <tabstop>mSignRecoverCombo</tabstop>
+  <tabstop>mVerifyRecoverCheck</tabstop>
+  <tabstop>mVerifyRecoverCombo</tabstop>
+  <tabstop>mStartDateCheck</tabstop>
+  <tabstop>mStartDateEdit</tabstop>
+  <tabstop>mEndDateCheck</tabstop>
+  <tabstop>mEndDateEdit</tabstop>
+  <tabstop>mTrustedCheck</tabstop>
+  <tabstop>mTrustedCombo</tabstop>
+  <tabstop>mCopyableCheck</tabstop>
+  <tabstop>mCopyableCombo</tabstop>
+  <tabstop>mDestroyableCheck</tabstop>
+  <tabstop>mDestroyableCombo</tabstop>
  </tabstops>
  <resources/>
  <connections>

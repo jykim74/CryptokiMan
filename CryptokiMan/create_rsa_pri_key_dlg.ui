@@ -1179,7 +1179,15 @@
   <tabstop>mLoginText</tabstop>
   <tabstop>mLabelText</tabstop>
   <tabstop>mSubjectText</tabstop>
+  <tabstop>mSubjectTypeCombo</tabstop>
   <tabstop>mIDText</tabstop>
+  <tabstop>mUseSKICheck</tabstop>
+  <tabstop>mPubKeyInfoText</tabstop>
+  <tabstop>mUseSPKICheck</tabstop>
+  <tabstop>mParamCombo</tabstop>
+  <tabstop>mEText</tabstop>
+  <tabstop>mGenKeyBtn</tabstop>
+  <tabstop>mFindKeyBtn</tabstop>
   <tabstop>mModulesText</tabstop>
   <tabstop>mModulesLenText</tabstop>
   <tabstop>mPubExponentText</tabstop>
@@ -1214,6 +1222,16 @@
   <tabstop>mExtractableCombo</tabstop>
   <tabstop>mTokenCheck</tabstop>
   <tabstop>mTokenCombo</tabstop>
+  <tabstop>mSignRecoverCheck</tabstop>
+  <tabstop>mSignRecoverCombo</tabstop>
+  <tabstop>mStartDateCheck</tabstop>
+  <tabstop>mStartDateEdit</tabstop>
+  <tabstop>mEndDateCheck</tabstop>
+  <tabstop>mEndDateEdit</tabstop>
+  <tabstop>mCopyableCheck</tabstop>
+  <tabstop>mCopyableCombo</tabstop>
+  <tabstop>mDestroyableCheck</tabstop>
+  <tabstop>mDestroyableCombo</tabstop>
  </tabstops>
  <resources/>
  <connections>

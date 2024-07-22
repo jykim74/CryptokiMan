@@ -347,6 +347,7 @@
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
   <tabstop>mPinText</tabstop>
+  <tabstop>mPinConfText</tabstop>
  </tabstops>
  <resources/>
  <connections>

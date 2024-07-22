@@ -1189,9 +1189,11 @@
   <tabstop>mSrcFileSizeText</tabstop>
   <tabstop>mFileTotalSizeText</tabstop>
   <tabstop>mFileReadSizeText</tabstop>
+  <tabstop>mRunThreadCheck</tabstop>
   <tabstop>mKeyLabelCombo</tabstop>
   <tabstop>mKeyObjectText</tabstop>
   <tabstop>mDigestKeyBtn</tabstop>
+  <tabstop>mOutputClearBtn</tabstop>
   <tabstop>mOutputLenText</tabstop>
   <tabstop>mOutputText</tabstop>
   <tabstop>mInitBtn</tabstop>

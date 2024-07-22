@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>582</width>
-    <height>523</height>
+    <height>534</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -868,6 +868,68 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>mSlotsCombo</tabstop>
+  <tabstop>mSlotIDText</tabstop>
+  <tabstop>mSessionText</tabstop>
+  <tabstop>mLoginText</tabstop>
+  <tabstop>mObjectTypeCombo</tabstop>
+  <tabstop>mLabelCombo</tabstop>
+  <tabstop>mObjectText</tabstop>
+  <tabstop>mClassCheck</tabstop>
+  <tabstop>mClassText</tabstop>
+  <tabstop>mKeyTypeCheck</tabstop>
+  <tabstop>mKeyTypeText</tabstop>
+  <tabstop>mLabelCheck</tabstop>
+  <tabstop>mLabelText</tabstop>
+  <tabstop>mLabelLenText</tabstop>
+  <tabstop>mIDCheck</tabstop>
+  <tabstop>mIDText</tabstop>
+  <tabstop>mIDLenText</tabstop>
+  <tabstop>mApplicationCheck</tabstop>
+  <tabstop>mApplicationText</tabstop>
+  <tabstop>mApplicationLenText</tabstop>
+  <tabstop>mObjectIDCheck</tabstop>
+  <tabstop>mObjectIDText</tabstop>
+  <tabstop>mObjectIDLenText</tabstop>
+  <tabstop>mPrivateCheck</tabstop>
+  <tabstop>mPrivateCombo</tabstop>
+  <tabstop>mSensitiveCheck</tabstop>
+  <tabstop>mSensitiveCombo</tabstop>
+  <tabstop>mWrapCheck</tabstop>
+  <tabstop>mWrapCombo</tabstop>
+  <tabstop>mUnwrapCheck</tabstop>
+  <tabstop>mUnwrapCombo</tabstop>
+  <tabstop>mEncryptCheck</tabstop>
+  <tabstop>mEncryptCombo</tabstop>
+  <tabstop>mDecryptCheck</tabstop>
+  <tabstop>mDecryptCombo</tabstop>
+  <tabstop>mModifiableCheck</tabstop>
+  <tabstop>mModifiableCombo</tabstop>
+  <tabstop>mSignCheck</tabstop>
+  <tabstop>mSignCombo</tabstop>
+  <tabstop>mVerifyCheck</tabstop>
+  <tabstop>mVerifyCombo</tabstop>
+  <tabstop>mTokenCheck</tabstop>
+  <tabstop>mTokenCombo</tabstop>
+  <tabstop>mExtractableCheck</tabstop>
+  <tabstop>mExtractableCombo</tabstop>
+  <tabstop>mDeriveCheck</tabstop>
+  <tabstop>mDeriveCombo</tabstop>
+  <tabstop>mTrustedCheck</tabstop>
+  <tabstop>mTrustedCombo</tabstop>
+  <tabstop>mCopyableCheck</tabstop>
+  <tabstop>mCopyableCombo</tabstop>
+  <tabstop>mDestroyableCheck</tabstop>
+  <tabstop>mDestroyableCombo</tabstop>
+  <tabstop>mStartDateCheck</tabstop>
+  <tabstop>mStartDateEdit</tabstop>
+  <tabstop>mEndDateCheck</tabstop>
+  <tabstop>mEndDateEdit</tabstop>
+  <tabstop>mGetAttributeBtn</tabstop>
+  <tabstop>mSetAttributeBtn</tabstop>
+  <tabstop>mCloseBtn</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

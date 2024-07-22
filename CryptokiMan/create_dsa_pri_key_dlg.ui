@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -901,7 +901,14 @@
   <tabstop>mLoginText</tabstop>
   <tabstop>mLabelText</tabstop>
   <tabstop>mSubjectText</tabstop>
+  <tabstop>mSubjectTypeCombo</tabstop>
   <tabstop>mIDText</tabstop>
+  <tabstop>mUseSKICheck</tabstop>
+  <tabstop>mPubKeyInfoText</tabstop>
+  <tabstop>mUseSPKICheck</tabstop>
+  <tabstop>mParamCombo</tabstop>
+  <tabstop>mGenKeyBtn</tabstop>
+  <tabstop>mFindKeyBtn</tabstop>
   <tabstop>mPText</tabstop>
   <tabstop>mPLenText</tabstop>
   <tabstop>mQText</tabstop>
@@ -928,6 +935,16 @@
   <tabstop>mExtractableCombo</tabstop>
   <tabstop>mTokenCheck</tabstop>
   <tabstop>mTokenCombo</tabstop>
+  <tabstop>mSignRecoverCheck</tabstop>
+  <tabstop>mSignRecoverCombo</tabstop>
+  <tabstop>mStartDateCheck</tabstop>
+  <tabstop>mStartDateEdit</tabstop>
+  <tabstop>mEndDateCheck</tabstop>
+  <tabstop>mEndDateEdit</tabstop>
+  <tabstop>mCopyableCheck</tabstop>
+  <tabstop>mCopyableCombo</tabstop>
+  <tabstop>mDestroyableCheck</tabstop>
+  <tabstop>mDestroyableCombo</tabstop>
  </tabstops>
  <resources/>
  <connections>

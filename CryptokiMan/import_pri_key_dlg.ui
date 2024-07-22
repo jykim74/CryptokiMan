@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -892,7 +892,11 @@
   <tabstop>mPasswdText</tabstop>
   <tabstop>mPriLabelText</tabstop>
   <tabstop>mPriSubjectText</tabstop>
+  <tabstop>mPriSubjectTypeCombo</tabstop>
   <tabstop>mPriIDText</tabstop>
+  <tabstop>mPriUseSKICheck</tabstop>
+  <tabstop>mPriPubKeyInfoText</tabstop>
+  <tabstop>mPriUseSPKICheck</tabstop>
   <tabstop>mPriPrivateCheck</tabstop>
   <tabstop>mPriPrivateCombo</tabstop>
   <tabstop>mPriDecryptCheck</tabstop>
@@ -911,8 +915,21 @@
   <tabstop>mPriExtractableCombo</tabstop>
   <tabstop>mPriTokenCheck</tabstop>
   <tabstop>mPriTokenCombo</tabstop>
+  <tabstop>mPriSignRecoverCheck</tabstop>
+  <tabstop>mPriSignRecoverCombo</tabstop>
+  <tabstop>mPriStartDateCheck</tabstop>
+  <tabstop>mPriStartDateEdit</tabstop>
+  <tabstop>mPriEndDateCheck</tabstop>
+  <tabstop>mPriEndDateEdit</tabstop>
+  <tabstop>mPriCopyableCheck</tabstop>
+  <tabstop>mPriCopyableCombo</tabstop>
+  <tabstop>mPriDestroyableCheck</tabstop>
+  <tabstop>mPriDestroyableCombo</tabstop>
   <tabstop>mPubLabelText</tabstop>
+  <tabstop>mPubSubjectText</tabstop>
+  <tabstop>mPubSubjectTypeCombo</tabstop>
   <tabstop>mPubIDText</tabstop>
+  <tabstop>mPubUseSKICheck</tabstop>
   <tabstop>mPubPrivateCheck</tabstop>
   <tabstop>mPubPrivateCombo</tabstop>
   <tabstop>mPubEncryptCheck</tabstop>
@@ -927,6 +944,18 @@
   <tabstop>mPubModifiableCombo</tabstop>
   <tabstop>mPubTokenCheck</tabstop>
   <tabstop>mPubTokenCombo</tabstop>
+  <tabstop>mPubVerifyRecoverCheck</tabstop>
+  <tabstop>mPubVerifyRecoverCombo</tabstop>
+  <tabstop>mPubStartDateCheck</tabstop>
+  <tabstop>mPubStartDateEdit</tabstop>
+  <tabstop>mPubEndDateCheck</tabstop>
+  <tabstop>mPubEndDateEdit</tabstop>
+  <tabstop>mPubTrustedCheck</tabstop>
+  <tabstop>mPubTrustedCombo</tabstop>
+  <tabstop>mPubCopyableCheck</tabstop>
+  <tabstop>mPubCopyableCombo</tabstop>
+  <tabstop>mPubDestroyableCheck</tabstop>
+  <tabstop>mPubDestroyableCombo</tabstop>
  </tabstops>
  <resources/>
  <connections>

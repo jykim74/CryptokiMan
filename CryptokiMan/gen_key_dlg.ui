@@ -718,6 +718,7 @@
   <tabstop>mParamText</tabstop>
   <tabstop>mLabelText</tabstop>
   <tabstop>mIDText</tabstop>
+  <tabstop>mUseRandCheck</tabstop>
   <tabstop>mPrivateCheck</tabstop>
   <tabstop>mPrivateCombo</tabstop>
   <tabstop>mSensitiveCheck</tabstop>
@@ -746,6 +747,12 @@
   <tabstop>mStartDateEdit</tabstop>
   <tabstop>mEndDateCheck</tabstop>
   <tabstop>mEndDateEdit</tabstop>
+  <tabstop>mTrustedCheck</tabstop>
+  <tabstop>mTrustedCombo</tabstop>
+  <tabstop>mCopyableCheck</tabstop>
+  <tabstop>mCopyableCombo</tabstop>
+  <tabstop>mDestroyableCheck</tabstop>
+  <tabstop>mDestroyableCombo</tabstop>
  </tabstops>
  <resources/>
  <connections>

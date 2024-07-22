@@ -1241,6 +1241,7 @@
   <tabstop>mKeyTypeCombo</tabstop>
   <tabstop>mMechCombo</tabstop>
   <tabstop>mParamText</tabstop>
+  <tabstop>mParamLenText</tabstop>
   <tabstop>mLabelCombo</tabstop>
   <tabstop>mObjectText</tabstop>
   <tabstop>mInputTab</tabstop>
@@ -1260,6 +1261,7 @@
   <tabstop>mSrcFileSizeText</tabstop>
   <tabstop>mFileTotalSizeText</tabstop>
   <tabstop>mFileReadSizeText</tabstop>
+  <tabstop>mRunThreadCheck</tabstop>
   <tabstop>mSignLenText</tabstop>
   <tabstop>mSignText</tabstop>
   <tabstop>mInitBtn</tabstop>
