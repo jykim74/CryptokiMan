@@ -94,6 +94,8 @@ void ManTreeView::showContextMenu( QPoint point )
 
     QMenu menu(this);
 
+    if( item == NULL ) return;
+
     if( item->getType() == HM_ITEM_TYPE_ROOT )
     {
         menu.addAction( tr("P11Initialize"), manApplet->mainWindow(), &MainWindow::P11Initialize );
