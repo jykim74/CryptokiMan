@@ -23,7 +23,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -343,7 +343,7 @@
          <property name="currentIndex">
           <number>1</number>
          </property>
-         <widget class="QWidget" name="tab_4">
+         <widget class="QWidget" name="mDSATab">
           <attribute name="title">
            <string>DSA Parameter</string>
           </attribute>
@@ -746,7 +746,7 @@
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab_5">
+         <widget class="QWidget" name="mDHTab">
           <attribute name="title">
            <string>DH Parameter</string>
           </attribute>

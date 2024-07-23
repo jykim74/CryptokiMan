@@ -52,6 +52,11 @@ GenKeyPairDlg::GenKeyPairDlg(QWidget *parent) :
 
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);
+
+    mDSATab->layout()->setSpacing(5);
+    mDSATab->layout()->setMargin(5);
+    mDHTab->layout()->setSpacing(5);
+    mDHTab->layout()->setMargin(5);
 #endif
     resize(minimumSizeHint().width(), minimumSizeHint().height());
 }
