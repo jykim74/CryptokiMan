@@ -31,6 +31,7 @@ private slots:
     void clickRandClear();
 
     void changeSeed();
+    void changeOutput();
 private:
     void initialize();
     void initUI();

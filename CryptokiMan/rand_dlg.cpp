@@ -42,6 +42,7 @@ void RandDlg::initUI()
     connect( mSeedClearBtn, SIGNAL(clicked()), this, SLOT(clickSeedClear()));
     connect( mRandClearBtn, SIGNAL(clicked()), this, SLOT(clickRandClear()));
     connect( mSeedText, SIGNAL(textChanged()), this, SLOT(changeSeed()));
+    connect( mOutputText, SIGNAL(textChanged()), this, SLOT(changeOutput()));
     connect( mSeedCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changeSeed()));
 
     initialize();
@@ -182,4 +183,12 @@ void RandDlg::changeSeed()
 
     QString strLen = getDataLenString( mSeedCombo->currentText(), strSeed );
     mSeedLenText->setText( QString("%1").arg(strLen ));
+}
+
+void RandDlg::changeOutput()
+{
+    QString strOutput = mOutputText->toPlainText();
+
+    QString strLen = getDataLenString( DATA_HEX, strOutput );
+    mOutputLenText->setText( QString("%1").arg(strLen ));
 }
