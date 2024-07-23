@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>449</width>
+    <width>418</width>
     <height>331</height>
    </rect>
   </property>
@@ -941,6 +941,12 @@
    </item>
    <item>
     <widget class="QPlainTextEdit" name="mOperationStateText">
+     <property name="minimumSize">
+      <size>
+       <width>400</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="font">
       <font/>
      </property>

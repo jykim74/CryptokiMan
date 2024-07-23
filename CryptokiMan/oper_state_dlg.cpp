@@ -133,7 +133,7 @@ void OperStateDlg::clickGetOperationState()
     if( ret != CKR_OK )
     {
         mOperationStateText->clear();
-        manApplet->warningBox( tr( "GetOperationState execution failure [%1]").arg(ret));
+        manApplet->warningBox( tr( "GetOperationState execution failure [%1]").arg(ret), this);
         return;
     }
 
@@ -171,7 +171,7 @@ void OperStateDlg::clickSetOperationState()
     if( ret != CKR_OK )
     {
         mOperationStateText->clear();
-        manApplet->warningBox( tr( "SetOperationState execution failure [%1]").arg(ret));
+        manApplet->warningBox( tr( "SetOperationState execution failure [%1]").arg(ret), this);
     }
     else
     {
