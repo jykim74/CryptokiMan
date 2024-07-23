@@ -78,6 +78,8 @@ void EncryptDlg::initUI()
     connect( mEncryptBtn, SIGNAL(clicked()), this, SLOT(clickEncrypt()));
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(clickClose()));
 
+    connect( mInputCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(inputChanged()));
+
     connect( mInputText, SIGNAL(textChanged()), this, SLOT(inputChanged()));
     connect( mOutputText, SIGNAL(textChanged()), this, SLOT(outputChanged()));
     connect( mParamText, SIGNAL(textChanged(const QString&)), this, SLOT(paramChanged()));

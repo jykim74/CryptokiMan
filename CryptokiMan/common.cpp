@@ -886,8 +886,14 @@ int getDataLen( int nType, const QString strData )
 
     QString strMsg = strData;
 
-    if( nType != DATA_STRING )
+    if( nType == DATA_HEX )
     {
+        strMsg.remove( QRegularExpression("[\t\r\n\\s]") );
+    }
+    else if( nType == DATA_BASE64 )
+    {
+        strMsg.remove( QRegularExpression( "-----BEGIN [^-]+-----") );
+        strMsg.remove( QRegularExpression("-----END [^-]+-----") );
         strMsg.remove( QRegularExpression("[\t\r\n\\s]") );
     }
 
@@ -951,8 +957,14 @@ const QString getDataLenString( int nType, const QString strData )
     QString strMsg = strData;
     QString strLen;
 
-    if( nType != DATA_STRING )
+    if( nType == DATA_HEX )
     {
+        strMsg.remove( QRegularExpression("[\t\r\n\\s]") );
+    }
+    else if( nType == DATA_BASE64 )
+    {
+        strMsg.remove( QRegularExpression( "-----BEGIN [^-]+-----") );
+        strMsg.remove( QRegularExpression("-----END [^-]+-----") );
         strMsg.remove( QRegularExpression("[\t\r\n\\s]") );
     }
 
@@ -1064,6 +1076,8 @@ void getBINFromString( BIN *pBin, int nType, const QString& strString )
     }
     else if( nType == DATA_BASE64 )
     {
+        srcString.remove( QRegularExpression( "-----BEGIN [^-]+-----") );
+        srcString.remove( QRegularExpression("-----END [^-]+-----") );
         srcString.remove( QRegularExpression("[\t\r\n\\s]") );
         if( isBase64( srcString ) == false ) return;
 

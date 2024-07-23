@@ -82,6 +82,10 @@ void SignDlg::initUI()
     connect( mSignRecoverInitBtn, SIGNAL(clicked()), this, SLOT(clickSignRecoverInit()));
     connect( mSignRecoverBtn, SIGNAL(clicked()), this, SLOT(clickSignRecover()));
 
+    connect( mInputHexRadio, SIGNAL(clicked()), this, SLOT(changeInput()));
+    connect( mInputStringRadio, SIGNAL(clicked()), this, SLOT(changeInput()));
+    connect( mInputBase64Radio, SIGNAL(clicked()), this, SLOT(changeInput()));
+
     connect( mInputText, SIGNAL(textChanged()), this, SLOT(changeInput()));
     connect( mOutputText, SIGNAL(textChanged()), this, SLOT(changeOutput()));
 

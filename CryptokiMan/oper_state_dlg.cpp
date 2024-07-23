@@ -160,7 +160,7 @@ void OperStateDlg::clickSetOperationState()
     if( strOperState.length() < 1 )
     {
         manApplet->warningBox( tr( "Enter a state" ), this );
-        mOperationStateLenText->setFocus();
+        mOperationStateText->setFocus();
         return;
     }
 
@@ -183,7 +183,8 @@ void OperStateDlg::clickSetOperationState()
 
 void OperStateDlg::changeOperationState()
 {
-    int nLen = mOperationStateText->toPlainText().length() / 2;
+    QString strState = mOperationStateText->toPlainText();
+    QString strLen = getDataLenString( DATA_HEX, strState );
 
-    mOperationStateLenText->setText( QString( "%1" ).arg( nLen ));
+    mOperationStateLenText->setText( QString( "%1" ).arg( strLen ));
 }

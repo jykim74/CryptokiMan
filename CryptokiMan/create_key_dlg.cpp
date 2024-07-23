@@ -170,6 +170,7 @@ void CreateKeyDlg::setAttributes()
 void CreateKeyDlg::connectAttributes()
 {
     connect( mUseRandCheck, SIGNAL(clicked()), this, SLOT(clickUseRand()));
+    connect( mKeyCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changeKey()));
     connect( mKeyText, SIGNAL(textChanged()), this, SLOT(changeKey()));
 
     connect( mPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPrivate()));

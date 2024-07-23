@@ -69,6 +69,7 @@ void DigestDlg::initUI()
     connect( mDigestBtn, SIGNAL(clicked()), this, SLOT(clickDigest()));
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(clickClose()));
 
+    connect( mInputCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(inputChanged()));
     connect( mInputText, SIGNAL(textChanged()), this, SLOT(inputChanged()));
     connect( mOutputText, SIGNAL(textChanged(const QString&)), this, SLOT(outputChanged()));
 

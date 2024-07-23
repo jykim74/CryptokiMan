@@ -107,6 +107,7 @@ void CreateDataDlg::setAttributes()
 
 void CreateDataDlg::connectAttributes()
 {
+    connect( mDataCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changeData()));
     connect( mDataText, SIGNAL(textChanged()), this, SLOT(changeData()));
 
     connect( mPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPrivate()));

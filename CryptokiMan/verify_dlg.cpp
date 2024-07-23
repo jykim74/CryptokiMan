@@ -81,6 +81,10 @@ void VerifyDlg::initUI()
     connect( mVerifyRecoverInitBtn, SIGNAL(clicked()), this, SLOT(clickVerifyRecoverInit()));
     connect( mVerifyRecoverBtn, SIGNAL(clicked()), this, SLOT(clickVerifyRecover()));
 
+    connect( mInputHexRadio, SIGNAL(clicked()), this, SLOT(changeInput()));
+    connect( mInputStringRadio, SIGNAL(clicked()), this, SLOT(changeInput()));
+    connect( mInputBase64Radio, SIGNAL(clicked()), this, SLOT(changeInput()));
+
     connect( mInputText, SIGNAL(textChanged()), this, SLOT(changeInput()));
     connect( mSignText, SIGNAL(textChanged()), this, SLOT(changeSign()));
 

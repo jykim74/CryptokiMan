@@ -28,6 +28,7 @@ GenKeyDlg::GenKeyDlg(QWidget *parent) :
     connectAttributes();
 
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
+    connect( mParamCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changeParam()));
     connect( mParamText, SIGNAL(textChanged()), this, SLOT(changeParam()));
 
     initialize();
