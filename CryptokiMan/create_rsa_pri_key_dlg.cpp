@@ -43,6 +43,11 @@ CreateRSAPriKeyDlg::CreateRSAPriKeyDlg(QWidget *parent) :
 
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);
+
+    mFirstTab->layout()->setSpacing(5);
+    mFirstTab->layout()->setMargin(5);
+    mSecondTab->layout()->setSpacing(5);
+    mSecondTab->layout()->setMargin(5);
 #endif
     resize(minimumSizeHint().width(), minimumSizeHint().height());
 }

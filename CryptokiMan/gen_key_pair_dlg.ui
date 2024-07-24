@@ -23,9 +23,9 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
-     <widget class="QWidget" name="tab">
+     <widget class="QWidget" name="mFirstTab">
       <attribute name="title">
        <string>General</string>
       </attribute>
@@ -848,7 +848,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_2">
+     <widget class="QWidget" name="mSecondTab">
       <attribute name="title">
        <string>Private Key</string>
       </attribute>
@@ -1099,7 +1099,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_3">
+     <widget class="QWidget" name="mThirdTab">
       <attribute name="title">
        <string>Public Key</string>
       </attribute>
