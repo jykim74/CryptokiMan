@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>426</width>
+    <width>518</width>
     <height>290</height>
    </rect>
   </property>
@@ -449,6 +449,12 @@
    </item>
    <item>
     <widget class="QTextBrowser" name="mValueText">
+     <property name="minimumSize">
+      <size>
+       <width>500</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="readOnly">
       <bool>false</bool>
      </property>
