@@ -39,7 +39,11 @@ VerifyDlg::VerifyDlg(QWidget *parent) :
     mDataTab->layout()->setMargin(5);
     mFileTab->layout()->setSpacing(5);
     mFileTab->layout()->setMargin(5);
+
+    mInputClearBtn->setFixedWidth(34);
+    mSignClearBtn->setFixedWidth(34);
 #endif
+
     resize(minimumSizeHint().width(), minimumSizeHint().height());
 }
 

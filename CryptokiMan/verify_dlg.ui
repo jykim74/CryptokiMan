@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>615</width>
-    <height>697</height>
+    <width>474</width>
+    <height>560</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -495,6 +495,13 @@
          <property name="topMargin">
           <number>0</number>
          </property>
+         <item row="0" column="2">
+          <widget class="QRadioButton" name="mInputHexRadio">
+           <property name="text">
+            <string>Hex</string>
+           </property>
+          </widget>
+         </item>
          <item row="0" column="1">
           <widget class="QRadioButton" name="mInputStringRadio">
            <property name="text">
@@ -505,20 +512,7 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_4">
-           <property name="minimumSize">
-            <size>
-             <width>80</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Input</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="5">
+         <item row="0" column="6">
           <widget class="QLineEdit" name="mInputLenText">
            <property name="maximumSize">
             <size>
@@ -568,10 +562,16 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="2">
-          <widget class="QRadioButton" name="mInputHexRadio">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_4">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="text">
-            <string>Hex</string>
+            <string>Input</string>
            </property>
           </widget>
          </item>
@@ -582,7 +582,7 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="4">
+         <item row="0" column="5">
           <spacer name="horizontalSpacer_5">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -594,6 +594,19 @@
             </size>
            </property>
           </spacer>
+         </item>
+         <item row="0" column="4">
+          <widget class="QPushButton" name="mInputClearBtn">
+           <property name="maximumSize">
+            <size>
+             <width>20</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>C</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -630,13 +643,6 @@
           <widget class="QPushButton" name="mFinalBtn">
            <property name="text">
             <string>Final</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="6">
-          <widget class="QPushButton" name="mInputClearBtn">
-           <property name="text">
-            <string>Input Clear</string>
            </property>
           </widget>
          </item>
@@ -1062,6 +1068,32 @@
       <number>0</number>
      </property>
      <item row="0" column="2">
+      <spacer name="horizontalSpacer_6">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_5">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Signature</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
       <widget class="QLineEdit" name="mSignLenText">
        <property name="maximumSize">
         <size>
@@ -1112,28 +1144,15 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <spacer name="horizontalSpacer_6">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
+      <widget class="QPushButton" name="mSignClearBtn">
+       <property name="maximumSize">
         <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_5">
-       <property name="minimumSize">
-        <size>
-         <width>80</width>
-         <height>0</height>
+         <width>20</width>
+         <height>16777215</height>
         </size>
        </property>
        <property name="text">
-        <string>Signature</string>
+        <string>C</string>
        </property>
       </widget>
      </item>
@@ -1178,13 +1197,6 @@
       <widget class="QPushButton" name="mVerifyBtn">
        <property name="text">
         <string>Verify</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="mSignClearBtn">
-       <property name="text">
-        <string>Sign Clear</string>
        </property>
       </widget>
      </item>
@@ -1248,13 +1260,13 @@
   <tabstop>mInputStringRadio</tabstop>
   <tabstop>mInputHexRadio</tabstop>
   <tabstop>mInputBase64Radio</tabstop>
+  <tabstop>mInputClearBtn</tabstop>
   <tabstop>mInputLenText</tabstop>
   <tabstop>mInputText</tabstop>
   <tabstop>mUpdateBtn</tabstop>
   <tabstop>mFinalBtn</tabstop>
   <tabstop>mVerifyRecoverInitBtn</tabstop>
   <tabstop>mVerifyRecoverBtn</tabstop>
-  <tabstop>mInputClearBtn</tabstop>
   <tabstop>mSrcFileText</tabstop>
   <tabstop>mFindSrcFileBtn</tabstop>
   <tabstop>mSrcFileInfoText</tabstop>
@@ -1262,12 +1274,12 @@
   <tabstop>mFileTotalSizeText</tabstop>
   <tabstop>mFileReadSizeText</tabstop>
   <tabstop>mRunThreadCheck</tabstop>
+  <tabstop>mSignClearBtn</tabstop>
   <tabstop>mSignLenText</tabstop>
   <tabstop>mSignText</tabstop>
   <tabstop>mInitBtn</tabstop>
   <tabstop>mInitAutoCheck</tabstop>
   <tabstop>mVerifyBtn</tabstop>
-  <tabstop>mSignClearBtn</tabstop>
   <tabstop>mCloseBtn</tabstop>
  </tabstops>
  <resources/>

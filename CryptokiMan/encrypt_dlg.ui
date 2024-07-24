@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>604</width>
-    <height>766</height>
+    <height>672</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -645,7 +645,23 @@
          <property name="topMargin">
           <number>0</number>
          </property>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="mInputCombo"/>
+         </item>
          <item row="0" column="3">
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="0" column="4">
           <widget class="QLineEdit" name="mInputLenText">
            <property name="minimumSize">
             <size>
@@ -708,21 +724,18 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
-          <widget class="QComboBox" name="mInputCombo"/>
-         </item>
          <item row="0" column="2">
-          <spacer name="horizontalSpacer_3">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
+          <widget class="QPushButton" name="mInputClearBtn">
+           <property name="maximumSize">
             <size>
-             <width>40</width>
-             <height>20</height>
+             <width>20</width>
+             <height>16777215</height>
             </size>
            </property>
-          </spacer>
+           <property name="text">
+            <string>C</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -738,13 +751,6 @@
           <widget class="QPushButton" name="mFinalBtn">
            <property name="text">
             <string>Final</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="4">
-          <widget class="QPushButton" name="mInputClearBtn">
-           <property name="text">
-            <string>Input Clear</string>
            </property>
           </widget>
          </item>
@@ -1438,9 +1444,15 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLabel" name="mStatusLabel">
+      <widget class="QPushButton" name="mOutputClearBtn">
+       <property name="maximumSize">
+        <size>
+         <width>20</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="text">
-        <string>Status</string>
+        <string>C</string>
        </property>
       </widget>
      </item>
@@ -1536,19 +1548,46 @@
        </property>
       </widget>
      </item>
-     <item>
-      <widget class="QPushButton" name="mOutputClearBtn">
+    </layout>
+   </item>
+   <item>
+    <widget class="Line" name="line_3">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="gridLayout_6">
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <item row="0" column="0">
+      <widget class="QLabel" name="mStatusLabel">
        <property name="text">
-        <string>Output Clear</string>
+        <string>Status</string>
        </property>
       </widget>
      </item>
-     <item>
+     <item row="0" column="2">
       <widget class="QPushButton" name="mCloseBtn">
        <property name="text">
         <string>Close</string>
        </property>
       </widget>
+     </item>
+     <item row="0" column="1">
+      <spacer name="horizontalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </item>
@@ -1572,11 +1611,11 @@
   <tabstop>mObjectText</tabstop>
   <tabstop>mInputTab</tabstop>
   <tabstop>mInputCombo</tabstop>
+  <tabstop>mInputClearBtn</tabstop>
   <tabstop>mInputLenText</tabstop>
   <tabstop>mInputText</tabstop>
   <tabstop>mUpdateBtn</tabstop>
   <tabstop>mFinalBtn</tabstop>
-  <tabstop>mInputClearBtn</tabstop>
   <tabstop>mSrcFileText</tabstop>
   <tabstop>mFindSrcFileBtn</tabstop>
   <tabstop>mSrcFileInfoText</tabstop>
@@ -1588,12 +1627,12 @@
   <tabstop>mFindDstFileBtn</tabstop>
   <tabstop>mDstFileInfoText</tabstop>
   <tabstop>mDstFileSizeText</tabstop>
-  <tabstop>mOutputText</tabstop>
+  <tabstop>mOutputClearBtn</tabstop>
   <tabstop>mOutputLenText</tabstop>
+  <tabstop>mOutputText</tabstop>
   <tabstop>mInitBtn</tabstop>
   <tabstop>mInitAutoCheck</tabstop>
   <tabstop>mEncryptBtn</tabstop>
-  <tabstop>mOutputClearBtn</tabstop>
   <tabstop>mCloseBtn</tabstop>
  </tabstops>
  <resources/>

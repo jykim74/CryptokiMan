@@ -2053,7 +2053,13 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation>소스 길이</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1554"/>
+        <location filename="../decrypt_dlg.ui" line="750"/>
+        <location filename="../decrypt_dlg.ui" line="1460"/>
+        <source>C</source>
+        <translation>C</translation>
+    </message>
+    <message>
+        <location filename="../decrypt_dlg.ui" line="1580"/>
         <source>Close</source>
         <translation>닫기</translation>
     </message>
@@ -2072,29 +2078,29 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation>대상</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1513"/>
+        <location filename="../decrypt_dlg.ui" line="1525"/>
         <source>Init</source>
         <translation>Init</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="768"/>
+        <location filename="../decrypt_dlg.ui" line="774"/>
         <source>Update</source>
         <translation>Update</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="761"/>
+        <location filename="../decrypt_dlg.ui" line="767"/>
         <source>Final</source>
         <translation>Final</translation>
     </message>
     <message>
         <location filename="../decrypt_dlg.ui" line="14"/>
-        <location filename="../decrypt_dlg.ui" line="1428"/>
-        <location filename="../decrypt_dlg.ui" line="1540"/>
+        <location filename="../decrypt_dlg.ui" line="1434"/>
+        <location filename="../decrypt_dlg.ui" line="1552"/>
         <source>Decrypt</source>
         <translation>복호화</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1448"/>
+        <location filename="../decrypt_dlg.ui" line="1573"/>
         <source>Status</source>
         <translation>상태</translation>
     </message>
@@ -2128,73 +2134,71 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation>데이타 입력</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="754"/>
         <source>Input Clear</source>
-        <translation>입력 지움</translation>
+        <translation type="vanished">입력 지움</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="791"/>
+        <location filename="../decrypt_dlg.ui" line="797"/>
         <source>Input File</source>
         <translation>파일 입력</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="826"/>
+        <location filename="../decrypt_dlg.ui" line="832"/>
         <source>Src File Path</source>
         <translation>소스 파일 경로</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="852"/>
-        <location filename="../decrypt_dlg.ui" line="1222"/>
+        <location filename="../decrypt_dlg.ui" line="858"/>
+        <location filename="../decrypt_dlg.ui" line="1228"/>
         <source>Find</source>
         <translation>찾기</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="875"/>
+        <location filename="../decrypt_dlg.ui" line="881"/>
         <source>File Information</source>
         <translation>소스 파일 정보</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1004"/>
+        <location filename="../decrypt_dlg.ui" line="1010"/>
         <source>File Status</source>
         <translation>파일 상태</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1011"/>
+        <location filename="../decrypt_dlg.ui" line="1017"/>
         <source>Total File Size</source>
         <translation>전체 파일 크기</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1077"/>
+        <location filename="../decrypt_dlg.ui" line="1083"/>
         <source>Read File Size</source>
         <translation>읽은 파일 크기</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1159"/>
+        <location filename="../decrypt_dlg.ui" line="1165"/>
         <source>Run Status</source>
         <translation>실행 상태</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1173"/>
+        <location filename="../decrypt_dlg.ui" line="1179"/>
         <source>RunThread</source>
         <translation>쓰레드 실행</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1196"/>
+        <location filename="../decrypt_dlg.ui" line="1202"/>
         <source>Dst File Path</source>
         <translation>대상 파일 경로</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1245"/>
+        <location filename="../decrypt_dlg.ui" line="1251"/>
         <source>Dst Information</source>
         <translation>대상 파일 정보</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1547"/>
         <source>Output Clear</source>
-        <translation>출력 지우기</translation>
+        <translation type="vanished">출력 지우기</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1533"/>
+        <location filename="../decrypt_dlg.ui" line="1545"/>
         <source>Init Automatically</source>
         <translation>자동 초기화</translation>
     </message>
@@ -2204,61 +2208,61 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">대상 파일 [%1] 이 이미 존재 합니다. 지우고 계속 하시겠습나까?</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.cpp" line="464"/>
+        <location filename="../decrypt_dlg.cpp" line="468"/>
         <source>Decrypt Files</source>
         <translation>복호화 파일</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.cpp" line="506"/>
+        <location filename="../decrypt_dlg.cpp" line="510"/>
         <source>DecryptInit execution failure [%1]</source>
         <translation>DecryptInit 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.cpp" line="526"/>
+        <location filename="../decrypt_dlg.cpp" line="530"/>
         <source>Enter your data.</source>
         <translation>데이타를 입력하세요</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.cpp" line="549"/>
-        <location filename="../decrypt_dlg.cpp" line="776"/>
+        <location filename="../decrypt_dlg.cpp" line="553"/>
+        <location filename="../decrypt_dlg.cpp" line="780"/>
         <source>DecryptUpdate execution failure [%1]</source>
         <translation>DecryptUpdate 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.cpp" line="578"/>
-        <location filename="../decrypt_dlg.cpp" line="594"/>
+        <location filename="../decrypt_dlg.cpp" line="582"/>
+        <location filename="../decrypt_dlg.cpp" line="598"/>
         <source>DecryptFinal execution failure [%1]</source>
         <translation>DecryptFinal 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.cpp" line="628"/>
+        <location filename="../decrypt_dlg.cpp" line="632"/>
         <source>This feature requires a license.</source>
         <translation>이 기능은 라이센스가 필요합니다.</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.cpp" line="647"/>
+        <location filename="../decrypt_dlg.cpp" line="651"/>
         <source>Enter your data</source>
         <translation>데이타를 입력하세요</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.cpp" line="672"/>
+        <location filename="../decrypt_dlg.cpp" line="676"/>
         <source>Decrypt execution failure [%1]</source>
         <translation>Decrypt 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.cpp" line="724"/>
-        <location filename="../decrypt_dlg.cpp" line="876"/>
+        <location filename="../decrypt_dlg.cpp" line="728"/>
+        <location filename="../decrypt_dlg.cpp" line="880"/>
         <source>Find destination file</source>
         <translation>대상 파일을 찾으세요</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.cpp" line="731"/>
+        <location filename="../decrypt_dlg.cpp" line="735"/>
         <source>The destination file(%1) already exists.
 Do you want to delete the file and continue?</source>
         <translation>대상 파일(%1)이 이미 존재합니다. 삭제 후 계속 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.cpp" line="850"/>
+        <location filename="../decrypt_dlg.cpp" line="854"/>
         <source>failed to initialize [%1]</source>
         <translation>초기화 실패 [%1]</translation>
     </message>
@@ -2267,13 +2271,13 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">Digest 초기화 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.cpp" line="706"/>
-        <location filename="../decrypt_dlg.cpp" line="868"/>
+        <location filename="../decrypt_dlg.cpp" line="710"/>
+        <location filename="../decrypt_dlg.cpp" line="872"/>
         <source>Find source file</source>
         <translation>소스 파일을 찾으세요</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.cpp" line="883"/>
+        <location filename="../decrypt_dlg.cpp" line="887"/>
         <source>The target file[%1] is already exist.
 Do you want to delete the file and continue?</source>
         <translation>대상 파일(%1)이 이미 존재합니다. 삭제 후 계속 하시겠습니까?</translation>
@@ -2644,24 +2648,24 @@ Do you want to delete the file and continue?</source>
         <translation>알고리즘</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.ui" line="1096"/>
+        <location filename="../digest_dlg.ui" line="1108"/>
         <source>Init</source>
         <translation>Init</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.ui" line="463"/>
+        <location filename="../digest_dlg.ui" line="476"/>
         <source>Update</source>
         <translation>Update</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.ui" line="456"/>
+        <location filename="../digest_dlg.ui" line="469"/>
         <source>Final</source>
         <translation>Final</translation>
     </message>
     <message>
         <location filename="../digest_dlg.ui" line="14"/>
-        <location filename="../digest_dlg.ui" line="1003"/>
-        <location filename="../digest_dlg.ui" line="1123"/>
+        <location filename="../digest_dlg.ui" line="1078"/>
+        <location filename="../digest_dlg.ui" line="1135"/>
         <source>Digest</source>
         <translation>Digest</translation>
     </message>
@@ -2671,7 +2675,7 @@ Do you want to delete the file and continue?</source>
         <translation>슬롯 목록</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.ui" line="1151"/>
+        <location filename="../digest_dlg.ui" line="1163"/>
         <source>Close</source>
         <translation>닫기</translation>
     </message>
@@ -2705,7 +2709,13 @@ Do you want to delete the file and continue?</source>
         <translation>파라미터</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.ui" line="1144"/>
+        <location filename="../digest_dlg.ui" line="452"/>
+        <location filename="../digest_dlg.ui" line="1091"/>
+        <source>C</source>
+        <translation>C</translation>
+    </message>
+    <message>
+        <location filename="../digest_dlg.ui" line="1156"/>
         <source>Status</source>
         <translation>상태</translation>
     </message>
@@ -2734,12 +2744,12 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">Digest 실패(%1)</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.ui" line="897"/>
+        <location filename="../digest_dlg.ui" line="913"/>
         <source>Secret Key</source>
         <translation>비밀 키</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.ui" line="970"/>
+        <location filename="../digest_dlg.ui" line="976"/>
         <source>DigestKey</source>
         <translation>DigestKey</translation>
     </message>
@@ -2749,67 +2759,65 @@ Do you want to delete the file and continue?</source>
         <translation>데이타 입력</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.ui" line="367"/>
+        <location filename="../digest_dlg.ui" line="383"/>
         <source>Input Type</source>
         <translation>입력 타입</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.ui" line="470"/>
         <source>Input Clear</source>
-        <translation>입력 지움</translation>
+        <translation type="vanished">입력 지움</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.ui" line="493"/>
+        <location filename="../digest_dlg.ui" line="499"/>
         <source>Input File</source>
         <translation>파일 입력</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.ui" line="520"/>
+        <location filename="../digest_dlg.ui" line="526"/>
         <source>Src File Path</source>
         <translation>소스 파일 경로</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.ui" line="539"/>
+        <location filename="../digest_dlg.ui" line="545"/>
         <source>Find</source>
         <translation>찾기</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.ui" line="609"/>
+        <location filename="../digest_dlg.ui" line="615"/>
         <source>File Information</source>
         <translation>소스 파일 정보</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.ui" line="679"/>
+        <location filename="../digest_dlg.ui" line="685"/>
         <source>Total File Size</source>
         <translation>전체 파일 크기</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.ui" line="698"/>
+        <location filename="../digest_dlg.ui" line="704"/>
         <source>File Status</source>
         <translation>파일 상태</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.ui" line="705"/>
+        <location filename="../digest_dlg.ui" line="711"/>
         <source>Read File Size</source>
         <translation>읽은 파일 크기</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.ui" line="853"/>
+        <location filename="../digest_dlg.ui" line="859"/>
         <source>Run Status</source>
         <translation>실행 상태</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.ui" line="860"/>
+        <location filename="../digest_dlg.ui" line="866"/>
         <source>RunThread</source>
         <translation>쓰레드 실행</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.ui" line="1079"/>
         <source>Output Clear</source>
-        <translation>출력 지우기</translation>
+        <translation type="vanished">출력 지우기</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.ui" line="1116"/>
+        <location filename="../digest_dlg.ui" line="1128"/>
         <source>Init automatically</source>
         <translation>자동 초기화</translation>
     </message>
@@ -2822,55 +2830,55 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">Digest 초기화 실패 :%1</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.cpp" line="225"/>
+        <location filename="../digest_dlg.cpp" line="229"/>
         <source>DigestKey execution failure [%1]</source>
         <translation>DigestKey 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.cpp" line="262"/>
+        <location filename="../digest_dlg.cpp" line="266"/>
         <source>DigestInit execution failure [%1]</source>
         <translation>DigestInit 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.cpp" line="282"/>
+        <location filename="../digest_dlg.cpp" line="286"/>
         <source>Enter input value.</source>
         <translation>입력값을 입력하세요</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.cpp" line="304"/>
-        <location filename="../digest_dlg.cpp" line="482"/>
+        <location filename="../digest_dlg.cpp" line="308"/>
+        <location filename="../digest_dlg.cpp" line="486"/>
         <source>DigestUpdate execution failure [%1]</source>
         <translation>DecryptUpdate 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.cpp" line="336"/>
+        <location filename="../digest_dlg.cpp" line="340"/>
         <source>DigestFinal execution failure [%1]</source>
         <translation>DecryptFinal 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.cpp" line="355"/>
+        <location filename="../digest_dlg.cpp" line="359"/>
         <source>This feature requires a license.</source>
         <translation>이 기능은 라이센스가 필요합니다.</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.cpp" line="376"/>
+        <location filename="../digest_dlg.cpp" line="380"/>
         <source>Enter input value</source>
         <translation>입력값을 입력하세요</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.cpp" line="412"/>
+        <location filename="../digest_dlg.cpp" line="416"/>
         <source>Digest execution failure [%1]</source>
         <translation>Digest 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.cpp" line="455"/>
-        <location filename="../digest_dlg.cpp" line="582"/>
+        <location filename="../digest_dlg.cpp" line="459"/>
+        <location filename="../digest_dlg.cpp" line="586"/>
         <source>failed to initialize digest [%1]</source>
         <translation>Digest 초기화 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.cpp" line="434"/>
-        <location filename="../digest_dlg.cpp" line="602"/>
+        <location filename="../digest_dlg.cpp" line="438"/>
+        <location filename="../digest_dlg.cpp" line="606"/>
         <source>Find source file</source>
         <translation>소스 파일을 찾으세요</translation>
     </message>
@@ -3195,12 +3203,12 @@ Do you want to delete the file and continue?</source>
         <translation>키 타입</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="707"/>
+        <location filename="../encrypt_dlg.ui" line="723"/>
         <source>Input</source>
         <translation>입력</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1549"/>
+        <location filename="../encrypt_dlg.ui" line="1575"/>
         <source>Close</source>
         <translation>닫기</translation>
     </message>
@@ -3240,29 +3248,35 @@ Do you want to delete the file and continue?</source>
         <translation>소스 길이</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1508"/>
+        <location filename="../encrypt_dlg.ui" line="736"/>
+        <location filename="../encrypt_dlg.ui" line="1455"/>
+        <source>C</source>
+        <translation>C</translation>
+    </message>
+    <message>
+        <location filename="../encrypt_dlg.ui" line="1520"/>
         <source>Init</source>
         <translation>Init</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="754"/>
+        <location filename="../encrypt_dlg.ui" line="760"/>
         <source>Update</source>
         <translation>Update</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="740"/>
+        <location filename="../encrypt_dlg.ui" line="753"/>
         <source>Final</source>
         <translation>Final</translation>
     </message>
     <message>
         <location filename="../encrypt_dlg.ui" line="14"/>
-        <location filename="../encrypt_dlg.ui" line="1380"/>
-        <location filename="../encrypt_dlg.ui" line="1535"/>
+        <location filename="../encrypt_dlg.ui" line="1386"/>
+        <location filename="../encrypt_dlg.ui" line="1547"/>
         <source>Encrypt</source>
         <translation>암호화</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1443"/>
+        <location filename="../encrypt_dlg.ui" line="1568"/>
         <source>Status</source>
         <translation>상태</translation>
     </message>
@@ -3292,68 +3306,66 @@ Do you want to delete the file and continue?</source>
         <translation>데이타 입력</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="747"/>
         <source>Input Clear</source>
-        <translation>입력 지움</translation>
+        <translation type="vanished">입력 지움</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="812"/>
+        <location filename="../encrypt_dlg.ui" line="818"/>
         <source>Src File Path</source>
         <translation>소스 파일 경로</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="838"/>
-        <location filename="../encrypt_dlg.ui" line="1208"/>
+        <location filename="../encrypt_dlg.ui" line="844"/>
+        <location filename="../encrypt_dlg.ui" line="1214"/>
         <source>Find</source>
         <translation>찾기</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="861"/>
+        <location filename="../encrypt_dlg.ui" line="867"/>
         <source>File Information</source>
         <translation>소스 파일 정보</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1037"/>
+        <location filename="../encrypt_dlg.ui" line="1043"/>
         <source>Total File Size</source>
         <translation>전체 파일 크기</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1056"/>
+        <location filename="../encrypt_dlg.ui" line="1062"/>
         <source>File Status</source>
         <translation>파일 상태</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1063"/>
+        <location filename="../encrypt_dlg.ui" line="1069"/>
         <source>Read File Size</source>
         <translation>읽은 파일 크기</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1145"/>
+        <location filename="../encrypt_dlg.ui" line="1151"/>
         <source>Run Status</source>
         <translation>실행 상태</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1159"/>
+        <location filename="../encrypt_dlg.ui" line="1165"/>
         <source>RunThread</source>
         <translation>쓰레드 실행</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1182"/>
+        <location filename="../encrypt_dlg.ui" line="1188"/>
         <source>Dst File Path</source>
         <translation>대상 파일 경로</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1231"/>
+        <location filename="../encrypt_dlg.ui" line="1237"/>
         <source>Dst Information</source>
         <translation>대상 파일 정보</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1542"/>
         <source>Output Clear</source>
-        <translation>출력 지우기</translation>
+        <translation type="vanished">출력 지우기</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1528"/>
+        <location filename="../encrypt_dlg.ui" line="1540"/>
         <source>Init Automatically</source>
         <translation>자동 초기화</translation>
     </message>
@@ -3363,56 +3375,56 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">대상 파일 [%1] 이 이미 존재 합니다. 지우고 계속 하시겠습나까?</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.cpp" line="466"/>
+        <location filename="../encrypt_dlg.cpp" line="470"/>
         <source>Encrypt Files</source>
         <translation>암호화 파일</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.cpp" line="502"/>
+        <location filename="../encrypt_dlg.cpp" line="506"/>
         <source>EncryptInit execution failure [%1]</source>
         <translation>EncryptInit 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.cpp" line="522"/>
+        <location filename="../encrypt_dlg.cpp" line="526"/>
         <source>Enter your data.</source>
         <translation>데이타를 입력하세요</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.cpp" line="548"/>
-        <location filename="../encrypt_dlg.cpp" line="783"/>
+        <location filename="../encrypt_dlg.cpp" line="552"/>
+        <location filename="../encrypt_dlg.cpp" line="787"/>
         <source>EncryptUpdate execution failure [%1]</source>
         <translation>EncryptUpdate 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.cpp" line="576"/>
-        <location filename="../encrypt_dlg.cpp" line="592"/>
+        <location filename="../encrypt_dlg.cpp" line="580"/>
+        <location filename="../encrypt_dlg.cpp" line="596"/>
         <source>EncryptFinal execution failure [%1]</source>
         <translation>EncryptFinal 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.cpp" line="647"/>
+        <location filename="../encrypt_dlg.cpp" line="651"/>
         <source>Enter your data</source>
         <translation>데이타를 입력하세요</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.cpp" line="680"/>
+        <location filename="../encrypt_dlg.cpp" line="684"/>
         <source>Encrypt execution failure [%1]</source>
         <translation>Encrypt 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.cpp" line="732"/>
-        <location filename="../encrypt_dlg.cpp" line="885"/>
+        <location filename="../encrypt_dlg.cpp" line="736"/>
+        <location filename="../encrypt_dlg.cpp" line="889"/>
         <source>Find destination file</source>
         <translation>대상 파일을 찾으세요</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.cpp" line="739"/>
+        <location filename="../encrypt_dlg.cpp" line="743"/>
         <source>Destination file[%1] is already exist.
 Do you want to delete the file and continue?</source>
         <translation>대상 파일(%1)이 이미 존재합니다. 삭제 후 계속 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.cpp" line="859"/>
+        <location filename="../encrypt_dlg.cpp" line="863"/>
         <source>failed to initialize [%1]</source>
         <translation>초기화 실패 [%1]</translation>
     </message>
@@ -3421,24 +3433,24 @@ Do you want to delete the file and continue?</source>
         <translation type="obsolete">Digest 초기화 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.cpp" line="714"/>
-        <location filename="../encrypt_dlg.cpp" line="877"/>
+        <location filename="../encrypt_dlg.cpp" line="718"/>
+        <location filename="../encrypt_dlg.cpp" line="881"/>
         <source>Find source file</source>
         <translation>소스 파일을 찾으세요</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.cpp" line="892"/>
+        <location filename="../encrypt_dlg.cpp" line="896"/>
         <source>The target file[%1] is already exist.
 Do you want to delete the file and continue?</source>
         <translation>대상 파일(%1)이 이미 존재합니다. 삭제 후 계속 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="777"/>
+        <location filename="../encrypt_dlg.ui" line="783"/>
         <source>Input File</source>
         <translation>파일 입력</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.cpp" line="627"/>
+        <location filename="../encrypt_dlg.cpp" line="631"/>
         <source>This feature requires a license.</source>
         <translation>이 기능은 라이센스가 필요합니다.</translation>
     </message>
@@ -7338,7 +7350,7 @@ Do you want to delete the file and continue?</source>
 <context>
     <name>SignDlg</name>
     <message>
-        <location filename="../sign_dlg.ui" line="524"/>
+        <location filename="../sign_dlg.ui" line="574"/>
         <source>Input</source>
         <translation>입력</translation>
     </message>
@@ -7358,7 +7370,7 @@ Do you want to delete the file and continue?</source>
         <translation>슬롯 목록</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="1249"/>
+        <location filename="../sign_dlg.ui" line="1261"/>
         <source>Close</source>
         <translation>닫기</translation>
     </message>
@@ -7393,27 +7405,33 @@ Do you want to delete the file and continue?</source>
         <translation>파라미터</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="1187"/>
+        <location filename="../sign_dlg.ui" line="1206"/>
         <source>Init</source>
         <translation>Init</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="604"/>
+        <location filename="../sign_dlg.ui" line="617"/>
         <source>Update</source>
         <translation>Update</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="632"/>
+        <location filename="../sign_dlg.ui" line="600"/>
+        <location filename="../sign_dlg.ui" line="1148"/>
+        <source>C</source>
+        <translation>C</translation>
+    </message>
+    <message>
+        <location filename="../sign_dlg.ui" line="638"/>
         <source>Final</source>
         <translation>Final</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="1116"/>
+        <location filename="../sign_dlg.ui" line="1072"/>
         <source>Signature</source>
         <translation>서명</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="1242"/>
+        <location filename="../sign_dlg.ui" line="1254"/>
         <source>Status</source>
         <translation>상태</translation>
     </message>
@@ -7423,55 +7441,55 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../sign_dlg.ui" line="14"/>
-        <location filename="../sign_dlg.ui" line="1214"/>
+        <location filename="../sign_dlg.ui" line="1233"/>
         <source>Sign</source>
         <translation>서명</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.cpp" line="313"/>
+        <location filename="../sign_dlg.cpp" line="317"/>
         <source>fail to run SignInit(%1)</source>
         <translation>SignInit 실패(%1)</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.cpp" line="332"/>
-        <location filename="../sign_dlg.cpp" line="411"/>
-        <location filename="../sign_dlg.cpp" line="604"/>
+        <location filename="../sign_dlg.cpp" line="336"/>
+        <location filename="../sign_dlg.cpp" line="415"/>
+        <location filename="../sign_dlg.cpp" line="608"/>
         <source>Please enter your data.</source>
         <translation>데이타를 입력하세요</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.cpp" line="349"/>
-        <location filename="../sign_dlg.cpp" line="519"/>
+        <location filename="../sign_dlg.cpp" line="353"/>
+        <location filename="../sign_dlg.cpp" line="523"/>
         <source>SignUpdate execution failure [%1]</source>
         <translation>SignUpdate 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.cpp" line="367"/>
+        <location filename="../sign_dlg.cpp" line="371"/>
         <source>SignFinal execution failure [%1]</source>
         <translation>SignFinal 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.cpp" line="439"/>
+        <location filename="../sign_dlg.cpp" line="443"/>
         <source>Sign execution failure [%1]</source>
         <translation>Sign 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.cpp" line="494"/>
+        <location filename="../sign_dlg.cpp" line="498"/>
         <source>failed to initialize sign [%1]</source>
         <translation>서명 초기화 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.cpp" line="587"/>
+        <location filename="../sign_dlg.cpp" line="591"/>
         <source>SignRecoverInit execution failure [%1]</source>
         <translation>SignRecoverInit 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.cpp" line="625"/>
+        <location filename="../sign_dlg.cpp" line="629"/>
         <source>SignRecover execution failure [%1]</source>
         <translation>SignRecover 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.cpp" line="687"/>
+        <location filename="../sign_dlg.cpp" line="691"/>
         <source>failed to initialize [%1]</source>
         <translation>초기화 실패 [%1]</translation>
     </message>
@@ -7480,8 +7498,8 @@ Do you want to delete the file and continue?</source>
         <translation type="obsolete">Digest 초기화 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.cpp" line="473"/>
-        <location filename="../sign_dlg.cpp" line="705"/>
+        <location filename="../sign_dlg.cpp" line="477"/>
+        <location filename="../sign_dlg.cpp" line="709"/>
         <source>Find source file</source>
         <translation>소스 파일을 찾으세요</translation>
     </message>
@@ -7498,27 +7516,27 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">Sign 실패(%1)</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="511"/>
+        <location filename="../sign_dlg.ui" line="494"/>
         <source>Hex</source>
         <translation>헥사</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="494"/>
+        <location filename="../sign_dlg.ui" line="561"/>
         <source>Base64</source>
         <translation>베이스64</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="501"/>
+        <location filename="../sign_dlg.ui" line="551"/>
         <source>String</source>
         <translation>문자열</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="611"/>
+        <location filename="../sign_dlg.ui" line="624"/>
         <source>SignRecoverInit</source>
         <translation>SignRecoverInit</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="618"/>
+        <location filename="../sign_dlg.ui" line="631"/>
         <source>SignRecover</source>
         <translation>SignRecover</translation>
     </message>
@@ -7536,62 +7554,60 @@ Do you want to delete the file and continue?</source>
         <translation>데이타 입력</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="625"/>
         <source>Input Clear</source>
-        <translation>입력 지움</translation>
+        <translation type="vanished">입력 지움</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="655"/>
+        <location filename="../sign_dlg.ui" line="661"/>
         <source>Input File</source>
         <translation>파일 입력</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="682"/>
+        <location filename="../sign_dlg.ui" line="688"/>
         <source>Src File Path</source>
         <translation>소스 파일 경로</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="701"/>
+        <location filename="../sign_dlg.ui" line="707"/>
         <source>Find</source>
         <translation>찾기</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="771"/>
+        <location filename="../sign_dlg.ui" line="777"/>
         <source>File Information</source>
         <translation>소스 파일 정보</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="853"/>
+        <location filename="../sign_dlg.ui" line="859"/>
         <source>File Status</source>
         <translation>파일 상태</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="919"/>
+        <location filename="../sign_dlg.ui" line="925"/>
         <source>Total File Size</source>
         <translation>전체 파일 크기</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="926"/>
+        <location filename="../sign_dlg.ui" line="932"/>
         <source>Read File Size</source>
         <translation>읽은 파일 크기</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="1008"/>
+        <location filename="../sign_dlg.ui" line="1014"/>
         <source>Run Status</source>
         <translation>실행 상태</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="1022"/>
+        <location filename="../sign_dlg.ui" line="1028"/>
         <source>RunThread</source>
         <translation>쓰레드 실행</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="1221"/>
         <source>Output Clear</source>
-        <translation>출력 지우기</translation>
+        <translation type="vanished">출력 지우기</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="1207"/>
+        <location filename="../sign_dlg.ui" line="1226"/>
         <source>Init automatically</source>
         <translation>자동 초기화</translation>
     </message>
@@ -7600,7 +7616,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">서명 초기화 실패:%1</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.cpp" line="391"/>
+        <location filename="../sign_dlg.cpp" line="395"/>
         <source>This feature requires a license.</source>
         <translation>이 기능은 라이센스가 필요합니다.</translation>
     </message>
@@ -7859,23 +7875,23 @@ Do you want to delete the file and continue?</source>
 <context>
     <name>VerifyDlg</name>
     <message>
-        <location filename="../verify_dlg.ui" line="1153"/>
+        <location filename="../verify_dlg.ui" line="1172"/>
         <source>Init</source>
         <translation>Init</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="611"/>
+        <location filename="../verify_dlg.ui" line="624"/>
         <source>Update</source>
         <translation>Update</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="632"/>
+        <location filename="../verify_dlg.ui" line="645"/>
         <source>Final</source>
         <translation>Final</translation>
     </message>
     <message>
         <location filename="../verify_dlg.ui" line="14"/>
-        <location filename="../verify_dlg.ui" line="1180"/>
+        <location filename="../verify_dlg.ui" line="1199"/>
         <source>Verify</source>
         <translation>검증</translation>
     </message>
@@ -7895,7 +7911,13 @@ Do you want to delete the file and continue?</source>
         <translation>라벨</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="1208"/>
+        <location filename="../verify_dlg.ui" line="607"/>
+        <location filename="../verify_dlg.ui" line="1155"/>
+        <source>C</source>
+        <translation>C</translation>
+    </message>
+    <message>
+        <location filename="../verify_dlg.ui" line="1220"/>
         <source>Close</source>
         <translation>닫기</translation>
     </message>
@@ -7910,12 +7932,12 @@ Do you want to delete the file and continue?</source>
         <translation>키 타입</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="517"/>
+        <location filename="../verify_dlg.ui" line="574"/>
         <source>Input</source>
         <translation>입력</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="1136"/>
+        <location filename="../verify_dlg.ui" line="1092"/>
         <source>Signature</source>
         <translation>서명</translation>
     </message>
@@ -7940,7 +7962,7 @@ Do you want to delete the file and continue?</source>
         <translation>로그인</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="1215"/>
+        <location filename="../verify_dlg.ui" line="1227"/>
         <source>Status</source>
         <translation>상태</translation>
     </message>
@@ -7978,22 +8000,22 @@ Do you want to delete the file and continue?</source>
         <translation>베이스64</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="574"/>
+        <location filename="../verify_dlg.ui" line="501"/>
         <source>Hex</source>
         <translation>헥사</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="501"/>
+        <location filename="../verify_dlg.ui" line="508"/>
         <source>String</source>
         <translation>문자열</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="625"/>
+        <location filename="../verify_dlg.ui" line="638"/>
         <source>VerifyRecoverInit</source>
         <translation>VerifyRecoverInit</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="618"/>
+        <location filename="../verify_dlg.ui" line="631"/>
         <source>VerifyRecover</source>
         <translation>VerifyRecover</translation>
     </message>
@@ -8007,62 +8029,60 @@ Do you want to delete the file and continue?</source>
         <translation>데이타 입력</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="639"/>
         <source>Input Clear</source>
-        <translation>입력 지움</translation>
+        <translation type="vanished">입력 지움</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="662"/>
+        <location filename="../verify_dlg.ui" line="668"/>
         <source>Input File</source>
         <translation>파일 입력</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="682"/>
+        <location filename="../verify_dlg.ui" line="688"/>
         <source>Src File Path</source>
         <translation>소스 파일 경로</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="708"/>
+        <location filename="../verify_dlg.ui" line="714"/>
         <source>Find</source>
         <translation>찾기</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="778"/>
+        <location filename="../verify_dlg.ui" line="784"/>
         <source>File Information</source>
         <translation>소스 파일 정보</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="907"/>
+        <location filename="../verify_dlg.ui" line="913"/>
         <source>Total File Size</source>
         <translation>전체 파일 크기</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="914"/>
+        <location filename="../verify_dlg.ui" line="920"/>
         <source>Read File Size</source>
         <translation>읽은 파일 크기</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="933"/>
+        <location filename="../verify_dlg.ui" line="939"/>
         <source>File Status</source>
         <translation>파일 상태</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="1022"/>
+        <location filename="../verify_dlg.ui" line="1028"/>
         <source>Run Status</source>
         <translation>실행 상태</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="1029"/>
+        <location filename="../verify_dlg.ui" line="1035"/>
         <source>RunThread</source>
         <translation>쓰레드 실행</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="1187"/>
         <source>Sign Clear</source>
-        <translation>서명 지우기</translation>
+        <translation type="vanished">서명 지우기</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="1173"/>
+        <location filename="../verify_dlg.ui" line="1192"/>
         <source>Init Automatically</source>
         <translation>자동 초기화</translation>
     </message>
@@ -8075,65 +8095,65 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">검증 초기화 실패:%1</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.cpp" line="310"/>
+        <location filename="../verify_dlg.cpp" line="314"/>
         <source>VerifyInit execution failure [%1]</source>
         <translation>VerifyInit 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.cpp" line="326"/>
-        <location filename="../verify_dlg.cpp" line="409"/>
+        <location filename="../verify_dlg.cpp" line="330"/>
+        <location filename="../verify_dlg.cpp" line="413"/>
         <source>Please enter your data.</source>
         <translation>데이타를 입력하세요</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.cpp" line="343"/>
-        <location filename="../verify_dlg.cpp" line="522"/>
+        <location filename="../verify_dlg.cpp" line="347"/>
+        <location filename="../verify_dlg.cpp" line="526"/>
         <source>VerifyUpdate execution failure [%1]</source>
         <translation>VerifyUpdate 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.cpp" line="358"/>
+        <location filename="../verify_dlg.cpp" line="362"/>
         <source>Enter signature.</source>
         <translation>서명값을 입력하세요</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.cpp" line="369"/>
-        <location filename="../verify_dlg.cpp" line="443"/>
-        <location filename="../verify_dlg.cpp" line="615"/>
+        <location filename="../verify_dlg.cpp" line="373"/>
+        <location filename="../verify_dlg.cpp" line="447"/>
+        <location filename="../verify_dlg.cpp" line="619"/>
         <source>Signature value is incorrect [%1]</source>
         <translation>서명값이 맞지 않습니다 [%1]</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.cpp" line="373"/>
-        <location filename="../verify_dlg.cpp" line="445"/>
-        <location filename="../verify_dlg.cpp" line="621"/>
+        <location filename="../verify_dlg.cpp" line="377"/>
+        <location filename="../verify_dlg.cpp" line="449"/>
+        <location filename="../verify_dlg.cpp" line="625"/>
         <source>Signature value is correct</source>
         <translation>서명값이 맞습니다</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.cpp" line="389"/>
+        <location filename="../verify_dlg.cpp" line="393"/>
         <source>This feature requires a license.</source>
         <translation>이 기능은 라이센스가 필요합니다.</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.cpp" line="417"/>
-        <location filename="../verify_dlg.cpp" line="488"/>
-        <location filename="../verify_dlg.cpp" line="604"/>
+        <location filename="../verify_dlg.cpp" line="421"/>
+        <location filename="../verify_dlg.cpp" line="492"/>
+        <location filename="../verify_dlg.cpp" line="608"/>
         <source>Please enter signature.</source>
         <translation>서명값을 입력하세요</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.cpp" line="497"/>
+        <location filename="../verify_dlg.cpp" line="501"/>
         <source>failed to initialize verify:%1</source>
         <translation>검증 초기화 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.cpp" line="587"/>
+        <location filename="../verify_dlg.cpp" line="591"/>
         <source>VerifyRecoverInit execution failure [%1]</source>
         <translation>VerifyRecoverInit 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.cpp" line="674"/>
+        <location filename="../verify_dlg.cpp" line="678"/>
         <source>failed to initialize [%1]</source>
         <translation>초기화 실패 [%1]</translation>
     </message>
@@ -8142,8 +8162,8 @@ Do you want to delete the file and continue?</source>
         <translation type="obsolete">Digest 초기화 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.cpp" line="469"/>
-        <location filename="../verify_dlg.cpp" line="692"/>
+        <location filename="../verify_dlg.cpp" line="473"/>
+        <location filename="../verify_dlg.cpp" line="696"/>
         <source>Find source file</source>
         <translation>소스 파일을 찾으세요</translation>
     </message>
