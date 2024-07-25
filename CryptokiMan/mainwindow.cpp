@@ -727,7 +727,11 @@ void MainWindow::open()
     if( !fileName.isEmpty() )
     {
         int ret = openLibrary( fileName );
-        if( ret != 0 ) return;
+        if( ret != 0 )
+        {
+            manApplet->warningBox( tr( "[%1] is not a valid library: %2" ).arg(fileName).arg(ret), this );
+            return;
+        }
 
         manApplet->setLibPath( fileName );
         manApplet->log( QString("Successfully opened Cryptoki library [%1]").arg( fileName) );

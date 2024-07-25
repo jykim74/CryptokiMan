@@ -1024,9 +1024,8 @@ void GenKeyPairDlg::clickGenDHParam()
 
 void GenKeyPairDlg::changeDH_P()
 {
-    int nLen = mDH_PText->toPlainText().length() / 2;
-
-    mDH_PLenText->setText( QString("%1").arg( nLen ));
+    QString strLen = getDataLenString( DATA_HEX, mDH_PText->toPlainText() );
+    mDH_PLenText->setText( QString("%1").arg( strLen ));
 }
 
 void GenKeyPairDlg::clickGenDSAParam()

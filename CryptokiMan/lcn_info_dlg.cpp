@@ -98,7 +98,7 @@ void LCNInfoDlg::initialize()
         {
             mCurGroup->setEnabled( true );
             mUpdateBtn->setEnabled( true );
-            mRemoveBtn->setEnabled( false );
+            mRemoveBtn->hide();
         }
         else
         {
