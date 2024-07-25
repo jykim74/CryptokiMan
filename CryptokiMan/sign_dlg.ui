@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>551</height>
+    <width>532</width>
+    <height>698</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1153,6 +1153,12 @@
    </item>
    <item>
     <widget class="QPlainTextEdit" name="mOutputText">
+     <property name="minimumSize">
+      <size>
+       <width>500</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="palette">
       <palette>
        <active>

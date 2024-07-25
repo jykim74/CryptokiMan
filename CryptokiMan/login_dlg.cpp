@@ -79,11 +79,8 @@ void LoginDlg::clickLogin()
     }
 
     int rv = -1;
- //   CK_UTF8CHAR *pPin = (CK_UTF8CHAR *)mPinText->text().toUtf8().toStdString().c_str();
-    CK_UTF8CHAR *pPin = (CK_UTF8CHAR *)mPinText->text().toStdString().c_str();
-    CK_ULONG uPinLen = mPinText->text().length();
 
-    if( mPinText->text().length() < 1 )
+    if( mPinText->text().toUtf8().length() < 1 )
     {
         manApplet->warningBox( tr( "Enter a PIN" ), this );
         mPinText->setFocus();
@@ -95,7 +92,13 @@ void LoginDlg::clickLogin()
     else
         nType = CKU_USER;
 
+    CK_ULONG uPinLen = mPinText->text().toUtf8().length();
+    CK_UTF8CHAR *pPin = (CK_UTF8CHAR *)JS_calloc( 1, uPinLen + 1 );
+    memcpy( pPin, mPinText->text().toStdString().c_str(), uPinLen );
+
     rv = manApplet->cryptokiAPI()->Login( hSession, nType, pPin, uPinLen );
+
+    if( pPin ) JS_free( pPin );
 
     if( rv == CKR_OK )
     {

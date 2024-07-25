@@ -6553,7 +6553,7 @@ Do you want to delete the file and continue?</source>
     <message>
         <location filename="../man_tree_view.cpp" line="125"/>
         <source>Login</source>
-        <translation>로그인</translation>
+        <translation>Login</translation>
     </message>
     <message>
         <location filename="../man_tree_view.cpp" line="126"/>

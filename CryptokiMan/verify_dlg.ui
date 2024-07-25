@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>474</width>
-    <height>560</height>
+    <width>532</width>
+    <height>713</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1159,7 +1159,14 @@
     </layout>
    </item>
    <item>
-    <widget class="QPlainTextEdit" name="mSignText"/>
+    <widget class="QPlainTextEdit" name="mSignText">
+     <property name="minimumSize">
+      <size>
+       <width>500</width>
+       <height>0</height>
+      </size>
+     </property>
+    </widget>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
