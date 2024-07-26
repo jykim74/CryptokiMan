@@ -8,6 +8,7 @@
 #include "man_applet.h"
 #include "js_pkcs11.h"
 #include "cryptoki_api.h"
+#include "common.h"
 
 SetPinDlg::SetPinDlg(QWidget *parent) :
     QDialog(parent)
@@ -100,22 +101,20 @@ void SetPinDlg::accept()
     BIN binOldPin = {0,0};
     BIN binNewPin = { 0,0 };
 
-
-    JS_BIN_set( &binOldPin, (unsigned char *)strOldPin.toStdString().c_str(), strOldPin.length() );
-    JS_BIN_set( &binNewPin, (unsigned char *)strNewPin.toStdString().c_str(), strNewPin.length() );
+    getBINFromString( &binOldPin, DATA_STRING, strOldPin );
+    getBINFromString( &binNewPin, DATA_STRING, strNewPin );
 
     rv = manApplet->cryptokiAPI()->SetPIN( hSession, binOldPin.pVal, binOldPin.nLen, binNewPin.pVal, binNewPin.nLen );
+
+    JS_BIN_reset( &binOldPin );
+    JS_BIN_reset( &binNewPin );
 
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr( "SetPIN execution failure [%1]").arg(rv), this );
-        JS_BIN_reset( &binOldPin );
-        JS_BIN_reset( &binNewPin );
         return;
     }
 
     manApplet->messageBox( tr( "SetPIN execution successful"), this );
-    JS_BIN_reset( &binNewPin );
-    JS_BIN_reset( &binOldPin );
     QDialog::accept();
 }

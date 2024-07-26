@@ -8,6 +8,7 @@
 #include "mainwindow.h"
 #include "js_pkcs11.h"
 #include "cryptoki_api.h"
+#include "common.h"
 
 const QStringList kLoginType = { "SO", "User" };
 
@@ -67,6 +68,7 @@ void LoginDlg::clickLogin()
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     int nType = 0;
+    BIN binPIN = {0,0};
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
@@ -92,13 +94,11 @@ void LoginDlg::clickLogin()
     else
         nType = CKU_USER;
 
-    CK_ULONG uPinLen = mPinText->text().toUtf8().length();
-    CK_UTF8CHAR *pPin = (CK_UTF8CHAR *)JS_calloc( 1, uPinLen + 1 );
-    memcpy( pPin, mPinText->text().toStdString().c_str(), uPinLen );
+    getBINFromString( &binPIN, DATA_STRING, mPinText->text() );
 
-    rv = manApplet->cryptokiAPI()->Login( hSession, nType, pPin, uPinLen );
+    rv = manApplet->cryptokiAPI()->Login( hSession, nType, binPIN.pVal, binPIN.nLen );
 
-    if( pPin ) JS_free( pPin );
+    JS_BIN_reset( &binPIN );
 
     if( rv == CKR_OK )
     {

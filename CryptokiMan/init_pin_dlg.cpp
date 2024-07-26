@@ -8,6 +8,7 @@
 #include "man_applet.h"
 #include "js_pkcs11.h"
 #include "cryptoki_api.h"
+#include "common.h"
 
 InitPinDlg::InitPinDlg(QWidget *parent) :
     QDialog(parent)
@@ -96,19 +97,19 @@ void InitPinDlg::accept()
         return;
     }
 
-    BIN binPin = {0,0};
-    JS_BIN_set( &binPin, (unsigned char *)strPin.toStdString().c_str(), strPin.length() );
+    BIN binPin = {0,0};    
+    getBINFromString( &binPin, DATA_STRING, strPin );
 
     rv = manApplet->cryptokiAPI()->InitPIN( hSession, binPin.pVal, binPin.nLen );
+
+    JS_BIN_reset( &binPin );
 
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr( "InitPIN execution failure [%1]").arg(rv), this );
-        JS_BIN_reset( &binPin );
         return;
     }
 
     manApplet->messageBox( tr( "InitPIN execution successful"), this );
-    JS_BIN_reset( &binPin );
     QDialog::accept();
 }

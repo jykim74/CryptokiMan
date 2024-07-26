@@ -9,6 +9,8 @@
 #include "js_pkcs11.h"
 #include "cryptoki_api.h"
 
+#include "common.h"
+
 InitTokenDlg::InitTokenDlg(QWidget *parent) :
     QDialog(parent)
 {
@@ -67,8 +69,10 @@ void InitTokenDlg::accept()
 
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
-    CK_SESSION_HANDLE   hSession = slotInfo.getSessionHandle();
+
     int rv = -1;
+
+    BIN binPIN = {0,0};
 
     QString strLabel = mLabelText->text();
     if( strLabel.isEmpty() )
@@ -97,11 +101,15 @@ void InitTokenDlg::accept()
         return;
     }
 
+    getBINFromString( &binPIN, DATA_STRING, mPinText->text() );
+
     rv = manApplet->cryptokiAPI()->InitToken(
                 slotInfo.getSlotID(),
-                (CK_UTF8CHAR_PTR)strPIN.toStdString().c_str(),
-                strPIN.length(),
+                binPIN.pVal,
+                binPIN.nLen,
                 (CK_UTF8CHAR_PTR)strLabel.toStdString().c_str() );
+
+    JS_BIN_reset( &binPIN );
 
     if( rv != CKR_OK )
     {
