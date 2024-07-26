@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>664</width>
-    <height>670</height>
+    <height>408</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -350,49 +350,45 @@
           <layout class="QVBoxLayout" name="verticalLayout_5">
            <item>
             <layout class="QGridLayout" name="gridLayout_8">
-             <item row="0" column="1">
-              <widget class="QLineEdit" name="mDSA_QText">
-               <property name="palette">
-                <palette>
-                 <active>
-                  <colorrole role="Base">
-                   <brush brushstyle="SolidPattern">
-                    <color alpha="255">
-                     <red>255</red>
-                     <green>255</green>
-                     <blue>255</blue>
-                    </color>
-                   </brush>
-                  </colorrole>
-                 </active>
-                 <inactive>
-                  <colorrole role="Base">
-                   <brush brushstyle="SolidPattern">
-                    <color alpha="255">
-                     <red>255</red>
-                     <green>255</green>
-                     <blue>255</blue>
-                    </color>
-                   </brush>
-                  </colorrole>
-                 </inactive>
-                 <disabled>
-                  <colorrole role="Base">
-                   <brush brushstyle="SolidPattern">
-                    <color alpha="255">
-                     <red>240</red>
-                     <green>240</green>
-                     <blue>240</blue>
-                    </color>
-                   </brush>
-                  </colorrole>
-                 </disabled>
-                </palette>
-               </property>
-               <property name="readOnly">
-                <bool>false</bool>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <item row="0" column="0">
+              <widget class="QPushButton" name="mDSAGenParamBtn">
+               <property name="text">
+                <string>Gen Param</string>
                </property>
               </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QPushButton" name="mDSAClearParamBtn">
+               <property name="text">
+                <string>Clear</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <spacer name="horizontalSpacer_5">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QGridLayout" name="gridLayout_13">
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="mDSA_PText"/>
              </item>
              <item row="0" column="2">
               <widget class="QLineEdit" name="mDSA_QLenText">
@@ -450,25 +446,51 @@
                </property>
               </widget>
              </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_18">
-               <property name="text">
-                <string>Subprime(Q)</string>
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="mDSA_QText">
+               <property name="palette">
+                <palette>
+                 <active>
+                  <colorrole role="Base">
+                   <brush brushstyle="SolidPattern">
+                    <color alpha="255">
+                     <red>255</red>
+                     <green>255</green>
+                     <blue>255</blue>
+                    </color>
+                   </brush>
+                  </colorrole>
+                 </active>
+                 <inactive>
+                  <colorrole role="Base">
+                   <brush brushstyle="SolidPattern">
+                    <color alpha="255">
+                     <red>255</red>
+                     <green>255</green>
+                     <blue>255</blue>
+                    </color>
+                   </brush>
+                  </colorrole>
+                 </inactive>
+                 <disabled>
+                  <colorrole role="Base">
+                   <brush brushstyle="SolidPattern">
+                    <color alpha="255">
+                     <red>240</red>
+                     <green>240</green>
+                     <blue>240</blue>
+                    </color>
+                   </brush>
+                  </colorrole>
+                 </disabled>
+                </palette>
+               </property>
+               <property name="readOnly">
+                <bool>false</bool>
                </property>
               </widget>
              </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QGridLayout" name="gridLayout_10">
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_19">
-               <property name="text">
-                <string>Prime(P)</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="2">
+             <item row="1" column="2">
               <widget class="QLineEdit" name="mDSA_PLenText">
                <property name="minimumSize">
                 <size>
@@ -524,71 +546,37 @@
                </property>
               </widget>
              </item>
-             <item row="0" column="1">
-              <spacer name="horizontalSpacer">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_18">
+               <property name="minimumSize">
                 <size>
-                 <width>40</width>
-                 <height>20</height>
+                 <width>80</width>
+                 <height>0</height>
                 </size>
                </property>
-              </spacer>
+               <property name="text">
+                <string>Subprime(Q)</string>
+               </property>
+              </widget>
              </item>
-            </layout>
-           </item>
-           <item>
-            <widget class="QPlainTextEdit" name="mDSA_PText">
-             <property name="palette">
-              <palette>
-               <active>
-                <colorrole role="Base">
-                 <brush brushstyle="SolidPattern">
-                  <color alpha="255">
-                   <red>255</red>
-                   <green>255</green>
-                   <blue>255</blue>
-                  </color>
-                 </brush>
-                </colorrole>
-               </active>
-               <inactive>
-                <colorrole role="Base">
-                 <brush brushstyle="SolidPattern">
-                  <color alpha="255">
-                   <red>255</red>
-                   <green>255</green>
-                   <blue>255</blue>
-                  </color>
-                 </brush>
-                </colorrole>
-               </inactive>
-               <disabled>
-                <colorrole role="Base">
-                 <brush brushstyle="SolidPattern">
-                  <color alpha="255">
-                   <red>240</red>
-                   <green>240</green>
-                   <blue>240</blue>
-                  </color>
-                 </brush>
-                </colorrole>
-               </disabled>
-              </palette>
-             </property>
-             <property name="readOnly">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <layout class="QGridLayout" name="gridLayout_11">
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <item row="0" column="2">
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_19">
+               <property name="text">
+                <string>Prime(P)</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_20">
+               <property name="text">
+                <string>Generator(G)</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QLineEdit" name="mDSA_GText"/>
+             </item>
+             <item row="2" column="2">
               <widget class="QLineEdit" name="mDSA_GLenText">
                <property name="minimumSize">
                 <size>
@@ -644,104 +632,6 @@
                </property>
               </widget>
              </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_20">
-               <property name="text">
-                <string>Generator(G)</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <spacer name="horizontalSpacer_4">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <widget class="QPlainTextEdit" name="mDSA_GText">
-             <property name="palette">
-              <palette>
-               <active>
-                <colorrole role="Base">
-                 <brush brushstyle="SolidPattern">
-                  <color alpha="255">
-                   <red>255</red>
-                   <green>255</green>
-                   <blue>255</blue>
-                  </color>
-                 </brush>
-                </colorrole>
-               </active>
-               <inactive>
-                <colorrole role="Base">
-                 <brush brushstyle="SolidPattern">
-                  <color alpha="255">
-                   <red>255</red>
-                   <green>255</green>
-                   <blue>255</blue>
-                  </color>
-                 </brush>
-                </colorrole>
-               </inactive>
-               <disabled>
-                <colorrole role="Base">
-                 <brush brushstyle="SolidPattern">
-                  <color alpha="255">
-                   <red>240</red>
-                   <green>240</green>
-                   <blue>240</blue>
-                  </color>
-                 </brush>
-                </colorrole>
-               </disabled>
-              </palette>
-             </property>
-             <property name="readOnly">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <layout class="QGridLayout" name="gridLayout_12">
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <item row="0" column="2">
-              <widget class="QPushButton" name="mDSAGenParamBtn">
-               <property name="text">
-                <string>Gen Param</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QPushButton" name="mDSAClearParamBtn">
-               <property name="text">
-                <string>Clear</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <spacer name="horizontalSpacer_5">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
             </layout>
            </item>
           </layout>
@@ -753,21 +643,44 @@
           <layout class="QVBoxLayout" name="verticalLayout_6">
            <item>
             <layout class="QGridLayout" name="gridLayout_9">
-             <item row="0" column="2">
+             <item row="0" column="3">
               <widget class="QLabel" name="label_15">
                <property name="text">
                 <string>g</string>
                </property>
               </widget>
              </item>
+             <item row="0" column="2">
+              <spacer name="horizontalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
              <item row="0" column="4">
+              <widget class="QComboBox" name="mDH_GCombo"/>
+             </item>
+             <item row="0" column="5">
               <widget class="QLabel" name="label_17">
                <property name="text">
                 <string>p</string>
                </property>
               </widget>
              </item>
-             <item row="0" column="5">
+             <item row="0" column="0">
+              <widget class="QPushButton" name="mGenDHParamBtn">
+               <property name="text">
+                <string>Gen DH Param</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="6">
               <widget class="QLineEdit" name="mDH_PLenText">
                <property name="maximumSize">
                 <size>
@@ -810,28 +723,12 @@
                </property>
               </widget>
              </item>
-             <item row="0" column="3">
-              <widget class="QComboBox" name="mDH_GCombo"/>
-             </item>
-             <item row="0" column="0">
-              <widget class="QPushButton" name="mGenDHParamBtn">
+             <item row="0" column="1">
+              <widget class="QPushButton" name="mDHClearParamBtn">
                <property name="text">
-                <string>Gen DH Param</string>
+                <string>Clear</string>
                </property>
               </widget>
-             </item>
-             <item row="0" column="1">
-              <spacer name="horizontalSpacer_3">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
              </item>
             </layout>
            </item>
@@ -1363,15 +1260,16 @@
   <tabstop>mMechCombo</tabstop>
   <tabstop>mOptionCombo</tabstop>
   <tabstop>mParamTab</tabstop>
+  <tabstop>mDSAGenParamBtn</tabstop>
+  <tabstop>mDSAClearParamBtn</tabstop>
   <tabstop>mDSA_QText</tabstop>
   <tabstop>mDSA_QLenText</tabstop>
-  <tabstop>mDSA_PLenText</tabstop>
   <tabstop>mDSA_PText</tabstop>
-  <tabstop>mDSA_GLenText</tabstop>
+  <tabstop>mDSA_PLenText</tabstop>
   <tabstop>mDSA_GText</tabstop>
-  <tabstop>mDSAClearParamBtn</tabstop>
-  <tabstop>mDSAGenParamBtn</tabstop>
+  <tabstop>mDSA_GLenText</tabstop>
   <tabstop>mGenDHParamBtn</tabstop>
+  <tabstop>mDHClearParamBtn</tabstop>
   <tabstop>mDH_GCombo</tabstop>
   <tabstop>mDH_PLenText</tabstop>
   <tabstop>mDH_PText</tabstop>

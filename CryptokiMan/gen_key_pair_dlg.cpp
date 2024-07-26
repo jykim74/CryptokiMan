@@ -38,9 +38,10 @@ GenKeyPairDlg::GenKeyPairDlg(QWidget *parent) :
     connect( mMechCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(mechChanged(int)));
     connect( mGenDHParamBtn, SIGNAL(clicked()), this, SLOT(clickGenDHParam()));
     connect( mDH_PText, SIGNAL(textChanged()), this, SLOT(changeDH_P()));
+    connect( mDHClearParamBtn, SIGNAL(clicked()), this, SLOT(clickClearDHParam()));
 
-    connect( mDSA_GText, SIGNAL(textChanged()), this, SLOT(changeDSA_G()));
-    connect( mDSA_PText, SIGNAL(textChanged()), this, SLOT(changeDSA_P()));
+    connect( mDSA_GText, SIGNAL(textChanged(const QString&)), this, SLOT(changeDSA_G()));
+    connect( mDSA_PText, SIGNAL(textChanged(const QString&)), this, SLOT(changeDSA_P()));
     connect( mDSA_QText, SIGNAL(textChanged(const QString&)), this, SLOT(changeDSA_Q()));
 
     connect( mDSAGenParamBtn, SIGNAL(clicked()), this, SLOT(clickGenDSAParam()));
@@ -419,8 +420,8 @@ void GenKeyPairDlg::accept()
     {
         /* DSA 알고리즘은 좀더 입력 값 확인 이 필요함 */
         /* 관련 CKA_PRIME, CKA_SUBPRIME 그리고 CKA_BASE 값 설정에 관한 */
-        QString strDSA_P = mDSA_PText->toPlainText();
-        QString strDSA_G = mDSA_GText->toPlainText();
+        QString strDSA_P = mDSA_PText->text();
+        QString strDSA_G = mDSA_GText->text();
         QString strDSA_Q = mDSA_QText->text();
 
         JS_BIN_decodeHex( strDSA_G.toStdString().c_str(), &binDSA_G );
@@ -1038,8 +1039,8 @@ void GenKeyPairDlg::clickGenDSAParam()
 
     JS_PKI_DSA_GenParam( nKeyLen, &binP, &binQ, &binG );
 
-    mDSA_GText->setPlainText( getHexString(binG.pVal, binG.nLen));
-    mDSA_PText->setPlainText( getHexString(binP.pVal, binP.nLen));
+    mDSA_GText->setText( getHexString(binG.pVal, binG.nLen));
+    mDSA_PText->setText( getHexString(binP.pVal, binP.nLen));
     mDSA_QText->setText( getHexString(binQ.pVal, binQ.nLen));
 
     JS_BIN_reset( &binP );
@@ -1054,16 +1055,21 @@ void GenKeyPairDlg::clickClearDSAParam()
     mDSA_QText->clear();
 }
 
+void GenKeyPairDlg::clickClearDHParam()
+{
+    mDH_PText->clear();
+}
+
 void GenKeyPairDlg::changeDSA_P()
 {
-    QString strP = mDSA_PText->toPlainText();
+    QString strP = mDSA_PText->text();
     QString strLen = getDataLenString( DATA_HEX, strP );
     mDSA_PLenText->setText( QString("%1").arg(strLen));
 }
 
 void GenKeyPairDlg::changeDSA_G()
 {
-    QString strG = mDSA_GText->toPlainText();
+    QString strG = mDSA_GText->text();
     QString strLen = getDataLenString( DATA_HEX, strG );
     mDSA_GLenText->setText( QString("%1").arg(strLen));
 }
