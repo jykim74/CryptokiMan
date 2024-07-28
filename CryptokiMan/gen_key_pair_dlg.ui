@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>664</width>
-    <height>498</height>
+    <height>508</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,7 +23,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="mFirstTab">
       <attribute name="title">
@@ -387,7 +387,7 @@
        <item>
         <widget class="QTabWidget" name="mParamTab">
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="mDSATab">
           <attribute name="title">
@@ -1317,6 +1317,7 @@
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
   <tabstop>mMechCombo</tabstop>
+  <tabstop>mMechText</tabstop>
   <tabstop>mOptionCombo</tabstop>
   <tabstop>mParamTab</tabstop>
   <tabstop>mDSAGenParamBtn</tabstop>

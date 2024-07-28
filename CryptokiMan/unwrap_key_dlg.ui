@@ -1127,10 +1127,13 @@
   <tabstop>mUnwrapObjectText</tabstop>
   <tabstop>mUnwrapTypeCombo</tabstop>
   <tabstop>mUnwrapMechCombo</tabstop>
+  <tabstop>mUnwrapMechText</tabstop>
   <tabstop>mUnwrapParamText</tabstop>
   <tabstop>mUnwrapParamLenText</tabstop>
   <tabstop>mClassCombo</tabstop>
+  <tabstop>mClassText</tabstop>
   <tabstop>mTypeCombo</tabstop>
+  <tabstop>mTypeText</tabstop>
   <tabstop>mLabelText</tabstop>
   <tabstop>mIDText</tabstop>
   <tabstop>mUseRandCheck</tabstop>

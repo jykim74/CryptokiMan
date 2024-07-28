@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="mFirstTab">
       <attribute name="title">
@@ -736,6 +736,7 @@
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
   <tabstop>mKeyTypeCombo</tabstop>
+  <tabstop>mKeyTypeText</tabstop>
   <tabstop>mKeyCombo</tabstop>
   <tabstop>mKeyLenText</tabstop>
   <tabstop>mKeyText</tabstop>

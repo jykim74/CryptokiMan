@@ -1240,6 +1240,7 @@
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
   <tabstop>mMechCombo</tabstop>
+  <tabstop>mMechText</tabstop>
   <tabstop>mParamText</tabstop>
   <tabstop>mInputTab</tabstop>
   <tabstop>mInputCombo</tabstop>

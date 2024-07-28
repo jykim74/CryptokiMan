@@ -565,6 +565,7 @@
   <tabstop>mLabelCombo</tabstop>
   <tabstop>mObjectText</tabstop>
   <tabstop>mAttributeCombo</tabstop>
+  <tabstop>mAttributeText</tabstop>
   <tabstop>mValueTypeCombo</tabstop>
   <tabstop>mValueLenText</tabstop>
   <tabstop>mValueText</tabstop>

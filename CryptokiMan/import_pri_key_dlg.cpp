@@ -250,6 +250,7 @@ int ImportPriKeyDlg::readPrivateKey( BIN *pPriKey )
     if( ret <= 0 )
     {
         manApplet->warningBox( tr( "failed to read private key: %1").arg( ret ), this );
+        mPasswdText->setFocus();
         return  -1;
     }
 
@@ -259,6 +260,7 @@ int ImportPriKeyDlg::readPrivateKey( BIN *pPriKey )
         if( strPasswd.length() < 1 )
         {
             manApplet->warningBox( tr( "Enter a password"), this );
+            mPasswdText->setFocus();
             ret = -1;
             goto end;
         }

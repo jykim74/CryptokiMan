@@ -758,6 +758,7 @@
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
   <tabstop>mMechCombo</tabstop>
+  <tabstop>mMechText</tabstop>
   <tabstop>mKeySizeText</tabstop>
   <tabstop>mParamCombo</tabstop>
   <tabstop>mParamLenText</tabstop>

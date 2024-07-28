@@ -1652,6 +1652,7 @@
   <tabstop>mLoginText</tabstop>
   <tabstop>mKeyTypeCombo</tabstop>
   <tabstop>mMechCombo</tabstop>
+  <tabstop>mMechText</tabstop>
   <tabstop>mParamText</tabstop>
   <tabstop>mParamLenText</tabstop>
   <tabstop>mSrcLengthText</tabstop>

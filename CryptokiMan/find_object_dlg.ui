@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>645</width>
+    <width>653</width>
     <height>586</height>
    </rect>
   </property>
@@ -719,7 +719,9 @@
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
   <tabstop>mClassCombo</tabstop>
+  <tabstop>mClassText</tabstop>
   <tabstop>mKeyTypeCombo</tabstop>
+  <tabstop>mKeyTypeText</tabstop>
   <tabstop>mMaxText</tabstop>
   <tabstop>tabWidget</tabstop>
   <tabstop>mLabelText</tabstop>

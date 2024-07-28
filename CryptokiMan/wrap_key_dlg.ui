@@ -859,6 +859,7 @@
   <tabstop>mWrappingObjectText</tabstop>
   <tabstop>mWrappingTypeCombo</tabstop>
   <tabstop>mWrappingMechCombo</tabstop>
+  <tabstop>mWrappingMechText</tabstop>
   <tabstop>mWrappingParamText</tabstop>
   <tabstop>mWrappingParamLenText</tabstop>
   <tabstop>mLabelCombo</tabstop>
