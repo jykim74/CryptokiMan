@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>572</width>
-    <height>441</height>
+    <width>645</width>
+    <height>586</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -245,17 +245,70 @@
      <property name="topMargin">
       <number>0</number>
      </property>
-     <item row="0" column="4">
-      <widget class="QComboBox" name="mKeyTypeCombo"/>
+     <item row="0" column="2">
+      <widget class="QLineEdit" name="mClassText">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>80</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="palette">
+        <palette>
+         <active>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </active>
+         <inactive>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </inactive>
+         <disabled/>
+        </palette>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
      </item>
-     <item row="0" column="3">
+     <item row="0" column="4">
       <widget class="QLabel" name="mKeyTypeLabel">
        <property name="text">
         <string>Key Type</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="6">
+     <item row="0" column="7">
+      <widget class="QLabel" name="label_15">
+       <property name="text">
+        <string>Max</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="mClassCombo"/>
+     </item>
+     <item row="0" column="8">
       <widget class="QLineEdit" name="mMaxText">
        <property name="minimumSize">
         <size>
@@ -271,14 +324,7 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="5">
-      <widget class="QLabel" name="label_15">
-       <property name="text">
-        <string>Max</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
+     <item row="0" column="3">
       <spacer name="horizontalSpacer_3">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -291,9 +337,6 @@
        </property>
       </spacer>
      </item>
-     <item row="0" column="1">
-      <widget class="QComboBox" name="mClassCombo"/>
-     </item>
      <item row="0" column="0">
       <widget class="QLabel" name="label_7">
        <property name="minimumSize">
@@ -304,6 +347,55 @@
        </property>
        <property name="text">
         <string>Class</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="5">
+      <widget class="QComboBox" name="mKeyTypeCombo"/>
+     </item>
+     <item row="0" column="6">
+      <widget class="QLineEdit" name="mKeyTypeText">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>80</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="palette">
+        <palette>
+         <active>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </active>
+         <inactive>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </inactive>
+         <disabled/>
+        </palette>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -321,7 +413,7 @@
      <property name="currentIndex">
       <number>1</number>
      </property>
-     <widget class="QWidget" name="tab">
+     <widget class="QWidget" name="mFirstTab">
       <attribute name="title">
        <string>Information</string>
       </attribute>
@@ -398,7 +490,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_2">
+     <widget class="QWidget" name="mSecondTab">
       <attribute name="title">
        <string>Boolean</string>
       </attribute>

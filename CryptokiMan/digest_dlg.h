@@ -27,6 +27,7 @@ public:
 private slots:
     void slotChanged( int index );
     void changeKeyLabel( int index );
+    void changeMech( int index );
 
     void clickDigestKey();
     int clickInit();

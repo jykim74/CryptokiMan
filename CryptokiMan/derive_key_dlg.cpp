@@ -44,6 +44,7 @@ DeriveKeyDlg::DeriveKeyDlg(QWidget *parent) :
 
     connect( mSrcLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(srcLabelChanged(int)));
     connect( mClassCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(classChanged(int)));
+    connect( mTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(typeChanged(int)));
     connect( mSrcMethodCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changeMechanism(int)));
     connect( mParam1Text, SIGNAL(textChanged(const QString&)), this, SLOT(changeParam1(const QString&)));
     connect( mParam2Text, SIGNAL(textChanged(const QString&)), this, SLOT(changeParam2(const QString&)));
@@ -78,12 +79,34 @@ void DeriveKeyDlg::srcLabelChanged( int index )
 
 void DeriveKeyDlg::classChanged( int index )
 {
+    QString strClass = mClassCombo->currentText();
+    if( strClass.length() < 1 )
+        mClassText->clear();
+    else
+    {
+        long uClass = JS_PKCS11_GetCKOType( strClass.toStdString().c_str() );
+        mClassText->setText( QString("%1").arg( uClass, 8, 16, QLatin1Char('0')));
+    }
+
     mTypeCombo->clear();
 
     if( mClassCombo->currentIndex() == 0 )
         mTypeCombo->addItems( sSecKeyTypeList );
     else {
         mTypeCombo->addItems( sPriKeyTypeList );
+    }
+}
+
+void DeriveKeyDlg::typeChanged( int index )
+{
+    QString strType = mTypeCombo->currentText();
+
+    if( strType.length() < 1 )
+        mTypeText->clear();
+    else
+    {
+        long uType = JS_PKCS11_GetCKKType( strType.toStdString().c_str() );
+        mTypeText->setText(QString("%1").arg( uType, 8, 16, QLatin1Char('0')));
     }
 }
 
@@ -140,6 +163,7 @@ void DeriveKeyDlg::initialize()
     tabWidget->setCurrentIndex(0);
     mParamCombo->addItems( sParamList );
     changeMechanism(0);
+    classChanged(0);
 }
 
 void DeriveKeyDlg::accept()
@@ -611,6 +635,8 @@ void DeriveKeyDlg::clickEndDate()
 void DeriveKeyDlg::changeMechanism( int index )
 {
     long nMech = JS_PKCS11_GetCKMType( mSrcMethodCombo->currentText().toStdString().c_str());
+
+    mSrcMethodText->setText( QString( "%1" ).arg( nMech, 8, 16, QLatin1Char('0')));
 
     if( nMech == CKM_ECDH1_DERIVE )
     {

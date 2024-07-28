@@ -80,6 +80,7 @@ void SignDlg::initUI()
     connect( mKeyTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(keyTypeChanged(int)));
     connect( mLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(labelChanged(int)));
     connect( mParamText, SIGNAL(textChanged(const QString)), this, SLOT(changeParam(const QString)));
+    connect( mMechCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(mechChanged(int)));
 
     connect( mInitBtn, SIGNAL(clicked()), this, SLOT(clickInit()));
     connect( mUpdateBtn, SIGNAL(clicked()), this, SLOT(clickUpdate()));
@@ -248,6 +249,19 @@ void SignDlg::keyTypeChanged( int index )
     {
         QString strHandle = QString("%1").arg( sObjects[0] );
         mObjectText->setText( strHandle );
+    }
+}
+
+void SignDlg::mechChanged( int index )
+{
+    QString strMech = mMechCombo->currentText();
+
+    if( strMech.length() < 1 )
+        mMechText->clear();
+    else
+    {
+        long uMech = JS_PKCS11_GetCKMType( strMech.toStdString().c_str() );
+        mMechText->setText(QString("%1").arg( uMech, 8, 16, QLatin1Char('0')));
     }
 }
 

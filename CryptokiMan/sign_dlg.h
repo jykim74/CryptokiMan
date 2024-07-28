@@ -42,6 +42,7 @@ private slots:
 
     void labelChanged( int index );
     void keyTypeChanged( int index );
+    void mechChanged( int index );
 
     void changeInput();
     void changeOutput();

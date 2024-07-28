@@ -46,6 +46,8 @@ void WrapKeyDlg::initUI()
 {
     connect( mWrappingTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(wrappingTypeChanged(int)));
     connect( mWrappingLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(wrappingLabelChanged(int)));
+    connect( mWrappingMechCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(wrappingMechChanged(int)));
+
     connect( mLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(labelChanged(int)));
     connect( mSaveFileBtn, SIGNAL(clicked()), this, SLOT(clickSaveFile()));
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(close()));
@@ -205,6 +207,19 @@ void WrapKeyDlg::wrappingTypeChanged( int index )
     {
         mWrappingMechCombo->addItems( sMechWrapAsymList );
         setWrappingRSAPublicLabel();
+    }
+}
+
+void WrapKeyDlg::wrappingMechChanged( int index )
+{
+    QString strMech = mWrappingMechCombo->currentText();
+
+    if( strMech.length() < 1 )
+        mWrappingMechText->clear();
+    else
+    {
+        long uMech = JS_PKCS11_GetCKMType( strMech.toStdString().c_str() );
+        mWrappingMechText->setText( QString("%1").arg( uMech, 8, 16, QLatin1Char('0')));
     }
 }
 

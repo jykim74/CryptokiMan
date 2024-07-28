@@ -44,8 +44,10 @@ UnwrapKeyDlg::UnwrapKeyDlg(QWidget *parent) :
     connect( mUnwrapLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(unwrapLabelChanged(int)));
     connect( mUnwrapTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(unwrapTypeChanged(int)));
     connect( mClassCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(classChanged(int)));
+    connect( mTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(typeChanged(int)));
 
     connect( mUnwrapParamText, SIGNAL(textChanged(const QString&)), this, SLOT(changeUnwrapParam(const QString&)));
+    connect( mUnwrapMechCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(unwrapMechChanged(int)));
 
     connect( mReadFileBtn, SIGNAL(clicked(bool)), this, SLOT(clickReadFile()));
     connect( mInputClearBtn, SIGNAL(clicked()), this, SLOT(clickInputClear()));
@@ -269,7 +271,7 @@ void UnwrapKeyDlg::setSelectedSlot(int index)
 
 void UnwrapKeyDlg::initialize()
 {
-
+    classChanged(0);
 }
 
 void UnwrapKeyDlg::accept()
@@ -578,14 +580,48 @@ void UnwrapKeyDlg::unwrapTypeChanged(int index)
     }
 }
 
+void UnwrapKeyDlg::unwrapMechChanged(int index )
+{
+    QString strMech = mUnwrapMechCombo->currentText();
+    if( strMech.length() < 1 )
+        mUnwrapMechText->clear();
+    else
+    {
+        long uType = JS_PKCS11_GetCKMType( strMech.toStdString().c_str() );
+        mUnwrapMechText->setText( QString("%1").arg( uType, 8, 16, QLatin1Char('0')));
+    }
+}
+
 void UnwrapKeyDlg::classChanged(int index)
 {
+    QString strClass = mClassCombo->currentText();
+    if( strClass.length() < 1 )
+        mClassText->clear();
+    else
+    {
+        long uClass = JS_PKCS11_GetCKOType( strClass.toStdString().c_str() );
+        mClassText->setText( QString("%1").arg( uClass, 8, 16, QLatin1Char('0')));
+    }
+
     mTypeCombo->clear();
 
     if( mClassCombo->currentText() == sClassList.at(0) )
         mTypeCombo->addItems( sSymTypeList );
     else
         mTypeCombo->addItems( sAsymTypeList );
+}
+
+void UnwrapKeyDlg::typeChanged(int index)
+{
+    QString strType = mTypeCombo->currentText();
+
+    if( strType.length() < 1 )
+        mTypeText->clear();
+    else
+    {
+        long uType = JS_PKCS11_GetCKKType( strType.toStdString().c_str() );
+        mTypeText->setText( QString("%1").arg( uType, 8, 16, QLatin1Char('0')));
+    }
 }
 
 void UnwrapKeyDlg::clickReadFile()

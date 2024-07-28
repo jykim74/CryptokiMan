@@ -28,6 +28,7 @@ GenKeyPairDlg::GenKeyPairDlg(QWidget *parent) :
 {
     setupUi(this);
 
+
     initUI();
 
     initAttributes();
@@ -121,6 +122,8 @@ void GenKeyPairDlg::initialize()
     }
 
     if( slot_infos.size() > 0 ) slotChanged(0);
+
+    mechChanged(0);
 }
 
 void GenKeyPairDlg::initAttributes()
@@ -826,6 +829,9 @@ void GenKeyPairDlg::mechChanged(int nIndex)
 {
     mOptionCombo->clear();
     QString strMech = mMechCombo->currentText();
+    int uMech = JS_PKCS11_GetCKMType( strMech.toStdString().c_str() );
+
+    mMechText->setText( QString("%1").arg( uMech, 8, 16, QLatin1Char('0')));
 
     if( strMech == "CKM_RSA_PKCS_KEY_PAIR_GEN" )
     {

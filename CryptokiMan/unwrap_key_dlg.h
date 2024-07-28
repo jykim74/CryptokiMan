@@ -28,7 +28,9 @@ private slots:
 
     void unwrapLabelChanged(int index);
     void unwrapTypeChanged(int index);
+    void unwrapMechChanged(int index );
     void classChanged(int index);
+    void typeChanged(int index);
     void clickReadFile();
 
     void clickUseRand();

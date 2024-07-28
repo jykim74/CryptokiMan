@@ -30,6 +30,7 @@ FindObjectDlg::FindObjectDlg(QWidget *parent) :
 
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
     connect( mClassCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changeClass(int)));
+    connect( mKeyTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changeKeyType(int)));
 
     connect( mFindObjectsBtn, SIGNAL(clicked()), this, SLOT(clickFindObjects()));
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(close()));
@@ -41,6 +42,11 @@ FindObjectDlg::FindObjectDlg(QWidget *parent) :
 
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);
+
+    mFirstTab->layout()->setSpacing(5);
+    mFirstTab->layout()->setMargin(5);
+    mSecondTab->layout()->setSpacing(5);
+    mSecondTab->layout()->setMargin(5);
 #endif
     resize(minimumSizeHint().width(), minimumSizeHint().height());
 }
@@ -89,6 +95,7 @@ void FindObjectDlg::changeClass( int index )
 {
     QString strClass = mClassCombo->currentText();
     long uClass = JS_PKCS11_GetCKOType( strClass.toStdString().c_str() );
+    mClassText->setText( QString( "%1" ).arg( uClass, 8, 16, QLatin1Char('0')));
 
     mKeyTypeCombo->clear();
     mKeyTypeCombo->addItem( "" );
@@ -151,6 +158,19 @@ void FindObjectDlg::changeClass( int index )
         mKeyTypeCombo->addItems( sAsymKeyTypeList );
         mIDLabel->setEnabled( true );
         mIDText->setEnabled( true );
+    }
+}
+
+void FindObjectDlg::changeKeyType( int index )
+{
+    QString strKeyType = mKeyTypeCombo->currentText();
+
+    if( strKeyType.length() < 1 )
+        mKeyTypeText->clear();
+    else
+    {
+        long uType = JS_PKCS11_GetCKKType( strKeyType.toStdString().c_str() );
+        mKeyTypeText->setText( QString( "%1" ).arg( uType, 8, 16, QLatin1Char('0')));
     }
 }
 

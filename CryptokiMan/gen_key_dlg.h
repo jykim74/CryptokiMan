@@ -25,6 +25,7 @@ public:
 private slots:
     virtual void accept();
     void slotChanged( int index );
+    void mechChanged( int index );
 
     void clickUseRand();
     void clickPrivate();

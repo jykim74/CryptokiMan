@@ -34,6 +34,7 @@ private slots:
     void slotChanged( int index );
     void labelChanged( int index );
     void objectTypeChanged( int type );
+    void attributeTypeChanged( int index );
 
     void clickClose();
     void clickGetAttribute();

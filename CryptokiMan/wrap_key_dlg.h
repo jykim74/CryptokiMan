@@ -29,6 +29,7 @@ private slots:
     void labelChanged(int index );
     void wrappingLabelChanged(int index );
     void wrappingTypeChanged( int index );
+    void wrappingMechChanged( int index );
     void clickSaveFile();
     void clickClearOutput();
     void changeOutput();

@@ -26,6 +26,7 @@ public:
 private slots:
     void slotChanged( int index );
     void changeClass( int index );
+    void changeKeyType( int index );
 
     void clickPrivate();
     void clickSensitive();

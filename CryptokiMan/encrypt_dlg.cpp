@@ -225,6 +225,9 @@ void EncryptDlg::mechChanged( int index )
     QString strMech = mMechCombo->currentText();
     QStringList algList = strMech.split( "_" );
 
+    long uMech = JS_PKCS11_GetCKMType( strMech.toStdString().c_str() );
+    mMechText->setText( QString("%1").arg( uMech, 8, 16, QLatin1Char('0')));
+
     int size = algList.size();
 
     QString strLast = algList.at(size-1);

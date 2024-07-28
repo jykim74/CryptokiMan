@@ -29,6 +29,7 @@ CreateKeyDlg::CreateKeyDlg(QWidget *parent) :
     connectAttributes();
 
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
+    connect( mKeyTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(keyTypeChanged(int)));
 
     initialize();
     setDefaults();
@@ -67,6 +68,13 @@ void CreateKeyDlg::slotChanged(int index)
     mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
 }
 
+void CreateKeyDlg::keyTypeChanged( int index )
+{
+    QString strKeyType = mKeyTypeCombo->currentText();
+    long uType = JS_PKCS11_GetCKKType( strKeyType.toStdString().c_str() );
+    mKeyTypeText->setText( QString("%1").arg( uType, 8, 16, QLatin1Char('0')));
+}
+
 void CreateKeyDlg::initUI()
 {
     if( manApplet->isLicense() )
@@ -95,6 +103,8 @@ void CreateKeyDlg::initialize()
     }
 
     if( slot_infos.size() > 0 ) slotChanged(0);
+
+    keyTypeChanged(0);
 }
 
 void CreateKeyDlg::initAttributes()

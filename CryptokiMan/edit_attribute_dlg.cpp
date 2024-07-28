@@ -27,6 +27,7 @@ EditAttributeDlg::EditAttributeDlg(QWidget *parent) :
 
     connect( mObjectTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(objectTypeChanged(int)));
     connect( mLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(labelChanged(int)));
+    connect( mAttributeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(attributeTypeChanged(int)));
 
     connect( mCloseBtn, SIGNAL(clicked(bool)), this, SLOT(clickClose()));
     connect( mGetAttrBtn, SIGNAL(clicked(bool)), this, SLOT(clickGetAttribute()));
@@ -190,6 +191,12 @@ void EditAttributeDlg::objectTypeChanged( int type )
     }
 }
 
+void EditAttributeDlg::attributeTypeChanged( int index )
+{
+    QString strAttribute = mAttributeCombo->currentText();
+    long uAttribute = JS_PKCS11_GetCKAType( strAttribute.toStdString().c_str() );
+    mAttributeText->setText(QString("%1").arg( uAttribute, 8, 16, QLatin1Char('0')));
+}
 
 void EditAttributeDlg::initialize()
 {
@@ -198,6 +205,8 @@ void EditAttributeDlg::initialize()
 
     if( manApplet->isLicense() == false )
         mSetAttrBtn->setEnabled( false );
+
+    attributeTypeChanged(0);
 }
 
 void EditAttributeDlg::initAttributes()

@@ -69,6 +69,7 @@ void DigestDlg::initUI()
 
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT( slotChanged(int) ));
     connect( mKeyLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT( changeKeyLabel(int)));
+    connect( mMechCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changeMech(int)));
 
     connect( mInitBtn, SIGNAL(clicked()), this, SLOT(clickInit()));
     connect( mUpdateBtn, SIGNAL(clicked()), this, SLOT(clickUpdate()));
@@ -76,6 +77,7 @@ void DigestDlg::initUI()
     connect( mDigestKeyBtn, SIGNAL(clicked()), this, SLOT(clickDigestKey()));
     connect( mDigestBtn, SIGNAL(clicked()), this, SLOT(clickDigest()));
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(clickClose()));
+
 
     connect( mInputCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(inputChanged()));
     connect( mInputText, SIGNAL(textChanged()), this, SLOT(inputChanged()));
@@ -173,6 +175,13 @@ void DigestDlg::changeKeyLabel( int index )
     mKeyObjectText->setText( strObject );
 }
 
+void DigestDlg::changeMech( int index )
+{
+    QString strMech = mMechCombo->currentText();
+    long uMech = JS_PKCS11_GetCKMType( strMech.toStdString().c_str() );
+    mMechText->setText( QString("%1").arg( uMech, 8, 16, QLatin1Char('0')));
+}
+
 void DigestDlg::setSelectedSlot(int index)
 {
     if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
@@ -200,6 +209,8 @@ void DigestDlg::initialize()
     mInputTab->setCurrentIndex(0);
 
     if( manApplet->isLicense() == false ) mInputTab->setTabEnabled( 1, false );
+
+    changeMech(0);
 }
 
 void DigestDlg::appendStatusLabel( const QString& strLabel )

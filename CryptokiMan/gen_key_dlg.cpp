@@ -30,6 +30,7 @@ GenKeyDlg::GenKeyDlg(QWidget *parent) :
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
     connect( mParamCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changeParam()));
     connect( mParamText, SIGNAL(textChanged()), this, SLOT(changeParam()));
+    connect( mMechCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(mechChanged(int)));
 
     initialize();
     setDefaults();
@@ -55,6 +56,14 @@ GenKeyDlg::~GenKeyDlg()
 void GenKeyDlg::setSelectedSlot(int index)
 {
     if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
+}
+
+void GenKeyDlg::mechChanged( int index )
+{
+    QString strMech = mMechCombo->currentText();
+    int uMech = JS_PKCS11_GetCKMType( strMech.toStdString().c_str() );
+    mMechText->setText( QString("%1").arg( uMech, 8, 16, QLatin1Char('0')));
+
 }
 
 void GenKeyDlg::slotChanged(int index)
@@ -104,6 +113,8 @@ void GenKeyDlg::initialize()
     }
 
     if( slot_infos.size() > 0 ) slotChanged(0);
+
+    mechChanged(0);
 }
 
 void GenKeyDlg::initAttributes()
