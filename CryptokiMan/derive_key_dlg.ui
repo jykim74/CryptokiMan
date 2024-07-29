@@ -684,25 +684,54 @@
          <property name="topMargin">
           <number>0</number>
          </property>
-         <item row="0" column="6">
-          <widget class="QLabel" name="label_17">
-           <property name="text">
-            <string>KeySize</string>
+         <item row="0" column="2">
+          <widget class="QLineEdit" name="mClassText">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
            </property>
-          </widget>
-         </item>
-         <item row="0" column="7">
-          <widget class="QLineEdit" name="mKeySizeText">
            <property name="maximumSize">
             <size>
-             <width>60</width>
+             <width>80</width>
              <height>16777215</height>
             </size>
            </property>
+           <property name="palette">
+            <palette>
+             <active>
+              <colorrole role="Base">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>221</red>
+                 <green>221</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </active>
+             <inactive>
+              <colorrole role="Base">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>221</red>
+                 <green>221</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </inactive>
+             <disabled/>
+            </palette>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
-         <item row="0" column="2">
-          <widget class="QLineEdit" name="mClassText">
+         <item row="0" column="5">
+          <widget class="QLineEdit" name="mTypeText">
            <property name="minimumSize">
             <size>
              <width>80</width>
@@ -757,6 +786,9 @@
            </property>
           </widget>
          </item>
+         <item row="0" column="4">
+          <widget class="QComboBox" name="mTypeCombo"/>
+         </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label_12">
            <property name="minimumSize">
@@ -776,56 +808,7 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="4">
-          <widget class="QLineEdit" name="mTypeText">
-           <property name="minimumSize">
-            <size>
-             <width>80</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>80</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="palette">
-            <palette>
-             <active>
-              <colorrole role="Base">
-               <brush brushstyle="SolidPattern">
-                <color alpha="255">
-                 <red>221</red>
-                 <green>221</green>
-                 <blue>255</blue>
-                </color>
-               </brush>
-              </colorrole>
-             </active>
-             <inactive>
-              <colorrole role="Base">
-               <brush brushstyle="SolidPattern">
-                <color alpha="255">
-                 <red>221</red>
-                 <green>221</green>
-                 <blue>255</blue>
-                </color>
-               </brush>
-              </colorrole>
-             </inactive>
-             <disabled/>
-            </palette>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="3">
-          <widget class="QComboBox" name="mTypeCombo"/>
-         </item>
-         <item row="0" column="5">
           <spacer name="horizontalSpacer_3">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -842,6 +825,16 @@
        </item>
        <item>
         <layout class="QGridLayout" name="gridLayout_6">
+         <item row="0" column="2">
+          <widget class="QLabel" name="label_17">
+           <property name="text">
+            <string>KeySize</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="mLabelText"/>
+         </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label_13">
            <property name="minimumSize">
@@ -855,8 +848,15 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="mLabelText"/>
+         <item row="0" column="3">
+          <widget class="QLineEdit" name="mKeySizeText">
+           <property name="maximumSize">
+            <size>
+             <width>60</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -1143,8 +1143,8 @@
   <tabstop>mClassText</tabstop>
   <tabstop>mTypeCombo</tabstop>
   <tabstop>mTypeText</tabstop>
-  <tabstop>mKeySizeText</tabstop>
   <tabstop>mLabelText</tabstop>
+  <tabstop>mKeySizeText</tabstop>
   <tabstop>mIDText</tabstop>
   <tabstop>mUseRandCheck</tabstop>
   <tabstop>mPrivateCheck</tabstop>
