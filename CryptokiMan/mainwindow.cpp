@@ -153,17 +153,10 @@ void MainWindow::initialize()
     right_table_->setSelectionBehavior(QAbstractItemView::SelectRows);
     right_table_->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    QList <int> sizes;
-    sizes << 300 << 600;
-
-#ifdef Q_OS_MACOS
-    resize( 1100, 768 );
-#else
-    resize(900,768);
-#endif
-
-    hsplitter_->setSizes(sizes);
+    hsplitter_->setStretchFactor(1,2);
     setCentralWidget(hsplitter_);
+
+    resize(900,768);
 
     connect( right_table_, SIGNAL(clicked(QModelIndex)), this, SLOT(rightTableClick(QModelIndex) ));
 
