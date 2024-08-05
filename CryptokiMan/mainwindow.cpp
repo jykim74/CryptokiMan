@@ -974,7 +974,8 @@ void MainWindow::openSession()
         if( item != NULL )
         {
             QFont font = item->font();
-            font.setBold(true);
+//            font.setBold(true);
+            font.setWeight( QFont::DemiBold );
             item->setFont( font );
         }
     }
@@ -1002,7 +1003,8 @@ void MainWindow::closeSession()
         if( item != NULL )
         {
             QFont font = item->font();
-            font.setBold(false);
+//            font.setBold(false);
+            font.setWeight( QFont::Normal );
             font.setUnderline(false);
             item->setFont( font );
         }
