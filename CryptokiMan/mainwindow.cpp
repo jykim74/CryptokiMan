@@ -973,7 +973,7 @@ void MainWindow::openSession()
         ManTreeItem* item = (ManTreeItem *)root->child( pos );
         if( item != NULL )
         {
-            item->setForeground( Qt::darkBlue );
+            item->setIcon( QIcon( ":/images/open_session.png" ));
         }
     }
 }
@@ -999,7 +999,7 @@ void MainWindow::closeSession()
         ManTreeItem* item = (ManTreeItem *)root->child( pos );
         if( item != NULL )
         {
-            item->setForeground(Qt::black);
+            item->setIcon( QIcon( ":/images/slot.png" ));
         }
     }
 }
@@ -1026,7 +1026,7 @@ void MainWindow::closeAllSessions()
             ManTreeItem* item = (ManTreeItem *)root->child( i );
             if( item != NULL )
             {
-                item->setForeground(Qt::black);
+                item->setIcon( QIcon( ":/images/slot.png" ));
             }
         }
     }
@@ -1052,7 +1052,7 @@ void MainWindow::login()
         ManTreeItem* item = (ManTreeItem *)root->child( pos );
         if( item != NULL )
         {
-            item->setForeground(Qt::darkGreen);
+            item->setIcon( QIcon( ":/images/login.png" ));
         }
     }
 }
@@ -1077,7 +1077,7 @@ void MainWindow::logout()
         ManTreeItem* item = (ManTreeItem *)root->child( pos );
         if( item != NULL )
         {
-            item->setForeground(Qt::darkBlue);
+            item->setIcon( QIcon( ":/images/open_session.png" ));
         }
     }
 }

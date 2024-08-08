@@ -79,5 +79,6 @@
         <file>images/cert_revoked.png</file>
         <file>images/root_cert.png</file>
         <file>../LICENSE</file>
+        <file>images/open_session.png</file>
     </qresource>
 </RCC>
