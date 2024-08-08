@@ -973,10 +973,7 @@ void MainWindow::openSession()
         ManTreeItem* item = (ManTreeItem *)root->child( pos );
         if( item != NULL )
         {
-            QFont font = item->font();
-//            font.setBold(true);
-            font.setWeight( QFont::DemiBold );
-            item->setFont( font );
+            item->setForeground( Qt::darkBlue );
         }
     }
 }
@@ -1002,11 +999,7 @@ void MainWindow::closeSession()
         ManTreeItem* item = (ManTreeItem *)root->child( pos );
         if( item != NULL )
         {
-            QFont font = item->font();
-//            font.setBold(false);
-            font.setWeight( QFont::Normal );
-            font.setUnderline(false);
-            item->setFont( font );
+            item->setForeground(Qt::black);
         }
     }
 }
@@ -1033,10 +1026,7 @@ void MainWindow::closeAllSessions()
             ManTreeItem* item = (ManTreeItem *)root->child( i );
             if( item != NULL )
             {
-                QFont font = item->font();
-                font.setBold(false);
-                font.setUnderline(false);
-                item->setFont( font );
+                item->setForeground(Qt::black);
             }
         }
     }
@@ -1062,9 +1052,7 @@ void MainWindow::login()
         ManTreeItem* item = (ManTreeItem *)root->child( pos );
         if( item != NULL )
         {
-            QFont font = item->font();
-            font.setUnderline(true);
-            item->setFont( font );
+            item->setForeground(Qt::darkGreen);
         }
     }
 }
@@ -1089,9 +1077,7 @@ void MainWindow::logout()
         ManTreeItem* item = (ManTreeItem *)root->child( pos );
         if( item != NULL )
         {
-            QFont font = item->font();
-            font.setUnderline(false);
-            item->setFont( font );
+            item->setForeground(Qt::darkBlue);
         }
     }
 }
