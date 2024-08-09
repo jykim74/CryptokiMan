@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
 project(CryptokiMan
-    VERSION 1.8.5
+    VERSION 1.8.6
     DESCRIPTION "CryptokiMan Application"
     LANGUAGES CXX )
 
