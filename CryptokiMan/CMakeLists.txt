@@ -22,6 +22,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Network)
 
 add_definitions( -D_USE_LCN_SRV )
 
+
 if(APPLE)
     SET(platform_specific_sources ${platform_specific_sources} mac_sparkle_support.mm)
     SET(platform_specific_headers ${platform_specific_headers} mac_sparkle_support.h)
