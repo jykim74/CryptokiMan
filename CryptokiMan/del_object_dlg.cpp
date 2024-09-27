@@ -195,7 +195,7 @@ void DelObjectDlg::deleteAllObj()
     }
     else
     {
-        manApplet->warningBox( tr( "invalid object type[%1]").arg( strType ));
+        manApplet->warningBox( tr( "invalid object type[%1]").arg( strType ), this);
         return;
     }
 

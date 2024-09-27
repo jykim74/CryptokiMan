@@ -157,7 +157,7 @@ void ImportCertDlg::accept()
     rv = JS_BIN_fileReadBER( strCertPath.toLocal8Bit().toStdString().c_str(), &binCert );
     if( rv < 0 )
     {
-        manApplet->warningBox( tr( "failed to read certificate [%1]").arg( ret ));
+        manApplet->warningBox( tr( "failed to read certificate [%1]").arg( ret ), this);
         return;
     }
 

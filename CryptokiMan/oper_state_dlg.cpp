@@ -83,7 +83,7 @@ void OperStateDlg::clickGetFunctionStatus()
     ret = manApplet->cryptokiAPI()->GetFunctionStatus( hSession );
     if( ret != CKR_OK )
     {
-        manApplet->warningBox( tr( "GetFunctionStatus execution failure [%1]").arg(ret));
+        manApplet->warningBox( tr( "GetFunctionStatus execution failure [%1]").arg(ret), this);
         return;
     }
     else
@@ -104,7 +104,7 @@ void OperStateDlg::clickCancelFunction()
     ret = manApplet->cryptokiAPI()->CancelFunction( hSession );
     if( ret != CKR_OK )
     {
-        manApplet->warningBox( tr( "CancelFunction execution failure [%1]").arg(ret));
+        manApplet->warningBox( tr( "CancelFunction execution failure [%1]").arg(ret), this);
         return;
     }
     else

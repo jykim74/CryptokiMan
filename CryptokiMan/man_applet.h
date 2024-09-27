@@ -41,9 +41,9 @@ public:
     int currentSlotIdx();
 
 
-    void messageBox(const QString& msg, QWidget *parent=0);
-    void warningBox(const QString& msg, QWidget *parent=0);
-    bool yesOrNoBox(const QString& msg, QWidget *parent=0, bool default_val=true);
+    void messageBox(const QString& msg, QWidget *parent);
+    void warningBox(const QString& msg, QWidget *parent);
+    bool yesOrNoBox(const QString& msg, QWidget *parent, bool default_val=true);
     bool detailedYesOrNoBox(const QString& msg, const QString& detailed_text, QWidget *parent, bool default_val=true);
     QMessageBox::StandardButton yesNoCancelBox(const QString& msg,
                                                QWidget *parent,
@@ -68,8 +68,8 @@ public:
 
     bool isLicense() { return  is_license_; };
 
-    void messageLog( const QString strLog, QWidget *parent=0 );
-    void warnLog( const QString strLog, QWidget *parent=0 );
+    void messageLog( const QString strLog, QWidget *parent );
+    void warnLog( const QString strLog, QWidget *parent );
 
     QString curFile() { return cur_file_; };
     QString curFolder();

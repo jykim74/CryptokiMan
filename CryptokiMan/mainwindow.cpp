@@ -797,7 +797,7 @@ void MainWindow::P11Initialize()
     if( ret != 0 )
     {
         QString msg = JS_PKCS11_GetErrorMsg( ret );
-        manApplet->warningBox( msg );
+        manApplet->warningBox( msg, this );
         return;
     }
 

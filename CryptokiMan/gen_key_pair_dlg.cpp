@@ -1043,7 +1043,7 @@ void GenKeyPairDlg::clickGenDSAParam()
 
     int nKeyLen = mOptionCombo->currentText().toInt();
 
-    JS_PKI_DSA_GenParam( nKeyLen, &binP, &binQ, &binG );
+    JS_PKI_DSA_GenParamValue( nKeyLen, &binP, &binQ, &binG );
 
     mDSA_GText->setText( getHexString(binG.pVal, binG.nLen));
     mDSA_PText->setText( getHexString(binP.pVal, binP.nLen));
