@@ -81,7 +81,7 @@ void EditAttributeListDlg::showEvent(QShowEvent *event)
     else
         mObjectTypeCombo->addItem( kObjectTypeList[object_type_] );
 
-    objectTypeChanged( object_type_ );
+    if( object_type_ >= 0 ) objectTypeChanged( object_type_ );
 }
 
 void EditAttributeListDlg::closeEvent(QCloseEvent *)
@@ -198,12 +198,13 @@ void EditAttributeListDlg::objectTypeChanged( int type )
         mLabelCombo->addItem( pHex, objVal );
         JS_BIN_reset(&binLabel);
     }
-
+/*
     if( uObjCnt > 0 )
     {
         QString strHandle = QString("%1").arg( sObjects[0] );
         mObjectText->setText( strHandle );
     }
+*/
 }
 
 void EditAttributeListDlg::changeLabel( const QString& text )
