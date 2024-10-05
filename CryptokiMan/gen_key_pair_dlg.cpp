@@ -17,7 +17,8 @@
 
 static QStringList sMechGenKeyPairList;
 static QStringList sRSAOptionList = { "1024", "2048", "3072", "4096" };
-static QStringList sDHOptionList = { "512", "1024", "2048" };
+static QStringList sDHOptionList = { "1024", "2048", "3072", "4096" };
+static QStringList sEDDSAOptionList = { "Ed25519", "Ed448" };
 static QStringList sDH_GList = { "02", "05" };
 
 
@@ -336,6 +337,11 @@ void GenKeyPairDlg::accept()
         stMech.mechanism = CKM_DSA_KEY_PAIR_GEN;
         keyType = CKK_DSA;
     }
+    else if( strMech == "CKM_EC_EDWARDS_KEY_PAIR_GEN" )
+    {
+        stMech.mechanism = CKM_EC_EDWARDS_KEY_PAIR_GEN;
+        keyType = CKK_EC_EDWARDS;
+    }
     else
     {
         manApplet->elog( QString( "Invalid Mechanism:%1").arg(strMech));
@@ -444,6 +450,20 @@ void GenKeyPairDlg::accept()
         sPubTemplate[uPubCount].type = CKA_BASE;
         sPubTemplate[uPubCount].pValue = binDSA_G.pVal;
         sPubTemplate[uPubCount].ulValueLen = binDSA_G.nLen;
+        uPubCount++;
+    }
+    else if( strMech == "CKM_EC_EDWARDS_KEY_PAIR_GEN" )
+    {
+        char sPararmHex[256];
+        QString strCurveName = mOptionCombo->currentText();
+        memset( sPararmHex, 0x00, sizeof(sPararmHex));
+
+        JS_PKI_getHexOIDFromSN(strCurveName.toStdString().c_str(), sPararmHex );
+        JS_BIN_decodeHex( sPararmHex, &binECParam );
+
+        sPubTemplate[uPubCount].type = CKA_EC_PARAMS;
+        sPubTemplate[uPubCount].pValue = binECParam.pVal;
+        sPubTemplate[uPubCount].ulValueLen = binECParam.nLen;
         uPubCount++;
     }
 
@@ -862,6 +882,12 @@ void GenKeyPairDlg::mechChanged(int nIndex)
         mParamTab->setCurrentIndex(0);
         mParamTab->setTabEnabled(0, true);
         mParamTab->setTabEnabled(1, false);
+    }
+    else if( strMech == "CKM_EC_EDWARDS_KEY_PAIR_GEN" )
+    {
+        mOptionLabel->setText( QString("NamedCurve"));
+        mOptionCombo->addItems( sEDDSAOptionList );
+        mParamTab->setDisabled(true);
     }
 }
 
