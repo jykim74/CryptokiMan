@@ -2135,6 +2135,10 @@ void MainWindow::showPublicKeyInfoDetail( QModelIndex index )
     {
         showInfoDHValue( uObj, true );
     }
+    else if( strKeyType == "CKK_EC_EDWARDS" )
+    {
+        showInfoECCValue( uObj, true );
+    }
 
     JS_BIN_reset( &binDN );
     if( pDN ) JS_free( pDN );
@@ -2182,6 +2186,10 @@ void MainWindow::showPrivateKeyInfoDetail( QModelIndex index )
     else if( strKeyType == "CKK_DH" )
     {
         showInfoDHValue( uObj, false );
+    }
+    else if( strKeyType == "CKK_EC_EDWARDS" )
+    {
+        showInfoECCValue( uObj, false );
     }
 
     JS_BIN_reset( &binDN );

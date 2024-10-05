@@ -18,7 +18,7 @@
 static QStringList sMechGenKeyPairList;
 static QStringList sRSAOptionList = { "1024", "2048", "3072", "4096" };
 static QStringList sDHOptionList = { "1024", "2048", "3072", "4096" };
-static QStringList sEDDSAOptionList = { "Ed25519", "Ed448" };
+static QStringList sEDDSAOptionList = { "ED25519", "ED448" };
 static QStringList sDH_GList = { "02", "05" };
 
 
@@ -456,15 +456,26 @@ void GenKeyPairDlg::accept()
     {
         char sPararmHex[256];
         QString strCurveName = mOptionCombo->currentText();
-        memset( sPararmHex, 0x00, sizeof(sPararmHex));
+        //PrintableString curve25519
+        CK_BYTE curveNameX25519[] = { 0x13, 0x0a, 0x63, 0x75, 0x72, 0x76, 0x65, 0x32, 0x35, 0x35, 0x31, 0x39 };
 
-        JS_PKI_getHexOIDFromSN(strCurveName.toStdString().c_str(), sPararmHex );
-        JS_BIN_decodeHex( sPararmHex, &binECParam );
+        //PrintableString cruve448
+        CK_BYTE curveNameX448[] = { 0x13, 0x08, 0x63, 0x75, 0x72, 0x76, 0x65, 0x34, 0x34, 0x38 };
 
-        sPubTemplate[uPubCount].type = CKA_EC_PARAMS;
-        sPubTemplate[uPubCount].pValue = binECParam.pVal;
-        sPubTemplate[uPubCount].ulValueLen = binECParam.nLen;
-        uPubCount++;
+        if( strCurveName == "ED25519" )
+        {
+            sPubTemplate[uPubCount].type = CKA_EC_PARAMS;
+            sPubTemplate[uPubCount].pValue = curveNameX25519;
+            sPubTemplate[uPubCount].ulValueLen = sizeof(curveNameX25519);
+            uPubCount++;
+        }
+        else if( strCurveName == "ED448" )
+        {
+            sPubTemplate[uPubCount].type = CKA_EC_PARAMS;
+            sPubTemplate[uPubCount].pValue = curveNameX448;
+            sPubTemplate[uPubCount].ulValueLen = sizeof(curveNameX448);
+            uPubCount++;
+        }
     }
 
     BIN binPubLabel = {0,0};
