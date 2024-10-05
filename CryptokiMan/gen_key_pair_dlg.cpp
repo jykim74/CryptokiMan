@@ -1327,6 +1327,15 @@ int GenKeyPairDlg::setSKI_SPKI( long hSession, int nKeyType, long hPri, long hPu
 
         JS_PKI_resetDSAKeyVal( &sDSAKey );
     }
+    else if( nKeyType == CKK_EC_EDWARDS )
+    {
+        BIN binVal = {0,0};
+        rv = cryptoAPI->GetAttributeValue2( hSession, hPub, CKA_EC_POINT, &binVal );
+        if( rv != 0 ) goto end;
+
+
+        JS_BIN_reset( &binVal );
+    }
 
     if( mPriUseSPKICheck->isChecked() )
     {
