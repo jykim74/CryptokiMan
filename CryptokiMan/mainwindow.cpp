@@ -2286,6 +2286,11 @@ void MainWindow::showRightMenu(QPoint point )
 
     manApplet->log( QString("RightType: %1").arg(right_type_));
 
+    if( right_type_ == HM_ITEM_TYPE_ROOT || right_type_ == HM_ITEM_TYPE_SLOT
+        || right_type_ == HM_ITEM_TYPE_TOKEN || right_type_ == HM_ITEM_TYPE_MECHANISM
+        || right_type_ == HM_ITEM_TYPE_SESSION )
+        return;
+
     menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
     menu.addAction( tr("Edit AttributeList"), this, &MainWindow::editAttributeList );
     delAct = menu.addAction( tr( "Delete Object" ), this, &MainWindow::deleteObject );
@@ -4170,7 +4175,7 @@ void MainWindow::showInfoDSAValue( CK_OBJECT_HANDLE hObj, bool bPub )
 
 void MainWindow::showInfoECCValue( CK_OBJECT_HANDLE hObj, bool bPub )
 {
-    info( "-- ECC Key Value\n" );
+    info( "-- EC Key Value\n" );
     info( "------------------------------------------------------------------------\n" );
 
     QString strName;

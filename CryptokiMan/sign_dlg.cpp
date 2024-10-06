@@ -425,6 +425,7 @@ void SignDlg::runDataSign()
 {
     int rv = -1;
 
+    int nDataType = -1;
     QString strInput = mInputText->toPlainText();
 
     if( strInput.isEmpty() )
@@ -443,11 +444,13 @@ void SignDlg::runDataSign()
     BIN binInput = {0,0};
 
     if( mInputStringRadio->isChecked() )
-        JS_BIN_set( &binInput, (unsigned char *)strInput.toStdString().c_str(), strInput.length());
+        nDataType = DATA_STRING;
     else if( mInputHexRadio->isChecked() )
-        JS_BIN_decodeHex( strInput.toStdString().c_str(), &binInput );
+        nDataType = DATA_HEX;
     else if( mInputBase64Radio->isChecked() )
-        JS_BIN_decodeBase64( strInput.toStdString().c_str(), &binInput );
+        nDataType = DATA_BASE64;
+
+    getBINFromString( &binInput, nDataType, strInput );
 
     unsigned char sSign[1024];
     long uSignLen = 1024;
