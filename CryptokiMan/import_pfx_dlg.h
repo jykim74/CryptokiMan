@@ -10,6 +10,7 @@
 #include "ui_import_pfx_dlg.h"
 #include "js_pki.h"
 #include "js_pki_eddsa.h"
+#include "pkcs11.h"
 
 namespace Ui {
 class ImportPFXDlg;
@@ -90,8 +91,13 @@ private:
     int createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal );
     int createECPublicKey( JECKeyVal *pEcKeyVal );
     int createECPrivateKey( JECKeyVal *pECKeyVal );
+    int createEDPublicKey( JRawKeyVal *pRawKeyVal );
+    int createEDPrivateKey( JRawKeyVal *pRawKeyVal );
     int createDSAPublicKey( JDSAKeyVal *pDSAKeyVal );
     int createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal );
+
+    void setPubBoolTemplate( CK_ATTRIBUTE sTemplate[], CK_ULONG *pnCount );
+    void setPriBoolTemplate( CK_ATTRIBUTE sTemplate[], CK_ULONG *pnCount );
 
     void setDefaults();
 

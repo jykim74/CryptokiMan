@@ -310,11 +310,13 @@ void ImportPFXDlg::accept()
     JRSAKeyVal rsaKeyVal;
     JECKeyVal ecKeyVal;
     JDSAKeyVal dsaKeyVal;
+    JRawKeyVal rawKeyVal;
     JCertInfo sCertInfo;
 
     memset( &rsaKeyVal, 0x00, sizeof(JRSAKeyVal));
     memset( &ecKeyVal, 0x00, sizeof(JECKeyVal));
     memset( &dsaKeyVal, 0x00, sizeof(JDSAKeyVal));
+    memset( &rawKeyVal, 0x00, sizeof(JRawKeyVal));
     memset( &sCertInfo, 0x00, sizeof(sCertInfo));
 
     rv = JS_PKI_decodePFX( &binPFX, strPasswd.toStdString().c_str(), &binPri, &binCert );
@@ -383,7 +385,6 @@ void ImportPFXDlg::accept()
             rv = createECPublicKey( &ecKeyVal );
             if( rv != 0 ) goto end;
         }
-
     }
     else if( key_type == JS_PKI_KEY_TYPE_DSA )
     {
@@ -394,6 +395,18 @@ void ImportPFXDlg::accept()
             if( rv != 0 ) goto end;
 
             rv = createDSAPublicKey( &dsaKeyVal );
+            if( rv != 0 ) goto end;
+        }
+    }
+    else if( key_type == JS_PKI_KEY_TYPE_ED25519 || key_type == JS_PKI_KEY_TYPE_ED448 )
+    {
+        rv = JS_PKI_getRawKeyVal( key_type, &binPri, &rawKeyVal );
+        if( rv == 0 )
+        {
+            rv = createEDPrivateKey( &rawKeyVal );
+            if( rv != 0 ) goto end;
+
+            rv = createEDPublicKey( &rawKeyVal );
             if( rv != 0 ) goto end;
         }
     }
@@ -670,6 +683,238 @@ void ImportPFXDlg::clickPubSubjectInCertCheck()
     mPubSubjectText->setEnabled( !bVal );
     mPubSubjectLabel->setEnabled( !bVal );
     mPubSubjectTypeCombo->setEnabled( !bVal );
+}
+
+void ImportPFXDlg::setPubBoolTemplate( CK_ATTRIBUTE sTemplate[], CK_ULONG *puCount )
+{
+    CK_DATE sSDate;
+    CK_DATE sEDate;
+
+    CK_ULONG uCount = *puCount;
+
+    if( mPubTokenCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_TOKEN;
+        sTemplate[uCount].pValue = ( mPubTokenCombo->currentIndex() ? &kTrue : &kFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPubTrustedCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_TRUSTED;
+        sTemplate[uCount].pValue = ( mPubTrustedCombo->currentIndex() ? &kTrue : &kFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPubPrivateCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_PRIVATE;
+        sTemplate[uCount].pValue = ( mPubPrivateCombo->currentIndex() ? &kTrue : &kFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPubEncryptCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_ENCRYPT;
+        sTemplate[uCount].pValue = ( mPubEncryptCombo->currentIndex() ? &kTrue : &kFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPubWrapCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_WRAP;
+        sTemplate[uCount].pValue = ( mPubWrapCombo->currentIndex() ? &kTrue : &kFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPubVerifyCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_VERIFY;
+        sTemplate[uCount].pValue = (mPubVerifyCombo->currentIndex() ? &kTrue : &kFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPubVerifyRecoverCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_VERIFY_RECOVER;
+        sTemplate[uCount].pValue = (mPubVerifyRecoverCombo->currentIndex() ? &kTrue : &kFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPubModifiableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_MODIFIABLE;
+        sTemplate[uCount].pValue = (mPubModifiableCombo->currentIndex() ? &kTrue : &kFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPubCopyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_COPYABLE;
+        sTemplate[uCount].pValue = ( mPubCopyableCombo->currentIndex() ? &kTrue : &kFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPubDestroyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_DESTROYABLE;
+        sTemplate[uCount].pValue = ( mPubDestroyableCombo->currentIndex() ? &kTrue : &kFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPubStartDateCheck->isChecked() )
+    {
+        getQDateToCKDate( mPubStartDateEdit->date(), &sSDate );
+        sTemplate[uCount].type = CKA_START_DATE;
+        sTemplate[uCount].pValue = &sSDate;
+        sTemplate[uCount].ulValueLen = sizeof(sSDate);
+        uCount++;
+    }
+
+    if( mPubEndDateCheck->isChecked() )
+    {
+        getQDateToCKDate( mPubEndDateEdit->date(), &sEDate );
+        sTemplate[uCount].type = CKA_END_DATE;
+        sTemplate[uCount].pValue = &sEDate;
+        sTemplate[uCount].ulValueLen = sizeof(sEDate);
+        uCount++;
+    }
+
+    *puCount = uCount;
+}
+
+void ImportPFXDlg::setPriBoolTemplate( CK_ATTRIBUTE sTemplate[], CK_ULONG *puCount )
+{
+    CK_DATE sSDate;
+    CK_DATE sEDate;
+
+    CK_ULONG uCount = *puCount;
+
+    if( mPriPrivateCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_PRIVATE;
+        sTemplate[uCount].pValue = ( mPriPrivateCombo->currentIndex() ? &kTrue : &kFalse );
+        sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
+        uCount++;
+    }
+
+    if( mPriTokenCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_TOKEN;
+        sTemplate[uCount].pValue = (mPriTokenCombo->currentIndex() ? &kTrue : &kFalse );
+        sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
+        uCount++;
+    }
+
+    if( mPriDecryptCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_DECRYPT;
+        sTemplate[uCount].pValue = (mPriDecryptCombo->currentIndex() ? &kTrue : &kFalse );
+        sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
+        uCount++;
+    }
+
+    if( mPriUnwrapCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_UNWRAP;
+        sTemplate[uCount].pValue = (mPriUnwrapCombo->currentIndex() ? &kTrue : &kFalse );
+        sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
+        uCount++;
+    }
+
+    if( mPriModifiableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_MODIFIABLE;
+        sTemplate[uCount].pValue = (mPriModifiableCombo->currentIndex() ? &kTrue : &kFalse );
+        sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
+        uCount++;
+    }
+
+    if( mPriCopyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_COPYABLE;
+        sTemplate[uCount].pValue = ( mPriCopyableCombo->currentIndex() ? &kTrue : &kFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPriDestroyableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_DESTROYABLE;
+        sTemplate[uCount].pValue = ( mPriDestroyableCombo->currentIndex() ? &kTrue : &kFalse );
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+
+    if( mPriSensitiveCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_SENSITIVE;
+        sTemplate[uCount].pValue = (mPriSensitiveCombo->currentIndex() ? &kTrue : &kFalse );
+        sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
+        uCount++;
+    }
+
+    if( mPriDeriveCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_DERIVE;
+        sTemplate[uCount].pValue = (mPriDeriveCombo->currentIndex() ? &kTrue : &kFalse );
+        sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
+        uCount++;
+    }
+
+    if( mPriExtractableCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_EXTRACTABLE;
+        sTemplate[uCount].pValue = (mPriExtractableCombo->currentIndex() ? &kTrue : &kFalse );
+        sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
+        uCount++;
+    }
+
+    if( mPriSignCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_SIGN;
+        sTemplate[uCount].pValue = (mPriSignCombo->currentIndex() ? &kTrue : &kFalse );
+        sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
+        uCount++;
+    }
+
+    if( mPriSignRecoverCheck->isChecked() )
+    {
+        sTemplate[uCount].type = CKA_SIGN_RECOVER;
+        sTemplate[uCount].pValue = (mPriSignRecoverCombo->currentIndex() ? &kTrue : &kFalse );
+        sTemplate[uCount].ulValueLen = sizeof( CK_BBOOL );
+        uCount++;
+    }
+
+    if( mPriStartDateCheck->isChecked() )
+    {
+        getQDateToCKDate( mPriStartDateEdit->date(), &sSDate );
+        sTemplate[uCount].type = CKA_START_DATE;
+        sTemplate[uCount].pValue = &sSDate;
+        sTemplate[uCount].ulValueLen = sizeof(sSDate);
+        uCount++;
+    }
+
+    if( mPriEndDateCheck->isChecked() )
+    {
+        getQDateToCKDate( mPriEndDateEdit->date(), &sEDate );
+        sTemplate[uCount].type = CKA_END_DATE;
+        sTemplate[uCount].pValue = &sEDate;
+        sTemplate[uCount].ulValueLen = sizeof(sEDate);
+        uCount++;
+    }
+
+    *puCount = uCount;
 }
 
 int ImportPFXDlg::createCert( BIN *pCert )
@@ -1930,6 +2175,271 @@ int ImportPFXDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
         manApplet->warningBox( tr("CreateObject execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this);
         return rv;
     }
+
+    return 0;
+}
+
+int ImportPFXDlg::createEDPublicKey( JRawKeyVal *pRawKeyVal )
+{
+    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
+
+    int index = mSlotsCombo->currentIndex();
+    SlotInfo slotInfo = slot_infos.at(index);
+    int rv = -1;
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+
+    CK_ATTRIBUTE sTemplate[20];
+    CK_ULONG uCount = 0;
+    CK_OBJECT_HANDLE hObject = -1;
+    CK_BBOOL bTrue = CK_TRUE;
+    CK_BBOOL bFalse = CK_FALSE;
+
+    CK_OBJECT_CLASS objClass = CKO_PUBLIC_KEY;
+    CK_KEY_TYPE keyType = CKK_EC;
+
+    CK_DATE sSDate;
+    CK_DATE sEDate;
+
+    memset( &sSDate, 0x00, sizeof(sSDate));
+    memset( &sEDate, 0x00, sizeof(sEDate));
+
+    sTemplate[uCount].type = CKA_CLASS;
+    sTemplate[uCount].pValue = &objClass;
+    sTemplate[uCount].ulValueLen = sizeof(objClass);
+    uCount++;
+
+    sTemplate[uCount].type = CKA_KEY_TYPE;
+    sTemplate[uCount].pValue = &keyType;
+    sTemplate[uCount].ulValueLen = sizeof(keyType);
+    uCount++;
+
+    QString strLabel = mPubLabelText->text();
+    BIN binLabel = {0,0};
+
+    if( !strLabel.isEmpty() )
+    {
+        JS_BIN_set( &binLabel, (unsigned char *)strLabel.toStdString().c_str(), strLabel.toUtf8().length() );
+        sTemplate[uCount].type = CKA_LABEL;
+        sTemplate[uCount].pValue = binLabel.pVal;
+        sTemplate[uCount].ulValueLen = binLabel.nLen;
+        uCount++;
+    }
+
+    QString strID = mPubIDText->text();
+    BIN binID = {0,0};
+
+    if( mPubUseSKICheck->isChecked() )
+    {
+        JS_BIN_copy( &binID, &ski_ );
+    }
+    else
+    {
+        JS_BIN_decodeHex( strID.toStdString().c_str(), &binID );
+    }
+
+    if( binID.nLen > 0 )
+    {
+        sTemplate[uCount].type = CKA_ID;
+        sTemplate[uCount].pValue = binID.pVal;
+        sTemplate[uCount].ulValueLen = binID.nLen;
+        uCount++;
+    }
+
+    QString strSubject;
+    BIN binSubject = {0,0};
+
+    if( mPubSubjectInCertCheck->isChecked() )
+    {
+        JS_BIN_copy( &binSubject, &der_dn_ );
+    }
+    else
+    {
+        strSubject = mPubSubjectText->text();
+        if( strSubject.length() > 0 )
+        {
+            if( mPubSubjectTypeCombo->currentText() == "Text" )
+                JS_PKI_getDERFromDN( strSubject.toStdString().c_str(), &binSubject );
+            else
+                JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+        }
+    }
+
+    if( binSubject.nLen > 0 )
+    {
+        sTemplate[uCount].type = CKA_SUBJECT;
+        sTemplate[uCount].pValue = binSubject.pVal;
+        sTemplate[uCount].ulValueLen = binSubject.nLen;
+        uCount++;
+    }
+
+    BIN binECParam = {0,0};
+//    JS_PKI_getOIDFromString( pEcKeyVal->pCurveOID, &binECParam );
+
+    sTemplate[uCount].type = CKA_EC_PARAMS;
+    sTemplate[uCount].pValue = binECParam.pVal;
+    sTemplate[uCount].ulValueLen = binECParam.nLen;
+    uCount++;
+
+    BIN binECPoint={0,0};
+    BIN binPubX = {0,0};
+    BIN binPubY = {0,0};
+    unsigned char sPrefix[3];
+
+//    JS_BIN_decodeHex( pEcKeyVal->pPubX, &binPubX );
+//    JS_BIN_decodeHex( pEcKeyVal->pPubY, &binPubY );
+    //    JS_BIN_decodeHex( "04", &binECPoint );
+    sPrefix[0] = 0x04;
+    sPrefix[1] = binPubX.nLen + binPubY.nLen + 1;
+    sPrefix[2] = 0x04;
+
+    JS_BIN_set( &binECPoint, sPrefix, 3 );
+    JS_BIN_appendBin( &binECPoint, &binPubX );
+    JS_BIN_appendBin( &binECPoint, &binPubY );
+    JS_BIN_reset( &binPubX );
+    JS_BIN_reset( &binPubY );
+
+    sTemplate[uCount].type = CKA_EC_POINT;
+    sTemplate[uCount].pValue = binECPoint.pVal;
+    sTemplate[uCount].ulValueLen = binECPoint.nLen;
+    uCount++;
+
+    setPubBoolTemplate( sTemplate, &uCount );
+
+    return 0;
+}
+
+int ImportPFXDlg::createEDPrivateKey( JRawKeyVal *pRawKeyVal )
+{
+    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
+
+    int index = mSlotsCombo->currentIndex();
+    SlotInfo slotInfo = slot_infos.at(index);
+    int rv = -1;
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+
+
+    CK_ATTRIBUTE sTemplate[20];
+    CK_ULONG uCount = 0;
+    CK_OBJECT_HANDLE hObject = -1;
+    CK_BBOOL bTrue = CK_TRUE;
+    CK_BBOOL bFalse = CK_FALSE;
+
+    CK_OBJECT_CLASS objClass = CKO_PRIVATE_KEY;
+    CK_KEY_TYPE keyType = CKK_EC;
+
+    CK_DATE sSDate;
+    CK_DATE sEDate;
+
+    memset( &sSDate, 0x00, sizeof(sSDate));
+    memset( &sEDate, 0x00, sizeof(sEDate));
+
+    sTemplate[uCount].type = CKA_CLASS;
+    sTemplate[uCount].pValue = &objClass;
+    sTemplate[uCount].ulValueLen = sizeof(objClass);
+    uCount++;
+
+    sTemplate[uCount].type = CKA_KEY_TYPE;
+    sTemplate[uCount].pValue = &keyType;
+    sTemplate[uCount].ulValueLen = sizeof(keyType);
+    uCount++;
+
+    QString strLabel = mPriLabelText->text();
+    BIN binLabel = {0,0};
+
+    if( !strLabel.isEmpty() )
+    {
+        JS_BIN_set( &binLabel, (unsigned char *)strLabel.toStdString().c_str(), strLabel.toUtf8().length() );
+        sTemplate[uCount].type = CKA_LABEL;
+        sTemplate[uCount].pValue = binLabel.pVal;
+        sTemplate[uCount].ulValueLen = binLabel.nLen;
+        uCount++;
+    }
+
+    QString strID = mPriIDText->text();
+    BIN binID = {0,0};
+
+    if( mPriUseSKICheck->isChecked() )
+    {
+        JS_BIN_copy( &binID, &ski_ );
+    }
+    else
+    {
+        JS_BIN_decodeHex( strID.toStdString().c_str(), &binID );
+    }
+
+    if( binID.nLen > 0 )
+    {
+        sTemplate[uCount].type = CKA_ID;
+        sTemplate[uCount].pValue = binID.pVal;
+        sTemplate[uCount].ulValueLen = binID.nLen;
+        uCount++;
+    }
+
+    QString strPubKeyInfo = mPriPubKeyInfoText->text();
+    BIN binPub = {0,0};
+
+    if( mPriUseSPKICheck->isChecked() )
+    {
+        JS_BIN_copy( &binPub, &spki_ );
+    }
+    else
+    {
+        if( strPubKeyInfo.length() > 0 )
+            JS_BIN_decodeHex( strPubKeyInfo.toStdString().c_str(), &binPub );
+    }
+
+    if( binPub.nLen > 0 )
+    {
+        sTemplate[uCount].type = CKA_PUBLIC_KEY_INFO;
+        sTemplate[uCount].pValue = binPub.pVal;
+        sTemplate[uCount].ulValueLen = binPub.nLen;
+        uCount++;
+    }
+
+    QString strSubject;
+    BIN binSubject = {0,0};
+
+    if( mPriSubjectInCertCheck->isChecked() )
+    {
+        JS_BIN_copy( &binSubject, &der_dn_ );
+    }
+    else
+    {
+        strSubject = mPriSubjectText->text();
+        if( strSubject.length() > 0 )
+        {
+            if( mPriSubjectTypeCombo->currentText() == "Text" )
+                JS_PKI_getDERFromDN( strSubject.toStdString().c_str(), &binSubject );
+            else
+                JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+        }
+    }
+
+    if( binSubject.nLen > 0 )
+    {
+        sTemplate[uCount].type = CKA_SUBJECT;
+        sTemplate[uCount].pValue = binSubject.pVal;
+        sTemplate[uCount].ulValueLen = binSubject.nLen;
+        uCount++;
+    }
+
+    BIN binECParam = {0,0};
+//    JS_PKI_getOIDFromString( pEcKeyVal->pCurveOID, &binECParam );
+
+    sTemplate[uCount].type = CKA_EC_PARAMS;
+    sTemplate[uCount].pValue = binECParam.pVal;
+    sTemplate[uCount].ulValueLen = binECParam.nLen;
+    uCount++;
+
+    BIN binValue = {0,0};
+//    JS_BIN_decodeHex( pEcKeyVal->pPrivate, &binValue );
+
+    sTemplate[uCount].type = CKA_VALUE;
+    sTemplate[uCount].pValue = binValue.pVal;
+    sTemplate[uCount].ulValueLen = binValue.nLen;
+    uCount++;
+
+    setPriBoolTemplate( sTemplate, &uCount );
 
     return 0;
 }
