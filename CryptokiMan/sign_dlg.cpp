@@ -342,6 +342,7 @@ int SignDlg::clickInit()
 void SignDlg::clickUpdate()
 {
     int rv = -1;
+    int nDataType = DATA_HEX;
 
     QString strInput = mInputText->toPlainText();
 
@@ -354,11 +355,13 @@ void SignDlg::clickUpdate()
     BIN binInput = {0,0};
 
     if( mInputStringRadio->isChecked() )
-        JS_BIN_set( &binInput, (unsigned char *)strInput.toStdString().c_str(), strInput.length() );
+        nDataType = DATA_STRING;
     else if( mInputHexRadio->isChecked() )
-        JS_BIN_decodeHex( strInput.toStdString().c_str(), &binInput );
+        nDataType = DATA_HEX;
     else if( mInputBase64Radio->isChecked() )
-        JS_BIN_decodeBase64( strInput.toStdString().c_str(), &binInput );
+        nDataType = DATA_BASE64;
+
+    getBINFromString( &binInput, nDataType, strInput );
 
     rv = manApplet->cryptokiAPI()->SignUpdate( session_, binInput.pVal, binInput.nLen );
 
