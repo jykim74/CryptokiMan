@@ -469,22 +469,15 @@ void CreateECPriKeyDlg::clickGenKey()
         int nKeyType = -1;
         QString strECParam;
 
-        //PrintableString curve25519
-        CK_BYTE curveNameX25519[] = { 0x13, 0x0a, 0x63, 0x75, 0x72, 0x76, 0x65, 0x32, 0x35, 0x35, 0x31, 0x39 };
-
-        //PrintableString cruve448
-        CK_BYTE curveNameX448[] = { 0x13, 0x08, 0x63, 0x75, 0x72, 0x76, 0x65, 0x34, 0x34, 0x38 };
-
-
         if( strParam == "ED25519" )
         {
             nKeyType = JS_PKI_KEY_TYPE_ED25519;
-            strECParam = getHexString( curveNameX25519, sizeof(curveNameX25519));
+            strECParam = getHexString( kCurveNameX25519, sizeof(kCurveNameX25519));
         }
         else
         {
             nKeyType = JS_PKI_KEY_TYPE_ED448;
-            strECParam = getHexString( curveNameX448, sizeof(curveNameX448));
+            strECParam = getHexString( kCurveNameX448, sizeof(kCurveNameX448));
         }
 
         ret = JS_PKI_EdDSA_GenKeyPair( nKeyType, &binPub, &binPri );
@@ -550,20 +543,13 @@ void CreateECPriKeyDlg::clickFindKey()
 
         QString strECParam;
 
-        //PrintableString curve25519
-        CK_BYTE curveNameX25519[] = { 0x13, 0x0a, 0x63, 0x75, 0x72, 0x76, 0x65, 0x32, 0x35, 0x35, 0x31, 0x39 };
-
-        //PrintableString cruve448
-        CK_BYTE curveNameX448[] = { 0x13, 0x08, 0x63, 0x75, 0x72, 0x76, 0x65, 0x34, 0x34, 0x38 };
-
-
         if( nKeyType == JS_PKI_KEY_TYPE_ED25519 )
         {
-            strECParam = getHexString( curveNameX25519, sizeof(curveNameX25519));
+            strECParam = getHexString( kCurveNameX25519, sizeof(kCurveNameX25519));
         }
         else
         {
-            strECParam = getHexString( curveNameX448, sizeof(curveNameX448));
+            strECParam = getHexString( kCurveNameX448, sizeof(kCurveNameX448));
         }
 
         ret = JS_PKI_getRawKeyVal( nKeyType, &binPri, &sRawKey );

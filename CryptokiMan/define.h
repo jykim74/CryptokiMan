@@ -8,6 +8,13 @@
 
 #include <QStringList>
 
+//PrintableString curve25519
+static unsigned char kCurveNameX25519[] = { 0x13, 0x0a, 0x63, 0x75, 0x72, 0x76, 0x65, 0x32, 0x35, 0x35, 0x31, 0x39 };
+
+//PrintableString cruve448
+static unsigned char kCurveNameX448[] = { 0x13, 0x08, 0x63, 0x75, 0x72, 0x76, 0x65, 0x34, 0x34, 0x38 };
+
+
 static const QString kCertificate = "Certificate";
 static const QString kPublicKey = "PublicKey";
 static const QString kPrivateKey = "PrivateKey";

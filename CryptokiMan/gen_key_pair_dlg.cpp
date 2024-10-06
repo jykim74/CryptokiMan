@@ -456,24 +456,19 @@ void GenKeyPairDlg::accept()
     {
         char sPararmHex[256];
         QString strCurveName = mOptionCombo->currentText();
-        //PrintableString curve25519
-        CK_BYTE curveNameX25519[] = { 0x13, 0x0a, 0x63, 0x75, 0x72, 0x76, 0x65, 0x32, 0x35, 0x35, 0x31, 0x39 };
-
-        //PrintableString cruve448
-        CK_BYTE curveNameX448[] = { 0x13, 0x08, 0x63, 0x75, 0x72, 0x76, 0x65, 0x34, 0x34, 0x38 };
 
         if( strCurveName == "ED25519" )
         {
             sPubTemplate[uPubCount].type = CKA_EC_PARAMS;
-            sPubTemplate[uPubCount].pValue = curveNameX25519;
-            sPubTemplate[uPubCount].ulValueLen = sizeof(curveNameX25519);
+            sPubTemplate[uPubCount].pValue = kCurveNameX25519;
+            sPubTemplate[uPubCount].ulValueLen = sizeof(kCurveNameX25519);
             uPubCount++;
         }
         else if( strCurveName == "ED448" )
         {
             sPubTemplate[uPubCount].type = CKA_EC_PARAMS;
-            sPubTemplate[uPubCount].pValue = curveNameX448;
-            sPubTemplate[uPubCount].ulValueLen = sizeof(curveNameX448);
+            sPubTemplate[uPubCount].pValue = kCurveNameX448;
+            sPubTemplate[uPubCount].ulValueLen = sizeof(kCurveNameX448);
             uPubCount++;
         }
     }
