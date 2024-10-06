@@ -408,6 +408,8 @@ void MainWindow::createActions()
     {
         createECPubKeyAct->setEnabled( false );
         createECPriKeyAct->setEnabled( false );
+        createEDPubKeyAct->setEnabled( false );
+        createEDPriKeyAct->setEnabled( false );
         createDSAPubKeyAct->setEnabled( false );
         createDSAPriKeyAct->setEnabled( false );
     }
