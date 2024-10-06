@@ -424,31 +424,72 @@ void CreateECPubKeyDlg::clickGenKey()
     BIN binPri = {0,0};
     BIN binOID = {0,0};
     JECKeyVal sECKey;
+    JRawKeyVal sRawKey;
 
     QString strParam = mParamCombo->currentText();
-    QString strPoints = "04";
-
-    JS_PKI_getOIDFromString( strParam.toStdString().c_str(), &binOID );
 
     memset( &sECKey, 0x00, sizeof(sECKey));
+    memset( &sRawKey, 0x00, sizeof(sRawKey));
 
-    ret = JS_PKI_ECCGenKeyPair( strParam.toStdString().c_str(), &binPub, &binPri );
-    if( ret != 0 ) goto end;
+    if( is_ed_ == true )
+    {
+        int nKeyType = -1;
+        QString strECParam;
+        QString strECPoint;
 
-    ret = JS_PKI_getECKeyVal( &binPri, &sECKey );
-    if( ret != 0 ) goto end;
+        //PrintableString curve25519
+        CK_BYTE curveNameX25519[] = { 0x13, 0x0a, 0x63, 0x75, 0x72, 0x76, 0x65, 0x32, 0x35, 0x35, 0x31, 0x39 };
 
-    strPoints += sECKey.pPubX;
-    strPoints += sECKey.pPubY;
+        //PrintableString cruve448
+        CK_BYTE curveNameX448[] = { 0x13, 0x08, 0x63, 0x75, 0x72, 0x76, 0x65, 0x34, 0x34, 0x38 };
 
-    mECParamsText->setText( getHexString( binOID.pVal, binOID.nLen ));
-    mECPointsText->setText( strPoints );
+
+        if( strParam == "ED25519" )
+        {
+            nKeyType = JS_PKI_KEY_TYPE_ED25519;
+            strECParam = getHexString( curveNameX25519, sizeof(curveNameX25519));
+        }
+        else
+        {
+            nKeyType = JS_PKI_KEY_TYPE_ED448;
+            strECParam = getHexString( curveNameX448, sizeof(curveNameX448));
+        }
+
+        ret = JS_PKI_EdDSA_GenKeyPair( nKeyType, &binPub, &binPri );
+        if( ret != 0 ) goto end;
+
+        strECPoint = "04";
+        strECPoint += QString( "%1" ).arg( binPub.nLen, 2, 16, QLatin1Char('0'));
+        strECPoint += getHexString( &binPub );
+
+        mECPointsText->setText( strECPoint );
+        mECParamsText->setText( strECParam );
+    }
+    else
+    {
+        QString strPoints = "04";
+
+        JS_PKI_getOIDFromString( strParam.toStdString().c_str(), &binOID );
+
+        ret = JS_PKI_ECCGenKeyPair( strParam.toStdString().c_str(), &binPub, &binPri );
+        if( ret != 0 ) goto end;
+
+        ret = JS_PKI_getECKeyVal( &binPri, &sECKey );
+        if( ret != 0 ) goto end;
+
+        strPoints += sECKey.pPubX;
+        strPoints += sECKey.pPubY;
+
+        mECParamsText->setText( getHexString( binOID.pVal, binOID.nLen ));
+        mECPointsText->setText( strPoints );
+    }
 
 end :
     JS_BIN_reset( &binPri );
     JS_BIN_reset( &binPub );
     JS_BIN_reset( &binOID );
     JS_PKI_resetECKeyVal( &sECKey );
+    JS_PKI_resetRawKeyVal( &sRawKey );
 }
 
 void CreateECPubKeyDlg::clickUseSKI()
@@ -464,6 +505,7 @@ void CreateECPubKeyDlg::clickFindKey()
     BIN binKey = {0,0};
     BIN binOID = {0,0};
     JECKeyVal sECKey;
+    JRawKeyVal sRawKey;
 
     QString strPath = manApplet->curFile();
     QString fileName = findFile( this, JS_FILE_TYPE_BER, strPath );
@@ -472,6 +514,7 @@ void CreateECPubKeyDlg::clickFindKey()
     QString strPoints = "04";
 
     memset( &sECKey, 0x00, sizeof(sECKey));
+    memset( &sRawKey, 0x00, sizeof(sRawKey));
 
     ret = JS_BIN_fileReadBER( fileName.toLocal8Bit().toStdString().c_str(), &binKey );
     if( ret < 0 )
@@ -481,36 +524,92 @@ void CreateECPubKeyDlg::clickFindKey()
     }
 
     nKeyType = JS_PKI_getPriKeyType( &binKey );
-    if( nKeyType < 0 )
+
+    if( is_ed_ == true )
     {
-        nKeyType = JS_PKI_getPubKeyType( &binKey );
-        if( nKeyType != JS_PKI_KEY_TYPE_ECC )
+        if( nKeyType < 0 )
         {
-            manApplet->elog( QString( "invalid public key type (%1)").arg( nKeyType ));
+            nKeyType = JS_PKI_getPubKeyType( &binKey );
+            if( nKeyType != JS_PKI_KEY_TYPE_ED25519 && nKeyType != JS_PKI_KEY_TYPE_ED448 )
+            {
+                manApplet->elog( QString( "invalid public key type (%1)").arg( nKeyType ));
+                goto end;
+            }
+
+            ret = JS_PKI_getECKeyValFromPub( &binKey, &sECKey );
+            if( ret != 0 ) goto end;
+        }
+        else if( nKeyType != JS_PKI_KEY_TYPE_ED25519 && nKeyType != JS_PKI_KEY_TYPE_ED448 )
+        {
+            manApplet->elog( QString( "invalid private key type (%1)").arg( nKeyType ));
             goto end;
         }
+        else
+        {
+            ret = JS_PKI_getRawKeyVal( nKeyType, &binKey, &sRawKey );
+            if( ret != 0 ) goto end;
+        }
 
-        ret = JS_PKI_getECKeyValFromPub( &binKey, &sECKey );
-        if( ret != 0 ) goto end;
-    }
-    else if( nKeyType != JS_PKI_KEY_TYPE_ECC )
-    {
-        manApplet->elog( QString( "invalid private key type (%1)").arg( nKeyType ));
-        goto end;
+        QString strECParam;
+        QString strECPoint;
+
+        //PrintableString curve25519
+        CK_BYTE curveNameX25519[] = { 0x13, 0x0a, 0x63, 0x75, 0x72, 0x76, 0x65, 0x32, 0x35, 0x35, 0x31, 0x39 };
+
+        //PrintableString cruve448
+        CK_BYTE curveNameX448[] = { 0x13, 0x08, 0x63, 0x75, 0x72, 0x76, 0x65, 0x34, 0x34, 0x38 };
+
+
+        if( nKeyType == JS_PKI_KEY_TYPE_ED25519 )
+        {
+
+            strECParam = getHexString( curveNameX25519, sizeof(curveNameX25519));
+        }
+        else
+        {
+            strECParam = getHexString( curveNameX448, sizeof(curveNameX448));
+        }
+
+        strECPoint = "04";
+        strECPoint += QString( "%1" ).arg( strlen(sRawKey.pPub)/2, 2, 16, QLatin1Char('0'));
+        strECPoint += sRawKey.pPub;
+
+        mECPointsText->setText( strECPoint );
+        mECParamsText->setText( strECParam );
     }
     else
     {
-        ret = JS_PKI_getECKeyVal( &binKey, &sECKey );
-        if( ret != 0 ) goto end;
+        if( nKeyType < 0 )
+        {
+            nKeyType = JS_PKI_getPubKeyType( &binKey );
+            if( nKeyType != JS_PKI_KEY_TYPE_ECC )
+            {
+                manApplet->elog( QString( "invalid public key type (%1)").arg( nKeyType ));
+                goto end;
+            }
+
+            ret = JS_PKI_getECKeyValFromPub( &binKey, &sECKey );
+            if( ret != 0 ) goto end;
+        }
+        else if( nKeyType != JS_PKI_KEY_TYPE_ECC )
+        {
+            manApplet->elog( QString( "invalid private key type (%1)").arg( nKeyType ));
+            goto end;
+        }
+        else
+        {
+            ret = JS_PKI_getECKeyVal( &binKey, &sECKey );
+            if( ret != 0 ) goto end;
+        }
+
+        JS_PKI_getOIDFromString( sECKey.pCurveOID, &binOID );
+
+        strPoints += sECKey.pPubX;
+        strPoints += sECKey.pPubY;
+
+        mECParamsText->setText( getHexString( binOID.pVal, binOID.nLen ));
+        mECPointsText->setText( strPoints );
     }
-
-    JS_PKI_getOIDFromString( sECKey.pCurveOID, &binOID );
-
-    strPoints += sECKey.pPubX;
-    strPoints += sECKey.pPubY;
-
-    mECParamsText->setText( getHexString( binOID.pVal, binOID.nLen ));
-    mECPointsText->setText( strPoints );
 
     manApplet->setCurFile( fileName );
     ret = 0;
@@ -519,6 +618,7 @@ end :
     JS_BIN_reset( &binKey );
     JS_BIN_reset( &binOID );
     JS_PKI_resetECKeyVal( &sECKey );
+    JS_PKI_resetRawKeyVal( &sRawKey );
 
     if( ret != 0 ) manApplet->warningBox( tr( "failed to get key value [%1]").arg(ret), this );
 }
