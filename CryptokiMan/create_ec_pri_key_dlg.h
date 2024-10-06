@@ -19,7 +19,7 @@ class CreateECPriKeyDlg : public QDialog, public Ui::CreateECPriKeyDlg
     Q_OBJECT
 
 public:
-    explicit CreateECPriKeyDlg(QWidget *parent = nullptr);
+    explicit CreateECPriKeyDlg(bool bED = false, QWidget *parent = nullptr);
     ~CreateECPriKeyDlg();
     void setSelectedSlot( int index );
 
@@ -58,6 +58,8 @@ private:
 
     void setDefaults();
     int getSKI_SPKI( BIN *pSKI, BIN *pSPKI );
+
+    bool is_ed_;
 };
 
 #endif // GEN_EC_PRI_KEY_DLG_H

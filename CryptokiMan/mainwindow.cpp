@@ -365,18 +365,30 @@ void MainWindow::createActions()
 //    objectsToolBar->addAction( createRSAPriKeyAct );
 
     const QIcon ep1Icon = QIcon::fromTheme("EC-Public", QIcon(":/images/ep1.png"));
-    QAction *createECPubKeyAct = new QAction( ep1Icon, tr("Create EC Public Key"), this);
+    QAction *createECPubKeyAct = new QAction( ep1Icon, tr("Create ECDSA Public Key"), this);
     createECPubKeyAct->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_F));
     connect( createECPubKeyAct, &QAction::triggered, this, &MainWindow::createECPublicKey);
     createECPubKeyAct->setStatusTip(tr("PKCS11 Create EC Public key"));
     objectsMenu->addAction( createECPubKeyAct );
 
     const QIcon ep2Icon = QIcon::fromTheme("EC-Private", QIcon(":/images/ep2.png"));
-    QAction *createECPriKeyAct = new QAction( ep2Icon, tr("Create EC Private Key"), this);
+    QAction *createECPriKeyAct = new QAction( ep2Icon, tr("Create ECDSA Private Key"), this);
     createECPriKeyAct->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_G));
     connect( createECPriKeyAct, &QAction::triggered, this, &MainWindow::createECPrivateKey);
     createECPriKeyAct->setStatusTip(tr("PKCS11 Create EC Private key"));
     objectsMenu->addAction( createECPriKeyAct );
+
+    QAction *createEDPubKeyAct = new QAction( ep1Icon, tr("Create EDDSA Public Key"), this);
+    createEDPubKeyAct->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_P));
+    connect( createEDPubKeyAct, &QAction::triggered, this, &MainWindow::createEDPublicKey);
+    createEDPubKeyAct->setStatusTip(tr("PKCS11 Create EDDSA Public key"));
+    objectsMenu->addAction( createEDPubKeyAct );
+
+    QAction *createEDPriKeyAct = new QAction( ep2Icon, tr("Create EDDSA Private Key"), this);
+    createEDPriKeyAct->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_Q));
+    connect( createEDPriKeyAct, &QAction::triggered, this, &MainWindow::createEDPrivateKey);
+    createEDPriKeyAct->setStatusTip(tr("PKCS11 Create EDDSA Private key"));
+    objectsMenu->addAction( createEDPriKeyAct );
 
     const QIcon dp1Icon = QIcon::fromTheme("DSA-Public", QIcon(":/images/dp1.png"));
     QAction *createDSAPubKeyAct = new QAction( dp1Icon, tr("Create DSA Public Key"), this);
@@ -1183,6 +1195,36 @@ void MainWindow::createECPrivateKey()
     }
 
     CreateECPriKeyDlg createECPriKeyDlg;
+    if( pItem ) createECPriKeyDlg.setSelectedSlot( pItem->getSlotIndex() );
+    createECPriKeyDlg.exec();
+}
+
+void MainWindow::createEDPublicKey()
+{
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "No slot selected" ), this );
+        return;
+    }
+
+    CreateECPubKeyDlg createECPubKeyDlg(true);
+    if( pItem ) createECPubKeyDlg.setSelectedSlot( pItem->getSlotIndex() );
+    createECPubKeyDlg.exec();
+}
+
+void MainWindow::createEDPrivateKey()
+{
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "No slot selected" ), this );
+        return;
+    }
+
+    CreateECPriKeyDlg createECPriKeyDlg(true);
     if( pItem ) createECPriKeyDlg.setSelectedSlot( pItem->getSlotIndex() );
     createECPriKeyDlg.exec();
 }
@@ -4139,6 +4181,15 @@ void MainWindow::showInfoECCValue( CK_OBJECT_HANDLE hObj, bool bPub )
     for( int i = 0; i < kECCKeyAttList.size(); i++ )
     {
         strName = kECCKeyAttList.at(i);
+        if( bPub == true )
+        {
+            if( strName == "CKA_VALUE" ) continue;
+        }
+        else
+        {
+            if( strName == "CKA_EC_POINT" ) continue;
+        }
+
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
 

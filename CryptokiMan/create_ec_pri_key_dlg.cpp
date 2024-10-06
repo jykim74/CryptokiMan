@@ -16,9 +16,10 @@
 
 static QStringList sFalseTrue = { "false", "true" };
 
-CreateECPriKeyDlg::CreateECPriKeyDlg(QWidget *parent) :
+CreateECPriKeyDlg::CreateECPriKeyDlg( bool bED, QWidget *parent) :
     QDialog(parent)
 {
+    is_ed_ = bED;
     setupUi(this);
 
     initAttributes();
@@ -68,7 +69,15 @@ void CreateECPriKeyDlg::slotChanged(int index)
 
 void CreateECPriKeyDlg::initialize()
 {
+    QString strTitle;
     mSlotsCombo->clear();
+
+    if( is_ed_ )
+        strTitle = tr( "EDDSA PrivateKey Create Window" );
+    else
+        strTitle = tr( "ECDSA PrivateKey Create Window" );
+
+    setWindowTitle( strTitle );
 
     QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
 
@@ -84,7 +93,11 @@ void CreateECPriKeyDlg::initialize()
 
 void CreateECPriKeyDlg::initAttributes()
 {
-    mParamCombo->addItems( kECCOptionList );
+    if( is_ed_ == true )
+        mParamCombo->addItems( kEDDSAOptionList );
+    else
+        mParamCombo->addItems( kECCOptionList );
+
     mSubjectTypeCombo->addItems(kDNTypeList);
 
     mPrivateCombo->addItems(sFalseTrue);
@@ -194,7 +207,12 @@ void CreateECPriKeyDlg::accept()
     memset( &sEDate, 0x00, sizeof(sEDate));
 
     CK_OBJECT_CLASS objClass = CKO_PRIVATE_KEY;
-    CK_KEY_TYPE keyType = CKK_EC;
+    CK_KEY_TYPE keyType = -1;
+
+    if( is_ed_ == true )
+        keyType = CKK_EC_EDWARDS;
+    else
+        keyType = CKK_ECDSA;
 
     sTemplate[uCount].type = CKA_CLASS;
     sTemplate[uCount].pValue = &objClass;
@@ -439,27 +457,62 @@ void CreateECPriKeyDlg::clickGenKey()
     BIN binPri = {0,0};
     BIN binOID = {0,0};
     JECKeyVal sECKey;
+    JRawKeyVal sRawKey;
 
     QString strParam = mParamCombo->currentText();
 
-    JS_PKI_getOIDFromString( strParam.toStdString().c_str(), &binOID );
-
     memset( &sECKey, 0x00, sizeof(sECKey));
+    memset( &sRawKey, 0x00, sizeof(sRawKey));
 
-    ret = JS_PKI_ECCGenKeyPair( strParam.toStdString().c_str(), &binPub, &binPri );
-    if( ret != 0 ) goto end;
+    if( is_ed_ == true )
+    {
+        int nKeyType = -1;
+        QString strECParam;
 
-    ret = JS_PKI_getECKeyVal( &binPri, &sECKey );
-    if( ret != 0 ) goto end;
+        //PrintableString curve25519
+        CK_BYTE curveNameX25519[] = { 0x13, 0x0a, 0x63, 0x75, 0x72, 0x76, 0x65, 0x32, 0x35, 0x35, 0x31, 0x39 };
 
-    mKeyValueText->setText( sECKey.pPrivate );
-    mECParamsText->setText( getHexString( binOID.pVal, binOID.nLen ));
+        //PrintableString cruve448
+        CK_BYTE curveNameX448[] = { 0x13, 0x08, 0x63, 0x75, 0x72, 0x76, 0x65, 0x34, 0x34, 0x38 };
+
+
+        if( strParam == "ED25519" )
+        {
+            nKeyType = JS_PKI_KEY_TYPE_ED25519;
+            strECParam = getHexString( curveNameX25519, sizeof(curveNameX25519));
+        }
+        else
+        {
+            nKeyType = JS_PKI_KEY_TYPE_ED448;
+            strECParam = getHexString( curveNameX448, sizeof(curveNameX448));
+        }
+
+        ret = JS_PKI_EdDSA_GenKeyPair( nKeyType, &binPub, &binPri );
+        if( ret != 0 ) goto end;
+
+        mKeyValueText->setText( getHexString( &binPri ));
+        mECParamsText->setText( strECParam );
+    }
+    else
+    {
+        JS_PKI_getOIDFromString( strParam.toStdString().c_str(), &binOID );
+
+        ret = JS_PKI_ECCGenKeyPair( strParam.toStdString().c_str(), &binPub, &binPri );
+        if( ret != 0 ) goto end;
+
+        ret = JS_PKI_getECKeyVal( &binPri, &sECKey );
+        if( ret != 0 ) goto end;
+
+        mKeyValueText->setText( sECKey.pPrivate );
+        mECParamsText->setText( getHexString( binOID.pVal, binOID.nLen ));
+    }
 
 end :
     JS_BIN_reset( &binPri );
     JS_BIN_reset( &binPub );
     JS_BIN_reset( &binOID );
     JS_PKI_resetECKeyVal( &sECKey );
+    JS_PKI_resetRawKeyVal( &sRawKey );
 }
 
 void CreateECPriKeyDlg::clickFindKey()
@@ -469,12 +522,14 @@ void CreateECPriKeyDlg::clickFindKey()
     BIN binPri = {0,0};
     BIN binOID = {0,0};
     JECKeyVal  sECKey;
+    JRawKeyVal sRawKey;
+
     QString strPath = manApplet->curFile();
     QString fileName = findFile( this, JS_FILE_TYPE_BER, strPath );
     if( fileName.length() < 1 ) return;
 
     memset( &sECKey, 0x00, sizeof(sECKey ));
-
+    memset( &sRawKey, 0x00, sizeof(sRawKey));
 
     ret = JS_BIN_fileReadBER( fileName.toLocal8Bit().toStdString().c_str(), &binPri );
     if( ret < 0 )
@@ -484,19 +539,57 @@ void CreateECPriKeyDlg::clickFindKey()
     }
 
     nKeyType = JS_PKI_getPriKeyType( &binPri );
-    if( nKeyType != JS_PKI_KEY_TYPE_ECC )
+
+    if( is_ed_ == true )
     {
-        manApplet->elog( QString( "invalid private key type (%1)").arg( nKeyType ));
-        goto end;
+        if( nKeyType != JS_PKI_KEY_TYPE_ED25519 && nKeyType != JS_PKI_KEY_TYPE_ED448 )
+        {
+            manApplet->elog( QString( "invalid private key type (%1)").arg( nKeyType ));
+            goto end;
+        }
+
+        QString strECParam;
+
+        //PrintableString curve25519
+        CK_BYTE curveNameX25519[] = { 0x13, 0x0a, 0x63, 0x75, 0x72, 0x76, 0x65, 0x32, 0x35, 0x35, 0x31, 0x39 };
+
+        //PrintableString cruve448
+        CK_BYTE curveNameX448[] = { 0x13, 0x08, 0x63, 0x75, 0x72, 0x76, 0x65, 0x34, 0x34, 0x38 };
+
+
+        if( nKeyType == JS_PKI_KEY_TYPE_ED25519 )
+        {
+            strECParam = getHexString( curveNameX25519, sizeof(curveNameX25519));
+        }
+        else
+        {
+            strECParam = getHexString( curveNameX448, sizeof(curveNameX448));
+        }
+
+        ret = JS_PKI_getRawKeyVal( nKeyType, &binPri, &sRawKey );
+        if( ret != 0 ) goto end;
+
+        mKeyValueText->setText( sRawKey.pPri );
+        mECParamsText->setText( strECParam );
+    }
+    else
+    {
+        if( nKeyType != JS_PKI_KEY_TYPE_ECC )
+        {
+            manApplet->elog( QString( "invalid private key type (%1)").arg( nKeyType ));
+            goto end;
+        }
+
+        ret = JS_PKI_getECKeyVal( &binPri, &sECKey );
+        if( ret != 0 ) goto end;
+
+        JS_PKI_getOIDFromString( sECKey.pCurveOID, &binOID );
+
+        mKeyValueText->setText( sECKey.pPrivate );
+        mECParamsText->setText( getHexString( binOID.pVal, binOID.nLen ));
     }
 
-    ret = JS_PKI_getECKeyVal( &binPri, &sECKey );
-    if( ret != 0 ) goto end;
 
-    JS_PKI_getOIDFromString( sECKey.pCurveOID, &binOID );
-
-    mKeyValueText->setText( sECKey.pPrivate );
-    mECParamsText->setText( getHexString( binOID.pVal, binOID.nLen ));
     manApplet->setCurFile( fileName );
 
     ret = 0;
@@ -507,6 +600,7 @@ end :
     JS_BIN_reset( &binPri );
     JS_BIN_reset( &binOID );
     JS_PKI_resetECKeyVal( &sECKey );
+    JS_PKI_resetRawKeyVal( &sRawKey );
 }
 
 void CreateECPriKeyDlg::clickUseSKI()

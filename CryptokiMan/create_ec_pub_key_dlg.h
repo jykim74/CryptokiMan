@@ -19,7 +19,7 @@ class CreateECPubKeyDlg : public QDialog, public Ui::CreateECPubKeyDlg
     Q_OBJECT
 
 public:
-    explicit CreateECPubKeyDlg(QWidget *parent = nullptr);
+    explicit CreateECPubKeyDlg( bool bED = false, QWidget *parent = nullptr);
     ~CreateECPubKeyDlg();
     void setSelectedSlot( int index );
 
@@ -54,6 +54,7 @@ private:
 
     void setDefaults();
     int getSKI( BIN *pSKI );
+    bool is_ed_;
 };
 
 #endif // GEN_EC_PUB_KEY_DLG_H

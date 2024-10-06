@@ -1330,11 +1330,27 @@ int GenKeyPairDlg::setSKI_SPKI( long hSession, int nKeyType, long hPri, long hPu
     else if( nKeyType == CKK_EC_EDWARDS )
     {
         BIN binVal = {0,0};
+        BIN binXY = {0,0};
+
+        QString strOption = mOptionCombo->currentText();
+        JRawKeyVal sRawKey;
+        char *pPubHex = NULL;
+
+        memset( &sRawKey, 0x00, sizeof(sRawKey));
+
         rv = cryptoAPI->GetAttributeValue2( hSession, hPub, CKA_EC_POINT, &binVal );
         if( rv != 0 ) goto end;
 
+        JS_BIN_set( &binXY, &binVal.pVal[2], binVal.nLen - 2);
 
+        JS_BIN_encodeHex( &binXY, &pPubHex );
+        JS_PKI_setRawKeyVal( &sRawKey, pPubHex, NULL, strOption.toStdString().c_str() );
+        rv = JS_PKI_encodeRawPublicKey( &sRawKey, &binPub );
+
+        JS_PKI_resetRawKeyVal( &sRawKey );
+        if( pPubHex ) JS_free( pPubHex );
         JS_BIN_reset( &binVal );
+        JS_BIN_reset( &binXY );
     }
 
     if( mPriUseSPKICheck->isChecked() )

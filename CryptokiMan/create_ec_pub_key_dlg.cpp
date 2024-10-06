@@ -16,10 +16,11 @@
 
 static QStringList sFalseTrue = { "false", "true" };
 
-CreateECPubKeyDlg::CreateECPubKeyDlg(QWidget *parent) :
+CreateECPubKeyDlg::CreateECPubKeyDlg(bool bED, QWidget *parent) :
     QDialog(parent)
 {
     setupUi(this);
+    is_ed_ = bED;
 
     initAttributes();
     setAttributes();
@@ -70,7 +71,15 @@ void CreateECPubKeyDlg::slotChanged(int index)
 
 void CreateECPubKeyDlg::initialize()
 {
+    QString strTitle;
     mSlotsCombo->clear();
+
+    if( is_ed_ )
+        strTitle = tr( "EDDSA PublicKey Create Window" );
+    else
+        strTitle = tr( "ECDSA PublicKey Create Window" );
+
+    setWindowTitle( strTitle );
 
     QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
 
@@ -86,7 +95,11 @@ void CreateECPubKeyDlg::initialize()
 
 void CreateECPubKeyDlg::initAttributes()
 {
-    mParamCombo->addItems( kECCOptionList );
+    if( is_ed_ == true )
+        mParamCombo->addItems( kEDDSAOptionList );
+    else
+        mParamCombo->addItems( kECCOptionList );
+
     mSubjectTypeCombo->addItems(kDNTypeList);
 
     mPrivateCombo->addItems(sFalseTrue);
@@ -182,7 +195,12 @@ void CreateECPubKeyDlg::accept()
     CK_OBJECT_HANDLE    hObject = 0;
 
     CK_OBJECT_CLASS objClass = CKO_PUBLIC_KEY;
-    CK_KEY_TYPE keyType = CKK_EC;
+    CK_KEY_TYPE keyType = -1;
+
+    if( is_ed_ == true )
+        keyType = CKK_EC_EDWARDS;
+    else
+        keyType = CKK_ECDSA;
 
     CK_DATE sSDate;
     CK_DATE sEDate;

@@ -127,6 +127,8 @@ static QStringList kECCOptionList = { "prime256v1",
     "sect409r1", "sect571k1", "sect571r1"
 };
 
+static QStringList kEDDSAOptionList = { "ED25519", "ED448" };
+
 static QStringList kRSAOptionList = { "1024", "2048", "3072", "4096" };
 static QStringList kDSAOptionList = { "1024", "2048", "3072", "4096" };
 

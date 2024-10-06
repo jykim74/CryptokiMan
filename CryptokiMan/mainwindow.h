@@ -109,6 +109,8 @@ public slots:
     void createRSAPrivateKey();
     void createECPublicKey();
     void createECPrivateKey();
+    void createEDPublicKey();
+    void createEDPrivateKey();
     void createDSAPublicKey();
     void createDSAPrivateKey();
     void createKey();
