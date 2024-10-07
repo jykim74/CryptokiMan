@@ -224,6 +224,10 @@ void ImportPFXDlg::setAttributes()
 
 void ImportPFXDlg::connectAttributes()
 {
+    connect( mPubSameLabelBtn, SIGNAL(clicked()), this, SLOT(clickPubSameLabel()));
+    connect( mPriSameLabelBtn, SIGNAL(clicked()), this, SLOT(clickPriSameLabel()));
+    connect( mCertSameLabelBtn, SIGNAL(clicked()), this, SLOT(clickCertSameLabel()));
+
     connect( mPriUseSKICheck, SIGNAL(clicked()), this, SLOT(clickPriUseSKI()));
     connect( mPriUseSPKICheck, SIGNAL(clicked()), this, SLOT(clickPriUseSPKI()));
 
@@ -448,6 +452,33 @@ void ImportPFXDlg::slotChanged(int index)
     mSlotIDText->setText( QString( "%1").arg(slotInfo.getSlotID()));
     mSessionText->setText( QString("%1").arg(slotInfo.getSessionHandle()));
     mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
+}
+
+void ImportPFXDlg::clickPriSameLabel()
+{
+    QString strLabel = mPriLabelText->text();
+    mPubLabelText->setText( strLabel );
+    mCertLabelText->setText( strLabel );
+
+    manApplet->messageBox( tr( "All labels are the same"), this );
+}
+
+void ImportPFXDlg::clickPubSameLabel()
+{
+    QString strLabel = mPubLabelText->text();
+    mPriLabelText->setText( strLabel );
+    mCertLabelText->setText( strLabel );
+
+    manApplet->messageBox( tr( "All labels are the same"), this );
+}
+
+void ImportPFXDlg::clickCertSameLabel()
+{
+    QString strLabel = mCertLabelText->text();
+    mPriLabelText->setText( strLabel );
+    mPubLabelText->setText( strLabel );
+
+    manApplet->messageBox( tr( "All labels are the same"), this );
 }
 
 void ImportPFXDlg::clickPriUseSKI()
@@ -685,12 +716,13 @@ void ImportPFXDlg::clickPubSubjectInCertCheck()
     mPubSubjectTypeCombo->setEnabled( !bVal );
 }
 
-void ImportPFXDlg::setPubBoolTemplate( CK_ATTRIBUTE sTemplate[], CK_ULONG *puCount )
+void ImportPFXDlg::setPubBoolTemplate( CK_ATTRIBUTE sTemplate[], CK_ULONG& uCount )
 {
     CK_DATE sSDate;
     CK_DATE sEDate;
 
-    CK_ULONG uCount = *puCount;
+    memset( &sSDate, 0x00, sizeof(sSDate));
+    memset( &sEDate, 0x00, sizeof(sEDate));
 
     if( mPubTokenCheck->isChecked() )
     {
@@ -789,16 +821,15 @@ void ImportPFXDlg::setPubBoolTemplate( CK_ATTRIBUTE sTemplate[], CK_ULONG *puCou
         sTemplate[uCount].ulValueLen = sizeof(sEDate);
         uCount++;
     }
-
-    *puCount = uCount;
 }
 
-void ImportPFXDlg::setPriBoolTemplate( CK_ATTRIBUTE sTemplate[], CK_ULONG *puCount )
+void ImportPFXDlg::setPriBoolTemplate( CK_ATTRIBUTE sTemplate[], CK_ULONG& uCount )
 {
     CK_DATE sSDate;
     CK_DATE sEDate;
 
-    CK_ULONG uCount = *puCount;
+    memset( &sSDate, 0x00, sizeof(sSDate));
+    memset( &sEDate, 0x00, sizeof(sEDate));
 
     if( mPriPrivateCheck->isChecked() )
     {
@@ -913,8 +944,6 @@ void ImportPFXDlg::setPriBoolTemplate( CK_ATTRIBUTE sTemplate[], CK_ULONG *puCou
         sTemplate[uCount].ulValueLen = sizeof(sEDate);
         uCount++;
     }
-
-    *puCount = uCount;
 }
 
 int ImportPFXDlg::createCert( BIN *pCert )
@@ -2191,17 +2220,10 @@ int ImportPFXDlg::createEDPublicKey( JRawKeyVal *pRawKeyVal )
     CK_ATTRIBUTE sTemplate[20];
     CK_ULONG uCount = 0;
     CK_OBJECT_HANDLE hObject = -1;
-    CK_BBOOL bTrue = CK_TRUE;
-    CK_BBOOL bFalse = CK_FALSE;
+
 
     CK_OBJECT_CLASS objClass = CKO_PUBLIC_KEY;
-    CK_KEY_TYPE keyType = CKK_EC;
-
-    CK_DATE sSDate;
-    CK_DATE sEDate;
-
-    memset( &sSDate, 0x00, sizeof(sSDate));
-    memset( &sEDate, 0x00, sizeof(sEDate));
+    CK_KEY_TYPE keyType = CKK_EC_EDWARDS;
 
     sTemplate[uCount].type = CKA_CLASS;
     sTemplate[uCount].pValue = &objClass;
@@ -2272,38 +2294,45 @@ int ImportPFXDlg::createEDPublicKey( JRawKeyVal *pRawKeyVal )
         uCount++;
     }
 
-    BIN binECParam = {0,0};
-//    JS_PKI_getOIDFromString( pEcKeyVal->pCurveOID, &binECParam );
+    if( strcasecmp( pRawKeyVal->pName, "ED25519" ) == 0 )
+    {
+        sTemplate[uCount].type = CKA_EC_PARAMS;
+        sTemplate[uCount].pValue = kCurveNameX25519;
+        sTemplate[uCount].ulValueLen = sizeof(kCurveNameX25519);
+        uCount++;
+    }
+    else
+    {
+        sTemplate[uCount].type = CKA_EC_PARAMS;
+        sTemplate[uCount].pValue = kCurveNameX448;
+        sTemplate[uCount].ulValueLen = sizeof(kCurveNameX448);
+        uCount++;
+    }
 
-    sTemplate[uCount].type = CKA_EC_PARAMS;
-    sTemplate[uCount].pValue = binECParam.pVal;
-    sTemplate[uCount].ulValueLen = binECParam.nLen;
-    uCount++;
-
+    QString strECPoint;
     BIN binECPoint={0,0};
-    BIN binPubX = {0,0};
-    BIN binPubY = {0,0};
-    unsigned char sPrefix[3];
 
-//    JS_BIN_decodeHex( pEcKeyVal->pPubX, &binPubX );
-//    JS_BIN_decodeHex( pEcKeyVal->pPubY, &binPubY );
-    //    JS_BIN_decodeHex( "04", &binECPoint );
-    sPrefix[0] = 0x04;
-    sPrefix[1] = binPubX.nLen + binPubY.nLen + 1;
-    sPrefix[2] = 0x04;
+    strECPoint = "04";
+    strECPoint += QString( "%1" ).arg( strlen( pRawKeyVal->pPub )/2, 2, 16, QLatin1Char('0'));
+    strECPoint += pRawKeyVal->pPub;
 
-    JS_BIN_set( &binECPoint, sPrefix, 3 );
-    JS_BIN_appendBin( &binECPoint, &binPubX );
-    JS_BIN_appendBin( &binECPoint, &binPubY );
-    JS_BIN_reset( &binPubX );
-    JS_BIN_reset( &binPubY );
+    JS_BIN_decodeHex( strECPoint.toStdString().c_str(), &binECPoint );
 
     sTemplate[uCount].type = CKA_EC_POINT;
     sTemplate[uCount].pValue = binECPoint.pVal;
     sTemplate[uCount].ulValueLen = binECPoint.nLen;
     uCount++;
 
-    setPubBoolTemplate( sTemplate, &uCount );
+    sTemplate[uCount].type = CKA_EC_POINT;
+    sTemplate[uCount].pValue = binECPoint.pVal;
+    sTemplate[uCount].ulValueLen = binECPoint.nLen;
+    uCount++;
+
+    setPubBoolTemplate( sTemplate, uCount );
+
+    JS_BIN_reset( &binECPoint );
+    JS_BIN_reset( &binSubject );
+    JS_BIN_reset( &binID );
 
     return 0;
 }
@@ -2321,17 +2350,9 @@ int ImportPFXDlg::createEDPrivateKey( JRawKeyVal *pRawKeyVal )
     CK_ATTRIBUTE sTemplate[20];
     CK_ULONG uCount = 0;
     CK_OBJECT_HANDLE hObject = -1;
-    CK_BBOOL bTrue = CK_TRUE;
-    CK_BBOOL bFalse = CK_FALSE;
 
     CK_OBJECT_CLASS objClass = CKO_PRIVATE_KEY;
-    CK_KEY_TYPE keyType = CKK_EC;
-
-    CK_DATE sSDate;
-    CK_DATE sEDate;
-
-    memset( &sSDate, 0x00, sizeof(sSDate));
-    memset( &sEDate, 0x00, sizeof(sEDate));
+    CK_KEY_TYPE keyType = CKK_EC_EDWARDS;
 
     sTemplate[uCount].type = CKA_CLASS;
     sTemplate[uCount].pValue = &objClass;
@@ -2423,23 +2444,35 @@ int ImportPFXDlg::createEDPrivateKey( JRawKeyVal *pRawKeyVal )
         uCount++;
     }
 
-    BIN binECParam = {0,0};
-//    JS_PKI_getOIDFromString( pEcKeyVal->pCurveOID, &binECParam );
-
-    sTemplate[uCount].type = CKA_EC_PARAMS;
-    sTemplate[uCount].pValue = binECParam.pVal;
-    sTemplate[uCount].ulValueLen = binECParam.nLen;
-    uCount++;
+    if( strcasecmp( pRawKeyVal->pName, "ED25519" ) == 0 )
+    {
+        sTemplate[uCount].type = CKA_EC_PARAMS;
+        sTemplate[uCount].pValue = kCurveNameX25519;
+        sTemplate[uCount].ulValueLen = sizeof(kCurveNameX25519);
+        uCount++;
+    }
+    else
+    {
+        sTemplate[uCount].type = CKA_EC_PARAMS;
+        sTemplate[uCount].pValue = kCurveNameX448;
+        sTemplate[uCount].ulValueLen = sizeof(kCurveNameX448);
+        uCount++;
+    }
 
     BIN binValue = {0,0};
-//    JS_BIN_decodeHex( pEcKeyVal->pPrivate, &binValue );
+    JS_BIN_decodeHex( pRawKeyVal->pPri, &binValue );
 
     sTemplate[uCount].type = CKA_VALUE;
     sTemplate[uCount].pValue = binValue.pVal;
     sTemplate[uCount].ulValueLen = binValue.nLen;
     uCount++;
 
-    setPriBoolTemplate( sTemplate, &uCount );
+    setPriBoolTemplate( sTemplate, uCount );
+
+    JS_BIN_reset( &binValue );
+    JS_BIN_reset( &binSubject );
+    JS_BIN_reset( &binPub );
+    JS_BIN_reset( &binID );
 
     return 0;
 }

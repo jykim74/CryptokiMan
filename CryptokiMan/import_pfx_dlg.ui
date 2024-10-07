@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>680</width>
+    <width>581</width>
     <height>527</height>
    </rect>
   </property>
@@ -395,9 +395,6 @@
          <property name="topMargin">
           <number>0</number>
          </property>
-         <item row="0" column="1" colspan="2">
-          <widget class="QLineEdit" name="mCertLabelText"/>
-         </item>
          <item row="1" column="2">
           <widget class="QCheckBox" name="mCertUseSKICheck">
            <property name="text">
@@ -455,6 +452,16 @@
           <widget class="QCheckBox" name="mCertUseSPKICheck">
            <property name="text">
             <string>Use SPKI</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="mCertLabelText"/>
+         </item>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="mCertSameLabelBtn">
+           <property name="text">
+            <string>Same Label</string>
            </property>
           </widget>
          </item>
@@ -654,9 +661,6 @@
          <item row="3" column="1">
           <widget class="QLineEdit" name="mPriSubjectText"/>
          </item>
-         <item row="0" column="1" colspan="2">
-          <widget class="QLineEdit" name="mPriLabelText"/>
-         </item>
          <item row="3" column="2">
           <widget class="QComboBox" name="mPriSubjectTypeCombo"/>
          </item>
@@ -687,6 +691,16 @@
           <widget class="QCheckBox" name="mPriUseSPKICheck">
            <property name="text">
             <string>Use SPKI</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="mPriLabelText"/>
+         </item>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="mPriSameLabelBtn">
+           <property name="text">
+            <string>Same Label</string>
            </property>
           </widget>
          </item>
@@ -941,9 +955,6 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="1" colspan="2">
-          <widget class="QLineEdit" name="mPubLabelText"/>
-         </item>
          <item row="1" column="0">
           <widget class="QLabel" name="label_16">
            <property name="text">
@@ -962,6 +973,16 @@
           <widget class="QLabel" name="mPubSubjectLabel">
            <property name="text">
             <string>Subject</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="mPubLabelText"/>
+         </item>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="mPubSameLabelBtn">
+           <property name="text">
+            <string>Same Label</string>
            </property>
           </widget>
          </item>
@@ -1158,6 +1179,7 @@
   <tabstop>mPasswordText</tabstop>
   <tabstop>mCertSubjectInCertCheck</tabstop>
   <tabstop>mCertLabelText</tabstop>
+  <tabstop>mCertSameLabelBtn</tabstop>
   <tabstop>mCertIDText</tabstop>
   <tabstop>mCertUseSKICheck</tabstop>
   <tabstop>mCertPubKeyInfoText</tabstop>
@@ -1182,6 +1204,7 @@
   <tabstop>mCertEndDateEdit</tabstop>
   <tabstop>mPriSubjectInCertCheck</tabstop>
   <tabstop>mPriLabelText</tabstop>
+  <tabstop>mPriSameLabelBtn</tabstop>
   <tabstop>mPriIDText</tabstop>
   <tabstop>mPriUseSKICheck</tabstop>
   <tabstop>mPriPubKeyInfoText</tabstop>
@@ -1218,6 +1241,7 @@
   <tabstop>mPriDestroyableCombo</tabstop>
   <tabstop>mPubSubjectInCertCheck</tabstop>
   <tabstop>mPubLabelText</tabstop>
+  <tabstop>mPubSameLabelBtn</tabstop>
   <tabstop>mPubIDText</tabstop>
   <tabstop>mPubUseSKICheck</tabstop>
   <tabstop>mPubSubjectText</tabstop>

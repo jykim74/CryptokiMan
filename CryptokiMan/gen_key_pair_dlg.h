@@ -27,6 +27,9 @@ private slots:
     void slotChanged( int index );
     void mechChanged( int nIndex );
 
+    void clickPriSameLabel();
+    void clickPubSameLabel();
+
     void clickPriUseSKI();
     void clickPriUseSPKI();
 

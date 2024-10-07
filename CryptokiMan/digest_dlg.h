@@ -29,6 +29,8 @@ private slots:
     void changeKeyLabel( int index );
     void changeMech( int index );
 
+    void changeParam( const QString text );
+
     void clickDigestKey();
     int clickInit();
     void clickUpdate();

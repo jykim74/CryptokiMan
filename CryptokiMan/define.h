@@ -206,7 +206,8 @@ static QStringList kMechDeriveNoLicenseList = {
 };
 
 static QStringList kMechGenKeyPairList = {
-  "CKM_RSA_PKCS_KEY_PAIR_GEN", "CKM_ECDSA_KEY_PAIR_GEN", "CKM_DSA_KEY_PAIR_GEN", "CKM_DH_PKCS_KEY_PAIR_GEN"
+  "CKM_RSA_PKCS_KEY_PAIR_GEN", "CKM_ECDSA_KEY_PAIR_GEN", "CKM_DSA_KEY_PAIR_GEN", "CKM_DH_PKCS_KEY_PAIR_GEN",
+    "CKM_EC_EDWARDS_KEY_PAIR_GEN"
 };
 
 static QStringList kMechGenList = {
@@ -230,7 +231,7 @@ static QStringList kSymTypeListNoLicense = {
 };
 
 static QStringList kAsymTypeList = {
-    "CKK_RSA", "CKK_DSA", "CKK_ECDSA", "CKK_EC",
+    "CKK_RSA", "CKK_DSA", "CKK_ECDSA", "CKK_EC_EDWARDS"
 };
 
 static QStringList kAsymTypeListNoLicense = {

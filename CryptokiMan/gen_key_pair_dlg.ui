@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>664</width>
+    <width>581</width>
     <height>508</height>
    </rect>
   </property>
@@ -850,9 +850,6 @@
          <item row="1" column="1">
           <widget class="QLineEdit" name="mPriSubjectText"/>
          </item>
-         <item row="0" column="1" colspan="2">
-          <widget class="QLineEdit" name="mPriLabelText"/>
-         </item>
          <item row="2" column="2">
           <widget class="QCheckBox" name="mPriUseSKICheck">
            <property name="text">
@@ -874,6 +871,16 @@
           <widget class="QCheckBox" name="mPriUseSPKICheck">
            <property name="text">
             <string>Use SPKI</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="mPriLabelText"/>
+         </item>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="mPriSameLabelBtn">
+           <property name="text">
+            <string>Same Label</string>
            </property>
           </widget>
          </item>
@@ -1088,9 +1095,6 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="1" colspan="2">
-          <widget class="QLineEdit" name="mPubLabelText"/>
-         </item>
          <item row="1" column="0">
           <widget class="QLabel" name="label_21">
            <property name="text">
@@ -1125,6 +1129,16 @@
           <widget class="QCheckBox" name="mPubUseSKICheck">
            <property name="text">
             <string>Use SKI</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="mPubLabelText"/>
+         </item>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="mPubSameLabelBtn">
+           <property name="text">
+            <string>Same Label</string>
            </property>
           </widget>
          </item>
@@ -1334,6 +1348,7 @@
   <tabstop>mDH_PLenText</tabstop>
   <tabstop>mDH_PText</tabstop>
   <tabstop>mPriLabelText</tabstop>
+  <tabstop>mPriSameLabelBtn</tabstop>
   <tabstop>mPriSubjectText</tabstop>
   <tabstop>mPriSubjectTypeCombo</tabstop>
   <tabstop>mPriIDText</tabstop>
@@ -1369,6 +1384,7 @@
   <tabstop>mPriDestroyableCheck</tabstop>
   <tabstop>mPriDestroyableCombo</tabstop>
   <tabstop>mPubLabelText</tabstop>
+  <tabstop>mPubSameLabelBtn</tabstop>
   <tabstop>mPubSubjectText</tabstop>
   <tabstop>mPubSubjectTypeCombo</tabstop>
   <tabstop>mPubIDText</tabstop>

@@ -69,6 +69,7 @@ void DigestDlg::initUI()
 
     connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT( slotChanged(int) ));
     connect( mKeyLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT( changeKeyLabel(int)));
+    connect( mParamText, SIGNAL(textChanged(const QString)), this, SLOT(changeParam(const QString)));
     connect( mMechCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changeMech(int)));
 
     connect( mInitBtn, SIGNAL(clicked()), this, SLOT(clickInit()));
@@ -180,6 +181,12 @@ void DigestDlg::changeMech( int index )
     QString strMech = mMechCombo->currentText();
     long uMech = JS_PKCS11_GetCKMType( strMech.toStdString().c_str() );
     mMechText->setText( QString("%1").arg( uMech, 8, 16, QLatin1Char('0')));
+}
+
+void DigestDlg::changeParam( const QString text )
+{
+    QString strLen = getDataLenString( DATA_HEX, mParamText->text() );
+    mParamLenText->setText( QString("%1").arg( strLen ));
 }
 
 void DigestDlg::setSelectedSlot(int index)

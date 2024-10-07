@@ -29,6 +29,10 @@ private slots:
     virtual void accept();
     void slotChanged( int index );
 
+    void clickPriSameLabel();
+    void clickPubSameLabel();
+    void clickCertSameLabel();
+
     void clickCertUseSKI();
     void clickCertUseSPKI();
 
@@ -96,8 +100,8 @@ private:
     int createDSAPublicKey( JDSAKeyVal *pDSAKeyVal );
     int createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal );
 
-    void setPubBoolTemplate( CK_ATTRIBUTE sTemplate[], CK_ULONG *pnCount );
-    void setPriBoolTemplate( CK_ATTRIBUTE sTemplate[], CK_ULONG *pnCount );
+    void setPubBoolTemplate( CK_ATTRIBUTE sTemplate[], CK_ULONG& uCount );
+    void setPriBoolTemplate( CK_ATTRIBUTE sTemplate[], CK_ULONG& uCount );
 
     void setDefaults();
 

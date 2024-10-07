@@ -221,12 +221,28 @@ const QStringList MechMgr::getSignList( int type )
             if( type == MECH_TYPE_SYM )
             {
                 if( strName.contains( "MAC", Qt::CaseInsensitive) == true )
+                {
                     signList.append( strName );
+                }
             }
             else if( type == MECH_TYPE_ASYM )
             {
-                if( strName.contains( "MAC", Qt::CaseInsensitive) == false )
-                    signList.append( strName );
+                if( strName.contains( "MAC", Qt::CaseInsensitive) == true )
+                    continue;
+
+                if( strName.contains( "AES", Qt::CaseInsensitive) == true )
+                    continue;
+
+                if( strName.contains( "ARIA", Qt::CaseInsensitive) == true )
+                    continue;
+
+                if( strName.contains( "DES", Qt::CaseInsensitive) == true )
+                    continue;
+
+                if( strName.contains( "SEED", Qt::CaseInsensitive) == true )
+                    continue;
+
+                signList.append( strName );
             }
             else
             {
@@ -253,12 +269,29 @@ const QStringList MechMgr::getVerifyList( int type )
             if( type == MECH_TYPE_SYM )
             {
                 if( strName.contains( "MAC", Qt::CaseInsensitive) == true )
+                {
                     verifyList.append( strName );
+                    continue;
+                }
             }
             else if( type == MECH_TYPE_ASYM )
             {
-                if( strName.contains( "MAC", Qt::CaseInsensitive) == false )
-                    verifyList.append( strName );
+                if( strName.contains( "MAC", Qt::CaseInsensitive) == true )
+                    continue;
+
+                if( strName.contains( "AES", Qt::CaseInsensitive) == true )
+                    continue;
+
+                if( strName.contains( "ARIA", Qt::CaseInsensitive) == true )
+                    continue;
+
+                if( strName.contains( "DES", Qt::CaseInsensitive) == true )
+                    continue;
+
+                if( strName.contains( "SEED", Qt::CaseInsensitive) == true )
+                    continue;
+
+                verifyList.append( strName );
             }
             else
             {
@@ -284,13 +317,27 @@ const QStringList MechMgr::getEncList( int type )
 
             if( type == MECH_TYPE_SYM )
             {
-                if( strName.contains( "RSA", Qt::CaseInsensitive) == false )
-                    encList.append( strName );
+                if( strName.contains( "RSA", Qt::CaseInsensitive) == true )
+                    continue;
+
+                if( strName.contains( "SM2", Qt::CaseInsensitive) == true )
+                    continue;
+
+                encList.append( strName );
             }
             else if( type == MECH_TYPE_ASYM )
             {
                 if( strName.contains( "RSA", Qt::CaseInsensitive) == true )
+                {
                     encList.append( strName );
+                    continue;
+                }
+
+                if( strName.contains( "SM2", Qt::CaseInsensitive) == true )
+                {
+                    encList.append( strName );
+                    continue;
+                }
             }
             else
             {
@@ -316,13 +363,27 @@ const QStringList MechMgr::getDecList( int type )
 
             if( type == MECH_TYPE_SYM )
             {
-                if( strName.contains( "RSA", Qt::CaseInsensitive) == false )
-                    decList.append( strName );
+                if( strName.contains( "RSA", Qt::CaseInsensitive) == true )
+                    continue;
+
+                if( strName.contains( "SM2", Qt::CaseInsensitive) == true )
+                    continue;
+
+                decList.append( strName );
             }
             else if( type == MECH_TYPE_ASYM )
             {
                 if( strName.contains( "RSA", Qt::CaseInsensitive) == true )
+                {
                     decList.append( strName );
+                    continue;
+                }
+
+                if( strName.contains( "SM2", Qt::CaseInsensitive) == true )
+                {
+                    decList.append( strName );
+                    continue;
+                }
             }
             else
             {

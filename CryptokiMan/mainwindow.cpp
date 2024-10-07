@@ -273,7 +273,7 @@ void MainWindow::createActions()
     moduleMenu->addAction( finalAct );
     moduleToolBar->addAction( finalAct );
 
-    const QIcon openSessIcon = QIcon::fromTheme("open_session", QIcon(":/images/open_s.png"));
+    const QIcon openSessIcon = QIcon::fromTheme("open_session", QIcon(":/images/open_session.png"));
     QAction *openSessAct = new QAction( openSessIcon, tr("Open Session"), this );
     openSessAct->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_O));
     connect( openSessAct, &QAction::triggered, this, &MainWindow::openSession );
@@ -281,13 +281,13 @@ void MainWindow::createActions()
     moduleMenu->addAction( openSessAct );
     moduleToolBar->addAction( openSessAct );
 
-    const QIcon closeSessIcon = QIcon::fromTheme("close_session", QIcon(":/images/close_s.png"));
+    const QIcon closeSessIcon = QIcon::fromTheme("close_session", QIcon(":/images/close_session.png"));
     QAction *closeSessAct = new QAction( closeSessIcon, tr("Close Session"), this );
     closeSessAct->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_C));
     connect( closeSessAct, &QAction::triggered, this, &MainWindow::closeSession );
     closeSessAct->setStatusTip(tr("PKCS11 Close Session"));
     moduleMenu->addAction( closeSessAct );
-//    moduleToolBar->addAction( closeSessAct );
+    moduleToolBar->addAction( closeSessAct );
 
     const QIcon closeAllIcon = QIcon::fromTheme("close_session", QIcon(":/images/close_all.png"));
     QAction *closeAllSessAct = new QAction( closeAllIcon, tr("Close All Sessions"), this );
@@ -295,7 +295,7 @@ void MainWindow::createActions()
     connect( closeAllSessAct, &QAction::triggered, this, &MainWindow::closeAllSessions );
     closeAllSessAct->setStatusTip(tr("PKCS11 Close All Sessions"));
     moduleMenu->addAction( closeAllSessAct );
-    moduleToolBar->addAction( closeAllSessAct );
+//    moduleToolBar->addAction( closeAllSessAct );
 
     const QIcon loginIcon = QIcon::fromTheme("login", QIcon(":/images/login.png"));
     QAction *loginAct = new QAction( loginIcon, tr("Login"), this );
@@ -378,13 +378,15 @@ void MainWindow::createActions()
     createECPriKeyAct->setStatusTip(tr("PKCS11 Create EC Private key"));
     objectsMenu->addAction( createECPriKeyAct );
 
-    QAction *createEDPubKeyAct = new QAction( ep1Icon, tr("Create EDDSA Public Key"), this);
+    const QIcon ed1Icon = QIcon::fromTheme("ED-Public", QIcon(":/images/ed1.png"));
+    QAction *createEDPubKeyAct = new QAction( ed1Icon, tr("Create EDDSA Public Key"), this);
     createEDPubKeyAct->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_P));
     connect( createEDPubKeyAct, &QAction::triggered, this, &MainWindow::createEDPublicKey);
     createEDPubKeyAct->setStatusTip(tr("PKCS11 Create EDDSA Public key"));
     objectsMenu->addAction( createEDPubKeyAct );
 
-    QAction *createEDPriKeyAct = new QAction( ep2Icon, tr("Create EDDSA Private Key"), this);
+    const QIcon ed2Icon = QIcon::fromTheme("ED-Public", QIcon(":/images/ed2.png"));
+    QAction *createEDPriKeyAct = new QAction( ed2Icon, tr("Create EDDSA Private Key"), this);
     createEDPriKeyAct->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_Q));
     connect( createEDPriKeyAct, &QAction::triggered, this, &MainWindow::createEDPrivateKey);
     createEDPriKeyAct->setStatusTip(tr("PKCS11 Create EDDSA Private key"));

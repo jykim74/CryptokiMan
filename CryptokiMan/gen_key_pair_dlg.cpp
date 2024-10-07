@@ -243,6 +243,9 @@ void GenKeyPairDlg::setAttributes()
 
 void GenKeyPairDlg::connectAttributes()
 {
+    connect( mPubSameLabelBtn, SIGNAL(clicked()), this, SLOT(clickPubSameLabel()));
+    connect( mPriSameLabelBtn, SIGNAL(clicked()), this, SLOT(clickPriSameLabel()));
+
     connect( mPriUseSKICheck, SIGNAL(clicked()), this, SLOT(clickPriUseSKI()));
     connect( mPriUseSPKICheck, SIGNAL(clicked()), this, SLOT(clickPriUseSPKI()));
 
@@ -895,6 +898,18 @@ void GenKeyPairDlg::mechChanged(int nIndex)
         mOptionCombo->addItems( sEDDSAOptionList );
         mParamTab->setDisabled(true);
     }
+}
+
+void GenKeyPairDlg::clickPriSameLabel()
+{
+    mPubLabelText->setText( mPriLabelText->text() );
+    manApplet->messageBox( tr( "All labels are the same"), this );
+}
+
+void GenKeyPairDlg::clickPubSameLabel()
+{
+    mPriLabelText->setText( mPubLabelText->text() );
+    manApplet->messageBox( tr( "All labels are the same"), this );
 }
 
 void GenKeyPairDlg::clickPriUseSKI()
