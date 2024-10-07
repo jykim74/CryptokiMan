@@ -224,6 +224,7 @@ add_executable(${PROJECT_NAME}
     verify_thread.h verify_thread.cpp
     encrypt_thread.h encrypt_thread.cpp
     decrypt_thread.h decrypt_thread.cpp
+    type_name_dlg.h type_name_dlg.cpp type_name_dlg.ui
 )
 
 target_link_options( ${PROJECT_NAME} PRIVATE -mwindows -MD )

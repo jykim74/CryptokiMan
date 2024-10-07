@@ -61,6 +61,7 @@
 #include "lcn_info_dlg.h"
 #include "copy_object_dlg.h"
 #include "find_object_dlg.h"
+#include "type_name_dlg.h"
 
 const int kMaxRecentFiles = 10;
 
@@ -445,11 +446,6 @@ void MainWindow::createActions()
     editAttributeListAct->setStatusTip(tr("PKCS11 Edit Attribute List"));
     objectsMenu->addAction( editAttributeListAct );
 
-    if( manApplet->isLicense() == false )
-    {
-        editAttributeListAct->setEnabled( false );
-    }
-
     const QIcon copyIcon = QIcon::fromTheme("Edit", QIcon(":/images/copy_object.png"));
     QAction *copyObjectAct = new QAction( copyIcon, tr("Copy Object"), this);
     copyObjectAct->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_N));
@@ -602,8 +598,17 @@ void MainWindow::createActions()
     deriveKeyAct->setStatusTip(tr("PKCS11 derive key"));
     toolsMenu->addAction( deriveKeyAct );
 
+    const QIcon typeIcon = QIcon::fromTheme("TypeNamey", QIcon(":/images/type.png"));
+    QAction *typeNameAct = new QAction( typeIcon, tr("Type Name"), this);
+    typeNameAct->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_T));
+    connect( typeNameAct, &QAction::triggered, this, &MainWindow::typeName);
+    typeNameAct->setStatusTip(tr("PKCS#11 Type Name"));
+    toolsMenu->addAction( typeNameAct );
+
     if( manApplet->isLicense() == false )
     {
+        editAttributeListAct->setEnabled( false );
+
         importCertAct->setEnabled( false );
         importPFXAct->setEnabled( false );
         importPriKeyAct->setEnabled( false );
@@ -616,6 +621,8 @@ void MainWindow::createActions()
         wrapKeyAct->setEnabled( false );
         unwrapKeyAct->setEnabled( false );
         deriveKeyAct->setEnabled( false );
+
+        typeNameAct->setEnabled( false );
     }
 
     QMenu *helpMenu = menuBar()->addMenu(tr("&Help"));
@@ -1979,6 +1986,12 @@ void MainWindow::deriveKey()
     DeriveKeyDlg deriveKeyDlg;
     deriveKeyDlg.setSelectedSlot( nSlot );
     deriveKeyDlg.exec();
+}
+
+void MainWindow::typeName()
+{
+    TypeNameDlg typeName;
+    typeName.exec();
 }
 
 void MainWindow::settings()

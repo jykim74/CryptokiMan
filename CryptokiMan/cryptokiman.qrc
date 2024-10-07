@@ -81,5 +81,6 @@
         <file>images/ed1.png</file>
         <file>images/ed2.png</file>
         <file>images/close_session.png</file>
+        <file>images/type.png</file>
     </qresource>
 </RCC>
