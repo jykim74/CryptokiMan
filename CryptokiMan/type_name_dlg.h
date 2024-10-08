@@ -8,6 +8,12 @@ namespace Ui {
 class TypeNameDlg;
 }
 
+enum {
+    JTypeName = 0,
+    JTypeDecimail = 1,
+    JTypeHex = 2
+};
+
 class TypeNameDlg : public QDialog, public Ui::TypeNameDlg
 {
     Q_OBJECT
@@ -21,7 +27,8 @@ private slots:
     void clickSearch();
 
 private:
-
+    void initialize();
+    int getType( const QString strInput );
 };
 
 #endif // TYPE_NAME_DLG_H

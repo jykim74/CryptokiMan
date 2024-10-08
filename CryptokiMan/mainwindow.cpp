@@ -604,6 +604,7 @@ void MainWindow::createActions()
     connect( typeNameAct, &QAction::triggered, this, &MainWindow::typeName);
     typeNameAct->setStatusTip(tr("PKCS#11 Type Name"));
     toolsMenu->addAction( typeNameAct );
+    toolsToolBar->addAction( typeNameAct );
 
     if( manApplet->isLicense() == false )
     {
@@ -656,7 +657,7 @@ void MainWindow::createActions()
     connect( settingsAct, &QAction::triggered, this, &MainWindow::settings);
     settingsAct->setStatusTip(tr("Settings CryptokiMan"));
     helpMenu->addAction( settingsAct );
-    helpToolBar->addAction( settingsAct );
+//    helpToolBar->addAction( settingsAct );
 
     const QIcon lcnIcon = QIcon::fromTheme("berview-license", QIcon(":/images/license.png"));
     QAction *lcnAct = new QAction( lcnIcon, tr("License Information"), this);

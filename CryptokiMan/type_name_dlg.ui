@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>382</width>
-    <height>270</height>
+    <height>211</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -225,6 +225,16 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>mTypeCombo</tabstop>
+  <tabstop>mSearchText</tabstop>
+  <tabstop>mSearchBtn</tabstop>
+  <tabstop>mDecimalText</tabstop>
+  <tabstop>mHexText</tabstop>
+  <tabstop>mNameText</tabstop>
+  <tabstop>mClearBtn</tabstop>
+  <tabstop>mCloseBtn</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

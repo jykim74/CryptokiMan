@@ -1,9 +1,13 @@
+#include <QStringList>
+
 #include "type_name_dlg.h"
 #include "js_pkcs11.h"
 #include "js_pki.h"
 
 #include "man_applet.h"
 #include "mainwindow.h"
+
+static QStringList kTypeList = { "ErrorCode", "KeyType", "Object", "Attribute", "Mechanism" };
 
 TypeNameDlg::TypeNameDlg(QWidget *parent)
     : QDialog(parent)
@@ -17,6 +21,8 @@ TypeNameDlg::TypeNameDlg(QWidget *parent)
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);
 #endif
+    initialize();
+    mSearchBtn->setDefault(true);
 
     resize(minimumSizeHint().width(), minimumSizeHint().height());
 }
@@ -24,6 +30,26 @@ TypeNameDlg::TypeNameDlg(QWidget *parent)
 TypeNameDlg::~TypeNameDlg()
 {
 
+}
+
+int TypeNameDlg::getType( const QString strInput )
+{
+    if( strInput.length() < 2 )
+        return JTypeDecimail;
+
+    QString strFirst = strInput.left(2).toUpper();
+
+    if( strFirst == "CK" )
+        return JTypeName;
+    else if( strFirst == "0X" )
+        return JTypeHex;
+    else
+        return JTypeDecimail;
+}
+
+void TypeNameDlg::initialize()
+{
+    mTypeCombo->addItems( kTypeList );
 }
 
 void TypeNameDlg::clickClear()
@@ -36,7 +62,11 @@ void TypeNameDlg::clickClear()
 
 void TypeNameDlg::clickSearch()
 {
-    QString strSearch = mSearchText->text();
+    int nType = -1;
+    long uValue = -1;
+    QString strValue;
+    QString strSearch = mSearchText->text().toUpper();
+    QString strTarget = mTypeCombo->currentText();
 
     if( strSearch.length() < 1 )
     {
@@ -44,4 +74,71 @@ void TypeNameDlg::clickSearch()
         mSearchText->setFocus();
         return;
     }
+
+    nType = getType( strSearch );
+
+    if( nType == JTypeDecimail )
+    {
+        uValue = strSearch.toLong();
+    }
+    else if( nType == JTypeHex )
+    {
+        strValue = strSearch.mid( 2 );
+        uValue = strValue.toLong( nullptr, 16 );
+    }
+    else
+    {
+        strValue = strSearch;
+    }
+
+    if( uValue >= 0 )
+    {
+        if( strTarget == "ErrorCode" )
+            strValue = JS_PKCS11_GetCKRName( uValue );
+        else if( strTarget == "KeyType" )
+            strValue = JS_PKCS11_GetCKKName( uValue );
+        else if( strTarget == "Object" )
+            strValue = JS_PKCS11_GetCKOName( uValue );
+        else if( strTarget == "Attribute" )
+            strValue = JS_PKCS11_GetCKAName( uValue );
+        else if( strTarget == "Mechanism" )
+            strValue = JS_PKCS11_GetCKMName( uValue );
+    }
+    else
+    {
+        if( strValue.length() < 3 )
+        {
+            manApplet->warningBox( tr( "Invalid word" ), this );
+            mSearchText->setFocus();
+            return;
+        }
+
+        QString strFirst = strValue.left(3);
+
+        if( strFirst == "CKR" )
+        {
+            uValue = JS_PKCS11_GetCKRType( strValue.toStdString().c_str() );
+        }
+        else if( strFirst == "CKK" )
+        {
+            uValue = JS_PKCS11_GetCKKType( strValue.toStdString().c_str() );
+        }
+        else if( strFirst == "CKO" )
+        {
+            uValue = JS_PKCS11_GetCKOType( strValue.toStdString().c_str() );
+        }
+        else if( strFirst == "CKA" )
+        {
+            uValue = JS_PKCS11_GetCKAType( strValue.toStdString().c_str() );
+        }
+        else if( strFirst == "CKM" )
+        {
+            uValue = JS_PKCS11_GetCKMType( strValue.toStdString().c_str() );
+        }
+    }
+
+    mDecimalText->setText( QString("%1").arg( uValue ));
+    QString strHex = QString( "%1" ).arg( uValue, sizeof(long) * 2, 16, QLatin1Char('0')).toUpper();
+    mHexText->setText( QString( "0x%1UL" ).arg( strHex ));
+    mNameText->setText( strValue );
 }
