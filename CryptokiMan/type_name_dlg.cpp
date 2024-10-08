@@ -1,4 +1,6 @@
 #include <QStringList>
+#include "common.h"
+#include "js_error.h"
 
 #include "type_name_dlg.h"
 #include "js_pkcs11.h"
@@ -62,6 +64,7 @@ void TypeNameDlg::clickClear()
 
 void TypeNameDlg::clickSearch()
 {
+    int ret = -1;
     int nType = -1;
     long uValue = -1;
     QString strValue;
@@ -79,11 +82,26 @@ void TypeNameDlg::clickSearch()
 
     if( nType == JTypeDecimail )
     {
+        if( isValidNumFormat( strSearch, 10 ) == false )
+        {
+            manApplet->warningBox( tr( "Invalid word" ), this );
+            mSearchText->setFocus();
+            return;
+        }
+
         uValue = strSearch.toLong();
     }
     else if( nType == JTypeHex )
     {
         strValue = strSearch.mid( 2 );
+
+        if( isValidNumFormat( strValue, 16 ) == false )
+        {
+            manApplet->warningBox( tr( "Invalid word" ), this );
+            mSearchText->setFocus();
+            return;
+        }
+
         uValue = strValue.toLong( nullptr, 16 );
     }
     else
@@ -103,6 +121,21 @@ void TypeNameDlg::clickSearch()
             strValue = JS_PKCS11_GetCKAName( uValue );
         else if( strTarget == "Mechanism" )
             strValue = JS_PKCS11_GetCKMName( uValue );
+
+        if( strValue.length() < 3 )
+        {
+            manApplet->warningBox( tr( "There is no defined value." ), this );
+            mSearchText->setFocus();
+            return;
+        }
+
+        QString strFirst = strValue.left(2);
+        if( strFirst != "CK" )
+        {
+            manApplet->warningBox( tr( "There is no defined value." ), this );
+            mSearchText->setFocus();
+            return;
+        }
     }
     else
     {
@@ -135,6 +168,15 @@ void TypeNameDlg::clickSearch()
         {
             uValue = JS_PKCS11_GetCKMType( strValue.toStdString().c_str() );
         }
+
+        if( uValue < 0 )
+        {
+            manApplet->warningBox( tr( "There is no defined value." ), this );
+            mSearchText->setFocus();
+            return;
+        }
+
+        ret = 0;
     }
 
     mDecimalText->setText( QString("%1").arg( uValue ));

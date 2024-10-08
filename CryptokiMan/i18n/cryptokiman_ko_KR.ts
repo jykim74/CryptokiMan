@@ -7841,14 +7841,23 @@ Do you want to delete the file and continue?</source>
         <translation>지우기</translation>
     </message>
     <message>
-        <location filename="../type_name_dlg.cpp" line="73"/>
+        <location filename="../type_name_dlg.cpp" line="76"/>
         <source>Enter a search word</source>
         <translation>검색 단어를 입력하세요</translation>
     </message>
     <message>
-        <location filename="../type_name_dlg.cpp" line="111"/>
+        <location filename="../type_name_dlg.cpp" line="87"/>
+        <location filename="../type_name_dlg.cpp" line="100"/>
+        <location filename="../type_name_dlg.cpp" line="144"/>
         <source>Invalid word</source>
         <translation>잘못 된 문자입니다</translation>
+    </message>
+    <message>
+        <location filename="../type_name_dlg.cpp" line="127"/>
+        <location filename="../type_name_dlg.cpp" line="135"/>
+        <location filename="../type_name_dlg.cpp" line="174"/>
+        <source>There is no defined value.</source>
+        <translation>정의 된 값이 없습니다</translation>
     </message>
 </context>
 <context>
