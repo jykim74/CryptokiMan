@@ -10,7 +10,7 @@
 namespace  {
     const char *kBehaviorGroup = "CryptokiMan";
     const char *kUseLogTab = "useLogTab";
-    const char *kLogLevel = "logLevel";
+    const char *kSetLogLevel = "SetLogLevel";
     const char *kFileReadSize = "fileReadSize";
     const char *kUseDeviceMech = "useDeviceMech";
     const char *kFontFamily = "fontFamily";
@@ -20,6 +20,13 @@ namespace  {
     const char *kStopMessage = "stopMessage";
     const char *kFindMaxObjectsCount = "findMaxObjectsCount";
     const char *kHexAreaWidth = "hexAreaWidth";
+    const char *kViewFile = "viewFile";
+    const char *kViewModule = "viewModule";
+    const char *kViewObject = "viewObject";
+    const char *kViewCrypt = "viewCrypt";
+    const char *kViewImport = "viewImport";
+    const char *kViewTool = "viewTool";
+    const char *kViewHelp = "viewHelp";
 }
 
 SettingsMgr::SettingsMgr( QObject *parent) : QObject (parent)
@@ -74,7 +81,7 @@ void SettingsMgr::setLogLevel( int nLevel )
 {
     QSettings settings;
     settings.beginGroup( kBehaviorGroup );
-    settings.setValue( kLogLevel, nLevel );
+    settings.setValue( kSetLogLevel, nLevel );
     settings.endGroup();
 
     log_level_ = nLevel;
@@ -85,7 +92,7 @@ int SettingsMgr::getLogLevel()
     QSettings settings;
 
     settings.beginGroup( kBehaviorGroup );
-    log_level_ = settings.value( kLogLevel, 2 ).toInt();
+    log_level_ = settings.value( kSetLogLevel, 2 ).toInt();
     settings.endGroup();
 
     return log_level_;
@@ -261,4 +268,141 @@ int SettingsMgr::getHexAreaWidth()
     sets.endGroup();
 
     return hex_area_width_;
+}
+
+int SettingsMgr::viewValue( ViewType nType )
+{
+    switch (nType) {
+    case VIEW_FILE: return view_file_;
+    case VIEW_MODULE: return view_module_;
+    case VIEW_OBJECT: return view_object_;
+    case VIEW_CRYPT: return view_crypt_;
+    case VIEW_IMPORT: return view_import_;
+    case VIEW_TOOL: return view_tool_;
+    case VIEW_HELP: return view_help_;
+    default:
+        break;
+    }
+
+    return -1;
+}
+
+
+int SettingsMgr::getViewValue( ViewType nType )
+{
+    int ret = -1;
+    QSettings settings;
+    settings.beginGroup(kBehaviorGroup);
+
+    switch (nType) {
+    case VIEW_FILE:
+        ret = settings.value( kViewFile, kFileDefault ).toInt();
+        view_file_ = ret;
+        break;
+    case VIEW_MODULE:
+        ret = settings.value( kViewModule, kModuleDefault ).toInt();
+        view_module_ = ret;
+        break;
+    case VIEW_OBJECT:
+        ret = settings.value( kViewObject, kObjectDefault ).toInt();
+        view_object_ = ret;
+        break;
+    case VIEW_CRYPT:
+        ret = settings.value( kViewCrypt, kCryptDefault ).toInt();
+        view_crypt_ = ret;
+        break;
+    case VIEW_IMPORT:
+        ret = settings.value( kViewImport, kImportDefault ).toInt();
+        view_import_ = ret;
+        break;
+    case VIEW_TOOL:
+        ret = settings.value( kViewTool, kToolDefault ).toInt();
+        view_tool_ = ret;
+        break;
+    case VIEW_HELP:
+        ret = settings.value( kViewHelp, kHelpDefault ).toInt();
+        view_file_ = ret;
+        break;
+    default:
+        break;
+    }
+
+    settings.endGroup();
+    return ret;
+}
+
+
+void SettingsMgr::setViewValue( ViewType nType, int nVal )
+{
+    QSettings settings;
+    settings.beginGroup(kBehaviorGroup);
+
+    switch (nType) {
+    case VIEW_FILE:
+        settings.setValue( kViewFile, nVal );
+        view_file_ = nVal;
+        break;
+    case VIEW_MODULE:
+        settings.setValue( kViewModule, nVal );
+        view_module_ = nVal;
+        break;
+    case VIEW_OBJECT:
+        settings.setValue( kViewObject, nVal );
+        view_object_ = nVal;
+        break;
+    case VIEW_CRYPT:
+        settings.setValue( kViewCrypt, nVal );
+        view_crypt_ = nVal;
+        break;
+    case VIEW_IMPORT:
+        settings.setValue( kViewImport, nVal );
+        view_import_ = nVal;
+        break;
+    case VIEW_TOOL:
+        settings.setValue( kViewTool, nVal );
+        view_tool_ = nVal;
+        break;
+    case VIEW_HELP:
+        settings.setValue( kViewHelp, nVal );
+        view_help_ = nVal;
+        break;
+    default:
+        break;
+    }
+
+    settings.endGroup();
+}
+
+void SettingsMgr::clearViewValue( ViewType nType )
+{
+    QSettings settings;
+
+    settings.beginGroup(kBehaviorGroup);
+    switch (nType) {
+    case VIEW_FILE:
+        settings.remove( kViewFile );
+        break;
+    case VIEW_MODULE:
+        settings.remove( kViewModule );
+        break;
+    case VIEW_OBJECT:
+        settings.remove( kViewObject );
+        break;
+    case VIEW_CRYPT:
+        settings.remove( kViewCrypt );
+        break;
+    case VIEW_IMPORT:
+        settings.remove( kViewImport );
+        break;
+    case VIEW_TOOL:
+        settings.remove( kViewTool );
+        break;
+    case VIEW_HELP:
+        settings.remove( kViewHelp );
+        break;
+    default:
+        break;
+    }
+
+    settings.endGroup();
 }

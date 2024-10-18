@@ -167,6 +167,7 @@ public slots:
 
 private:
     void baseTableHeader();
+    void createViewActions();
     void createActions();
     void createStatusBar();
     int openLibrary( const QString libPath );
@@ -220,6 +221,73 @@ private:
     ThreadWork      *th_work_;
 
     bool            log_halt_;
+
+    QToolBar* file_tool_;
+    QAction* new_act_;
+    QAction* open_act_;
+    QAction* unload_act_;
+    QAction* show_dock_act_;
+    QAction* quit_act_;
+
+    QToolBar* module_tool_;
+    QAction* init_act_;
+    QAction* final_act_;
+    QAction* open_sess_act_;
+    QAction* close_sess_act_;
+    QAction* close_all_act_;
+    QAction* login_act_;
+    QAction* logout_act_;
+
+    QToolBar* object_tool_;
+    QAction* gen_keypair_act_;
+    QAction* gen_key_act_;
+    QAction* create_data_act_;
+    QAction* create_rsa_pub_key_act_;
+    QAction* create_rsa_pri_key_act_;
+    QAction* create_ec_pub_key_act_;
+    QAction* create_ec_pri_key_act_;
+    QAction* create_ed_pub_key_act_;
+    QAction* create_ed_pri_key_act_;
+    QAction* create_dsa_pub_key_act_;
+    QAction* create_dsa_pri_key_act_;
+    QAction* create_key_act_;
+    QAction* del_object_act_;
+    QAction* edit_att_act_;
+    QAction* edit_att_list_act_;
+    QAction* copy_object_act_;
+    QAction* find_object_act_;
+
+    QToolBar* crypt_tool_;
+    QAction* rand_act_;
+    QAction* digest_act_;
+    QAction* sign_act_;
+    QAction* verify_act_;
+    QAction* enc_act_;
+    QAction* dec_act_;
+
+    QToolBar* import_tool_;
+    QAction* import_cert_act_;
+    QAction* import_pfx_act_;
+    QAction* import_pri_key_act_;
+
+    QToolBar* tool_tool_;
+    QAction* init_token_act_;
+    QAction* oper_state_act_;
+    QAction* set_pin_act_;
+    QAction* init_pin_act_;
+    QAction* wrap_key_act_;
+    QAction* unwrap_key_act_;
+    QAction* derive_key_act_;
+    QAction* type_name_act_;
+
+    QToolBar* help_tool_;
+    QAction* clear_log_act_;
+    QAction* halt_log_act_;
+    QAction* setting_act_;
+    QAction* lcn_info_act_;
+    QAction* bug_issue_act_;
+    QAction* qna_act_;
+    QAction* about_act_;
 };
 
 #endif // MAINWINDOW_H

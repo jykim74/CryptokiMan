@@ -7,6 +7,7 @@
 #define SETTINGS_MGR_H
 
 #include <QObject>
+#include "common.h"
 
 class SettingsMgr : public QObject
 {
@@ -53,6 +54,11 @@ public:
     int getHexAreaWidth();
     int hexAreaWidth() { return hex_area_width_; };
 
+    int viewValue( ViewType nType );
+    int getViewValue( ViewType nType );
+    void setViewValue( ViewType nType, int nVal );
+    void clearViewValue( ViewType nType );
+
 signals:
 
 public slots:
@@ -63,6 +69,14 @@ private:
     bool use_device_mech_;
     int find_max_objects_count_;
     int hex_area_width_;
+
+    int view_file_;
+    int view_module_;
+    int view_object_;
+    int view_crypt_;
+    int view_import_;
+    int view_tool_;
+    int view_help_;
 
     Q_DISABLE_COPY(SettingsMgr)
 };
