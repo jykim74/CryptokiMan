@@ -12,6 +12,7 @@
 class SettingsMgr : public QObject
 {
     Q_OBJECT
+
 private:
     int log_level_;
 
@@ -59,12 +60,11 @@ public:
     void setViewValue( ViewType nType, int nVal );
     void clearViewValue( ViewType nType );
 
-signals:
-
-public slots:
 
 private:
     void initialize();
+
+private:
     int file_read_size_;
     bool use_device_mech_;
     int find_max_objects_count_;
@@ -78,6 +78,7 @@ private:
     int view_tool_;
     int view_help_;
 
+private:
     Q_DISABLE_COPY(SettingsMgr)
 };
 

@@ -14,6 +14,7 @@
 #include "js_pkcs11.h"
 #include "temp_array.h"
 #include "slot_info.h"
+#include "common.h"
 
 class ManTreeView;
 class ManTreeModel;
@@ -199,6 +200,10 @@ private:
     void privateKeyInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *pAttrList, int nAttrCnt );
     void secretKeyInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *pAttrList, int nAttrCnt );
     void dataInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *pAttrList, int nAttrCnt );
+
+    bool isView( ViewType type, int nAct );
+    void setView( ViewType type, int nAct );
+    void unsetView( ViewType type, int nAct );
 
     QList<QAction *>  recent_file_list_;
 

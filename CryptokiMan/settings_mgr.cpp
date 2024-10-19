@@ -53,6 +53,14 @@ void SettingsMgr::initialize()
     getUseDeviceMech();
     getFindMaxObjectsCount();
     getHexAreaWidth();
+
+    getViewValue( VIEW_FILE );
+    getViewValue( VIEW_MODULE );
+    getViewValue( VIEW_OBJECT );
+    getViewValue( VIEW_IMPORT );
+    getViewValue( VIEW_CRYPT );
+    getViewValue( VIEW_TOOL );
+    getViewValue( VIEW_HELP );
 }
 
 void SettingsMgr::setUseLogTab( bool bVal )
@@ -324,6 +332,7 @@ int SettingsMgr::getViewValue( ViewType nType )
         view_file_ = ret;
         break;
     default:
+        ret = -1;
         break;
     }
 
