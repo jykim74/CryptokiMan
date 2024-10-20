@@ -82,5 +82,6 @@
         <file>images/ed2.png</file>
         <file>images/close_session.png</file>
         <file>images/type.png</file>
+        <file>images/unload.png</file>
     </qresource>
 </RCC>

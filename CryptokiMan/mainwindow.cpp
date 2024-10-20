@@ -11,7 +11,7 @@
 
 #include "common.h"
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
+
 #include "man_tree_item.h"
 #include "man_tree_model.h"
 #include "man_tree_view.h"
@@ -186,19 +186,6 @@ void MainWindow::baseTableHeader()
     right_table_->verticalHeader()->setVisible(false);
 }
 
-void MainWindow::createViewActions()
-{
-    bool bVal = false;
-    QMenu *viewMenu = menuBar()->addMenu( tr("&View" ));
-
-    QMenu *fileMenu = viewMenu->addMenu( tr("File ToolBar") );
-    QMenu *moduleMenu = viewMenu->addMenu( tr("Module ToolBar") );
-    QMenu *objectMenu = viewMenu->addMenu( tr("Object ToolBar") );
-    QMenu *cryptMenu = viewMenu->addMenu( tr("Cryptogram ToolBar") );
-    QMenu *importMenu = viewMenu->addMenu( tr("Import ToolBar") );
-    QMenu *toolMenu = viewMenu->addMenu( tr("Tools ToolBar") );
-    QMenu *helpMenu = viewMenu->addMenu( tr("Help ToolBar") );
-}
 
 void MainWindow::createActions()
 {
@@ -229,7 +216,8 @@ void MainWindow::createActions()
     if( isView( VIEW_FILE, ACT_FILE_OPEN ) ) file_tool_->addAction(open_act_);
 
 
-    unload_act_ = new QAction( tr("Unload"), this );
+    const QIcon unloadIcon = QIcon::fromTheme("document-unload", QIcon(":/images/unload.png"));
+    unload_act_ = new QAction( unloadIcon, tr("Unload"), this );
     unload_act_->setShortcut(QKeySequence::Close);
     unload_act_->setStatusTip(tr("Unload cryptoki library"));
     connect( unload_act_, &QAction::triggered, this, &MainWindow::unload );
@@ -389,42 +377,48 @@ void MainWindow::createActions()
     create_ec_pub_key_act_->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_F));
     connect( create_ec_pub_key_act_, &QAction::triggered, this, &MainWindow::createECPublicKey);
     create_ec_pub_key_act_->setStatusTip(tr("PKCS11 Create EC Public key"));
-    if( isView( VIEW_OBJECT, ACT_OBJECT_CREATE_EC_PUB_KEY ) ) objectsMenu->addAction( create_ec_pub_key_act_ );
+    objectsMenu->addAction( create_ec_pub_key_act_ );
+    if( isView( VIEW_OBJECT, ACT_OBJECT_CREATE_EC_PUB_KEY ) ) object_tool_->addAction( create_ec_pub_key_act_ );
 
     const QIcon ep2Icon = QIcon::fromTheme("EC-Private", QIcon(":/images/ep2.png"));
     create_ec_pri_key_act_ = new QAction( ep2Icon, tr("Create ECDSA Private Key"), this);
     create_ec_pri_key_act_->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_G));
     connect( create_ec_pri_key_act_, &QAction::triggered, this, &MainWindow::createECPrivateKey);
     create_ec_pri_key_act_->setStatusTip(tr("PKCS11 Create EC Private key"));
-    if( isView( VIEW_OBJECT, ACT_OBJECT_CREATE_EC_PRI_KEY ) ) objectsMenu->addAction( create_ec_pri_key_act_ );
+    objectsMenu->addAction( create_ec_pri_key_act_ );
+    if( isView( VIEW_OBJECT, ACT_OBJECT_CREATE_EC_PRI_KEY ) ) object_tool_->addAction( create_ec_pri_key_act_ );
 
     const QIcon ed1Icon = QIcon::fromTheme("ED-Public", QIcon(":/images/ed1.png"));
     create_ed_pub_key_act_ = new QAction( ed1Icon, tr("Create EDDSA Public Key"), this);
     create_ed_pub_key_act_->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_P));
     connect( create_ed_pub_key_act_, &QAction::triggered, this, &MainWindow::createEDPublicKey);
     create_ed_pub_key_act_->setStatusTip(tr("PKCS11 Create EDDSA Public key"));
-    if( isView( VIEW_OBJECT, ACT_OBJECT_CREATE_ED_PUB_KEY ) ) objectsMenu->addAction( create_ed_pub_key_act_ );
+    objectsMenu->addAction( create_ed_pub_key_act_ );
+    if( isView( VIEW_OBJECT, ACT_OBJECT_CREATE_ED_PUB_KEY ) ) object_tool_->addAction( create_ed_pub_key_act_ );
 
     const QIcon ed2Icon = QIcon::fromTheme("ED-Public", QIcon(":/images/ed2.png"));
     create_ed_pri_key_act_ = new QAction( ed2Icon, tr("Create EDDSA Private Key"), this);
     create_ed_pri_key_act_->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_Q));
     connect( create_ed_pri_key_act_, &QAction::triggered, this, &MainWindow::createEDPrivateKey);
     create_ed_pri_key_act_->setStatusTip(tr("PKCS11 Create EDDSA Private key"));
-    if( isView( VIEW_OBJECT, ACT_OBJECT_CREATE_ED_PRI_KEY ) ) objectsMenu->addAction( create_ed_pri_key_act_ );
+    objectsMenu->addAction( create_ed_pri_key_act_ );
+    if( isView( VIEW_OBJECT, ACT_OBJECT_CREATE_ED_PRI_KEY ) ) object_tool_->addAction( create_ec_pri_key_act_ );
 
     const QIcon dp1Icon = QIcon::fromTheme("DSA-Public", QIcon(":/images/dp1.png"));
     create_dsa_pub_key_act_ = new QAction( dp1Icon, tr("Create DSA Public Key"), this);
     create_dsa_pub_key_act_->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_R));
     connect( create_dsa_pub_key_act_, &QAction::triggered, this, &MainWindow::createDSAPublicKey);
     create_dsa_pub_key_act_->setStatusTip(tr("PKCS11 Create DSA Public key"));
-    if( isView( VIEW_OBJECT, ACT_OBJECT_CREATE_DSA_PUB_KEY ) ) objectsMenu->addAction( create_dsa_pub_key_act_ );
+    objectsMenu->addAction( create_dsa_pub_key_act_ );
+    if( isView( VIEW_OBJECT, ACT_OBJECT_CREATE_DSA_PUB_KEY ) ) object_tool_->addAction( create_dsa_pub_key_act_ );
 
     const QIcon dp2Icon = QIcon::fromTheme("DSA-Private", QIcon(":/images/dp2.png"));
     create_dsa_pri_key_act_ = new QAction( dp2Icon, tr("Create DSA Private Key"), this);
     create_dsa_pri_key_act_->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_I));
     connect( create_dsa_pri_key_act_, &QAction::triggered, this, &MainWindow::createDSAPrivateKey);
     create_dsa_pri_key_act_->setStatusTip(tr("PKCS11 Create DSA Private key"));
-    if( isView( VIEW_OBJECT, ACT_OBJECT_CREATE_DSA_PRI_KEY ) ) objectsMenu->addAction( create_dsa_pri_key_act_ );
+    objectsMenu->addAction( create_dsa_pri_key_act_ );
+    if( isView( VIEW_OBJECT, ACT_OBJECT_CREATE_DSA_PRI_KEY ) ) object_tool_->addAction( create_dsa_pri_key_act_ );
 
     if( manApplet->isLicense() == false )
     {
@@ -457,13 +451,15 @@ void MainWindow::createActions()
     edit_att_act_->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_L));
     connect( edit_att_act_, &QAction::triggered, this, &MainWindow::editObject);
     edit_att_act_->setStatusTip(tr("PKCS11 Edit Object"));
-    if( isView( VIEW_OBJECT, ACT_OBJECT_EDIT_ATT ) ) objectsMenu->addAction( edit_att_act_ );
+    objectsMenu->addAction( edit_att_act_ );
+    if( isView( VIEW_OBJECT, ACT_OBJECT_EDIT_ATT ) ) object_tool_->addAction( edit_att_act_ );
 
     edit_att_list_act_ = new QAction( editIcon, tr("Edit Attribute List"), this);
     edit_att_list_act_->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_M));
     connect( edit_att_list_act_, &QAction::triggered, this, &MainWindow::editAttributeList2 );
     edit_att_list_act_->setStatusTip(tr("PKCS11 Edit Attribute List"));
-    if( isView( VIEW_OBJECT, ACT_OBJECT_EDIT_ATT_LIST ) ) objectsMenu->addAction( edit_att_list_act_ );
+    objectsMenu->addAction( edit_att_list_act_ );
+    if( isView( VIEW_OBJECT, ACT_OBJECT_EDIT_ATT_LIST ) ) object_tool_->addAction( edit_att_list_act_ );
 
     const QIcon copyIcon = QIcon::fromTheme("Edit", QIcon(":/images/copy_object.png"));
     copy_object_act_ = new QAction( copyIcon, tr("Copy Object"), this);
@@ -557,14 +553,16 @@ void MainWindow::createActions()
     import_pfx_act_->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_X));
     connect( import_pfx_act_, &QAction::triggered, this, &MainWindow::importPFX);
     import_pfx_act_->setStatusTip(tr("PKCS11 import PFX"));
-    if( isView( VIEW_IMPORT, ACT_IMPORT_PFX ) ) importMenu->addAction( import_pfx_act_ );
+    importMenu->addAction( import_pfx_act_ );
+    if( isView( VIEW_IMPORT, ACT_IMPORT_PFX ) ) import_tool_->addAction( import_pfx_act_ );
 
     const QIcon priKeyIcon = QIcon::fromTheme("PrivateKey", QIcon(":/images/prikey.png"));
     import_pri_key_act_ = new QAction( priKeyIcon, tr("Import Private Key"), this);
     import_pri_key_act_->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_P));
     connect( import_pri_key_act_, &QAction::triggered, this, &MainWindow::improtPrivateKey);
     import_pri_key_act_->setStatusTip(tr("PKCS11 import private key"));
-    if( isView( VIEW_IMPORT, ACT_IMPORT_PRI_KEY ) ) importMenu->addAction( import_pri_key_act_ );
+    importMenu->addAction( import_pri_key_act_ );
+    if( isView( VIEW_IMPORT, ACT_IMPORT_PRI_KEY ) ) import_tool_->addAction( import_pri_key_act_ );
 
     QMenu *toolsMenu = menuBar()->addMenu(tr("&Tools"));
     tool_tool_ = addToolBar(tr("Tools"));
@@ -4710,3 +4708,4 @@ void MainWindow::unsetView( ViewType type, int nAct )
 
     manApplet->settingsMgr()->setViewValue( type, nValue );
 }
+

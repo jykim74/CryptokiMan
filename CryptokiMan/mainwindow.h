@@ -87,6 +87,62 @@ public:
 
     void loadLibray( const QString& filename );
 
+    void viewFileNew( bool bChecked );
+    void viewFileOpen( bool bChecked );
+    void viewFileUnload( bool bCheked );
+    void viewFileShowDock( bool bChecked );
+
+    void viewModuleInit( bool bChecked );
+    void viewModuleFinal( bool bChecked );
+    void viewModuleOpenSess( bool bChecked );
+    void viewModuleCloseSess( bool bChecked );
+    void viewModuleCloseAll( bool bChecked );
+    void viewModuleLogin( bool bChecked );
+    void viewModuleLogout( bool bChecked );
+
+    void viewObjectGenKeyPair( bool bChecked );
+    void viewObjectGenKey( bool bChecked );
+    void viewObjectCreateData( bool bChecked );
+    void viewObjectCreateRSAPubKey( bool bChecked );
+    void viewObjectCreateRSAPriKey( bool bChecked );
+    void viewObjectCreateECPubKey( bool bChecked );
+    void viewObjectCreateECPriKey( bool bChecked );
+    void viewObjectCreateEDPubKey( bool bChecked );
+    void viewObjectCreateEDPriKey( bool bChedked );
+    void viewObjectCreateDSAPubKey( bool bChecked );
+    void viewObjectCreateDSAPriKey( bool bChecked );
+    void viewObjectCreateKey( bool bChecked );
+    void viewObjectDelObject( bool bChecked );
+    void viewObjectEditAtt( bool bChecked );
+    void viewObjectEditAttList( bool bChecked );
+    void viewObjectCopyObject( bool bChecked );
+    void viewObjectFindObject( bool bChecked );
+
+    void viewCryptRand( bool bChecked );
+    void viewCryptDigest( bool bChecked );
+    void viewCryptSign( bool bChecked );
+    void viewCryptVerify( bool bChecked );
+    void viewCryptEnc( bool bChecked );
+    void viewCryptDec( bool bChecked );
+
+    void viewImportCert( bool bChecked );
+    void viewImportPFX( bool bChecked );
+    void viewImportPriKey( bool bChecked );
+
+    void viewToolInitToken( bool bChecked );
+    void viewToolOperState( bool bChecked );
+    void viewToolSetPIN( bool bChecked );
+    void viewToolInitPIN( bool bChecked );
+    void viewToolWrapKey( bool bChecked );
+    void viewToolUnwrapKey( bool bChecked );
+    void viewToolDeriveKey( bool bChecked );
+    void viewToolTypeName( bool bChecked );
+
+    void viewHelpClearLog( bool bChecked );
+    void viewHelpHaltLog( bool bChecked );
+    void viewHelpSetting( bool bChecked );
+    void viewHelpAbout( bool bChecked );
+
 private slots:
     void closeEvent(QCloseEvent *event);
 
