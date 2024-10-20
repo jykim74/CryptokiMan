@@ -278,7 +278,7 @@ int SettingsMgr::getHexAreaWidth()
     return hex_area_width_;
 }
 
-int SettingsMgr::viewValue( ViewType nType )
+int SettingsMgr::viewValue( int nType )
 {
     switch (nType) {
     case VIEW_FILE: return view_file_;
@@ -296,9 +296,10 @@ int SettingsMgr::viewValue( ViewType nType )
 }
 
 
-int SettingsMgr::getViewValue( ViewType nType )
+int SettingsMgr::getViewValue( int nType )
 {
     int ret = -1;
+
     QSettings settings;
     settings.beginGroup(kBehaviorGroup);
 
@@ -341,10 +342,13 @@ int SettingsMgr::getViewValue( ViewType nType )
 }
 
 
-void SettingsMgr::setViewValue( ViewType nType, int nVal )
+void SettingsMgr::setViewValue( int nVal )
 {
+    int nType = -1;
     QSettings settings;
     settings.beginGroup(kBehaviorGroup);
+
+    nType = nVal & 0xFF000000;
 
     switch (nType) {
     case VIEW_FILE:
@@ -382,7 +386,7 @@ void SettingsMgr::setViewValue( ViewType nType, int nVal )
     settings.endGroup();
 }
 
-void SettingsMgr::clearViewValue( ViewType nType )
+void SettingsMgr::clearViewValue( int nType )
 {
     QSettings settings;
 

@@ -55,10 +55,10 @@ public:
     int getHexAreaWidth();
     int hexAreaWidth() { return hex_area_width_; };
 
-    int viewValue( ViewType nType );
-    int getViewValue( ViewType nType );
-    void setViewValue( ViewType nType, int nVal );
-    void clearViewValue( ViewType nType );
+    int viewValue( int nType );
+    int getViewValue( int nType );
+    void setViewValue( int nVal );
+    void clearViewValue( int nType );
 
 
 private:

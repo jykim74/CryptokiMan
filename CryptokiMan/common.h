@@ -54,65 +54,73 @@ enum ViewType {
     VIEW_HELP
 };
 
-#define ACT_FILE_NEW                    0x00000001
-#define ACT_FILE_OPEN                   0x00000002
-#define ACT_FILE_UNLOAD                 0x00000004
-#define ACT_FILE_SHOW_DOCK              0x00000008
-#define ACT_FILE_QUIT                   0x00000010
+#define VIEW_FILE                       0x01000000
+#define VIEW_MODULE                     0x02000000
+#define VIEW_OBJECT                     0x03000000
+#define VIEW_CRYPT                      0x04000000
+#define VIEW_IMPORT                     0x05000000
+#define VIEW_TOOL                       0x06000000
+#define VIEW_HELP                       0x07000000
 
-#define ACT_MODULE_INIT                 0x00000001
-#define ACT_MODULE_FINAL                0x00000002
-#define ACT_MODULE_OPEN_SESS            0x00000004
-#define ACT_MODULE_CLOSE_SESS           0x00000008
-#define ACT_MODULE_CLOSE_ALL            0x00000010
-#define ACT_MODULE_LOGIN                0x00000020
-#define ACT_MODULE_LOGOUT               0x00000040
+#define ACT_FILE_NEW                    VIEW_FILE | 0x00000001
+#define ACT_FILE_OPEN                   VIEW_FILE | 0x00000002
+#define ACT_FILE_UNLOAD                 VIEW_FILE | 0x00000004
+#define ACT_FILE_SHOW_DOCK              VIEW_FILE | 0x00000008
+#define ACT_FILE_QUIT                   VIEW_FILE | 0x00000010
 
-#define ACT_OBJECT_GEN_KEYPAIR          0x00000001
-#define ACT_OBJECT_GEN_KEY              0x00000002
-#define ACT_OBJECT_CREATE_DATA          0x00000004
-#define ACT_OBJECT_CREATE_RSA_PUB_KEY   0x00000008
-#define ACT_OBJECT_CREATE_RSA_PRI_KEY   0x00000010
-#define ACT_OBJECT_CREATE_EC_PUB_KEY    0x00000020
-#define ACT_OBJECT_CREATE_EC_PRI_KEY    0x00000040
-#define ACT_OBJECT_CREATE_ED_PUB_KEY    0x00000080
-#define ACT_OBJECT_CREATE_ED_PRI_KEY    0x00000100
-#define ACT_OBJECT_CREATE_DSA_PUB_KEY   0x00000200
-#define ACT_OBJECT_CREATE_DSA_PRI_KEY   0x00000400
-#define ACT_OBJECT_CREATE_KEY           0x00000800
-#define ACT_OBJECT_DEL_OBJECT           0x00001000
-#define ACT_OBJECT_EDIT_ATT             0x00002000
-#define ACT_OBJECT_EDIT_ATT_LIST        0x00004000
-#define ACT_OBJECT_COPY_OBJECT          0x00008000
-#define ACT_OBJECT_FIND_OBJECT          0x00010000
+#define ACT_MODULE_INIT                 VIEW_MODULE | 0x00000001
+#define ACT_MODULE_FINAL                VIEW_MODULE | 0x00000002
+#define ACT_MODULE_OPEN_SESS            VIEW_MODULE | 0x00000004
+#define ACT_MODULE_CLOSE_SESS           VIEW_MODULE | 0x00000008
+#define ACT_MODULE_CLOSE_ALL            VIEW_MODULE | 0x00000010
+#define ACT_MODULE_LOGIN                VIEW_MODULE | 0x00000020
+#define ACT_MODULE_LOGOUT               VIEW_MODULE | 0x00000040
 
-#define ACT_CRYPT_RAND                  0x00000001
-#define ACT_CRYPT_DIGEST                0x00000002
-#define ACT_CRYPT_SIGN                  0x00000004
-#define ACT_CRYPT_VERIFY                0x00000008
-#define ACT_CRYPT_ENC                   0x00000010
-#define ACT_CRYPT_DEC                   0x00000020
+#define ACT_OBJECT_GEN_KEYPAIR          VIEW_OBJECT | 0x00000001
+#define ACT_OBJECT_GEN_KEY              VIEW_OBJECT | 0x00000002
+#define ACT_OBJECT_CREATE_DATA          VIEW_OBJECT | 0x00000004
+#define ACT_OBJECT_CREATE_RSA_PUB_KEY   VIEW_OBJECT | 0x00000008
+#define ACT_OBJECT_CREATE_RSA_PRI_KEY   VIEW_OBJECT | 0x00000010
+#define ACT_OBJECT_CREATE_EC_PUB_KEY    VIEW_OBJECT | 0x00000020
+#define ACT_OBJECT_CREATE_EC_PRI_KEY    VIEW_OBJECT | 0x00000040
+#define ACT_OBJECT_CREATE_ED_PUB_KEY    VIEW_OBJECT | 0x00000080
+#define ACT_OBJECT_CREATE_ED_PRI_KEY    VIEW_OBJECT | 0x00000100
+#define ACT_OBJECT_CREATE_DSA_PUB_KEY   VIEW_OBJECT | 0x00000200
+#define ACT_OBJECT_CREATE_DSA_PRI_KEY   VIEW_OBJECT | 0x00000400
+#define ACT_OBJECT_CREATE_KEY           VIEW_OBJECT | 0x00000800
+#define ACT_OBJECT_DEL_OBJECT           VIEW_OBJECT | 0x00001000
+#define ACT_OBJECT_EDIT_ATT             VIEW_OBJECT | 0x00002000
+#define ACT_OBJECT_EDIT_ATT_LIST        VIEW_OBJECT | 0x00004000
+#define ACT_OBJECT_COPY_OBJECT          VIEW_OBJECT | 0x00008000
+#define ACT_OBJECT_FIND_OBJECT          VIEW_OBJECT | 0x00010000
 
-#define ACT_IMPORT_CERT                 0x00000001
-#define ACT_IMPORT_PFX                  0x00000002
-#define ACT_IMPORT_PRI_KEY              0x00000004
+#define ACT_CRYPT_RAND                  VIEW_CRYPT | 0x00000001
+#define ACT_CRYPT_DIGEST                VIEW_CRYPT | 0x00000002
+#define ACT_CRYPT_SIGN                  VIEW_CRYPT | 0x00000004
+#define ACT_CRYPT_VERIFY                VIEW_CRYPT | 0x00000008
+#define ACT_CRYPT_ENC                   VIEW_CRYPT | 0x00000010
+#define ACT_CRYPT_DEC                   VIEW_CRYPT | 0x00000020
 
-#define ACT_TOOL_INIT_TOKEN             0x00000001
-#define ACT_TOOL_OPER_STATE             0x00000002
-#define ACT_TOOL_SET_PIN                0x00000004
-#define ACT_TOOL_INIT_PIN               0x00000008
-#define ACT_TOOL_WRAP_KEY               0x00000010
-#define ACT_TOOL_UNWRAP_KEY             0x00000020
-#define ACT_TOOL_DERIVE_KEY             0x00000040
-#define ACT_TOOL_TYPE_NAME              0x00000080
+#define ACT_IMPORT_CERT                 VIEW_IMPORT | 0x00000001
+#define ACT_IMPORT_PFX                  VIEW_IMPORT | 0x00000002
+#define ACT_IMPORT_PRI_KEY              VIEW_IMPORT | 0x00000004
 
-#define ACT_HELP_CLEAR_LOG              0x00000001
-#define ACT_HELP_HALT_LOG               0x00000002
-#define ACT_HELP_SETTING                0x00000004
-#define ACT_HELP_LCN_INFO               0x00000008
-#define ACT_HELP_BUG_ISSUE              0x00000010
-#define ACT_HELP_QNA                    0x00000020
-#define ACT_HELP_ABOUT                  0x00000040
+#define ACT_TOOL_INIT_TOKEN             VIEW_TOOL | 0x00000001
+#define ACT_TOOL_OPER_STATE             VIEW_TOOL | 0x00000002
+#define ACT_TOOL_SET_PIN                VIEW_TOOL | 0x00000004
+#define ACT_TOOL_INIT_PIN               VIEW_TOOL | 0x00000008
+#define ACT_TOOL_WRAP_KEY               VIEW_TOOL | 0x00000010
+#define ACT_TOOL_UNWRAP_KEY             VIEW_TOOL | 0x00000020
+#define ACT_TOOL_DERIVE_KEY             VIEW_TOOL | 0x00000040
+#define ACT_TOOL_TYPE_NAME              VIEW_TOOL | 0x00000080
+
+#define ACT_HELP_CLEAR_LOG              VIEW_HELP | 0x00000001
+#define ACT_HELP_HALT_LOG               VIEW_HELP | 0x00000002
+#define ACT_HELP_SETTING                VIEW_HELP | 0x00000004
+#define ACT_HELP_LCN_INFO               VIEW_HELP | 0x00000008
+#define ACT_HELP_BUG_ISSUE              VIEW_HELP | 0x00000010
+#define ACT_HELP_QNA                    VIEW_HELP | 0x00000020
+#define ACT_HELP_ABOUT                  VIEW_HELP | 0x00000040
 
 static const int kFileDefault = ACT_FILE_NEW | ACT_FILE_OPEN;
 
