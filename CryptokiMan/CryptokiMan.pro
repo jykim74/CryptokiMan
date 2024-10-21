@@ -66,6 +66,7 @@ SOURCES += \
         logout_dlg.cpp \
         main.cpp \
         mainwindow.cpp \
+        mainwindows2.cpp \
         man_applet.cpp \
         man_tray_icon.cpp \
         man_tree_item.cpp \
