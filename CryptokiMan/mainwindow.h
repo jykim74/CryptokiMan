@@ -89,7 +89,7 @@ public:
 
     void viewFileNew( bool bChecked );
     void viewFileOpen( bool bChecked );
-    void viewFileUnload( bool bCheked );
+    void viewFileUnload( bool bChecked );
     void viewFileShowDock( bool bChecked );
 
     void viewModuleInit( bool bChecked );
@@ -108,7 +108,7 @@ public:
     void viewObjectCreateECPubKey( bool bChecked );
     void viewObjectCreateECPriKey( bool bChecked );
     void viewObjectCreateEDPubKey( bool bChecked );
-    void viewObjectCreateEDPriKey( bool bChedked );
+    void viewObjectCreateEDPriKey( bool bChecked );
     void viewObjectCreateDSAPubKey( bool bChecked );
     void viewObjectCreateDSAPriKey( bool bChecked );
     void viewObjectCreateKey( bool bChecked );
@@ -142,6 +142,8 @@ public:
     void viewHelpHaltLog( bool bChecked );
     void viewHelpSetting( bool bChecked );
     void viewHelpAbout( bool bChecked );
+
+    void viewSetDefault();
 
 private slots:
     void closeEvent(QCloseEvent *event);

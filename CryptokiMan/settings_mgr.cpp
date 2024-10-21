@@ -281,13 +281,20 @@ int SettingsMgr::getHexAreaWidth()
 int SettingsMgr::viewValue( int nType )
 {
     switch (nType) {
-    case VIEW_FILE: return view_file_;
-    case VIEW_MODULE: return view_module_;
-    case VIEW_OBJECT: return view_object_;
-    case VIEW_CRYPT: return view_crypt_;
-    case VIEW_IMPORT: return view_import_;
-    case VIEW_TOOL: return view_tool_;
-    case VIEW_HELP: return view_help_;
+    case VIEW_FILE:
+        return view_file_;
+    case VIEW_MODULE:
+        return view_module_;
+    case VIEW_OBJECT:
+        return view_object_;
+    case VIEW_CRYPT:
+        return view_crypt_;
+    case VIEW_IMPORT:
+        return view_import_;
+    case VIEW_TOOL:
+        return view_tool_;
+    case VIEW_HELP:
+        return view_help_;
     default:
         break;
     }
@@ -330,7 +337,7 @@ int SettingsMgr::getViewValue( int nType )
         break;
     case VIEW_HELP:
         ret = settings.value( kViewHelp, kHelpDefault ).toInt();
-        view_file_ = ret;
+        view_help_ = ret;
         break;
     default:
         ret = -1;
