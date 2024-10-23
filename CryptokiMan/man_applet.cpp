@@ -3,6 +3,13 @@
  *
  * All rights reserved.
  */
+#include <QtGlobal>
+
+#include <QtWidgets>
+#include <QApplication>
+#include <QMessageBox>
+#include <QMainWindow>
+
 #include <QPushButton>
 #include <QProcess>
 #include <QSettings>
@@ -129,9 +136,32 @@ void ManApplet::start()
     main_win_->activateWindow();
 }
 
-QString ManApplet::curFolder()
+QString ManApplet::curFilePath( const QString strPath )
 {
-    if( cur_file_.length() < 1 ) return ".";
+    if( strPath.length() > 1 )
+    {
+        cur_file_ = strPath;
+    }
+    else
+    {
+        if( cur_file_.length() < 1 )
+            cur_file_ = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+    }
+
+    return cur_file_;
+}
+
+QString ManApplet::curPath( const QString strPath )
+{
+    if( strPath.length() > 1 )
+    {
+        cur_file_ = strPath;
+    }
+    else
+    {
+        if( cur_file_.length() < 1 )
+            cur_file_ = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+    }
 
     QFileInfo file;
     file.setFile( cur_file_ );
@@ -140,10 +170,6 @@ QString ManApplet::curFolder()
     return folder.path();
 }
 
-void ManApplet::setCurFile( const QString& strFile )
-{
-    cur_file_ = strFile;
-}
 
 int ManApplet::checkLicense()
 {

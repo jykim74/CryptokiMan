@@ -389,14 +389,13 @@ void ImportCertDlg::clickEndDate()
 
 
 void ImportCertDlg::clickFind()
-{  
-    QString strPath = manApplet->curFile();
+{
+    QString strPath = manApplet->curFilePath();
 
     QString fileName = findFile( this, JS_FILE_TYPE_CERT, strPath );
     if( fileName.isEmpty() ) return;
 
     mCertPathText->setText( fileName );
-    manApplet->setCurFile( fileName );
 }
 
 void ImportCertDlg::clickSubjectInCertCheck()

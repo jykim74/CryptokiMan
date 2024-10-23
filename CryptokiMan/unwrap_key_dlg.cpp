@@ -626,7 +626,7 @@ void UnwrapKeyDlg::typeChanged(int index)
 
 void UnwrapKeyDlg::clickReadFile()
 {
-    QString strPath = manApplet->curFile();
+    QString strPath = manApplet->curFilePath();
 
     QString fileName = findFile( this, JS_FILE_TYPE_PRIKEY, strPath );
     if( fileName.isEmpty() ) return;
@@ -637,7 +637,6 @@ void UnwrapKeyDlg::clickReadFile()
     mInputText->setPlainText( getHexString( binInput.pVal, binInput.nLen ));
     JS_BIN_reset( &binInput );
 
-    manApplet->setCurFile( fileName );
 }
 
 

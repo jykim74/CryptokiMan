@@ -604,12 +604,11 @@ void ImportPriKeyDlg::clickPubEndDate()
 
 void ImportPriKeyDlg::clickFind()
 {
-    QString strPath = manApplet->curFolder();
+    QString strPath = manApplet->curPath();
     QString fileName = findFile( this, JS_FILE_TYPE_PRIKEY, strPath );
     if( fileName.isEmpty() ) return;
 
     mPathText->setText( fileName );
-    manApplet->setCurFile( fileName );
 }
 
 void ImportPriKeyDlg::setPubBoolTemplate( CK_ATTRIBUTE sTemplate[], CK_ULONG& uCount )

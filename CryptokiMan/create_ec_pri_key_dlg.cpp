@@ -517,7 +517,7 @@ void CreateECPriKeyDlg::clickFindKey()
     JECKeyVal  sECKey;
     JRawKeyVal sRawKey;
 
-    QString strPath = manApplet->curFile();
+    QString strPath = manApplet->curFilePath();
     QString fileName = findFile( this, JS_FILE_TYPE_BER, strPath );
     if( fileName.length() < 1 ) return;
 
@@ -575,8 +575,6 @@ void CreateECPriKeyDlg::clickFindKey()
         mECParamsText->setText( getHexString( binOID.pVal, binOID.nLen ));
     }
 
-
-    manApplet->setCurFile( fileName );
 
     ret = 0;
 

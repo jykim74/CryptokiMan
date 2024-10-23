@@ -71,9 +71,8 @@ public:
     void messageLog( const QString strLog, QWidget *parent );
     void warnLog( const QString strLog, QWidget *parent );
 
-    QString curFile() { return cur_file_; };
-    QString curFolder();
-    void setCurFile( const QString& strFile );
+    QString curFilePath( const QString strPath = "" );
+    QString curPath( const QString strPath = "" );
 
 private:
     Q_DISABLE_COPY(ManApplet)

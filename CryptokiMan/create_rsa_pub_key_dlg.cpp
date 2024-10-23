@@ -432,7 +432,7 @@ void CreateRSAPubKeyDlg::clickFindKey()
     BIN binKey = {0,0};
     JRSAKeyVal sRSAKey;
 
-    QString strPath = manApplet->curFile();
+    QString strPath = manApplet->curFilePath();
     QString fileName = findFile( this, JS_FILE_TYPE_BER, strPath );
     if( fileName.length() < 1 ) return;
 
@@ -472,7 +472,6 @@ void CreateRSAPubKeyDlg::clickFindKey()
     mModulesText->setText( sRSAKey.pN );
     mExponentText->setText( sRSAKey.pE );
 
-    manApplet->setCurFile( fileName );
     ret = 0;
 
 end :

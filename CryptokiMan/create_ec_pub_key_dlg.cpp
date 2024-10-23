@@ -500,7 +500,7 @@ void CreateECPubKeyDlg::clickFindKey()
     JECKeyVal sECKey;
     JRawKeyVal sRawKey;
 
-    QString strPath = manApplet->curFile();
+    QString strPath = manApplet->curFilePath();
     QString fileName = findFile( this, JS_FILE_TYPE_BER, strPath );
     if( fileName.length() < 1 ) return;
 
@@ -597,7 +597,6 @@ void CreateECPubKeyDlg::clickFindKey()
         mECPointsText->setText( strPoints );
     }
 
-    manApplet->setCurFile( fileName );
     ret = 0;
 
 end :

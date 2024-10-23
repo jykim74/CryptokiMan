@@ -469,7 +469,7 @@ void CreateDSAPubKeyDlg::clickFindKey()
     BIN binKey = {0,0};
     JDSAKeyVal sDSAKey;
 
-    QString strPath = manApplet->curFile();
+    QString strPath = manApplet->curFilePath();
     QString fileName = findFile( this, JS_FILE_TYPE_BER, strPath );
     if( fileName.length() < 1 ) return;
 
@@ -511,7 +511,6 @@ void CreateDSAPubKeyDlg::clickFindKey()
     mQText->setText( sDSAKey.pQ );
     mPublicText->setText( sDSAKey.pPublic );
 
-    manApplet->setCurFile( fileName );
     ret = 0;
 
 end :

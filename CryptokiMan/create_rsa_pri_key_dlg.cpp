@@ -555,7 +555,7 @@ void CreateRSAPriKeyDlg::clickFindKey()
     int nKeyType = -1;
     BIN binPri = {0,0};
     JRSAKeyVal  sRSAKey;
-    QString strPath = manApplet->curFile();
+    QString strPath = manApplet->curFilePath();
     QString fileName = findFile( this, JS_FILE_TYPE_BER, strPath );
     if( fileName.length() < 1 ) return;
 
@@ -587,7 +587,6 @@ void CreateRSAPriKeyDlg::clickFindKey()
     mExponent2Text->setText( sRSAKey.pDMQ1 );
     mCoefficientText->setText( sRSAKey.pIQMP );
 
-    manApplet->setCurFile( fileName );
     ret = 0;
 
 end :

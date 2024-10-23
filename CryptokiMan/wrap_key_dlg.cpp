@@ -227,7 +227,7 @@ void WrapKeyDlg::clickSaveFile()
 {
     BIN binOut = {0,0};
     QString strOutput = mOutputText->toPlainText();
-    QString strPath = manApplet->curFile();
+    QString strPath = manApplet->curFilePath();
 
     if( strOutput.length() < 1 )
     {
@@ -245,7 +245,6 @@ void WrapKeyDlg::clickSaveFile()
     }
 
     JS_BIN_fileWrite( &binOut, fileName.toLocal8Bit().toStdString().c_str() );
-    manApplet->setCurFile( fileName );
     JS_BIN_reset( &binOut );
 }
 
