@@ -142,6 +142,7 @@ ExportDlg::ExportDlg(QWidget *parent) :
     key_type_ = -1;
 
     memset( &pri_key_, 0x00, sizeof(BIN));
+    memset( &pub_key_, 0x00, sizeof(BIN));
     memset( &cert_, 0x00, sizeof(BIN));
     memset( &csr_, 0x00, sizeof(BIN));
     memset( &crl_, 0x00, sizeof(BIN));
@@ -162,6 +163,7 @@ ExportDlg::ExportDlg(QWidget *parent) :
 ExportDlg::~ExportDlg()
 {
     JS_BIN_reset( &pri_key_ );
+    JS_BIN_reset( &pub_key_ );
     JS_BIN_reset( &cert_ );
     JS_BIN_reset( &csr_ );
     JS_BIN_reset( &crl_ );
@@ -295,6 +297,19 @@ void ExportDlg::setPrivateKey( const BIN *pPriKey )
     mFormatCombo->addItem( getFormatName( ExportP8InfoDER ), ExportP8InfoDER);
 }
 
+void ExportDlg::setPublicKey( const BIN *pPubKey )
+{
+    data_type_ = DataPubKey;
+    JS_BIN_copy( &pub_key_, pPubKey );
+    key_type_ = JS_PKI_getPubKeyType( &pub_key_ );
+    mAlgText->setText( JS_PKI_getKeyTypeName( key_type_ ));
+
+    mTitleLabel->setText( tr( "Public Key Export" ));
+
+    mFormatCombo->addItem( getFormatName( ExportPubPEM ), ExportPubPEM );
+    mFormatCombo->addItem( getFormatName( ExportPubDER ), ExportPubDER);
+}
+
 void ExportDlg::setCert( const BIN *pCert )
 {
     data_type_ = DataCert;
@@ -381,6 +396,10 @@ int ExportDlg::exportPublic()
     {
         JS_PKI_getPubKeyFromPri( key_type_, &pri_key_, &binPub );
     }
+    else if( data_type_ == DataPubKey )
+    {
+        JS_BIN_copy( &binPub, &pub_key_ );
+    }
     else if( data_type_ == DataCSR )
     {
         JS_PKI_getPubKeyFromCSR( &csr_, &binPub );
@@ -424,6 +443,7 @@ int ExportDlg::exportPrivate()
     int nExportType = -1;
     QString strFilename = mFilenameText->text();
 
+    if( data_type_ == DataPubKey ) return -1;
     if( data_type_ == DataCRL ) return -1;
     if( data_type_ == DataCSR ) return -1;
     if( data_type_ == DataCert ) return -1;
@@ -454,6 +474,7 @@ int ExportDlg::exportCert()
     int nExportType = -1;
     QString strFilename = mFilenameText->text();
 
+    if( data_type_ == DataPubKey ) return -1;
     if( data_type_ == DataPriKey ) return -1;
     if( data_type_ == DataCRL ) return -1;
     if( data_type_ == DataCSR ) return -1;
