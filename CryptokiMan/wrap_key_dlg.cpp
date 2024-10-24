@@ -237,7 +237,7 @@ void WrapKeyDlg::clickSaveFile()
 
     getBINFromString( &binOut, DATA_HEX, strOutput );
 
-    QString fileName = saveFile( this, JS_FILE_TYPE_BIN, strPath );
+    QString fileName = findSaveFile( this, JS_FILE_TYPE_BIN, strPath );
     if( fileName.isEmpty() )
     {
         JS_BIN_reset( &binOut );

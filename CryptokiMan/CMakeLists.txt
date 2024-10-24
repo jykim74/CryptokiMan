@@ -226,6 +226,12 @@ add_executable(${PROJECT_NAME}
     decrypt_thread.h decrypt_thread.cpp
     type_name_dlg.h type_name_dlg.cpp type_name_dlg.ui
     mainwindows2.cpp
+    export_dlg.h
+    export_dlg.cpp
+    export_dlg.ui
+    new_passwd_dlg.h
+    new_passwd_dlg.cpp
+    new_passwd_dlg.ui
 )
 
 target_link_options( ${PROJECT_NAME} PRIVATE -mwindows -MD )

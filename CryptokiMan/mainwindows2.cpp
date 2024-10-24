@@ -46,6 +46,13 @@ void MainWindow::createViewActions()
     connect( fileUnloadAct, &QAction::triggered, this, &MainWindow::viewFileUnload );
     fileMenu->addAction( fileUnloadAct );
 
+    QAction *fileShowDockAct = new QAction( tr( "Show Information" ), this );
+    bVal = isView( ACT_FILE_SHOW_DOCK );
+    fileShowDockAct->setCheckable( true );
+    fileShowDockAct->setChecked( bVal );
+    connect( fileShowDockAct, &QAction::triggered, this, &MainWindow::viewFileShowDock );
+    fileMenu->addAction( fileShowDockAct );
+
     QAction *moduleInitAct = new QAction( tr("P11Initialize"), this );
     bVal = isView( ACT_MODULE_INIT );
     moduleInitAct->setCheckable(true);

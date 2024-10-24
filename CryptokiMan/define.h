@@ -30,16 +30,19 @@ enum {
     JS_FILE_TYPE_CRL,
     JS_FILE_TYPE_CSR,
     JS_FILE_TYPE_PRIKEY,
-    JS_FILE_TYPE_DLL,
     JS_FILE_TYPE_TXT,
     JS_FILE_TYPE_BER,
     JS_FILE_TYPE_CFG,
     JS_FILE_TYPE_PFX,
     JS_FILE_TYPE_BIN,
+    JS_FILE_TYPE_DLL,
     JS_FILE_TYPE_LCN,
     JS_FILE_TYPE_JSON,
     JS_FILE_TYPE_PKCS7,
+    JS_FILE_TYPE_PKCS8,
+    JS_FILE_TYPE_PRIKEY_PKCS8_PFX,
     JS_FILE_TYPE_ALL };
+
 
 const QString kTableStyle = "QHeaderView::section {background-color:#404040;color:#FFFFFF;}";
 

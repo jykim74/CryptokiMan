@@ -131,6 +131,19 @@ static const QString _getFileFilter( int nType, QString& strFileType )
         strFileType = QObject::tr("License Files");
         strFilter = QString( "%1 (*.lcn *.txt)" ).arg( strFileType );
     }
+    else if( nType == JS_FILE_TYPE_PRIKEY_PKCS8_PFX )
+    {
+        strFileType = QObject::tr("PrivateKey Files");
+        strFilter = QString("%1 (*.key *.der *.pem)").arg( strFileType );
+
+        strFilter += ";;";
+        strFileType = QObject::tr("PKCS8 Files");
+        strFilter += QString("%1 (*.pk8 *.p8)" ).arg( strFileType );
+
+        strFilter += ";;";
+        strFileType = QObject::tr("PFX Files");
+        strFilter += QString("%1 (*.pfx *.p12 *.pem)" ).arg( strFileType );
+    }
 
     if( strFilter.length() > 0 ) strFilter += ";;";
     strFilter += QObject::tr( "All Files (*.*)" );
@@ -165,18 +178,47 @@ QString findFile( QWidget *parent, int nType, const QString strPath )
     return fileName;
 };
 
-QString saveFile( QWidget *parent, int nType, const QString strPath )
+QString findFile( QWidget *parent, int nType, const QString strPath, QString& strSelected )
 {
     QString strCurPath;
+
     QFileDialog::Options options;
     options |= QFileDialog::DontUseNativeDialog;
-
-    QString strType;
 
     if( strPath.length() <= 0 )
         strCurPath = QDir::currentPath();
     else
         strCurPath = strPath;
+
+    QString strFileType;
+    QString strFilter = _getFileFilter( nType, strFileType );
+    QString selectedFilter;
+
+
+    QString fileName = QFileDialog::getOpenFileName( parent,
+                                                    QObject::tr( "Open %1" ).arg( strFileType ),
+                                                    strCurPath,
+                                                    strFilter,
+                                                    &strSelected,
+                                                    options );
+
+    return fileName;
+};
+
+
+QString findSaveFile( QWidget *parent, int nType, const QString strPath )
+{
+    QString strCurPath;
+
+    QFileDialog::Options options;
+    options |= QFileDialog::DontUseNativeDialog;
+
+    if( strPath.length() <= 0 )
+        strCurPath = QDir::currentPath();
+    else
+        strCurPath = strPath;
+
+    //    QString strPath = QDir::currentPath();
 
     QString strFileType;
     QString strFilter = _getFileFilter( nType, strFileType );
@@ -190,6 +232,19 @@ QString saveFile( QWidget *parent, int nType, const QString strPath )
                                                     options );
 
     return fileName;
+};
+
+QString findFolder( QWidget *parent, const QString strPath )
+{
+    QFileDialog::Options options;
+    options |= QFileDialog::ShowDirsOnly;
+    options |= QFileDialog::DontResolveSymlinks;
+
+
+    QString folderName = QFileDialog::getExistingDirectory(
+        parent, QObject::tr("Open Directory"), strPath, options);
+
+    return folderName;
 }
 
 void getQDateToCKDate( const QDate date, CK_DATE *pCKDate )

@@ -224,7 +224,8 @@ void MainWindow::createActions()
     fileMenu->addAction(unload_act_);
     if( isView( ACT_FILE_UNLOAD ) ) file_tool_->addAction( unload_act_ );
 
-    show_dock_act_ = new QAction( tr( "Show Information"), this );
+    const QIcon infoIcon = QIcon::fromTheme("document-unload", QIcon(":/images/info.png"));
+    show_dock_act_ = new QAction( infoIcon, tr( "Show Information"), this );
     show_dock_act_->setShortcut( QKeySequence(Qt::Key_F2));
     show_dock_act_->setStatusTip(tr("Show Information"));
     connect( show_dock_act_, &QAction::triggered, this, &MainWindow::showDock);
@@ -1865,6 +1866,16 @@ void MainWindow::improtPrivateKey()
     importPriKeyDlg.exec();
 }
 
+void MainWindow::exportPubKey()
+{
+
+}
+
+void MainWindow::exportCert()
+{
+
+}
+
 void MainWindow::licenseInfo()
 {
     LCNInfoDlg lcnInfoDlg;
@@ -2080,7 +2091,6 @@ void MainWindow::showDock()
 void MainWindow::rightTableClick(QModelIndex index)
 {
     QString msg = QString( "detail type: %1" ).arg(right_type_ );
-    qDebug( msg.toStdString().c_str() );
 
     if( right_type_ == HM_ITEM_TYPE_MECHANISM )
         showMechaismInfoDetail( index );
@@ -2345,12 +2355,14 @@ void MainWindow::showRightMenu(QPoint point )
     case HM_ITEM_TYPE_CERTIFICATE:
         menu.addAction( tr("View Certificate" ), this, &MainWindow::viewCert );
         menu.addAction( tr( "Copy Object" ), this, &MainWindow::copyTableObject );
+        menu.addAction( tr( "Export Certficate" ), this, &MainWindow::exportCert );
         break;
 
     case HM_ITEM_TYPE_PUBLICKEY:
         menu.addAction( tr( "Verify" ), this, &MainWindow::verifyEach );
         menu.addAction( tr( "Encrypt"), this, &MainWindow::encryptEach );
         menu.addAction( tr( "Copy Object" ), this, &MainWindow::copyTableObject );
+        menu.addAction( tr( "Export PublicKey" ), this, &MainWindow::exportPubKey );
         break;
 
     case HM_ITEM_TYPE_PRIVATEKEY:
@@ -4710,6 +4722,8 @@ void MainWindow::unsetView( int nAct )
     if( nValue < 0 ) return;
 
     if( nValue & nAct ) nValue -= nAct;
+
+    nValue |= nType;
 
     manApplet->settingsMgr()->setViewValue( nValue );
 }

@@ -91,7 +91,9 @@ SOURCES += \
         verify_thread.cpp \
         encrypt_thread.cpp \
         decrypt_thread.cpp \
-        type_name_dlg.cpp
+        type_name_dlg.cpp \
+        export_dlg.cpp \
+        new_passwd_dlg.cpp
 
 HEADERS += \
         about_dlg.h \
@@ -155,7 +157,9 @@ HEADERS += \
         verify_thread.h \
         encrypt_thread.h \
         decrypt_thread.h \
-        type_name_dlg.h
+        type_name_dlg.h \
+        export_dlg.h \
+        new_passwd_dlg.h
 
 FORMS += \
         about_dlg.ui \
@@ -198,7 +202,9 @@ FORMS += \
         verify_dlg.ui \
         wrap_key_dlg.ui \
         find_object_dlg.ui \
-        type_name_dlg.ui
+        type_name_dlg.ui \
+        export_dlg.ui \
+        new_passwd_dlg.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

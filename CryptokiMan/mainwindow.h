@@ -199,6 +199,8 @@ public slots:
     void viewCert();
     void importPFX();
     void improtPrivateKey();
+    void exportPubKey();
+    void exportCert();
     void initToken();
     void rand();
     void setPin();
