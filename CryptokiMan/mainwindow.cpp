@@ -62,6 +62,7 @@
 #include "copy_object_dlg.h"
 #include "find_object_dlg.h"
 #include "type_name_dlg.h"
+#include "export_dlg.h"
 
 const int kMaxRecentFiles = 10;
 
@@ -816,6 +817,9 @@ void MainWindow::unload()
         manApplet->warningBox( tr( "Cryptoki library not loaded"), this );
         return;
     }
+
+    bool bVal = manApplet->yesOrNoBox( tr( "Are you sure to unload cryptokilibrary" ), this );
+    if( bVal == false ) return;
 
     ret = manApplet->cryptokiAPI()->unloadLibrary();
     if( ret == 0 )
@@ -1868,12 +1872,72 @@ void MainWindow::improtPrivateKey()
 
 void MainWindow::exportPubKey()
 {
+    ManTreeItem *pItem = currentTreeItem();
 
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "No slot selected" ), this );
+        return;
+    }
+
+    int nSlot = pItem->getSlotIndex();
+
+    QModelIndex index = right_table_->currentIndex();
+    int row = index.row();
+
+    QTableWidgetItem* item0 = right_table_->item( row, 0 );
+    QTableWidgetItem* item1 = right_table_->item( row, 1 );
+
+    EncryptDlg encryptDlg;
+
+    int type = getDataType( right_type_ );
+    long obj_id = item1->text().toLong();
+
+
+    // continue ..
 }
 
 void MainWindow::exportCert()
 {
+    int ret = 0;
+    BIN binVal = {0,0};
 
+    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
+    SlotInfo slotInfo = slot_infos.at( slot_index_ );
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+
+    QModelIndex index = right_table_->currentIndex();
+    int row = index.row();
+
+    QTableWidgetItem* item0 = right_table_->item( row, 0 );
+    QTableWidgetItem* item1 = right_table_->item( row, 1 );
+
+    ret = manApplet->cryptokiAPI()->GetAttributeValue2( hSession, item1->text().toLong(), CKA_VALUE, &binVal );
+    if( ret != CKR_OK )
+    {
+        manApplet->warningBox( tr( "fail to get certficate" ), this );
+        return;
+    }
+
+    JCertInfo sCertInfo;
+
+    memset( &sCertInfo, 0x00, sizeof(sCertInfo));
+
+    ret = JS_PKI_getCertInfo( &binVal, &sCertInfo, NULL );
+    if( ret != 0 )
+    {
+        manApplet->warningBox( tr( "Invalid certificate" ), this );
+        JS_BIN_reset( &binVal );
+        return;
+    }
+
+    ExportDlg exportDlg;
+    exportDlg.setName( sCertInfo.pSubjectName );
+    exportDlg.setCert( &binVal );
+    exportDlg.exec();
+
+    JS_BIN_reset( &binVal );
+    JS_PKI_resetCertInfo( &sCertInfo );
 }
 
 void MainWindow::licenseInfo()
