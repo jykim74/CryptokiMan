@@ -135,7 +135,7 @@ static const int kCryptDefault = ACT_CRYPT_RAND | ACT_CRYPT_DIGEST | ACT_CRYPT_S
 
 static const int kImportDefault = 0;
 
-static const int kToolDefault = ACT_TOOL_OPER_STATE | ACT_TOOL_TYPE_NAME;
+static const int kToolDefault = ACT_TOOL_TYPE_NAME;
 
 static const int kHelpDefault = ACT_HELP_CLEAR_LOG | ACT_HELP_HALT_LOG | ACT_HELP_ABOUT;
 

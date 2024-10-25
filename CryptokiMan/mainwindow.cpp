@@ -63,6 +63,7 @@
 #include "find_object_dlg.h"
 #include "type_name_dlg.h"
 #include "export_dlg.h"
+#include "p11_work.h"
 
 const int kMaxRecentFiles = 10;
 
@@ -1872,6 +1873,12 @@ void MainWindow::improtPrivateKey()
 
 void MainWindow::exportPubKey()
 {
+    int ret = 0;
+    BIN binPubKey = {0,0};
+    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
+    SlotInfo slotInfo = slot_infos.at( slot_index_ );
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+
     ManTreeItem *pItem = currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
@@ -1888,13 +1895,20 @@ void MainWindow::exportPubKey()
     QTableWidgetItem* item0 = right_table_->item( row, 0 );
     QTableWidgetItem* item1 = right_table_->item( row, 1 );
 
-    EncryptDlg encryptDlg;
-
+    ExportDlg exportDlg;
     int type = getDataType( right_type_ );
-    long obj_id = item1->text().toLong();
+
+    ret = getPublicKey( manApplet->cryptokiAPI(), hSession, item1->text().toLong(), &binPubKey );
+    if( ret !=  0 ) goto end;
+
+    exportDlg.setName( item0->text() );
+    exportDlg.setPublicKey( &binPubKey );
+    exportDlg.exec();
 
 
-    // continue ..
+end :
+    JS_BIN_reset( &binPubKey );
+
 }
 
 void MainWindow::exportCert()
