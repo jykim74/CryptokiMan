@@ -325,7 +325,7 @@ void GenKeyPairDlg::accept()
         stMech.mechanism = CKM_RSA_PKCS_KEY_PAIR_GEN;
         keyType = CKK_RSA;
     }
-    else if( strMech == "CKM_ECDSA_KEY_PAIR_GEN" )
+    else if( strMech == "CKM_EC_KEY_PAIR_GEN" || strMech == "CKM_ECDSA_KEY_PAIR_GEN" )
     {
         stMech.mechanism = CKM_ECDSA_KEY_PAIR_GEN;
         keyType = CKK_ECDSA;
@@ -394,7 +394,7 @@ void GenKeyPairDlg::accept()
             uPubCount++;
         }
     }
-    else if( strMech == "CKM_ECDSA_KEY_PAIR_GEN" )
+    else if( strMech == "CKM_EC_KEY_PAIR_GEN" || strMech == "CKM_ECDSA_KEY_PAIR_GEN" )
     {
         char sPararmHex[256];
         const char *pCurveName = kECCOptionList.at(nSelOption).toStdString().c_str();
@@ -861,14 +861,16 @@ void GenKeyPairDlg::mechChanged(int nIndex)
     int uMech = JS_PKCS11_GetCKMType( strMech.toStdString().c_str() );
 
     mMechText->setText( QString("%1").arg( uMech, 8, 16, QLatin1Char('0')));
+    mPubExponentText->setEnabled(false);
 
     if( strMech == "CKM_RSA_PKCS_KEY_PAIR_GEN" )
     {
         mOptionLabel->setText( QString("Key Length") );
         mOptionCombo->addItems( sRSAOptionList );
         mParamTab->setDisabled(true);
+        mPubExponentText->setEnabled(true);
     }
-    else if( strMech == "CKM_ECDSA_KEY_PAIR_GEN" )
+    else if( strMech == "CKM_EC_KEY_PAIR_GEN" || strMech == "CKM_ECDSA_KEY_PAIR_GEN" )
     {
         mOptionLabel->setText( QString("NamedCurve"));
         mOptionCombo->addItems( kECCOptionList );

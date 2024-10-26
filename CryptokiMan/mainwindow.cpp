@@ -1911,6 +1911,45 @@ end :
 
 }
 
+void MainWindow::exportPriKey()
+{
+    int ret = 0;
+    BIN binPriKey = {0,0};
+    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
+    SlotInfo slotInfo = slot_infos.at( slot_index_ );
+    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "No slot selected" ), this );
+        return;
+    }
+
+    int nSlot = pItem->getSlotIndex();
+
+    QModelIndex index = right_table_->currentIndex();
+    int row = index.row();
+
+    QTableWidgetItem* item0 = right_table_->item( row, 0 );
+    QTableWidgetItem* item1 = right_table_->item( row, 1 );
+
+    ExportDlg exportDlg;
+    int type = getDataType( right_type_ );
+
+    ret = getPrivateKey( manApplet->cryptokiAPI(), hSession, item1->text().toLong(), &binPriKey );
+    if( ret !=  0 ) goto end;
+
+    exportDlg.setName( item0->text() );
+    exportDlg.setPrivateKey( &binPriKey );
+    exportDlg.exec();
+
+
+end :
+    JS_BIN_reset( &binPriKey );
+}
+
 void MainWindow::exportCert()
 {
     int ret = 0;
@@ -2417,6 +2456,9 @@ void MainWindow::showRightMenu(QPoint point )
 {
     QMenu menu(this);
     QAction *delAct = NULL;
+    QAction *exportCertAct = NULL;
+    QAction *exportPubKeyAct = NULL;
+    QAction *exportPriKeyAct = NULL;
 
     manApplet->log( QString("RightType: %1").arg(right_type_));
 
@@ -2433,20 +2475,21 @@ void MainWindow::showRightMenu(QPoint point )
     case HM_ITEM_TYPE_CERTIFICATE:
         menu.addAction( tr("View Certificate" ), this, &MainWindow::viewCert );
         menu.addAction( tr( "Copy Object" ), this, &MainWindow::copyTableObject );
-        menu.addAction( tr( "Export Certficate" ), this, &MainWindow::exportCert );
+        exportCertAct = menu.addAction( tr( "Export Certficate" ), this, &MainWindow::exportCert );
         break;
 
     case HM_ITEM_TYPE_PUBLICKEY:
         menu.addAction( tr( "Verify" ), this, &MainWindow::verifyEach );
         menu.addAction( tr( "Encrypt"), this, &MainWindow::encryptEach );
         menu.addAction( tr( "Copy Object" ), this, &MainWindow::copyTableObject );
-        menu.addAction( tr( "Export PublicKey" ), this, &MainWindow::exportPubKey );
+        exportPubKeyAct = menu.addAction( tr( "Export PublicKey" ), this, &MainWindow::exportPubKey );
         break;
 
     case HM_ITEM_TYPE_PRIVATEKEY:
         menu.addAction( tr( "Sign" ), this, &MainWindow::signEach );
         menu.addAction( tr( "Decrypt" ), this, &MainWindow::decryptEach );
         menu.addAction( tr( "Copy Object" ), this, &MainWindow::copyTableObject );
+        exportPriKeyAct = menu.addAction( tr( "Export PrivateKey" ), this, &MainWindow::exportPriKey );
         break;
 
     case HM_ITEM_TYPE_SECRETKEY:
@@ -2465,6 +2508,9 @@ void MainWindow::showRightMenu(QPoint point )
     if( manApplet->isLicense() == false )
     {
         if( delAct ) delAct->setEnabled(false);
+        if( exportCertAct ) exportCertAct->setEnabled(false);
+        if( exportPubKeyAct ) exportPubKeyAct->setEnabled( false );
+        if( exportPriKeyAct ) exportPriKeyAct->setEnabled( false );
     }
 
     menu.exec(QCursor::pos());

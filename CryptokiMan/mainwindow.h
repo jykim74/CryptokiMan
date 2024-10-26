@@ -200,6 +200,7 @@ public slots:
     void importPFX();
     void improtPrivateKey();
     void exportPubKey();
+    void exportPriKey();
     void exportCert();
     void initToken();
     void rand();

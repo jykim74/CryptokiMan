@@ -93,7 +93,8 @@ SOURCES += \
         decrypt_thread.cpp \
         type_name_dlg.cpp \
         export_dlg.cpp \
-        new_passwd_dlg.cpp
+        new_passwd_dlg.cpp \
+        p11_work.cpp
 
 HEADERS += \
         about_dlg.h \
@@ -159,7 +160,8 @@ HEADERS += \
         decrypt_thread.h \
         type_name_dlg.h \
         export_dlg.h \
-        new_passwd_dlg.h
+        new_passwd_dlg.h \
+        p11_work.h
 
 FORMS += \
         about_dlg.ui \
