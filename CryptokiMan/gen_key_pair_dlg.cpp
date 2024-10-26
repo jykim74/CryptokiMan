@@ -1235,7 +1235,7 @@ int GenKeyPairDlg::setSKI_SPKI( long hSession, int nKeyType, long hPri, long hPu
         if( pE ) JS_free( pE );
         JS_PKI_resetRSAKeyVal( &rsaKey );
     }
-    else if( nKeyType == CKK_ECDSA )
+    else if( nKeyType == CKK_ECDSA || nKeyType == CKK_EC )
     {
         BIN binVal = {0,0};
         BIN binKey = {0,0};
