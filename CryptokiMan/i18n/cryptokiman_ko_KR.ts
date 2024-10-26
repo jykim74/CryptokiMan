@@ -7648,117 +7648,117 @@ Do you want to delete the file and continue?</source>
     <message>
         <location filename="../export_dlg.cpp" line="31"/>
         <source>PEM PKCS8 Info (*.pk8)</source>
-        <translation type="unfinished"></translation>
+        <translation>PEM PKCS8 정보 (*.pk8)</translation>
     </message>
     <message>
         <location filename="../export_dlg.cpp" line="33"/>
         <source>DER PKCS8 Info (*.der)</source>
-        <translation type="unfinished"></translation>
+        <translation>DER PKCS8 정보 (*.pk8)</translation>
     </message>
     <message>
         <location filename="../export_dlg.cpp" line="35"/>
         <source>PEM PKCS8 Encrypt (*.key)</source>
-        <translation type="unfinished"></translation>
+        <translation>PEM PKCS8 암호화 (*.pk8)</translation>
     </message>
     <message>
         <location filename="../export_dlg.cpp" line="37"/>
         <source>DER PKCS8 Encrypt (*.der)</source>
-        <translation type="unfinished"></translation>
+        <translation>DER PKCS8 암호화 (*.pk8)</translation>
     </message>
     <message>
         <location filename="../export_dlg.cpp" line="39"/>
         <source>PEM CSR (*.csr)</source>
-        <translation type="unfinished"></translation>
+        <translation>PEM CSR (*.csr)</translation>
     </message>
     <message>
         <location filename="../export_dlg.cpp" line="41"/>
         <source>DER CSR (*.der)</source>
-        <translation type="unfinished"></translation>
+        <translation>DER CSR (*.der)</translation>
     </message>
     <message>
         <location filename="../export_dlg.cpp" line="43"/>
         <source>PEM CRL (*.crl)</source>
-        <translation type="unfinished"></translation>
+        <translation>PEM CRL (*.crl)</translation>
     </message>
     <message>
         <location filename="../export_dlg.cpp" line="45"/>
         <source>DER CRL (*.der)</source>
-        <translation type="unfinished"></translation>
+        <translation>DER CRL (*.der)</translation>
     </message>
     <message>
         <location filename="../export_dlg.cpp" line="58"/>
         <source>Public key PEM format file</source>
-        <translation type="unfinished"></translation>
+        <translation>공개키 PEM 형식 파일</translation>
     </message>
     <message>
         <location filename="../export_dlg.cpp" line="60"/>
         <source>Public key DER format file</source>
-        <translation type="unfinished"></translation>
+        <translation>공개키 DER 형식 파일</translation>
     </message>
     <message>
         <location filename="../export_dlg.cpp" line="62"/>
         <source>Unencrypted private key PEM format file</source>
-        <translation type="unfinished"></translation>
+        <translation>암호화 안된 개인키 PEM 형식 파일</translation>
     </message>
     <message>
         <location filename="../export_dlg.cpp" line="64"/>
         <source>Unencrypted private key DER format file</source>
-        <translation type="unfinished"></translation>
+        <translation>암호화 안된 개인키 DER 형식 파일</translation>
     </message>
     <message>
         <location filename="../export_dlg.cpp" line="66"/>
         <source>Certificate PEM format file</source>
-        <translation type="unfinished"></translation>
+        <translation>인증서 PEM 형식 파일</translation>
     </message>
     <message>
         <location filename="../export_dlg.cpp" line="68"/>
         <source>Certificate DER format file</source>
-        <translation type="unfinished"></translation>
+        <translation>인증서 DER 형식 파일</translation>
     </message>
     <message>
         <location filename="../export_dlg.cpp" line="70"/>
         <source>PKCS12 (PFX) format file</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS12(PFX) 형식 파일</translation>
     </message>
     <message>
         <location filename="../export_dlg.cpp" line="72"/>
         <source>Unencrypted PKCS8 PEM format file</source>
-        <translation type="unfinished"></translation>
+        <translation>암호화 안된 PKCS8 PEM 형식 파일</translation>
     </message>
     <message>
         <location filename="../export_dlg.cpp" line="74"/>
         <source>Unencrypted PKCS8 DER format file</source>
-        <translation type="unfinished"></translation>
+        <translation>암호화 안된 PKCS8 DER 형식 파일</translation>
     </message>
     <message>
         <location filename="../export_dlg.cpp" line="76"/>
         <source>Encrypted PKCS8 PEM format file</source>
-        <translation type="unfinished"></translation>
+        <translation>암호화 PKCS8 PEM 형식 파일</translation>
     </message>
     <message>
         <location filename="../export_dlg.cpp" line="78"/>
         <source>Encrypted PKCS8 DER format file</source>
-        <translation type="unfinished"></translation>
+        <translation>암호화 PKCS8 DER 형식 파일</translation>
     </message>
     <message>
         <location filename="../export_dlg.cpp" line="80"/>
         <source>CSR PEM format file</source>
-        <translation type="unfinished"></translation>
+        <translation>CSR PEM 형식 파일</translation>
     </message>
     <message>
         <location filename="../export_dlg.cpp" line="82"/>
         <source>CSR DER format file</source>
-        <translation type="unfinished"></translation>
+        <translation>CSR DER 형식 파일</translation>
     </message>
     <message>
         <location filename="../export_dlg.cpp" line="84"/>
         <source>CRL PEM format file</source>
-        <translation type="unfinished"></translation>
+        <translation>CRL PEM 형식 파일</translation>
     </message>
     <message>
         <location filename="../export_dlg.cpp" line="86"/>
         <source>CRL DER format file</source>
-        <translation type="unfinished"></translation>
+        <translation>CRL DER 형식 파일</translation>
     </message>
 </context>
 <context>
