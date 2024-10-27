@@ -64,6 +64,7 @@
 #include "type_name_dlg.h"
 #include "export_dlg.h"
 #include "p11_work.h"
+#include "pri_key_info_dlg.h"
 
 const int kMaxRecentFiles = 10;
 
@@ -1840,7 +1841,7 @@ end :
 void MainWindow::viewPriKey()
 {
     int ret = 0;
-    BIN binVal = {0,0};
+    BIN binPriKey = {0,0};
 
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
     SlotInfo slotInfo = slot_infos.at( slot_index_ );
@@ -1851,12 +1852,23 @@ void MainWindow::viewPriKey()
 
     QTableWidgetItem* item0 = right_table_->item( row, 0 );
     QTableWidgetItem* item1 = right_table_->item( row, 1 );
+
+    PriKeyInfoDlg priKeyInfo;
+
+    ret = getPrivateKey( manApplet->cryptokiAPI(), hSession, item1->text().toLong(), &binPriKey );
+    if( ret !=  0 ) goto end;
+
+    priKeyInfo.setPrivateKey( &binPriKey );
+    priKeyInfo.exec();
+
+end :
+    JS_BIN_reset( &binPriKey );
 }
 
 void MainWindow::viewPubKkey()
 {
     int ret = 0;
-    BIN binVal = {0,0};
+    BIN binPubKey = {0,0};
 
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
     SlotInfo slotInfo = slot_infos.at( slot_index_ );
@@ -1867,6 +1879,17 @@ void MainWindow::viewPubKkey()
 
     QTableWidgetItem* item0 = right_table_->item( row, 0 );
     QTableWidgetItem* item1 = right_table_->item( row, 1 );
+
+    PriKeyInfoDlg priKeyInfo;
+
+    ret = getPublicKey( manApplet->cryptokiAPI(), hSession, item1->text().toLong(), &binPubKey );
+    if( ret !=  0 ) goto end;
+
+    priKeyInfo.setPublicKey( &binPubKey );
+    priKeyInfo.exec();
+
+end :
+    JS_BIN_reset( &binPubKey );
 }
 
 void MainWindow::importPFX()
