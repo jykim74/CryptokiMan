@@ -234,6 +234,9 @@ add_executable(${PROJECT_NAME}
     new_passwd_dlg.ui
     p11_work.h
     p11_work.cpp
+    pri_key_info_dlg.h
+    pri_key_info_dlg.cpp
+    pri_key_info_dlg.ui
 )
 
 target_link_options( ${PROJECT_NAME} PRIVATE -mwindows -MD )
