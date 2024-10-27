@@ -197,6 +197,8 @@ public slots:
     void decryptEach();
     void importCert();
     void viewCert();
+    void viewPriKey();
+    void viewPubKkey();
     void importPFX();
     void improtPrivateKey();
     void exportPubKey();
