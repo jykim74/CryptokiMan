@@ -323,7 +323,7 @@ end :
 int getEDPrivateKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pPriKey )
 {
     int ret = -1;
-    BIN binPoint = {0,0};
+    BIN binParam = {0,0};
     BIN binValue = {0,0};
 
     JRawKeyVal sRawKey;
@@ -334,7 +334,7 @@ int getEDPrivateKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pPriKe
     memset( &sRawKey, 0x00, sizeof(sRawKey));
 
 
-    ret = pAPI->GetAttributeValue2( hSession, hObject, CKA_EC_POINT, &binPoint );
+    ret = pAPI->GetAttributeValue2( hSession, hObject, CKA_EC_PARAMS, &binParam );
     if( ret != CKR_OK ) goto end;
 
     ret = pAPI->GetAttributeValue2( hSession, hObject, CKA_VALUE, &binValue );
@@ -349,7 +349,7 @@ int getEDPrivateKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pPriKe
     ret = JS_PKI_encodeRawPrivateKey( &sRawKey, pPriKey );
 
 end :
-    JS_BIN_reset( &binPoint );
+    JS_BIN_reset( &binParam );
     JS_BIN_reset( &binValue );
     JS_PKI_resetRawKeyVal( &sRawKey );
 
