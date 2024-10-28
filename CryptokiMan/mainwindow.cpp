@@ -1828,9 +1828,15 @@ void MainWindow::viewCert()
     QTableWidgetItem* item0 = right_table_->item( row, 0 );
     QTableWidgetItem* item1 = right_table_->item( row, 1 );
 
-    ret = manApplet->cryptokiAPI()->GetAttributeValue2( hSession, item1->text().toLong(), CKA_VALUE, &binVal );
-
     CertInfoDlg certInfoDlg;
+
+    ret = manApplet->cryptokiAPI()->GetAttributeValue2( hSession, item1->text().toLong(), CKA_VALUE, &binVal );
+    if( ret != CKR_OK )
+    {
+        manApplet->warningBox( tr( "failed to get certificate: %1").arg(ret), this );
+        goto end;
+    }
+
     certInfoDlg.setCertVal( getHexString( binVal.pVal, binVal.nLen ));
     certInfoDlg.exec();
 
@@ -1856,7 +1862,11 @@ void MainWindow::viewPriKey()
     PriKeyInfoDlg priKeyInfo;
 
     ret = getPrivateKey( manApplet->cryptokiAPI(), hSession, item1->text().toLong(), &binPriKey );
-    if( ret !=  0 ) goto end;
+    if( ret !=  0 )
+    {
+        manApplet->warningBox( tr( "failed to get private key: %1").arg(ret), this );
+        goto end;
+    }
 
     priKeyInfo.setPrivateKey( &binPriKey );
     priKeyInfo.exec();
@@ -1883,7 +1893,11 @@ void MainWindow::viewPubKkey()
     PriKeyInfoDlg priKeyInfo;
 
     ret = getPublicKey( manApplet->cryptokiAPI(), hSession, item1->text().toLong(), &binPubKey );
-    if( ret !=  0 ) goto end;
+    if( ret !=  0 )
+    {
+        manApplet->warningBox( tr( "failed to get public key: %1").arg(ret), this );
+        goto end;
+    }
 
     priKeyInfo.setPublicKey( &binPubKey );
     priKeyInfo.exec();
@@ -1954,7 +1968,11 @@ void MainWindow::exportPubKey()
     int type = getDataType( right_type_ );
 
     ret = getPublicKey( manApplet->cryptokiAPI(), hSession, item1->text().toLong(), &binPubKey );
-    if( ret !=  0 ) goto end;
+    if( ret !=  0 )
+    {
+        manApplet->warningBox( tr( "failed to get public key: %1").arg(ret), this );
+        goto end;
+    }
 
     exportDlg.setName( item0->text() );
     exportDlg.setPublicKey( &binPubKey );
@@ -1994,7 +2012,12 @@ void MainWindow::exportPriKey()
     int type = getDataType( right_type_ );
 
     ret = getPrivateKey( manApplet->cryptokiAPI(), hSession, item1->text().toLong(), &binPriKey );
-    if( ret !=  0 ) goto end;
+    if( ret !=  0 )
+    {
+        manApplet->warningBox( tr( "failed to get private key: %1").arg(ret), this );
+        goto end;
+    }
+
 
     exportDlg.setName( item0->text() );
     exportDlg.setPrivateKey( &binPriKey );
