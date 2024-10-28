@@ -1904,6 +1904,7 @@ void MainWindow::viewPubKkey()
 
 end :
     JS_BIN_reset( &binPubKey );
+    return;
 }
 
 void MainWindow::importPFX()

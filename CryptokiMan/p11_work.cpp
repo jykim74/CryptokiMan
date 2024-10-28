@@ -61,10 +61,10 @@ int getECPublicKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pPubKey
     ret = pAPI->GetAttributeValue2( hSession, hObject, CKA_EC_POINT, &binPoint );
     if( ret != CKR_OK ) goto end;
 
-    nPubLen = (binPoint.nLen -1) / 2;
+    nPubLen = (binPoint.nLen - 3) / 2;
 
-    strHexX = getHexString( &binPoint.pVal[1], nPubLen );
-    strHexY = getHexString( &binPoint.pVal[1+nPubLen], nPubLen );
+    strHexX = getHexString( &binPoint.pVal[3], nPubLen );
+    strHexY = getHexString( &binPoint.pVal[3+nPubLen], nPubLen );
 
     JS_PKI_getStringFromOID( &binParam, sTextOID );
 
@@ -90,7 +90,7 @@ int getDSAPublicKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pPubKe
 
     JDSAKeyVal sDSAKey;
 
-    memset( &sDSAKey, 0x00, sizeof(&sDSAKey));
+    memset( &sDSAKey, 0x00, sizeof(sDSAKey));
 
     ret = pAPI->GetAttributeValue2( hSession, hObject, CKA_PRIME, &binP );
     if( ret != CKR_OK ) goto end;
@@ -117,6 +117,7 @@ end :
     JS_BIN_reset( &binP );
     JS_BIN_reset( &binQ );
     JS_BIN_reset( &binG );
+    JS_BIN_reset( &binVal );
     JS_PKI_resetDSAKeyVal( &sDSAKey );
 
     return ret;
@@ -288,7 +289,7 @@ int getDSAPrivateKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pPriK
 
     JDSAKeyVal sDSAKey;
 
-    memset( &sDSAKey, 0x00, sizeof(&sDSAKey));
+    memset( &sDSAKey, 0x00, sizeof(sDSAKey));
 
     ret = pAPI->GetAttributeValue2( hSession, hObject, CKA_PRIME, &binP );
     if( ret != CKR_OK ) goto end;
