@@ -326,6 +326,7 @@ int getEDPrivateKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pPriKe
     int ret = -1;
     BIN binParam = {0,0};
     BIN binValue = {0,0};
+    BIN binPoint = {0,0};
 
     JRawKeyVal sRawKey;
     QString strName = "ED25519";
@@ -341,17 +342,24 @@ int getEDPrivateKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pPriKe
     ret = pAPI->GetAttributeValue2( hSession, hObject, CKA_VALUE, &binValue );
     if( ret != CKR_OK ) goto end;
 
+    ret = pAPI->GetAttributeValue2( hSession, hObject, CKA_EC_POINT, &binPoint );
+//    if( ret != CKR_OK ) goto end;
+
 
     if( binValue.nLen != 32 )
         strName = "ED448";
 
-    JS_PKI_setRawKeyVal( &sRawKey, NULL, getHexString( &binValue ).toStdString().c_str(), strName.toStdString().c_str() );
+    JS_PKI_setRawKeyVal( &sRawKey,
+                        ( binPoint.nLen > 0 ) ? getHexString( &binPoint ).toStdString().c_str() : NULL,
+                        getHexString( &binValue ).toStdString().c_str(),
+                        strName.toStdString().c_str() );
 
     ret = JS_PKI_encodeRawPrivateKey( &sRawKey, pPriKey );
 
 end :
     JS_BIN_reset( &binParam );
     JS_BIN_reset( &binValue );
+    JS_BIN_reset( &binPoint );
     JS_PKI_resetRawKeyVal( &sRawKey );
 
     return ret;
