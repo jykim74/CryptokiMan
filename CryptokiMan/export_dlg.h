@@ -52,6 +52,7 @@ public:
     void setCRL( const BIN *pCRL );
     void setCSR( const BIN *pCSR );
     void setPriKeyAndCert( const BIN *pPriKey, const BIN *pCert );
+    int getKeyType() { return key_type_; };
 
 private slots:
     void changeFormatType( int index );

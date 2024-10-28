@@ -1965,6 +1965,7 @@ void MainWindow::exportPubKey()
     QTableWidgetItem* item1 = right_table_->item( row, 1 );
 
     ExportDlg exportDlg;
+    QString strName;
     int type = getDataType( right_type_ );
 
     ret = getPublicKey( manApplet->cryptokiAPI(), hSession, item1->text().toLong(), &binPubKey );
@@ -1974,8 +1975,9 @@ void MainWindow::exportPubKey()
         goto end;
     }
 
-    exportDlg.setName( item0->text() );
+
     exportDlg.setPublicKey( &binPubKey );
+    exportDlg.setName( QString( "PublicKey_%1" ).arg( item1->text().toLong()));
     exportDlg.exec();
 
 
@@ -2019,7 +2021,7 @@ void MainWindow::exportPriKey()
     }
 
 
-    exportDlg.setName( item0->text() );
+    exportDlg.setName( QString( "PrivateKey_%1" ).arg( item1->text().toLong()));
     exportDlg.setPrivateKey( &binPriKey );
     exportDlg.exec();
 
