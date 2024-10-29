@@ -138,10 +138,14 @@ int getEDPublicKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pPubKey
     ret = pAPI->GetAttributeValue2( hSession, hObject, CKA_EC_PARAMS, &binParam );
     if( ret != CKR_OK ) goto end;
 
+    if( binPoint.pVal[1] == 32 )
+        nKeyType = JS_PKI_KEY_TYPE_ED25519;
+    else
+        nKeyType = JS_PKI_KEY_TYPE_ED448;
+/*
     if( binPoint.nLen != ( 32 + 2 ) )
         nKeyType = JS_PKI_KEY_TYPE_ED448;
-
-
+*/
     JS_BIN_set( &binPub, &binPoint.pVal[2], binPoint.nLen - 2 );
     ret = JS_PKI_encodeRawPublicKeyValue( nKeyType, &binPub, pPubKey );
 
@@ -342,7 +346,7 @@ int getEDPrivateKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pPriKe
     ret = pAPI->GetAttributeValue2( hSession, hObject, CKA_VALUE, &binValue );
     if( ret != CKR_OK ) goto end;
 
-    ret = pAPI->GetAttributeValue2( hSession, hObject, CKA_EC_POINT, &binPoint );
+//    ret = pAPI->GetAttributeValue2( hSession, hObject, CKA_EC_POINT, &binPoint );
 //    if( ret != CKR_OK ) goto end;
 
 

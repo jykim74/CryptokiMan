@@ -463,15 +463,15 @@ void GenKeyPairDlg::accept()
         if( strCurveName == "ED25519" )
         {
             sPubTemplate[uPubCount].type = CKA_EC_PARAMS;
-            sPubTemplate[uPubCount].pValue = kCurveNameX25519;
-            sPubTemplate[uPubCount].ulValueLen = sizeof(kCurveNameX25519);
+            sPubTemplate[uPubCount].pValue = kOID_X25519;
+            sPubTemplate[uPubCount].ulValueLen = sizeof(kOID_X25519);
             uPubCount++;
         }
         else if( strCurveName == "ED448" )
         {
             sPubTemplate[uPubCount].type = CKA_EC_PARAMS;
-            sPubTemplate[uPubCount].pValue = kCurveNameX448;
-            sPubTemplate[uPubCount].ulValueLen = sizeof(kCurveNameX448);
+            sPubTemplate[uPubCount].pValue = kOID_X448;
+            sPubTemplate[uPubCount].ulValueLen = sizeof(kOID_X448);
             uPubCount++;
         }
     }
