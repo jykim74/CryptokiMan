@@ -3440,7 +3440,7 @@ void MainWindow::showAttribute( int nValType, CK_ATTRIBUTE_TYPE uAttribute, CK_O
     if( pStr ) JS_free( pStr );
 }
 
-QString MainWindow::stringAttribute( int nValType, CK_ATTRIBUTE_TYPE uAttribute, CK_OBJECT_HANDLE hObj )
+QString MainWindow::stringAttribute( int nValType, CK_ATTRIBUTE_TYPE uAttribute, CK_OBJECT_HANDLE hObj, int* pnLen )
 {
     int ret = 0;
 
@@ -3456,6 +3456,8 @@ QString MainWindow::stringAttribute( int nValType, CK_ATTRIBUTE_TYPE uAttribute,
 
     if( ret == CKR_OK )
     {
+        if( pnLen ) *pnLen = binVal.nLen;
+
         if( nValType == ATTR_VAL_BOOL )
         {
             strMsg = getBool( &binVal );
@@ -3517,6 +3519,7 @@ QString MainWindow::stringAttribute( int nValType, CK_ATTRIBUTE_TYPE uAttribute,
     else
     {
         strMsg = QString( "[ERR] %1[%2]" ).arg( JS_PKCS11_GetErrorMsg(ret)).arg(ret);
+        if( pnLen ) *pnLen = -1;
     }
 
     JS_BIN_reset( &binVal );
@@ -3986,11 +3989,12 @@ void MainWindow::showInfoCommon( CK_OBJECT_HANDLE hObj )
 
     for( int i = 0; i < kCommonAttList.size(); i++ )
     {
+        int nLen = -1;
         strName = kCommonAttList.at(i);
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
 
-        strValue = stringAttribute( nType, uAttrType, hObj);
+        strValue = stringAttribute( nType, uAttrType, hObj, &nLen );
 
         if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
             info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );

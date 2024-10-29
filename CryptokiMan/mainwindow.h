@@ -240,7 +240,7 @@ private:
     void adjustForCurrentFile( const QString& filePath );
     void updateRecentActionList();
     void showAttribute( int nValType, CK_ATTRIBUTE_TYPE uAttribute, CK_OBJECT_HANDLE hObj );
-    QString stringAttribute( int nValType, CK_ATTRIBUTE_TYPE uAttribute, CK_OBJECT_HANDLE hObj );
+    QString stringAttribute( int nValType, CK_ATTRIBUTE_TYPE uAttribute, CK_OBJECT_HANDLE hObj, int *pnLen = NULL );
 
     void showInfoCommon( CK_OBJECT_HANDLE hObj );
     void showInfoData( CK_OBJECT_HANDLE hObj );
