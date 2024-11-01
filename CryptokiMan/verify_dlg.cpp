@@ -385,13 +385,13 @@ void VerifyDlg::clickFinal()
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("Signature value is incorrect [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        appendStatusLabel( QString( "|Final failure [%1]" ).arg( rv ));
     }
     else
     {
         manApplet->messageBox( tr("Signature value is correct"), this );
+        appendStatusLabel( "|Final OK" );
     }
-
-    appendStatusLabel( "|Final" );
 }
 
 void VerifyDlg::clickVerify()
@@ -532,7 +532,11 @@ void VerifyDlg::runFileVerify()
             nPartSize = nLeft;
 
         nRead = JS_BIN_fileReadPartFP( fp, nOffset, nPartSize, &binPart );
-        if( nRead <= 0 ) break;
+        if( nRead <= 0 )
+        {
+            manApplet->warnLog( tr( "fail to read file: %1").arg( nRead ), this );
+            goto end;
+        }
 
         ret = manApplet->cryptokiAPI()->VerifyUpdate( session_, binPart.pVal, binPart.nLen );
         if( ret != CKR_OK )
@@ -658,6 +662,8 @@ void VerifyDlg::clickSignClear()
 void VerifyDlg::clickFindSrcFile()
 {
     QString strPath = mSrcFileText->text();
+    strPath = manApplet->curFilePath( strPath );
+
     QString strSrcFile = findFile( this, JS_FILE_TYPE_ALL, strPath );
 
     if( strSrcFile.length() > 0 )

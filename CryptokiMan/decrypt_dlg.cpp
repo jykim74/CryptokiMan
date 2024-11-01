@@ -17,6 +17,8 @@
 #include "mech_mgr.h"
 #include "decrypt_thread.h"
 
+#include "js_error.h"
+
 
 static QStringList sKeyList = { "SECRET", "PRIVATE" };
 static QStringList sMechEncSymList;
@@ -425,6 +427,8 @@ void DecryptDlg::clickOutputClear()
 void DecryptDlg::clickFindSrcFile()
 {
     QString strPath = mSrcFileText->text();
+    strPath = manApplet->curFilePath( strPath );
+
     QString strSrcFile = findFile( this, JS_FILE_TYPE_ALL, strPath );
 
     if( strSrcFile.length() > 0 )
@@ -442,12 +446,7 @@ void DecryptDlg::clickFindSrcFile()
         mSrcFileInfoText->setText( strInfo );
         mDecProgBar->setValue(0);
 
-        QStringList nameExt = strSrcFile.split(".");
-        QString strDstName = QString( "%1.dst" ).arg( nameExt.at(0) );
-        if( strSrcFile == strDstName )
-        {
-            strDstName += "_dst";
-        }
+        QString strDstName = QString( "%1/%2_dec.bin" ).arg( fileInfo.absolutePath() ).arg( fileInfo.baseName() );
 
         mDstFileText->setText( strDstName );
 
@@ -460,19 +459,11 @@ void DecryptDlg::clickFindSrcFile()
 
 void DecryptDlg::clickFindDstFile()
 {
-    QFileDialog::Options options;
-    options |= QFileDialog::DontUseNativeDialog;
-
-    QString strFilter;
+    int nType = JS_FILE_TYPE_BIN;
     QString strPath = mDstFileText->text();
+    strPath = manApplet->curFilePath( strPath );
 
-    QString selectedFilter;
-    QString fileName = QFileDialog::getSaveFileName( this,
-                                                     tr("Decrypt Files"),
-                                                     strPath,
-                                                     strFilter,
-                                                     &selectedFilter,
-                                                     options );
+    QString fileName = findSaveFile( this, nType, strPath );
 
     if( fileName.length() > 0 ) mDstFileText->setText( fileName );
 }
@@ -567,7 +558,7 @@ void DecryptDlg::clickUpdate()
     if( pDecPart ) JS_free( pDecPart );
 }
 
-void DecryptDlg::clickFinal()
+int DecryptDlg::clickFinal()
 {
     int rv = -1;
 
@@ -583,13 +574,13 @@ void DecryptDlg::clickFinal()
         if( pDecPart ) JS_free( pDecPart );
         mOutputText->setPlainText("");
         manApplet->warningBox( tr("DecryptFinal execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
-        return;
+        return rv;
     }
 
     if( uDecPartLen > 0 )
     {
         pDecPart = (unsigned char *)JS_malloc( uDecPartLen );
-        if( pDecPart == NULL )return;
+        if( pDecPart == NULL ) return JSR_ERR;
     }
 
     rv = manApplet->cryptokiAPI()->DecryptFinal( session_, pDecPart, (CK_ULONG_PTR)&uDecPartLen );
@@ -597,12 +588,12 @@ void DecryptDlg::clickFinal()
     if( rv != CKR_OK )
     {
         if( pDecPart ) JS_free( pDecPart );
-        mOutputText->setPlainText("");
+        appendStatusLabel( QString( "|Final failure[%1]" ).arg(rv));
         manApplet->warningBox( tr("DecryptFinal execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
-        return;
+        return rv;
     }
 
-    appendStatusLabel( "|Final" );
+    appendStatusLabel( "|Final OK" );
 
     JS_BIN_set( &binDecPart, pDecPart, uDecPartLen );
 
@@ -620,6 +611,8 @@ void DecryptDlg::clickFinal()
     JS_BIN_reset( &binDecPart );
     if( pDecPart ) JS_free( pDecPart );
     JS_BIN_reset( &binDecPart );
+
+    return rv;
 }
 
 void DecryptDlg::clickDecrypt()
@@ -768,7 +761,11 @@ void DecryptDlg::runFileDecrypt()
             nPartSize = nLeft;
 
         nRead = JS_BIN_fileReadPartFP( fp, nOffset, nPartSize, &binPart );
-        if( nRead <= 0 ) break;
+        if( nRead <= 0 )
+        {
+            manApplet->warnLog( tr( "fail to read file: %1").arg( nRead ), this );
+            goto end;
+        }
 
         uDecPartLen = binPart.nLen + 64;
 
@@ -795,7 +792,16 @@ void DecryptDlg::runFileDecrypt()
         }
 
         if( binDst.nLen > 0 )
-            JS_BIN_fileAppend( &binDst, strDstFile.toLocal8Bit().toStdString().c_str() );
+        {
+            rv = JS_BIN_fileAppend( &binDst, strDstFile.toLocal8Bit().toStdString().c_str() );
+            if( rv != binDst.nLen )
+            {
+                manApplet->warnLog( tr( "fail to append file: %1" ).arg( rv ), this );
+                goto end;
+            }
+
+            rv = 0;
+        }
 
         nReadSize += nRead;
         nPercent = ( nReadSize * 100 ) / fileSize;
@@ -822,7 +828,11 @@ void DecryptDlg::runFileDecrypt()
         {
             QString strMsg = QString( "|Update X %1").arg( update_cnt_ );
             appendStatusLabel( strMsg );
-            clickFinal();
+            rv = clickFinal();
+            if( rv == 0 )
+            {
+                manApplet->messageLog( tr( "File(%1) save was successful" ).arg( strDstFile ), this );
+            }
 
             QFileInfo fileInfo;
             fileInfo.setFile( strDstFile );

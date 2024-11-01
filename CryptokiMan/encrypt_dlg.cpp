@@ -17,6 +17,8 @@
 #include "mech_mgr.h"
 #include "encrypt_thread.h"
 
+#include "js_error.h"
+
 static QStringList sKeyList = { "SECRET", "PUBLIC" };
 
 static QStringList sMechEncSymList;
@@ -27,6 +29,7 @@ EncryptDlg::EncryptDlg(QWidget *parent) :
 {
     slot_index_ = -1;
     session_ = -1;
+    thread_ = nullptr;
 
     setupUi(this);
     initUI();
@@ -427,6 +430,8 @@ void EncryptDlg::clickOutputClear()
 void EncryptDlg::clickFindSrcFile()
 {
     QString strPath = mSrcFileText->text();
+    strPath = manApplet->curFilePath( strPath );
+
     QString strSrcFile = findFile( this, JS_FILE_TYPE_ALL, strPath );
 
     if( strSrcFile.length() > 0 )
@@ -444,12 +449,7 @@ void EncryptDlg::clickFindSrcFile()
         mSrcFileInfoText->setText( strInfo );
         mEncProgBar->setValue(0);
 
-        QStringList nameExt = strSrcFile.split(".");
-        QString strDstName = QString( "%1.dst" ).arg( nameExt.at(0) );
-        if( strSrcFile == strDstName )
-        {
-            strDstName += "_dst";
-        }
+        QString strDstName = QString( "%1/%2_enc.bin" ).arg( fileInfo.absolutePath() ).arg( fileInfo.baseName() );
 
         mDstFileText->setText( strDstName );
 
@@ -462,19 +462,11 @@ void EncryptDlg::clickFindSrcFile()
 
 void EncryptDlg::clickFindDstFile()
 {
-    QFileDialog::Options options;
-    options |= QFileDialog::DontUseNativeDialog;
-
-    QString strFilter;
+    int nType = JS_FILE_TYPE_BIN;
     QString strPath = mDstFileText->text();
+    strPath = manApplet->curFilePath( strPath );
 
-    QString selectedFilter;
-    QString fileName = QFileDialog::getSaveFileName( this,
-                                                     tr("Encrypt Files"),
-                                                     strPath,
-                                                     strFilter,
-                                                     &selectedFilter,
-                                                     options );
+    QString fileName = findSaveFile( this, nType, strPath );
 
     if( fileName.length() > 0 ) mDstFileText->setText( fileName );
 }
@@ -566,7 +558,7 @@ void EncryptDlg::clickUpdate()
     JS_BIN_reset( &binPart );
 }
 
-void EncryptDlg::clickFinal()
+int EncryptDlg::clickFinal()
 {
     int rv = -1;
 
@@ -581,29 +573,29 @@ void EncryptDlg::clickFinal()
         mOutputText->setPlainText( "" );
         if( pEncPart ) JS_free( pEncPart );
         manApplet->warningBox( tr("EncryptFinal execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
-        return;
+        return rv;
     }
 
     if( uEncPartLen > 0 )
     {
         pEncPart = (unsigned char *)JS_malloc( uEncPartLen );
-        if( pEncPart == NULL ) return;
+        if( pEncPart == NULL ) return JSR_ERR;
     }
 
     rv = manApplet->cryptokiAPI()->EncryptFinal( session_, pEncPart, (CK_ULONG_PTR)&uEncPartLen );
 
     if( rv != CKR_OK )
     {
-        mOutputText->setPlainText( "" );
+        appendStatusLabel( QString( "|Final failure(%1)" ).arg(rv) );
         if( pEncPart ) JS_free( pEncPart );
         manApplet->warningBox( tr("EncryptFinal execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
-        return;
+        return rv;
     }
 
 
     JS_BIN_set( &binEncPart, pEncPart, uEncPartLen );
 
-    appendStatusLabel( "|Final" );
+    appendStatusLabel( "|Final OK" );
 
 
     if( mInputTab->currentIndex() == 0 )
@@ -619,6 +611,8 @@ void EncryptDlg::clickFinal()
 
     if( pEncPart ) JS_free( pEncPart );
     JS_BIN_reset( &binEncPart );
+
+    return rv;
 }
 
 void EncryptDlg::clickEncrypt()
@@ -775,7 +769,11 @@ void EncryptDlg::runFileEncrypt()
             nPartSize = nLeft;
 
         nRead = JS_BIN_fileReadPartFP( fp, nOffset, nPartSize, &binPart );
-        if( nRead <= 0 ) break;
+        if( nRead <= 0 )
+        {
+            manApplet->warnLog( tr( "fail to read file: %1").arg( nRead ), this );
+            goto end;
+        }
 
         uEncPartLen = binPart.nLen + 64;
 
@@ -791,8 +789,6 @@ void EncryptDlg::runFileEncrypt()
             goto end;
         }
 
-
-
         update_cnt_++;
 
         if( uEncPartLen > 0 )
@@ -804,7 +800,16 @@ void EncryptDlg::runFileEncrypt()
         }
 
         if( binDst.nLen > 0 )
-            JS_BIN_fileAppend( &binDst, strDstFile.toLocal8Bit().toStdString().c_str() );
+        {
+            rv = JS_BIN_fileAppend( &binDst, strDstFile.toLocal8Bit().toStdString().c_str() );
+            if( rv != binDst.nLen )
+            {
+                manApplet->warnLog( tr( "fail to append file: %1" ).arg( rv ), this );
+                goto end;
+            }
+
+            rv = 0;
+        }
 
         nReadSize += nRead;
         nPercent = ( nReadSize * 100 ) / fileSize;
@@ -831,7 +836,11 @@ void EncryptDlg::runFileEncrypt()
         {
             QString strMsg = QString( "|Update X %1").arg( update_cnt_ );
             appendStatusLabel( strMsg );
-            clickFinal();
+            rv = clickFinal();
+            if( rv == 0 )
+            {
+                manApplet->messageLog( tr( "File(%1) save was successful" ).arg( strDstFile ), this );
+            }
 
             QFileInfo fileInfo;
             fileInfo.setFile( strDstFile );

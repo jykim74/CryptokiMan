@@ -32,7 +32,7 @@ private slots:
 
     int clickInit();
     void clickUpdate();
-    void clickFinal();
+    int clickFinal();
     void clickEncrypt();
     void runDataEncrypt();
     void runFileEncrypt();

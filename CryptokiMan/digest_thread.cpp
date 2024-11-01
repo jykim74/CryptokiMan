@@ -63,8 +63,11 @@ void DigestThread::run()
             nPartSize = nLeft;
 
         nRead = JS_BIN_fileReadPartFP( fp, nOffset, nPartSize, &binPart );
-        if( nRead <= 0 ) break;
-
+        if( nRead <= 0 )
+        {
+            fprintf( stderr, "fail to read file: %d\n", nRead );
+            goto end;
+        }
 
         ret = manApplet->cryptokiAPI()->DigestUpdate( session_, binPart.pVal, binPart.nLen, false );
         if( ret != CKR_OK )

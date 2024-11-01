@@ -351,12 +351,12 @@ void DigestDlg::clickFinal()
     {
         JS_BIN_set( &binDigest, sDigest, uDigestLen );
         mOutputText->setText( getHexString( binDigest.pVal, binDigest.nLen) );
-        appendStatusLabel( "|Final" );
+        appendStatusLabel( "|Final OK" );
     }
     else
     {
         manApplet->warningBox( tr("DigestFinal execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
-        mOutputText->setText("");
+        appendStatusLabel( QString( "|Final failure [%1]").arg( rv ));
     }
 
     JS_BIN_reset( &binDigest );
@@ -496,7 +496,11 @@ void DigestDlg::runFileDigest()
             nPartSize = nLeft;
 
         nRead = JS_BIN_fileReadPartFP( fp, nOffset, nPartSize, &binPart );
-        if( nRead <= 0 ) break;
+        if( nRead <= 0 )
+        {
+            manApplet->warnLog( tr( "fail to read file: %1").arg( nRead ), this );
+            goto end;
+        }
 
         ret = manApplet->cryptokiAPI()->DigestUpdate( hSession, binPart.pVal, binPart.nLen );
         if( ret != CKR_OK )
@@ -570,6 +574,8 @@ void DigestDlg::clickOutputClear()
 void DigestDlg::clickFindSrcFile()
 {
     QString strPath = mSrcFileText->text();
+    strPath = manApplet->curFilePath( strPath );
+
     QString strSrcFile = findFile( this, JS_FILE_TYPE_ALL, strPath );
 
     if( strSrcFile.length() > 0 )

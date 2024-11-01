@@ -69,7 +69,11 @@ void DecryptThread::run()
             nPartSize = nLeft;
 
         nRead = JS_BIN_fileReadPartFP( fp, nOffset, nPartSize, &binPart );
-        if( nRead <= 0 ) break;
+        if( nRead <= 0 )
+        {
+            fprintf( stderr, "fail to read file: %d\n", nRead );
+            goto end;
+        }
 
         uDecPartLen = binPart.nLen + 64;
 
@@ -94,7 +98,16 @@ void DecryptThread::run()
         }
 
         if( binDst.nLen > 0 )
-            JS_BIN_fileAppend( &binDst, dst_file_.toLocal8Bit().toStdString().c_str() );
+        {
+            rv = JS_BIN_fileAppend( &binDst, dst_file_.toLocal8Bit().toStdString().c_str() );
+            if( rv != binDst.nLen )
+            {
+                fprintf( stderr, "fail to append file: %d\n", rv );
+                goto end;
+            }
+
+            rv = 0;
+        }
 
         nReadSize += nRead;;
         emit taskUpdate( nReadSize );

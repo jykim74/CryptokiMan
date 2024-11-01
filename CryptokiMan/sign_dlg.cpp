@@ -386,7 +386,7 @@ void SignDlg::clickFinal()
     if( rv != CKR_OK )
     {
         manApplet->warningBox( tr("SignFinal execution failure [%1]").arg( JS_PKCS11_GetErrorMsg(rv)), this );
-        mOutputText->setPlainText("");
+        appendStatusLabel( QString( "|Final failure [%1]").arg( rv ));
         return;
     }
 
@@ -395,7 +395,7 @@ void SignDlg::clickFinal()
     JS_BIN_set( &binSign, sSign, uSignLen );
     mOutputText->setPlainText( getHexString( binSign.pVal, binSign.nLen) );
 
-    appendStatusLabel( "|Final" );
+    appendStatusLabel( "|Final OK" );
     JS_BIN_reset(&binSign);
 }
 
@@ -535,7 +535,11 @@ void SignDlg::runFileSign()
             nPartSize = nLeft;
 
         nRead = JS_BIN_fileReadPartFP( fp, nOffset, nPartSize, &binPart );
-        if( nRead <= 0 ) break;
+        if( nRead <= 0 )
+        {
+            manApplet->warnLog( tr( "fail to read file: %1").arg( nRead ), this );
+            goto end;
+        }
 
         ret = manApplet->cryptokiAPI()->SignUpdate( session_, binPart.pVal, binPart.nLen );
         if( ret != CKR_OK )
@@ -677,6 +681,8 @@ void SignDlg::clickOutputClear()
 void SignDlg::clickFindSrcFile()
 {
     QString strPath = mSrcFileText->text();
+    strPath = manApplet->curFilePath( strPath );
+
     QString strSrcFile = findFile( this, JS_FILE_TYPE_ALL, strPath );
 
     if( strSrcFile.length() > 0 )
