@@ -2410,7 +2410,7 @@ void MainWindow::showPublicKeyInfoDetail( QModelIndex index )
     strKeyType = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, uObj );
 
     info( "========================================================================\n" );
-    info( QString( "== PublicKey(%1) Information\n").arg( strKeyType) );
+    info( QString( "== PublicKey [ %1 ] Information\n").arg( strKeyType) );
     info( "========================================================================\n" );
 
     showInfoCommon( uObj );
@@ -2462,7 +2462,7 @@ void MainWindow::showPrivateKeyInfoDetail( QModelIndex index )
     info_text_->clear();
 
     info( "========================================================================\n" );
-    info( QString( "== PrivateKey(%1)) Information\n").arg( strKeyType) );
+    info( QString( "== PrivateKey [ %1 ] Information\n").arg( strKeyType) );
     info( "========================================================================\n" );
 
     showInfoCommon( uObj );
@@ -2506,7 +2506,7 @@ void MainWindow::showSecretKeyInfoDetail( QModelIndex index )
     info_text_->clear();
 
     info( "========================================================================\n" );
-    info( QString("== SecretKey Information(%1)\n").arg( strKeyType) );
+    info( QString("== SecretKey Information [ %1 ]\n").arg( strKeyType) );
     info( "========================================================================\n" );
 
     showInfoCommon( uObj );
