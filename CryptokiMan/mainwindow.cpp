@@ -990,6 +990,9 @@ void MainWindow::P11Finalize()
         return;
     }
 
+    bool bVal = manApplet->yesOrCancelBox( tr( "Are you sure to finalize?" ), this, true );
+    if( bVal == false ) return;
+
     ret = manApplet->cryptokiAPI()->Finalize(NULL);
 
     if( ret == 0 )
