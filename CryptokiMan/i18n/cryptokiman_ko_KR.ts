@@ -7078,22 +7078,22 @@ Do you want to delete the file and continue?</source>
         <translation>지우기</translation>
     </message>
     <message>
-        <location filename="../make_csr_dlg.cpp" line="206"/>
+        <location filename="../make_csr_dlg.cpp" line="228"/>
         <source>Insert DN</source>
         <translation>DN 입력하세요</translation>
     </message>
     <message>
-        <location filename="../make_csr_dlg.cpp" line="216"/>
+        <location filename="../make_csr_dlg.cpp" line="238"/>
         <source>fail to get public key: %1</source>
         <translation>공개키 가져오기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../make_csr_dlg.cpp" line="239"/>
+        <location filename="../make_csr_dlg.cpp" line="261"/>
         <source>fail to verify CSR: %1</source>
         <translation>CSR 검증 실패: %1</translation>
     </message>
     <message>
-        <location filename="../make_csr_dlg.cpp" line="247"/>
+        <location filename="../make_csr_dlg.cpp" line="269"/>
         <source>fail to make CSR: %1</source>
         <translation>CSR 만들기 실패: %1</translation>
     </message>
@@ -7209,13 +7209,13 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../man_tree_view.cpp" line="132"/>
-        <location filename="../man_tree_view.cpp" line="237"/>
+        <location filename="../man_tree_view.cpp" line="239"/>
         <source>GenerateKey</source>
         <translation>키 생성</translation>
     </message>
     <message>
         <location filename="../man_tree_view.cpp" line="134"/>
-        <location filename="../man_tree_view.cpp" line="261"/>
+        <location filename="../man_tree_view.cpp" line="263"/>
         <source>CreateData</source>
         <translation>데이타 생성</translation>
     </message>
@@ -7245,7 +7245,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../man_tree_view.cpp" line="139"/>
-        <location filename="../man_tree_view.cpp" line="234"/>
+        <location filename="../man_tree_view.cpp" line="236"/>
         <source>CreateKey</source>
         <translation>키 만들기</translation>
     </message>
@@ -7270,8 +7270,8 @@ Do you want to delete the file and continue?</source>
         <location filename="../man_tree_view.cpp" line="160"/>
         <location filename="../man_tree_view.cpp" line="174"/>
         <location filename="../man_tree_view.cpp" line="198"/>
-        <location filename="../man_tree_view.cpp" line="225"/>
-        <location filename="../man_tree_view.cpp" line="259"/>
+        <location filename="../man_tree_view.cpp" line="227"/>
+        <location filename="../man_tree_view.cpp" line="261"/>
         <source>DeleteObject</source>
         <translation>대상 삭제</translation>
     </message>
@@ -7281,13 +7281,13 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../man_tree_view.cpp" line="177"/>
-        <location filename="../man_tree_view.cpp" line="232"/>
+        <location filename="../man_tree_view.cpp" line="234"/>
         <source>Verify</source>
         <translation>검증</translation>
     </message>
     <message>
         <location filename="../man_tree_view.cpp" line="178"/>
-        <location filename="../man_tree_view.cpp" line="228"/>
+        <location filename="../man_tree_view.cpp" line="230"/>
         <source>Encrypt</source>
         <translation>암호화</translation>
     </message>
@@ -7298,13 +7298,13 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../man_tree_view.cpp" line="201"/>
-        <location filename="../man_tree_view.cpp" line="231"/>
+        <location filename="../man_tree_view.cpp" line="233"/>
         <source>Sign</source>
         <translation>서명</translation>
     </message>
     <message>
         <location filename="../man_tree_view.cpp" line="202"/>
-        <location filename="../man_tree_view.cpp" line="229"/>
+        <location filename="../man_tree_view.cpp" line="231"/>
         <source>Decrypt</source>
         <translation>복호화</translation>
     </message>
@@ -7314,17 +7314,22 @@ Do you want to delete the file and continue?</source>
         <translation>DSA 개인키 생성</translation>
     </message>
     <message>
-        <location filename="../man_tree_view.cpp" line="239"/>
+        <location filename="../man_tree_view.cpp" line="209"/>
+        <source>MakeCSR</source>
+        <translation>CSR 만들기</translation>
+    </message>
+    <message>
+        <location filename="../man_tree_view.cpp" line="241"/>
         <source>WrapKey</source>
         <translation>Wrap Key</translation>
     </message>
     <message>
-        <location filename="../man_tree_view.cpp" line="240"/>
+        <location filename="../man_tree_view.cpp" line="242"/>
         <source>UnwrapKey</source>
         <translation>Unwrap Key</translation>
     </message>
     <message>
-        <location filename="../man_tree_view.cpp" line="241"/>
+        <location filename="../man_tree_view.cpp" line="243"/>
         <source>DeriveKey</source>
         <translation>Derive Key</translation>
     </message>
@@ -7372,8 +7377,8 @@ Do you want to delete the file and continue?</source>
         <location filename="../man_tree_view.cpp" line="161"/>
         <location filename="../man_tree_view.cpp" line="175"/>
         <location filename="../man_tree_view.cpp" line="199"/>
-        <location filename="../man_tree_view.cpp" line="226"/>
-        <location filename="../man_tree_view.cpp" line="260"/>
+        <location filename="../man_tree_view.cpp" line="228"/>
+        <location filename="../man_tree_view.cpp" line="262"/>
         <source>EditObject</source>
         <translation>대상 편집</translation>
     </message>

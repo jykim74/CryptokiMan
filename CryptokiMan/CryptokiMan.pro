@@ -19,7 +19,7 @@ PROJECT_VERSION = "1.9.0"
 DEFINES += QT_DEPRECATED_WARNINGS
 DEFINES += CRYPTOKIMAN_VERSION=$$PROJECT_VERSION
 
-# DEFINES += _USE_RC_LCN
+DEFINES += _USE_LCN_SRV
 
 
 # You can also make your code fail to compile if you use deprecated APIs.

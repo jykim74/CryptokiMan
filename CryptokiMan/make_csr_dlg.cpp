@@ -39,7 +39,8 @@ MakeCSRDlg::MakeCSRDlg(QWidget *parent) :
 
     memset( &csr_, 0x00, sizeof(BIN));
 
-    connect( mPriLabelCombo, SIGNAL(currentIndexChanged(int)), SLOT(getPubCombo()));
+    connect( mPriLabelCombo, SIGNAL(currentIndexChanged(int)), SLOT(changePriLabel(int)));
+    connect( mPubLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changePubLabel(int)));
 
     connect( mCancelBtn, SIGNAL(clicked()), this, SLOT(close()));
     connect( mOKBtn, SIGNAL(clicked()), this, SLOT(clickOK()));
@@ -97,6 +98,7 @@ void MakeCSRDlg::initialize()
     SettingsMgr *setMgr = manApplet->settingsMgr();
 
     mSignHashCombo->addItems( kHashList );
+    mSignHashCombo->setCurrentText( "SHA256" );
 }
 
 const QString MakeCSRDlg::getCSRHex()
@@ -188,6 +190,26 @@ void MakeCSRDlg::clickClear()
     mLText->clear();
     mSTText->clear();
     mCText->clear();
+}
+
+void MakeCSRDlg::changePriLabel( int index )
+{
+    QVariant objVal = mPriLabelCombo->itemData( index );
+
+    QString strHandle = QString("%1").arg( objVal.toInt() );
+
+    mPriObjectText->setText( strHandle );
+
+    getPubCombo();
+}
+
+void MakeCSRDlg::changePubLabel( int index )
+{
+    QVariant objVal = mPubLabelCombo->itemData( index );
+
+    QString strHandle = QString("%1").arg( objVal.toInt() );
+
+    mPubObjectText->setText( strHandle );
 }
 
 void MakeCSRDlg::clickOK()
@@ -314,6 +336,8 @@ int MakeCSRDlg::getPubCombo()
 {
     int rv = -1;
 
+    CK_OBJECT_HANDLE hPriObj = mPriObjectText->text().toLong();
+
     CK_ATTRIBUTE sTemplate[10];
     CK_ULONG uCnt = 0;
 
@@ -321,9 +345,14 @@ int MakeCSRDlg::getPubCombo()
     CK_OBJECT_HANDLE sObjects[uMaxObjCnt];
     CK_ULONG uObjCnt = 0;
 
-    CK_OBJECT_CLASS objClass = 0;
+    CK_OBJECT_CLASS objClass = CKO_PUBLIC_KEY;
+    BIN binType = {0,0};
 
-    objClass = CKO_PUBLIC_KEY;
+    if( hPriObj < 0 ) return JSR_ERR;
+
+    rv = manApplet->cryptokiAPI()->GetAttributeValue2( session_, hPriObj, CKA_KEY_TYPE, &binType );
+    if( rv != CKR_OK ) return JSR_ERR2;
+
 
     sTemplate[uCnt].type = CKA_CLASS;
     sTemplate[uCnt].pValue = &objClass;
@@ -335,15 +364,34 @@ int MakeCSRDlg::getPubCombo()
     sTemplate[uCnt].ulValueLen = sizeof(CK_BBOOL);
     uCnt++;
 
+    sTemplate[uCnt].type = CKA_KEY_TYPE;
+    sTemplate[uCnt].pValue = binType.pVal;
+    sTemplate[uCnt].ulValueLen = binType.nLen;
+    uCnt++;
+
 
     rv = manApplet->cryptokiAPI()->FindObjectsInit( session_, sTemplate, uCnt );
-    if( rv != CKR_OK ) return rv;
+    if( rv != CKR_OK )
+    {
+        JS_BIN_reset( &binType );
+        return rv;
+    }
 
     rv = manApplet->cryptokiAPI()->FindObjects( session_, sObjects, uMaxObjCnt, &uObjCnt );
-    if( rv != CKR_OK ) return rv;
+    if( rv != CKR_OK )
+    {
+        JS_BIN_reset( &binType );
+        return rv;
+    }
 
     rv = manApplet->cryptokiAPI()->FindObjectsFinal( session_ );
-    if( rv != CKR_OK ) return rv;
+    if( rv != CKR_OK )
+    {
+        JS_BIN_reset( &binType );
+        return rv;
+    }
+
+    JS_BIN_reset( &binType );
 
     mPubLabelCombo->clear();
     mPubObjectText->clear();

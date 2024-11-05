@@ -32,12 +32,17 @@ private slots:
     void clickOK();
     void clickClear();
 
+    void changePriLabel( int index );
+    void changePubLabel( int index );
+
+    int getPriCombo();
+    int getPubCombo();
+
+
 private:
     void initUI();
     void initialize();
 
-    int getPriCombo();
-    int getPubCombo();
 
     int slot_index_;
     BIN csr_;

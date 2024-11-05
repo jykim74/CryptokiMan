@@ -206,6 +206,7 @@ void ManTreeView::showContextMenu( QPoint point )
         QAction* pCreateECPriAct = menu.addAction( tr("CreateECPrivateKey"), manApplet->mainWindow(), &MainWindow::createECPrivateKey );
         QAction* pCreateDSAPriAct = menu.addAction( tr("CreateDSAPrivateKey"), manApplet->mainWindow(), &MainWindow::createDSAPrivateKey );
         QAction* pImportPriKeyAct = menu.addAction( tr("ImportPrivateKey"), manApplet->mainWindow(), &MainWindow::improtPrivateKey );
+        QAction* pMakeCSRAct = menu.addAction( tr( "MakeCSR" ), manApplet->mainWindow(), &MainWindow::makeCSR );
 
         if( manApplet->isLicense() == false )
         {
@@ -218,6 +219,7 @@ void ManTreeView::showContextMenu( QPoint point )
             pCreateECPriAct->setEnabled( false );
             pCreateDSAPriAct->setEnabled( false );
             pImportPriKeyAct->setEnabled( false );
+            pMakeCSRAct->setEnabled( false );
         }
     }
     else if( item->getType() == HM_ITEM_TYPE_SECRETKEY )
