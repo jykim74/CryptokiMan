@@ -16,6 +16,7 @@
 #include "settings_mgr.h"
 #include "mech_mgr.h"
 #include "p11_work.h"
+#include "js_error.h"
 
 static QStringList kHashList = {
     "MD5",
@@ -227,10 +228,20 @@ void MakeCSRDlg::clickOK()
         manApplet->cryptokiAPI()->getCTX(),
         &csr_ );
 
+
     JS_BIN_reset( &binPub );
 
     if( ret == 0 )
+    {
+        ret = JS_PKI_verifyCSR( &csr_ );
+        if( ret != JSR_VALID )
+        {
+            manApplet->warnLog( tr( "fail to verify CSR: %1").arg( ret ), this );
+            return;
+        }
+
         return QDialog::accept();
+    }
     else
     {
         manApplet->warnLog( tr( "fail to make CSR: %1").arg( ret ), this);
