@@ -214,6 +214,7 @@ void MakeCSRDlg::clickOK()
     int ret = 0;
     QString strHash = mSignHashCombo->currentText();
     QString strDN = getDN();
+    JP11_CTX *pCTX = manApplet->cryptokiAPI()->getCTX();
 
     BIN binPub = {0,0};
     JS_BIN_reset( &csr_ );
@@ -235,6 +236,8 @@ void MakeCSRDlg::clickOK()
         return;
     }
 
+    pCTX->hSession = session_;
+
     ret = JS_PKI_makeCSRByP11Handle(
         strHash.toStdString().c_str(),
         strDN.toStdString().c_str(),
@@ -243,7 +246,7 @@ void MakeCSRDlg::clickOK()
         hPri,
         &binPub,
         NULL,
-        manApplet->cryptokiAPI()->getCTX(),
+        pCTX,
         &csr_ );
 
 
@@ -263,7 +266,7 @@ void MakeCSRDlg::clickOK()
     else
     {
         manApplet->warnLog( tr( "fail to make CSR: %1").arg( ret ), this);
-        return QDialog::reject();
+        return;
     }
 }
 
