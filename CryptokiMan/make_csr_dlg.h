@@ -47,7 +47,6 @@ private:
     int slot_index_;
     BIN csr_;
     CK_SESSION_HANDLE session_;
-    CK_OBJECT_HANDLE pri_object_;
 };
 
 #endif // MAKE_CSR_DLG_H

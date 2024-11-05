@@ -236,7 +236,7 @@
       <widget class="QLabel" name="label_10">
        <property name="minimumSize">
         <size>
-         <width>80</width>
+         <width>100</width>
          <height>0</height>
         </size>
        </property>
@@ -507,6 +507,14 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>mSlotsCombo</tabstop>
+  <tabstop>mSlotIDText</tabstop>
+  <tabstop>mSessionText</tabstop>
+  <tabstop>mLoginText</tabstop>
+  <tabstop>mPriLabelCombo</tabstop>
+  <tabstop>mPriObjectText</tabstop>
+  <tabstop>mPubLabelCombo</tabstop>
+  <tabstop>mPubObjectText</tabstop>
   <tabstop>mCNText</tabstop>
   <tabstop>mEMAILADDRESSText</tabstop>
   <tabstop>mOText</tabstop>

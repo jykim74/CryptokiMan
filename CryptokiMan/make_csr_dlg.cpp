@@ -32,7 +32,6 @@ MakeCSRDlg::MakeCSRDlg(QWidget *parent) :
     QDialog(parent)
 {
     session_ = -1;
-    pri_object_ = -1;
 
     setupUi(this);
     initUI();
@@ -68,17 +67,15 @@ void MakeCSRDlg::setSelectedSlot(int index)
 
 void MakeCSRDlg::setPriObject( CK_OBJECT_HANDLE hPriObj )
 {
-    pri_object_ = hPriObj;
-
     BIN binVal = {0,0};
     char *pLabel = NULL;
 
-    manApplet->cryptokiAPI()->GetAttributeValue2( session_, pri_object_, CKA_LABEL, &binVal );
+    manApplet->cryptokiAPI()->GetAttributeValue2( session_, hPriObj, CKA_LABEL, &binVal );
     JS_BIN_string( &binVal, &pLabel );
     JS_BIN_reset( &binVal );
 
     mPriLabelCombo->setCurrentText( pLabel );
-    mPriObjectText->setText( QString("%1").arg( pri_object_ ));
+    mPriObjectText->setText( QString("%1").arg( hPriObj ));
 
     if( pLabel ) JS_free( pLabel );
 }
@@ -222,6 +219,7 @@ void MakeCSRDlg::clickOK()
     JS_BIN_reset( &csr_ );
 
     CK_OBJECT_HANDLE hPub = mPubObjectText->text().toLong();
+    CK_OBJECT_HANDLE hPri = mPriObjectText->text().toLong();
 
     if( strDN.length() < 1 )
     {
@@ -229,8 +227,6 @@ void MakeCSRDlg::clickOK()
         mCNText->setFocus();
         return;
     }
-
-    JS_BIN_reset( &csr_ );
 
     ret = getPublicKey( manApplet->cryptokiAPI(), session_, hPub, &binPub );
     if( ret != 0 )
@@ -244,7 +240,7 @@ void MakeCSRDlg::clickOK()
         strDN.toStdString().c_str(),
         NULL,
         NULL,
-        pri_object_,
+        hPri,
         &binPub,
         NULL,
         manApplet->cryptokiAPI()->getCTX(),
@@ -336,7 +332,7 @@ int MakeCSRDlg::getPubCombo()
 {
     int rv = -1;
 
-    CK_OBJECT_HANDLE hPriObj = mPriObjectText->text().toLong();
+    CK_OBJECT_HANDLE hPriObj = -1;
 
     CK_ATTRIBUTE sTemplate[10];
     CK_ULONG uCnt = 0;
@@ -348,7 +344,10 @@ int MakeCSRDlg::getPubCombo()
     CK_OBJECT_CLASS objClass = CKO_PUBLIC_KEY;
     BIN binType = {0,0};
 
-    if( hPriObj < 0 ) return JSR_ERR;
+    QString strPriObject = mPriObjectText->text();
+    if( strPriObject.length() < 1 ) return JSR_ERR;
+
+    hPriObj = strPriObject.toLong();
 
     rv = manApplet->cryptokiAPI()->GetAttributeValue2( session_, hPriObj, CKA_KEY_TYPE, &binType );
     if( rv != CKR_OK ) return JSR_ERR2;
