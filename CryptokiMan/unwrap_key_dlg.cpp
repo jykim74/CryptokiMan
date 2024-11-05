@@ -89,18 +89,15 @@ void UnwrapKeyDlg::initUI()
             sMechUnwrapSymList = kMechWrapSymList;
             sMechUnwrapAsymList = kMechWrapAsymList;
         }
-
-        sSymTypeList = kSymTypeList;
-        sAsymTypeList = kAsymTypeList;
     }
     else
     {
         sMechUnwrapSymList = kMechWrapSymList;
         sMechUnwrapAsymList = kMechWrapAsymList;
-
-        sSymTypeList = kSymTypeListNoLicense;
-        sAsymTypeList = kAsymTypeListNoLicense;
     }
+
+    sSymTypeList = kSymTypeList;
+    sAsymTypeList = kAsymTypeList;
 
     mUnwrapMechCombo->addItems(sMechUnwrapSymList);
     mClassCombo->addItems(sClassList);

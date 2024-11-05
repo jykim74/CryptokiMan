@@ -180,16 +180,8 @@ void FindObjectDlg::initUI()
     mClassCombo->addItems( kClassList );
     mMaxText->setText( QString("%1").arg( nMaxCnt ));
 
-    if( manApplet->isLicense() == false )
-    {
-        sSymKeyTypeList = kSymTypeListNoLicense;
-        sAsymKeyTypeList = kAsymTypeListNoLicense;
-    }
-    else
-    {
-        sSymKeyTypeList = kSymTypeList;
-        sAsymKeyTypeList = kAsymTypeList;
-    }
+    sSymKeyTypeList = kSymTypeList;
+    sAsymKeyTypeList = kAsymTypeList;
 
     mKeyTypeCombo->addItem( "" );
     mKeyTypeCombo->addItems( sSymKeyTypeList );

@@ -137,6 +137,7 @@ public:
     void viewToolUnwrapKey( bool bChecked );
     void viewToolDeriveKey( bool bChecked );
     void viewToolTypeName( bool bChecked );
+    void viewToolMakeCSR( bool bChecked );
 
     void viewHelpClearLog( bool bChecked );
     void viewHelpHaltLog( bool bChecked );
@@ -204,6 +205,8 @@ public slots:
     void exportPubKey();
     void exportPriKey();
     void exportCert();
+    void makeCSR();
+    void makeCSREach();
     void initToken();
     void rand();
     void setPin();
@@ -347,6 +350,7 @@ private:
     QAction* unwrap_key_act_;
     QAction* derive_key_act_;
     QAction* type_name_act_;
+    QAction* make_csr_act_;
 
     QToolBar* help_tool_;
     QAction* clear_log_act_;

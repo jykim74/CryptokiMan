@@ -75,8 +75,6 @@ void ImportPFXDlg::initialize()
     }
 
     if( slot_infos.size() > 0 ) slotChanged(0);
-
-
 }
 
 void ImportPFXDlg::initAttributes()
@@ -332,17 +330,6 @@ void ImportPFXDlg::accept()
     }
 
     key_type = JS_PKI_getPriKeyType( &binPri );
-    if( manApplet->isLicense() == false )
-    {
-        if( key_type != JS_PKI_KEY_TYPE_RSA )
-        {
-            manApplet->warningBox( tr( "Without a license, only RSA algorithms are supported." ), this );
-            JS_BIN_reset( &binPri );
-            JS_BIN_reset( &binPFX );
-            JS_BIN_reset( &binCert );
-            return;
-        }
-    }
 
     rv = JS_PKI_getCertInfo( &binCert, &sCertInfo, NULL );
     if( rv == 0 )

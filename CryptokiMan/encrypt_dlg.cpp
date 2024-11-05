@@ -71,7 +71,7 @@ void EncryptDlg::initUI()
     }
     else
     {
-        sMechEncSymList = kMechEncSymNoLicenseList;
+        sMechEncSymList = kMechEncSymList;
         sMechEncAsymList = kMechEncAsymList;
     }
 

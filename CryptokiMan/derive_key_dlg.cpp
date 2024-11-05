@@ -150,7 +150,7 @@ void DeriveKeyDlg::initUI()
     }
     else
     {
-        sMechDeriveList = kMechDeriveNoLicenseList;
+        sMechDeriveList = kMechDeriveList;
     }
 
     mSrcMethodCombo->addItems(sMechDeriveList);

@@ -320,15 +320,6 @@ void ImportPriKeyDlg::accept()
     if( rv != 0 ) return;
 
     nKeyType = JS_PKI_getPriKeyType( &binPri );
-    if( manApplet->isLicense() == false )
-    {
-        if( nKeyType != JS_PKI_KEY_TYPE_RSA )
-        {
-            manApplet->warningBox( tr( "Without a license, only RSA algorithms are supported." ), this );
-            JS_BIN_reset( &binPri );
-            return;
-        }
-    }
 
     rv = JS_PKI_getPubKeyFromPri( nKeyType, &binPri, &binPub );
     if( rv != 0 )

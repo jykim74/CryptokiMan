@@ -84,5 +84,6 @@
         <file>images/type.png</file>
         <file>images/unload.png</file>
         <file>images/info.png</file>
+        <file>images/csr.png</file>
     </qresource>
 </RCC>

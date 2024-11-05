@@ -95,7 +95,8 @@ SOURCES += \
         export_dlg.cpp \
         new_passwd_dlg.cpp \
         p11_work.cpp \
-        pri_key_info_dlg.cpp
+        pri_key_info_dlg.cpp \
+        make_csr_dlg.cpp
 
 HEADERS += \
         about_dlg.h \
@@ -163,7 +164,8 @@ HEADERS += \
         export_dlg.h \
         new_passwd_dlg.h \
         p11_work.h \
-        pri_key_info_dlg.h
+        pri_key_info_dlg.h \
+        make_csr_dlg.h
 
 FORMS += \
         about_dlg.ui \
@@ -209,7 +211,8 @@ FORMS += \
         type_name_dlg.ui \
         export_dlg.ui \
         new_passwd_dlg.ui \
-        pri_key_info_dlg.ui
+        pri_key_info_dlg.ui \
+        make_csr_dlg.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

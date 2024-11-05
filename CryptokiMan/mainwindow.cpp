@@ -65,6 +65,7 @@
 #include "export_dlg.h"
 #include "p11_work.h"
 #include "pri_key_info_dlg.h"
+#include "make_csr_dlg.h"
 
 const int kMaxRecentFiles = 10;
 
@@ -424,16 +425,6 @@ void MainWindow::createActions()
     objectsMenu->addAction( create_dsa_pri_key_act_ );
     if( isView( ACT_OBJECT_CREATE_DSA_PRI_KEY ) ) object_tool_->addAction( create_dsa_pri_key_act_ );
 
-    if( manApplet->isLicense() == false )
-    {
-        create_ec_pub_key_act_->setEnabled( false );
-        create_ec_pri_key_act_->setEnabled( false );
-        create_ed_pub_key_act_->setEnabled( false );
-        create_ed_pri_key_act_->setEnabled( false );
-        create_dsa_pub_key_act_->setEnabled( false );
-        create_dsa_pri_key_act_->setEnabled( false );
-    }
-
     const QIcon keyGenIcon = QIcon::fromTheme("KeyGen", QIcon(":/images/key_gen.png"));
     create_key_act_ = new QAction( keyGenIcon, tr("Create Key"), this);
     create_key_act_->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_J));
@@ -480,6 +471,24 @@ void MainWindow::createActions()
     find_object_act_->setStatusTip(tr("PKCS11 Find Object"));
     objectsMenu->addAction( find_object_act_ );
     if( isView( ACT_OBJECT_FIND_OBJECT ) ) object_tool_->addAction( find_object_act_ );
+
+    if( manApplet->isLicense() == false )
+    {
+        create_rsa_pub_key_act_->setEnabled( false );
+        create_rsa_pri_key_act_->setEnabled( false );
+        create_ec_pub_key_act_->setEnabled( false );
+        create_ec_pri_key_act_->setEnabled( false );
+        create_ed_pub_key_act_->setEnabled( false );
+        create_ed_pri_key_act_->setEnabled( false );
+        create_dsa_pub_key_act_->setEnabled( false );
+        create_dsa_pri_key_act_->setEnabled( false );
+
+        create_key_act_->setEnabled( false );
+        del_object_act_->setEnabled( false );
+        edit_att_act_->setEnabled( false );
+        edit_att_list_act_->setEnabled( false );
+        copy_object_act_->setEnabled( false );
+    }
 
 
     QMenu *cryptMenu = menuBar()->addMenu(tr("&Cryptogram"));
@@ -536,6 +545,14 @@ void MainWindow::createActions()
     dec_act_->setStatusTip(tr("PKCS11 Decrypt"));
     cryptMenu->addAction( dec_act_ );
     if( isView( ACT_CRYPT_DEC ) ) crypt_tool_->addAction( dec_act_ );
+
+    if( manApplet->isLicense() == false )
+    {
+        sign_act_->setEnabled( false );
+        verify_act_->setEnabled( false );
+        enc_act_->setEnabled( false );
+        dec_act_->setEnabled( false );
+    }
 
 
     QMenu *importMenu = menuBar()->addMenu(tr("&Import"));
@@ -636,6 +653,15 @@ void MainWindow::createActions()
     type_name_act_->setStatusTip(tr("PKCS#11 Type Name"));
     toolsMenu->addAction( type_name_act_ );
     if( isView( ACT_TOOL_TYPE_NAME ) ) tool_tool_->addAction( type_name_act_ );
+
+    const QIcon csrIcon = QIcon::fromTheme( "Make CSR", QIcon(":/images/csr.png" ));
+    make_csr_act_ = new QAction( csrIcon, tr( "Make CSR" ), this );
+    make_csr_act_->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_R));
+    connect( make_csr_act_, &QAction::triggered, this, &MainWindow::makeCSR );
+    make_csr_act_->setStatusTip( tr( "Make Certificate Request" ) );
+    toolsMenu->addAction( make_csr_act_ );
+    if( isView( ACT_TOOL_MAKE_CSR )) tool_tool_->addAction( make_csr_act_ );
+
 
     if( manApplet->isLicense() == false )
     {
@@ -2077,6 +2103,81 @@ void MainWindow::exportCert()
     JS_PKI_resetCertInfo( &sCertInfo );
 }
 
+void MainWindow::makeCSR()
+{
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "No slot selected" ), this );
+        return;
+    }
+
+    int nSlot = pItem->getSlotIndex();
+
+    MakeCSRDlg makeCSR;
+    makeCSR.setSelectedSlot( nSlot );
+    if( makeCSR.exec() == QDialog::Accepted )
+    {
+        int ret = 0;
+        BIN binCSR = {0,0};
+        JReqInfo sReqInfo;
+        ExportDlg exportDlg;
+
+        memset( &sReqInfo, 0x00, sizeof(sReqInfo));
+        JS_BIN_decodeHex( makeCSR.getCSRHex().toStdString().c_str(), &binCSR );
+        ret = JS_PKI_getReqInfo( &binCSR, &sReqInfo, 0, NULL );
+
+        exportDlg.setName( sReqInfo.pSubjectDN );
+        exportDlg.setCRL( &binCSR );
+        exportDlg.exec();
+
+        JS_BIN_reset( &binCSR );
+        JS_PKI_resetReqInfo( &sReqInfo );
+    }
+}
+
+void MainWindow::makeCSREach()
+{
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "No slot selected" ), this );
+        return;
+    }
+
+    int nSlot = pItem->getSlotIndex();
+
+    QModelIndex index = right_table_->currentIndex();
+    int row = index.row();
+
+    QTableWidgetItem* item0 = right_table_->item( row, 0 );
+    QTableWidgetItem* item1 = right_table_->item( row, 1 );
+
+    MakeCSRDlg makeCSR;
+    makeCSR.setSelectedSlot( nSlot );
+    makeCSR.setPriObject( item1->text().toLong());
+    if( makeCSR.exec() == QDialog::Accepted )
+    {
+        int ret = 0;
+        BIN binCSR = {0,0};
+        JReqInfo sReqInfo;
+        ExportDlg exportDlg;
+
+        memset( &sReqInfo, 0x00, sizeof(sReqInfo));
+        JS_BIN_decodeHex( makeCSR.getCSRHex().toStdString().c_str(), &binCSR );
+        ret = JS_PKI_getReqInfo( &binCSR, &sReqInfo, 0, NULL );
+
+        exportDlg.setName( sReqInfo.pSubjectDN );
+        exportDlg.setCRL( &binCSR );
+        exportDlg.exec();
+
+        JS_BIN_reset( &binCSR );
+        JS_PKI_resetReqInfo( &sReqInfo );
+    }
+}
+
 void MainWindow::licenseInfo()
 {
     LCNInfoDlg lcnInfoDlg;
@@ -2540,11 +2641,20 @@ void MainWindow::showRightMenu(QPoint point )
 {
     QMenu menu(this);
     QAction *delAct = NULL;
+    QAction *editAttAct = NULL;
+    QAction *editAttListAct = NULL;
+    QAction *viewCertAct = NULL;
     QAction *exportCertAct = NULL;
+    QAction *copyObjectAct = NULL;
     QAction *exportPubKeyAct = NULL;
     QAction *exportPriKeyAct = NULL;
     QAction *viewPriKeyAct = NULL;
     QAction *viewPubKeyAct = NULL;
+    QAction *verifyAct = NULL;
+    QAction *encAct = NULL;
+    QAction *signAct = NULL;
+    QAction *decAct = NULL;
+    QAction *makeCSRAct = NULL;
 
     manApplet->log( QString("RightType: %1").arg(right_type_));
 
@@ -2553,54 +2663,64 @@ void MainWindow::showRightMenu(QPoint point )
         || right_type_ == HM_ITEM_TYPE_SESSION )
         return;
 
-    menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
-    menu.addAction( tr("Edit AttributeList"), this, &MainWindow::editAttributeList );
+    editAttAct = menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
+    editAttListAct = menu.addAction( tr("Edit AttributeList"), this, &MainWindow::editAttributeList );
     delAct = menu.addAction( tr( "Delete Object" ), this, &MainWindow::deleteObject );
 
     switch ( right_type_ ) {
     case HM_ITEM_TYPE_CERTIFICATE:
-        menu.addAction( tr("View Certificate" ), this, &MainWindow::viewCert );
-        menu.addAction( tr( "Copy Object" ), this, &MainWindow::copyTableObject );
+        viewCertAct = menu.addAction( tr("View Certificate" ), this, &MainWindow::viewCert );
+        copyObjectAct = menu.addAction( tr( "Copy Object" ), this, &MainWindow::copyTableObject );
         exportCertAct = menu.addAction( tr( "Export Certficate" ), this, &MainWindow::exportCert );
         break;
 
     case HM_ITEM_TYPE_PUBLICKEY:
-        menu.addAction( tr( "Verify" ), this, &MainWindow::verifyEach );
-        menu.addAction( tr( "Encrypt"), this, &MainWindow::encryptEach );
-        menu.addAction( tr( "Copy Object" ), this, &MainWindow::copyTableObject );
+        verifyAct = menu.addAction( tr( "Verify" ), this, &MainWindow::verifyEach );
+        encAct = menu.addAction( tr( "Encrypt"), this, &MainWindow::encryptEach );
+        copyObjectAct = menu.addAction( tr( "Copy Object" ), this, &MainWindow::copyTableObject );
         exportPubKeyAct = menu.addAction( tr( "Export PublicKey" ), this, &MainWindow::exportPubKey );
         viewPubKeyAct = menu.addAction( tr( "View PublicKey" ), this, &MainWindow::viewPubKkey );
         break;
 
     case HM_ITEM_TYPE_PRIVATEKEY:
-        menu.addAction( tr( "Sign" ), this, &MainWindow::signEach );
-        menu.addAction( tr( "Decrypt" ), this, &MainWindow::decryptEach );
-        menu.addAction( tr( "Copy Object" ), this, &MainWindow::copyTableObject );
+        signAct = menu.addAction( tr( "Sign" ), this, &MainWindow::signEach );
+        decAct = menu.addAction( tr( "Decrypt" ), this, &MainWindow::decryptEach );
+        copyObjectAct = menu.addAction( tr( "Copy Object" ), this, &MainWindow::copyTableObject );
         exportPriKeyAct = menu.addAction( tr( "Export PrivateKey" ), this, &MainWindow::exportPriKey );
         viewPriKeyAct = menu.addAction( tr( "View PrivateKey" ), this, &MainWindow::viewPriKey );
+        makeCSRAct = menu.addAction( tr( "Make CSR" ), this, &MainWindow::makeCSREach );
         break;
 
     case HM_ITEM_TYPE_SECRETKEY:
-        menu.addAction( tr( "Sign" ), this, &MainWindow::signEach );
-        menu.addAction( tr( "Verify" ), this, &MainWindow::verifyEach );
-        menu.addAction( tr( "Encrypt"), this, &MainWindow::encryptEach );
-        menu.addAction( tr( "Decrypt" ), this, &MainWindow::decryptEach );
-        menu.addAction( tr( "Copy Object" ), this, &MainWindow::copyTableObject );
+        signAct = menu.addAction( tr( "Sign" ), this, &MainWindow::signEach );
+        verifyAct = menu.addAction( tr( "Verify" ), this, &MainWindow::verifyEach );
+        encAct = menu.addAction( tr( "Encrypt"), this, &MainWindow::encryptEach );
+        decAct = menu.addAction( tr( "Decrypt" ), this, &MainWindow::decryptEach );
+        copyObjectAct = menu.addAction( tr( "Copy Object" ), this, &MainWindow::copyTableObject );
         break;
 
     case HM_ITEM_TYPE_DATA:
-        menu.addAction( tr( "Copy Object" ), this, &MainWindow::copyTableObject );
+        copyObjectAct = menu.addAction( tr( "Copy Object" ), this, &MainWindow::copyTableObject );
         break;
     }
 
     if( manApplet->isLicense() == false )
     {
         if( delAct ) delAct->setEnabled(false);
-        if( exportCertAct ) exportCertAct->setEnabled(false);
+        if( editAttAct ) editAttAct->setEnabled( false );
+        if( editAttListAct ) editAttListAct->setEnabled( false );
+//        if( viewCertAct ) viewCertAct->setEnabled( false );
+        if( exportCertAct ) exportCertAct->setEnabled( false);
+        if( copyObjectAct ) copyObjectAct->setEnabled( false );
         if( exportPubKeyAct ) exportPubKeyAct->setEnabled( false );
         if( exportPriKeyAct ) exportPriKeyAct->setEnabled( false );
         if( viewPriKeyAct ) viewPriKeyAct->setEnabled( false );
         if( viewPubKeyAct ) viewPubKeyAct->setEnabled( false );
+        if( verifyAct ) verifyAct->setEnabled( false );
+        if( encAct ) encAct->setEnabled( false );
+        if( signAct ) signAct->setEnabled( false );
+        if( decAct ) decAct->setEnabled( false );
+        if( makeCSRAct ) makeCSRAct->setEnabled( false );
     }
 
     menu.exec(QCursor::pos());

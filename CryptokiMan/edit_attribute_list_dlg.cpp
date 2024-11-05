@@ -55,8 +55,7 @@ EditAttributeListDlg::~EditAttributeListDlg()
 
 void EditAttributeListDlg::initialize()
 {
-    if( manApplet->isLicense() == false )
-        mSetAttributeBtn->setEnabled( false );
+
 }
 
 void EditAttributeListDlg::setSlotIndex( int index )

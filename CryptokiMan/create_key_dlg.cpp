@@ -77,15 +77,7 @@ void CreateKeyDlg::keyTypeChanged( int index )
 
 void CreateKeyDlg::initUI()
 {
-    if( manApplet->isLicense() )
-    {
-        sSymTypeList = kSymTypeList;
-    }
-    else
-    {
-        sSymTypeList = kSymTypeListNoLicense;
-    }
-
+    sSymTypeList = kSymTypeList;
     mKeyTypeCombo->addItems( sSymTypeList );
 }
 

@@ -72,7 +72,7 @@ void DecryptDlg::initUI()
     }
     else
     {
-        sMechEncSymList = kMechEncSymNoLicenseList;
+        sMechEncSymList = kMechEncSymList;
         sMechEncAsymList = kMechEncAsymList;
     }
 

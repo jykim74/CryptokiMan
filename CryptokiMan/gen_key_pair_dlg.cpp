@@ -96,7 +96,7 @@ void GenKeyPairDlg::initUI()
     }
     else
     {
-        sMechGenKeyPairList = kMechGenKeyPairListNoLicense;
+        sMechGenKeyPairList = kMechGenKeyPairList;
     }
 
 

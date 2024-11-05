@@ -93,7 +93,7 @@ void GenKeyDlg::initUI()
     }
     else
     {
-        sMechGenList = kMechGenListNoLicense;
+        sMechGenList = kMechGenList;
     }
 
     mMechCombo->addItems(sMechGenList);

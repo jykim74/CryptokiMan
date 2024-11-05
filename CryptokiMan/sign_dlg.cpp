@@ -70,8 +70,8 @@ void SignDlg::initUI()
     }
     else
     {
-        sMechSignSymList = kMechSignSymNoLicenseList;
-        sMechSignAsymList = kMechSignAsymNoLicenseList;
+        sMechSignSymList = kMechSignSymList;
+        sMechSignAsymList = kMechSignAsymList;
     }
 
     mKeyTypeCombo->addItems(sKeyList);

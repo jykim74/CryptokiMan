@@ -333,6 +333,13 @@ void MainWindow::createViewActions()
     connect( toolTypeNameAct, &QAction::triggered, this, &MainWindow::viewToolTypeName );
     toolMenu->addAction( toolTypeNameAct );
 
+    QAction *toolMakeCSRAct = new QAction( tr("Make CSR"), this );
+    bVal = isView( ACT_TOOL_MAKE_CSR );
+    toolMakeCSRAct->setCheckable(true);
+    toolMakeCSRAct->setChecked(bVal);
+    connect( toolMakeCSRAct, &QAction::triggered, this, &MainWindow::viewToolMakeCSR );
+    toolMenu->addAction( toolMakeCSRAct );
+
     QAction *helpClearLogAct = new QAction( tr("Clear Log"), this );
     bVal = isView( ACT_HELP_CLEAR_LOG );
     helpClearLogAct->setCheckable(true);
@@ -1048,6 +1055,20 @@ void MainWindow::viewToolTypeName( bool bChecked )
     }
 }
 
+void MainWindow::viewToolMakeCSR( bool bChecked )
+{
+    int nAct = ACT_TOOL_MAKE_CSR;
+    if( bChecked == true )
+    {
+        tool_tool_->addAction( make_csr_act_ );
+        setView( nAct );
+    }
+    else
+    {
+        tool_tool_->removeAction( make_csr_act_ );
+        unsetView( nAct );
+    }
+}
 
 void MainWindow::viewHelpClearLog( bool bChecked )
 {
