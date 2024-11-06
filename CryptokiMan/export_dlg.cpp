@@ -258,7 +258,14 @@ void ExportDlg::clickOK()
         break;
     }
 
-    if( ret == 0 ) QDialog::accept();
+    if( ret == 0 )
+    {
+        QDialog::accept();
+    }
+    else
+    {
+        manApplet->warningBox( tr( "fail to export: %1").arg(ret), this );
+    }
 }
 
 void ExportDlg::clickFindFilename()
@@ -573,11 +580,11 @@ int ExportDlg::exportCSR()
 
     nExportType = mFormatCombo->currentData().toInt();
 
-    if( nExportType == ExportCRL_PEM )
+    if( nExportType == ExportCSR_PEM )
     {
         ret = JS_BIN_writePEM( &csr_, JS_PEM_TYPE_CSR, strFilename.toLocal8Bit().toStdString().c_str() );
     }
-    else if( nExportType == ExportCRL_DER )
+    else if( nExportType == ExportCSR_DER )
     {
         ret = JS_BIN_fileWrite( &csr_, strFilename.toLocal8Bit().toStdString().c_str() );
     }
