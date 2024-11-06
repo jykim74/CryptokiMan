@@ -144,6 +144,199 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
 </context>
 <context>
+    <name>CSRInfoDlg</name>
+    <message>
+        <location filename="../csr_info_dlg.ui" line="14"/>
+        <source>CSR Information</source>
+        <translation>CSR 정보</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.ui" line="20"/>
+        <source>Field List</source>
+        <translation>필드 목록</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.ui" line="37"/>
+        <source>Detail Value</source>
+        <translation>상세 값</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.ui" line="112"/>
+        <source>Save</source>
+        <translation>저장</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.ui" line="132"/>
+        <source>Close</source>
+        <translation>닫기</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.ui" line="139"/>
+        <source>Verify CSR</source>
+        <translation>CSR 검증</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.cpp" line="76"/>
+        <source>Field</source>
+        <translation>필드</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.cpp" line="76"/>
+        <source>Value</source>
+        <translation>값</translation>
+    </message>
+    <message>
+        <source>Export Files</source>
+        <translation type="vanished">내보내기 파일</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.cpp" line="101"/>
+        <source>The CSR was saved in PEM format.</source>
+        <translation>CSR 파일이 PEM 형식으로 저장 하였습니다</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.cpp" line="117"/>
+        <source>Select a CSR</source>
+        <translation>CSR 을 선택하세요</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.cpp" line="126"/>
+        <source>failed to get CSR information</source>
+        <translation>CSR 정보 가져오기 실패</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.cpp" line="132"/>
+        <source>Version</source>
+        <translation>버전</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.cpp" line="142"/>
+        <source>SubjectName</source>
+        <translation>주체자 이름</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.cpp" line="149"/>
+        <source>Verify</source>
+        <translation>검증</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.cpp" line="179"/>
+        <location filename="../csr_info_dlg.cpp" line="312"/>
+        <source>PublicKey</source>
+        <translation>공개키</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.cpp" line="195"/>
+        <source>SigAlgorithm</source>
+        <translation>서명 알고리즘</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.cpp" line="204"/>
+        <source>Signature</source>
+        <translation>서명</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.cpp" line="213"/>
+        <source>Challenge</source>
+        <translation>챌린지</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.cpp" line="222"/>
+        <source>UnstructuredName</source>
+        <translation>구조화 안된 이름</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.cpp" line="266"/>
+        <source>authorityInfoAccess</source>
+        <translation>기관 정보 액세스</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.cpp" line="268"/>
+        <source>authorityKeyIdentifier</source>
+        <translation>기관 키 식별자</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.cpp" line="270"/>
+        <source>basicConstraints</source>
+        <translation>기본 제한</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.cpp" line="272"/>
+        <source>crlDistributionPoints</source>
+        <translation>CRL 배포 지점</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.cpp" line="274"/>
+        <source>extendedKeyUsage</source>
+        <translation>확장된 키 사용</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.cpp" line="276"/>
+        <source>issuerAltName</source>
+        <translation>발급자 대체 이름</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.cpp" line="278"/>
+        <source>keyUsage</source>
+        <translation>키 용도</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.cpp" line="280"/>
+        <source>nameConstraints</source>
+        <translation>이름 제한</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.cpp" line="282"/>
+        <source>certificatePolicies</source>
+        <translation>인증서 정책</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.cpp" line="284"/>
+        <source>policyConstraints</source>
+        <translation>정책 제약 조건</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.cpp" line="286"/>
+        <source>policyMappings</source>
+        <translation>정책 매핑</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.cpp" line="288"/>
+        <source>subjectKeyIdentifier</source>
+        <translation>주체 키 식별자</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.cpp" line="290"/>
+        <source>subjectAltName</source>
+        <translation>주체 대체 이름</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.cpp" line="292"/>
+        <source>crlNumber</source>
+        <translation>CRL 번호</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.cpp" line="294"/>
+        <source>issuingDistributionPoint</source>
+        <translation>발급 배포 지점</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.cpp" line="296"/>
+        <source>CRLReason</source>
+        <translation>폐기 사유</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.cpp" line="333"/>
+        <source>CSR verification successful</source>
+        <translation>CSR 검증 성공</translation>
+    </message>
+    <message>
+        <location filename="../csr_info_dlg.cpp" line="335"/>
+        <source>CSR verification failed [%1]</source>
+        <translation>CSR 검증 실패: [%1]</translation>
+    </message>
+</context>
+<context>
     <name>CertInfoDlg</name>
     <message>
         <location filename="../cert_info_dlg.ui" line="14"/>
@@ -3573,97 +3766,107 @@ Do you want to delete the file and continue?</source>
         <translation>닫기</translation>
     </message>
     <message>
-        <location filename="../export_dlg.ui" line="259"/>
+        <location filename="../export_dlg.ui" line="272"/>
         <source>OK</source>
         <translation>확인</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="209"/>
+        <location filename="../export_dlg.ui" line="279"/>
+        <source>View</source>
+        <translation>보기</translation>
+    </message>
+    <message>
+        <location filename="../export_dlg.cpp" line="213"/>
         <source>That file name already exists. Do you want to overwrite it?</source>
         <translation>이 파일명의 파일이 이미 존재합니다. 덮어 쓰겠습니까?</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="288"/>
+        <location filename="../export_dlg.cpp" line="313"/>
+        <source>This data is not supported.</source>
+        <translation>지원하지 않는 데이타 입니다</translation>
+    </message>
+    <message>
+        <location filename="../export_dlg.cpp" line="324"/>
         <source>Private Key Export</source>
         <translation>개인키 내보내기</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="307"/>
+        <location filename="../export_dlg.cpp" line="343"/>
         <source>Public Key Export</source>
         <translation>공개키 내보내기</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="320"/>
+        <location filename="../export_dlg.cpp" line="356"/>
         <source>Certificate Export</source>
         <translation>인증서 내보내기</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="335"/>
+        <location filename="../export_dlg.cpp" line="371"/>
         <source>CRL Export</source>
         <translation>CRL 내보내기</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="348"/>
+        <location filename="../export_dlg.cpp" line="384"/>
         <source>CSR Export</source>
         <translation>CSR 내보내기</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="362"/>
+        <location filename="../export_dlg.cpp" line="398"/>
         <source>Certificate and Private Key Export</source>
         <translation>인증서와 개인키 내보내기</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="413"/>
+        <location filename="../export_dlg.cpp" line="449"/>
         <source>invalid service: %1</source>
         <translation>유효하지 않는 서비스: %1</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="431"/>
+        <location filename="../export_dlg.cpp" line="467"/>
         <source>Public Key export successfully</source>
         <translation>공개키 내보내기 성공하였습니다.</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="464"/>
+        <location filename="../export_dlg.cpp" line="500"/>
         <source>Private Key export successfully</source>
         <translation>개인키 내보내기 성공하였습니다.</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="495"/>
+        <location filename="../export_dlg.cpp" line="531"/>
         <source>Certificate export successfully</source>
         <translation>인증서 내보내기 성공하였습니다.</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="523"/>
+        <location filename="../export_dlg.cpp" line="559"/>
         <source>CRL export successfully</source>
         <translation>CRL 내보내기 성공하였습니다.</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="551"/>
+        <location filename="../export_dlg.cpp" line="587"/>
         <source>CSR export successfully</source>
         <translation>CSR 내보내기 성공하였습니다.</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="580"/>
+        <location filename="../export_dlg.cpp" line="616"/>
         <source>fail to encrypt PFX: %1</source>
         <translation>PFX 암호화 실패: %1</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="587"/>
+        <location filename="../export_dlg.cpp" line="623"/>
         <source>PFX export successfully</source>
         <translation>PFX 내보내기 성공하였습니다.</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="619"/>
+        <location filename="../export_dlg.cpp" line="655"/>
         <source>fail to encrypt private key: %1</source>
         <translation>개인키 암호화 실패: %1</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="630"/>
+        <location filename="../export_dlg.cpp" line="666"/>
         <source>Encrypted privateKey export successfully</source>
         <translation>암호화 개인키 내보내기 성공하였습니다.</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="666"/>
+        <location filename="../export_dlg.cpp" line="702"/>
         <source>PKCS8 Info export successfully</source>
         <translation>PKCS8 개인키 정보 내보내기 성공하였습니다.</translation>
     </message>
@@ -7078,22 +7281,22 @@ Do you want to delete the file and continue?</source>
         <translation>지우기</translation>
     </message>
     <message>
-        <location filename="../make_csr_dlg.cpp" line="228"/>
+        <location filename="../make_csr_dlg.cpp" line="227"/>
         <source>Insert DN</source>
         <translation>DN 입력하세요</translation>
     </message>
     <message>
-        <location filename="../make_csr_dlg.cpp" line="238"/>
+        <location filename="../make_csr_dlg.cpp" line="235"/>
         <source>fail to get public key: %1</source>
         <translation>공개키 가져오기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../make_csr_dlg.cpp" line="261"/>
+        <location filename="../make_csr_dlg.cpp" line="260"/>
         <source>fail to verify CSR: %1</source>
         <translation>CSR 검증 실패: %1</translation>
     </message>
     <message>
-        <location filename="../make_csr_dlg.cpp" line="269"/>
+        <location filename="../make_csr_dlg.cpp" line="268"/>
         <source>fail to make CSR: %1</source>
         <translation>CSR 만들기 실패: %1</translation>
     </message>
@@ -7101,34 +7304,34 @@ Do you want to delete the file and continue?</source>
 <context>
     <name>ManApplet</name>
     <message>
-        <location filename="../man_applet.cpp" line="224"/>
+        <location filename="../man_applet.cpp" line="209"/>
         <source>License is invalid: %1</source>
         <translation>라이선스가 유효하지 않습니다: %1</translation>
     </message>
     <message>
+        <location filename="../man_applet.cpp" line="329"/>
         <location filename="../man_applet.cpp" line="344"/>
-        <location filename="../man_applet.cpp" line="359"/>
         <source>OK</source>
         <translation>확인</translation>
     </message>
     <message>
-        <location filename="../man_applet.cpp" line="370"/>
-        <location filename="../man_applet.cpp" line="384"/>
-        <location filename="../man_applet.cpp" line="400"/>
-        <location filename="../man_applet.cpp" line="424"/>
+        <location filename="../man_applet.cpp" line="355"/>
+        <location filename="../man_applet.cpp" line="369"/>
+        <location filename="../man_applet.cpp" line="385"/>
+        <location filename="../man_applet.cpp" line="409"/>
         <source>Yes</source>
         <translation>예</translation>
     </message>
     <message>
-        <location filename="../man_applet.cpp" line="371"/>
-        <location filename="../man_applet.cpp" line="401"/>
-        <location filename="../man_applet.cpp" line="425"/>
+        <location filename="../man_applet.cpp" line="356"/>
+        <location filename="../man_applet.cpp" line="386"/>
+        <location filename="../man_applet.cpp" line="410"/>
         <source>No</source>
         <translation>아니오</translation>
     </message>
     <message>
-        <location filename="../man_applet.cpp" line="385"/>
-        <location filename="../man_applet.cpp" line="402"/>
+        <location filename="../man_applet.cpp" line="370"/>
+        <location filename="../man_applet.cpp" line="387"/>
         <source>Cancel</source>
         <translation>취소</translation>
     </message>
@@ -7972,152 +8175,152 @@ Do you want to delete the file and continue?</source>
         <translation>디렉토리 열기</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="17"/>
+        <location filename="../export_dlg.cpp" line="20"/>
         <source>PEM public (*.pem)</source>
         <translation>PEM 공개키 (*.pem)</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="19"/>
+        <location filename="../export_dlg.cpp" line="22"/>
         <source>DER public (*.der)</source>
         <translation>DER 공개키 (*.der)</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="21"/>
+        <location filename="../export_dlg.cpp" line="24"/>
         <source>PEM private (*.pem)</source>
         <translation>PEM 개인키 (*.pem)</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="23"/>
+        <location filename="../export_dlg.cpp" line="26"/>
         <source>DER private (*.der)</source>
         <translation>DER 개인키 (*.der)</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="25"/>
+        <location filename="../export_dlg.cpp" line="28"/>
         <source>PEM certificate (*.crt)</source>
         <translation>PEM 인증서 (*.crt)</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="27"/>
+        <location filename="../export_dlg.cpp" line="30"/>
         <source>DER certificate (*.cer)</source>
         <translation>DER 인증서 (*.cer)</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="29"/>
+        <location filename="../export_dlg.cpp" line="32"/>
         <source>PKCS12 (*.pfx)</source>
         <translation>PKCS12 파일 (*.pfx)</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="31"/>
+        <location filename="../export_dlg.cpp" line="34"/>
         <source>PEM PKCS8 Info (*.pk8)</source>
         <translation>PEM PKCS8 정보 (*.pk8)</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="33"/>
+        <location filename="../export_dlg.cpp" line="36"/>
         <source>DER PKCS8 Info (*.der)</source>
         <translation>DER PKCS8 정보 (*.pk8)</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="35"/>
+        <location filename="../export_dlg.cpp" line="38"/>
         <source>PEM PKCS8 Encrypt (*.key)</source>
         <translation>PEM PKCS8 암호화 (*.pk8)</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="37"/>
+        <location filename="../export_dlg.cpp" line="40"/>
         <source>DER PKCS8 Encrypt (*.der)</source>
         <translation>DER PKCS8 암호화 (*.pk8)</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="39"/>
+        <location filename="../export_dlg.cpp" line="42"/>
         <source>PEM CSR (*.csr)</source>
         <translation>PEM CSR (*.csr)</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="41"/>
+        <location filename="../export_dlg.cpp" line="44"/>
         <source>DER CSR (*.der)</source>
         <translation>DER CSR (*.der)</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="43"/>
+        <location filename="../export_dlg.cpp" line="46"/>
         <source>PEM CRL (*.crl)</source>
         <translation>PEM CRL (*.crl)</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="45"/>
+        <location filename="../export_dlg.cpp" line="48"/>
         <source>DER CRL (*.der)</source>
         <translation>DER CRL (*.der)</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="58"/>
+        <location filename="../export_dlg.cpp" line="61"/>
         <source>Public key PEM format file</source>
         <translation>공개키 PEM 형식 파일</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="60"/>
+        <location filename="../export_dlg.cpp" line="63"/>
         <source>Public key DER format file</source>
         <translation>공개키 DER 형식 파일</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="62"/>
+        <location filename="../export_dlg.cpp" line="65"/>
         <source>Unencrypted private key PEM format file</source>
         <translation>암호화 안된 개인키 PEM 형식 파일</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="64"/>
+        <location filename="../export_dlg.cpp" line="67"/>
         <source>Unencrypted private key DER format file</source>
         <translation>암호화 안된 개인키 DER 형식 파일</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="66"/>
+        <location filename="../export_dlg.cpp" line="69"/>
         <source>Certificate PEM format file</source>
         <translation>인증서 PEM 형식 파일</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="68"/>
+        <location filename="../export_dlg.cpp" line="71"/>
         <source>Certificate DER format file</source>
         <translation>인증서 DER 형식 파일</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="70"/>
+        <location filename="../export_dlg.cpp" line="73"/>
         <source>PKCS12 (PFX) format file</source>
         <translation>PKCS12(PFX) 형식 파일</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="72"/>
+        <location filename="../export_dlg.cpp" line="75"/>
         <source>Unencrypted PKCS8 PEM format file</source>
         <translation>암호화 안된 PKCS8 PEM 형식 파일</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="74"/>
+        <location filename="../export_dlg.cpp" line="77"/>
         <source>Unencrypted PKCS8 DER format file</source>
         <translation>암호화 안된 PKCS8 DER 형식 파일</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="76"/>
+        <location filename="../export_dlg.cpp" line="79"/>
         <source>Encrypted PKCS8 PEM format file</source>
         <translation>암호화 PKCS8 PEM 형식 파일</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="78"/>
+        <location filename="../export_dlg.cpp" line="81"/>
         <source>Encrypted PKCS8 DER format file</source>
         <translation>암호화 PKCS8 DER 형식 파일</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="80"/>
+        <location filename="../export_dlg.cpp" line="83"/>
         <source>CSR PEM format file</source>
         <translation>CSR PEM 형식 파일</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="82"/>
+        <location filename="../export_dlg.cpp" line="85"/>
         <source>CSR DER format file</source>
         <translation>CSR DER 형식 파일</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="84"/>
+        <location filename="../export_dlg.cpp" line="87"/>
         <source>CRL PEM format file</source>
         <translation>CRL PEM 형식 파일</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="86"/>
+        <location filename="../export_dlg.cpp" line="89"/>
         <source>CRL DER format file</source>
         <translation>CRL DER 형식 파일</translation>
     </message>

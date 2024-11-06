@@ -9,6 +9,9 @@
 #include "js_pki_key.h"
 #include "js_error.h"
 #include "new_passwd_dlg.h"
+#include "cert_info_dlg.h"
+#include "pri_key_info_dlg.h"
+#include "csr_info_dlg.h"
 
 static const QString getFormatName( int nFormatType )
 {
@@ -148,6 +151,7 @@ ExportDlg::ExportDlg(QWidget *parent) :
     memset( &crl_, 0x00, sizeof(BIN));
 
     connect( mFindFilenameBtn, SIGNAL(clicked()), this, SLOT(clickFindFilename()));
+    connect( mViewBtn, SIGNAL(clicked()), this, SLOT(clickView()));
     connect( mOKBtn, SIGNAL(clicked()), this, SLOT(clickOK()));
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(close()));
     connect( mFormatCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changeFormatType(int)));
@@ -276,6 +280,38 @@ void ExportDlg::clickFindFilename()
     if( strFilename.length() < 1 ) return;
 
     mFilenameText->setText( strFilename );
+}
+
+void ExportDlg::clickView()
+{
+    if( data_type_ == DataPriKey )
+    {
+        PriKeyInfoDlg priKeyInfo;
+        priKeyInfo.setPrivateKey( &pri_key_ );
+        priKeyInfo.exec();
+    }
+    else if( data_type_ == DataPubKey )
+    {
+        PriKeyInfoDlg priKeyInfo;
+        priKeyInfo.setPublicKey( &pub_key_ );
+        priKeyInfo.exec();
+    }
+    else if( data_type_ == DataCert )
+    {
+        CertInfoDlg certInfo;
+        certInfo.setCertVal( getHexString( &cert_ ));
+        certInfo.exec();
+    }
+    else if( data_type_ == DataCSR )
+    {
+        CSRInfoDlg csrInfo;
+        csrInfo.setReqBIN( &csr_ );
+        csrInfo.exec();
+    }
+    else
+    {
+        manApplet->warningBox( tr( "This data is not supported."), this );
+    }
 }
 
 void ExportDlg::setPrivateKey( const BIN *pPriKey )

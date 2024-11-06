@@ -58,6 +58,7 @@ private slots:
     void changeFormatType( int index );
     void clickOK();
     void clickFindFilename();
+    void clickView();
 
 private:
     void initialize();

@@ -2129,7 +2129,7 @@ void MainWindow::makeCSR()
         ret = JS_PKI_getReqInfo( &binCSR, &sReqInfo, 0, NULL );
 
         exportDlg.setName( sReqInfo.pSubjectDN );
-        exportDlg.setCRL( &binCSR );
+        exportDlg.setCSR( &binCSR );
         exportDlg.exec();
 
         JS_BIN_reset( &binCSR );
@@ -2170,7 +2170,7 @@ void MainWindow::makeCSREach()
         ret = JS_PKI_getReqInfo( &binCSR, &sReqInfo, 0, NULL );
 
         exportDlg.setName( sReqInfo.pSubjectDN );
-        exportDlg.setCRL( &binCSR );
+        exportDlg.setCSR( &binCSR );
         exportDlg.exec();
 
         JS_BIN_reset( &binCSR );
