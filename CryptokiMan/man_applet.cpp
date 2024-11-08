@@ -174,8 +174,6 @@ QString ManApplet::curPath( const QString strPath )
 int ManApplet::checkLicense()
 {
     int ret = 0;
-    time_t ntp_t = 0;
-
     is_license_ = false;
 
     BIN binLCN = {0,0};
@@ -183,26 +181,36 @@ int ManApplet::checkLicense()
 
     QString strEmail = settings_mgr_->getEmail();
     QString strLicense = settings_mgr_->getLicense();
+    time_t run_t = settings_mgr_->getRunTime();
+    time_t now_t = time(NULL);
     QString strSID = GetSystemID();
 
     JS_BIN_decodeHex( strLicense.toStdString().c_str(), &binEncLCN );
-    if( binEncLCN.nLen > 0 ) JS_LCN_dec( strEmail.toStdString().c_str(), &binEncLCN, &binLCN );
-
+    if( binEncLCN.nLen > 0 )
+        JS_LCN_dec( strEmail.toStdString().c_str(), &binEncLCN, &binLCN );
+    else
+        goto end;
 
     ret = JS_LCN_ParseBIN( &binLCN, &license_info_ );
     if( ret != 0 ) goto end;
 
-#ifdef USE_TIME_SRV
-    ntp_t = JS_NET_clientNTP( JS_NTP_SERVER, JS_NTP_PORT, 2 );
-#endif
+    if( run_t > 0 )
+    {
+        if( now_t < ( run_t - 86400 ) ) // 하루 이상으로 돌아간 경우
+        {
+            time_t ntp_t = JS_NET_clientNTP( JS_NTP_SERVER, JS_NTP_PORT, 2 );
+            if( ntp_t <= 0 ) goto end;
 
-    if( ntp_t <= 0 ) ntp_t = time(NULL);
+            now_t = ntp_t;
+        }
+    }
 
-    ret = JS_LCN_IsValid( &license_info_, strEmail.toStdString().c_str(), JS_LCN_PRODUCT_CRYPTOKIMAN_NAME, strSID.toStdString().c_str(), ntp_t );
+    ret = JS_LCN_IsValid( &license_info_, strEmail.toStdString().c_str(), JS_LCN_PRODUCT_CRYPTOKIMAN_NAME, strSID.toStdString().c_str(), now_t );
 
     if( ret == JSR_VALID )
     {
         is_license_ = true;
+        settings_mgr_->setRunTime( now_t );
     }
     else
     {

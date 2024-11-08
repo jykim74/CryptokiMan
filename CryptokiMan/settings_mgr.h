@@ -60,6 +60,8 @@ public:
     void setViewValue( int nVal );
     void clearViewValue( int nType );
 
+    void setRunTime( time_t tRun );
+    time_t getRunTime();
 
 private:
     void initialize();

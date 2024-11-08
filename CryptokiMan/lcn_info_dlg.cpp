@@ -414,6 +414,8 @@ end :
 
     if( ret == 0 )
     {
+        manApplet->settingsMgr()->setRunTime(0);
+
         if( manApplet->yesOrNoBox(tr("You have changed license. Restart to apply it?"), this, true))
             manApplet->restartApp();
 
