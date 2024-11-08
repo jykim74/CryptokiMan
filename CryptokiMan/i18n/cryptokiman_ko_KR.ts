@@ -3781,92 +3781,97 @@ Do you want to delete the file and continue?</source>
         <translation>이 파일명의 파일이 이미 존재합니다. 덮어 쓰겠습니까?</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="313"/>
+        <location filename="../export_dlg.cpp" line="267"/>
+        <source>fail to export: %1</source>
+        <translation>내보내기 실패: %1</translation>
+    </message>
+    <message>
+        <location filename="../export_dlg.cpp" line="320"/>
         <source>This data is not supported.</source>
         <translation>지원하지 않는 데이타 입니다</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="324"/>
+        <location filename="../export_dlg.cpp" line="331"/>
         <source>Private Key Export</source>
         <translation>개인키 내보내기</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="343"/>
+        <location filename="../export_dlg.cpp" line="350"/>
         <source>Public Key Export</source>
         <translation>공개키 내보내기</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="356"/>
+        <location filename="../export_dlg.cpp" line="363"/>
         <source>Certificate Export</source>
         <translation>인증서 내보내기</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="371"/>
+        <location filename="../export_dlg.cpp" line="378"/>
         <source>CRL Export</source>
         <translation>CRL 내보내기</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="384"/>
+        <location filename="../export_dlg.cpp" line="391"/>
         <source>CSR Export</source>
         <translation>CSR 내보내기</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="398"/>
+        <location filename="../export_dlg.cpp" line="405"/>
         <source>Certificate and Private Key Export</source>
         <translation>인증서와 개인키 내보내기</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="449"/>
+        <location filename="../export_dlg.cpp" line="456"/>
         <source>invalid service: %1</source>
         <translation>유효하지 않는 서비스: %1</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="467"/>
+        <location filename="../export_dlg.cpp" line="474"/>
         <source>Public Key export successfully</source>
         <translation>공개키 내보내기 성공하였습니다.</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="500"/>
+        <location filename="../export_dlg.cpp" line="507"/>
         <source>Private Key export successfully</source>
         <translation>개인키 내보내기 성공하였습니다.</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="531"/>
+        <location filename="../export_dlg.cpp" line="538"/>
         <source>Certificate export successfully</source>
         <translation>인증서 내보내기 성공하였습니다.</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="559"/>
+        <location filename="../export_dlg.cpp" line="566"/>
         <source>CRL export successfully</source>
         <translation>CRL 내보내기 성공하였습니다.</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="587"/>
+        <location filename="../export_dlg.cpp" line="594"/>
         <source>CSR export successfully</source>
         <translation>CSR 내보내기 성공하였습니다.</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="616"/>
+        <location filename="../export_dlg.cpp" line="623"/>
         <source>fail to encrypt PFX: %1</source>
         <translation>PFX 암호화 실패: %1</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="623"/>
+        <location filename="../export_dlg.cpp" line="630"/>
         <source>PFX export successfully</source>
         <translation>PFX 내보내기 성공하였습니다.</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="655"/>
+        <location filename="../export_dlg.cpp" line="662"/>
         <source>fail to encrypt private key: %1</source>
         <translation>개인키 암호화 실패: %1</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="666"/>
+        <location filename="../export_dlg.cpp" line="673"/>
         <source>Encrypted privateKey export successfully</source>
         <translation>암호화 개인키 내보내기 성공하였습니다.</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="702"/>
+        <location filename="../export_dlg.cpp" line="709"/>
         <source>PKCS8 Info export successfully</source>
         <translation>PKCS8 개인키 정보 내보내기 성공하였습니다.</translation>
     </message>
@@ -5608,22 +5613,22 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">라이선스가 유효하지 않습니다</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="347"/>
+        <location filename="../lcn_info_dlg.cpp" line="350"/>
         <source>Please enter a email</source>
         <translation>이메일을 입력하세요</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="354"/>
+        <location filename="../lcn_info_dlg.cpp" line="357"/>
         <source>Please enter a license key</source>
         <translation>라이센스 키를 입력하세요</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="362"/>
+        <location filename="../lcn_info_dlg.cpp" line="365"/>
         <source>failed to get license %1 : %2</source>
         <translation>라이선스 가져오기 실패 %1 : %2</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="449"/>
+        <location filename="../lcn_info_dlg.cpp" line="454"/>
         <source>failed to renew license %1 : %2</source>
         <translation>라이선스 갱신 실패 %1 : %2</translation>
     </message>
@@ -5632,44 +5637,44 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">라이선스 가져오기 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="114"/>
+        <location filename="../lcn_info_dlg.cpp" line="113"/>
         <source>This CryptokiMan is unlicensed version</source>
         <translation>CryptokiMan 은 라이선스가 없는 버전입니다</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="123"/>
+        <location filename="../lcn_info_dlg.cpp" line="122"/>
         <source>[Expired:%1]</source>
         <translation>[만료일 : %1]</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="127"/>
+        <location filename="../lcn_info_dlg.cpp" line="130"/>
         <source>[No license]</source>
         <translation>[라이선스 없음]</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="374"/>
+        <location filename="../lcn_info_dlg.cpp" line="377"/>
         <source>failed to parse license [%1]</source>
         <translation>라이선스 파싱 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="383"/>
+        <location filename="../lcn_info_dlg.cpp" line="386"/>
         <source>license is not valid [%1]</source>
         <translation>라이선스가 유효하지 않습니다 [%1]</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="397"/>
-        <location filename="../lcn_info_dlg.cpp" line="460"/>
+        <location filename="../lcn_info_dlg.cpp" line="400"/>
+        <location filename="../lcn_info_dlg.cpp" line="465"/>
         <source>Your current license has a longer usage period.</source>
         <translation>현재 라이선스가 더 긴 기간의 라이선스입니다</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="414"/>
-        <location filename="../lcn_info_dlg.cpp" line="483"/>
+        <location filename="../lcn_info_dlg.cpp" line="419"/>
+        <location filename="../lcn_info_dlg.cpp" line="488"/>
         <source>You have changed license. Restart to apply it?</source>
         <translation>라이선스가 변경 되었습니다.적용을 위해 다시 시작 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="437"/>
+        <location filename="../lcn_info_dlg.cpp" line="442"/>
         <source>There is currently no license</source>
         <translation>현재 라이선스가 없습니다</translation>
     </message>
@@ -5678,17 +5683,17 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">라이선스 갱신 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="473"/>
+        <location filename="../lcn_info_dlg.cpp" line="478"/>
         <source>License is invalid : %1</source>
         <translation>라이선스가 유효하지 않습니다: %1</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="492"/>
+        <location filename="../lcn_info_dlg.cpp" line="497"/>
         <source>Are you sure you want to remove invalid license information?</source>
         <translation>유효하지 않는 라이선스 정보를 제거 하겠습니까?</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="499"/>
+        <location filename="../lcn_info_dlg.cpp" line="504"/>
         <source>Remove invalid license settings</source>
         <translation>유효하지 않는 라이선스 설정 제거</translation>
     </message>
@@ -5722,7 +5727,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">현재 라이선스가 더 긴 기간의 라이선스입니다</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="109"/>
+        <location filename="../lcn_info_dlg.cpp" line="108"/>
         <source>This CryptokiMan is licensed version</source>
         <translation>CryptokiMan 은 라이선스 버전입니다</translation>
     </message>
@@ -5735,8 +5740,8 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">라이선스가 발급 되지 않았습니다.</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="248"/>
-        <location filename="../lcn_info_dlg.cpp" line="341"/>
+        <location filename="../lcn_info_dlg.cpp" line="251"/>
+        <location filename="../lcn_info_dlg.cpp" line="344"/>
         <source>This service is not yet supported.</source>
         <translation>아직 지원하지 않는 서비스 입니다</translation>
     </message>
@@ -7304,34 +7309,43 @@ Do you want to delete the file and continue?</source>
 <context>
     <name>ManApplet</name>
     <message>
-        <location filename="../man_applet.cpp" line="209"/>
         <source>License is invalid: %1</source>
-        <translation>라이선스가 유효하지 않습니다: %1</translation>
+        <translation type="vanished">라이선스가 유효하지 않습니다: %1</translation>
     </message>
     <message>
-        <location filename="../man_applet.cpp" line="329"/>
-        <location filename="../man_applet.cpp" line="344"/>
+        <location filename="../man_applet.cpp" line="220"/>
+        <source>The license has expired</source>
+        <translation>라이선스가 만료 되었습니다</translation>
+    </message>
+    <message>
+        <location filename="../man_applet.cpp" line="222"/>
+        <source>The license is invalid: %1</source>
+        <translation>라이선스가 맞지 않습니다: %1</translation>
+    </message>
+    <message>
+        <location filename="../man_applet.cpp" line="343"/>
+        <location filename="../man_applet.cpp" line="358"/>
         <source>OK</source>
         <translation>확인</translation>
     </message>
     <message>
-        <location filename="../man_applet.cpp" line="355"/>
         <location filename="../man_applet.cpp" line="369"/>
-        <location filename="../man_applet.cpp" line="385"/>
-        <location filename="../man_applet.cpp" line="409"/>
+        <location filename="../man_applet.cpp" line="383"/>
+        <location filename="../man_applet.cpp" line="399"/>
+        <location filename="../man_applet.cpp" line="423"/>
         <source>Yes</source>
         <translation>예</translation>
     </message>
     <message>
-        <location filename="../man_applet.cpp" line="356"/>
-        <location filename="../man_applet.cpp" line="386"/>
-        <location filename="../man_applet.cpp" line="410"/>
+        <location filename="../man_applet.cpp" line="370"/>
+        <location filename="../man_applet.cpp" line="400"/>
+        <location filename="../man_applet.cpp" line="424"/>
         <source>No</source>
         <translation>아니오</translation>
     </message>
     <message>
-        <location filename="../man_applet.cpp" line="370"/>
-        <location filename="../man_applet.cpp" line="387"/>
+        <location filename="../man_applet.cpp" line="384"/>
+        <location filename="../man_applet.cpp" line="401"/>
         <source>Cancel</source>
         <translation>취소</translation>
     </message>
