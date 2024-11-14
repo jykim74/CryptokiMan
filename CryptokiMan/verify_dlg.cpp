@@ -556,7 +556,7 @@ void VerifyDlg::runFileVerify()
         nOffset += nRead;
 
         JS_BIN_reset( &binPart );
-        repaint();
+        update();
     }
 
     fclose( fp );

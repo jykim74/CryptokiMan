@@ -520,7 +520,7 @@ void DigestDlg::runFileDigest()
         nOffset += nRead;
 
         JS_BIN_reset( &binPart );
-        repaint();
+        update();
     }
 
     fclose( fp );

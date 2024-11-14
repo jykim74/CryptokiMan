@@ -814,7 +814,7 @@ void DecryptDlg::runFileDecrypt()
 
         JS_BIN_reset( &binPart );
         JS_BIN_reset( &binDst );
-        repaint();
+        update();
     }
 
     fclose( fp );

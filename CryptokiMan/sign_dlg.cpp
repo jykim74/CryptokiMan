@@ -559,7 +559,7 @@ void SignDlg::runFileSign()
         nOffset += nRead;
 
         JS_BIN_reset( &binPart );
-        repaint();
+        update();
     }
 
     fclose( fp );

@@ -2807,7 +2807,7 @@ void MainWindow::info( QString strInfo, QColor cr )
     cursor.insertText( strInfo );
 
     info_text_->setTextCursor( cursor );
-    info_text_->repaint();
+    info_text_->update();
 }
 
 void MainWindow::info_w( QString strInfo )
@@ -2894,7 +2894,7 @@ void MainWindow::write( const QString strLog, QColor cr )
     cursor.insertText( strLog );
     cursor.movePosition( QTextCursor::End );
     log_text_->setTextCursor( cursor );
-    log_text_->repaint();
+    log_text_->update();
 }
 
 void MainWindow::setTitle(const QString strName)
