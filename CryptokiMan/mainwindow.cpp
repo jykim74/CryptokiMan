@@ -136,7 +136,7 @@ void MainWindow::initialize()
     log_text_ = new QTextEdit();
     log_text_->setReadOnly(true);
 
-    info_text_ = new QTextEdit;
+    info_text_ = new CodeEditor;
     info_text_->setReadOnly(true);
 
     left_tree_->setModel(left_model_);

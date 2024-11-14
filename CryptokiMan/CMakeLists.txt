@@ -239,6 +239,7 @@ add_executable(${PROJECT_NAME}
     pri_key_info_dlg.ui
     make_csr_dlg.cpp make_csr_dlg.h make_csr_dlg.ui
     csr_info_dlg.cpp csr_info_dlg.h csr_info_dlg.ui
+    code_editor.cpp code_editor.h
 )
 
 target_link_options( ${PROJECT_NAME} PRIVATE -mwindows -MD )

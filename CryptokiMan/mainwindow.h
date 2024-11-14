@@ -15,6 +15,7 @@
 #include "temp_array.h"
 #include "slot_info.h"
 #include "common.h"
+#include "code_editor.h"
 
 class ManTreeView;
 class ManTreeModel;
@@ -281,7 +282,7 @@ private:
     QTableWidget    *right_table_;
 
     QTabWidget      *text_tab_;
-    QTextEdit       *info_text_;
+    CodeEditor      *info_text_;
     QTextEdit       *log_text_;
     int             right_type_;
 

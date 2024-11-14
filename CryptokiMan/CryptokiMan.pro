@@ -97,7 +97,8 @@ SOURCES += \
         p11_work.cpp \
         pri_key_info_dlg.cpp \
         make_csr_dlg.cpp \
-        csr_info_dlg.cpp
+        csr_info_dlg.cpp \
+        code_editor.cpp
 
 HEADERS += \
         about_dlg.h \
@@ -215,7 +216,8 @@ FORMS += \
         new_passwd_dlg.ui \
         pri_key_info_dlg.ui \
         make_csr_dlg.ui \
-        csr_info_dlg.ui
+        csr_info_dlg.ui \
+        code_editor.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
