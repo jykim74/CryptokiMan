@@ -283,7 +283,7 @@ private:
 
     QTabWidget      *text_tab_;
     CodeEditor      *info_text_;
-    QTextEdit       *log_text_;
+    QPlainTextEdit  *log_text_;
     int             right_type_;
 
     QString         file_path_;

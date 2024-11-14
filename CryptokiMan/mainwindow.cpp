@@ -133,7 +133,7 @@ void MainWindow::initialize()
     right_table_ = new QTableWidget;
     left_model_ = new ManTreeModel(this);
 
-    log_text_ = new QTextEdit();
+    log_text_ = new QPlainTextEdit();
     log_text_->setReadOnly(true);
 
     info_text_ = new CodeEditor;
