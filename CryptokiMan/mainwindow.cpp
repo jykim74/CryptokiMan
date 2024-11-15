@@ -2422,6 +2422,7 @@ void MainWindow::rightTableClick(QModelIndex index)
         info( "========================================================================\n" );
         info( QString( "Name  : %1\n" ).arg( item1->text() ));
         info( QString( "Value : %1\n" ).arg( item2->text() ));
+        info( "========================================================================\n" );
     }
 }
 
@@ -2444,6 +2445,7 @@ void MainWindow::showMechaismInfoDetail( QModelIndex index )
     info( QString( "Min Key Size : %1\n" ).arg( item2->text() ));
     info( QString( "Max Key Size : %1\n" ).arg( item3->text() ));
     info( QString( "Flags        : %1\n" ).arg( item4->text() ));
+    info( "========================================================================\n" );
 }
 
 void MainWindow::showObjectsInfoDetail( QModelIndex index )
@@ -2464,6 +2466,7 @@ void MainWindow::showObjectsInfoDetail( QModelIndex index )
     info( QString( "Class        : %1\n" ).arg( item1->text() ));
     info( QString( "Objects Size : %1\n" ).arg( item2->text() ));
     info( QString( "Handle       : %1\n" ).arg( item3->text() ));
+    info( "========================================================================\n" );
 }
 
 void MainWindow::showCertificateInfoDetail( QModelIndex index )

@@ -99,7 +99,7 @@ void SettingsDlg::initialize()
 
     Qt::CheckState state;
 
-    const QStringList sHexWidthList = { "", "8", "16", "32", "64", "80", "128" };
+    const QStringList sHexWidthList = { "", "8", "16", "32", "64", "80", "100" };
 
     mHexAreaWidthCombo->addItems(sHexWidthList);
     mHexAreaWidthCombo->setCurrentText( QString("%1").arg( mgr->getHexAreaWidth() ));
