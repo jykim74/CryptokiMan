@@ -93,12 +93,49 @@ void EditAttributeDlg::slotChanged(int index)
 
 void EditAttributeDlg::labelChanged( int index )
 {
-
+    int ret = 0;
     QVariant objVal = mLabelCombo->itemData( index );
-
     QString strHandle = QString("%1").arg( objVal.toInt() );
 
+    BIN binVal = {0,0};
+    CK_KEY_TYPE nKeyType = -1;
+
+    if( object_type_ == OBJ_PUBKEY_IDX || object_type_ == OBJ_PRIKEY_IDX )
+    {
+        ret = manApplet->cryptokiAPI()->GetAttributeValue2( session_, strHandle.toLong(), CKA_KEY_TYPE, &binVal );
+        if( ret != CKR_OK ) goto end;
+
+        memcpy( &nKeyType, binVal.pVal, binVal.nLen );
+
+        mAttributeCombo->clear();
+        mAttributeCombo->addItems( kCommonAttList );
+
+        if( object_type_ == OBJ_PUBKEY_IDX )
+            mAttributeCombo->addItems( kPubKeyAttList );
+        else
+            mAttributeCombo->addItems( kPriKeyAttList );
+
+        if( nKeyType == CKK_RSA )
+        {
+            mAttributeCombo->addItems( kRSAKeyAttList );
+        }
+        else if( nKeyType == CKK_EC || nKeyType == CKK_EC_EDWARDS )
+        {
+            mAttributeCombo->addItems( kECCKeyAttList );
+        }
+        else if( nKeyType == CKK_DSA )
+        {
+            mAttributeCombo->addItems( kDSAKeyAttList );
+        }
+        else if( nKeyType == CKK_DH )
+        {
+            mAttributeCombo->addItems( kDHKeyAttList );
+        }
+    }
+
+end :
     mObjectText->setText( strHandle );
+    JS_BIN_reset( &binVal );
 }
 
 void EditAttributeDlg::objectTypeChanged( int type )
