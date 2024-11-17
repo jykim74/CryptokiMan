@@ -56,6 +56,7 @@ void ManTreeView::showTypeList( int nSlotIndex, int nType )
     ulong hObject = -1;
     manApplet->mainWindow()->setRightType( nType );
     manApplet->mainWindow()->setCurrentSlotIdx( nSlotIndex );
+    manApplet->mainWindow()->infoClear();
 
     if( nType == HM_ITEM_TYPE_ROOT )
     {

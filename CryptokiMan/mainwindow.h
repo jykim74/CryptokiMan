@@ -37,6 +37,8 @@ public:
     void initialize();
     void showWindow();
 
+    void infoClear();
+
     QList<SlotInfo>& getSlotInfos() { return slot_infos_; };
     ManTreeItem* currentTreeItem();
     ManTreeItem* getRootItem();
@@ -228,6 +230,7 @@ public slots:
     void showDock();
 
     void rightTableClick( QModelIndex index );
+    void rightTableDblClick();
     void showRightMenu(QPoint point );
 
     virtual void dragEnterEvent(QDragEnterEvent *event );

@@ -74,6 +74,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     initialize();
 
+    connect( right_table_, SIGNAL(itemDoubleClicked(QTableWidgetItem*)), this, SLOT(rightTableDblClick()));
+
+
     createActions();
     createStatusBar();
 
@@ -1064,6 +1067,13 @@ void MainWindow::openSession()
         if( item != NULL )
         {
             item->setIcon( QIcon( ":/images/open_session.png" ));
+            left_tree_->expand( item->index() );
+
+            ManTreeItem* objItem = (ManTreeItem *)item->child(3);
+            if( objItem )
+            {
+                left_tree_->expand(objItem->index());
+            }
         }
     }
 }
@@ -2426,6 +2436,22 @@ void MainWindow::rightTableClick(QModelIndex index)
     }
 }
 
+void MainWindow::rightTableDblClick()
+{
+    if( right_type_ == HM_ITEM_TYPE_CERTIFICATE )
+    {
+        viewCert();
+    }
+    else if( right_type_ == HM_ITEM_TYPE_PUBLICKEY )
+    {
+        viewPubKkey();
+    }
+    else if( right_type_ == HM_ITEM_TYPE_PRIVATEKEY )
+    {
+        viewPriKey();
+    }
+}
+
 void MainWindow::showMechaismInfoDetail( QModelIndex index )
 {
     int row = index.row();
@@ -2446,6 +2472,8 @@ void MainWindow::showMechaismInfoDetail( QModelIndex index )
     info( QString( "Max Key Size : %1\n" ).arg( item3->text() ));
     info( QString( "Flags        : %1\n" ).arg( item4->text() ));
     info( "========================================================================\n" );
+
+    info_text_->moveCursor(QTextCursor::Start);
 }
 
 void MainWindow::showObjectsInfoDetail( QModelIndex index )
@@ -2467,6 +2495,8 @@ void MainWindow::showObjectsInfoDetail( QModelIndex index )
     info( QString( "Objects Size : %1\n" ).arg( item2->text() ));
     info( QString( "Handle       : %1\n" ).arg( item3->text() ));
     info( "========================================================================\n" );
+
+    info_text_->moveCursor(QTextCursor::Start);
 }
 
 void MainWindow::showCertificateInfoDetail( QModelIndex index )
@@ -2495,6 +2525,8 @@ void MainWindow::showCertificateInfoDetail( QModelIndex index )
 
     JS_BIN_reset( &binDN );
     if( pDN ) JS_free( pDN );
+
+    info_text_->moveCursor(QTextCursor::Start);
 }
 
 void MainWindow::showPublicKeyInfoDetail( QModelIndex index )
@@ -2547,6 +2579,8 @@ void MainWindow::showPublicKeyInfoDetail( QModelIndex index )
 
     JS_BIN_reset( &binDN );
     if( pDN ) JS_free( pDN );
+
+    info_text_->moveCursor(QTextCursor::Start);
 }
 
 void MainWindow::showPrivateKeyInfoDetail( QModelIndex index )
@@ -2599,6 +2633,8 @@ void MainWindow::showPrivateKeyInfoDetail( QModelIndex index )
 
     JS_BIN_reset( &binDN );
     if( pDN ) JS_free( pDN );
+
+    info_text_->moveCursor(QTextCursor::Start);
 }
 
 void MainWindow::showSecretKeyInfoDetail( QModelIndex index )
@@ -2620,6 +2656,8 @@ void MainWindow::showSecretKeyInfoDetail( QModelIndex index )
     showInfoKeyCommon( uObj );
     showInfoSecretKey( uObj );
     showInfoSecretValue( uObj );
+
+    info_text_->moveCursor(QTextCursor::Start);
 }
 
 void MainWindow::showDataInfoDetail( QModelIndex index )
@@ -2638,6 +2676,8 @@ void MainWindow::showDataInfoDetail( QModelIndex index )
 
     showInfoCommon( uObj );
     showInfoData( uObj );
+
+    info_text_->moveCursor(QTextCursor::Start);
 }
 
 void MainWindow::showRightMenu(QPoint point )
@@ -2737,9 +2777,16 @@ void MainWindow::showWindow()
     activateWindow();
 }
 
+void MainWindow::infoClear()
+{
+    info_text_->clear();
+}
+
 void MainWindow::showTypeList( int nSlotIndex, int nType )
 {
     left_tree_->showTypeList( nSlotIndex, nType );
+
+    info_text_->clear();
 }
 
 void MainWindow::adjustForCurrentFile( const QString& filePath )
@@ -3833,6 +3880,7 @@ void MainWindow::showPublicKeyInfoList( int index, long hObject )
 
         row++;
     }
+
 }
 
 void MainWindow::showPrivateKeyInfoList( int index, long hObject )
@@ -3924,6 +3972,7 @@ void MainWindow::showPrivateKeyInfoList( int index, long hObject )
 
         row++;
     }
+
 }
 
 void MainWindow::showSecretKeyInfoList( int index, long hObject )
@@ -3999,6 +4048,7 @@ void MainWindow::showSecretKeyInfoList( int index, long hObject )
 
         row++;
     }
+
 }
 
 void MainWindow::showDataInfoList( int index, long hObject )
@@ -4082,6 +4132,7 @@ void MainWindow::showDataInfoList( int index, long hObject )
 
         row++;
     }
+
 }
 
 void MainWindow::showFindInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *pAttrList, int nAttrCnt )
