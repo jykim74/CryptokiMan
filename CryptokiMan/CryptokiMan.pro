@@ -168,7 +168,8 @@ HEADERS += \
         p11_work.h \
         pri_key_info_dlg.h \
         make_csr_dlg.h \
-        csr_info_dlg.h
+        csr_info_dlg.h \
+        code_editor.h
 
 FORMS += \
         about_dlg.ui \
@@ -216,8 +217,8 @@ FORMS += \
         new_passwd_dlg.ui \
         pri_key_info_dlg.ui \
         make_csr_dlg.ui \
-        csr_info_dlg.ui \
-        code_editor.h
+        csr_info_dlg.ui
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
