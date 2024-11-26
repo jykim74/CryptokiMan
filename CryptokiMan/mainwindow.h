@@ -22,6 +22,8 @@ class ManTreeModel;
 class ManTreeItem;
 class ThreadWork;
 
+class HsmManDlg;
+
 namespace Ui {
 class MainWindow;
 }
@@ -127,6 +129,7 @@ public:
     void viewCryptVerify( bool bChecked );
     void viewCryptEnc( bool bChecked );
     void viewCryptDec( bool bChecked );
+    void viewCryptHsmMan( bool bChecked );
 
     void viewImportCert( bool bChecked );
     void viewImportPFX( bool bChecked );
@@ -189,6 +192,7 @@ public slots:
     void sign();
     void signType();
     void signEach();
+    void hsmMan();
 
     void verify();
     void verifyType();
@@ -241,6 +245,8 @@ private:
     void createViewActions();
     void createActions();
     void createStatusBar();
+    void createMemberDlg();
+
     int openLibrary( const QString libPath );
     void setTitle(const QString strName);
 
@@ -297,6 +303,8 @@ private:
 
     bool            log_halt_;
 
+    HsmManDlg*       hsm_man_dlg_;
+
     QToolBar* file_tool_;
     QAction* new_act_;
     QAction* open_act_;
@@ -339,6 +347,7 @@ private:
     QAction* verify_act_;
     QAction* enc_act_;
     QAction* dec_act_;
+    QAction* hsm_man_act_;
 
     QToolBar* import_tool_;
     QAction* import_cert_act_;

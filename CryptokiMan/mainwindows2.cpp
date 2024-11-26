@@ -256,6 +256,13 @@ void MainWindow::createViewActions()
     connect( cryptDecAct, &QAction::triggered, this, &MainWindow::viewCryptDec );
     cryptMenu->addAction( cryptDecAct );
 
+    QAction *cryptHsmManAct = new QAction( tr("HSM Man"), this );
+    bVal = isView( ACT_CRYPT_HSM_MAN );
+    cryptHsmManAct->setCheckable(true);
+    cryptHsmManAct->setChecked(bVal);
+    connect( cryptHsmManAct, &QAction::triggered, this, &MainWindow::viewCryptHsmMan );
+    cryptMenu->addAction( cryptHsmManAct );
+
     QAction *importCertAct = new QAction( tr("Import Certificate"), this );
     bVal = isView( ACT_IMPORT_CERT );
     importCertAct->setCheckable(true);
@@ -888,6 +895,20 @@ void MainWindow::viewCryptDec( bool bChecked )
     }
 }
 
+void MainWindow::viewCryptHsmMan( bool bChecked )
+{
+    int nAct = ACT_CRYPT_HSM_MAN;
+    if( bChecked == true )
+    {
+        crypt_tool_->addAction( hsm_man_act_ );
+        setView( nAct );
+    }
+    else
+    {
+        crypt_tool_->removeAction( hsm_man_act_ );
+        unsetView( nAct );
+    }
+}
 
 void MainWindow::viewImportCert( bool bChecked )
 {

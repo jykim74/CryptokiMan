@@ -66,6 +66,7 @@
 #include "p11_work.h"
 #include "pri_key_info_dlg.h"
 #include "make_csr_dlg.h"
+#include "hsm_man_dlg.h"
 
 const int kMaxRecentFiles = 10;
 
@@ -79,6 +80,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     createActions();
     createStatusBar();
+    createMemberDlg();
 
     setUnifiedTitleAndToolBarOnMac(true);
 
@@ -549,12 +551,21 @@ void MainWindow::createActions()
     cryptMenu->addAction( dec_act_ );
     if( isView( ACT_CRYPT_DEC ) ) crypt_tool_->addAction( dec_act_ );
 
+    const QIcon hsmIcon = QIcon::fromTheme("HSMMan", QIcon(":/images/hsm_man.png"));
+    hsm_man_act_ = new QAction( hsmIcon, tr("HSM Manage"), this);
+    hsm_man_act_->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_H));
+    connect( hsm_man_act_, &QAction::triggered, this, &MainWindow::hsmMan);
+    hsm_man_act_->setStatusTip(tr("HSM Management"));
+    cryptMenu->addAction( hsm_man_act_ );
+    if( isView( ACT_CRYPT_HSM_MAN ) ) crypt_tool_->addAction( hsm_man_act_ );
+
     if( manApplet->isLicense() == false )
     {
         sign_act_->setEnabled( false );
         verify_act_->setEnabled( false );
         enc_act_->setEnabled( false );
         dec_act_->setEnabled( false );
+        hsm_man_act_->setEnabled( false );
     }
 
 
@@ -753,6 +764,10 @@ void MainWindow::createStatusBar()
     statusBar()->showMessage(tr("Ready"));
 }
 
+void MainWindow::createMemberDlg()
+{
+    hsm_man_dlg_ = new HsmManDlg;
+}
 
 void MainWindow::newFile()
 {
@@ -1638,6 +1653,24 @@ void MainWindow::signEach()
     signDlg.setObject( type, obj_id );
 
     signDlg.exec();
+}
+
+void MainWindow::hsmMan()
+{
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "No slot selected" ), this );
+        return;
+    }
+
+    int nSlot = pItem->getSlotIndex();
+
+    hsm_man_dlg_->setSelectedSlot( nSlot );
+    hsm_man_dlg_->show();
+    hsm_man_dlg_->raise();
+    hsm_man_dlg_->activateWindow();
 }
 
 void MainWindow::verify()

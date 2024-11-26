@@ -149,6 +149,7 @@ public:
     int CancelFunction( CK_SESSION_HANDLE hSession );
 
     QString getLastError();
+    long getHandle( CK_SESSION_HANDLE hSession, CK_OBJECT_CLASS objClass, const BIN *pID );
 
 private:
     void logResult( const QString strName, int rv, qint64 ms = -1 );

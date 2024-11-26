@@ -240,6 +240,8 @@ add_executable(${PROJECT_NAME}
     make_csr_dlg.cpp make_csr_dlg.h make_csr_dlg.ui
     csr_info_dlg.cpp csr_info_dlg.h csr_info_dlg.ui
     code_editor.cpp code_editor.h
+    hsm_man_dlg.h hsm_man_dlg.cpp hsm_man_dlg.ui
+    secret_info_dlg.h secret_info_dlg.cpp secret_info_dlg.ui
 )
 
 target_link_options( ${PROJECT_NAME} PRIVATE -mwindows -MD )

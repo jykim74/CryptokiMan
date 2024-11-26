@@ -100,6 +100,7 @@ enum ViewType {
 #define ACT_CRYPT_VERIFY                VIEW_CRYPT | 0x00000008
 #define ACT_CRYPT_ENC                   VIEW_CRYPT | 0x00000010
 #define ACT_CRYPT_DEC                   VIEW_CRYPT | 0x00000020
+#define ACT_CRYPT_HSM_MAN               VIEW_CRYPT | 0x00000040
 
 #define ACT_IMPORT_CERT                 VIEW_IMPORT | 0x00000001
 #define ACT_IMPORT_PFX                  VIEW_IMPORT | 0x00000002
@@ -132,7 +133,7 @@ static const int kObjectDefault = ACT_OBJECT_GEN_KEYPAIR | ACT_OBJECT_GEN_KEY | 
                                 | ACT_OBJECT_CREATE_KEY | ACT_OBJECT_FIND_OBJECT;
 
 static const int kCryptDefault = ACT_CRYPT_RAND | ACT_CRYPT_DIGEST | ACT_CRYPT_SIGN | ACT_CRYPT_VERIFY \
-                                 | ACT_CRYPT_ENC | ACT_CRYPT_DEC;
+                                 | ACT_CRYPT_ENC | ACT_CRYPT_DEC | ACT_CRYPT_HSM_MAN;
 
 static const int kImportDefault = 0;
 

@@ -1967,6 +1967,41 @@ QString CryptokiAPI::getLastError()
     return strError;
 }
 
+long CryptokiAPI::getHandle( CK_SESSION_HANDLE hSession, CK_OBJECT_CLASS objClass, const BIN *pID )
+{
+    int rv;
+
+    CK_ATTRIBUTE sTemplate[2];
+    long uCount = 0;
+
+    CK_OBJECT_HANDLE hObjects = -1;
+    CK_ULONG uObjCnt = 0;
+
+    sTemplate[uCount].type = CKA_CLASS;
+    sTemplate[uCount].pValue = &objClass;
+    sTemplate[uCount].ulValueLen = sizeof(objClass);
+    uCount++;
+
+    sTemplate[uCount].type = CKA_ID;
+    sTemplate[uCount].pValue = pID->pVal;
+    sTemplate[uCount].ulValueLen = pID->nLen;
+    uCount++;
+
+
+    rv = FindObjectsInit( hSession, sTemplate, uCount );
+    if( rv != CKR_OK ) goto end;
+
+    rv = FindObjects( hSession, &hObjects, 1, &uObjCnt );
+    if( rv != CKR_OK ) goto end;
+
+    rv = FindObjectsFinal( hSession );
+    if( rv != CKR_OK ) goto end;
+
+end :
+
+    return hObjects;
+}
+
 void CryptokiAPI::logResult( const QString strName, int rv, qint64 ms )
 {
     QString strLog;

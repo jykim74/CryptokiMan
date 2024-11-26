@@ -98,7 +98,9 @@ SOURCES += \
         pri_key_info_dlg.cpp \
         make_csr_dlg.cpp \
         csr_info_dlg.cpp \
-        code_editor.cpp
+        code_editor.cpp \
+        hsm_man_dlg.cpp \
+        secret_info_dlg.cpp
 
 HEADERS += \
         about_dlg.h \
@@ -169,7 +171,9 @@ HEADERS += \
         pri_key_info_dlg.h \
         make_csr_dlg.h \
         csr_info_dlg.h \
-        code_editor.h
+        code_editor.h \
+        hsm_man_dlg.h \
+        secret_info_dlg.h
 
 FORMS += \
         about_dlg.ui \
@@ -217,7 +221,9 @@ FORMS += \
         new_passwd_dlg.ui \
         pri_key_info_dlg.ui \
         make_csr_dlg.ui \
-        csr_info_dlg.ui
+        csr_info_dlg.ui \
+        hsm_man_dlg.ui \
+        secret_info_dlg.ui
 
 
 # Default rules for deployment.

@@ -16,6 +16,7 @@
 #include "settings_mgr.h"
 #include "mech_mgr.h"
 #include "encrypt_thread.h"
+#include "hsm_man_dlg.h"
 
 #include "js_error.h"
 
@@ -88,6 +89,7 @@ void EncryptDlg::initUI()
     connect( mFinalBtn, SIGNAL(clicked()), this, SLOT(clickFinal()));
     connect( mEncryptBtn, SIGNAL(clicked()), this, SLOT(clickEncrypt()));
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(clickClose()));
+    connect( mSelectBtn, SIGNAL(clicked()), this, SLOT(clickSelect()));
 
     connect( mInputCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(inputChanged()));
 
@@ -861,6 +863,23 @@ end :
 void EncryptDlg::clickClose()
 {
     this->hide();
+}
+
+void EncryptDlg::clickSelect()
+{
+    HsmManDlg hsmMan;
+    hsmMan.setSelectedSlot( slot_index_ );
+    hsmMan.setTitle( "Select Key" );
+
+    if( mKeyTypeCombo->currentText() == "SECRET" )
+        hsmMan.setMode( HsmModeSelectSecretKey );
+    else
+        hsmMan.setMode( HsmModeSelectPublicKey );
+
+    if( hsmMan.exec() == QDialog::Accepted )
+    {
+
+    }
 }
 
 void EncryptDlg::runFileEncryptThread()

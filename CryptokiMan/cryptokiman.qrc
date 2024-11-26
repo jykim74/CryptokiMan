@@ -85,5 +85,6 @@
         <file>images/unload.png</file>
         <file>images/info.png</file>
         <file>images/csr.png</file>
+        <file>images/hsm_man.png</file>
     </qresource>
 </RCC>
