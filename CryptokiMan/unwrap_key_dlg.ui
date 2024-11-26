@@ -394,6 +394,13 @@
        </item>
        <item>
         <layout class="QGridLayout" name="gridLayout_5">
+         <item row="0" column="2">
+          <widget class="QLabel" name="label_10">
+           <property name="text">
+            <string>Object</string>
+           </property>
+          </widget>
+         </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label_6">
            <property name="minimumSize">
@@ -457,13 +464,6 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="2">
-          <widget class="QLabel" name="label_10">
-           <property name="text">
-            <string>Object</string>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="1">
           <widget class="QComboBox" name="mUnwrapLabelCombo">
            <property name="sizePolicy">
@@ -471,6 +471,13 @@
              <horstretch>1</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="4">
+          <widget class="QPushButton" name="mSelectBtn">
+           <property name="text">
+            <string>Select</string>
            </property>
           </widget>
          </item>

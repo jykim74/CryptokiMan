@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "ui_hsm_man_dlg.h"
+#include "js_pkcs11.h"
 
 enum {
     HsmModeManage = 0,
@@ -10,6 +11,16 @@ enum {
     HsmModeSelectPublicKey,
     HsmModeSelectPrivateKey,
     HsmModeSelectSecretKey
+};
+
+enum {
+    HsmUsageAny = 0,
+    HsmUsageSign,
+    HsmUsageVerify,
+    HsmUsageEncrypt,
+    HsmUsageDecrypt,
+    HsmUsageWrap,
+    HsmUsageUnwrap
 };
 
 enum {
@@ -31,7 +42,7 @@ public:
     explicit HsmManDlg(QWidget *parent = nullptr);
     ~HsmManDlg();
     void setSelectedSlot( int index );
-    void setMode( int nMode );
+    void setMode( int nMode, int nUsage = HsmUsageAny );
     void setTitle( const QString strTitle );
 
 private slots:
@@ -65,6 +76,7 @@ private slots:
 private:
     void initUI();
     void initialize();
+    void setUsageTemplate( CK_ATTRIBUTE sTemplate[], long& uCount );
 
     int slot_index_;
     long session_;

@@ -872,9 +872,9 @@ void EncryptDlg::clickSelect()
     hsmMan.setTitle( "Select Key" );
 
     if( mKeyTypeCombo->currentText() == "SECRET" )
-        hsmMan.setMode( HsmModeSelectSecretKey );
+        hsmMan.setMode( HsmModeSelectSecretKey, HsmUsageEncrypt );
     else
-        hsmMan.setMode( HsmModeSelectPublicKey );
+        hsmMan.setMode( HsmModeSelectPublicKey, HsmUsageEncrypt );
 
     if( hsmMan.exec() == QDialog::Accepted )
     {

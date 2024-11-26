@@ -37,6 +37,8 @@ private slots:
     void runFileVerify();
     void clickClose();
 
+    void clickSelect();
+
     void clickVerifyRecoverInit();
     void clickVerifyRecover();
 

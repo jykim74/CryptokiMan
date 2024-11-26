@@ -13,6 +13,7 @@
 #include "cryptoki_api.h"
 #include "settings_mgr.h"
 #include "mech_mgr.h"
+#include "hsm_man_dlg.h"
 
 static QStringList sMechWrapSymList;
 static QStringList sMechWrapAsymList;
@@ -54,6 +55,8 @@ void WrapKeyDlg::initUI()
     connect( mOutputClearBtn, SIGNAL(clicked()), this, SLOT( clickClearOutput()));
     connect( mWrapKeyBtn, SIGNAL(clicked()), this, SLOT(clickWrapKey()));
     connect( mOutputText, SIGNAL(textChanged()), this, SLOT(changeOutput()));
+
+    connect( mSelectBtn, SIGNAL(clicked()), this, SLOT(clickSelect()));
 
     initialize();
 }
@@ -264,6 +267,26 @@ void WrapKeyDlg::changeWrappingParam(const QString& text )
 {
     QString strLen = getDataLenString( DATA_HEX, text );
     mWrappingParamLenText->setText( QString("%1").arg(strLen));
+}
+
+void WrapKeyDlg::clickSelect()
+{
+    HsmManDlg hsmMan;
+    hsmMan.setSelectedSlot( slot_index_ );
+    hsmMan.setTitle( "Select Key" );
+
+    if( mWrappingTypeCombo->currentText() == "SECRET" )
+        hsmMan.setMode( HsmModeSelectSecretKey, HsmUsageWrap );
+    else
+    {
+        hsmMan.setMode( HsmModeSelectPublicKey, HsmUsageWrap );
+        hsmMan.mPublicTypeCombo->setCurrentText( "CKK_RSA" );
+    }
+
+    if( hsmMan.exec() == QDialog::Accepted )
+    {
+
+    }
 }
 
 void WrapKeyDlg::setWrappingSecretLabel()

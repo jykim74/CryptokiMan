@@ -13,6 +13,7 @@
 #include "cryptoki_api.h"
 #include "settings_mgr.h"
 #include "mech_mgr.h"
+#include "hsm_man_dlg.h"
 
 static QStringList sMechUnwrapSymList;
 static QStringList sMechUnwrapAsymList;
@@ -52,6 +53,8 @@ UnwrapKeyDlg::UnwrapKeyDlg(QWidget *parent) :
     connect( mReadFileBtn, SIGNAL(clicked(bool)), this, SLOT(clickReadFile()));
     connect( mInputClearBtn, SIGNAL(clicked()), this, SLOT(clickInputClear()));
     connect( mInputText, SIGNAL(textChanged()), this, SLOT(changeInput()));
+
+    connect( mSelectBtn, SIGNAL(clicked()), this, SLOT(clickSelect()));
 
     initialize();
     setDefaults();
@@ -885,4 +888,24 @@ void UnwrapKeyDlg::changeInput()
     QString strInput = mInputText->toPlainText();
     QString strLen = getDataLenString( DATA_HEX, strInput );
     mInputLenText->setText( QString("%1").arg(strLen));
+}
+
+void UnwrapKeyDlg::clickSelect()
+{
+    HsmManDlg hsmMan;
+    hsmMan.setSelectedSlot( slot_index_ );
+    hsmMan.setTitle( "Select Key" );
+
+    if( mUnwrapTypeCombo->currentText() == "SECRET" )
+        hsmMan.setMode( HsmModeSelectSecretKey, HsmUsageUnwrap );
+    else
+    {
+        hsmMan.setMode( HsmModeSelectPrivateKey, HsmUsageUnwrap );
+        hsmMan.mPrivateTypeCombo->setCurrentText( "CKK_RSA" );
+    }
+
+    if( hsmMan.exec() == QDialog::Accepted )
+    {
+
+    }
 }

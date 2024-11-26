@@ -58,6 +58,8 @@ private slots:
     void clickInputClear();
     void changeInput();
 
+    void clickSelect();
+
 private:
     void initUI();
     void initialize();

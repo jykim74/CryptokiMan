@@ -16,6 +16,7 @@
 #include "settings_mgr.h"
 #include "mech_mgr.h"
 #include "decrypt_thread.h"
+#include "hsm_man_dlg.h"
 
 #include "js_error.h"
 
@@ -89,6 +90,7 @@ void DecryptDlg::initUI()
     connect( mFinalBtn, SIGNAL(clicked()), this, SLOT(clickFinal()));
     connect( mDecryptBtn, SIGNAL(clicked()), this, SLOT(clickDecrypt()));
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(clickClose()));
+    connect( mSelectBtn, SIGNAL(clicked()), this, SLOT(clickSelect()));
 
     connect( mInputText, SIGNAL(textChanged()), this, SLOT(inputChanged()));
     connect( mOutputText, SIGNAL(textChanged()), this, SLOT(outputChanged()));
@@ -853,6 +855,23 @@ end :
 void DecryptDlg::clickClose()
 {
     this->hide();
+}
+
+void DecryptDlg::clickSelect()
+{
+    HsmManDlg hsmMan;
+    hsmMan.setSelectedSlot( slot_index_ );
+    hsmMan.setTitle( "Select Key" );
+
+    if( mKeyTypeCombo->currentText() == "SECRET" )
+        hsmMan.setMode( HsmModeSelectSecretKey, HsmUsageDecrypt );
+    else
+        hsmMan.setMode( HsmModeSelectPrivateKey, HsmUsageDecrypt );
+
+    if( hsmMan.exec() == QDialog::Accepted )
+    {
+
+    }
 }
 
 void DecryptDlg::runFileDecryptThread()

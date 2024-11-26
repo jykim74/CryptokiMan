@@ -37,6 +37,8 @@ private slots:
     void runFileSign();
     void clickClose();
 
+    void clickSelect();
+
     void clickSignRecoverInit();
     void clickSignRecover();
 

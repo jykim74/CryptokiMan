@@ -15,6 +15,7 @@
 #include "settings_mgr.h"
 #include "mech_mgr.h"
 #include "verify_thread.h"
+#include "hsm_man_dlg.h"
 
 static QStringList sMechSignSymList;
 static QStringList sMechSignAsymList;
@@ -86,6 +87,8 @@ void VerifyDlg::initUI()
     connect( mFinalBtn, SIGNAL(clicked()), this, SLOT(clickFinal()));
     connect( mVerifyBtn, SIGNAL(clicked()), this, SLOT(clickVerify()));
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(clickClose()));
+
+    connect( mSelectBtn, SIGNAL(clicked()), this, SLOT(clickSelect()));
 
     connect( mVerifyRecoverInitBtn, SIGNAL(clicked()), this, SLOT(clickVerifyRecoverInit()));
     connect( mVerifyRecoverBtn, SIGNAL(clicked()), this, SLOT(clickVerifyRecover()));
@@ -581,6 +584,23 @@ end :
 void VerifyDlg::clickClose()
 {
     this->hide();
+}
+
+void VerifyDlg::clickSelect()
+{
+    HsmManDlg hsmMan;
+    hsmMan.setSelectedSlot( slot_index_ );
+    hsmMan.setTitle( "Select Key" );
+
+    if( mKeyTypeCombo->currentText() == "SECRET" )
+        hsmMan.setMode( HsmModeSelectSecretKey, HsmUsageVerify );
+    else
+        hsmMan.setMode( HsmModeSelectPublicKey, HsmUsageVerify );
+
+    if( hsmMan.exec() == QDialog::Accepted )
+    {
+
+    }
 }
 
 void VerifyDlg::clickVerifyRecoverInit()

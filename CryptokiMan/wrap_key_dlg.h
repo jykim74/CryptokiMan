@@ -35,6 +35,7 @@ private slots:
     void changeOutput();
 
     void changeWrappingParam(const QString& text );
+    void clickSelect();
 private:
     void initialize();
     void initUI();

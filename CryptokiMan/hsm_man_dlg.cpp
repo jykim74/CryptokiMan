@@ -13,7 +13,7 @@
 #include "p11_work.h"
 #include "secret_info_dlg.h"
 
-static const QStringList kUsageList = { "Any", "Sign", "Verify", "Encrypt", "Decrypt" };
+static const QStringList kUsageList = { "Any", "Sign", "Verify", "Encrypt", "Decrypt", "Wrap", "Unwrap" };
 
 HsmManDlg::HsmManDlg(QWidget *parent) :
     QDialog(parent)
@@ -83,7 +83,7 @@ HsmManDlg::~HsmManDlg()
 
 }
 
-void HsmManDlg::setMode( int nMode )
+void HsmManDlg::setMode( int nMode, int nUsage )
 {
     if( nMode != HsmModeManage )
     {
@@ -119,6 +119,22 @@ void HsmManDlg::setMode( int nMode )
     {
         mTabWidget->setCurrentIndex( TAB_SECRET_IDX );
         mTabWidget->setTabEnabled( TAB_SECRET_IDX, true );
+    }
+
+    if( nMode != HsmModeManage && nMode != HsmModeSelectCert )
+    {
+        if( nUsage == HsmUsageSign )
+            mUsageCombo->setCurrentText( "Sign" );
+        else if( nUsage == HsmUsageVerify )
+            mUsageCombo->setCurrentText( "Verify" );
+        else if( nUsage == HsmUsageEncrypt )
+            mUsageCombo->setCurrentText( "Encrypt" );
+        else if( nUsage == HsmUsageDecrypt )
+            mUsageCombo->setCurrentText( "Decrypt" );
+        else if( nUsage == HsmUsageWrap )
+            mUsageCombo->setCurrentText( "Wrap" );
+        else if( nUsage == HsmUsageUnwrap )
+            mUsageCombo->setCurrentText( "Unwrap" );
     }
 }
 
@@ -272,6 +288,31 @@ void HsmManDlg::initialize()
         loadSecretList();
 }
 
+void HsmManDlg::setUsageTemplate( CK_ATTRIBUTE sTemplate[], long& uCount )
+{
+    QString strUsage = mUsageCombo->currentText();
+
+    if( strUsage != "Any" )
+    {
+        if( strUsage == "Sign" )
+            sTemplate[uCount].type = CKA_SIGN;
+        else if( strUsage == "Verify" )
+            sTemplate[uCount].type = CKA_VERIFY;
+        else if( strUsage == "Encrypt" )
+            sTemplate[uCount].type = CKA_ENCRYPT;
+        else if( strUsage == "Decrypt" )
+            sTemplate[uCount].type = CKA_DECRYPT;
+        else if( strUsage == "Wrap" )
+            sTemplate[uCount].type = CKA_WRAP;
+        else if( strUsage == "Unwrap" )
+            sTemplate[uCount].type = CKA_UNWRAP;
+
+        sTemplate[uCount].pValue = &kTrue;
+        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+        uCount++;
+    }
+}
+
 void HsmManDlg::loadCertList()
 {
 #if 1
@@ -402,23 +443,7 @@ void HsmManDlg::loadPublicList()
         uCount++;
     }
 
-    QString strUsage = mUsageCombo->currentText();
-
-    if( strUsage != "Any" )
-    {
-        if( strUsage == "Sign" )
-            sTemplate[uCount].type = CKA_SIGN;
-        else if( strUsage == "Verify" )
-            sTemplate[uCount].type = CKA_VERIFY;
-        else if( strUsage == "Encrypt" )
-            sTemplate[uCount].type = CKA_ENCRYPT;
-        else if( strUsage == "Decrypt" )
-            sTemplate[uCount].type = CKA_DECRYPT;
-
-        sTemplate[uCount].pValue = &kTrue;
-        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
-        uCount++;
-    }
+    setUsageTemplate( sTemplate, uCount );
 
     rv = pP11->FindObjectsInit( session_, sTemplate, uCount );
     if( rv != CKR_OK ) goto end;
@@ -510,23 +535,7 @@ void HsmManDlg::loadPrivateList()
         uCount++;
     }
 
-    QString strUsage = mUsageCombo->currentText();
-
-    if( strUsage != "Any" )
-    {
-        if( strUsage == "Sign" )
-            sTemplate[uCount].type = CKA_SIGN;
-        else if( strUsage == "Verify" )
-            sTemplate[uCount].type = CKA_VERIFY;
-        else if( strUsage == "Encrypt" )
-            sTemplate[uCount].type = CKA_ENCRYPT;
-        else if( strUsage == "Decrypt" )
-            sTemplate[uCount].type = CKA_DECRYPT;
-
-        sTemplate[uCount].pValue = &kTrue;
-        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
-        uCount++;
-    }
+    setUsageTemplate( sTemplate, uCount );
 
     rv = pP11->FindObjectsInit( session_, sTemplate, uCount );
     if( rv != CKR_OK ) goto end;
@@ -617,23 +626,7 @@ void HsmManDlg::loadSecretList()
         uCount++;
     }
 
-    QString strUsage = mUsageCombo->currentText();
-
-    if( strUsage != "Any" )
-    {
-        if( strUsage == "Sign" )
-            sTemplate[uCount].type = CKA_SIGN;
-        else if( strUsage == "Verify" )
-            sTemplate[uCount].type = CKA_VERIFY;
-        else if( strUsage == "Encrypt" )
-            sTemplate[uCount].type = CKA_ENCRYPT;
-        else if( strUsage == "Decrypt" )
-            sTemplate[uCount].type = CKA_DECRYPT;
-
-        sTemplate[uCount].pValue = &kTrue;
-        sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
-        uCount++;
-    }
+    setUsageTemplate( sTemplate, uCount );
 
     rv = pP11->FindObjectsInit( session_, sTemplate, uCount );
     if( rv != CKR_OK ) goto end;

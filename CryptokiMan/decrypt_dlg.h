@@ -39,6 +39,8 @@ private slots:
     void runFileDecrypt();
     void clickClose();
 
+    void clickSelect();
+
     void keyTypeChanged( int index );
     void labelChanged( int index );
 
