@@ -819,9 +819,14 @@ void EncryptDlg::clickSelect()
     hsmMan.setTitle( "Select Key" );
 
     if( mKeyTypeCombo->currentText() == "SECRET" )
+    {
         hsmMan.setMode( HsmModeSelectSecretKey, HsmUsageEncrypt );
+    }
     else
+    {
+        hsmMan.mPublicTypeCombo->setCurrentText( "CKK_RSA" );
         hsmMan.setMode( HsmModeSelectPublicKey, HsmUsageEncrypt );
+    }
 
     if( hsmMan.exec() == QDialog::Accepted )
     {

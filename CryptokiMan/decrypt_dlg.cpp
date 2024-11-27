@@ -813,9 +813,14 @@ void DecryptDlg::clickSelect()
     hsmMan.setTitle( "Select Key" );
 
     if( mKeyTypeCombo->currentText() == "SECRET" )
+    {
         hsmMan.setMode( HsmModeSelectSecretKey, HsmUsageDecrypt );
+    }
     else
+    {
+        hsmMan.mPrivateTypeCombo->setCurrentText( "CKK_RSA" );
         hsmMan.setMode( HsmModeSelectPrivateKey, HsmUsageDecrypt );
+    }
 
     if( hsmMan.exec() == QDialog::Accepted )
     {

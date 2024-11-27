@@ -104,6 +104,8 @@ MainWindow::~MainWindow()
     delete text_tab_;
     delete dock_;
     delete hsplitter_;
+
+    delete hsm_man_dlg_;
 }
 
 void MainWindow::dragEnterEvent(QDragEnterEvent *event)
@@ -2977,7 +2979,7 @@ void MainWindow::write( const QString strLog, QColor cr )
     cursor.insertText( strLog );
     cursor.movePosition( QTextCursor::End );
     log_text_->setTextCursor( cursor );
-    log_text_->update();
+    log_text_->repaint();
 }
 
 void MainWindow::setTitle(const QString strName)

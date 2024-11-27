@@ -544,7 +544,7 @@ void HsmManDlg::loadPrivateList()
     mPrivateTable->setRowCount(0);
 
     CK_KEY_TYPE keyType = -1;
-    QString strType = mPublicTypeCombo->currentText();
+    QString strType = mPrivateTypeCombo->currentText();
     if( strType != "Any" )
     {
         keyType = JS_PKCS11_GetCKKType( strType.toStdString().c_str() );
@@ -635,7 +635,7 @@ void HsmManDlg::loadSecretList()
     mSecretTable->setRowCount(0);
 
     CK_KEY_TYPE keyType = -1;
-    QString strType = mPublicTypeCombo->currentText();
+    QString strType = mSecretTypeCombo->currentText();
     if( strType != "Any" )
     {
         keyType = JS_PKCS11_GetCKKType( strType.toStdString().c_str() );
