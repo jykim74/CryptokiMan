@@ -271,7 +271,7 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="mCertTab">
       <attribute name="title">
@@ -329,10 +329,10 @@
          <layout class="QVBoxLayout" name="verticalLayout_6">
           <item>
            <layout class="QGridLayout" name="gridLayout_2">
-            <item row="0" column="1">
-             <widget class="QPushButton" name="mCertDeleteBtn">
+            <item row="0" column="0">
+             <widget class="QPushButton" name="mCertViewBtn">
               <property name="text">
-               <string>Delete</string>
+               <string>View</string>
               </property>
              </widget>
             </item>
@@ -340,13 +340,6 @@
              <widget class="QPushButton" name="mCertExportBtn">
               <property name="text">
                <string>Export</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0">
-             <widget class="QPushButton" name="mCertViewBtn">
-              <property name="text">
-               <string>View</string>
               </property>
              </widget>
             </item>
@@ -362,6 +355,20 @@
                </size>
               </property>
              </spacer>
+            </item>
+            <item row="0" column="1">
+             <widget class="QPushButton" name="mCertDeleteBtn">
+              <property name="text">
+               <string>Delete</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="4">
+             <widget class="QPushButton" name="mCertDeleteKeyPairBtn">
+              <property name="text">
+               <string>Delete certificate and key pair</string>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
@@ -422,13 +429,6 @@
          <layout class="QVBoxLayout" name="verticalLayout_7">
           <item>
            <layout class="QGridLayout" name="gridLayout_3">
-            <item row="0" column="1">
-             <widget class="QPushButton" name="mPublicDeleteBtn">
-              <property name="text">
-               <string>Delete</string>
-              </property>
-             </widget>
-            </item>
             <item row="0" column="0">
              <widget class="QPushButton" name="mPublicViewBtn">
               <property name="text">
@@ -436,7 +436,14 @@
               </property>
              </widget>
             </item>
-            <item row="0" column="3">
+            <item row="0" column="1">
+             <widget class="QPushButton" name="mPublicDeleteBtn">
+              <property name="text">
+               <string>Delete</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="5">
              <widget class="QPushButton" name="mPublicExportBtn">
               <property name="text">
                <string>Export</string>
@@ -455,6 +462,20 @@
                </size>
               </property>
              </spacer>
+            </item>
+            <item row="0" column="3">
+             <widget class="QPushButton" name="mPublicVerifyBtn">
+              <property name="text">
+               <string>Verify</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="4">
+             <widget class="QPushButton" name="mPublicEncryptBtn">
+              <property name="text">
+               <string>Encrypt</string>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
@@ -518,27 +539,6 @@
          <layout class="QVBoxLayout" name="verticalLayout_8">
           <item>
            <layout class="QGridLayout" name="gridLayout_4">
-            <item row="0" column="3">
-             <widget class="QPushButton" name="mPrivateExportBtn">
-              <property name="text">
-               <string>Export</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0">
-             <widget class="QPushButton" name="mPrivateViewBtn">
-              <property name="text">
-               <string>View</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QPushButton" name="mPrivateDeleteBtn">
-              <property name="text">
-               <string>Delete</string>
-              </property>
-             </widget>
-            </item>
             <item row="0" column="2">
              <spacer name="horizontalSpacer_10">
               <property name="orientation">
@@ -551,6 +551,41 @@
                </size>
               </property>
              </spacer>
+            </item>
+            <item row="0" column="5">
+             <widget class="QPushButton" name="mPrivateExportBtn">
+              <property name="text">
+               <string>Export</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QPushButton" name="mPrivateDeleteBtn">
+              <property name="text">
+               <string>Delete</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="3">
+             <widget class="QPushButton" name="mPrivateSignBtn">
+              <property name="text">
+               <string>Sign</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QPushButton" name="mPrivateViewBtn">
+              <property name="text">
+               <string>View</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="4">
+             <widget class="QPushButton" name="mPrivateDecryptBtn">
+              <property name="text">
+               <string>Decrypt</string>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
@@ -611,6 +646,26 @@
          <layout class="QVBoxLayout" name="verticalLayout_9">
           <item>
            <layout class="QGridLayout" name="gridLayout_5">
+            <item row="0" column="3">
+             <spacer name="horizontalSpacer_7">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="0" column="5">
+             <widget class="QPushButton" name="mSecretDecryptBtn">
+              <property name="text">
+               <string>Decrypt</string>
+              </property>
+             </widget>
+            </item>
             <item row="0" column="1">
              <widget class="QPushButton" name="mSecretViewBtn">
               <property name="text">
@@ -625,18 +680,26 @@
               </property>
              </widget>
             </item>
-            <item row="0" column="3">
-             <spacer name="horizontalSpacer_7">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+            <item row="0" column="6">
+             <widget class="QPushButton" name="mSecretSignBtn">
+              <property name="text">
+               <string>Sign</string>
               </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
+             </widget>
+            </item>
+            <item row="0" column="4">
+             <widget class="QPushButton" name="mSecretEncryptBtn">
+              <property name="text">
+               <string>Encrypt</string>
               </property>
-             </spacer>
+             </widget>
+            </item>
+            <item row="0" column="7">
+             <widget class="QPushButton" name="mSecretVerifyBtn">
+              <property name="text">
+               <string>Verify</string>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
