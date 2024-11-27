@@ -311,6 +311,11 @@ void EncryptDlg::appendStatusLabel( const QString& strLabel )
     mStatusLabel->setText( strStatus );
 }
 
+void EncryptDlg::updateStatusLabel()
+{
+    mStatusLabel->setText( QString( "Init|Update X %1").arg( update_cnt_));
+}
+
 void EncryptDlg::keyTypeChanged( int index )
 {
     mMechCombo->clear();
@@ -499,7 +504,9 @@ void EncryptDlg::clickUpdate()
 
     BIN binPart = {0,0};
     JS_BIN_set( &binPart, pEncPart, uEncPartLen );
-    appendStatusLabel( "|Update" );
+
+    update_cnt_++;
+    updateStatusLabel();
 
     mOutputText->appendPlainText( getHexString( binPart.pVal, binPart.nLen ));
 

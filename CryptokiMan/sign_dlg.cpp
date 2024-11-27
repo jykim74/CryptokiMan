@@ -184,6 +184,11 @@ void SignDlg::appendStatusLabel( const QString& strLabel )
     mStatusLabel->setText( strStatus );
 }
 
+void SignDlg::updateStatusLabel()
+{
+    mStatusLabel->setText( QString( "Init|Update X %1").arg( update_cnt_));
+}
+
 void SignDlg::keyTypeChanged( int index )
 {
     mMechCombo->clear();
@@ -321,7 +326,8 @@ void SignDlg::clickUpdate()
         return;
     }
 
-    appendStatusLabel( "|Update" );
+    update_cnt_++;
+    updateStatusLabel();
 }
 
 void SignDlg::clickFinal()

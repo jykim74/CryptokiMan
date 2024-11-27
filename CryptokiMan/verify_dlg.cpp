@@ -186,6 +186,11 @@ void VerifyDlg::appendStatusLabel( const QString& strLabel )
     mStatusLabel->setText( strStatus );
 }
 
+void VerifyDlg::updateStatusLabel()
+{
+    mStatusLabel->setText( QString( "Init|Update X %1").arg( update_cnt_));
+}
+
 void VerifyDlg::keyTypeChanged( int index )
 {
     mMechCombo->clear();
@@ -315,7 +320,8 @@ void VerifyDlg::clickUpdate()
         return;
     }
 
-    appendStatusLabel( "|Update" );
+    update_cnt_++;
+    updateStatusLabel();
 }
 
 void VerifyDlg::clickFinal()

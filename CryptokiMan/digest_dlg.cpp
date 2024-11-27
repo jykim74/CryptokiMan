@@ -227,6 +227,11 @@ void DigestDlg::appendStatusLabel( const QString& strLabel )
     mStatusLabel->setText( strStatus );
 }
 
+void DigestDlg::updateStatusLabel()
+{
+    mStatusLabel->setText( QString( "Init|Update X %1").arg( update_cnt_));
+}
+
 void DigestDlg::clickDigestKey()
 {
     int rv;
@@ -319,7 +324,8 @@ void DigestDlg::clickUpdate()
 
     if( rv == CKR_OK )
     {
-        appendStatusLabel( "|Update" );
+        update_cnt_++;
+        updateStatusLabel();
     }
     else
     {

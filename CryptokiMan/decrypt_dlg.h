@@ -61,6 +61,7 @@ private slots:
 private:
     void initialize();
     void appendStatusLabel( const QString& strLabel );
+    void updateStatusLabel();
     void initUI();
     void setMechanism( void *pMech );
     void freeMechanism( void *pMech );

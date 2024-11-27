@@ -310,6 +310,11 @@ void DecryptDlg::appendStatusLabel( const QString& strLabel )
     mStatusLabel->setText( strStatus );
 }
 
+void DecryptDlg::updateStatusLabel()
+{
+    mStatusLabel->setText( QString( "Init|Update X %1").arg( update_cnt_));
+}
+
 void DecryptDlg::keyTypeChanged( int index )
 {
     mMechCombo->clear();
@@ -505,7 +510,8 @@ void DecryptDlg::clickUpdate()
     mOutputText->appendPlainText( strDec );
     JS_BIN_reset( &binDecPart );
 
-    appendStatusLabel( "|Update" );
+    update_cnt_++;
+    updateStatusLabel();
     if( pDecPart ) JS_free( pDecPart );
 }
 
