@@ -42,7 +42,6 @@ private slots:
     void clickSelect();
 
     void keyTypeChanged( int index );
-    void labelChanged( int index );
 
     void inputChanged();
     void outputChanged();

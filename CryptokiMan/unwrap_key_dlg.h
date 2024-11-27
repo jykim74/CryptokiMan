@@ -26,7 +26,6 @@ private slots:
     virtual void accept();
     void slotChanged( int index );
 
-    void unwrapLabelChanged(int index);
     void unwrapTypeChanged(int index);
     void unwrapMechChanged(int index );
     void classChanged(int index);
@@ -67,9 +66,6 @@ private:
     void setAttributes();
     void connectAttributes();
     void setDefaults();
-
-    void setUnwrapSecretLabel();
-    void setUnwrapRSAPrivateLabel();
 
     int slot_index_;
     long session_;

@@ -44,6 +44,7 @@ public:
     void setSelectedSlot( int index );
     void setMode( int nMode, int nUsage = HsmUsageAny );
     void setTitle( const QString strTitle );
+    const QString getData() { return str_data_; };
 
 private slots:
     void slotChanged( int index );
@@ -73,6 +74,8 @@ private slots:
     void clickSecretView();
     void clickSecretDelete();
 
+    void clickOK();
+
 private:
     void initUI();
     void initialize();
@@ -80,6 +83,7 @@ private:
 
     int slot_index_;
     long session_;
+    QString str_data_;
 };
 
 #endif // HSM_MAN_DLG_H

@@ -26,23 +26,19 @@ private slots:
     void clickWrapKey();
     void slotChanged( int index );
 
-    void labelChanged(int index );
-    void wrappingLabelChanged(int index );
     void wrappingTypeChanged( int index );
     void wrappingMechChanged( int index );
     void clickSaveFile();
     void clickClearOutput();
     void changeOutput();
+    void typeChanged( int index );
 
     void changeWrappingParam(const QString& text );
+    void clickWrappingSelect();
     void clickSelect();
 private:
     void initialize();
     void initUI();
-
-    void setWrappingSecretLabel();
-    void setWrappingRSAPublicLabel();
-    void setLabelKeyList();
 
     int slot_index_;
     long session_;

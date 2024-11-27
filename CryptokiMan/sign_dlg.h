@@ -42,7 +42,6 @@ private slots:
     void clickSignRecoverInit();
     void clickSignRecover();
 
-    void labelChanged( int index );
     void keyTypeChanged( int index );
     void mechChanged( int index );
 

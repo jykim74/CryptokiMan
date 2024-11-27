@@ -42,7 +42,6 @@ UnwrapKeyDlg::UnwrapKeyDlg(QWidget *parent) :
     setAttributes();
     connectAttributes();
 
-    connect( mUnwrapLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(unwrapLabelChanged(int)));
     connect( mUnwrapTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(unwrapTypeChanged(int)));
     connect( mClassCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(classChanged(int)));
     connect( mTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(typeChanged(int)));
@@ -305,9 +304,13 @@ void UnwrapKeyDlg::accept()
 
     if( mUnwrapObjectText->text().length() < 1 )
     {
-        manApplet->warningBox( tr( "Select unwrap key" ), this );
-        mUnwrapLabelCombo->setFocus();
-        return;
+        clickSelect();
+
+        if( mUnwrapObjectText->text().length() < 1 )
+        {
+            manApplet->warningBox( tr( "Select unwrap key" ), this );
+            return;
+        }
     }
 
     hUnwrappingKey = mUnwrapObjectText->text().toLong();
@@ -554,15 +557,6 @@ void UnwrapKeyDlg::accept()
     QDialog::accept();
 }
 
-void UnwrapKeyDlg::unwrapLabelChanged(int index)
-{
-    QVariant objVal = mUnwrapLabelCombo->itemData(index);
-
-    QString strObject = QString("%1").arg( objVal.toInt() );
-
-
-    mUnwrapObjectText->setText( strObject );
-}
 
 void UnwrapKeyDlg::unwrapTypeChanged(int index)
 {
@@ -571,13 +565,14 @@ void UnwrapKeyDlg::unwrapTypeChanged(int index)
     if( mUnwrapTypeCombo->currentText() == kWrapType.at(0) )
     {
         mUnwrapMechCombo->addItems( sMechUnwrapSymList );
-        setUnwrapSecretLabel();
     }
     else
     {
         mUnwrapMechCombo->addItems( sMechUnwrapAsymList );
-        setUnwrapRSAPrivateLabel();
     }
+
+    mUnwrapLabelText->clear();
+    mUnwrapObjectText->clear();
 }
 
 void UnwrapKeyDlg::unwrapMechChanged(int index )
@@ -637,137 +632,6 @@ void UnwrapKeyDlg::clickReadFile()
     mInputText->setPlainText( getHexString( binInput.pVal, binInput.nLen ));
     JS_BIN_reset( &binInput );
 
-}
-
-
-void UnwrapKeyDlg::setUnwrapSecretLabel()
-{
-    int rv = -1;
-
-    CK_ATTRIBUTE sTemplate[10];
-    CK_ULONG uCnt = 0;
-
-    CK_ULONG uMaxObjCnt = manApplet->settingsMgr()->findMaxObjectsCount();
-    CK_OBJECT_HANDLE sObjects[uMaxObjCnt];
-    CK_ULONG uObjCnt = 0;
-
-    CK_OBJECT_CLASS objClass = 0;
-
-    objClass = CKO_SECRET_KEY;
-
-    sTemplate[uCnt].type = CKA_CLASS;
-    sTemplate[uCnt].pValue = &objClass;
-    sTemplate[uCnt].ulValueLen = sizeof(objClass);
-    uCnt++;
-
-    sTemplate[uCnt].type = CKA_UNWRAP;
-    sTemplate[uCnt].pValue = &kTrue;
-    sTemplate[uCnt].ulValueLen = sizeof(CK_BBOOL);
-    uCnt++;
-
-    rv = manApplet->cryptokiAPI()->FindObjectsInit( session_, sTemplate, uCnt );
-    if( rv != CKR_OK ) return;
-
-    rv = manApplet->cryptokiAPI()->FindObjects( session_, sObjects, uMaxObjCnt, &uObjCnt );
-    if( rv != CKR_OK ) return;
-
-    rv = manApplet->cryptokiAPI()->FindObjectsFinal( session_ );
-    if( rv != CKR_OK ) return;
-
-    mUnwrapLabelCombo->clear();
-
-    for( int i=0; i < uObjCnt; i++ )
-    {
-        char *pLabel = NULL;
-
-        BIN binLabel = {0,0};
-        QVariant objVal = QVariant( (int)sObjects[i] );
-
-        rv = manApplet->cryptokiAPI()->GetAttributeValue2( session_, sObjects[i], CKA_LABEL, &binLabel );
-
-        JS_BIN_string( &binLabel, &pLabel );
-
-        mUnwrapLabelCombo->addItem( pLabel, objVal );
-
-        if( pLabel ) JS_free( pLabel );
-        JS_BIN_reset( &binLabel );
-    }
-
-    int iKeyCnt = mUnwrapLabelCombo->count();
-    if( iKeyCnt > 0 )
-    {
-        QVariant objVal = mUnwrapLabelCombo->itemData(0);
-        QString strObject = QString("%1").arg( objVal.toInt() );
-
-        mUnwrapObjectText->setText( strObject );
-    }
-}
-
-void UnwrapKeyDlg::setUnwrapRSAPrivateLabel()
-{
-    int rv = -1;
-
-    CK_ATTRIBUTE sTemplate[10];
-    CK_ULONG uCnt = 0;
-
-    CK_ULONG uMaxObjCnt = manApplet->settingsMgr()->findMaxObjectsCount();
-    CK_OBJECT_HANDLE sObjects[uMaxObjCnt];
-    CK_ULONG uObjCnt = 0;
-
-    CK_OBJECT_CLASS objClass = CKO_PUBLIC_KEY;
-    CK_KEY_TYPE keyType = CKK_RSA;
-
-    sTemplate[uCnt].type = CKA_CLASS;
-    sTemplate[uCnt].pValue = &objClass;
-    sTemplate[uCnt].ulValueLen = sizeof(objClass);
-    uCnt++;
-
-    sTemplate[uCnt].type = CKA_KEY_TYPE;
-    sTemplate[uCnt].pValue = &keyType;
-    sTemplate[uCnt].ulValueLen = sizeof(keyType);
-    uCnt++;
-
-    sTemplate[uCnt].type = CKA_UNWRAP;
-    sTemplate[uCnt].pValue = &kTrue;
-    sTemplate[uCnt].ulValueLen = sizeof(CK_BBOOL);
-    uCnt++;
-
-    rv = manApplet->cryptokiAPI()->FindObjectsInit( session_, sTemplate, uCnt );
-    if( rv != CKR_OK ) return;
-
-    rv = manApplet->cryptokiAPI()->FindObjects( session_, sObjects, uMaxObjCnt, &uObjCnt );
-    if( rv != CKR_OK ) return;
-
-    rv = manApplet->cryptokiAPI()->FindObjectsFinal( session_ );
-    if( rv != CKR_OK ) return;
-
-    mUnwrapLabelCombo->clear();
-
-    for( int i=0; i < uObjCnt; i++ )
-    {
-        char *pLabel = NULL;
-
-        BIN binLabel = {0,0};
-        QVariant objVal = QVariant( (int)sObjects[i] );
-
-        rv = manApplet->cryptokiAPI()->GetAttributeValue2( session_, sObjects[i], CKA_LABEL, &binLabel );
-
-        JS_BIN_string( &binLabel, &pLabel );
-
-        mUnwrapLabelCombo->addItem( pLabel, objVal );
-
-        if( pLabel ) JS_free( pLabel );
-        JS_BIN_reset( &binLabel );
-    }
-
-    int iKeyCnt = mUnwrapLabelCombo->count();
-    if( iKeyCnt > 0 )
-    {
-        QVariant objVal = mUnwrapLabelCombo->itemData(0);
-        QString strObject = QString("%1").arg( objVal.toInt() );
-
-        mUnwrapObjectText->setText( strObject );
-    }
 }
 
 void UnwrapKeyDlg::clickUseRand()
@@ -906,6 +770,18 @@ void UnwrapKeyDlg::clickSelect()
 
     if( hsmMan.exec() == QDialog::Accepted )
     {
+        mUnwrapLabelText->clear();
+        mUnwrapObjectText->clear();
 
+        QString strData = hsmMan.getData();
+        QStringList listData = strData.split(":");
+        if( listData.size() < 3 ) return;
+
+        QString strType = listData.at(0);
+        long hObj = listData.at(1).toLong();
+        QString strID = listData.at(2);
+        QString strLabel = manApplet->cryptokiAPI()->getLabel( session_, hObj );
+        mUnwrapLabelText->setText( strLabel );
+        mUnwrapObjectText->setText( QString("%1").arg( hObj ));
     }
 }

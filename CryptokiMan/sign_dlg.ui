@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>532</width>
-    <height>698</height>
+    <height>553</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -463,6 +463,13 @@
        </property>
       </widget>
      </item>
+     <item row="0" column="4">
+      <widget class="QPushButton" name="mSelectBtn">
+       <property name="text">
+        <string>Select</string>
+       </property>
+      </widget>
+     </item>
      <item row="0" column="3">
       <widget class="QLineEdit" name="mObjectText">
        <property name="maximumSize">
@@ -514,19 +521,36 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QComboBox" name="mLabelCombo">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-         <horstretch>1</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
+      <widget class="QLineEdit" name="mLabelText">
+       <property name="palette">
+        <palette>
+         <active>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </active>
+         <inactive>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </inactive>
+         <disabled/>
+        </palette>
        </property>
-      </widget>
-     </item>
-     <item row="0" column="4">
-      <widget class="QPushButton" name="mSelectBtn">
-       <property name="text">
-        <string>Select</string>
+       <property name="readOnly">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -1354,7 +1378,6 @@
   <tabstop>mMechText</tabstop>
   <tabstop>mParamText</tabstop>
   <tabstop>mParamLenText</tabstop>
-  <tabstop>mLabelCombo</tabstop>
   <tabstop>mObjectText</tabstop>
   <tabstop>mInputTab</tabstop>
   <tabstop>mInputStringRadio</tabstop>

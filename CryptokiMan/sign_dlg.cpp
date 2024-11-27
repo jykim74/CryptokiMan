@@ -79,7 +79,6 @@ void SignDlg::initUI()
     mMechCombo->addItems( sMechSignAsymList );
 
     connect( mKeyTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(keyTypeChanged(int)));
-    connect( mLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(labelChanged(int)));
     connect( mParamText, SIGNAL(textChanged(const QString)), this, SLOT(changeParam(const QString)));
     connect( mMechCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(mechChanged(int)));
 
@@ -164,7 +163,7 @@ void SignDlg::setObject( int type, long hObj )
     JS_BIN_string( &binVal, &pLabel );
     JS_BIN_reset( &binVal );
 
-    mLabelCombo->setCurrentText( pLabel );
+    mLabelText->setText( pLabel );
     mObjectText->setText( QString("%1").arg( hObj ));
 
     if( pLabel ) JS_free( pLabel );
@@ -187,71 +186,19 @@ void SignDlg::appendStatusLabel( const QString& strLabel )
 
 void SignDlg::keyTypeChanged( int index )
 {
-    int rv = -1;
-
-    CK_ATTRIBUTE sTemplate[10];
-    CK_ULONG uCnt = 0;
-
-    CK_ULONG uMaxObjCnt = manApplet->settingsMgr()->findMaxObjectsCount();
-    CK_OBJECT_HANDLE sObjects[uMaxObjCnt];
-    CK_ULONG uObjCnt = 0;
-
-    CK_OBJECT_CLASS objClass = 0;
-
     mMechCombo->clear();
 
     if( mKeyTypeCombo->currentText() == sKeyList[0] )
     {
-        objClass = CKO_PRIVATE_KEY;
         mMechCombo->addItems( sMechSignAsymList );
     }
     else if( mKeyTypeCombo->currentText() == sKeyList[1] )
     {
-        objClass = CKO_SECRET_KEY;
         mMechCombo->addItems( sMechSignSymList );
     }
 
-    sTemplate[uCnt].type = CKA_CLASS;
-    sTemplate[uCnt].pValue = &objClass;
-    sTemplate[uCnt].ulValueLen = sizeof(objClass);
-    uCnt++;
-
-    sTemplate[uCnt].type = CKA_SIGN;
-    sTemplate[uCnt].pValue = &kTrue;
-    sTemplate[uCnt].ulValueLen = sizeof(CK_BBOOL);
-    uCnt++;
-
-
-    rv = manApplet->cryptokiAPI()->FindObjectsInit( session_, sTemplate, uCnt );
-    if( rv != CKR_OK ) return;
-
-    rv = manApplet->cryptokiAPI()->FindObjects( session_, sObjects, uMaxObjCnt, &uObjCnt );
-    if( rv != CKR_OK ) return;
-
-    rv = manApplet->cryptokiAPI()->FindObjectsFinal( session_ );
-    if( rv != CKR_OK ) return;
-
-    mLabelCombo->clear();
-
-    for( int i=0; i < uObjCnt; i++ )
-    {
-        char    *pStr = NULL;
-        BIN binLabel = {0,0};
-
-        rv = manApplet->cryptokiAPI()->GetAttributeValue2( session_, sObjects[i], CKA_LABEL, &binLabel );
-
-        QVariant objVal = QVariant((int)sObjects[i]);
-        JS_BIN_string( &binLabel, &pStr );
-        mLabelCombo->addItem( pStr, objVal );
-        if( pStr ) JS_free( pStr );
-        JS_BIN_reset(&binLabel);
-    }
-
-    if( uObjCnt > 0 )
-    {
-        QString strHandle = QString("%1").arg( sObjects[0] );
-        mObjectText->setText( strHandle );
-    }
+    mLabelText->clear();
+    mObjectText->clear();
 }
 
 void SignDlg::mechChanged( int index )
@@ -294,15 +241,6 @@ void SignDlg::changeParam( const QString text )
     mParamLenText->setText( QString("%1").arg( strLen ));
 }
 
-void SignDlg::labelChanged( int index )
-{
-    QVariant objVal = mLabelCombo->itemData( index );
-
-    QString strHandle = QString("%1").arg( objVal.toInt() );
-
-    mObjectText->setText( strHandle );
-}
-
 int SignDlg::clickInit()
 {
     int rv = -1;
@@ -321,6 +259,16 @@ int SignDlg::clickInit()
 
         sMech.pParameter = binParam.pVal;
         sMech.ulParameterLen = binParam.nLen;
+    }
+
+    if( mObjectText->text().isEmpty() )
+    {
+        clickSelect();
+        if( mObjectText->text().isEmpty() )
+        {
+            manApplet->warningBox( tr( "Select your key"), this );
+            return -1;
+        }
     }
 
     CK_OBJECT_HANDLE uObject = mObjectText->text().toLong();
@@ -602,7 +550,19 @@ void SignDlg::clickSelect()
 
     if( hsmMan.exec() == QDialog::Accepted )
     {
+        mLabelText->clear();
+        mObjectText->clear();
 
+        QString strData = hsmMan.getData();
+        QStringList listData = strData.split(":");
+        if( listData.size() < 3 ) return;
+
+        QString strType = listData.at(0);
+        long hObj = listData.at(1).toLong();
+        QString strID = listData.at(2);
+        QString strLabel = manApplet->cryptokiAPI()->getLabel( session_, hObj );
+        mLabelText->setText( strLabel );
+        mObjectText->setText( QString("%1").arg( hObj ));
     }
 }
 

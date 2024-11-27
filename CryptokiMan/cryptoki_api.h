@@ -150,6 +150,7 @@ public:
 
     QString getLastError();
     long getHandle( CK_SESSION_HANDLE hSession, CK_OBJECT_CLASS objClass, const BIN *pID );
+    const QString getLabel( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObj );
 
 private:
     void logResult( const QString strName, int rv, qint64 ms = -1 );

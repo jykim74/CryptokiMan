@@ -24,7 +24,13 @@ HsmManDlg::HsmManDlg(QWidget *parent) :
     setupUi(this);
 
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(close()));
+    connect( mOKBtn, SIGNAL(clicked()), this, SLOT(clickOK()));
     connect( mUsageCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changeUsage()));
+
+    connect( mCertTable, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(clickCertView()));
+    connect( mPublicTable, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(clickPublicView()));
+    connect( mPrivateTable, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(clickPrivateView()));
+    connect( mSecretTable, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(clickSecretView()));
 
     connect( mTabWidget, SIGNAL(currentChanged(int)), this, SLOT(changeTab(int)));
     connect( mCertKeyPairCheck, SIGNAL(clicked()), this, SLOT(loadCertList()));
@@ -1062,4 +1068,48 @@ void HsmManDlg::clickSecretDelete()
         manApplet->messageBox( tr("The secret key is deleted"), this );
         loadSecretList();
     }
+}
+
+void HsmManDlg::clickOK()
+{
+    str_data_.clear();
+
+    QModelIndex idx;
+    QTableWidgetItem *item = NULL;
+    int nTabIdx = mTabWidget->currentIndex();
+
+    if( nTabIdx == TAB_CERT_IDX )
+    {
+        idx = mCertTable->currentIndex();
+        item = mCertTable->item( idx.row(), 0 );
+    }
+    else if( nTabIdx == TAB_PUBLIC_IDX )
+    {
+        idx = mPublicTable->currentIndex();
+        item = mPublicTable->item( idx.row(), 0 );
+    }
+    else if( nTabIdx == TAB_PRIVATE_IDX )
+    {
+        idx = mPrivateTable->currentIndex();
+        item = mPrivateTable->item( idx.row(), 0 );
+    }
+    else if( nTabIdx == TAB_SECRET_IDX )
+    {
+        idx = mSecretTable->currentIndex();
+        item = mSecretTable->item( idx.row(), 0 );
+    }
+
+    if( item == NULL )
+    {
+        manApplet->warningBox( tr( "There are no selected items"), this );
+        return;
+    }
+
+    QString strData = item->data(Qt::UserRole).toString();
+    QStringList listData = strData.split(":");
+    if( listData.size() < 3 ) return;
+
+    str_data_ = strData;
+
+    accept();
 }

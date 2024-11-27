@@ -2002,6 +2002,28 @@ end :
     return hObjects;
 }
 
+const QString CryptokiAPI::getLabel( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObj )
+{
+    int rv = 0;
+    QString strLabel;
+
+    BIN binLabel = {0,0};
+    char *pLabel = NULL;
+
+    rv = GetAttributeValue2( hSession, hObj, CKA_LABEL, &binLabel );
+    if( rv == CKR_OK )
+    {
+        JS_BIN_string( &binLabel, &pLabel );
+        if( pLabel )
+        {
+            strLabel = pLabel;
+            JS_free( pLabel );
+        }
+    }
+
+    return strLabel;
+}
+
 void CryptokiAPI::logResult( const QString strName, int rv, qint64 ms )
 {
     QString strLog;
