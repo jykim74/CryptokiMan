@@ -3,7 +3,8 @@
   <?define CurrentCryptokiManVersion="1.9.4" ?>
 
   <!-- CryptokiMan Product Guid  -->
-  <?define ProductGuid="cde1e8c3-3000-4ce7-a079-6b0a5ecfaf34" ?> <!-- Version 1.9.4 -->
+  <?define ProductGuid="a1e22579-49b6-45b6-9a32-7e0e3aad4cd7" ?> <!-- Version 1.9.4 -->
+  <!-- ?define ProductGuid="cde1e8c3-3000-4ce7-a079-6b0a5ecfaf34" ? --> <!-- Version 1.9.4 -->
   <!-- ?define ProductGuid="e1804661-cc48-4c28-ad22-db407b79b263" ? --> <!-- Version 1.9.2 -->
   <!-- ?define ProductGuid="7edba9d5-5dbb-4352-b7a2-9eb7923323ec" ? --> <!-- Version 1.9.0 -->
   <!-- ?define ProductGuid="f0595508-da13-4b38-9a21-9ed7be06ed4f" ? --> <!-- Version 1.8.8 -->
