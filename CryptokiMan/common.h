@@ -126,7 +126,7 @@ enum ViewType {
 
 static const int kFileDefault = ACT_FILE_NEW | ACT_FILE_OPEN;
 
-static const int kModuleDefault = ACT_MODULE_INIT | ACT_MODULE_FINAL | ACT_MODULE_OPEN_SESS | ACT_MODULE_CLOSE_SESS \
+static const int kModuleDefault = ACT_MODULE_INIT | ACT_MODULE_OPEN_SESS | ACT_MODULE_CLOSE_SESS \
                                 | ACT_MODULE_LOGIN | ACT_MODULE_LOGOUT;
 
 static const int kObjectDefault = ACT_OBJECT_GEN_KEYPAIR | ACT_OBJECT_GEN_KEY | ACT_OBJECT_CREATE_DATA \
