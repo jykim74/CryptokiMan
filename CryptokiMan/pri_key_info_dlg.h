@@ -9,6 +9,7 @@
 #include "js_bin.h"
 #include <QDialog>
 #include "ui_pri_key_info_dlg.h"
+#include "js_pkcs11.h"
 
 namespace Ui {
 class PriKeyInfoDlg;
@@ -24,6 +25,9 @@ public:
 
     void setPrivateKey( const BIN *pPriKey );
     void setPublicKey( const BIN *pPubKey );
+
+    void setPrivateKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey );
+    void setPublicKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey );
 
     void readPrivateKey( BIN *pPriKey );
     void readPublicKey( BIN *pPubKey );
@@ -66,11 +70,20 @@ private:
     void setDSAKey( const BIN *pKey, bool bPri = true );
     void setEdDSAKey( int nKeyType, const BIN *pKey, bool bPri = true );
 
+    void setRSAKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey, bool bPri = true );
+    void setECCKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey, bool bPri = true );
+    void setDSAKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey, bool bPri = true );
+    void setEdDSAKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey, bool bPri = true );
+
     void setModeUI( bool bVal );
 
     BIN pri_key_;
     BIN pub_key_;
     int key_type_;
+
+    CK_SESSION_HANDLE session_;
+    CK_OBJECT_HANDLE pri_handle_;
+    CK_OBJECT_HANDLE pub_handle_;
 };
 
 #endif // PRI_KEY_INFO_DLG_H

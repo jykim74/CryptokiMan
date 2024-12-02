@@ -18,6 +18,8 @@
 #include "js_pkcs11.h"
 #include "js_error.h"
 #include "common.h"
+#include "cryptoki_api.h"
+#include "p11_work.h"
 
 
 PriKeyInfoDlg::PriKeyInfoDlg(QWidget *parent) :
@@ -25,6 +27,9 @@ PriKeyInfoDlg::PriKeyInfoDlg(QWidget *parent) :
 {
     setupUi(this);
     key_type_ = -1;
+    session_ = 0;
+    pub_handle_ = 0;
+    pri_handle_ = 0;
 
     memset( &pri_key_, 0x00, sizeof(BIN));
     memset( &pub_key_, 0x00, sizeof(BIN));
@@ -355,6 +360,289 @@ void PriKeyInfoDlg::setEdDSAKey( int nKeyType, const BIN *pKey, bool bPri )
     JS_PKI_resetRawKeyVal( &sRawKeyVal );
 }
 
+void PriKeyInfoDlg::setRSAKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey, bool bPri )
+{
+    int ret = 0;
+    BIN binVal = {0,0};
+
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+
+    ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_PUBLIC_EXPONENT, &binVal );
+    if( ret == CKR_OK )
+    {
+        mRSA_EText->setText( getHexString( &binVal ) );
+        JS_BIN_reset( &binVal );
+    }
+    else
+    {
+        mRSA_EText->setText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+    }
+
+    ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_MODULUS, &binVal );
+    if( ret == CKR_OK )
+    {
+        mRSA_NText->setPlainText( getHexString( &binVal ) );
+        JS_BIN_reset( &binVal );
+    }
+    else
+    {
+        mRSA_NText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+    }
+
+    if( bPri == true )
+    {
+        ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_PRIVATE_EXPONENT, &binVal );
+        if( ret == CKR_OK )
+        {
+            mRSA_DText->setPlainText( getHexString( &binVal ) );
+            JS_BIN_reset( &binVal );
+        }
+        else
+        {
+            mRSA_DText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+        }
+
+        ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_PRIME_1, &binVal );
+        if( ret == CKR_OK )
+        {
+            mRSA_PText->setText( getHexString( &binVal ) );
+            JS_BIN_reset( &binVal );
+        }
+        else
+        {
+            mRSA_PText->setText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+        }
+
+        ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_PRIME_2, &binVal );
+        if( ret == CKR_OK )
+        {
+            mRSA_QText->setText( getHexString( &binVal ) );
+            JS_BIN_reset( &binVal );
+        }
+        else
+        {
+            mRSA_QText->setText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+        }
+
+        ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_EXPONENT_1, &binVal );
+        if( ret == CKR_OK )
+        {
+            mRSA_DMP1Text->setText( getHexString( &binVal ) );
+            JS_BIN_reset( &binVal );
+        }
+        else
+        {
+            mRSA_DMP1Text->setText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+        }
+
+        ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_EXPONENT_2, &binVal );
+        if( ret == CKR_OK )
+        {
+            mRSA_DMQ1Text->setText( getHexString( &binVal ) );
+            JS_BIN_reset( &binVal );
+        }
+        else
+        {
+            mRSA_DMQ1Text->setText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+        }
+
+        ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_COEFFICIENT, &binVal );
+        if( ret == CKR_OK )
+        {
+            mRSA_IQMPText->setText( getHexString( &binVal ) );
+            JS_BIN_reset( &binVal );
+        }
+        else
+        {
+            mRSA_IQMPText->setText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+        }
+    }
+
+    JS_BIN_reset( &binVal );
+}
+
+void PriKeyInfoDlg::setECCKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey, bool bPri )
+{
+    int ret = 0;
+    BIN binVal = {0,0};
+
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+
+    char sTextOID[1024];
+
+    ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_EC_PARAMS, &binVal );
+    if( ret == CKR_OK )
+    {
+        JS_PKI_getStringFromOID( &binVal, sTextOID );
+        JS_BIN_reset( &binVal );
+
+        mECC_CurveOIDText->setText( sTextOID );
+        mECC_CurveSNText->setText( JS_PKI_getSNFromOID( sTextOID ) );
+    }
+    else
+    {
+        mECC_CurveOIDText->setText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+    }
+
+    if( bPri == false )
+    {
+        ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_EC_POINT, &binVal );
+        if( ret == CKR_OK )
+        {
+            int nPubLen = (binVal.nLen - 3) / 2;
+            mECC_PubXText->setPlainText( getHexString( &binVal.pVal[3], nPubLen));
+            mECC_PubYText->setPlainText( getHexString( &binVal.pVal[3 + nPubLen], nPubLen));
+
+            JS_BIN_reset( &binVal );
+        }
+        else
+        {
+            mECC_PubXText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+            mECC_PubYText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+        }
+    }
+    else
+    {
+        ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_VALUE, &binVal );
+        if( ret == CKR_OK )
+        {
+            mECC_PrivateText->setPlainText( getHexString( &binVal ) );
+            JS_BIN_reset( &binVal );
+        }
+        else
+        {
+            mECC_PrivateText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+        }
+    }
+
+    JS_BIN_reset( &binVal );
+}
+
+void PriKeyInfoDlg::setDSAKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey, bool bPri )
+{
+    int ret = 0;
+    BIN binVal = {0,0};
+
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+
+    ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_PRIME, &binVal );
+    if( ret == CKR_OK )
+    {
+        mDSA_PText->setPlainText( getHexString( &binVal ) );
+        JS_BIN_reset( &binVal );
+    }
+    else
+    {
+        mDSA_PText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+    }
+
+    ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_SUBPRIME, &binVal );
+    if( ret == CKR_OK )
+    {
+        mDSA_QText->setText( getHexString( &binVal ) );
+        JS_BIN_reset( &binVal );
+    }
+    else
+    {
+        mDSA_QText->setText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+    }
+
+    ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_BASE, &binVal );
+    if( ret == CKR_OK )
+    {
+        mDSA_GText->setPlainText( getHexString( &binVal ) );
+        JS_BIN_reset( &binVal );
+    }
+    else
+    {
+        mDSA_GText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+    }
+
+    if( bPri == true )
+    {
+        ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_VALUE, &binVal );
+        if( ret == CKR_OK )
+        {
+            mDSA_PrivateText->setText( getHexString( &binVal ) );
+            JS_BIN_reset( &binVal );
+        }
+        else
+        {
+            mDSA_PrivateText->setText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+        }
+    }
+    else
+    {
+        ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_VALUE, &binVal );
+        if( ret == CKR_OK )
+        {
+            mDSA_PublicText->setPlainText( getHexString( &binVal ) );
+            JS_BIN_reset( &binVal );
+        }
+        else
+        {
+            mDSA_PublicText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+        }
+    }
+
+    JS_BIN_reset( &binVal );
+}
+
+void PriKeyInfoDlg::setEdDSAKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey,  bool bPri )
+{
+    int ret = 0;
+    BIN binVal = {0,0};
+    QString strName;
+
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+
+    ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_EC_PARAMS, &binVal );
+    if( ret == CKR_OK )
+    {
+        JS_BIN_reset( &binVal );
+    }
+
+    if( bPri == false )
+    {
+        ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_EC_POINT, &binVal );
+        if( ret == CKR_OK )
+        {
+            if( binVal.pVal[1] == 32 )
+                strName = "ED25519";
+            else
+                strName = "ED448";
+
+            mEdDSA_RawPublicText->setPlainText( getHexString( &binVal.pVal[2], binVal.nLen - 2 ) );
+            JS_BIN_reset( &binVal );
+        }
+        else
+        {
+            mEdDSA_RawPublicText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+        }
+    }
+    else
+    {
+        ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_VALUE, &binVal );
+        if( ret == CKR_OK )
+        {
+            if( binVal.nLen == 32 )
+                strName = "ED25519";
+            else
+                strName = "ED448";
+
+            mEdDSA_RawPrivateText->setPlainText( getHexString( &binVal ) );
+            JS_BIN_reset( &binVal );
+        }
+        else
+        {
+            mEdDSA_RawPrivateText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+        }
+    }
+
+    mEdDSA_NameText->setText( strName );
+    JS_BIN_reset( &binVal );
+}
+
 void PriKeyInfoDlg::changeRSA_N()
 {
     QString strN = mRSA_NText->toPlainText();
@@ -503,6 +791,7 @@ void PriKeyInfoDlg::clearAll()
 
 void PriKeyInfoDlg::clickCheckPubKey()
 {
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
 
     int ret = 0;
     if( pub_key_.nLen > 0 )
@@ -512,7 +801,25 @@ void PriKeyInfoDlg::clickCheckPubKey()
     else
     {
         BIN binPub = {0,0};
-        JS_PKI_getPubKeyFromPriKey( key_type_, &pri_key_, &binPub );
+        if( pri_key_.nLen > 0 )
+        {
+            JS_PKI_getPubKeyFromPriKey( key_type_, &pri_key_, &binPub );
+        }
+        else
+        {
+            if( session_ > 0 )
+            {
+                if( pub_handle_ > 0 )
+                {
+                    getPublicKey( pAPI, session_, pub_handle_, &binPub );
+                }
+                else if( pri_handle_ > 0 )
+                {
+                    getPublicKey( pAPI, session_, pri_handle_, &binPub );
+                }
+            }
+        }
+
         ret = JS_PKI_checkPublicKey( &binPub );
         JS_BIN_reset( &binPub );
     }
@@ -614,6 +921,9 @@ void PriKeyInfoDlg::setPrivateKey( const BIN *pPriKey )
     JS_BIN_reset( &pri_key_ );
     JS_BIN_reset( &pub_key_ );
     JS_BIN_copy( &pri_key_, pPriKey );
+    session_ = 0;
+    pub_handle_ = 0;
+    pri_handle_ = 0;
 
 
     if( pPriKey == NULL || pPriKey->nLen <= 0 )
@@ -665,6 +975,10 @@ void PriKeyInfoDlg::setPublicKey( const BIN *pPubKey )
     JS_BIN_reset( &pub_key_ );
     JS_BIN_copy( &pub_key_, pPubKey );
 
+    session_ = 0;
+    pub_handle_ = 0;
+    pri_handle_ = 0;
+
     if( pPubKey == NULL || pPubKey->nLen <= 0 )
         return;
 
@@ -699,6 +1013,128 @@ void PriKeyInfoDlg::setPublicKey( const BIN *pPubKey )
         manApplet->warningBox( tr("Public key algorithm(%1) not supported").arg( key_type_ ), this);
     }
 
+}
+
+void PriKeyInfoDlg::setPrivateKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey )
+{
+    clearAll();
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+
+    int ret = 0;
+    BIN binVal = {0,0};
+    long uKeyType = 0;
+
+    QString strTitle = tr( "Private Key Information" );
+
+    mTitleLabel->setText( strTitle );
+    setWindowTitle( strTitle );
+
+    JS_BIN_reset( &pri_key_ );
+    JS_BIN_reset( &pub_key_ );
+
+    if( hKey < 0 || hSession < 0) return;
+    session_ = hSession;
+    pri_handle_ = hKey;
+    pub_handle_ = 0;
+
+    ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_KEY_TYPE, &binVal );
+    if( ret != 0 ) goto end;
+
+    mCheckPubKeyBtn->setEnabled( false );
+
+    memcpy( &uKeyType, binVal.pVal, binVal.nLen );
+
+    if( uKeyType == CKK_RSA )
+    {
+        mKeyTab->setCurrentIndex(0);
+        mKeyTab->setTabEnabled(0, true);
+        setRSAKey( hSession, hKey, true );
+    }
+    else if( uKeyType == CKK_EC )
+    {
+        mKeyTab->setCurrentIndex(1);
+        mKeyTab->setTabEnabled(1, true);
+        setECCKey( hSession, hKey, true );
+    }
+    else if( uKeyType == CKK_DSA )
+    {
+        mKeyTab->setCurrentIndex( 2 );
+        mKeyTab->setTabEnabled(2, true);
+        setDSAKey( hSession, hKey, true );
+    }
+    else if( uKeyType == CKK_EC_EDWARDS )
+    {
+        mKeyTab->setCurrentIndex( 3 );
+        mKeyTab->setTabEnabled(3, true);
+        setEdDSAKey( hSession, hKey, true );
+    }
+    else
+    {
+        manApplet->warningBox( tr("Private key algorithm(%1) not supported").arg( uKeyType ), this);
+    }
+
+end :
+    JS_BIN_reset( &binVal );
+}
+
+void PriKeyInfoDlg::setPublicKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey )
+{
+    clearAll();
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+
+    int ret = 0;
+    BIN binVal = {0,0};
+    long uKeyType = 0;
+
+    QString strTitle = tr( "Public Key Information" );
+
+    mTitleLabel->setText( strTitle );
+    setWindowTitle( strTitle );
+
+    JS_BIN_reset( &pri_key_ );
+    JS_BIN_reset( &pub_key_ );
+
+    if( hKey < 0 || hSession < 0) return;
+    session_ = hSession;
+    pub_handle_ = hKey;
+    pri_handle_ = -1;
+
+    ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_KEY_TYPE, &binVal );
+    if( ret != 0 ) goto end;
+
+    memcpy( &uKeyType, binVal.pVal, binVal.nLen );
+
+    if( uKeyType == CKK_RSA )
+    {
+        mKeyTab->setCurrentIndex(0);
+        mKeyTab->setTabEnabled(0, true);
+        setRSAKey( hSession, hKey, false );
+    }
+    else if( uKeyType == CKK_EC )
+    {
+        mKeyTab->setCurrentIndex(1);
+        mKeyTab->setTabEnabled(1, true);
+        setECCKey( hSession, hKey, false );
+    }
+    else if( uKeyType == CKK_DSA )
+    {
+        mKeyTab->setCurrentIndex( 2 );
+        mKeyTab->setTabEnabled(2, true);
+        setDSAKey( hSession, hKey, false );
+    }
+    else if( uKeyType == CKK_EC_EDWARDS )
+    {
+        mKeyTab->setCurrentIndex( 3 );
+        mKeyTab->setTabEnabled(3, true);
+        setEdDSAKey( hSession, hKey, false );
+    }
+    else
+    {
+        manApplet->warningBox( tr("Public key algorithm(%1) not supported").arg( uKeyType ), this);
+    }
+
+end :
+    JS_BIN_reset( &binVal );
 }
 
 void PriKeyInfoDlg::readPrivateKey( BIN *pPriKey )

@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="mFirstTab">
       <attribute name="title">
@@ -53,20 +53,6 @@
           </widget>
          </item>
         </layout>
-       </item>
-       <item>
-        <widget class="Line" name="line">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Slot status</string>
-         </property>
-        </widget>
        </item>
        <item>
         <layout class="QGridLayout" name="gridLayout_3">

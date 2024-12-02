@@ -1934,7 +1934,7 @@ void MainWindow::viewPriKey()
     QTableWidgetItem* item1 = right_table_->item( row, 1 );
 
     PriKeyInfoDlg priKeyInfo;
-
+#if 0
     ret = getPrivateKey( manApplet->cryptokiAPI(), hSession, item1->text().toLong(), &binPriKey );
     if( ret !=  0 )
     {
@@ -1943,6 +1943,10 @@ void MainWindow::viewPriKey()
     }
 
     priKeyInfo.setPrivateKey( &binPriKey );
+#else
+    priKeyInfo.setPrivateKey( hSession, item1->text().toLong() );
+#endif
+
     priKeyInfo.exec();
 
 end :
@@ -1965,7 +1969,7 @@ void MainWindow::viewPubKkey()
     QTableWidgetItem* item1 = right_table_->item( row, 1 );
 
     PriKeyInfoDlg priKeyInfo;
-
+#if 0
     ret = getPublicKey( manApplet->cryptokiAPI(), hSession, item1->text().toLong(), &binPubKey );
     if( ret !=  0 )
     {
@@ -1974,6 +1978,9 @@ void MainWindow::viewPubKkey()
     }
 
     priKeyInfo.setPublicKey( &binPubKey );
+#else
+    priKeyInfo.setPublicKey( hSession, item1->text().toLong() );
+#endif
     priKeyInfo.exec();
 
 end :
