@@ -2469,12 +2469,12 @@ void MainWindow::rightTableClick(QModelIndex index)
 
         info_text_->clear();
 
-        info( "========================================================================\n" );
+        infoLine();
         info( QString( "== %1 Field Information\n" ).arg( getItemTypeName(right_type_)) );
-        info( "========================================================================\n" );
+        infoLine();
         info( QString( "Name  : %1\n" ).arg( item1->text() ));
         info( QString( "Value : %1\n" ).arg( item2->text() ));
-        info( "========================================================================\n" );
+        infoLine();
     }
 }
 
@@ -2506,14 +2506,14 @@ void MainWindow::showMechaismInfoDetail( QModelIndex index )
 
     info_text_->clear();
 
-    info( "========================================================================\n" );
+    infoLine();
     info( "== Mechanism Information\n" );
-    info( "========================================================================\n" );
+    infoLine();
     info( QString( "Algorithm    : %1\n" ).arg( item1->text() ));
     info( QString( "Min Key Size : %1\n" ).arg( item2->text() ));
     info( QString( "Max Key Size : %1\n" ).arg( item3->text() ));
     info( QString( "Flags        : %1\n" ).arg( item4->text() ));
-    info( "========================================================================\n" );
+    infoLine();
 
     info_text_->moveCursor(QTextCursor::Start);
 }
@@ -2530,13 +2530,13 @@ void MainWindow::showObjectsInfoDetail( QModelIndex index )
 
     info_text_->clear();
 
-    info( "========================================================================\n" );
+    infoLine();
     info( "== Object Information\n" );
-    info( "========================================================================\n" );
+    infoLine();
     info( QString( "Class        : %1\n" ).arg( item1->text() ));
     info( QString( "Objects Size : %1\n" ).arg( item2->text() ));
     info( QString( "Handle       : %1\n" ).arg( item3->text() ));
-    info( "========================================================================\n" );
+    infoLine();
 
     info_text_->moveCursor(QTextCursor::Start);
 }
@@ -2557,9 +2557,9 @@ void MainWindow::showCertificateInfoDetail( QModelIndex index )
 
     info_text_->clear();
 
-    info( "========================================================================\n" );
+    infoLine();
     info( "== Certificate Information\n" );
-    info( "========================================================================\n" );
+    infoLine();
 
     showInfoCommon( uObj );
     showInfoCertCommon( uObj );
@@ -2590,9 +2590,9 @@ void MainWindow::showPublicKeyInfoDetail( QModelIndex index )
 
     strKeyType = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, uObj );
 
-    info( "========================================================================\n" );
+    infoLine();
     info( QString( "== PublicKey [ %1 ] Information\n").arg( strKeyType) );
-    info( "========================================================================\n" );
+    infoLine();
 
     showInfoCommon( uObj );
     showInfoKeyCommon( uObj );
@@ -2644,9 +2644,9 @@ void MainWindow::showPrivateKeyInfoDetail( QModelIndex index )
 
     info_text_->clear();
 
-    info( "========================================================================\n" );
+    infoLine();
     info( QString( "== PrivateKey [ %1 ] Information\n").arg( strKeyType) );
-    info( "========================================================================\n" );
+    infoLine();
 
     showInfoCommon( uObj );
     showInfoKeyCommon( uObj );
@@ -2690,9 +2690,9 @@ void MainWindow::showSecretKeyInfoDetail( QModelIndex index )
 
     info_text_->clear();
 
-    info( "========================================================================\n" );
+    infoLine();
     info( QString("== SecretKey Information [ %1 ]\n").arg( strKeyType) );
-    info( "========================================================================\n" );
+    infoLine();
 
     showInfoCommon( uObj );
     showInfoKeyCommon( uObj );
@@ -2712,9 +2712,9 @@ void MainWindow::showDataInfoDetail( QModelIndex index )
 
     info_text_->clear();
 
-    info( "========================================================================\n" );
+    infoLine();
     info( "== Data Information\n" );
-    info( "========================================================================\n" );
+    infoLine();
 
     showInfoCommon( uObj );
     showInfoData( uObj );
@@ -2905,6 +2905,16 @@ void MainWindow::info( QString strInfo, QColor cr )
 void MainWindow::info_w( QString strInfo )
 {
     info( strInfo, Qt::darkRed );
+}
+
+void MainWindow::infoLine()
+{
+    info( "====================================================================================================\n" );
+}
+
+void MainWindow::infoLine2()
+{
+    info( "----------------------------------------------------------------------------------------------------\n" );
 }
 
 void MainWindow::log( QString strLog )
@@ -4198,7 +4208,7 @@ void MainWindow::showFindInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *pAt
 void MainWindow::showInfoCommon( CK_OBJECT_HANDLE hObj )
 {
     info( "-- Common\n" );
-    info( "------------------------------------------------------------------------\n" );
+    infoLine2();
 
     QString strName;
     int nType = -1;
@@ -4223,13 +4233,13 @@ void MainWindow::showInfoCommon( CK_OBJECT_HANDLE hObj )
         }
     }
 
-    info( "------------------------------------------------------------------------\n" );
+    infoLine2();
 }
 
 void MainWindow::showInfoData( CK_OBJECT_HANDLE hObj )
 {
     info( "-- Data\n" );
-    info( "------------------------------------------------------------------------\n" );
+    infoLine2();
 
     QString strName;
     QString strValue;
@@ -4282,13 +4292,13 @@ void MainWindow::showInfoData( CK_OBJECT_HANDLE hObj )
         }
     }
 
-    info( "------------------------------------------------------------------------\n" );
+    infoLine2();
 }
 
 void MainWindow::showInfoCertCommon( CK_OBJECT_HANDLE hObj )
 {
     info( "-- Certificate Common\n" );
-    info( "------------------------------------------------------------------------\n" );
+    infoLine2();
 
     QString strName;
     QString strValue;
@@ -4321,13 +4331,13 @@ void MainWindow::showInfoCertCommon( CK_OBJECT_HANDLE hObj )
         }
     }
 
-    info( "------------------------------------------------------------------------\n" );
+    infoLine2();
 }
 
 void MainWindow::showInfoX509Cert( CK_OBJECT_HANDLE hObj )
 {
     info( "-- X509 Certificate\n" );
-    info( "------------------------------------------------------------------------\n" );
+    infoLine2();
 
     QString strName;
     QString strValue;
@@ -4388,13 +4398,13 @@ void MainWindow::showInfoX509Cert( CK_OBJECT_HANDLE hObj )
         }
     }
 
-    info( "------------------------------------------------------------------------\n" );
+    infoLine2();
 }
 
 void MainWindow::showInfoKeyCommon( CK_OBJECT_HANDLE hObj )
 {
     info( "-- Key Common\n" );
-    info( "------------------------------------------------------------------------\n" );
+    infoLine2();
 
     QString strName;
     QString strValue;
@@ -4419,13 +4429,13 @@ void MainWindow::showInfoKeyCommon( CK_OBJECT_HANDLE hObj )
         }
     }
 
-    info( "------------------------------------------------------------------------\n" );
+    infoLine2();
 }
 
 void MainWindow::showInfoPublicKey( CK_OBJECT_HANDLE hObj )
 {
     info( "-- Public Key\n" );
-    info( "------------------------------------------------------------------------\n" );
+    infoLine2();
 
     QString strName;
     QString strValue;
@@ -4486,13 +4496,13 @@ void MainWindow::showInfoPublicKey( CK_OBJECT_HANDLE hObj )
         }
     }
 
-    info( "------------------------------------------------------------------------\n" );
+    infoLine2();
 }
 
 void MainWindow::showInfoPrivateKey( CK_OBJECT_HANDLE hObj )
 {
     info( "-- Private Key\n" );
-    info( "------------------------------------------------------------------------\n" );
+    infoLine2();
 
     QString strName;
     QString strValue;
@@ -4553,13 +4563,13 @@ void MainWindow::showInfoPrivateKey( CK_OBJECT_HANDLE hObj )
         }
     }
 
-    info( "------------------------------------------------------------------------\n" );
+    infoLine2();
 }
 
 void MainWindow::showInfoSecretKey( CK_OBJECT_HANDLE hObj )
 {
     info( "-- Secret Key\n" );
-    info( "------------------------------------------------------------------------\n" );
+    infoLine2();
 
     QString strName;
     QString strValue;
@@ -4593,14 +4603,14 @@ void MainWindow::showInfoSecretKey( CK_OBJECT_HANDLE hObj )
 
     }
 
-    info( "------------------------------------------------------------------------\n" );
+    infoLine2();
 }
 
 
 void MainWindow::showInfoRSAValue( CK_OBJECT_HANDLE hObj, bool bPub )
 {
     info( "-- RSA Key Value\n" );
-    info( "------------------------------------------------------------------------\n" );
+    infoLine2();
 
     QString strName;
     QString strValue;
@@ -4631,13 +4641,13 @@ void MainWindow::showInfoRSAValue( CK_OBJECT_HANDLE hObj, bool bPub )
         }
     }
 
-    info( "------------------------------------------------------------------------\n" );
+    infoLine2();
 }
 
 void MainWindow::showInfoDSAValue( CK_OBJECT_HANDLE hObj, bool bPub )
 {
     info( "-- DSA Key Value\n" );
-    info( "------------------------------------------------------------------------\n" );
+    infoLine2();
 
     QString strName;
     QString strValue;
@@ -4662,13 +4672,13 @@ void MainWindow::showInfoDSAValue( CK_OBJECT_HANDLE hObj, bool bPub )
 
     }
 
-    info( "------------------------------------------------------------------------\n" );
+    infoLine2();
 }
 
 void MainWindow::showInfoECCValue( CK_OBJECT_HANDLE hObj, bool bPub )
 {
     info( "-- EC Key Value\n" );
-    info( "------------------------------------------------------------------------\n" );
+    infoLine2();
 
     QString strName;
     QString strValue;
@@ -4701,13 +4711,13 @@ void MainWindow::showInfoECCValue( CK_OBJECT_HANDLE hObj, bool bPub )
         }
      }
 
-    info( "------------------------------------------------------------------------\n" );
+    infoLine2();
 }
 
 void MainWindow::showInfoDHValue( CK_OBJECT_HANDLE hObj, bool bPub )
 {
     info( "-- DH Key Value\n" );
-    info( "------------------------------------------------------------------------\n" );
+    infoLine2();
 
     QString strName;
     QString strValue;
@@ -4731,13 +4741,13 @@ void MainWindow::showInfoDHValue( CK_OBJECT_HANDLE hObj, bool bPub )
         }
     }
 
-    info( "------------------------------------------------------------------------\n" );
+    infoLine2();
 }
 
 void MainWindow::showInfoSecretValue( CK_OBJECT_HANDLE hObj)
 {
     info( "-- Secret Key Value\n" );
-    info( "------------------------------------------------------------------------\n" );
+    infoLine2();
 
     QString strName;
     QString strValue;
@@ -4769,7 +4779,7 @@ void MainWindow::showInfoSecretValue( CK_OBJECT_HANDLE hObj)
         }
     }
 
-    info( "------------------------------------------------------------------------\n" );
+    infoLine2();
 }
 
 void MainWindow::certificateInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *pAttrList, int nAttrCnt )

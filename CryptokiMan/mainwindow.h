@@ -48,6 +48,9 @@ public:
     void info( QString strInfo, QColor cr = QColor(0x00, 0x00, 0x00) );
     void info_w( QString strInfo );
 
+    void infoLine();
+    void infoLine2();
+
     void log( const QString strLog );
     void elog( const QString strLog );
     void wlog( const QString strLog );
