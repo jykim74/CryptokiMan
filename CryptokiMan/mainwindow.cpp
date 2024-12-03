@@ -4634,10 +4634,13 @@ void MainWindow::showInfoRSAValue( CK_OBJECT_HANDLE hObj, bool bPub )
 
         strValue = stringAttribute( nType, uAttrType, hObj);
         if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
+        {
             info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
+        }
         else
         {
-            info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+            strValue = getHexStringArea( strValue, nWidth );
+            info( QString( "%1 : \n%2\n" ).arg( strName, kNameWidth ).arg( strValue ));
         }
     }
 
@@ -4667,7 +4670,8 @@ void MainWindow::showInfoDSAValue( CK_OBJECT_HANDLE hObj, bool bPub )
             info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
         else
         {
-            info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+            strValue = getHexStringArea( strValue, nWidth );
+            info( QString( "%1 : \n%2\n" ).arg( strName, kNameWidth ).arg( strValue ));
         }
 
     }
@@ -4707,7 +4711,8 @@ void MainWindow::showInfoECCValue( CK_OBJECT_HANDLE hObj, bool bPub )
             info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
         else
         {
-            info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+            strValue = getHexStringArea( strValue, nWidth );
+            info( QString( "%1 : \n%2\n" ).arg( strName, kNameWidth ).arg( strValue ));
         }
      }
 
@@ -4737,7 +4742,8 @@ void MainWindow::showInfoDHValue( CK_OBJECT_HANDLE hObj, bool bPub )
             info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
         else
         {
-            info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+            strValue = getHexStringArea( strValue, nWidth );
+            info( QString( "%1 : \n%2\n" ).arg( strName, kNameWidth ).arg( strValue ));
         }
     }
 
@@ -4774,7 +4780,8 @@ void MainWindow::showInfoSecretValue( CK_OBJECT_HANDLE hObj)
             }
             else
             {
-                info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+                strValue = getHexStringArea( strValue, nWidth );
+                info( QString( "%1 : \n%2\n" ).arg( strName, kNameWidth ).arg( strValue ));
             }
         }
     }
