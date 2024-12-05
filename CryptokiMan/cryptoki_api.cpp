@@ -20,7 +20,7 @@ void CryptokiAPI::setCTX( JP11_CTX *pCTX )
 {
     if( p11_ctx_ )
     {
-        JS_PKCS11_ReleaseLibrry( &p11_ctx_ );
+        JS_PKCS11_ReleaseLibrary( &p11_ctx_ );
     }
 
     p11_ctx_ = pCTX;
@@ -98,7 +98,7 @@ int CryptokiAPI::openLibrary( const QString strPath )
 
 int CryptokiAPI::unloadLibrary()
 {
-    if( p11_ctx_ ) JS_PKCS11_ReleaseLibrry( (JP11_CTX **)&p11_ctx_ );
+    if( p11_ctx_ ) JS_PKCS11_ReleaseLibrary( (JP11_CTX **)&p11_ctx_ );
     manApplet->log( "Cryptoki library has been released" );
     return 0;
 }
