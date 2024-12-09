@@ -276,6 +276,7 @@ void ExportDlg::clickFindFilename()
     QString strFilename = findSaveFile( this, strFilter, strPath );
     if( strFilename.length() < 1 ) return;
 
+    manApplet->curFilePath( strFilename );
     mFilenameText->setText( strFilename );
 }
 
