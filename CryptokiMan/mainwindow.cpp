@@ -2920,7 +2920,6 @@ void MainWindow::infoLine2()
 void MainWindow::log( QString strLog )
 {
     if( log_halt_ == true ) return;
-//    if( text_tab_->count() <= 1 ) return;
     if( text_tab_->isTabEnabled( 1 ) == false ) return;
 
     int nLevel = manApplet->settingsMgr()->logLevel();
