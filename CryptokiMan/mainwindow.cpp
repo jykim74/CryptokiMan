@@ -769,6 +769,7 @@ void MainWindow::createStatusBar()
 void MainWindow::createMemberDlg()
 {
     hsm_man_dlg_ = new HsmManDlg;
+    hsm_man_dlg_->setMode( HsmModeManage );
 }
 
 void MainWindow::newFile()

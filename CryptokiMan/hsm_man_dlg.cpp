@@ -31,10 +31,6 @@ HsmManDlg::HsmManDlg(QWidget *parent) :
     connect( mOKBtn, SIGNAL(clicked()), this, SLOT(clickOK()));
     connect( mUsageCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changeUsage()));
 
-    connect( mCertTable, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(clickCertView()));
-    connect( mPublicTable, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(clickPublicView()));
-    connect( mPrivateTable, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(clickPrivateView()));
-    connect( mSecretTable, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(clickSecretView()));
 
     connect( mTabWidget, SIGNAL(currentChanged(int)), this, SLOT(changeTab(int)));
     connect( mCertKeyPairCheck, SIGNAL(clicked()), this, SLOT(loadCertList()));
@@ -117,6 +113,18 @@ void HsmManDlg::setMode( int nMode, int nUsage )
         mTabWidget->setTabEnabled( TAB_PUBLIC_IDX, false );
         mTabWidget->setTabEnabled( TAB_PRIVATE_IDX, false );
         mTabWidget->setTabEnabled( TAB_SECRET_IDX, false );
+
+        connect( mCertTable, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(clickOK()));
+        connect( mPublicTable, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(clickOK()));
+        connect( mPrivateTable, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(clickOK()));
+        connect( mSecretTable, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(clickOK()));
+    }
+    else
+    {
+        connect( mCertTable, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(clickCertView()));
+        connect( mPublicTable, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(clickPublicView()));
+        connect( mPrivateTable, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(clickPrivateView()));
+        connect( mSecretTable, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(clickSecretView()));
     }
 
     if( nMode == HsmModeSelectCert )
@@ -902,22 +910,11 @@ void HsmManDlg::clickPublicView()
     QString strType = listData.at(0);
     long hObj = listData.at(1).toLong();
     QString strID = listData.at(2);
+    int nKeyType = listData.at(3).toInt();
 
-    BIN binPubKey = {0,0};
     PriKeyInfoDlg priKeyInfo;
-
-    int ret = getPublicKey( manApplet->cryptokiAPI(), session_, hObj, &binPubKey );
-    if( ret !=  0 )
-    {
-        manApplet->warningBox( tr( "failed to get public key: %1").arg(ret), this );
-        goto end;
-    }
-
-    priKeyInfo.setPublicKey( &binPubKey );
-    priKeyInfo.exec();
-
-end :
-    JS_BIN_reset( &binPubKey );
+    priKeyInfo.setPublicKey( session_, hObj );
+    priKeyInfo.exec(); 
 }
 
 void HsmManDlg::clickPublicDelete()
@@ -1063,21 +1060,10 @@ void HsmManDlg::clickPrivateView()
     long hObj = listData.at(1).toLong();
     QString strID = listData.at(2);
 
-    BIN binPriKey = {0,0};
+
     PriKeyInfoDlg priKeyInfo;
-
-    int ret = getPrivateKey( manApplet->cryptokiAPI(), session_, hObj, &binPriKey );
-    if( ret !=  0 )
-    {
-        manApplet->warningBox( tr( "failed to get private key: %1").arg(ret), this );
-        goto end;
-    }
-
-    priKeyInfo.setPrivateKey( &binPriKey );
-    priKeyInfo.exec();
-
-end :
-    JS_BIN_reset( &binPriKey );
+    priKeyInfo.setPrivateKey( session_, hObj );
+    priKeyInfo.exec(); 
 }
 
 void HsmManDlg::clickPrivateDelete()
