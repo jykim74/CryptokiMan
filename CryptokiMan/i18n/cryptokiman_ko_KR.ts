@@ -8950,9 +8950,29 @@ Do you want to delete the file and continue?</source>
         <translation>헥사 값 넓이 고정</translation>
     </message>
     <message>
-        <location filename="../settings_dlg.cpp" line="79"/>
+        <location filename="../settings_dlg.ui" line="346"/>
+        <source>OK</source>
+        <translation>확인</translation>
+    </message>
+    <message>
+        <location filename="../settings_dlg.ui" line="353"/>
+        <source>Restore defaults</source>
+        <translation>기본값 복원</translation>
+    </message>
+    <message>
+        <location filename="../settings_dlg.ui" line="360"/>
+        <source>Cancel</source>
+        <translation>취소</translation>
+    </message>
+    <message>
+        <location filename="../settings_dlg.cpp" line="83"/>
         <source>You have changed language. Restart to apply it?</source>
         <translation>언어가 바꼈습니다. 다시 시작 하겠습니까?</translation>
+    </message>
+    <message>
+        <location filename="../settings_dlg.cpp" line="102"/>
+        <source>Are you sure you want to clear all the saved settings?</source>
+        <translation>정말로 저장된 설정 값을 지우겠습니까?</translation>
     </message>
     <message>
         <location filename="../settings_dlg.ui" line="14"/>

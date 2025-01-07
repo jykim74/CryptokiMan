@@ -7,28 +7,7 @@
 
 #include "settings_mgr.h"
 
-namespace  {
-    const char *kBehaviorGroup = "CryptokiMan";
-    const char *kUseLogTab = "useLogTab";
-    const char *kSetLogLevel = "SetLogLevel";
-    const char *kFileReadSize = "fileReadSize";
-    const char *kUseDeviceMech = "useDeviceMech";
-    const char *kFontFamily = "fontFamily";
-    const char *kMisc = "Misc";
-    const char *kEmail = "email";
-    const char *kLicense = "license";
-    const char *kStopMessage = "stopMessage";
-    const char *kFindMaxObjectsCount = "findMaxObjectsCount";
-    const char *kHexAreaWidth = "hexAreaWidth";
-    const char *kViewFile = "viewFile";
-    const char *kViewModule = "viewModule";
-    const char *kViewObject = "viewObject";
-    const char *kViewCrypt = "viewCrypt";
-    const char *kViewImport = "viewImport";
-    const char *kViewTool = "viewTool";
-    const char *kViewHelp = "viewHelp";
-    const char *kRunTime = "runTime";
-}
+
 
 SettingsMgr::SettingsMgr( QObject *parent) : QObject (parent)
 {

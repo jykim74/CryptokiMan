@@ -23,6 +23,10 @@ SettingsDlg::SettingsDlg(QWidget *parent) :
 
     mLangCombo->addItems(I18NHelper::getInstance()->getLanguages());
 
+    connect( mRestoreDefaultsBtn, SIGNAL(clicked()), this, SLOT(clickRestoreDefaults()));
+    connect( mOKBtn, SIGNAL(clicked()), this, SLOT(clickOK()));
+    connect( mCancelBtn, SIGNAL(clicked()), this, SLOT(clickCancel()));
+
     initFontFamily();
     initialize();
 
@@ -80,10 +84,37 @@ void SettingsDlg::updateSettings()
         manApplet->restartApp();
 }
 
-void SettingsDlg::accept()
+void SettingsDlg::clickOK()
 {
     updateSettings();
     QDialog::accept();
+}
+
+void SettingsDlg::clickCancel()
+{
+    reject();
+}
+
+void SettingsDlg::clickRestoreDefaults()
+{
+    SettingsMgr *mgr = manApplet->settingsMgr();
+
+    QString strMsg = tr( "Are you sure you want to clear all the saved settings?" );
+
+    bool bVal = manApplet->yesOrNoBox( strMsg, this, false );
+    if( bVal == false ) return;
+
+    mgr->removeSet( "Misc", "SparkleAlreadyEnableUpdateByDefault" );
+    mgr->removeSet( "Language", "current" );
+    mgr->removeSet( kBehaviorGroup, kUseLogTab );
+    mgr->removeSet( kBehaviorGroup, kSetLogLevel );
+    mgr->removeSet( kBehaviorGroup, kFileReadSize );
+    mgr->removeSet( kBehaviorGroup, kUseDeviceMech );
+    mgr->removeSet( kBehaviorGroup, kFontFamily );
+    mgr->removeSet( kBehaviorGroup, kFindMaxObjectsCount );
+    mgr->removeSet( kBehaviorGroup, kHexAreaWidth );
+
+    close();
 }
 
 void SettingsDlg::initFontFamily()
