@@ -8975,6 +8975,11 @@ Do you want to delete the file and continue?</source>
         <translation>정말로 저장된 설정 값을 지우겠습니까?</translation>
     </message>
     <message>
+        <location filename="../settings_dlg.cpp" line="122"/>
+        <source>Restored to default settings. Restart to apply it?</source>
+        <translation>초기 설정 복원 되었습니다. 적용을 위해서 다시 시작 하겠습니까?</translation>
+    </message>
+    <message>
         <location filename="../settings_dlg.ui" line="14"/>
         <source>Settings</source>
         <translation>설정</translation>

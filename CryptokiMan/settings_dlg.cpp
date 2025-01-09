@@ -119,6 +119,9 @@ void SettingsDlg::clickRestoreDefaults()
     mgr->removeSet( kBehaviorGroup, kFindMaxObjectsCount );
     mgr->removeSet( kBehaviorGroup, kHexAreaWidth );
 
+    if( manApplet->yesOrNoBox(tr("Restored to default settings. Restart to apply it?"), this, true))
+        manApplet->restartApp();
+
     close();
 }
 
