@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Delete object</string>
+   <string>Destory object</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>

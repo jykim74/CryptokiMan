@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Set pin</string>
+   <string>Set PIN</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>

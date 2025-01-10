@@ -33,7 +33,7 @@ CloseSessionDlg::~CloseSessionDlg()
 void CloseSessionDlg::setAll(bool all)
 {
     all_ = all;
-    setWindowTitle( "CloseAllSession Dialog" );
+    setWindowTitle( "Close all sessions" );
 }
 
 void CloseSessionDlg::initialize()

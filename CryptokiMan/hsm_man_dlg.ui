@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>HSM Management Window</string>
+   <string>HSM Manage</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>

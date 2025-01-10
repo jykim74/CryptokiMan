@@ -75,9 +75,9 @@ void CreateECPubKeyDlg::initialize()
     mSlotsCombo->clear();
 
     if( is_ed_ )
-        strTitle = tr( "EDDSA PublicKey Create Window" );
+        strTitle = tr( "Create EDDSA public key" );
     else
-        strTitle = tr( "ECDSA PublicKey Create Window" );
+        strTitle = tr( "Create ECDSA public key" );
 
     setWindowTitle( strTitle );
 
