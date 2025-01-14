@@ -8377,9 +8377,13 @@ Do you want to delete the file and continue?</source>
     <name>PriKeyInfoDlg</name>
     <message>
         <location filename="../pri_key_info_dlg.ui" line="14"/>
-        <location filename="../pri_key_info_dlg.ui" line="20"/>
         <location filename="../pri_key_info_dlg.cpp" line="916"/>
         <location filename="../pri_key_info_dlg.cpp" line="1027"/>
+        <source>View Private Key</source>
+        <translation>개인키 보기</translation>
+    </message>
+    <message>
+        <location filename="../pri_key_info_dlg.ui" line="20"/>
         <source>Private Key Information</source>
         <translation>개인키 정보</translation>
     </message>
@@ -8528,8 +8532,12 @@ Do you want to delete the file and continue?</source>
     <message>
         <location filename="../pri_key_info_dlg.cpp" line="969"/>
         <location filename="../pri_key_info_dlg.cpp" line="1089"/>
+        <source>View Public Key</source>
+        <translation>공개키 보기</translation>
+    </message>
+    <message>
         <source>Public Key Information</source>
-        <translation>공개키 정보</translation>
+        <translation type="vanished">공개키 정보</translation>
     </message>
     <message>
         <location filename="../pri_key_info_dlg.cpp" line="1013"/>

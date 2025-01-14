@@ -913,7 +913,7 @@ void PriKeyInfoDlg::setPrivateKey( const BIN *pPriKey )
 {
     clearAll();
 
-    QString strTitle = tr( "Private Key Information" );
+    QString strTitle = tr( "View Private Key" );
 
     mTitleLabel->setText( strTitle );
     setWindowTitle( strTitle );
@@ -966,7 +966,7 @@ void PriKeyInfoDlg::setPublicKey( const BIN *pPubKey )
 {
     clearAll();
 
-    QString strTitle = tr( "Public Key Information" );
+    QString strTitle = tr( "View Public Key" );
 
     mTitleLabel->setText( strTitle );
     setWindowTitle( strTitle );
@@ -1024,7 +1024,7 @@ void PriKeyInfoDlg::setPrivateKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE 
     BIN binVal = {0,0};
     long uKeyType = 0;
 
-    QString strTitle = tr( "Private Key Information" );
+    QString strTitle = tr( "View Private Key" );
 
     mTitleLabel->setText( strTitle );
     setWindowTitle( strTitle );
@@ -1086,7 +1086,7 @@ void PriKeyInfoDlg::setPublicKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE h
     BIN binVal = {0,0};
     long uKeyType = 0;
 
-    QString strTitle = tr( "Public Key Information" );
+    QString strTitle = tr( "View Public Key" );
 
     mTitleLabel->setText( strTitle );
     setWindowTitle( strTitle );
