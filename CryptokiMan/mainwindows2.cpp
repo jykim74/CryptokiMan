@@ -46,42 +46,42 @@ void MainWindow::createViewActions()
     connect( fileUnloadAct, &QAction::triggered, this, &MainWindow::viewFileUnload );
     fileMenu->addAction( fileUnloadAct );
 
-    QAction *fileShowDockAct = new QAction( tr( "Show Information" ), this );
+    QAction *fileShowDockAct = new QAction( tr( "Show log tab" ), this );
     bVal = isView( ACT_FILE_SHOW_DOCK );
     fileShowDockAct->setCheckable( true );
     fileShowDockAct->setChecked( bVal );
     connect( fileShowDockAct, &QAction::triggered, this, &MainWindow::viewFileShowDock );
     fileMenu->addAction( fileShowDockAct );
 
-    QAction *moduleInitAct = new QAction( tr("P11Initialize"), this );
+    QAction *moduleInitAct = new QAction( tr("Initialize"), this );
     bVal = isView( ACT_MODULE_INIT );
     moduleInitAct->setCheckable(true);
     moduleInitAct->setChecked(bVal);
     connect( moduleInitAct, &QAction::triggered, this, &MainWindow::viewModuleInit );
     moduleMenu->addAction( moduleInitAct );
 
-    QAction *moduleFinalAct = new QAction( tr("P11Finalize"), this );
+    QAction *moduleFinalAct = new QAction( tr("Finalize"), this );
     bVal = isView( ACT_MODULE_FINAL );
     moduleFinalAct->setCheckable(true);
     moduleFinalAct->setChecked(bVal);
     connect( moduleFinalAct, &QAction::triggered, this, &MainWindow::viewModuleFinal );
     moduleMenu->addAction( moduleFinalAct );
 
-    QAction *moduleOpenSessAct = new QAction( tr("OpenSession"), this );
+    QAction *moduleOpenSessAct = new QAction( tr("Open Session"), this );
     bVal = isView( ACT_MODULE_OPEN_SESS );
     moduleOpenSessAct->setCheckable(true);
     moduleOpenSessAct->setChecked(bVal);
     connect( moduleOpenSessAct, &QAction::triggered, this, &MainWindow::viewModuleOpenSess );
     moduleMenu->addAction( moduleOpenSessAct );
 
-    QAction *moduleCloseSessAct = new QAction( tr("CloseSession"), this );
+    QAction *moduleCloseSessAct = new QAction( tr("Close Session"), this );
     bVal = isView( ACT_MODULE_CLOSE_SESS );
     moduleCloseSessAct->setCheckable(true);
     moduleCloseSessAct->setChecked(bVal);
     connect( moduleCloseSessAct, &QAction::triggered, this, &MainWindow::viewModuleCloseSess );
     moduleMenu->addAction( moduleCloseSessAct );
 
-    QAction *moduleCloseAllAct = new QAction( tr("CloseSessionAll"), this );
+    QAction *moduleCloseAllAct = new QAction( tr("Close All Sessions"), this );
     bVal = isView( ACT_MODULE_CLOSE_ALL );
     moduleCloseAllAct->setCheckable(true);
     moduleCloseAllAct->setChecked(bVal);
@@ -102,6 +102,13 @@ void MainWindow::createViewActions()
     connect( moduleLogoutAct, &QAction::triggered, this, &MainWindow::viewModuleLogout );
     moduleMenu->addAction( moduleLogoutAct );
 
+    QAction *objectGenKeyPairAct = new QAction( tr("Generate Key Pair"), this );
+    bVal = isView( ACT_OBJECT_GEN_KEYPAIR );
+    objectGenKeyPairAct->setCheckable(true);
+    objectGenKeyPairAct->setChecked(bVal);
+    connect( objectGenKeyPairAct, &QAction::triggered, this, &MainWindow::viewObjectGenKeyPair );
+    objectMenu->addAction( objectGenKeyPairAct );
+
     QAction *objectGenKeyAct = new QAction( tr("Generate Key"), this );
     bVal = isView( ACT_OBJECT_GEN_KEY );
     objectGenKeyAct->setCheckable(true);
@@ -116,56 +123,56 @@ void MainWindow::createViewActions()
     connect( objectCreateDataAct, &QAction::triggered, this, &MainWindow::viewObjectCreateData );
     objectMenu->addAction( objectCreateDataAct );
 
-    QAction *objectCreateRSAPubKeyAct = new QAction( tr("Create RSA PubKey"), this );
+    QAction *objectCreateRSAPubKeyAct = new QAction( tr("Create RSA Public Key"), this );
     bVal = isView( ACT_OBJECT_CREATE_RSA_PUB_KEY );
     objectCreateRSAPubKeyAct->setCheckable(true);
     objectCreateRSAPubKeyAct->setChecked(bVal);
     connect( objectCreateRSAPubKeyAct, &QAction::triggered, this, &MainWindow::viewObjectCreateRSAPubKey );
     objectMenu->addAction( objectCreateRSAPubKeyAct );
 
-    QAction *objectCreateRSAPriKeyAct = new QAction( tr("Create RSA PriKey"), this );
+    QAction *objectCreateRSAPriKeyAct = new QAction( tr("Create RSA Private Key"), this );
     bVal = isView( ACT_OBJECT_CREATE_RSA_PRI_KEY );
     objectCreateRSAPriKeyAct->setCheckable(true);
     objectCreateRSAPriKeyAct->setChecked(bVal);
     connect( objectCreateRSAPriKeyAct, &QAction::triggered, this, &MainWindow::viewObjectCreateRSAPriKey );
     objectMenu->addAction( objectCreateRSAPriKeyAct );
 
-    QAction *objectCreateECPubKeyAct = new QAction( tr("Create EC PubKey"), this );
+    QAction *objectCreateECPubKeyAct = new QAction( tr("Create ECDSA Public Key"), this );
     bVal = isView( ACT_OBJECT_CREATE_EC_PUB_KEY );
     objectCreateECPubKeyAct->setCheckable(true);
     objectCreateECPubKeyAct->setChecked(bVal);
     connect( objectCreateECPubKeyAct, &QAction::triggered, this, &MainWindow::viewObjectCreateECPubKey );
     objectMenu->addAction( objectCreateECPubKeyAct );
 
-    QAction *objectCreateECPriKeyAct = new QAction( tr("Create EC PriKey"), this );
+    QAction *objectCreateECPriKeyAct = new QAction( tr("Create ECDSA Private Key"), this );
     bVal = isView( ACT_OBJECT_CREATE_EC_PRI_KEY );
     objectCreateECPriKeyAct->setCheckable(true);
     objectCreateECPriKeyAct->setChecked(bVal);
     connect( objectCreateECPriKeyAct, &QAction::triggered, this, &MainWindow::viewObjectCreateECPriKey );
     objectMenu->addAction( objectCreateECPriKeyAct );
 
-    QAction *objectCreateEDPubKey = new QAction( tr("Create ED PubKey"), this );
+    QAction *objectCreateEDPubKey = new QAction( tr("Create EDDSA Public Key"), this );
     bVal = isView( ACT_OBJECT_CREATE_ED_PUB_KEY );
     objectCreateEDPubKey->setCheckable(true);
     objectCreateEDPubKey->setChecked(bVal);
     connect( objectCreateEDPubKey, &QAction::triggered, this, &MainWindow::viewObjectCreateEDPubKey );
     objectMenu->addAction( objectCreateEDPubKey );
 
-    QAction *objectCreateEDPriKeyAct = new QAction( tr("Create ED PriKey"), this );
+    QAction *objectCreateEDPriKeyAct = new QAction( tr("Create EDDSA Private Key"), this );
     bVal = isView( ACT_OBJECT_CREATE_ED_PRI_KEY );
     objectCreateEDPriKeyAct->setCheckable(true);
     objectCreateEDPriKeyAct->setChecked(bVal);
     connect( objectCreateEDPriKeyAct, &QAction::triggered, this, &MainWindow::viewObjectCreateEDPriKey );
     objectMenu->addAction( objectCreateEDPriKeyAct );
 
-    QAction *objectCreateDSAPubAct = new QAction( tr("Create DSA PubKey"), this );
+    QAction *objectCreateDSAPubAct = new QAction( tr("Create DSA Public Key"), this );
     bVal = isView( ACT_OBJECT_CREATE_DSA_PUB_KEY );
     objectCreateDSAPubAct->setCheckable(true);
     objectCreateDSAPubAct->setChecked(bVal);
     connect( objectCreateDSAPubAct, &QAction::triggered, this, &MainWindow::viewObjectCreateDSAPubKey );
     objectMenu->addAction( objectCreateDSAPubAct );
 
-    QAction *objectCreateDSAPriKeyAct = new QAction( tr("Create DSA PriKey"), this );
+    QAction *objectCreateDSAPriKeyAct = new QAction( tr("Create DSA Private Key"), this );
     bVal = isView( ACT_OBJECT_CREATE_DSA_PRI_KEY );
     objectCreateDSAPriKeyAct->setCheckable(true);
     objectCreateDSAPriKeyAct->setChecked(bVal);
@@ -179,14 +186,14 @@ void MainWindow::createViewActions()
     connect( objectCreateKeyAct, &QAction::triggered, this, &MainWindow::viewObjectCreateKey );
     objectMenu->addAction( objectCreateKeyAct );
 
-    QAction *objectDelObjectAct = new QAction( tr("Delete Object"), this );
+    QAction *objectDelObjectAct = new QAction( tr("Destory Object"), this );
     bVal = isView( ACT_OBJECT_DEL_OBJECT );
     objectDelObjectAct->setCheckable(true);
     objectDelObjectAct->setChecked(bVal);
     connect( objectDelObjectAct, &QAction::triggered, this, &MainWindow::viewObjectDelObject );
     objectMenu->addAction( objectDelObjectAct );
 
-    QAction *objectEditAttAct = new QAction( tr("Edit Attribute"), this );
+    QAction *objectEditAttAct = new QAction( tr("Edit Object"), this );
     bVal = isView( ACT_OBJECT_EDIT_ATT );
     objectEditAttAct->setCheckable(true);
     objectEditAttAct->setChecked(bVal);
@@ -207,14 +214,14 @@ void MainWindow::createViewActions()
     connect( objectCopyObjectAct, &QAction::triggered, this, &MainWindow::viewObjectCopyObject );
     objectMenu->addAction( objectCopyObjectAct );
 
-    QAction *objectFindObjectAct = new QAction( tr("Find Object"), this );
+    QAction *objectFindObjectAct = new QAction( tr("Find Objects"), this );
     bVal = isView( ACT_OBJECT_FIND_OBJECT );
     objectFindObjectAct->setCheckable(true);
     objectFindObjectAct->setChecked(bVal);
     connect( objectFindObjectAct, &QAction::triggered, this, &MainWindow::viewObjectFindObject );
     objectMenu->addAction( objectFindObjectAct );
 
-    QAction *cryptRandAct = new QAction( tr("Rand"), this );
+    QAction *cryptRandAct = new QAction( tr("Random"), this );
     bVal = isView( ACT_CRYPT_RAND );
     cryptRandAct->setCheckable(true);
     cryptRandAct->setChecked(bVal);
@@ -228,7 +235,7 @@ void MainWindow::createViewActions()
     connect( cryptDigestAct, &QAction::triggered, this, &MainWindow::viewCryptDigest );
     cryptMenu->addAction( cryptDigestAct );
 
-    QAction *cryptSignAct = new QAction( tr("Sign"), this );
+    QAction *cryptSignAct = new QAction( tr("Signature"), this );
     bVal = isView( ACT_CRYPT_SIGN );
     cryptSignAct->setCheckable(true);
     cryptSignAct->setChecked(bVal);
@@ -256,14 +263,14 @@ void MainWindow::createViewActions()
     connect( cryptDecAct, &QAction::triggered, this, &MainWindow::viewCryptDec );
     cryptMenu->addAction( cryptDecAct );
 
-    QAction *cryptHsmManAct = new QAction( tr("HSM Man"), this );
+    QAction *cryptHsmManAct = new QAction( tr("HSM Manage"), this );
     bVal = isView( ACT_CRYPT_HSM_MAN );
     cryptHsmManAct->setCheckable(true);
     cryptHsmManAct->setChecked(bVal);
     connect( cryptHsmManAct, &QAction::triggered, this, &MainWindow::viewCryptHsmMan );
     cryptMenu->addAction( cryptHsmManAct );
 
-    QAction *importCertAct = new QAction( tr("Import Certificate"), this );
+    QAction *importCertAct = new QAction( tr("Import certificate"), this );
     bVal = isView( ACT_IMPORT_CERT );
     importCertAct->setCheckable(true);
     importCertAct->setChecked(bVal);
@@ -277,7 +284,7 @@ void MainWindow::createViewActions()
     connect( importPFXAct, &QAction::triggered, this, &MainWindow::viewImportPFX );
     importMenu->addAction( importPFXAct );
 
-    QAction *importPriKeyAct = new QAction( tr("Import PrivateKey"), this );
+    QAction *importPriKeyAct = new QAction( tr("Import Private Key"), this );
     bVal = isView( ACT_IMPORT_PRI_KEY );
     importPriKeyAct->setCheckable(true);
     importPriKeyAct->setChecked(bVal);
@@ -354,21 +361,21 @@ void MainWindow::createViewActions()
     connect( helpClearLogAct, &QAction::triggered, this, &MainWindow::viewHelpClearLog );
     helpMenu->addAction( helpClearLogAct );
 
-    QAction *helpHaltLogAct = new QAction( tr("Clear Log"), this );
+    QAction *helpHaltLogAct = new QAction( tr("Halt Log"), this );
     bVal = isView( ACT_HELP_HALT_LOG );
     helpHaltLogAct->setCheckable(true);
     helpHaltLogAct->setChecked(bVal);
     connect( helpHaltLogAct, &QAction::triggered, this, &MainWindow::viewHelpHaltLog );
     helpMenu->addAction( helpHaltLogAct );
 
-    QAction *helpSettingAct = new QAction( tr("Setting"), this );
+    QAction *helpSettingAct = new QAction( tr("Settings"), this );
     bVal = isView( ACT_HELP_SETTING );
     helpSettingAct->setCheckable(true);
     helpSettingAct->setChecked(bVal);
     connect( helpSettingAct, &QAction::triggered, this, &MainWindow::viewHelpSetting );
     helpMenu->addAction( helpSettingAct );
 
-    QAction *helpAboutAct = new QAction( tr("About"), this );
+    QAction *helpAboutAct = new QAction( tr("About CryptokiMan"), this );
     bVal = isView( ACT_HELP_ABOUT );
     helpAboutAct->setCheckable(true);
     helpAboutAct->setChecked(bVal);

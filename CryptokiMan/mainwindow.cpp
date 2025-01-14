@@ -615,10 +615,10 @@ void MainWindow::createActions()
     if( isView( ACT_TOOL_INIT_TOKEN ) ) toolsMenu->addAction( init_token_act_ );
 
     const QIcon operIcon = QIcon::fromTheme( "operation1", QIcon(":/images/operation.png"));
-    oper_state_act_ = new QAction( operIcon, tr("OperationState"), this );
+    oper_state_act_ = new QAction( operIcon, tr("Operation State"), this );
     oper_state_act_->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_O));
     connect( oper_state_act_, &QAction::triggered, this, &MainWindow::operationState );
-    oper_state_act_->setStatusTip( tr( "OperationState" ));
+    oper_state_act_->setStatusTip( tr( "Operation State" ));
     toolsMenu->addAction( oper_state_act_ );
     if( isView( ACT_TOOL_OPER_STATE ) ) tool_tool_->addAction( oper_state_act_ );
 

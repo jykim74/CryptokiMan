@@ -6307,6 +6307,7 @@ Do you want to delete the file and continue?</source>
     <message>
         <location filename="../mainwindow.cpp" line="239"/>
         <location filename="../mainwindow.cpp" line="241"/>
+        <location filename="../mainwindows2.cpp" line="49"/>
         <source>Show log tab</source>
         <translation>로그탭 보여주기</translation>
     </message>
@@ -6331,18 +6332,16 @@ Do you want to delete the file and continue?</source>
         <translation>모듈</translation>
     </message>
     <message>
-        <location filename="../mainwindows2.cpp" line="56"/>
         <source>P11Initialize</source>
-        <translation>P11 Initialize</translation>
+        <translation type="vanished">P11 Initialize</translation>
     </message>
     <message>
         <source>PKCS11 initialize</source>
         <translation type="vanished">PKCS11 initialize</translation>
     </message>
     <message>
-        <location filename="../mainwindows2.cpp" line="63"/>
         <source>P11Finalize</source>
-        <translation>P11 Finalize</translation>
+        <translation type="vanished">P11 Finalize</translation>
     </message>
     <message>
         <source>PKCS11 finalize</source>
@@ -6350,6 +6349,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="298"/>
+        <location filename="../mainwindows2.cpp" line="70"/>
         <source>Open Session</source>
         <translation>Open Session</translation>
     </message>
@@ -6359,6 +6359,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="306"/>
+        <location filename="../mainwindows2.cpp" line="77"/>
         <source>Close Session</source>
         <translation>Close Session</translation>
     </message>
@@ -6368,6 +6369,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="314"/>
+        <location filename="../mainwindows2.cpp" line="84"/>
         <source>Close All Sessions</source>
         <translation>Close All Sessions</translation>
     </message>
@@ -6404,6 +6406,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="346"/>
+        <location filename="../mainwindows2.cpp" line="105"/>
         <source>Generate Key Pair</source>
         <translation>키 쌍 생성</translation>
     </message>
@@ -6413,7 +6416,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="354"/>
-        <location filename="../mainwindows2.cpp" line="105"/>
+        <location filename="../mainwindows2.cpp" line="112"/>
         <source>Generate Key</source>
         <translation>키 생성</translation>
     </message>
@@ -6423,17 +6426,20 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="388"/>
+        <location filename="../mainwindows2.cpp" line="140"/>
         <source>Create ECDSA Public Key</source>
         <translation>ECDSA 공개키 생성</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="396"/>
+        <location filename="../mainwindows2.cpp" line="147"/>
         <source>Create ECDSA Private Key</source>
         <translation>ECDSA 개인키 생성</translation>
     </message>
     <message>
+        <location filename="../mainwindows2.cpp" line="154"/>
         <source>Create EDDSA Public Key</source>
-        <translation type="vanished">EDDSA 공개키 생성</translation>
+        <translation>EDDSA 공개키 생성</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="407"/>
@@ -6441,8 +6447,9 @@ Do you want to delete the file and continue?</source>
         <translation>PKCS11 EDDSA 공개키 생성</translation>
     </message>
     <message>
+        <location filename="../mainwindows2.cpp" line="161"/>
         <source>Create EDDSA Private Key</source>
-        <translation type="vanished">EDDSA 개인키 생성</translation>
+        <translation>EDDSA 개인키 생성</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="415"/>
@@ -6451,7 +6458,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="459"/>
-        <location filename="../mainwindows2.cpp" line="196"/>
+        <location filename="../mainwindows2.cpp" line="203"/>
         <source>Edit Attribute List</source>
         <translation>속성 리스트 편집</translation>
     </message>
@@ -6461,9 +6468,8 @@ Do you want to delete the file and continue?</source>
         <translation>PKCS#11 속성 리스트 편집하기</translation>
     </message>
     <message>
-        <location filename="../mainwindows2.cpp" line="210"/>
         <source>Find Object</source>
-        <translation>객체 찾기</translation>
+        <translation type="vanished">객체 찾기</translation>
     </message>
     <message>
         <source>PKCS11 Find Object</source>
@@ -6471,6 +6477,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="557"/>
+        <location filename="../mainwindows2.cpp" line="266"/>
         <source>HSM Manage</source>
         <translation>HSM 관리</translation>
     </message>
@@ -6481,7 +6488,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="666"/>
-        <location filename="../mainwindows2.cpp" line="336"/>
+        <location filename="../mainwindows2.cpp" line="343"/>
         <source>Type Name</source>
         <translation>타입 이름</translation>
     </message>
@@ -6492,7 +6499,7 @@ Do you want to delete the file and continue?</source>
     <message>
         <location filename="../mainwindow.cpp" line="674"/>
         <location filename="../mainwindow.cpp" line="2777"/>
-        <location filename="../mainwindows2.cpp" line="343"/>
+        <location filename="../mainwindows2.cpp" line="350"/>
         <source>Make CSR</source>
         <translation>CSR 만들기</translation>
     </message>
@@ -6512,7 +6519,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="363"/>
-        <location filename="../mainwindows2.cpp" line="112"/>
+        <location filename="../mainwindows2.cpp" line="119"/>
         <source>Create Data</source>
         <translation>데이타 생성</translation>
     </message>
@@ -6527,6 +6534,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="372"/>
+        <location filename="../mainwindows2.cpp" line="126"/>
         <source>Create RSA Public Key</source>
         <translation>RSA 공개키 생성</translation>
     </message>
@@ -6536,6 +6544,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="380"/>
+        <location filename="../mainwindows2.cpp" line="133"/>
         <source>Create RSA Private Key</source>
         <translation>RSA 개인 키 생성</translation>
     </message>
@@ -6561,7 +6570,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="436"/>
-        <location filename="../mainwindows2.cpp" line="175"/>
+        <location filename="../mainwindows2.cpp" line="182"/>
         <source>Create Key</source>
         <translation>키 만들기</translation>
     </message>
@@ -6571,7 +6580,6 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2754"/>
-        <location filename="../mainwindows2.cpp" line="182"/>
         <source>Delete Object</source>
         <translation>대상 삭제</translation>
     </message>
@@ -6681,7 +6689,6 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2752"/>
-        <location filename="../mainwindows2.cpp" line="189"/>
         <source>Edit Attribute</source>
         <translation>속성 편집</translation>
     </message>
@@ -6700,7 +6707,7 @@ Do you want to delete the file and continue?</source>
     <message>
         <location filename="../mainwindow.cpp" line="516"/>
         <location filename="../mainwindow.cpp" line="519"/>
-        <location filename="../mainwindows2.cpp" line="224"/>
+        <location filename="../mainwindows2.cpp" line="231"/>
         <source>Digest</source>
         <translation>Digest</translation>
     </message>
@@ -6711,6 +6718,7 @@ Do you want to delete the file and continue?</source>
     <message>
         <location filename="../mainwindow.cpp" line="524"/>
         <location filename="../mainwindow.cpp" line="527"/>
+        <location filename="../mainwindows2.cpp" line="238"/>
         <source>Signature</source>
         <translation>서명</translation>
     </message>
@@ -6723,7 +6731,7 @@ Do you want to delete the file and continue?</source>
         <location filename="../mainwindow.cpp" line="536"/>
         <location filename="../mainwindow.cpp" line="2764"/>
         <location filename="../mainwindow.cpp" line="2782"/>
-        <location filename="../mainwindows2.cpp" line="238"/>
+        <location filename="../mainwindows2.cpp" line="245"/>
         <source>Verify</source>
         <translation>검증</translation>
     </message>
@@ -6736,7 +6744,7 @@ Do you want to delete the file and continue?</source>
         <location filename="../mainwindow.cpp" line="544"/>
         <location filename="../mainwindow.cpp" line="2765"/>
         <location filename="../mainwindow.cpp" line="2783"/>
-        <location filename="../mainwindows2.cpp" line="245"/>
+        <location filename="../mainwindows2.cpp" line="252"/>
         <source>Encrypt</source>
         <translation>암호화</translation>
     </message>
@@ -6749,7 +6757,7 @@ Do you want to delete the file and continue?</source>
         <location filename="../mainwindow.cpp" line="552"/>
         <location filename="../mainwindow.cpp" line="2773"/>
         <location filename="../mainwindow.cpp" line="2784"/>
-        <location filename="../mainwindows2.cpp" line="252"/>
+        <location filename="../mainwindows2.cpp" line="259"/>
         <source>Decrypt</source>
         <translation>복호화</translation>
     </message>
@@ -6770,6 +6778,7 @@ Do you want to delete the file and continue?</source>
     <message>
         <location filename="../mainwindow.cpp" line="581"/>
         <location filename="../mainwindow.cpp" line="584"/>
+        <location filename="../mainwindows2.cpp" line="273"/>
         <source>Import certificate</source>
         <translation>인증서 가져오기</translation>
     </message>
@@ -6780,7 +6789,7 @@ Do you want to delete the file and continue?</source>
     <message>
         <location filename="../mainwindow.cpp" line="589"/>
         <location filename="../mainwindow.cpp" line="592"/>
-        <location filename="../mainwindows2.cpp" line="273"/>
+        <location filename="../mainwindows2.cpp" line="280"/>
         <source>Import PFX</source>
         <translation>PFX 가져오기</translation>
     </message>
@@ -6790,6 +6799,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="597"/>
+        <location filename="../mainwindows2.cpp" line="287"/>
         <source>Import Private Key</source>
         <translation>개인키 가져오기</translation>
     </message>
@@ -6818,6 +6828,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="508"/>
+        <location filename="../mainwindows2.cpp" line="224"/>
         <source>Random</source>
         <translation>랜덤</translation>
     </message>
@@ -6828,7 +6839,7 @@ Do you want to delete the file and continue?</source>
     <message>
         <location filename="../mainwindow.cpp" line="626"/>
         <location filename="../mainwindow.cpp" line="629"/>
-        <location filename="../mainwindows2.cpp" line="301"/>
+        <location filename="../mainwindows2.cpp" line="308"/>
         <source>Set PIN</source>
         <translation>Set PIN</translation>
     </message>
@@ -6839,7 +6850,7 @@ Do you want to delete the file and continue?</source>
     <message>
         <location filename="../mainwindow.cpp" line="634"/>
         <location filename="../mainwindow.cpp" line="637"/>
-        <location filename="../mainwindows2.cpp" line="308"/>
+        <location filename="../mainwindows2.cpp" line="315"/>
         <source>Init PIN</source>
         <translation>Init PIN</translation>
     </message>
@@ -6849,7 +6860,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="642"/>
-        <location filename="../mainwindows2.cpp" line="315"/>
+        <location filename="../mainwindows2.cpp" line="322"/>
         <source>Wrap Key</source>
         <translation>Wrap Key</translation>
     </message>
@@ -6859,7 +6870,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="650"/>
-        <location filename="../mainwindows2.cpp" line="322"/>
+        <location filename="../mainwindows2.cpp" line="329"/>
         <source>Unwrap Key</source>
         <translation>Unwrap Key</translation>
     </message>
@@ -6869,7 +6880,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="658"/>
-        <location filename="../mainwindows2.cpp" line="329"/>
+        <location filename="../mainwindows2.cpp" line="336"/>
         <source>Derive Key</source>
         <translation>Derive Key</translation>
     </message>
@@ -6938,124 +6949,115 @@ Do you want to delete the file and continue?</source>
         <translation>열기</translation>
     </message>
     <message>
-        <location filename="../mainwindows2.cpp" line="70"/>
+        <location filename="../mainwindows2.cpp" line="189"/>
+        <source>Destory Object</source>
+        <translation>대상 삭제</translation>
+    </message>
+    <message>
+        <location filename="../mainwindows2.cpp" line="364"/>
+        <source>Halt Log</source>
+        <translation>로그 중지</translation>
+    </message>
+    <message>
         <source>OpenSession</source>
-        <translation>OpenSession</translation>
+        <translation type="vanished">OpenSession</translation>
     </message>
     <message>
-        <location filename="../mainwindows2.cpp" line="77"/>
         <source>CloseSession</source>
-        <translation>CloseSession</translation>
+        <translation type="vanished">CloseSession</translation>
     </message>
     <message>
-        <location filename="../mainwindows2.cpp" line="84"/>
-        <source>CloseSessionAll</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../mainwindows2.cpp" line="119"/>
         <source>Create RSA PubKey</source>
-        <translation>RSA 공개키 생성</translation>
+        <translation type="vanished">RSA 공개키 생성</translation>
     </message>
     <message>
-        <location filename="../mainwindows2.cpp" line="126"/>
         <source>Create RSA PriKey</source>
-        <translation>RSA 개인키 생성</translation>
+        <translation type="vanished">RSA 개인키 생성</translation>
     </message>
     <message>
-        <location filename="../mainwindows2.cpp" line="133"/>
         <source>Create EC PubKey</source>
-        <translation>EC 공개키 생성</translation>
+        <translation type="vanished">EC 공개키 생성</translation>
     </message>
     <message>
-        <location filename="../mainwindows2.cpp" line="140"/>
         <source>Create EC PriKey</source>
-        <translation>EC 개인 키 생성</translation>
+        <translation type="vanished">EC 개인 키 생성</translation>
     </message>
     <message>
-        <location filename="../mainwindows2.cpp" line="147"/>
         <source>Create ED PubKey</source>
-        <translation>ED 공개키 생성</translation>
+        <translation type="vanished">ED 공개키 생성</translation>
     </message>
     <message>
-        <location filename="../mainwindows2.cpp" line="154"/>
         <source>Create ED PriKey</source>
-        <translation>ED 개인 키 생성</translation>
+        <translation type="vanished">ED 개인 키 생성</translation>
     </message>
     <message>
-        <location filename="../mainwindows2.cpp" line="161"/>
         <source>Create DSA PubKey</source>
-        <translation>DSA 공개키 생성</translation>
+        <translation type="vanished">DSA 공개키 생성</translation>
     </message>
     <message>
-        <location filename="../mainwindows2.cpp" line="168"/>
         <source>Create DSA PriKey</source>
-        <translation>DSA 개인키 생성</translation>
+        <translation type="vanished">DSA 개인키 생성</translation>
     </message>
     <message>
-        <location filename="../mainwindows2.cpp" line="217"/>
         <source>Rand</source>
-        <translation>랜덤</translation>
+        <translation type="vanished">랜덤</translation>
     </message>
     <message>
-        <location filename="../mainwindows2.cpp" line="259"/>
         <source>HSM Man</source>
-        <translation>HSM 관리</translation>
+        <translation type="vanished">HSM 관리</translation>
     </message>
     <message>
-        <location filename="../mainwindows2.cpp" line="266"/>
         <source>Import Certificate</source>
-        <translation>인증서 가져오기</translation>
+        <translation type="vanished">인증서 가져오기</translation>
     </message>
     <message>
-        <location filename="../mainwindows2.cpp" line="280"/>
         <source>Import PrivateKey</source>
-        <translation>개인키 가져오기</translation>
+        <translation type="vanished">개인키 가져오기</translation>
     </message>
     <message>
-        <location filename="../mainwindows2.cpp" line="287"/>
+        <location filename="../mainwindows2.cpp" line="294"/>
         <source>Init Token</source>
         <translation>토큰 초기화</translation>
     </message>
     <message>
-        <location filename="../mainwindows2.cpp" line="294"/>
+        <location filename="../mainwindow.cpp" line="618"/>
+        <location filename="../mainwindow.cpp" line="621"/>
+        <location filename="../mainwindows2.cpp" line="301"/>
         <source>Operation State</source>
         <translation>운영 상태</translation>
     </message>
     <message>
-        <location filename="../mainwindows2.cpp" line="350"/>
         <location filename="../mainwindows2.cpp" line="357"/>
         <source>Clear Log</source>
         <translation>로그 지우기</translation>
     </message>
     <message>
-        <location filename="../mainwindows2.cpp" line="364"/>
         <source>Setting</source>
-        <translation>설정</translation>
+        <translation type="vanished">설정</translation>
     </message>
     <message>
-        <location filename="../mainwindows2.cpp" line="371"/>
         <source>About</source>
-        <translation>에 대해</translation>
+        <translation type="vanished">에 대해</translation>
     </message>
     <message>
-        <location filename="../mainwindows2.cpp" line="379"/>
+        <location filename="../mainwindows2.cpp" line="386"/>
         <source>Set Default</source>
         <translation>초기 상태</translation>
     </message>
     <message>
-        <location filename="../mainwindows2.cpp" line="1156"/>
+        <location filename="../mainwindows2.cpp" line="1163"/>
         <source>Would you like to change to the initial toolbar view?</source>
         <translation>초기 툴바가 변경 되었습니다.적용을 위해 다시 시작 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../mainwindows2.cpp" line="1167"/>
+        <location filename="../mainwindows2.cpp" line="1174"/>
         <source>You have changed toolbar settings. Restart to apply it?</source>
         <translation>툴바 보기가 변경 되었습니다.적용을 위해 다시 시작 하시겠습니까?</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="756"/>
         <location filename="../mainwindow.cpp" line="759"/>
+        <location filename="../mainwindows2.cpp" line="378"/>
         <source>About CryptokiMan</source>
         <translation>CryptokiMan 에 대해서</translation>
     </message>
@@ -7068,8 +7070,9 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PKCS11 에 대한 로그 보기</translation>
     </message>
     <message>
+        <location filename="../mainwindows2.cpp" line="371"/>
         <source>Settings</source>
-        <translation type="vanished">설정</translation>
+        <translation>설정</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="731"/>
@@ -7105,10 +7108,8 @@ Do you want to delete the file and continue?</source>
         <translation>설정(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="618"/>
-        <location filename="../mainwindow.cpp" line="621"/>
         <source>OperationState</source>
-        <translation>운영 상태</translation>
+        <translation type="vanished">운영 상태</translation>
     </message>
     <message>
         <source>Operation state tool</source>
@@ -7121,6 +7122,7 @@ Do you want to delete the file and continue?</source>
     <message>
         <location filename="../mainwindow.cpp" line="452"/>
         <location filename="../mainwindow.cpp" line="455"/>
+        <location filename="../mainwindows2.cpp" line="196"/>
         <source>Edit Object</source>
         <translation>대상 편집</translation>
     </message>
@@ -7136,7 +7138,6 @@ Do you want to delete the file and continue?</source>
     <message>
         <location filename="../mainwindow.cpp" line="2772"/>
         <location filename="../mainwindow.cpp" line="2781"/>
-        <location filename="../mainwindows2.cpp" line="231"/>
         <source>Sign</source>
         <translation>서명</translation>
     </message>
@@ -7157,6 +7158,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="281"/>
+        <location filename="../mainwindows2.cpp" line="56"/>
         <source>Initialize</source>
         <translation>Initialize</translation>
     </message>
@@ -7167,6 +7169,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="289"/>
+        <location filename="../mainwindows2.cpp" line="63"/>
         <source>Finalize</source>
         <translation>Finalize</translation>
     </message>
@@ -7278,6 +7281,7 @@ Do you want to delete the file and continue?</source>
     <message>
         <location filename="../mainwindow.cpp" line="475"/>
         <location filename="../mainwindow.cpp" line="478"/>
+        <location filename="../mainwindows2.cpp" line="217"/>
         <source>Find Objects</source>
         <translation>객체 찾기</translation>
     </message>
@@ -7579,13 +7583,13 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">정보 보기</translation>
     </message>
     <message>
-        <location filename="../mainwindows2.cpp" line="49"/>
         <source>Show Information</source>
-        <translation>정보 보기</translation>
+        <translation type="vanished">정보 보기</translation>
     </message>
     <message>
+        <location filename="../mainwindows2.cpp" line="168"/>
         <source>Create DSA Public Key</source>
-        <translation type="vanished">DSA 공개키 생성</translation>
+        <translation>DSA 공개키 생성</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="423"/>
@@ -7593,8 +7597,9 @@ Do you want to delete the file and continue?</source>
         <translation>PKCS11 DSA 공개키 생성</translation>
     </message>
     <message>
+        <location filename="../mainwindows2.cpp" line="175"/>
         <source>Create DSA Private Key</source>
-        <translation type="vanished">DSA 개인키 생성</translation>
+        <translation>DSA 개인키 생성</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="431"/>
@@ -7656,7 +7661,7 @@ Do you want to delete the file and continue?</source>
         <location filename="../mainwindow.cpp" line="2774"/>
         <location filename="../mainwindow.cpp" line="2785"/>
         <location filename="../mainwindow.cpp" line="2789"/>
-        <location filename="../mainwindows2.cpp" line="203"/>
+        <location filename="../mainwindows2.cpp" line="210"/>
         <source>Copy Object</source>
         <translation>객체 복사</translation>
     </message>
