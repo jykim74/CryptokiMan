@@ -17,7 +17,7 @@
 #include "encrypt_dlg.h"
 #include "decrypt_dlg.h"
 
-static const QStringList kUsageList = { "Any", "Sign", "Verify", "Encrypt", "Decrypt", "Wrap", "Unwrap" };
+static const QStringList kUsageList = { "Any", "Sign", "Verify", "Encrypt", "Decrypt", "Wrap", "Unwrap", "Derive" };
 
 HsmManDlg::HsmManDlg(QWidget *parent) :
     QDialog(parent)
@@ -162,6 +162,8 @@ void HsmManDlg::setMode( int nMode, int nUsage )
             mUsageCombo->setCurrentText( "Wrap" );
         else if( nUsage == HsmUsageUnwrap )
             mUsageCombo->setCurrentText( "Unwrap" );
+        else if( nUsage == HsmUsageDerive )
+            mUsageCombo->setCurrentText( "Derive" );
     }
 }
 
@@ -333,6 +335,8 @@ void HsmManDlg::setUsageTemplate( CK_ATTRIBUTE sTemplate[], long& uCount )
             sTemplate[uCount].type = CKA_WRAP;
         else if( strUsage == "Unwrap" )
             sTemplate[uCount].type = CKA_UNWRAP;
+        else if( strUsage == "Derive" )
+            sTemplate[uCount].type = CKA_DERIVE;
 
         sTemplate[uCount].pValue = &kTrue;
         sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);

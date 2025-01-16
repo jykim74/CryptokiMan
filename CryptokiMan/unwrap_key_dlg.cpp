@@ -105,6 +105,8 @@ void UnwrapKeyDlg::initUI()
     mClassCombo->addItems(sClassList);
     mTypeCombo->addItems(sSymTypeList);
     mUnwrapTypeCombo->addItems( kWrapType );
+
+    mUnwrapLabelText->setPlaceholderText( tr( "Select a key from HSM Man" ));
 }
 
 void UnwrapKeyDlg::initAttributes()

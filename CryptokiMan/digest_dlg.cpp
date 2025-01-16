@@ -15,6 +15,7 @@
 #include "settings_mgr.h"
 #include "mech_mgr.h"
 #include "digest_thread.h"
+#include "hsm_man_dlg.h"
 
 static QStringList sMechDigestList;
 
@@ -67,14 +68,13 @@ void DigestDlg::initUI()
     mInputCombo->addItems( sInputList );
     mMechCombo->addItems( sMechDigestList );
 
-    connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT( slotChanged(int) ));
-    connect( mKeyLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT( changeKeyLabel(int)));
     connect( mParamText, SIGNAL(textChanged(const QString)), this, SLOT(changeParam(const QString)));
     connect( mMechCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changeMech(int)));
 
     connect( mInitBtn, SIGNAL(clicked()), this, SLOT(clickInit()));
     connect( mUpdateBtn, SIGNAL(clicked()), this, SLOT(clickUpdate()));
     connect( mFinalBtn, SIGNAL(clicked()), this, SLOT(clickFinal()));
+    connect( mSelectBtn, SIGNAL(clicked()), this, SLOT(clickSelectKey()));
     connect( mDigestKeyBtn, SIGNAL(clicked()), this, SLOT(clickDigestKey()));
     connect( mDigestBtn, SIGNAL(clicked()), this, SLOT(clickDigest()));
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(clickClose()));
@@ -87,6 +87,8 @@ void DigestDlg::initUI()
     connect( mInputClearBtn, SIGNAL(clicked()), this, SLOT(clickInputClear()));
     connect( mOutputClearBtn, SIGNAL(clicked()), this, SLOT(clickOutputClear()));
     connect( mFindSrcFileBtn, SIGNAL(clicked()), this, SLOT(clickFindSrcFile()));
+
+    mKeyLabelText->setPlaceholderText( tr( "Select a key from HSM Man" ));
 
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);
@@ -105,75 +107,22 @@ long DigestDlg::getSessionHandle()
     return hSession;
 }
 
-void DigestDlg::setKeyList()
-{
-    int rv = -1;
-
-    CK_SESSION_HANDLE hSession = getSessionHandle();
-
-    CK_ATTRIBUTE sTemplate[1];
-    CK_ULONG uCnt = 0;
-
-    CK_ULONG uMaxObjCnt = manApplet->settingsMgr()->findMaxObjectsCount();
-    CK_OBJECT_HANDLE sObjects[uMaxObjCnt];
-    CK_ULONG uObjCnt = 0;
-
-    CK_OBJECT_CLASS objClass = 0;
-
-    objClass = CKO_SECRET_KEY;
-
-    sTemplate[uCnt].type = CKA_CLASS;
-    sTemplate[uCnt].pValue = &objClass;
-    sTemplate[uCnt].ulValueLen = sizeof(objClass);
-    uCnt++;
-
-    rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, uCnt );
-    if( rv != CKR_OK ) return;
-
-    rv = manApplet->cryptokiAPI()->FindObjects( hSession, sObjects, uMaxObjCnt, &uObjCnt );
-    if( rv != CKR_OK ) return;
-
-    rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
-    if( rv != CKR_OK ) return;
-
-    mKeyLabelCombo->clear();
-
-    for( int i=0; i < uObjCnt; i++ )
-    {
-        char *pLabel = NULL;
-
-        BIN binLabel = {0,0};
-        QVariant objVal = QVariant( (int)sObjects[i] );
-
-        rv = manApplet->cryptokiAPI()->GetAttributeValue2( hSession, sObjects[i], CKA_LABEL, &binLabel );
-
-        JS_BIN_string( &binLabel, &pLabel );
-
-        mKeyLabelCombo->addItem( pLabel, objVal );
-
-        if( pLabel ) JS_free( pLabel );
-        JS_BIN_reset( &binLabel );
-    }
-}
-
 void DigestDlg::slotChanged(int index)
 {
     if( index < 0 ) return;
+
+    slot_index_ = index;
 
     QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
     SlotInfo slotInfo = slot_infos.at(index);
 
     mSlotIDText->setText( QString( "%1").arg(slotInfo.getSlotID()));
+    session_ = slotInfo.getSessionHandle();
     mSessionText->setText( QString("%1").arg(slotInfo.getSessionHandle()));
     mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
-}
 
-void DigestDlg::changeKeyLabel( int index )
-{
-    QVariant objVal = mKeyLabelCombo->itemData(index);
-
-    QString strObject = QString("%1").arg( objVal.toInt() );
-    mKeyObjectText->setText( strObject );
+    mSlotsCombo->clear();
+    mSlotsCombo->addItem( slotInfo.getDesc() );
 }
 
 void DigestDlg::changeMech( int index )
@@ -191,27 +140,12 @@ void DigestDlg::changeParam( const QString text )
 
 void DigestDlg::setSelectedSlot(int index)
 {
-    if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
-
-    setKeyList();
+    slotChanged(index);
 }
 
 
 void DigestDlg::initialize()
 {
-    mSlotsCombo->clear();
-
-    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    for( int i=0; i < slot_infos.size(); i++ )
-    {
-        SlotInfo slotInfo = slot_infos.at(i);
-
-        mSlotsCombo->addItem( slotInfo.getDesc() );
-    }
-
-    if( slot_infos.size() > 0 ) slotChanged(0);
-
     mInitAutoCheck->setChecked(true);
     mInputTab->setCurrentIndex(0);
 
@@ -232,13 +166,50 @@ void DigestDlg::updateStatusLabel()
     mStatusLabel->setText( QString( "Init|Update X %1").arg( update_cnt_));
 }
 
+void DigestDlg::clickSelectKey()
+{
+    HsmManDlg hsmMan;
+    hsmMan.setSelectedSlot( slot_index_ );
+    hsmMan.setTitle( "Select Key" );
+
+    hsmMan.setMode( HsmModeSelectSecretKey, HsmUsageAny );
+
+    if( hsmMan.exec() == QDialog::Accepted )
+    {
+        mKeyLabelText->clear();
+        mKeyObjectText->clear();
+
+        QString strData = hsmMan.getData();
+        QStringList listData = strData.split(":");
+        if( listData.size() < 3 ) return;
+
+        QString strType = listData.at(0);
+        long hObj = listData.at(1).toLong();
+        QString strID = listData.at(2);
+        QString strLabel = manApplet->cryptokiAPI()->getLabel( session_, hObj );
+        mKeyLabelText->setText( strLabel );
+        mKeyObjectText->setText( QString("%1").arg( hObj ));
+    }
+}
+
 void DigestDlg::clickDigestKey()
 {
     int rv;
-    CK_SESSION_HANDLE hSession = getSessionHandle();
-    CK_OBJECT_HANDLE hKey = mKeyObjectText->text().toULong();
+    CK_OBJECT_HANDLE hKey = -1;
 
-    rv = manApplet->cryptokiAPI()->DigestKey( hSession, hKey );
+    if( mKeyObjectText->text().isEmpty() )
+    {
+        clickSelectKey();
+        if( mKeyObjectText->text().isEmpty() )
+        {
+            manApplet->warningBox( tr( "Select your key"), this );
+            return;
+        }
+    }
+
+    hKey = mKeyObjectText->text().toULong();
+
+    rv = manApplet->cryptokiAPI()->DigestKey( session_, hKey );
 
     if( rv == CKR_OK )
     {
@@ -259,8 +230,6 @@ int DigestDlg::clickInit()
     int rv = -1;
     update_cnt_ = 0;
 
-    CK_SESSION_HANDLE hSession = getSessionHandle();
-
     BIN binParam = {0,0};
     CK_MECHANISM stMech;
 
@@ -277,7 +246,7 @@ int DigestDlg::clickInit()
         stMech.ulParameterLen = binParam.nLen;
     }
 
-    rv = manApplet->cryptokiAPI()->DigestInit( hSession, &stMech );
+    rv = manApplet->cryptokiAPI()->DigestInit( session_, &stMech );
 
     if( rv == CKR_OK )
     {
@@ -301,7 +270,6 @@ void DigestDlg::clickUpdate()
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     QString strInput = mInputText->toPlainText();
     if( strInput.isEmpty() )
@@ -320,7 +288,7 @@ void DigestDlg::clickUpdate()
     else if( mInputCombo->currentIndex() == 2 )
         JS_BIN_decodeBase64( strInput.toStdString().c_str(), &binInput );
 
-    rv = manApplet->cryptokiAPI()->DigestUpdate( hSession, binInput.pVal, binInput.nLen );
+    rv = manApplet->cryptokiAPI()->DigestUpdate( session_, binInput.pVal, binInput.nLen );
 
     if( rv == CKR_OK )
     {
@@ -342,7 +310,6 @@ void DigestDlg::clickFinal()
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
 
     unsigned char sDigest[512];
@@ -351,7 +318,7 @@ void DigestDlg::clickFinal()
 
     memset( sDigest, 0x00, sizeof(sDigest) );
 
-    rv = manApplet->cryptokiAPI()->DigestFinal( hSession, sDigest, &uDigestLen );
+    rv = manApplet->cryptokiAPI()->DigestFinal( session_, sDigest, &uDigestLen );
 
     if( rv == CKR_OK )
     {
@@ -395,7 +362,6 @@ void DigestDlg::clickDigest()
 void DigestDlg::runDataDigest()
 {
     int rv = -1;
-    CK_SESSION_HANDLE hSession = getSessionHandle();
 
     QString strInput = mInputText->toPlainText();
 
@@ -422,7 +388,7 @@ void DigestDlg::runDataDigest()
 
     memset( sDigest, 0x00, sizeof(sDigest) );
 
-    rv = manApplet->cryptokiAPI()->Digest( hSession, binInput.pVal, binInput.nLen, sDigest, &uDigestLen );
+    rv = manApplet->cryptokiAPI()->Digest( session_, binInput.pVal, binInput.nLen, sDigest, &uDigestLen );
 
     if( rv == CKR_OK )
     {
@@ -445,8 +411,6 @@ void DigestDlg::runDataDigest()
 void DigestDlg::runFileDigest()
 {
     int ret = -1;
-    CK_SESSION_HANDLE hSession = getSessionHandle();
-
     int nRead = 0;
     int nPartSize = manApplet->settingsMgr()->fileReadSize();
     int nReadSize = 0;
@@ -508,7 +472,7 @@ void DigestDlg::runFileDigest()
             goto end;
         }
 
-        ret = manApplet->cryptokiAPI()->DigestUpdate( hSession, binPart.pVal, binPart.nLen );
+        ret = manApplet->cryptokiAPI()->DigestUpdate( session_, binPart.pVal, binPart.nLen );
         if( ret != CKR_OK )
         {
             manApplet->warningBox( tr("DigestUpdate execution failure [%1]").arg( JS_PKCS11_GetErrorMsg(ret)), this );

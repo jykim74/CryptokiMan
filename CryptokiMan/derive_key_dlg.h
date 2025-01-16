@@ -27,9 +27,10 @@ private slots:
     virtual void accept();
     void slotChanged( int index );
 
-    void srcLabelChanged( int index );
     void classChanged( int index );
     void typeChanged( int index );
+
+    void clickSelectSrcKey();
 
     void clickUseRand();
     void clickPrivate();
@@ -62,7 +63,6 @@ private:
     void initAttributes();
     void setAttributes();
     void connectAttributes();
-    void setSrcLabelList();
 
     void setDefaults();
     void setMechanism( void *pMech );

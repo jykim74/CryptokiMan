@@ -26,11 +26,11 @@ public:
 
 private slots:
     void slotChanged( int index );
-    void changeKeyLabel( int index );
     void changeMech( int index );
 
     void changeParam( const QString text );
 
+    void clickSelectKey();
     void clickDigestKey();
     int clickInit();
     void clickUpdate();
@@ -57,12 +57,14 @@ private:
     void appendStatusLabel( const QString& strLabel );
     void updateStatusLabel();
     void initUI();
-    void setKeyList();
 
     long getSessionHandle();
 
     DigestThread* thread_;
     int update_cnt_;
+
+    int slot_index_ = -1;
+    long session_ = -1;
 };
 
 #endif // DIGEST_DLG_H

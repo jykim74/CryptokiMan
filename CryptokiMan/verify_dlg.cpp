@@ -108,6 +108,8 @@ void VerifyDlg::initUI()
     keyTypeChanged(0);
     mVerifyBtn->setDefault(true);
 
+    mLabelText->setPlaceholderText( tr( "Select a key from HSM Man" ));
+
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);
 #endif

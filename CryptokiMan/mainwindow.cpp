@@ -73,18 +73,18 @@ const int kMaxRecentFiles = 10;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
-    initialize();
-
-    connect( right_table_, SIGNAL(itemDoubleClicked(QTableWidgetItem*)), this, SLOT(rightTableDblClick()));
-
-
     createActions();
     createStatusBar();
     createMemberDlg();
 
     setUnifiedTitleAndToolBarOnMac(true);
-
     setAcceptDrops(true);
+
+    initialize();
+
+    connect( right_table_, SIGNAL(itemDoubleClicked(QTableWidgetItem*)), this, SLOT(rightTableDblClick()));
+
+
     right_type_ = -1;
     slot_index_ = -1;
     log_halt_ = false;

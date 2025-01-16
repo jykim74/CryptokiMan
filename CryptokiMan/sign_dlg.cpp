@@ -106,6 +106,8 @@ void SignDlg::initUI()
     initialize();
     keyTypeChanged(0);
 
+    mLabelText->setPlaceholderText( tr( "Select a key from HSM Man" ));
+
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);
 #endif

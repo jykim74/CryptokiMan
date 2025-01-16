@@ -20,7 +20,8 @@ enum {
     HsmUsageEncrypt,
     HsmUsageDecrypt,
     HsmUsageWrap,
-    HsmUsageUnwrap
+    HsmUsageUnwrap,
+    HsmUsageDerive
 };
 
 enum {

@@ -11,6 +11,7 @@
 #include "cryptoki_api.h"
 #include "settings_mgr.h"
 #include "mech_mgr.h"
+#include "hsm_man_dlg.h"
 
 static QStringList sFalseTrue = { "false", "true" };
 static QStringList sParamList = { "CKD_NULL", "CKD_SHA1_KDF", "CKD_SHA224_KDF", "CKD_SHA256_KDF", "CKD_SHA348_KDF", "CKD_SHA512_KDF" };
@@ -42,12 +43,12 @@ DeriveKeyDlg::DeriveKeyDlg(QWidget *parent) :
     setAttributes();
     connectAttributes();
 
-    connect( mSrcLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(srcLabelChanged(int)));
     connect( mClassCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(classChanged(int)));
     connect( mTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(typeChanged(int)));
     connect( mSrcMethodCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changeMechanism(int)));
     connect( mParam1Text, SIGNAL(textChanged(const QString&)), this, SLOT(changeParam1(const QString&)));
     connect( mParam2Text, SIGNAL(textChanged(const QString&)), this, SLOT(changeParam2(const QString&)));
+    connect( mSelectSrcBtn, SIGNAL(clicked()), this, SLOT(clickSelectSrcKey()));
 
     initialize();
     setDefaults();
@@ -66,15 +67,6 @@ DeriveKeyDlg::DeriveKeyDlg(QWidget *parent) :
 DeriveKeyDlg::~DeriveKeyDlg()
 {
 
-}
-
-void DeriveKeyDlg::srcLabelChanged( int index )
-{
-    QVariant objVal = mSrcLabelCombo->itemData(index);
-
-    QString strHandle = QString("%1").arg( objVal.toInt() );
-
-    mSrcObjectText->setText(strHandle);
 }
 
 void DeriveKeyDlg::classChanged( int index )
@@ -110,6 +102,32 @@ void DeriveKeyDlg::typeChanged( int index )
     }
 }
 
+void DeriveKeyDlg::clickSelectSrcKey()
+{
+    HsmManDlg hsmMan;
+    hsmMan.setSelectedSlot( slot_index_ );
+    hsmMan.setTitle( "Select Key" );
+
+    hsmMan.setMode( HsmModeSelectSecretKey, HsmUsageDerive );
+
+    if( hsmMan.exec() == QDialog::Accepted )
+    {
+        mSrcLabelText->clear();
+        mSrcObjectText->clear();
+
+        QString strData = hsmMan.getData();
+        QStringList listData = strData.split(":");
+        if( listData.size() < 3 ) return;
+
+        QString strType = listData.at(0);
+        long hObj = listData.at(1).toLong();
+        QString strID = listData.at(2);
+        QString strLabel = manApplet->cryptokiAPI()->getLabel( session_, hObj );
+        mSrcLabelText->setText( strLabel );
+        mSrcLabelText->setText( QString("%1").arg( hObj ));
+    }
+}
+
 void DeriveKeyDlg::slotChanged(int index)
 {
     if( index < 0 ) return;
@@ -131,8 +149,6 @@ void DeriveKeyDlg::slotChanged(int index)
 void DeriveKeyDlg::setSelectedSlot(int index)
 {
     slotChanged( index );
-
-    setSrcLabelList();
 }
 
 void DeriveKeyDlg::initUI()
@@ -156,6 +172,8 @@ void DeriveKeyDlg::initUI()
     mSrcMethodCombo->addItems(sMechDeriveList);
     mClassCombo->addItems( sKeyClassList );
     mTypeCombo->addItems( sSecKeyTypeList );
+
+    mSrcLabelText->setPlaceholderText( tr( "Select a key from HSM Man" ));
 }
 
 void DeriveKeyDlg::initialize()
@@ -191,9 +209,13 @@ void DeriveKeyDlg::accept()
 
     if( mSrcObjectText->text().length() < 1 )
     {
-        manApplet->warningBox( tr( "Select a key" ), this );
-        mSrcLabelCombo->setFocus();
-        return;
+        clickSelectSrcKey();
+
+        if( mSrcObjectText->text().length() < 1 )
+        {
+            manApplet->warningBox( tr( "Select a key" ), this );
+            return;
+        }
     }
 
     hSrcKey = mSrcObjectText->text().toLong();
@@ -871,105 +893,6 @@ void DeriveKeyDlg::freeMechanism( void *pMech )
     pPtr->ulParameterLen = 0;
 }
 
-void DeriveKeyDlg::setSrcLabelList()
-{
-    int rv = -1;
-
-    CK_ATTRIBUTE sTemplate[10];
-    CK_ULONG uCnt = 0;
-
-    CK_ULONG uMaxObjCnt = manApplet->settingsMgr()->findMaxObjectsCount();
-    CK_OBJECT_HANDLE sObjects[uMaxObjCnt];
-    CK_ULONG uObjCnt = 0;
-
-    CK_OBJECT_CLASS objClass = 0;
-
-
-    objClass = CKO_SECRET_KEY;
-
-    sTemplate[uCnt].type = CKA_CLASS;
-    sTemplate[uCnt].pValue = &objClass;
-    sTemplate[uCnt].ulValueLen = sizeof(objClass);
-    uCnt++;
-
-    sTemplate[uCnt].type = CKA_DERIVE;
-    sTemplate[uCnt].pValue = &kTrue;
-    sTemplate[uCnt].ulValueLen = sizeof(CK_BBOOL);
-    uCnt++;
-
-    rv = manApplet->cryptokiAPI()->FindObjectsInit( session_, sTemplate, uCnt );
-    if( rv != CKR_OK ) return;
-
-    rv = manApplet->cryptokiAPI()->FindObjects( session_, sObjects, uMaxObjCnt, &uObjCnt );
-    if( rv != CKR_OK ) return;
-
-    rv = manApplet->cryptokiAPI()->FindObjectsFinal( session_ );
-    if( rv != CKR_OK ) return;
-
-    mSrcLabelCombo->clear();
-
-    for( int i=0; i < uObjCnt; i++ )
-    {
-        char *pStr = NULL;
-        BIN binLabel = {0,0};
-        QVariant objVal = QVariant( (int)sObjects[i] );
-
-        rv = manApplet->cryptokiAPI()->GetAttributeValue2( session_, sObjects[i], CKA_LABEL, &binLabel );
-
-        JS_BIN_string( &binLabel, &pStr );
-
-        mSrcLabelCombo->addItem( pStr, objVal );
-        if( pStr ) JS_free(pStr);
-        JS_BIN_reset( &binLabel );
-    }
-
-    uCnt = 0;
-    uObjCnt = 0;
-
-    objClass = CKO_PRIVATE_KEY;
-    sTemplate[uCnt].type = CKA_CLASS;
-    sTemplate[uCnt].pValue = &objClass;
-    sTemplate[uCnt].ulValueLen = sizeof(objClass);
-    uCnt++;
-
-    sTemplate[uCnt].type = CKA_DERIVE;
-    sTemplate[uCnt].pValue = &kTrue;
-    sTemplate[uCnt].ulValueLen = sizeof(CK_BBOOL);
-    uCnt++;
-
-    rv = manApplet->cryptokiAPI()->FindObjectsInit( session_, sTemplate, uCnt );
-    if( rv != CKR_OK ) return;
-
-    rv = manApplet->cryptokiAPI()->FindObjects( session_, sObjects, uMaxObjCnt, &uObjCnt );
-    if( rv != CKR_OK ) return;
-
-    rv = manApplet->cryptokiAPI()->FindObjectsFinal( session_ );
-    if( rv != CKR_OK ) return;
-
-    for( int i=0; i < uObjCnt; i++ )
-    {
-        char *pStr = NULL;
-        BIN binLabel = {0,0};
-        QVariant objVal = QVariant( (int)sObjects[i] );
-
-        rv = manApplet->cryptokiAPI()->GetAttributeValue2( session_, sObjects[i], CKA_LABEL, &binLabel );
-
-        JS_BIN_string( &binLabel, &pStr );
-
-        mSrcLabelCombo->addItem( pStr, objVal );
-        if( pStr ) JS_free(pStr);
-        JS_BIN_reset( &binLabel );
-    }
-
-    int iKeyCnt = mSrcLabelCombo->count();
-    if( iKeyCnt > 0 )
-    {
-        QVariant objVal = mSrcLabelCombo->itemData(0);
-
-        QString strHandle = QString("%1").arg( objVal.toInt() );
-        mSrcObjectText->setText( strHandle );
-    }
-}
 
 void DeriveKeyDlg::setDefaults()
 {
