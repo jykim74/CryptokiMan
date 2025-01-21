@@ -147,6 +147,7 @@ public:
     void viewToolDeriveKey( bool bChecked );
     void viewToolTypeName( bool bChecked );
     void viewToolMakeCSR( bool bChecked );
+    void viewToolCAVP( bool bChecked );
 
     void viewHelpClearLog( bool bChecked );
     void viewHelpHaltLog( bool bChecked );
@@ -225,6 +226,7 @@ public slots:
     void unwrapKey();
     void deriveKey();
     void typeName();
+    void CAVP();
     void licenseInfo();
     void bugIssueReport();
     void qnaDiscussion();
@@ -367,6 +369,7 @@ private:
     QAction* derive_key_act_;
     QAction* type_name_act_;
     QAction* make_csr_act_;
+    QAction* cavp_act_;
 
     QToolBar* help_tool_;
     QAction* clear_log_act_;

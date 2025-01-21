@@ -354,6 +354,13 @@ void MainWindow::createViewActions()
     connect( toolMakeCSRAct, &QAction::triggered, this, &MainWindow::viewToolMakeCSR );
     toolMenu->addAction( toolMakeCSRAct );
 
+    QAction *toolCAVPAct = new QAction( tr("CAVP"), this );
+    bVal = isView( ACT_TOOL_CAVP );
+    toolCAVPAct->setCheckable(true);
+    toolCAVPAct->setChecked(bVal);
+    connect( toolCAVPAct, &QAction::triggered, this, &MainWindow::viewToolCAVP );
+    toolMenu->addAction( toolCAVPAct );
+
     QAction *helpClearLogAct = new QAction( tr("Clear Log"), this );
     bVal = isView( ACT_HELP_CLEAR_LOG );
     helpClearLogAct->setCheckable(true);
@@ -1094,6 +1101,21 @@ void MainWindow::viewToolMakeCSR( bool bChecked )
     else
     {
         tool_tool_->removeAction( make_csr_act_ );
+        unsetView( nAct );
+    }
+}
+
+void MainWindow::viewToolCAVP( bool bChecked )
+{
+    int nAct = ACT_TOOL_CAVP;
+    if( bChecked == true )
+    {
+        tool_tool_->addAction( cavp_act_ );
+        setView( nAct );
+    }
+    else
+    {
+        tool_tool_->removeAction( cavp_act_ );
         unsetView( nAct );
     }
 }

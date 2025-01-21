@@ -67,6 +67,7 @@
 #include "pri_key_info_dlg.h"
 #include "make_csr_dlg.h"
 #include "hsm_man_dlg.h"
+#include "cavp_dlg.h"
 
 const int kMaxRecentFiles = 10;
 
@@ -678,6 +679,14 @@ void MainWindow::createActions()
     toolsMenu->addAction( make_csr_act_ );
     if( isView( ACT_TOOL_MAKE_CSR )) tool_tool_->addAction( make_csr_act_ );
 
+    const QIcon cavpIcon = QIcon::fromTheme( "CAVP", QIcon(":/images/cavp.png" ));
+    cavp_act_ = new QAction( cavpIcon, tr( "CAVP" ), this );
+    cavp_act_->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_C));
+    connect( cavp_act_, &QAction::triggered, this, &MainWindow::CAVP );
+    cavp_act_->setStatusTip( tr( "Cryptography Algorithm Valication Program" ) );
+    toolsMenu->addAction( cavp_act_ );
+    if( isView( ACT_TOOL_CAVP )) tool_tool_->addAction( cavp_act_ );
+
 
     if( manApplet->isLicense() == false )
     {
@@ -697,6 +706,7 @@ void MainWindow::createActions()
         derive_key_act_->setEnabled( false );
 
         type_name_act_->setEnabled( false );
+        cavp_act_->setEnabled( false );
     }
 
     QMenu *helpMenu = menuBar()->addMenu(tr("&Help"));
@@ -2389,6 +2399,23 @@ void MainWindow::typeName()
 {
     TypeNameDlg typeName;
     typeName.exec();
+}
+
+void MainWindow::CAVP()
+{
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "No slot selected" ), this );
+        return;
+    }
+
+    int nSlot = pItem->getSlotIndex();
+
+    CAVPDlg cavp;
+    cavp.setSelectedSlot( nSlot );
+    cavp.exec();
 }
 
 void MainWindow::settings()
