@@ -300,7 +300,7 @@ void HsmManDlg::initUI()
     mPrivateTypeCombo->addItems( kAsymTypeList );
 
     mSecretTypeCombo->addItem( "Any" );
-    mSecretTypeCombo->addItems( kSymTypeList );
+    mSecretTypeCombo->addItems( kSymKeyList );
 }
 
 void HsmManDlg::initialize()

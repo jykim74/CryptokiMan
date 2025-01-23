@@ -77,7 +77,7 @@ void CreateKeyDlg::keyTypeChanged( int index )
 
 void CreateKeyDlg::initUI()
 {
-    sSymTypeList = kSymTypeList;
+    sSymTypeList = kSymKeyList;
     mKeyTypeCombo->addItems( sSymTypeList );
 }
 

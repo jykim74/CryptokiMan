@@ -180,7 +180,7 @@ void FindObjectDlg::initUI()
     mClassCombo->addItems( kClassList );
     mMaxText->setText( QString("%1").arg( nMaxCnt ));
 
-    sSymKeyTypeList = kSymTypeList;
+    sSymKeyTypeList = kSymKeyList;
     sAsymKeyTypeList = kAsymTypeList;
 
     mKeyTypeCombo->addItem( "" );

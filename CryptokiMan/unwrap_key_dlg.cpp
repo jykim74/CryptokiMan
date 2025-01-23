@@ -98,7 +98,7 @@ void UnwrapKeyDlg::initUI()
         sMechUnwrapAsymList = kMechWrapAsymList;
     }
 
-    sSymTypeList = kSymTypeList;
+    sSymTypeList = kSymKeyList;
     sAsymTypeList = kAsymTypeList;
 
     mUnwrapMechCombo->addItems(sMechUnwrapSymList);

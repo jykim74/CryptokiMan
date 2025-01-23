@@ -13,11 +13,107 @@
 #include "mech_mgr.h"
 #include "cryptoki_api.h"
 
+static const int kACVP_TYPE_BLOCK_CIPHER = 0;
+static const int kACVP_TYPE_HASH = 1;
+static const int kACVP_TYPE_MAC = 2;
+static const int kACVP_TYPE_RSA = 3;
+static const int kACVP_TYPE_ECDSA = 4;
+static const int kACVP_TYPE_DRBG = 5;
+static const int kACVP_TYPE_KDA = 6;
+static const int kACVP_TYPE_EDDSA = 7;
+static const int kACVP_TYPE_DSA = 8;
+
+static QStringList kACVP_HashList =
+    { "SHA-1", "SHA2-224", "SHA2-256", "SHA2-384", "SHA2-512" };
+static QStringList kACVP_BlockCipherList =
+    { "ACVP-AES-ECB", "ACVP-AES-CBC", "ACVP-AES-CFB128", "ACVP-AES-OFB", "ACVP-AES-CTR", "ACVP-AES-CCM", "ACVP-AES-KW", "ACVP-AES-KWP", "ACVP-AES-GCM" };
+static QStringList kACVP_MACList =
+    { "HMAC-SHA-1", "HMAC-SHA2-224", "HMAC-SHA2-256", "HMAC-SHA2-384", "HMAC-SHA2-512", "ACVP-AES-GMAC", "CMAC-AES" };
+static QStringList kACVP_RSAList = { "RSA" };
+static QStringList kACVP_ECDSAList = { "ECDSA" };
+static QStringList kACVP_DRBGList = { "ctrDRBG", "hashDRBG", "hmacDRBG" };
+static QStringList kACVP_KDAList = { "KAS-ECC", "kdf-components", "PBKDF" };
+static QStringList kACVP_EDDSAList = { "EDDSA" };
+static QStringList kACVP_DSAList = { "DSA" };
+
 const QStringList kSymAlgList = { "AES", "DES3" };
 const QStringList kSymModeList = { "ECB", "CBC", "CTR", "CFB", "OFB" };
 const QStringList kSymDirection = { "Encrypt", "Decrypt" };
 const QStringList kHashAlgList = { "SHA-1", "SHA2-224", "SHA2-256", "SHA2-384", "SHA2-512" };
 const QStringList kMctVersion = { "Standard", "Alternate" };
+
+const QStringList kSymTypeList = { "KAT", "MCT", "MMT" };
+
+const QStringList kAEModeList = { "GCM", "CCM" };
+const QStringList kAETypeList = { "AE", "AD" };
+
+const QStringList kHashTypeList = { "Short", "Long", "Monte" };
+const QStringList kECCAlgList = { "ECDSA", "ECDH" };
+const QStringList kECCTypeECDSA = { "KPG", "PKV", "SGT", "SVT" };
+const QStringList kECCTypeECDH = { "KAKAT", "PKV", "KPG" };
+
+const QStringList kRSAAlgList = { "RSAES", "RSAPSS" };
+const QStringList kRSATypeRSAES = { "DET", "ENT", "KGT" };
+const QStringList kRSATypeRSAPSS = { "KPG", "SGT", "SVT" };
+
+int getACVPType( const QString strAlg )
+{
+    for( int i = 0; i < kACVP_HashList.size(); i++ )
+    {
+        if( strAlg.toUpper() == kACVP_HashList.at(i).toUpper() )
+            return kACVP_TYPE_HASH;
+    }
+
+    for( int i = 0; i < kACVP_BlockCipherList.size(); i++ )
+    {
+        if( strAlg.toUpper() == kACVP_BlockCipherList.at(i).toUpper() )
+            return kACVP_TYPE_BLOCK_CIPHER;
+    }
+
+    for( int i = 0; i < kACVP_MACList.size(); i++ )
+    {
+        if( strAlg.toUpper() == kACVP_MACList.at(i).toUpper() )
+            return kACVP_TYPE_MAC;
+    }
+
+    for( int i = 0; i < kACVP_RSAList.size(); i++ )
+    {
+        if( strAlg.toUpper() == kACVP_RSAList.at(i).toUpper() )
+            return kACVP_TYPE_RSA;
+    }
+
+    for( int i = 0; i < kACVP_ECDSAList.size(); i++ )
+    {
+        if( strAlg.toUpper() == kACVP_ECDSAList.at(i).toUpper() )
+            return kACVP_TYPE_ECDSA;
+    }
+
+    for( int i = 0; i < kACVP_DRBGList.size(); i++ )
+    {
+        if( strAlg.toUpper() == kACVP_DRBGList.at(i).toUpper() )
+            return kACVP_TYPE_DRBG;
+    }
+
+    for( int i = 0; i < kACVP_KDAList.size(); i++ )
+    {
+        if( strAlg.toUpper() == kACVP_KDAList.at(i).toUpper() )
+            return kACVP_TYPE_KDA;
+    }
+
+    for( int i = 0; i < kACVP_EDDSAList.size(); i++ )
+    {
+        if( strAlg.toUpper() == kACVP_EDDSAList.at(i).toUpper() )
+            return kACVP_TYPE_EDDSA;
+    }
+
+    for( int i = 0; i < kACVP_DSAList.size(); i++ )
+    {
+        if( strAlg.toUpper() == kACVP_DSAList.at(i).toUpper() )
+            return kACVP_TYPE_DSA;
+    }
+
+    return -1;
+}
 
 CAVPDlg::CAVPDlg(QWidget *parent) :
     QDialog(parent)
@@ -26,10 +122,29 @@ CAVPDlg::CAVPDlg(QWidget *parent) :
 
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(close()));
     connect( mFindRspBtn, SIGNAL(clicked()), this, SLOT(clickFindRsp()));
+
+    connect( mSymRunBtn, SIGNAL(clicked()), this, SLOT(clickSymRun()));
+    connect( mAERunBtn, SIGNAL(clicked()), this, SLOT(clickAERun()));
+    connect( mHashRunBtn, SIGNAL(clicked()), this, SLOT(clickHashRun()));
+    connect( mMACRunBtn, SIGNAL(clicked()), this, SLOT(clickMACRun()));
+    connect( mECCRunBtn, SIGNAL(clicked()), this, SLOT(clickECCRun()));
+    connect( mRSARunBtn, SIGNAL(clicked()), this, SLOT(clickRSARun()));
+
+    connect( mSymFindBtn, SIGNAL(clicked()), this, SLOT(clickSymFind()));
+    connect( mAEFindBtn, SIGNAL(clicked()), this, SLOT(clickAEFind()));
+    connect( mHashFindBtn, SIGNAL(clicked()), this, SLOT(clickHashFind()));
+    connect( mMACFindBtn, SIGNAL(clicked()), this, SLOT(clickMACFind()));
+    connect( mECCFindBtn, SIGNAL(clicked()), this, SLOT(clickECCFind()));
+    connect( mRSAFindBtn, SIGNAL(clicked()), this, SLOT(clickRSAFind()));
+
     connect( mMCT_SymClearBtn, SIGNAL(clicked()), this, SLOT(clickMCT_SymClear()));
     connect( mMCT_HashClearBtn, SIGNAL(clicked()), this, SLOT(clickMCT_HashClear()));
     connect( mMCT_SymRunBtn, SIGNAL(clicked()), this, SLOT(clickMCT_SymRun()));
     connect( mMCT_HashRunBtn, SIGNAL(clicked()), this, SLOT(clickMCT_HashRun()));
+    connect( mACVP_ClearBtn, SIGNAL(clicked()), this, SLOT(clickACVP_Clear()));
+    connect( mACVP_RunBtn, SIGNAL(clicked()), this, SLOT(clickACVP_Run()));
+    connect( mACVP_LDTClearBtn, SIGNAL(clicked()), this, SLOT(clickACVP_LDTClear()));
+    connect( mACVP_LDTRunBtn, SIGNAL(clicked()), this, SLOT(clickACVP_LDTRun()));
 
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);
@@ -52,7 +167,32 @@ void CAVPDlg::initUI()
     mMCT_HashAlgCombo->addItems( kHashAlgList );
     mMCT_HashMctVersionCombo->addItems( kMctVersion );
 
-    mACVP_HashCombo->addItems( kHashAlgList );
+    mACVP_LDTHashCombo->addItems( kMechDigestList );
+
+
+
+    mSymAlgCombo->addItems( kSymAlgList );
+    mSymModeCombo->addItems( kSymModeList );
+    mSymTypeCombo->addItems( kSymTypeList );
+
+    mAEAlgCombo->addItems( kSymAlgList );
+    mAEModeCombo->addItems( kAEModeList );
+    mAETypeCombo->addItems( kAETypeList );
+
+    mHashAlgCombo->addItems( kHashAlgList );
+    mHashTypeCombo->addItems( kHashTypeList );
+
+    mMACHashCombo->addItems( kHashAlgList );
+
+    mECCAlgCombo->addItems( kECCAlgList );
+    mECCParamCombo->addItems( kECCOptionList );
+    mECCHashCombo->addItems( kHashAlgList );
+    mECCTypeCombo->addItems( kECCTypeECDSA );
+
+    mRSAAlgCombo->addItems( kRSAAlgList );
+    mRSAHashCombo->addItems( kHashAlgList );
+    mRSA_EText->setText( "65537" );
+    mRSATypeCombo->addItems( kRSATypeRSAES );
 
     mTabWidget->setCurrentIndex(0);
 }
@@ -95,6 +235,847 @@ void CAVPDlg::clickFindRsp()
     {
         mRspPathText->setText( strFileName );
     }
+}
+
+void CAVPDlg::clickSymRun()
+{
+    int ret = 0;
+    manApplet->log( "SymRun\n" );
+
+    if( mSymReqPathText->text().length() < 1 )
+    {
+        manApplet->warningBox( tr("Select requested file"), this );
+        mSymReqPathText->setFocus();
+        return;
+    }
+
+    QString strPath = mSymReqPathText->text();
+    QFile reqFile( strPath );
+    QString strAlg = mSymAlgCombo->currentText();
+
+
+    QString strRspName = getRspFile( strPath );
+
+    if( !reqFile.open( QIODevice::ReadOnly | QIODevice::Text ))
+    {
+        manApplet->elog( QString( "failed to open file(%1)\n").arg( strPath ));
+        return;
+    }
+
+    QTextStream in( &reqFile );
+    QString strLine = in.readLine();
+    int nPos = 0;
+    int nLen = 0;
+    QString strKey;
+    QString strIV;
+    QString strPT;
+    QString strType = mSymTypeCombo->currentText();
+    QString strMode = mSymModeCombo->currentText();
+
+    logRsp( QString( "# SYM-%1-%2-%3 Response")
+               .arg( mSymAlgCombo->currentText())
+               .arg( mSymModeCombo->currentText())
+               .arg( mSymTypeCombo->currentText()) );
+
+    while( strLine.isNull() == false )
+    {
+        QString strName;
+        QString strValue;
+        QString strNext = in.readLine();
+
+        nLen = strLine.length();
+
+        if( nLen > 0 )
+        {
+            getNameValue( strLine, strName, strValue );
+
+            if( strName == "KEY" )
+                strKey = strValue;
+            else if( strName == "IV" )
+                strIV = strValue;
+            else if( strName == "PT" )
+                strPT = strValue;
+        }
+
+        if( nLen == 0 || strNext.isNull() )
+        {
+            if( strKey.length() > 0 )
+            {
+                if( strKey.length() > 0 ) logRsp( QString( "Key = %1").arg( strKey ));
+                if( strIV.length() > 0 ) logRsp( QString( "IV = %1").arg( strIV ));
+                if( strPT.length() > 0 ) logRsp( QString( "PT = %1").arg( strPT ));
+#if 0
+                if( strType == "MCT" )
+                {
+                    if( strMode == "CBC" )
+                    {
+                        ret = makeSymCBC_MCT( strAlg, strKey, strIV, strPT, NULL);
+                    }
+                    else if( strMode == "ECB" )
+                    {
+                        ret = makeSymECB_MCT( strAlg, strKey, strPT, NULL );
+                    }
+                    else if( strMode == "CTR" )
+                    {
+                        ret = makeSymCTR_MCT( strAlg, strKey, strIV, strPT, NULL );
+                    }
+                    else if( strMode == "CFB" )
+                    {
+                        ret = makeSymCFB_MCT( strAlg, strKey, strIV, strPT, NULL );
+                    }
+                    else if( strMode == "OFB" )
+                    {
+                        ret = makeSymOFB_MCT( strAlg, strKey, strIV, strPT, NULL );
+                    }
+                }
+                else
+                    ret = makeSymData( strKey, strIV, strPT );
+#endif
+
+                if( ret != 0 )
+                {
+                    manApplet->warningBox( tr( "SYM execution failed [%1]").arg(ret), this);
+                    return;
+                }
+            }
+
+            strKey.clear();
+            strIV.clear();
+            strPT.clear();
+        }
+
+        strLine = strNext;
+        nPos++;
+    }
+
+    manApplet->messageBox( tr("CAVP completed[Rsp: %1]").arg(strRspName), this );
+}
+
+void CAVPDlg::clickAERun()
+{
+
+}
+
+void CAVPDlg::clickHashRun()
+{
+    int ret = 0;
+    manApplet->log( "Hash execution" );
+
+    if( mHashReqPathText->text().length() < 1 )
+    {
+        manApplet->warningBox( tr("Select requested file"), this );
+        mHashReqPathText->setFocus();
+        return;
+    }
+
+    QString strPath = mHashReqPathText->text();
+    QFile reqFile( strPath );
+    QString strAlg = mHashAlgCombo->currentText();
+
+    QString strRspName = getRspFile( strPath );
+
+    if( !reqFile.open( QIODevice::ReadOnly | QIODevice::Text ))
+    {
+        manApplet->elog( QString( "fail to open file(%1)\n").arg( strPath ));
+        return;
+    }
+
+    QTextStream in( &reqFile );
+    QString strLine = in.readLine();
+
+    QString strL;
+    QString strLen;
+    QString strMsg;
+    QString strSeed;
+
+    int nPos = 0;
+    int nLen = 0;
+
+    logRsp( QString( "# HASH-%1-%2 Response")
+               .arg( mHashAlgCombo->currentText())
+               .arg( mHashTypeCombo->currentText()) );
+
+    while( strLine.isNull() == false )
+    {
+        QString strName;
+        QString strValue;
+        QString strNext = in.readLine();
+
+        nLen = strLine.length();
+        //        manApplet->log( QString( "%1 %2 %3").arg( nPos ).arg( nLen ).arg( strLine ));
+
+        if( nLen > 0 )
+        {
+            getNameValue( strLine, strName, strValue );
+            manApplet->log( QString( "Name:%1 Value:%2").arg(strName).arg(strValue));
+
+            if( strName == "L" )
+                strL = strValue;
+            else if( strName == "Len" )
+                strLen = strValue;
+            else if( strName == "Msg" )
+                strMsg = strValue;
+            else if( strName == "Seed" )
+                strSeed = strValue;
+        }
+
+        if( nLen == 0 || strNext.isNull() )
+        {
+            if( strL.length() > 0 )
+            {
+                logRsp( QString( "L = %1").arg( strL ));
+                logRsp( "" );
+                strL.clear();
+            }
+
+            if( strMsg.length() > 0 && strLen.length() > 0 )
+            {
+//                ret = makeHashData( strLen.toInt(), strMsg );
+            }
+            else if( strSeed.length() > 0 )
+            {
+ //               ret = makeHashMCT( mHashAlgCombo->currentText(), strSeed, NULL );
+            }
+
+            strMsg.clear();
+            strLen.clear();
+            strSeed.clear();
+
+            if( ret != 0 )
+            {
+                manApplet->warningBox( tr( "Hash execution failed [%1]" ).arg(ret), this);
+                return;
+            }
+        }
+
+        strLine = strNext;
+        nPos++;
+    }
+
+    manApplet->messageBox( tr("CAVP completed[Rsp: %1]").arg(strRspName), this );
+}
+
+void CAVPDlg::clickMACRun()
+{
+    int ret = 0;
+    manApplet->log( "Hash execution" );
+
+    if( mMACReqPathText->text().length() < 1 )
+    {
+        manApplet->warningBox( tr("Select requested file"), this );
+        mMACReqPathText->setFocus();
+        return;
+    }
+
+    QString strPath = mMACReqPathText->text();
+    QFile reqFile( strPath );
+
+    QString strRspName = getRspFile( strPath );
+
+    if( !reqFile.open( QIODevice::ReadOnly | QIODevice::Text ))
+    {
+        manApplet->elog( QString( "failed to open file(%1)\n").arg( strPath ));
+        return;
+    }
+
+    QTextStream in( &reqFile );
+    QString strLine = in.readLine();
+
+    QString strL;
+    QString strCount;
+    QString strKLen;
+    QString strTLen;
+    QString strKey;
+    QString strMsg;
+
+    int nPos = 0;
+    int nLen = 0;
+
+    logRsp( QString( "# MAC-%1 Response")
+               .arg( mMACHashCombo->currentText()) );
+
+    while( strLine.isNull() == false )
+    {
+        QString strName;
+        QString strValue;
+        QString strNext = in.readLine();
+
+        nLen = strLine.length();
+        //        manApplet->log( QString( "%1 %2 %3").arg( nPos ).arg( nLen ).arg( strLine ));
+
+        if( nLen > 0 )
+        {
+            getNameValue( strLine, strName, strValue );
+            //            manApplet->log( QString( "Name:%1 Value:%2").arg(strName).arg(strValue));
+
+            if( strName == "COUNT" )
+                strCount = strValue;
+            else if( strName == "Klen" )
+                strKLen = strValue;
+            else if( strName == "Tlen" )
+                strTLen = strValue;
+            else if( strName == "Key" )
+                strKey = strValue;
+            else if( strName == "Msg" )
+                strMsg = strValue;
+            else if( strName == "L" )
+                strL = strValue;
+        }
+
+        if( nLen == 0 || strNext.isNull() )
+        {
+            if( strL.length() > 0 )
+            {
+                logRsp( QString( "L = %1").arg(strL));
+                logRsp( "" );
+
+                strL.clear();
+            }
+
+            if( strCount.length() > 0 && strKLen.length() > 0 && strTLen.length() > 0 && strKey.length() > 0 && strMsg.length() > 0 )
+            {
+ //               ret = makeHMACData( strCount, strKLen, strTLen, strKey, strMsg );
+
+                if( ret != 0 )
+                {
+                    manApplet->warningBox( tr( "HMAC execution failed [%1]").arg(ret), this);
+                    return;
+                }
+            }
+
+            strCount.clear();
+            strKLen.clear();
+            strTLen.clear();
+            strKey.clear();
+            strMsg.clear();
+        }
+
+        strLine = strNext;
+        nPos++;
+    }
+
+    manApplet->messageBox( tr("CAVP completed[Rsp: %1]").arg(strRspName), this );
+}
+
+void CAVPDlg::clickECCRun()
+{
+    manApplet->log( "ECC execution" );
+    int ret = 0;
+    bool bInit = true;
+
+    if( mECCReqPathText->text().length() < 1 )
+    {
+        manApplet->warningBox( tr("Select requested file"), this );
+        mECCReqPathText->setFocus();
+        return;
+    }
+
+    QString strPath = mECCReqPathText->text();
+    QFile reqFile( strPath );
+
+    QString strRspName = getRspFile( strPath );
+
+    if( !reqFile.open( QIODevice::ReadOnly | QIODevice::Text ))
+    {
+        manApplet->elog( QString( "failed to open file(%1)").arg(strPath));
+        return;
+    }
+
+    int nPos = 0;
+    int nLen = 0;
+
+    QString strYX;
+    QString strYY;
+    QString strM;
+    QString strR;
+    QString strS;
+
+    QString strQX;
+    QString strQY;
+    QString strRA;
+    QString strRB;
+    QString strKTA1X;
+    QString strKTA1Y;
+
+    QTextStream in( &reqFile );
+    QString strLine = in.readLine();
+    QString strParam = mECCParamCombo->currentText();
+    QString strHash = mECCHashCombo->currentText();
+#if 0
+    logRsp( QString( "# ECC-%1-%2-%3 Response")
+               .arg( mECC_ECDSARadio->isChecked() ? "ECDSA" : "ECDH" )
+               .arg( mECCParamCombo->currentText() )
+               .arg( mECCTypeCombo->currentText()));
+
+    while( strLine.isNull() == false )
+    {
+        QString strName;
+        QString strValue;
+        QString strNext = in.readLine();
+
+        nLen = strLine.length();
+        //       manApplet->log( QString( "%1 %2 %3").arg( nPos ).arg( nLen ).arg( strLine ));
+
+        if( nLen > 0 )
+        {
+            strLine.remove( '[' );
+            strLine.remove( ']' );
+
+            getNameValue( strLine, strName, strValue );
+
+            if( strName == "Yx" )
+                strYX = strValue;
+            else if( strName == "Yy" )
+                strYY = strValue;
+            else if( strName == "M" )
+                strM = strValue;
+            else if( strName == "R" )
+                strR = strValue;
+            else if( strName == "S" )
+                strS = strValue;
+            else if( strName == "Qx" )
+                strQX = strValue;
+            else if( strName == "Qy" )
+                strQY = strValue;
+            else if( strName == "rA" )
+                strRA = strValue;
+            else if( strName == "rB" )
+                strRB = strValue;
+            else if( strName == "KTA1x" )
+                strKTA1X = strValue;
+            else if( strName == "KTA1y" )
+                strKTA1Y = strValue;
+        }
+
+        if( nLen == 0 || strNext.isNull() )
+        {
+            if( mECC_ECDSARadio->isChecked() && mECCTypeCombo->currentText() == "KPG" )
+            {
+                if( bInit == true )
+                {
+                    logRsp( QString("[%1]").arg( strParam) );
+                    logRsp( "" );
+                    bInit = false;
+                }
+
+                ret = makeECDSA_KPG( strParam, 10 );
+                if( ret != 0 )
+                {
+                    manApplet->warningBox( tr( "ECC execution fail [%1]").arg(ret), this );
+                    return;
+                }
+            }
+            else if( mECC_ECDSARadio->isChecked() && mECCTypeCombo->currentText() == "PKV" )
+            {
+                if( bInit == true )
+                {
+                    logRsp( QString("[%1]").arg( strParam) );
+                    logRsp( "" );
+                    bInit = false;
+                }
+
+                if( strYX.length() > 0 && strYY.length() > 0 )
+                {
+                    ret = makeECDSA_PKV( strParam, strYX, strYY );
+                    if( ret != 0 )
+                    {
+                        manApplet->warningBox( tr( "ECC execution fail [%1]").arg(ret), this);
+                        return;
+                    }
+                }
+            }
+            else if( mECC_ECDSARadio->isChecked() && mECCTypeCombo->currentText() == "SGT" )
+            {
+                if( bInit == true )
+                {
+                    logRsp( QString("[%1, %2]").arg( strParam ).arg( strHash ) );
+                    logRsp( "" );
+                    bInit = false;
+                }
+
+                if( strM.length() > 0 )
+                {
+                    ret = makeECDSA_SGT( strParam, strHash, strM );
+                    if( ret != 0 )
+                    {
+                        manApplet->warningBox( tr( "ECC execution fail [%1]").arg(ret), this);
+                        return;
+                    }
+                }
+            }
+            else if( mECC_ECDSARadio->isChecked() && mECCTypeCombo->currentText() == "SVT" )
+            {
+                if( bInit == true )
+                {
+                    logRsp( QString("[%1, %2]").arg( strParam ).arg( strHash ) );
+                    logRsp( "" );
+                    bInit = false;
+                }
+
+                if( strM.length() > 0 && strYX.length() > 0 && strYY.length() > 0 && strR.length() > 0 && strS.length() > 0 )
+                {
+                    ret = makeECDSA_SVT( strParam, strHash, strM, strYX, strYY, strR, strS );
+                    if( ret != 0 )
+                    {
+                        manApplet->warningBox( tr( "ECC execution fail [%1]").arg(ret), this );
+                        return;
+                    }
+                }
+            }
+            else if( mECC_ECDHRadio->isChecked() && mECCTypeCombo->currentText() == "KPG" )
+            {
+                if( bInit )
+                {
+                    logRsp( QString("[%1]").arg( strParam) );
+                    logRsp( "" );
+                    bInit = false;
+                }
+
+                ret = makeECDH_KPG( strParam, 15 );
+                if( ret != 0 )
+                {
+                    manApplet->warningBox( tr( "ECC execution fail [%1]").arg(ret), this );
+                    return;
+                }
+            }
+            else if( mECC_ECDHRadio->isChecked() && mECCTypeCombo->currentText() == "PKV" )
+            {
+                if( bInit )
+                {
+                    logRsp( QString("[%1]").arg( strParam) );
+                    logRsp( "" );
+                    bInit = false;
+                }
+
+                if( strQX.length() > 0 && strQY.length() > 0 )
+                {
+                    ret = makeECDH_PKV( strParam, strQX, strQY );
+
+                    if( ret != 0 )
+                    {
+                        manApplet->warningBox( tr( "ECC execution fail [%1]").arg(ret), this );
+                        return;
+                    }
+                }
+            }
+            else if( mECC_ECDHRadio->isChecked() && mECCTypeCombo->currentText() == "KAKAT" )
+            {
+                if( bInit )
+                {
+                    logRsp( QString("[%1]").arg( strParam) );
+                    logRsp( "" );
+                    bInit = false;
+                }
+
+                if( strRA.length() > 0 && strRB.length() > 0 && strKTA1X.length() > 0 && strKTA1Y.length() > 0 )
+                {
+                    ret = makeECDH_KAKAT( strParam, strRA, strRB, strKTA1X, strKTA1Y );
+
+                    if( ret != 0 )
+                    {
+                        manApplet->warningBox( tr( "ECC execution fail [%1]").arg(ret), this );
+                        return;
+                    }
+                }
+            }
+
+            strM.clear();
+            strYX.clear();
+            strYY.clear();
+            strR.clear();
+            strS.clear();
+
+            strQX.clear();
+            strQY.clear();
+            strRA.clear();
+            strRB.clear();
+            strKTA1X.clear();
+            strKTA1Y.clear();
+        }
+
+        strLine = strNext;
+        nPos++;
+    }
+#endif
+
+    manApplet->messageBox( tr("CAVP completed[Rsp: %1]").arg(strRspName), this );
+}
+
+void CAVPDlg::clickRSARun()
+{
+    int ret = 0;
+    bool bInit = true;
+    manApplet->log( "RSA execution" );
+
+    if( mRSAReqPathText->text().length() < 1 )
+    {
+        manApplet->warningBox( tr( "Select requested file" ), this );
+        mRSAReqPathText->setFocus();
+        return;
+    }
+
+    QString strPath = mRSAReqPathText->text();
+    QFile reqFile( strPath );
+
+    if( !reqFile.open( QIODevice::ReadOnly | QIODevice::Text ))
+    {
+        manApplet->elog( QString( "failed to open file(%1)").arg(strPath));
+        return;
+    }
+
+    QString strRspName = getRspFile( strPath );
+
+    int nPos = 0;
+    int nLen = 0;
+
+    int nKeyLen = -1;
+
+    QString strM;
+    QString strS;
+    QString strN;
+    QString strC;
+
+    QTextStream in( &reqFile );
+    QString strLine = in.readLine();
+    QString strHash = mRSAHashCombo->currentText();
+    int nE = mRSA_EText->text().toInt();
+
+    BIN binPri = {0,0};
+    BIN binPub = {0,0};
+
+#if 0
+    logRsp( QString( "# RSA-%1-%2 Response")
+               .arg( mRSA_ESRadio->isChecked() ? "RSA_ES" : "RSA_PSS" )
+               .arg( mRSATypeCombo->currentText() ));
+
+    while( strLine.isNull() == false )
+    {
+        QString strName;
+        QString strValue;
+        QString strNext = in.readLine();
+
+        nLen = strLine.length();
+        //       manApplet->log( QString( "%1 %2 %3").arg( nPos ).arg( nLen ).arg( strLine ));
+
+        if( nLen > 0 )
+        {
+            getNameValue( strLine, strName, strValue );
+
+            if( strName == "|n|" || strName == "mod" )
+                nKeyLen = strValue.toInt();
+            else if( strName == "n" )
+                strN = strValue;
+            else if( strName == "M" )
+                strM = strValue;
+            else if( strName == "S" )
+                strS = strValue;
+            else if( strName == "C" )
+                strC = strValue;
+        }
+
+        if( nLen == 0 || strNext.isNull() )
+        {
+            if( mRSA_PSSRadio->isChecked() && mRSATypeCombo->currentText() == "KPG" )
+            {
+                if( nKeyLen > 0 )
+                {
+                    if( bInit == true )
+                    {
+                        logRsp( QString( "|n| = %1").arg(nKeyLen));
+                        logRsp( "" );
+                        bInit = false;
+                    }
+
+                    ret = makeRSA_PSS_KPG( nKeyLen, nE, 10 );
+                    nKeyLen = -1;
+                    if( ret != 0 )
+                    {
+                        manApplet->warningBox( tr( "RSA execution failed [%1]").arg(ret), this );
+                        return;
+                    }
+                }
+            }
+            else if( mRSA_PSSRadio->isChecked() && mRSATypeCombo->currentText() == "SGT" )
+            {
+                if( nKeyLen > 0 && nE > 0 && bInit == true)
+                {
+                    JRSAKeyVal sRSAKeyVal;
+
+                    memset( &sRSAKeyVal, 0x00, sizeof(sRSAKeyVal ));
+
+
+                    ret = JS_PKI_RSAGenKeyPair( nKeyLen, nE, &binPub, &binPri );
+                    if( ret != 0 ) return;
+
+                    JS_PKI_getRSAKeyVal( &binPri, &sRSAKeyVal );
+                    strN = sRSAKeyVal.pN;
+
+                    logRsp( QString( "mod = %1").arg( nKeyLen ));
+                    logRsp( QString( "HashAlg = %1").arg( strHash ));
+                    logRsp( "" );
+                    logRsp( QString( "n = %1" ).arg( strN ));
+                    logRsp( QString( "e = %1").arg(nE));
+
+                    logRsp( "" );
+
+                    bInit = false;
+                    JS_PKI_resetRSAKeyVal( &sRSAKeyVal );
+                }
+
+                if( strM.length() > 0 && nE > 0 && binPri.nLen > 0 )
+                {
+                    ret = makeRSA_PSS_SGT( nE, getHexString(&binPri), strHash, strM );
+                    if( ret != 0 )
+                    {
+                        manApplet->warningBox( tr( "RSA execution failed [%1]").arg(ret), this );
+                        JS_BIN_reset( &binPri );
+                        JS_BIN_reset( &binPub );
+                        return;
+                    }
+                }
+            }
+            else if( mRSA_PSSRadio->isChecked() && mRSATypeCombo->currentText() == "SVT" )
+            {
+                if( strN.length() > 0 && nE > 0 && bInit == true)
+                {
+                    logRsp( QString( "mod = %1").arg( nKeyLen ));
+                    logRsp( QString( "HashAlg = %1").arg( strHash ));
+                    logRsp( "" );
+                    logRsp( QString( "n = %1").arg( strN));
+                    logRsp( QString( "e = %1").arg(nE));
+                    logRsp( "" );
+
+                    bInit = false;
+                }
+
+                if( strS.length() > 0 && strM.length() > 0 )
+                {
+                    ret = makeRSA_PSS_SVT( nE, strN, strHash, strM, strS );
+                    if( ret != 0 )
+                    {
+                        manApplet->warningBox( tr( "RSA execution failed [%1]").arg(ret), this );
+                        return;
+                    }
+                }
+            }
+            else if( mRSA_ESRadio->isChecked() && mRSATypeCombo->currentText() == "DET" )
+            {
+                if( bInit == true )
+                {
+                    QString strPriPath = mRSA_DETPriPathText->text();
+                    if( strPriPath.length() < 1 )
+                    {
+                        manApplet->warningBox( tr( "Select RSA private key for DET" ), this );
+                        return;
+                    }
+
+                    JS_BIN_fileReadBER( strPriPath.toLocal8Bit().toStdString().c_str(), &binPri );
+
+                    logRsp( QString( "|n| = %1").arg(nKeyLen));
+                    logRsp( QString( "n = %1").arg( strN ));
+                    logRsp( QString( "e = %1").arg( nE ) );
+                    logRsp( "" );
+                    bInit = false;
+                }
+
+                if( strC.length() > 0 && binPri.nLen > 0 )
+                {
+                    logRsp( QString( "SHAAlg = %1").arg(strHash));
+
+                    ret = makeRSA_ES_DET( getHexString( &binPri ), strC );
+
+                    if( ret != 0 )
+                    {
+                        JS_BIN_reset( &binPri );
+                        return;
+                    }
+                }
+            }
+            else if( mRSA_ESRadio->isChecked() && mRSATypeCombo->currentText() == "ENT" )
+            {
+                if( strN.length() > 0 && nE > 0 && bInit == true)
+                {
+                    logRsp( QString("|n| = %1").arg( strN.length()/2 ));
+                    logRsp( QString( "n = %1").arg( strN));
+                    logRsp( QString( "e = %1").arg(nE));
+                    logRsp( "" );
+
+                    bInit = false;
+                }
+
+                if( strM.length() > 0 && strN.length() > 0 )
+                {
+                    ret = makeRSA_ES_ENT( nE, strN, strM );
+
+                    if( ret != 0 ) return;
+                }
+            }
+            else if( mRSA_ESRadio->isChecked() && mRSATypeCombo->currentText() == "KGT" )
+            {
+                if( nKeyLen > 0 && nE > 0 )
+                {
+                    if( bInit == true )
+                    {
+                        logRsp( QString( "|n| = %1").arg(nKeyLen));
+                        logRsp( QString( "e = %1").arg(nE));
+                        logRsp( "" );
+                        bInit = false;
+                    }
+
+                    ret = makeRSA_ES_KGT( nKeyLen, nE, 10 );
+                    nKeyLen = -1;
+                    if( ret != 0 ) return;
+                }
+            }
+
+            strS.clear();
+            strM.clear();
+            //            strN.clear();
+            strC.clear();
+
+            if( mRSA_ESRadio->isChecked() ) strHash.clear();
+        }
+
+
+        strLine = strNext;
+        nPos++;
+    }
+
+    JS_BIN_reset( &binPri );
+    JS_BIN_reset( &binPub );
+#endif
+
+    manApplet->messageBox( tr("CAVP completed[Rsp: %1]").arg(strRspName), this );
+}
+
+void CAVPDlg::clickSymFind()
+{
+
+}
+
+void CAVPDlg::clickAEFind()
+{
+
+}
+
+void CAVPDlg::clickHashFind()
+{
+
+}
+
+void CAVPDlg::clickMACFind()
+{
+
+}
+
+void CAVPDlg::clickECCFind()
+{
+
+}
+
+void CAVPDlg::clickRSAFind()
+{
+
 }
 
 void CAVPDlg::clickMCT_SymClear()
@@ -164,6 +1145,184 @@ void CAVPDlg::clickMCT_HashRun()
     JS_BIN_reset( &binSeed );
 }
 
+void CAVPDlg::clickACVP_Clear()
+{
+
+}
+
+void CAVPDlg::clickACVP_Run()
+{
+    int ret = 0;
+
+    QString strReqPath = mACVP_ReqPathText->text();
+    QJsonDocument jReqDoc;
+
+    QJsonDocument jRspDoc;
+    QJsonArray jRspArr;
+    QJsonObject jRspObj;
+    QJsonArray jRspTestGroupArr;
+
+    if( mACVP_SetTGIDCheck->isChecked() == true )
+    {
+        if( mACVP_SetTGIDText->text().length() < 1 )
+        {
+            manApplet->warningBox( tr( "Enter a tgId" ), this );
+            mACVP_SetTGIDText->setFocus();
+            return;
+        }
+    }
+
+    if( mACVP_SetTCIDCheck->isChecked() == true )
+    {
+        if( mACVP_SetTCIDText->text().length() < 1 )
+        {
+            manApplet->warningBox( tr( "Enter a tcId" ), this );
+            mACVP_SetTCIDText->setFocus();
+            return;
+        }
+    }
+
+    ret = readJsonReq( strReqPath, jReqDoc );
+    if( ret != 0 ) return;
+
+    QJsonArray jArr = jReqDoc.array();
+
+    for( int i = 0; i < jArr.size(); i++ )
+    {
+        QJsonValue jVal = jArr.at(i);
+        QJsonObject jObj = jVal.toObject();
+
+
+        if( i == 0 )
+        {
+            jRspArr.insert( 0, jObj );
+        }
+        else if( i == 1 )
+        {
+            QString strAlg = jObj["algorithm"].toString();
+            QString strRevision = jObj["revision"].toString();
+            QString strMode = jObj["mode"].toString();
+            int nVsId = jObj["vsId"].toInt();
+
+            QJsonArray jTestGroupArr = jObj["testGroups"].toArray();
+
+            //            if( strAlg == "ECDSA" || strAlg == "RSA" ) strAlg = strMode;
+
+            jRspObj["algorithm"] = strAlg;
+            jRspObj["revision"] = strRevision;
+            jRspObj["vsId"] = nVsId;
+            if( strMode.length() > 0 ) jRspObj["mode"] = strMode;
+
+            for( int k = 0; k < jTestGroupArr.size(); k++ )
+            {
+                QJsonValue jSubVal = jTestGroupArr.at(k);
+                QJsonObject jSubObj = jSubVal.toObject();
+                int nTgId = jSubObj["tgId"].toInt();
+                QJsonObject jRspObject;
+
+                if( mACVP_SetTGIDCheck->isChecked() == true )
+                {
+                    int nSetTgId = mACVP_SetTGIDText->text().toInt();
+                    if( nSetTgId != nTgId ) continue;
+                }
+
+                ret = makeUnitJsonWork( strAlg, strMode, jSubObj, jRspObject );
+                if( ret != 0 ) break;
+
+                if( mACVP_SetTGIDCheck->isChecked() == true )
+                    jRspTestGroupArr.insert( 0, jRspObject );
+                else
+                    jRspTestGroupArr.insert( k, jRspObject );
+            }
+
+            jRspObj["testGroups"] = jRspTestGroupArr;
+            jRspArr.insert( 1, jRspObj );
+        }
+    }
+
+    jRspDoc.setArray( jRspArr );
+    saveJsonRsp( jRspDoc );
+}
+
+void CAVPDlg::clickACVP_LDTClear()
+{
+
+}
+
+void CAVPDlg::clickACVP_LDTRun()
+{
+    int ret = 0;
+
+    int nMech = -1;
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+    long hSession = mSessionText->text().toLong();
+
+    unsigned char sDigest[128];
+    long uDigestLen = 0;
+
+    CK_MECHANISM sMech;
+    QString strHash = mACVP_LDTHashCombo->currentText();
+    QString strFullLength = mACVP_LDTFullLengthBitsText->text();
+
+    if( strFullLength.length() < 1 )
+    {
+        manApplet->warningBox( tr( "Enter a full length" ), this );
+        mACVP_LDTFullLengthBitsText->setFocus();
+        return;
+    }
+
+    QString strContent = mACVP_LDTContentText->text();
+    if( strContent.length() < 1 )
+    {
+        manApplet->warningBox( tr( "Enter a content" ), this );
+        mACVP_LDTContentText->setFocus();
+        return;
+    }
+
+    nMech = JS_PKCS11_GetCKMType( strHash.toStdString().c_str() );
+    memset( &sMech, 0x00, sizeof(sMech));
+    sMech.mechanism = nMech;
+
+    mACVP_LDTProgressBar->setValue( 0 );
+    mACVP_LDTStatusText->clear();
+
+    BIN binContent = {0,0};
+
+    qint64 nFullLength = strFullLength.toLongLong() / 8;
+    qint64 nCurLength = 0;
+
+    JS_BIN_decodeHex( strContent.toStdString().c_str(), &binContent );
+
+    ret = pAPI->DigestInit( hSession, &sMech );
+    if( ret != 0 ) goto end;
+
+    while( nFullLength > nCurLength )
+    {
+        int nPercent = 0;
+
+        ret = pAPI->DigestUpdate( hSession, binContent.pVal, binContent.nLen, false );
+        if( ret != 0 ) goto end;
+
+        nCurLength += binContent.nLen;
+
+        nPercent = ( nCurLength * 100 ) / nFullLength;
+
+        manApplet->log( QString( "CurLength: %1" ).arg( nCurLength * 8));
+        mACVP_LDTProgressBar->setValue( nPercent );
+        mACVP_LDTStatusText->setText( QString( "%1").arg( nCurLength * 8));
+    }
+
+    uDigestLen = sizeof(sDigest);
+    ret = pAPI->DigestFinal( hSession, sDigest, (CK_ULONG_PTR)&uDigestLen );
+    if( ret == 0 )
+    {
+        mACVP_LDT_MDText->setText( getHexString( sDigest, uDigestLen ));
+    }
+
+end :
+    JS_BIN_reset( &binContent );
+}
+
 void CAVPDlg::logRsp( QString strLog )
 {
     manApplet->log( strLog );
@@ -176,6 +1335,41 @@ void CAVPDlg::logRsp( QString strLog )
     QTextStream SaveFile( &file );
     SaveFile << strLog << "\n";
     file.close();
+}
+
+QString CAVPDlg::getRspFile(const QString &reqFileName )
+{
+    QFileInfo fileInfo;
+    fileInfo.setFile( reqFileName );
+
+    QString strRspPath = mRspPathText->text();
+
+
+    QString fileName = fileInfo.baseName();
+    QString extName = fileInfo.completeSuffix();
+    QString filePath = fileInfo.canonicalPath();
+
+    QString fileRspName = QString( "%1.rsp" ).arg( fileName );
+    QString strPath = QString( "%1/%2").arg( strRspPath ).arg( fileRspName );
+
+    manApplet->log( QString( "RspName: %1").arg(strPath));
+
+    return strPath;
+}
+
+int CAVPDlg::getNameValue( const QString strLine, QString& name, QString& value )
+{
+    if( strLine.isEmpty() ) return -1;
+
+    QStringList nameVal = strLine.split( "=" );
+
+    if( nameVal.size() >= 1 )
+        name = nameVal.at(0).trimmed();
+
+    if( nameVal.size() >= 2 )
+        value = nameVal.at(1).trimmed();
+
+    return 0;
 }
 
 int CAVPDlg::createKey( int nKeyType, const BIN *pKey, long *phObj )
@@ -2374,5 +3568,179 @@ end :
     JS_BIN_reset( &binSeed );
 
     return ret;
+}
+
+void CAVPDlg::saveJsonRsp( const QJsonDocument& pJsonDoc )
+{
+    QDir dir;
+    QString strRspPath = mRspPathText->text();
+    QString strReqPath = mACVP_ReqPathText->text();
+
+    QFileInfo fileInfo( strReqPath );
+    QString strBaseName = fileInfo.baseName();
+
+    QString strSaveName;
+
+    QDateTime date;
+    date.setTime_t( time(NULL));
+
+    if( strRspPath.length() > 0 ) strRspPath += "/";
+
+    strRspPath += "acvp_rsp";
+
+    if( dir.exists( strRspPath ) == false )
+        dir.mkdir( strRspPath );
+
+
+    strSaveName = QString( "%1/%2_%3.json" )
+                      .arg( strRspPath )
+                      .arg( strBaseName )
+                      .arg( date.toString( "yyyy_MM_dd_HHmmss" ));
+
+    QFile saveFile( strSaveName );
+    saveFile.open(QFile::WriteOnly | QFile::Append| QFile::Text );
+    saveFile.write( pJsonDoc.toJson() );
+    saveFile.close();
+
+    manApplet->messageBox( tr( "%1 file save successfully").arg( strSaveName ), this );
+
+}
+
+int CAVPDlg::readJsonReq( const QString strPath, QJsonDocument& pJsonDoc )
+{
+    QFile jsonFile( strPath );
+    manApplet->log( QString( "Json Path: %1").arg( strPath ));
+
+    if( !jsonFile.open( QIODevice::ReadOnly))
+    {
+        manApplet->elog( QString( "fail to read json: %1").arg( strPath));
+        return -1;
+    }
+
+    QByteArray fileByte = jsonFile.readAll();
+    manApplet->log( QString("Json Size: %1").arg( fileByte.size() ));
+
+    jsonFile.close();
+
+    pJsonDoc = QJsonDocument::fromJson( fileByte );
+
+    return 0;
+}
+
+int CAVPDlg::makeUnitJsonWork( const QString strAlg, const QString strMode, const QJsonObject jObject, QJsonObject& jRspObject )
+{
+    int ret = 0;
+    int nACVP_Type = -1;
+    QString strTestType = jObject["testType"].toString();
+    int nTgId = jObject["tgId"].toInt();
+
+    if( isSkipTestType( strTestType ) == true )
+    {
+        QJsonObject jSkipObj;
+        jRspObject["tests"] = jSkipObj;
+        jRspObject["tgId"] = nTgId;
+
+        return 0;
+    }
+
+    nACVP_Type = getACVPType( strAlg );
+
+    switch ( nACVP_Type ) {
+    case kACVP_TYPE_BLOCK_CIPHER :
+        ret = blockCipherJsonWork( strAlg, jObject, jRspObject );
+        break;
+
+    case kACVP_TYPE_HASH :
+        ret = hashJsonWork( strAlg, jObject, jRspObject );
+        break;
+
+    case kACVP_TYPE_MAC :
+        ret = macJsonWork( strAlg, jObject, jRspObject );
+        break;
+
+    case kACVP_TYPE_RSA :
+        ret = rsaJsonWork( strMode, jObject, jRspObject );
+        break;
+
+    case kACVP_TYPE_ECDSA :
+        ret = ecdsaJsonWork( strMode, jObject, jRspObject );
+        break;
+
+    case kACVP_TYPE_DRBG :
+        ret = drbgJsonWork( strAlg, jObject, jRspObject );
+        break;
+
+    case kACVP_TYPE_KDA :
+        ret = kdaJsonWork( strAlg, jObject, jRspObject );
+        break;
+
+    case kACVP_TYPE_EDDSA:
+        ret = eddsaJsonWork( strMode, jObject, jRspObject );
+        break;
+
+    case kACVP_TYPE_DSA:
+        ret = dsaJsonWork( strMode, jObject, jRspObject );
+        break;
+
+    default:
+        ret = -1;
+        manApplet->warnLog( QString( "Invalid Algorithm: %1" ).arg( strAlg ), this );
+        break;
+    }
+
+    return ret;
+}
+
+bool CAVPDlg::isSkipTestType( const QString strTestType )
+{
+    if( mACVP_SkipLDTCheck->isChecked() == true )
+        if( strTestType == "MCT" ) return true;
+
+    return false;
+}
+
+int CAVPDlg::hashJsonWork( const QString strAlg, const QJsonObject jObject, QJsonObject& jRspObject )
+{
+    return 0;
+}
+
+int CAVPDlg::ecdsaJsonWork( const QString strMode, const QJsonObject jObject, QJsonObject& jRspObject )
+{
+    return 0;
+}
+
+int CAVPDlg::eddsaJsonWork( const QString strMode, const QJsonObject jObject, QJsonObject& jRspObject )
+{
+    return 0;
+}
+
+int CAVPDlg::rsaJsonWork( const QString strMode, const QJsonObject jObject, QJsonObject& jRspObject )
+{
+    return 0;
+}
+
+int CAVPDlg::dsaJsonWork( const QString strMode, const QJsonObject jObject, QJsonObject& jRspObject )
+{
+    return 0;
+}
+
+int CAVPDlg::macJsonWork( const QString strAlg, const QJsonObject jObject, QJsonObject& jRspObject )
+{
+    return 0;
+}
+
+int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObject, QJsonObject& jRspObject )
+{
+    return 0;
+}
+
+int CAVPDlg::kdaJsonWork( const QString strAlg, const QJsonObject jObject, QJsonObject& jRspObject )
+{
+    return 0;
+}
+
+int CAVPDlg::drbgJsonWork( const QString strAlg, const QJsonObject jObject, QJsonObject& jRspObject )
+{
+    return 0;
 }
 

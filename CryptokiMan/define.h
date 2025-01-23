@@ -146,7 +146,7 @@ static QStringList kRSAOptionList = { "1024", "2048", "3072", "4096" };
 static QStringList kDSAOptionList = { "1024", "2048", "3072", "4096" };
 
 static QStringList kMechDigestList = {
-    "CKM_MD5", "CKM_SHA_1", "CKM_SHA256", "CKM_SHA512"
+    "CKM_MD5", "CKM_SHA_1", "CKM_SHA224", "CKM_SHA256", "CKM_SHA384", "CKM_SHA512"
 };
 
 static QStringList kMechEncSymList = {
@@ -199,7 +199,7 @@ static QStringList kMechGenList = {
     "CKM_AES_KEY_GEN", "CKM_DES_KEY_GEN", "CKM_DES3_KEY_GEN", "CKM_GENERIC_SECRET_KEY_GEN"
 };
 
-static QStringList kSymTypeList = {
+static QStringList kSymKeyList = {
     "CKK_DES", "CKK_DES3", "CKK_AES", "CKK_GENERIC_SECRET"
 };
 

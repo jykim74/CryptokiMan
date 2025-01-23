@@ -259,7 +259,7 @@
    <item>
     <widget class="QTabWidget" name="mTabWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_3">
       <attribute name="title">
@@ -1300,6 +1300,576 @@
       <attribute name="title">
        <string>CAVP</string>
       </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <layout class="QGridLayout" name="gridLayout_19">
+         <item row="0" column="3">
+          <widget class="QLabel" name="label_36">
+           <property name="text">
+            <string>Mode</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="6">
+          <widget class="QComboBox" name="mSymTypeCombo"/>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_35">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Symmetric</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="4">
+          <widget class="QComboBox" name="mSymModeCombo"/>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="mSymAlgCombo"/>
+         </item>
+         <item row="0" column="5">
+          <widget class="QLabel" name="label_37">
+           <property name="text">
+            <string>Type</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <spacer name="horizontalSpacer_11">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_20">
+         <item row="0" column="2">
+          <widget class="QPushButton" name="mSymFindBtn">
+           <property name="text">
+            <string>Find</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_38">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Request File</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="mSymReqPathText"/>
+         </item>
+         <item row="0" column="3">
+          <widget class="QPushButton" name="mSymRunBtn">
+           <property name="text">
+            <string>Run</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="Line" name="line_12">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_29">
+         <item row="0" column="4">
+          <widget class="QComboBox" name="mAEModeCombo"/>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="mAEAlgCombo"/>
+         </item>
+         <item row="0" column="5">
+          <widget class="QLabel" name="label_57">
+           <property name="text">
+            <string>Type</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="6">
+          <widget class="QComboBox" name="mAETypeCombo"/>
+         </item>
+         <item row="0" column="3">
+          <widget class="QLabel" name="label_56">
+           <property name="text">
+            <string>Mode</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_55">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>AE</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <spacer name="horizontalSpacer_16">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_30">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_58">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Request File</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="mAEFindBtn">
+           <property name="text">
+            <string>Find</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="mAEReqPathText"/>
+         </item>
+         <item row="0" column="3">
+          <widget class="QPushButton" name="mAERunBtn">
+           <property name="text">
+            <string>Run</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="Line" name="line_17">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_21">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_39">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Hash</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="4">
+          <widget class="QComboBox" name="mHashTypeCombo"/>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="mHashAlgCombo"/>
+         </item>
+         <item row="0" column="3">
+          <widget class="QLabel" name="label_40">
+           <property name="text">
+            <string>Type</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <spacer name="horizontalSpacer_12">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_22">
+         <item row="0" column="2">
+          <widget class="QPushButton" name="mHashFindBtn">
+           <property name="text">
+            <string>Find</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_41">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Request File</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="mHashReqPathText"/>
+         </item>
+         <item row="0" column="3">
+          <widget class="QPushButton" name="mHashRunBtn">
+           <property name="text">
+            <string>Run</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="Line" name="line_13">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_27">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_52">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>MAC</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QComboBox" name="mMACHashCombo"/>
+         </item>
+         <item row="0" column="2">
+          <widget class="QLabel" name="label_53">
+           <property name="text">
+            <string>Hash</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <spacer name="horizontalSpacer_13">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_28">
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="mMACReqPathText"/>
+         </item>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="mMACFindBtn">
+           <property name="text">
+            <string>Find</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_54">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Request File</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QPushButton" name="mMACRunBtn">
+           <property name="text">
+            <string>Run</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="Line" name="line_15">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_23">
+         <item row="0" column="7">
+          <widget class="QLabel" name="label_45">
+           <property name="text">
+            <string>Type</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_42">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>ECC</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="5">
+          <widget class="QLabel" name="label_44">
+           <property name="text">
+            <string>Hash</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="6">
+          <widget class="QComboBox" name="mECCHashCombo"/>
+         </item>
+         <item row="0" column="8">
+          <widget class="QComboBox" name="mECCTypeCombo"/>
+         </item>
+         <item row="0" column="3">
+          <widget class="QLabel" name="label_43">
+           <property name="text">
+            <string>Param</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="mECCAlgCombo"/>
+         </item>
+         <item row="0" column="4">
+          <widget class="QComboBox" name="mECCParamCombo"/>
+         </item>
+         <item row="0" column="2">
+          <spacer name="horizontalSpacer_14">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_24">
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="mECCReqPathText"/>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_46">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Request File</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="mECCFindBtn">
+           <property name="text">
+            <string>Find</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QPushButton" name="mECCRunBtn">
+           <property name="text">
+            <string>Run</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="Line" name="line_14">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_25">
+         <item row="0" column="6">
+          <widget class="QComboBox" name="mRSAHashCombo"/>
+         </item>
+         <item row="0" column="7">
+          <widget class="QLabel" name="label_50">
+           <property name="text">
+            <string>Type</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_47">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>RSA</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="mRSAAlgCombo"/>
+         </item>
+         <item row="0" column="8">
+          <widget class="QComboBox" name="mRSATypeCombo"/>
+         </item>
+         <item row="0" column="3">
+          <widget class="QLabel" name="label_48">
+           <property name="text">
+            <string>E</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="5">
+          <widget class="QLabel" name="label_49">
+           <property name="text">
+            <string>Hash</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="4">
+          <widget class="QLineEdit" name="mRSA_EText">
+           <property name="maximumSize">
+            <size>
+             <width>80</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <spacer name="horizontalSpacer_15">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_26">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_51">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Request File</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="mRSAFindBtn">
+           <property name="text">
+            <string>Find</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="mRSAReqPathText"/>
+         </item>
+         <item row="0" column="3">
+          <widget class="QPushButton" name="mRSARunBtn">
+           <property name="text">
+            <string>Run</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="Line" name="line_16">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
      <widget class="QWidget" name="tab_2">
       <attribute name="title">
@@ -1357,21 +1927,21 @@
           </widget>
          </item>
          <item row="0" column="5">
-          <widget class="QCheckBox" name="mACVP_SetTcIdCheck">
+          <widget class="QCheckBox" name="mACVP_SetTCIDCheck">
            <property name="text">
             <string>SetTcId</string>
            </property>
           </widget>
          </item>
          <item row="0" column="2">
-          <widget class="QCheckBox" name="mACVP_SetTgIdCheck">
+          <widget class="QCheckBox" name="mACVP_SetTGIDCheck">
            <property name="text">
             <string>SetTgId</string>
            </property>
           </widget>
          </item>
          <item row="0" column="3">
-          <widget class="QLineEdit" name="mACVP_SetTgIdText">
+          <widget class="QLineEdit" name="mACVP_SetTGIDText">
            <property name="maximumSize">
             <size>
              <width>80</width>
@@ -1381,7 +1951,7 @@
           </widget>
          </item>
          <item row="0" column="6">
-          <widget class="QLineEdit" name="mACVP_SetTcIdText">
+          <widget class="QLineEdit" name="mACVP_SetTCIDText">
            <property name="maximumSize">
             <size>
              <width>80</width>
@@ -1467,7 +2037,7 @@
        <item>
         <layout class="QGridLayout" name="gridLayout_14">
          <item row="0" column="1">
-          <widget class="QComboBox" name="mACVP_HashCombo"/>
+          <widget class="QComboBox" name="mACVP_LDTHashCombo"/>
          </item>
          <item row="0" column="3">
           <widget class="QLabel" name="label_31">
@@ -1490,7 +2060,7 @@
           </widget>
          </item>
          <item row="0" column="4">
-          <widget class="QLineEdit" name="mACVP_FullLengthBitsText"/>
+          <widget class="QLineEdit" name="mACVP_LDTFullLengthBitsText"/>
          </item>
          <item row="0" column="2">
           <spacer name="horizontalSpacer_8">
@@ -1523,10 +2093,10 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QLineEdit" name="mACVP_ContentText"/>
+          <widget class="QLineEdit" name="mACVP_LDTContentText"/>
          </item>
          <item row="0" column="2">
-          <widget class="QLineEdit" name="mACVP_ContentLenText">
+          <widget class="QLineEdit" name="mACVP_LDTContentLenText">
            <property name="maximumSize">
             <size>
              <width>40</width>
@@ -1570,7 +2140,7 @@
        <item>
         <layout class="QGridLayout" name="gridLayout_16">
          <item row="0" column="1">
-          <widget class="QLineEdit" name="mACVP_MDText">
+          <widget class="QLineEdit" name="mACVP_LDT_MDText">
            <property name="palette">
             <palette>
              <active>
@@ -1617,7 +2187,7 @@
           </widget>
          </item>
          <item row="0" column="2">
-          <widget class="QLineEdit" name="mACVP_MDLenText">
+          <widget class="QLineEdit" name="mACVP_LDT_MDLenText">
            <property name="maximumSize">
             <size>
              <width>40</width>
@@ -1664,7 +2234,7 @@
           <number>0</number>
          </property>
          <item row="0" column="1">
-          <widget class="QProgressBar" name="mACVP_ProgBar">
+          <widget class="QProgressBar" name="mACVP_LDTProgressBar">
            <property name="value">
             <number>24</number>
            </property>
@@ -1684,7 +2254,7 @@
           </widget>
          </item>
          <item row="0" column="2">
-          <widget class="QLineEdit" name="mACVP_CurrentText">
+          <widget class="QLineEdit" name="mACVP_LDTStatusText">
            <property name="maximumSize">
             <size>
              <width>100</width>
