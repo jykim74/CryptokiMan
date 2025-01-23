@@ -353,7 +353,149 @@ void CAVPDlg::clickSymRun()
 
 void CAVPDlg::clickAERun()
 {
+    int ret = 0;
+    manApplet->log( "AE execution" );
 
+    if( mAEReqPathText->text().length() < 1 )
+    {
+        manApplet->warningBox( tr("Select requested file"), this );
+        mAEReqPathText->setFocus();
+        return;
+    }
+
+    QString strPath = mAEReqPathText->text();
+    QFile reqFile( strPath );
+    QString strAlg = mAEAlgCombo->currentText();
+
+
+    QString strRspName = getRspFile( strPath );
+
+    if( !reqFile.open( QIODevice::ReadOnly | QIODevice::Text ))
+    {
+        manApplet->elog( QString( "failed to open file(%1)\n").arg( strPath ));
+        return;
+    }
+
+    int nPos = 0;
+    int nLen = 0;
+    QString strCount;
+    QString strKey;
+    QString strIV;
+    QString strC;
+    QString strT;
+    QString strAdata;
+    QString strPT;
+
+    int nKeyLen = -1;
+    int nIVLen = -1;
+    int nPTLen = -1;
+    int nAADLen = -1;
+    int nTagLen = -1;
+
+    QTextStream in( &reqFile );
+    QString strLine = in.readLine();
+
+    logRsp( QString( "# AE-%1-%2-%3 Response")
+               .arg( mAEAlgCombo->currentText())
+               .arg( mAEModeCombo->currentText())
+               .arg( mAETypeCombo->currentText()) );
+
+    while( strLine.isNull() == false )
+    {
+        QString strName;
+        QString strValue;
+        QString strNext = in.readLine();
+
+        nLen = strLine.length();
+        //        berApplet->log( QString( "%1 %2 %3").arg( nPos ).arg( nLen ).arg( strLine ));
+
+        if( nLen > 0 )
+        {
+            strLine.remove( '[' );
+            strLine.remove( ']' );
+
+            getNameValue( strLine, strName, strValue );
+
+            if( strName == "COUNT" )
+                strCount = strValue;
+            else if( strName == "Key" )
+                strKey = strValue;
+            else if( strName == "IV" )
+                strIV = strValue;
+            else if( strName == "C" )
+                strC = strValue;
+            else if( strName == "Adata" )
+                strAdata = strValue;
+            else if( strName == "PT" )
+                strPT = strValue;
+            else if( strName == "T" )
+                strT = strValue;
+            else if( strName == "KeyLen" )
+                nKeyLen = strValue.toInt();
+            else if( strName == "IVLen" )
+                nIVLen = strValue.toInt();
+            else if( strName == "PTLen" )
+                nPTLen = strValue.toInt();
+            else if( strName == "AADLen" )
+                nAADLen = strValue.toInt();
+            else if( strName == "TagLen" )
+                nTagLen = strValue.toInt();
+        }
+
+        if( nLen == 0 || strNext.isNull() )
+        {
+            if( nKeyLen >= 0 && nIVLen >= 0 && nAADLen >= 0 && nPTLen >= 0 && nTagLen >= 0 )
+            {
+                logRsp( QString( "[KeyLen = %1]").arg( nKeyLen ));
+                logRsp( QString( "[IVLen = %1]").arg(nIVLen));
+                logRsp( QString( "[PTLen = %1]").arg( nPTLen ));
+                logRsp( QString( "[AADLen = %1]").arg(nAADLen));
+                logRsp( QString( "[TagLen = %1]").arg(nTagLen));
+                logRsp( "" );
+
+                nKeyLen = -1;
+                nIVLen = -1;
+                nAADLen = -1;
+                nPTLen = -1;
+            }
+
+            if( mAETypeCombo->currentText() == "AD" )
+            {
+                if( strCount.length() > 0 && strKey.length() > 0 && strIV.length() > 0 && strT.length() > 0 )
+                {
+                    manApplet->log( QString( "COUNT = %1").arg( strCount ));
+                    //                   ret = makeGCM_AD( RNX_ALG_ARIA, &binKey, &binIV, &binAdata, &binC, &binT );
+//                    ret = makeADData( strKey, strIV, strC, strAdata, strT );
+
+                    if( ret != 0 ) break;
+                }
+            }
+            else
+            {
+                if( strCount.length() > 0 && strKey.length() > 0 && strIV.length() > 0 && nTagLen > 0 )
+                {
+                    manApplet->log( QString( "COUNT = %1").arg( strCount ));
+                    //                   ret = makeGCM_AE( RNX_ALG_ARIA, &binKey, &binIV, &binAdata, &binPT, nTagLen / 8 );
+//                    ret = makeAEData( strKey, strIV, strPT, strAdata, nTagLen/8 );
+
+                    if( ret != 0 ) break;
+                }
+            }
+
+            strCount.clear();
+            strKey.clear();
+            strIV.clear();
+            strT.clear();
+            strC.clear();
+            strAdata.clear();
+        }
+
+
+        strLine = strNext;
+        nPos++;
+    }
+
+    manApplet->messageBox( tr("CAVP completed[Rsp: %1]").arg(strRspName), this );
 }
 
 void CAVPDlg::clickHashRun()
