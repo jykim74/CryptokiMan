@@ -270,6 +270,9 @@ CAVPDlg::CAVPDlg(QWidget *parent) :
     connect( mACVP_LDTClearBtn, SIGNAL(clicked()), this, SLOT(clickACVP_LDTClear()));
     connect( mACVP_LDTRunBtn, SIGNAL(clicked()), this, SLOT(clickACVP_LDTRun()));
 
+    connect( mACVP_SetTCIDCheck, SIGNAL(clicked()), this, SLOT(checkACVPSetTcId()));
+    connect( mACVP_SetTGIDCheck, SIGNAL(clicked()), this, SLOT(checkACVPSetTgId()));
+
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);
 #endif
@@ -317,6 +320,9 @@ void CAVPDlg::initUI()
     mRSAHashCombo->addItems( kHashAlgList );
     mRSA_EText->setText( "65537" );
     mRSATypeCombo->addItems( kRSATypeRSAES );
+
+    checkACVPSetTcId();
+    checkACVPSetTgId();
 
     mTabWidget->setCurrentIndex(0);
 }
@@ -414,6 +420,18 @@ void CAVPDlg::changeRSAType(int index)
         mRSAObjectText->setEnabled(false);
         mRSAObjectText->setEnabled(false);
     }
+}
+
+void CAVPDlg::checkACVPSetTgId()
+{
+    bool bVal = mACVP_SetTGIDCheck->isChecked();
+    mACVP_SetTGIDText->setEnabled( bVal );
+}
+
+void CAVPDlg::checkACVPSetTcId()
+{
+    bool bVal = mACVP_SetTCIDCheck->isChecked();
+    mACVP_SetTCIDText->setEnabled( bVal );
 }
 
 void CAVPDlg::MCT_KeyChanged( const QString& text )
@@ -1468,12 +1486,21 @@ void CAVPDlg::clickRSAFind()
 
 void CAVPDlg::clickMCT_SymClear()
 {
-
+    mMCT_SymKeyText->clear();
+    mMCT_SymIVText->clear();
+    mMCT_SymPTText->clear();
+    mMCT_SymCTText->clear();
+    mMCT_SymLastKeyText->clear();
+    mMCT_SymLastIVText->clear();
+    mMCT_SymLastPTText->clear();
+    mMCT_SymLastCTText->clear();
 }
 
 void CAVPDlg::clickMCT_HashClear()
 {
-
+    mMCT_HashSeedText->clear();
+    mMCT_HashFirstMDText->clear();
+    mMCT_HashLastMDText->clear();
 }
 
 void CAVPDlg::clickMCT_SymRun()

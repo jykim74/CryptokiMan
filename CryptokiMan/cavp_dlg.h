@@ -28,6 +28,9 @@ private slots:
     void changeECCType(int index);
     void changeRSAType(int index);
 
+    void checkACVPSetTgId();
+    void checkACVPSetTcId();
+
     void MCT_KeyChanged( const QString& text );
     void MCT_IVChanged( const QString& text );
     void MCT_PTChanged( const QString& text );
