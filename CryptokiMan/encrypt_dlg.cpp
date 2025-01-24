@@ -135,6 +135,8 @@ void EncryptDlg::setMechanism( void *pMech )
         JS_BIN_decodeHex( strIV.toStdString().c_str(), &binIV );
         getBINFromString( &binAAD, mAADTypeCombo->currentText(), strAAD );
 
+        setAES_GCMParam( &binIV, &binAAD, nReqLen, pPtr );
+        /*
         CK_GCM_PARAMS_PTR gcmParam;
         gcmParam = (CK_GCM_PARAMS *)JS_calloc( 1, sizeof(CK_GCM_PARAMS));
 
@@ -147,6 +149,7 @@ void EncryptDlg::setMechanism( void *pMech )
 
         pPtr->pParameter = gcmParam;
         pPtr->ulParameterLen = sizeof(CK_GCM_PARAMS);
+        */
     }
     else if( nMech == CKM_AES_CCM )
     {
@@ -162,6 +165,8 @@ void EncryptDlg::setMechanism( void *pMech )
         JS_BIN_decodeHex( strIV.toStdString().c_str(), &binIV );
         getBINFromString( &binAAD, mAADTypeCombo->currentText(), strAAD );
 
+        setAES_CCMParam( &binIV, &binAAD, nSrcLen, nReqLen, pPtr );
+        /*
         CK_CCM_PARAMS_PTR ccmParam;
         ccmParam->ulDataLen = nSrcLen;
         ccmParam->pNonce = binIV.pVal;
@@ -172,6 +177,7 @@ void EncryptDlg::setMechanism( void *pMech )
 
         pPtr->pParameter = ccmParam;
         pPtr->ulParameterLen = sizeof(CK_CCM_PARAMS);
+        */
     }
     else
     {

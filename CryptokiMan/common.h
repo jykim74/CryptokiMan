@@ -189,4 +189,7 @@ bool isBase64( const QString strBase64String );
 bool isURLEncode( const QString strURLEncode );
 
 
+void setAES_GCMParam( const BIN *pIV, const BIN *pAAD, int nReqLen, CK_MECHANISM *pMech );
+void setAES_CCMParam( const BIN *pIV, const BIN *pAAD, int nSrcLen, int nReqLen, CK_MECHANISM *pMech );
+
 #endif // COMMON_H

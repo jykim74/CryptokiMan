@@ -5,6 +5,49 @@
 #include "ui_cavp_dlg.h"
 #include "js_bin.h"
 
+static const int kACVP_TYPE_BLOCK_CIPHER = 0;
+static const int kACVP_TYPE_HASH = 1;
+static const int kACVP_TYPE_MAC = 2;
+static const int kACVP_TYPE_RSA = 3;
+static const int kACVP_TYPE_ECDSA = 4;
+static const int kACVP_TYPE_DRBG = 5;
+static const int kACVP_TYPE_KDA = 6;
+static const int kACVP_TYPE_EDDSA = 7;
+static const int kACVP_TYPE_DSA = 8;
+
+static QStringList kACVP_HashList =
+    { "SHA-1", "SHA2-224", "SHA2-256", "SHA2-384", "SHA2-512" };
+static QStringList kACVP_BlockCipherList =
+    { "ACVP-AES-ECB", "ACVP-AES-CBC", "ACVP-AES-CFB128", "ACVP-AES-OFB", "ACVP-AES-CTR", "ACVP-AES-CCM", "ACVP-AES-KW", "ACVP-AES-KWP", "ACVP-AES-GCM" };
+static QStringList kACVP_MACList =
+    { "HMAC-SHA-1", "HMAC-SHA2-224", "HMAC-SHA2-256", "HMAC-SHA2-384", "HMAC-SHA2-512", "ACVP-AES-GMAC", "CMAC-AES" };
+static QStringList kACVP_RSAList = { "RSA" };
+static QStringList kACVP_ECDSAList = { "ECDSA" };
+static QStringList kACVP_DRBGList = { "ctrDRBG", "hashDRBG", "hmacDRBG" };
+static QStringList kACVP_KDAList = { "KAS-ECC", "kdf-components", "PBKDF" };
+static QStringList kACVP_EDDSAList = { "EDDSA" };
+static QStringList kACVP_DSAList = { "DSA" };
+
+const QStringList kSymAlgList = { "AES", "DES3" };
+const QStringList kSymModeList = { "ECB", "CBC", "CTR", "CFB", "OFB" };
+const QStringList kSymDirection = { "Encrypt", "Decrypt" };
+const QStringList kHashAlgList = { "SHA-1", "SHA2-224", "SHA2-256", "SHA2-384", "SHA2-512" };
+const QStringList kMctVersion = { "Standard", "Alternate" };
+
+const QStringList kSymTypeList = { "KAT", "MCT", "MMT" };
+
+const QStringList kAEModeList = { "GCM", "CCM" };
+const QStringList kAETypeList = { "AE", "AD" };
+
+const QStringList kHashTypeList = { "Short", "Long", "Monte" };
+const QStringList kECCAlgList = { "ECDSA", "ECDH" };
+const QStringList kECCTypeECDSA = { "KPG", "PKV", "SGT", "SVT" };
+const QStringList kECCTypeECDH = { "KAKAT", "PKV", "KPG" };
+
+const QStringList kRSAAlgList = { "RSAES", "RSAPSS" };
+const QStringList kRSATypeRSAES = { "DET", "ENT", "KGT" };
+const QStringList kRSATypeRSAPSS = { "KPG", "SGT", "SVT" };
+
 namespace Ui {
 class CAVPDlg;
 }
@@ -22,6 +65,7 @@ public:
 private slots:
     void slotChanged( int index );
     void clickFindRsp();
+    void clickACVPFindJson();
 
     void changeECCAlg(int index);
     void changeRSAAlg(int index);
@@ -75,6 +119,12 @@ private:
     void logRsp( const QString strLog );
     QString getRspFile(const QString &reqFileName );
     int getNameValue( const QString strLine, QString& name, QString& value );
+
+    int makeSymData( const QString strAlgMode, const BIN *pKey, const BIN *pIV, const BIN *pPT );
+    int makeAEData( const BIN *pKey, const BIN *pIV, const BIN *pPT, const BIN *pAAD, int nTagLen, int nSrcLen );
+    int makeADData( const BIN *pKey, const BIN *pIV, const BIN *pCT, const BIN *pAAD, const BIN *pTag, int nSrcLen );
+    int makeHashData( int nLen, const BIN *pVal );
+
 
     int makeSym_MCT( const QString strAlgMode, const BIN *pKey, const BIN *pIV, const BIN *pPT, QJsonArray& jsonRes, bool bWin = false );
     int makeSymDec_MCT( const QString strAlgMode, const BIN *pKey, const BIN *pIV, const BIN *pCT, QJsonArray& jsonRes, bool bWin = false );

@@ -1550,3 +1550,38 @@ bool isValidNumFormat( const QString strInput, int nNumber )
 
     return strReg.exactMatch( strInput );
 }
+
+void setAES_GCMParam( const BIN *pIV, const BIN *pAAD, int nReqLen, CK_MECHANISM *pMech )
+{
+    pMech->mechanism = CKM_AES_GCM;
+    CK_GCM_PARAMS *pGCMParam = NULL;
+
+    pGCMParam = (CK_GCM_PARAMS *)JS_calloc( 1, sizeof(CK_GCM_PARAMS));
+
+    pGCMParam->ulIvLen = pIV->nLen;
+    pGCMParam->pIv = pIV->pVal;
+    pGCMParam->ulAADLen = pAAD->nLen;
+    pGCMParam->pAAD = pAAD->pVal;
+    pGCMParam->ulIvBits = pIV->nLen * 8;
+    pGCMParam->ulTagBits = nReqLen * 8;
+
+    pMech->pParameter = pGCMParam;
+    pMech->ulParameterLen = sizeof(CK_GCM_PARAMS);
+}
+
+void setAES_CCMParam( const BIN *pIV, const BIN *pAAD, int nSrcLen, int nReqLen, CK_MECHANISM *pMech )
+{
+    pMech->mechanism = CKM_AES_CCM;
+    CK_CCM_PARAMS *pCCMParam = NULL;
+
+    pCCMParam = (CK_CCM_PARAMS *)JS_calloc( 1, sizeof(CK_CCM_PARAMS));
+    pCCMParam->ulDataLen = nSrcLen;
+    pCCMParam->pNonce = pIV->pVal;
+    pCCMParam->ulNonceLen = pIV->nLen;
+    pCCMParam->pAAD = pAAD->pVal;
+    pCCMParam->ulAADLen = pAAD->nLen;
+    pCCMParam->ulMACLen = nReqLen;
+
+    pMech->pParameter = pCCMParam;
+    pMech->ulParameterLen = sizeof(CK_CCM_PARAMS);
+}

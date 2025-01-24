@@ -17,48 +17,7 @@
 #include "js_pki_tools.h"
 #include "js_pki_eddsa.h"
 
-static const int kACVP_TYPE_BLOCK_CIPHER = 0;
-static const int kACVP_TYPE_HASH = 1;
-static const int kACVP_TYPE_MAC = 2;
-static const int kACVP_TYPE_RSA = 3;
-static const int kACVP_TYPE_ECDSA = 4;
-static const int kACVP_TYPE_DRBG = 5;
-static const int kACVP_TYPE_KDA = 6;
-static const int kACVP_TYPE_EDDSA = 7;
-static const int kACVP_TYPE_DSA = 8;
 
-static QStringList kACVP_HashList =
-    { "SHA-1", "SHA2-224", "SHA2-256", "SHA2-384", "SHA2-512" };
-static QStringList kACVP_BlockCipherList =
-    { "ACVP-AES-ECB", "ACVP-AES-CBC", "ACVP-AES-CFB128", "ACVP-AES-OFB", "ACVP-AES-CTR", "ACVP-AES-CCM", "ACVP-AES-KW", "ACVP-AES-KWP", "ACVP-AES-GCM" };
-static QStringList kACVP_MACList =
-    { "HMAC-SHA-1", "HMAC-SHA2-224", "HMAC-SHA2-256", "HMAC-SHA2-384", "HMAC-SHA2-512", "ACVP-AES-GMAC", "CMAC-AES" };
-static QStringList kACVP_RSAList = { "RSA" };
-static QStringList kACVP_ECDSAList = { "ECDSA" };
-static QStringList kACVP_DRBGList = { "ctrDRBG", "hashDRBG", "hmacDRBG" };
-static QStringList kACVP_KDAList = { "KAS-ECC", "kdf-components", "PBKDF" };
-static QStringList kACVP_EDDSAList = { "EDDSA" };
-static QStringList kACVP_DSAList = { "DSA" };
-
-const QStringList kSymAlgList = { "AES", "DES3" };
-const QStringList kSymModeList = { "ECB", "CBC", "CTR", "CFB", "OFB" };
-const QStringList kSymDirection = { "Encrypt", "Decrypt" };
-const QStringList kHashAlgList = { "SHA-1", "SHA2-224", "SHA2-256", "SHA2-384", "SHA2-512" };
-const QStringList kMctVersion = { "Standard", "Alternate" };
-
-const QStringList kSymTypeList = { "KAT", "MCT", "MMT" };
-
-const QStringList kAEModeList = { "GCM", "CCM" };
-const QStringList kAETypeList = { "AE", "AD" };
-
-const QStringList kHashTypeList = { "Short", "Long", "Monte" };
-const QStringList kECCAlgList = { "ECDSA", "ECDH" };
-const QStringList kECCTypeECDSA = { "KPG", "PKV", "SGT", "SVT" };
-const QStringList kECCTypeECDH = { "KAKAT", "PKV", "KPG" };
-
-const QStringList kRSAAlgList = { "RSAES", "RSAPSS" };
-const QStringList kRSATypeRSAES = { "DET", "ENT", "KGT" };
-const QStringList kRSATypeRSAPSS = { "KPG", "SGT", "SVT" };
 
 static QString _getHashName( const QString strACVPHash )
 {
@@ -136,31 +95,6 @@ static QString _getHashNameFromMAC( const QString strACVPMac )
     return "";
 }
 
-QString getSymAlg( const QString strAlg, const QString strMode, int nKeyLen )
-{
-    QString strRes;
-    strRes.clear();
-
-    QString strLAlg = strAlg.toLower();
-    QString strLMode = strMode.toLower();
-
-    if( (nKeyLen % 8) != 0 ) return strRes;
-    if( nKeyLen > 32 ) return strRes;
-
-    if( strAlg.isEmpty() || strMode.isEmpty() ) return strRes;
-
-    if( strLMode == "cfb128" ) strLMode = "cfb";
-
-    if( strLAlg.toLower() == "des" || strLAlg.toLower() == "seed" || strLAlg.toLower() == "sm4" )
-        strRes = QString( "%1-%2").arg(strLAlg).arg(strLMode );
-    else if( strLAlg.toLower() == "des3" )
-        strRes = QString( "des-ede-%1").arg(strLMode);
-    else
-        strRes = QString( "%1-%2-%3" ).arg( strLAlg ).arg( nKeyLen * 8 ).arg( strLMode);
-
-    return strRes;
-}
-
 int getACVPType( const QString strAlg )
 {
     for( int i = 0; i < kACVP_HashList.size(); i++ )
@@ -227,6 +161,7 @@ CAVPDlg::CAVPDlg(QWidget *parent) :
 
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(close()));
     connect( mFindRspBtn, SIGNAL(clicked()), this, SLOT(clickFindRsp()));
+    connect( mACVP_FindReqPathBtn, SIGNAL(clicked()), this, SLOT(clickACVPFindJson()));
 
     connect( mECCAlgCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changeECCAlg(int)));
     connect( mRSAAlgCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changeRSAAlg(int)));
@@ -364,6 +299,18 @@ void CAVPDlg::clickFindRsp()
     if( strFileName.length() > 0 )
     {
         mRspPathText->setText( strFileName );
+    }
+}
+
+void CAVPDlg::clickACVPFindJson()
+{
+    QString strRspPath = mACVP_ReqPathText->text();
+    if( strRspPath.length() < 1 ) strRspPath = manApplet->curPath();
+
+    QString strFileName = findFile( this, JS_FILE_TYPE_JSON, strRspPath );
+    if( strFileName.length() > 0 )
+    {
+        mACVP_ReqPathText->setText( strFileName );
     }
 }
 
@@ -565,36 +512,30 @@ void CAVPDlg::clickSymRun()
         {
             if( strKey.length() > 0 )
             {
+                BIN binKey = {0,0};
+                BIN binIV = {0,0};
+                BIN binPT = {0,0};
+
                 if( strKey.length() > 0 ) logRsp( QString( "Key = %1").arg( strKey ));
                 if( strIV.length() > 0 ) logRsp( QString( "IV = %1").arg( strIV ));
                 if( strPT.length() > 0 ) logRsp( QString( "PT = %1").arg( strPT ));
-#if 0
+
+                QString strAlgMode = QString( "%1-%2" ).arg( strAlg ).arg( strMode );
+
                 if( strType == "MCT" )
                 {
-                    if( strMode == "CBC" )
-                    {
-                        ret = makeSymCBC_MCT( strAlg, strKey, strIV, strPT, NULL);
-                    }
-                    else if( strMode == "ECB" )
-                    {
-                        ret = makeSymECB_MCT( strAlg, strKey, strPT, NULL );
-                    }
-                    else if( strMode == "CTR" )
-                    {
-                        ret = makeSymCTR_MCT( strAlg, strKey, strIV, strPT, NULL );
-                    }
-                    else if( strMode == "CFB" )
-                    {
-                        ret = makeSymCFB_MCT( strAlg, strKey, strIV, strPT, NULL );
-                    }
-                    else if( strMode == "OFB" )
-                    {
-                        ret = makeSymOFB_MCT( strAlg, strKey, strIV, strPT, NULL );
-                    }
+                    QJsonArray jArr;
+                    ret = makeSym_MCT( strAlgMode, &binKey, &binIV, &binPT, jArr, false );
                 }
                 else
-                    ret = makeSymData( strKey, strIV, strPT );
-#endif
+                {
+                    ret = makeSymData( strAlgMode, &binKey, &binIV, &binPT );
+                }
+
+
+                JS_BIN_reset( &binKey );
+                JS_BIN_reset( &binIV );
+                JS_BIN_reset( &binPT );
 
                 if( ret != 0 )
                 {
@@ -1456,32 +1397,74 @@ void CAVPDlg::clickRSARun()
 
 void CAVPDlg::clickSymFind()
 {
+    QString strRspPath = mSymReqPathText->text();
+    if( strRspPath.length() < 1 ) strRspPath = manApplet->curPath();
 
+    QString strFileName = findFile( this, JS_FILE_TYPE_TXT, strRspPath );
+    if( strFileName.length() > 0 )
+    {
+        mSymReqPathText->setText( strFileName );
+    }
 }
 
 void CAVPDlg::clickAEFind()
 {
+    QString strRspPath = mAEReqPathText->text();
+    if( strRspPath.length() < 1 ) strRspPath = manApplet->curPath();
 
+    QString strFileName = findFile( this, JS_FILE_TYPE_TXT, strRspPath );
+    if( strFileName.length() > 0 )
+    {
+        mAEReqPathText->setText( strFileName );
+    }
 }
 
 void CAVPDlg::clickHashFind()
 {
+    QString strRspPath = mHashReqPathText->text();
+    if( strRspPath.length() < 1 ) strRspPath = manApplet->curPath();
 
+    QString strFileName = findFile( this, JS_FILE_TYPE_TXT, strRspPath );
+    if( strFileName.length() > 0 )
+    {
+        mHashReqPathText->setText( strFileName );
+    }
 }
 
 void CAVPDlg::clickMACFind()
 {
+    QString strRspPath = mMACReqPathText->text();
+    if( strRspPath.length() < 1 ) strRspPath = manApplet->curPath();
 
+    QString strFileName = findFile( this, JS_FILE_TYPE_TXT, strRspPath );
+    if( strFileName.length() > 0 )
+    {
+        mMACReqPathText->setText( strFileName );
+    }
 }
 
 void CAVPDlg::clickECCFind()
 {
+    QString strRspPath = mECCReqPathText->text();
+    if( strRspPath.length() < 1 ) strRspPath = manApplet->curPath();
 
+    QString strFileName = findFile( this, JS_FILE_TYPE_TXT, strRspPath );
+    if( strFileName.length() > 0 )
+    {
+        mECCReqPathText->setText( strFileName );
+    }
 }
 
 void CAVPDlg::clickRSAFind()
 {
+    QString strRspPath = mRSAReqPathText->text();
+    if( strRspPath.length() < 1 ) strRspPath = manApplet->curPath();
 
+    QString strFileName = findFile( this, JS_FILE_TYPE_TXT, strRspPath );
+    if( strFileName.length() > 0 )
+    {
+        mRSAReqPathText->setText( strFileName );
+    }
 }
 
 void CAVPDlg::clickMCT_SymClear()
@@ -1979,6 +1962,306 @@ int _getCKK( const QString strAlg )
 
     return -1;
 }
+
+int _getCKM( const QString strAlg, const QString strMode )
+{
+    if( strAlg == "AES" )
+    {
+        if( strMode == "ECB" )
+            return CKM_AES_ECB;
+        else if( strMode == "CBC" )
+            return CKM_AES_CBC;
+        else if( strMode == "CTR" )
+            return CKM_AES_CTR;
+        else if( strMode == "OFB" )
+            return CKM_AES_OFB;
+        else if( strMode == "CFB" )
+            return CKM_AES_CFB128;
+        else if( strMode == "GCM" )
+            return CKM_AES_GCM;
+        else if( strMode == "CCM" )
+            return CKM_AES_CCM;
+    }
+    else if( strAlg == "DES3" || strAlg == "3DES" )
+    {
+        if( strMode == "ECB" )
+            return CKM_DES3_ECB;
+        else if( strMode == "CBC" )
+            return CKM_DES3_CBC;
+    }
+
+    return -1;
+}
+
+int CAVPDlg::makeSymData( const QString strAlgMode, const BIN *pKey, const BIN *pIV, const BIN *pPT )
+{
+    int ret = 0;
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+    long hSession = mSessionText->text().toLong();
+
+    BIN binEnc = {0,0};
+
+    QStringList list = strAlgMode.split( "-" );
+    if( list.size() < 2 ) return -1;
+
+    long hKey = -1;
+    QString strAlg = list.at(0);
+    QString strMode = list.at(1);
+
+    int nKeyAlg = _getCKK( strAlg );
+    CK_MECHANISM sMech;
+
+    long uOutLen = 0;
+    unsigned char *pOut = NULL;
+
+    memset( &sMech, 0x00, sizeof(sMech));
+
+    sMech.mechanism = _getCKM( strAlg, strMode );
+    sMech.pParameter = pIV->pVal;
+    sMech.ulParameterLen = pIV->nLen;
+
+    ret = createKey( nKeyAlg, pKey, &hKey );
+    if( ret != 0 ) goto end;
+
+    ret = pAPI->EncryptInit( hSession, &sMech, hKey );
+    if( ret != 0 ) goto end;
+
+    ret = pAPI->Encrypt( hSession, pPT->pVal, pPT->nLen, NULL, (CK_ULONG_PTR)&uOutLen );
+    if( ret != 0 ) goto end;
+    pOut = (unsigned char *)JS_calloc( 1, uOutLen );
+
+    ret = pAPI->Encrypt( hSession, pPT->pVal, pPT->nLen, pOut, (CK_ULONG_PTR)&uOutLen );
+    if( ret != 0 ) goto end;
+
+    if( ret != 0 )
+    {
+        manApplet->elog( QString( "failed to encrypt [%1]").arg(ret));
+        goto end;
+    }
+
+    logRsp( QString( "CT = %1").arg( getHexString(binEnc.pVal, binEnc.nLen)));
+    logRsp( "" );
+
+end :
+    if( pOut ) JS_free( pOut );
+    JS_BIN_reset( &binEnc );
+
+    return ret;
+}
+
+int CAVPDlg::makeAEData( const BIN *pKey, const BIN *pIV, const BIN *pPT, const BIN *pAAD, int nTagLen, int nSrcLen )
+{
+    int ret = 0;
+
+    BIN binTag = {0,0};
+    BIN binEnc = {0,0};
+
+    QString strMode = mAEModeCombo->currentText();
+    QString strAlg = mAEAlgCombo->currentText();
+    QString strEncAlg;
+
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+    long hSession = mSessionText->text().toLong();
+
+
+    long uOutLen = 0;
+    unsigned char *pOut = NULL;
+    long hKey = -1;
+    int nKeyAlg = _getCKK( strAlg );
+
+    CK_MECHANISM sMech;
+    memset( &sMech, 0x00, sizeof(sMech));
+
+    logRsp( QString( "Key = %1").arg( getHexString( pKey ) ));
+    logRsp( QString( "IV = %1").arg( getHexString( pIV )));
+    logRsp( QString( "PT = %1").arg( getHexString( pPT )));
+    logRsp( QString( "Adata = %1").arg( getHexString( pAAD )));
+
+    sMech.mechanism = _getCKM( strAlg, strMode );
+
+    if( sMech.mechanism == CKM_AES_GCM )
+    {
+        setAES_GCMParam( pIV, pAAD, nTagLen, &sMech );
+    }
+    else if( sMech.mechanism == CKM_AES_GCM )
+    {
+        setAES_CCMParam( pIV, pAAD, nSrcLen, nTagLen, &sMech );
+    }
+    else
+    {
+        sMech.pParameter = pIV->pVal;
+        sMech.ulParameterLen = pIV->nLen;
+    }
+
+    ret = createKey( nKeyAlg, pKey, &hKey );
+    if( ret != 0 ) goto end;
+
+    ret = pAPI->EncryptInit( hSession, &sMech, hKey );
+    if( ret != 0 ) goto end;
+
+    ret = pAPI->Encrypt( hSession, pPT->pVal, pPT->nLen, NULL, (CK_ULONG_PTR)&uOutLen );
+    if( ret != 0 ) goto end;
+    pOut = (unsigned char *)JS_calloc( 1, uOutLen );
+
+    ret = pAPI->Encrypt( hSession, pPT->pVal, pPT->nLen, pOut, (CK_ULONG_PTR)&uOutLen );
+    if( ret != 0 ) goto end;
+
+    JS_BIN_set( &binEnc, pOut, uOutLen );
+
+    logRsp( QString( "C = %1").arg(getHexString( binEnc.pVal, binEnc.nLen)));
+    logRsp( QString( "T = %1").arg(getHexString( binTag.pVal, binTag.nLen)));
+    logRsp( "" );
+
+end :
+    if( sMech.mechanism == CKM_AES_GCM || sMech.mechanism == CKM_AES_CCM )
+    {
+        if( sMech.pParameter ) JS_free( sMech.pParameter );
+    }
+
+    if( pOut ) JS_free( pOut );
+    JS_BIN_reset( &binTag );
+    JS_BIN_reset( &binEnc );
+
+    return ret;
+}
+
+int CAVPDlg::makeADData( const BIN *pKey, const BIN *pIV, const BIN *pCT, const BIN *pAAD, const BIN *pTag, int nSrcLen )
+{
+    int ret = 0;
+
+    BIN binPT = {0,0};
+
+    QString strMode = mAEModeCombo->currentText();
+    QString strAlg = mAEAlgCombo->currentText();
+    QString strEncAlg;
+
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+    long hSession = mSessionText->text().toLong();
+
+
+    long uOutLen = 0;
+    unsigned char *pOut = NULL;
+    long hKey = -1;
+    int nKeyAlg = _getCKK( strAlg );
+
+    CK_MECHANISM sMech;
+    memset( &sMech, 0x00, sizeof(sMech));
+
+    logRsp( QString( "Key = %1").arg( getHexString( pKey ) ));
+    logRsp( QString( "IV = %1").arg( getHexString( pIV )));
+    logRsp( QString( "CT = %1").arg( getHexString( pCT )));
+    logRsp( QString( "Adata = %1").arg( getHexString( pAAD )));
+
+    sMech.mechanism = _getCKM( strAlg, strMode );
+
+    if( sMech.mechanism == CKM_AES_GCM )
+    {
+        setAES_GCMParam( pIV, pAAD, pTag->nLen, &sMech );
+    }
+    else if( sMech.mechanism == CKM_AES_GCM )
+    {
+        setAES_CCMParam( pIV, pAAD, nSrcLen, pTag->nLen, &sMech );
+    }
+    else
+    {
+        sMech.pParameter = pIV->pVal;
+        sMech.ulParameterLen = pIV->nLen;
+    }
+
+    ret = createKey( nKeyAlg, pKey, &hKey );
+    if( ret != 0 ) goto end;
+
+    ret = pAPI->EncryptInit( hSession, &sMech, hKey );
+    if( ret != 0 ) goto end;
+
+    ret = pAPI->Decrypt( hSession, pCT->pVal, pCT->nLen, NULL, (CK_ULONG_PTR)&uOutLen );
+    if( ret != 0 ) goto end;
+    pOut = (unsigned char *)JS_calloc( 1, uOutLen );
+
+    ret = pAPI->Decrypt( hSession, pCT->pVal, pCT->nLen, pOut, (CK_ULONG_PTR)&uOutLen );
+    if( ret != 0 ) goto end;
+
+    JS_BIN_set( &binPT, pOut, uOutLen );
+
+    if( ret == 0 )
+    {
+        logRsp( QString( "PT = %1").arg( getHexString(binPT.pVal, binPT.nLen)));
+    }
+    else
+    {
+        logRsp( "Invalid" );
+    }
+
+    logRsp( "" );
+
+end :
+    if( sMech.mechanism == CKM_AES_GCM || sMech.mechanism == CKM_AES_CCM )
+    {
+        if( sMech.pParameter ) JS_free( sMech.pParameter );
+    }
+
+    if( pOut ) JS_free( pOut );
+    JS_BIN_reset( &binPT );
+
+    return ret;
+}
+
+int CAVPDlg::makeHashData( int nLen, const BIN *pVal )
+{
+    int ret = 0;
+    BIN binHash = {0,0};
+
+    QString strAlg = mHashAlgCombo->currentText();
+
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+    long hSession = mSessionText->text().toLong();
+
+    unsigned char sOut[1024];
+    int nOutLen = 0;
+
+    CK_MECHANISM sMech;
+    memset( &sMech, 0x00, sizeof(sMech));
+
+    if( strAlg == "SHA-1" )
+        sMech.mechanism = CKM_SHA_1;
+    else if( strAlg == "SHA2-224" )
+        sMech.mechanism = CKM_SHA224;
+    else if( strAlg == "SHA2-256" )
+        sMech.mechanism = CKM_SHA256;
+    else if( strAlg == "SHA2-384" )
+        sMech.mechanism = CKM_SHA384;
+    else if( strAlg == "SHA2-512" )
+        sMech.mechanism = CKM_SHA512;
+    else
+    {
+        manApplet->warningBox( QString("Invalid algorithm: %1").arg( strAlg ), this );
+        return -1;
+    }
+
+    ret = JS_PKI_genHash( strAlg.toStdString().c_str(), pVal, &binHash );
+
+    ret = pAPI->DigestInit( hSession, &sMech );
+    if( ret != 0 ) goto end;
+
+    nOutLen = sizeof(sOut);
+    memset( sOut, 0x00, nOutLen );
+
+    ret = pAPI->Digest( hSession, pVal->pVal, pVal->nLen, sOut, (CK_ULONG_PTR)&nOutLen );
+    JS_BIN_set( &binHash, sOut, nOutLen );
+
+    if( ret != 0 ) goto end;
+
+    logRsp( QString( "Len = %1").arg( nLen ));
+    logRsp( QString( "Msg = %1").arg( getHexString( pVal ) ));
+    logRsp( QString( "MD = %1").arg(getHexString( binHash.pVal, binHash.nLen)));
+    logRsp( "" );
+
+end :
+    JS_BIN_reset( &binHash );
+
+    return ret;
+}
+
 
 int CAVPDlg::makeSym_MCT( const QString strAlgMode, const BIN *pKey, const BIN *pIV, const BIN *pPT, QJsonArray& jsonRes, bool bWin )
 {
@@ -5074,7 +5357,8 @@ int CAVPDlg::macJsonWork( const QString strAlg, const QJsonObject jObject, QJson
                 }
                 else if( strMode == "AES" && strSymAlg == "CMAC" )
                 {
-                    QString strMACAlg = getSymAlg( strMode, "CBC", binKey.nLen );
+                    QString strMACAlg;
+//                    strMACAlg = getSymAlg( strMode, "CBC", binKey.nLen );
                     ret = JS_PKI_genCMAC( strMACAlg.toStdString().c_str(), &binMsg, &binKey, &binGenMAC );
                     if( ret != 0 ) goto end;
                 }
@@ -5103,7 +5387,8 @@ int CAVPDlg::macJsonWork( const QString strAlg, const QJsonObject jObject, QJson
                 }
                 else if( strMode == "AES" && strSymAlg == "CMAC" )
                 {
-                    QString strMACAlg = getSymAlg( strMode, "CBC", binKey.nLen );
+                    QString strMACAlg;
+ //                   strMACAlg = getSymAlg( strMode, "CBC", binKey.nLen );
                     ret = JS_PKI_genCMAC( strMACAlg.toStdString().c_str(), &binMsg, &binKey, &binMAC );
                     if( ret != 0 ) goto end;
                     jRspTestObj["mac"] = getHexString( &binMAC );
@@ -5263,7 +5548,8 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
             BIN binPart = {0,0};
             BIN binRes = {0,0};
 
-            QString strCipher = getSymAlg( strSymAlg, strMode, nKeyLen/8 );
+            QString strCipher;
+ //           strCipher = getSymAlg( strSymAlg, strMode, nKeyLen/8 );
 
             if( strMode.toUpper() != "CTR" )
                 return -2;
@@ -5319,7 +5605,8 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
         }
         else // AFT
         {
-            QString strCipher = getSymAlg( strSymAlg, strMode, nKeyLen/8 );
+            QString strCipher;
+ //           strCipher = getSymAlg( strSymAlg, strMode, nKeyLen/8 );
 
             if( strDirection == "encrypt" )
             {
