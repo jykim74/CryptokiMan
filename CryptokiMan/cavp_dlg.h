@@ -23,6 +23,24 @@ private slots:
     void slotChanged( int index );
     void clickFindRsp();
 
+    void changeECCAlg(int index);
+    void changeRSAAlg(int index);
+    void changeECCType(int index);
+    void changeRSAType(int index);
+
+    void MCT_KeyChanged( const QString& text );
+    void MCT_IVChanged( const QString& text );
+    void MCT_PTChanged( const QString& text );
+    void MCT_CTChanged( const QString& text );
+    void MCT_LastKeyChanged( const QString& text );
+    void MCT_LastIVChanged( const QString& text );
+    void MCT_LastPTChanged( const QString& text );
+    void MCT_LastCTChanged( const QString& text );
+
+    void MCT_SeedChanged( const QString& text );
+    void MCT_FirstMDChanged( const QString& text );
+    void MCT_LastMDChanged( const QString& text );
+
     void clickSymRun();
     void clickAERun();
     void clickHashRun();
@@ -46,6 +64,7 @@ private slots:
     void clickACVP_Run();
     void clickACVP_LDTClear();
     void clickACVP_LDTRun();
+
 
 private:
     void initUI();
@@ -88,7 +107,6 @@ private:
     int macJsonWork( const QString strAlg, const QJsonObject jObject, QJsonObject& jRspObject );
     int blockCipherJsonWork( const QString strAlg, const QJsonObject jObject, QJsonObject& jRspObject );
     int kdaJsonWork( const QString strAlg, const QJsonObject jObject, QJsonObject& jRspObject );
-    int drbgJsonWork( const QString strAlg, const QJsonObject jObject, QJsonObject& jRspObject );
 
     long session_;
     int slot_index_;
