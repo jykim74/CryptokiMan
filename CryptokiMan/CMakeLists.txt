@@ -243,6 +243,7 @@ add_executable(${PROJECT_NAME}
     hsm_man_dlg.h hsm_man_dlg.cpp hsm_man_dlg.ui
     secret_info_dlg.h secret_info_dlg.cpp secret_info_dlg.ui
     cavp_dlg.h cavp_dlg.cpp cavp_dlg.ui
+    cavp_dlg2.cpp
 )
 
 target_link_options( ${PROJECT_NAME} PRIVATE -mwindows -MD )
