@@ -9,6 +9,7 @@
 #include "cryptoki_api.h"
 #include "man_applet.h"
 #include "common.h"
+#include "js_pki_tools.h"
 
 CryptokiAPI::CryptokiAPI()
 {
@@ -558,6 +559,51 @@ int CryptokiAPI::GetAttributeValue2( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDL
 
     return rv;
 }
+
+int CryptokiAPI::GetAttributeValue3( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject, CK_ATTRIBUTE_TYPE attrType, void *pVal )
+{
+    CK_RV           rv;
+    CK_ATTRIBUTE    sAttribute;
+
+    if( hSession <= 0 ) return -1;
+
+    memset( &sAttribute, 0x00, sizeof(sAttribute));
+    sAttribute.type = attrType;
+
+    rv = GetAttributeValue( hSession, hObject, &sAttribute, 1 );
+
+    if( rv != CKR_OK )
+    {
+        fprintf( stderr, "failed to execute C_GetAttributeValue(%s:%s:%d)\n", JS_PKCS11_GetCKAName(attrType),JS_PKCS11_GetErrorMsg(rv), rv );
+        return rv;
+    }
+
+    if( sAttribute.ulValueLen > 0 )
+    {
+        sAttribute.pValue = (CK_BYTE_PTR)JS_calloc( 1, sAttribute.ulValueLen );
+        if( sAttribute.pValue == NULL )
+        {
+            fprintf( stderr, "out of memory\n" );
+            return -1;
+        }
+
+        rv = GetAttributeValue( hSession, hObject, &sAttribute, 1 );
+
+        if( rv != CKR_OK )
+        {
+            if( sAttribute.pValue ) JS_free( sAttribute.pValue );
+            sAttribute.pValue = NULL;
+
+            return rv;
+        }
+
+        memcpy( pVal, sAttribute.pValue, sAttribute.ulValueLen );
+        JS_free( sAttribute.pValue );
+    }
+
+    return rv;
+}
+
 
 int CryptokiAPI::GetAttributeListValue( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject, CK_ATTRIBUTE_PTR pAttribute, CK_ULONG uAttributeCnt )
 {
@@ -2062,4 +2108,139 @@ void CryptokiAPI::logTemplate( const CK_ATTRIBUTE sTemplate[], int nCount )
 
         manApplet->dlog( strLog );
     }
+}
+
+int CryptokiAPI::getRSAKeyVal( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObj, JRSAKeyVal *pRSAVal )
+{
+    int ret = 0;
+    BIN binVal = {0,0};
+
+    CK_OBJECT_CLASS objClass = -1;
+    CK_KEY_TYPE keyType = -1;
+
+    ret = GetAttributeValue3( hSession, hObj, CKA_KEY_TYPE, (void *)&keyType );
+    if( ret != CKR_OK ) goto end;
+
+    if( keyType != CKK_RSA ) goto end;
+
+    ret = GetAttributeValue3( hSession, hObj, CKA_CLASS, &objClass );
+    if( ret != CKR_OK ) goto end;
+
+    ret = GetAttributeValue2( hSession, hObj, CKA_PUBLIC_EXPONENT, &binVal );
+    if( ret != CKR_OK ) goto end;
+
+    pRSAVal->pE = JS_strdup( getHexString( &binVal ).toStdString().c_str() );
+    JS_BIN_reset( &binVal );
+
+    ret = GetAttributeValue2( hSession, hObj, CKA_MODULUS, &binVal );
+    if( ret != CKR_OK ) goto end;
+
+    pRSAVal->pN = JS_strdup( getHexString( &binVal ).toStdString().c_str() );
+    JS_BIN_reset( &binVal );
+
+    if( objClass == CKO_PRIVATE_KEY )
+    {
+        ret = GetAttributeValue2( hSession, hObj, CKA_PRIVATE_EXPONENT, &binVal );
+        if( ret == CKR_OK )
+        {
+            pRSAVal->pD = JS_strdup( getHexString( &binVal ).toStdString().c_str() );
+            JS_BIN_reset( &binVal );
+        }
+
+        ret = GetAttributeValue2( hSession, hObj, CKA_PRIME_1, &binVal );
+        if( ret == CKR_OK )
+        {
+            pRSAVal->pP = JS_strdup( getHexString( &binVal ).toStdString().c_str() );
+            JS_BIN_reset( &binVal );
+        }
+
+        ret = GetAttributeValue2( hSession, hObj, CKA_PRIME_2, &binVal );
+        if( ret == CKR_OK )
+        {
+            pRSAVal->pQ = JS_strdup( getHexString( &binVal ).toStdString().c_str() );
+            JS_BIN_reset( &binVal );
+        }
+
+        ret = GetAttributeValue2( hSession, hObj, CKA_EXPONENT_1, &binVal );
+        if( ret == CKR_OK )
+        {
+            pRSAVal->pDMP1 = JS_strdup( getHexString( &binVal ).toStdString().c_str() );
+            JS_BIN_reset( &binVal );
+        }
+
+        ret = GetAttributeValue2( hSession, hObj, CKA_EXPONENT_2, &binVal );
+        if( ret == CKR_OK )
+        {
+            pRSAVal->pDMQ1 = JS_strdup( getHexString( &binVal ).toStdString().c_str() );
+            JS_BIN_reset( &binVal );
+        }
+
+        ret = GetAttributeValue2( hSession, hObj, CKA_COEFFICIENT, &binVal );
+        if( ret == CKR_OK )
+        {
+            pRSAVal->pIQMP = JS_strdup( getHexString( &binVal ).toStdString().c_str() );
+            JS_BIN_reset( &binVal );
+        }
+    }
+
+
+end :
+    JS_BIN_reset( &binVal );
+    return ret;
+}
+
+int CryptokiAPI::getECCKeyVal( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObj, JECKeyVal *pECVal )
+{
+    int ret = 0;
+    BIN binVal = {0,0};
+
+    CK_OBJECT_CLASS objClass = -1;
+    CK_KEY_TYPE keyType = -1;
+
+    char sTextOID[1024];
+
+    memset( sTextOID, 0x00, sizeof(sTextOID ));
+
+    ret = GetAttributeValue3( hSession, hObj, CKA_KEY_TYPE, (void *)&keyType );
+    if( ret != CKR_OK ) goto end;
+
+    if( keyType != CKK_ECDSA ) goto end;
+
+    ret = GetAttributeValue3( hSession, hObj, CKA_CLASS, &objClass );
+    if( ret != CKR_OK ) goto end;
+
+    ret = GetAttributeValue2( hSession, hObj, CKA_EC_PARAMS, &binVal );
+    if( ret != CKR_OK ) goto end;
+
+    JS_PKI_getStringFromOID( &binVal, sTextOID );
+    JS_BIN_reset( &binVal );
+
+    pECVal->pCurveOID = JS_strdup( JS_PKI_getSNFromOID( sTextOID ));
+
+    if( objClass == CKO_PRIVATE_KEY )
+    {
+        ret = GetAttributeValue2( hSession, hObj, CKA_VALUE, &binVal );
+        if( ret == CKR_OK )
+        {
+            pECVal->pPrivate = JS_strdup( getHexString(&binVal).toStdString().c_str() );
+        }
+
+        JS_BIN_reset( &binVal );
+    }
+    else if( objClass == CKO_PUBLIC_KEY )
+    {
+        ret = GetAttributeValue2( hSession, hObj, CKA_EC_POINT, &binVal );
+        if( ret == CKR_OK )
+        {
+            int nPubLen = ( binVal.nLen - 3 ) / 2;
+            pECVal->pPubX = JS_strdup( getHexString( &binVal.pVal[3], nPubLen).toStdString().c_str() );
+            pECVal->pPubY = JS_strdup( getHexString( &binVal.pVal[3+nPubLen], nPubLen).toStdString().c_str() );
+        }
+
+        JS_BIN_reset( &binVal );
+    }
+
+end :
+    JS_BIN_reset( &binVal );
+    return ret;
 }

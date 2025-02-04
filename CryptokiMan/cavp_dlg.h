@@ -176,6 +176,7 @@ private:
 
     int createKey( int nKeyType, const BIN *pKey, long *phObj );
     int genRSAKeyPair( int nKeyLen, int nE, long *phPri, long *phPub );
+    int importRSAPriKey( const BIN *pRSAPri, long *phPri );
     int genECCKeyPair( const QString strParam, long *phPri, long *phPub );
 
     bool isSkipTestType( const QString strTestType );

@@ -324,11 +324,13 @@ void CAVPDlg::initUI()
     mECCAlgCombo->addItems( kECCAlgList );
     mECCParamCombo->addItems( kECCOptionList );
     mECCHashCombo->addItems( kHashAlgList );
+    mECCTypeCombo->clear();
     mECCTypeCombo->addItems( kECCTypeECDSA );
 
     mRSAAlgCombo->addItems( kRSAAlgList );
     mRSAHashCombo->addItems( kHashAlgList );
     mRSA_EText->setText( "65537" );
+    mRSATypeCombo->clear();
     mRSATypeCombo->addItems( kRSATypeRSAES );
 
     checkACVPSetTcId();
@@ -435,12 +437,14 @@ void CAVPDlg::changeRSAType(int index)
     if( strType == "DET" )
     {
         mRSAObjectLabel->setEnabled( true );
-        mRSAObjectText->setEnabled(true);
+        mRSA_DETPriKeyFindBtn->setEnabled(true);
+        mRSA_DETPriKeyPathText->setEnabled(true);
     }
     else
     {
-        mRSAObjectText->setEnabled(false);
-        mRSAObjectText->setEnabled(false);
+        mRSAObjectLabel->setEnabled( false );
+        mRSA_DETPriKeyFindBtn->setEnabled(false);
+        mRSA_DETPriKeyPathText->setEnabled(false);
     }
 }
 
@@ -1008,6 +1012,130 @@ int CAVPDlg::genRSAKeyPair( int nKeyLen, int nE, long *phPri, long *phPub )
     }
 
     JS_BIN_reset( &binExp );
+
+    return ret;
+}
+
+int CAVPDlg::importRSAPriKey( const BIN *pRSAPri, long *phPri )
+{
+    int ret = 0;
+    bool bToken = false;
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+
+    CK_ATTRIBUTE sTemplate[10];
+    long uCount = 0;
+
+    CK_OBJECT_CLASS objClass = CKO_PRIVATE_KEY;
+    CK_KEY_TYPE keyType = CKK_RSA;
+
+    JRSAKeyVal sRSAVal;
+
+    BIN binN = {0,0};
+    BIN binE = {0,0};
+    BIN binD = {0,0};
+    BIN binP = {0,0};
+    BIN binQ = {0,0};
+    BIN binDMP1 = {0,0};
+    BIN binDMQ1 = {0,0};
+    BIN binIQMP = {0,0};
+
+    memset( &sRSAVal, 0x00, sizeof(sRSAVal));
+
+    ret = JS_PKI_getRSAKeyVal( pRSAPri, &sRSAVal );
+    if( ret != 0 ) goto end;
+
+    sTemplate[uCount].type = CKA_CLASS;
+    sTemplate[uCount].pValue = &objClass;
+    sTemplate[uCount].ulValueLen = sizeof(objClass);
+    uCount++;
+
+    sTemplate[uCount].type = CKA_KEY_TYPE;
+    sTemplate[uCount].pValue = &keyType;
+    sTemplate[uCount].ulValueLen = sizeof(keyType);
+    uCount++;
+
+    if( sRSAVal.pN )
+    {
+        JS_BIN_decodeHex( sRSAVal.pN, &binN );
+        sTemplate[uCount].type = CKA_MODULUS;
+        sTemplate[uCount].pValue = binN.pVal;
+        sTemplate[uCount].ulValueLen = binN.nLen;
+        uCount++;
+    }
+
+    if( sRSAVal.pE )
+    {
+        JS_BIN_decodeHex( sRSAVal.pE, &binE );
+        sTemplate[uCount].type = CKA_PUBLIC_EXPONENT;
+        sTemplate[uCount].pValue = binE.pVal;
+        sTemplate[uCount].ulValueLen = binE.nLen;
+        uCount++;
+    }
+
+    if( sRSAVal.pD )
+    {
+        JS_BIN_decodeHex( sRSAVal.pD, &binD );
+        sTemplate[uCount].type = CKA_PRIVATE_EXPONENT;
+        sTemplate[uCount].pValue = binD.pVal;
+        sTemplate[uCount].ulValueLen = binD.nLen;
+        uCount++;
+    }
+
+    if( sRSAVal.pP )
+    {
+        JS_BIN_decodeHex( sRSAVal.pP, &binP );
+        sTemplate[uCount].type = CKA_PRIME_1;
+        sTemplate[uCount].pValue = binP.pVal;
+        sTemplate[uCount].ulValueLen = binP.nLen;
+        uCount++;
+    }
+
+    if( sRSAVal.pQ )
+    {
+        JS_BIN_decodeHex( sRSAVal.pQ, &binQ );
+        sTemplate[uCount].type = CKA_PRIME_2;
+        sTemplate[uCount].pValue = binQ.pVal;
+        sTemplate[uCount].ulValueLen = binQ.nLen;
+        uCount++;
+    }
+
+    if( sRSAVal.pDMP1 )
+    {
+        JS_BIN_decodeHex( sRSAVal.pDMP1, &binDMP1 );
+        sTemplate[uCount].type = CKA_EXPONENT_1;
+        sTemplate[uCount].pValue = binDMP1.pVal;
+        sTemplate[uCount].ulValueLen = binDMP1.nLen;
+        uCount++;
+    }
+
+    if( sRSAVal.pDMQ1 )
+    {
+        JS_BIN_decodeHex( sRSAVal.pDMQ1, &binDMQ1 );
+        sTemplate[uCount].type = CKA_EXPONENT_2;
+        sTemplate[uCount].pValue = binDMQ1.pVal;
+        sTemplate[uCount].ulValueLen = binDMQ1.nLen;
+        uCount++;
+    }
+
+    if( sRSAVal.pIQMP )
+    {
+        JS_BIN_decodeHex( sRSAVal.pIQMP, &binIQMP );
+        sTemplate[uCount].type = CKA_COEFFICIENT;
+        sTemplate[uCount].pValue = binIQMP.pVal;
+        sTemplate[uCount].ulValueLen = binIQMP.nLen;
+        uCount++;
+    }
+
+end :
+    JS_PKI_resetRSAKeyVal( &sRSAVal );
+    JS_BIN_reset( &binN );
+    JS_BIN_reset( &binE );
+    JS_BIN_reset( &binD );
+    JS_BIN_reset( &binQ );
+    JS_BIN_reset( &binP );
+    JS_BIN_reset( &binDMP1 );
+    JS_BIN_reset( &binDMQ1 );
+    JS_BIN_reset( &binIQMP );
 
     return ret;
 }

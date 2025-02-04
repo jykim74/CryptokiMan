@@ -9,6 +9,8 @@
 #include <QObject>
 #include <QString>
 #include "js_pkcs11.h"
+#include "js_pki.h"
+#include "js_pki_x509.h"
 
 enum { ATTR_VAL_BOOL, ATTR_VAL_STRING, ATTR_VAL_HEX, ATTR_VAL_KEY_NAME, ATTR_VAL_OBJECT_NAME, ATTR_VAL_LEN, ATTR_VAL_DATE };
 
@@ -44,6 +46,7 @@ public:
     int GetObjectSize( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject, CK_ULONG_PTR puSize );
     int GetAttributeValue( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject, CK_ATTRIBUTE_PTR pAttribute, CK_ULONG uAttributeCnt );
     int GetAttributeValue2( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject, CK_ATTRIBUTE_TYPE attrType, BIN *pBinVal );
+    int GetAttributeValue3( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject, CK_ATTRIBUTE_TYPE attrType, void *pVal );
     int GetAttributeListValue( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject, CK_ATTRIBUTE_PTR pAttribute, CK_ULONG uAttributeCnt );
     int SetAttributeValue( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject, CK_ATTRIBUTE_PTR pAttribute, CK_ULONG uAttributeCnt );
     int SetAttributeValue2( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject, CK_ATTRIBUTE_TYPE attrType, BIN *pBinVal );
@@ -151,6 +154,9 @@ public:
     QString getLastError();
     long getHandle( CK_SESSION_HANDLE hSession, CK_OBJECT_CLASS objClass, const BIN *pID );
     const QString getLabel( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObj );
+
+    int getRSAKeyVal( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObj, JRSAKeyVal *pRSAVal );
+    int getECCKeyVal( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObj, JECKeyVal *pECVal );
 
 private:
     void logResult( const QString strName, int rv, qint64 ms = -1 );

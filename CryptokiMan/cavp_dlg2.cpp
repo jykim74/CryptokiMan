@@ -899,7 +899,7 @@ void CAVPDlg::clickRSARun()
             {
                 if( bInit == true )
                 {
-                    QString strPriPath;
+                    QString strPriPath = mRSA_DETPriKeyPathText->text();
                     if( strPriPath.length() < 1 )
                     {
                         manApplet->warningBox( tr( "Select RSA private key for DET" ), this );
@@ -1395,10 +1395,16 @@ int CAVPDlg::makeECDSA_KPG( const QString strParam, int nNum )
 {
     int ret = 0;
 
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+    long hSession = mSessionText->text().toLong();
+
     BIN binPri = {0,0};
     BIN binPub = {0,0};
     JECKeyVal sKeyVal;
     memset( &sKeyVal, 0x00, sizeof(sKeyVal));
+
+    long uPri = -1;
+    long uPub = -1;
 
     for( int i = 0; i < nNum; i++ )
     {
@@ -1406,16 +1412,19 @@ int CAVPDlg::makeECDSA_KPG( const QString strParam, int nNum )
         JS_BIN_reset( &binPri );
         JS_BIN_reset( &binPub );
 
-        ret = JS_PKI_ECCGenKeyPair( strParam.toStdString().c_str(), &binPub, &binPri );
+        ret = genECCKeyPair( strParam, &uPri, &uPub );
         if( ret != 0 ) goto end;
 
-        ret = JS_PKI_getECKeyVal( &binPri, &sKeyVal );
+        ret = pAPI->getECCKeyVal( hSession, uPri, &sKeyVal );
         if( ret != 0 ) goto end;
 
         logRsp( QString( "X = %1").arg( sKeyVal.pPrivate ));
         logRsp( QString( "Yx = %1").arg( sKeyVal.pPubX ));
         logRsp( QString( "Yy = %1").arg( sKeyVal.pPubY ));
         logRsp( "" );
+
+        pAPI->DestroyObject( hSession, uPri );
+        pAPI->DestroyObject( hSession, uPub );
     }
 
 end :
