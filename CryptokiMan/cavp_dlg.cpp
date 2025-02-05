@@ -1021,6 +1021,8 @@ int CAVPDlg::importRSAPriKey( const BIN *pRSAPri, long *phPri )
     int ret = 0;
     bool bToken = false;
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+    long hSession = mSessionText->text().toLong();
+    long uObj = -1;
 
     CK_ATTRIBUTE sTemplate[10];
     long uCount = 0;
@@ -1126,6 +1128,12 @@ int CAVPDlg::importRSAPriKey( const BIN *pRSAPri, long *phPri )
         uCount++;
     }
 
+    ret = pAPI->CreateObject( hSession, sTemplate, uCount, (CK_ULONG_PTR)&uObj );
+    if( ret == CKR_OK )
+    {
+        *phPri = uObj;
+    }
+
 end :
     JS_PKI_resetRSAKeyVal( &sRSAVal );
     JS_BIN_reset( &binN );
@@ -1136,6 +1144,72 @@ end :
     JS_BIN_reset( &binDMP1 );
     JS_BIN_reset( &binDMQ1 );
     JS_BIN_reset( &binIQMP );
+
+    return ret;
+}
+
+int CAVPDlg::importRSAPubKey( const BIN *pRSAPub, long *phPub )
+{
+    int ret = 0;
+    bool bToken = false;
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+    long hSession = mSessionText->text().toLong();
+    long uObj = -1;
+
+    CK_ATTRIBUTE sTemplate[10];
+    long uCount = 0;
+
+    CK_OBJECT_CLASS objClass = CKO_PUBLIC_KEY;
+    CK_KEY_TYPE keyType = CKK_RSA;
+
+    JRSAKeyVal sRSAVal;
+
+    BIN binN = {0,0};
+    BIN binE = {0,0};
+
+    memset( &sRSAVal, 0x00, sizeof(sRSAVal));
+
+    ret = JS_PKI_getRSAKeyValFromPub( pRSAPub, &sRSAVal );
+    if( ret != 0 ) goto end;
+
+    sTemplate[uCount].type = CKA_CLASS;
+    sTemplate[uCount].pValue = &objClass;
+    sTemplate[uCount].ulValueLen = sizeof(objClass);
+    uCount++;
+
+    sTemplate[uCount].type = CKA_KEY_TYPE;
+    sTemplate[uCount].pValue = &keyType;
+    sTemplate[uCount].ulValueLen = sizeof(keyType);
+    uCount++;
+
+    if( sRSAVal.pN )
+    {
+        JS_BIN_decodeHex( sRSAVal.pN, &binN );
+        sTemplate[uCount].type = CKA_MODULUS;
+        sTemplate[uCount].pValue = binN.pVal;
+        sTemplate[uCount].ulValueLen = binN.nLen;
+        uCount++;
+    }
+
+    if( sRSAVal.pE )
+    {
+        JS_BIN_decodeHex( sRSAVal.pE, &binE );
+        sTemplate[uCount].type = CKA_PUBLIC_EXPONENT;
+        sTemplate[uCount].pValue = binE.pVal;
+        sTemplate[uCount].ulValueLen = binE.nLen;
+        uCount++;
+    }
+
+    ret = pAPI->CreateObject( hSession, sTemplate, uCount, (CK_ULONG_PTR)&uObj );
+    if( ret == CKR_OK )
+    {
+        *phPub = uObj;
+    }
+
+end :
+    JS_PKI_resetRSAKeyVal( &sRSAVal );
+    JS_BIN_reset( &binN );
+    JS_BIN_reset( &binE );
 
     return ret;
 }
@@ -1245,6 +1319,158 @@ int CAVPDlg::genECCKeyPair( const QString strParam, long *phPri, long *phPub )
     }
 
     JS_BIN_reset( &binParam );
+    return ret;
+}
+
+int CAVPDlg::importECCPriKey( const BIN *pECCPri, long *phPri )
+{
+    int ret = 0;
+    bool bToken = false;
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+    long hSession = mSessionText->text().toLong();
+    long uObj = -1;
+
+    CK_ATTRIBUTE sTemplate[10];
+    long uCount = 0;
+
+    CK_OBJECT_CLASS objClass = CKO_PRIVATE_KEY;
+    CK_KEY_TYPE keyType = CKK_EC;
+
+    BIN binParam = {0,0};
+    char sParamHex[256];
+    BIN binValue = {0,0};
+
+    JECKeyVal sECVal;
+
+    memset( &sECVal, 0x00, sizeof(sECVal));
+    memset( sParamHex, 0x00, sizeof(sParamHex));
+
+    ret = JS_PKI_getECKeyVal( pECCPri, &sECVal );
+    if( ret != 0 ) goto end;
+
+    sTemplate[uCount].type = CKA_CLASS;
+    sTemplate[uCount].pValue = &objClass;
+    sTemplate[uCount].ulValueLen = sizeof(objClass);
+    uCount++;
+
+    sTemplate[uCount].type = CKA_KEY_TYPE;
+    sTemplate[uCount].pValue = &keyType;
+    sTemplate[uCount].ulValueLen = sizeof(keyType);
+    uCount++;
+
+    JS_PKI_getHexOIDFromSN( sECVal.pCurveOID, sParamHex );
+    JS_BIN_decodeHex( sParamHex, &binParam );
+
+    sTemplate[uCount].type = CKA_EC_PARAMS;
+    sTemplate[uCount].pValue = binParam.pVal;
+    sTemplate[uCount].ulValueLen = binParam.nLen;
+    uCount++;
+
+
+    JS_BIN_decodeHex( sECVal.pPrivate, &binValue );
+
+    sTemplate[uCount].type = CKA_VALUE;
+    sTemplate[uCount].pValue = binValue.pVal;
+    sTemplate[uCount].ulValueLen = binValue.nLen;
+    uCount++;
+
+    ret = pAPI->CreateObject( hSession, sTemplate, uCount, (CK_ULONG_PTR)&uObj );
+    if( ret == CKR_OK )
+    {
+        *phPri = uObj;
+    }
+
+
+end :
+    JS_PKI_resetECKeyVal( &sECVal );
+    JS_BIN_reset( &binParam );
+    JS_BIN_reset( &binValue );
+
+
+    return ret;
+}
+
+int CAVPDlg::importECCPubKey( const BIN *pECCPub, long *phPub )
+{
+    int ret = 0;
+    bool bToken = false;
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+    long hSession = mSessionText->text().toLong();
+    long uObj = -1;
+
+    CK_ATTRIBUTE sTemplate[10];
+    long uCount = 0;
+
+    CK_OBJECT_CLASS objClass = CKO_PUBLIC_KEY;
+    CK_KEY_TYPE keyType = CKK_EC;
+
+    BIN binParam = {0,0};
+    char sParamHex[256];
+
+    JECKeyVal sECVal;
+
+    BIN binECPoint={0,0};
+    BIN binPubX = {0,0};
+    BIN binPubY = {0,0};
+
+    memset( &sECVal, 0x00, sizeof(sECVal));
+    memset( sParamHex, 0x00, sizeof(sParamHex));
+
+    ret = JS_PKI_getECKeyValFromPub( pECCPub, &sECVal );
+    if( ret != 0 ) goto end;
+
+    sTemplate[uCount].type = CKA_CLASS;
+    sTemplate[uCount].pValue = &objClass;
+    sTemplate[uCount].ulValueLen = sizeof(objClass);
+    uCount++;
+
+    sTemplate[uCount].type = CKA_KEY_TYPE;
+    sTemplate[uCount].pValue = &keyType;
+    sTemplate[uCount].ulValueLen = sizeof(keyType);
+    uCount++;
+
+    JS_PKI_getHexOIDFromSN( sECVal.pCurveOID, sParamHex );
+    JS_BIN_decodeHex( sParamHex, &binParam );
+
+    sTemplate[uCount].type = CKA_EC_PARAMS;
+    sTemplate[uCount].pValue = binParam.pVal;
+    sTemplate[uCount].ulValueLen = binParam.nLen;
+    uCount++;
+
+
+    unsigned char sPrefix[3];
+
+    JS_BIN_decodeHex( sECVal.pPubX, &binPubX );
+    JS_BIN_decodeHex( sECVal.pPubY, &binPubY );
+
+    sPrefix[0] = 0x04;
+    sPrefix[1] = binPubX.nLen + binPubY.nLen + 1;
+    sPrefix[2] = 0x04;
+
+    JS_BIN_set( &binECPoint, sPrefix, 3 );
+    JS_BIN_appendBin( &binECPoint, &binPubX );
+    JS_BIN_appendBin( &binECPoint, &binPubY );
+    JS_BIN_reset( &binPubX );
+    JS_BIN_reset( &binPubY );
+
+    sTemplate[uCount].type = CKA_EC_POINT;
+    sTemplate[uCount].pValue = binECPoint.pVal;
+    sTemplate[uCount].ulValueLen = binECPoint.nLen;
+    uCount++;
+
+    ret = pAPI->CreateObject( hSession, sTemplate, uCount, (CK_ULONG_PTR)&uObj );
+    if( ret == CKR_OK )
+    {
+        *phPub = uObj;
+    }
+
+end :
+    JS_PKI_resetECKeyVal( &sECVal );
+    JS_BIN_reset( &binParam );
+    JS_BIN_reset( &binECPoint );
+    JS_BIN_reset( &binPubX );
+    JS_BIN_reset( &binPubY );
+
     return ret;
 }
 

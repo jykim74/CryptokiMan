@@ -1060,26 +1060,46 @@ int CAVPDlg::makeRSA_ES_DET( const QString strPri, const QString strC )
 {
     int ret = 0;
     BIN binC = {0,0};
-    BIN binM = {0,0};
     BIN binPri = {0,0};
+
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+    long hSession = mSessionText->text().toLong();
+
+    CK_MECHANISM sMech;
+    long uPri = -1;
+
+    long uOutLen = 2048;
+    unsigned char sOut[2048];
+
+    memset( sOut, 0x00, sizeof(sOut));
+    memset( &sMech, 0x00, sizeof(sMech));
+
+    sMech.mechanism = CKM_RSA_PKCS_OAEP;
 
     JS_BIN_decodeHex( strPri.toStdString().c_str(), &binPri );
     JS_BIN_decodeHex( strC.toStdString().c_str(), &binC );
 
+    ret = importRSAPriKey( &binPri, &uPri );
+    if( ret != 0 ) goto end;
+
     /* need to set private key */
 
-    ret = JS_PKI_RSADecryptWithPri( JS_PKI_RSA_PADDING_V21, &binC, &binPri, &binM );
+    ret = pAPI->DecryptInit( hSession, &sMech, uPri );
+    if( ret != 0 ) goto end;
+
+    ret = pAPI->Decrypt( hSession, binC.pVal, binC.nLen, sOut, (CK_ULONG_PTR)&uOutLen );
     if( ret != 0 ) goto end;
 
 
     logRsp( QString( "C = %1").arg(getHexString( binC.pVal, binC.nLen )));
-    logRsp( QString( "M = %1").arg(getHexString( binM.pVal, binM.nLen)));
+    logRsp( QString( "M = %1").arg(getHexString( sOut, uOutLen )));
     logRsp( "" );
 
 end :
     JS_BIN_reset( &binC );
-    JS_BIN_reset( &binM );
     JS_BIN_reset( &binPri );
+
+    if( uPri > 0 ) pAPI->DestroyObject( hSession, uPri );
 
     return ret;
 }
@@ -1088,10 +1108,21 @@ int CAVPDlg::makeRSA_ES_ENT( int nE, const QString strN, const QString strM )
 {
     int ret = 0;
     BIN binM = {0,0};
-    BIN binC = {0,0};
     BIN binPub = {0,0};
     BIN binN = {0,0};
     BIN binE = {0,0};
+
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+    long hSession = mSessionText->text().toLong();
+
+    CK_MECHANISM sMech;
+    long uPub = -1;
+
+    long uOutLen = 2048;
+    unsigned char sOut[2048];
+
+    memset( sOut, 0x00, sizeof(sOut));
+    memset( &sMech, 0x00, sizeof(sMech));
 
     JS_BIN_decodeHex( strN.toStdString().c_str(), &binN );
     JS_BIN_decodeHex( strM.toStdString().c_str(), &binM );
@@ -1101,19 +1132,28 @@ int CAVPDlg::makeRSA_ES_ENT( int nE, const QString strN, const QString strM )
     JS_BIN_trimLeft( 0x00, &binE );
     JS_PKI_encodeRSAPublicKeyValue( &binN, &binE, &binPub );
 
-    ret = JS_PKI_RSAEncryptWithPub( JS_PKI_RSA_PADDING_V21, &binM, &binPub, &binC );
+    sMech.mechanism = CKM_RSA_PKCS_OAEP;
+
+    ret = importRSAPubKey( &binPub, &uPub );
+    if( ret != 0 ) goto end;
+
+    ret = pAPI->EncryptInit( hSession, &sMech, uPub );
+    if( ret != 0 ) goto end;
+
+    ret = pAPI->Encrypt( hSession, binM.pVal, binM.nLen, sOut, (CK_ULONG_PTR)&uOutLen );
     if( ret != 0 ) goto end;
 
     logRsp( QString( "M = %1").arg(getHexString( binM.pVal, binM.nLen )));
-    logRsp( QString( "C = %1").arg(getHexString( binC.pVal, binC.nLen )));
+    logRsp( QString( "C = %1").arg(getHexString( sOut, uOutLen )));
     logRsp( "" );
 
 end :
     JS_BIN_reset( &binM );
-    JS_BIN_reset( &binC );
     JS_BIN_reset( &binPub );
     JS_BIN_reset( &binE );
     JS_BIN_reset( &binN );
+
+    if( uPub > 0 ) pAPI->DestroyObject( hSession, uPub );
 
     return ret;
 }
@@ -1126,17 +1166,31 @@ int CAVPDlg::makeRSA_ES_KGT( int nKeyLen, int nE, int nCount )
     BIN binPri = {0,0};
     JRSAKeyVal sKeyVal;
 
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+    long hSession = mSessionText->text().toLong();
+
+    CK_MECHANISM sMech;
+
+    memset( &sMech, 0x00, sizeof(sMech));
+
     for( int i = 0; i < nCount; i++ )
     {
+        long uPri = -1;
+        long uPub = -1;
+
         JS_BIN_reset( &binPub );
         JS_BIN_reset( &binPri );
 
         memset( &sKeyVal, 0x00, sizeof(sKeyVal));
 
-        ret = JS_PKI_RSAGenKeyPair( nKeyLen, nE, &binPub, &binPri );
+        ret = genRSAKeyPair( nKeyLen, nE, &uPri, &uPub );
         if( ret != 0 ) goto end;
 
-        ret = JS_PKI_getRSAKeyVal( &binPri, &sKeyVal );
+        ret = pAPI->getRSAKeyVal( hSession, uPri, &sKeyVal );
+
+        if( uPri > 0 ) pAPI->DestroyObject( hSession, uPri );
+        if( uPub > 0 ) pAPI->DestroyObject( hSession, uPub );
+
         if( ret != 0 ) goto end;
 
         logRsp( QString( "n = %1").arg( sKeyVal.pN));
@@ -1166,17 +1220,35 @@ int CAVPDlg::makeRSA_PSS_KPG( int nLen, int nE, int nCount )
     BIN binPri = {0,0};
     JRSAKeyVal sKeyVal;
 
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+    long hSession = mSessionText->text().toLong();
+
+    CK_MECHANISM sMech;
+
+    long uOutLen = 2048;
+    unsigned char sOut[2048];
+
+    memset( sOut, 0x00, sizeof(sOut));
+    memset( &sMech, 0x00, sizeof(sMech));
+
 
     for( int i = 0; i < nCount; i++ )
     {
+        long uPri = -1;
+        long uPub = -1;
+
         JS_BIN_reset( &binPub );
         JS_BIN_reset( &binPri );
         memset( &sKeyVal, 0x00, sizeof(sKeyVal));
 
-        ret = JS_PKI_RSAGenKeyPair( nLen, nE, &binPub, &binPri );
+        ret = genRSAKeyPair( nLen, nE, &uPri, &uPub );
         if( ret != 0 ) goto end;
 
-        ret = JS_PKI_getRSAKeyVal( &binPri, &sKeyVal );
+        ret = pAPI->getRSAKeyVal( hSession, uPri, &sKeyVal );
+
+        if( uPri > 0 ) pAPI->DestroyObject( hSession, uPri );
+        if( uPub > 0 ) pAPI->DestroyObject( hSession, uPub );
+
         if( ret != 0 ) goto end;
 
         logRsp( QString( "e = %1").arg( nE ));
@@ -1185,6 +1257,8 @@ int CAVPDlg::makeRSA_PSS_KPG( int nLen, int nE, int nCount )
         logRsp( QString( "n = %1").arg( sKeyVal.pN ));
         logRsp( QString( "s = %1").arg( sKeyVal.pD));
         logRsp( "" );
+
+        JS_PKI_resetRSAKeyVal( &sKeyVal );
     }
 
 end :
@@ -1199,10 +1273,22 @@ int CAVPDlg::makeRSA_PSS_SGT( int nE, const QString strPri, const QString strHas
 {
     int ret = 0;
     BIN binM = {0,0};
-    BIN binS = {0,0};
     BIN binPri = {0,0};
     //    BIN binPub = {0,0};
 
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+    long hSession = mSessionText->text().toLong();
+
+    CK_MECHANISM sMech;
+
+    long uOutLen = 2048;
+    unsigned char sOut[2048];
+    long uPri = -1;
+
+    memset( sOut, 0x00, sizeof(sOut));
+    memset( &sMech, 0x00, sizeof(sMech));
+
+    sMech.mechanism = CKM_RSA_PKCS_PSS;
 
     JS_BIN_decodeHex( strM.toStdString().c_str(), &binM );
     JS_BIN_decodeHex( strPri.toStdString().c_str(), &binPri );
@@ -1210,18 +1296,24 @@ int CAVPDlg::makeRSA_PSS_SGT( int nE, const QString strPri, const QString strHas
     //    ret = JS_PKI_RSAGenKeyPair( 2048, nE, &binPub, &binPri );
     //    if( ret != 0 ) goto end;
 
-    ret = JS_PKI_RSAMakeSign( strHash.toStdString().c_str(), JS_PKI_RSA_PADDING_V21, &binM, &binPri, &binS );
+    ret = importRSAPriKey( &binPri, &uPri );
+    if( ret != 0 ) goto end;
+
+    ret = pAPI->SignInit( hSession, &sMech, uPri );
+    if( ret != 0 ) goto end;
+
+    ret = pAPI->Sign( hSession, binM.pVal, binM.nLen, sOut, (CK_ULONG_PTR)&uOutLen );
     if( ret != 0 ) goto end;
 
     logRsp( QString( "M = %1").arg( getHexString(binM.pVal, binM.nLen)));
-    logRsp( QString( "S = %1").arg(getHexString(binS.pVal, binS.nLen)));
+    logRsp( QString( "S = %1").arg(getHexString( sOut, uOutLen)));
     logRsp( "" );
 
 end :
     JS_BIN_reset( &binM );
-    JS_BIN_reset( &binS );
     JS_BIN_reset( &binPri );
     //    JS_BIN_reset( &binPub );
+    if( uPri > 0 ) pAPI->DestroyObject( hSession, uPri );
 
     return ret;
 }
@@ -1237,6 +1329,14 @@ int CAVPDlg::makeRSA_PSS_SVT( int nE, const QString strN, const QString strHash,
 
     JRSAKeyVal sKeyVal;
 
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+    long hSession = mSessionText->text().toLong();
+
+    CK_MECHANISM sMech;
+
+    long uPub = -1;
+
+    memset( &sMech, 0x00, sizeof(sMech));
     memset( &sKeyVal, 0x00, sizeof(sKeyVal));
 
     JS_BIN_intToBin( nE, &binE );
@@ -1251,7 +1351,15 @@ int CAVPDlg::makeRSA_PSS_SVT( int nE, const QString strN, const QString strHash,
     ret = JS_PKI_encodeRSAPublicKey( &sKeyVal, &binPub );
     if( ret != 0 ) goto end;
 
-    ret = JS_PKI_RSAVerifySign( strHash.toStdString().c_str(), JS_PKI_RSA_PADDING_V21, &binM, &binS, &binPub );
+    ret = importRSAPubKey( &binPub, &uPub );
+    if( ret != 0 ) goto end;
+
+    sMech.mechanism = CKM_RSA_PKCS_PSS;
+
+    ret = pAPI->VerifyInit( hSession, &sMech, uPub );
+    if( ret != 0 ) goto end;
+
+    ret = pAPI->Verify( hSession, binM.pVal, binM.nLen, binS.pVal, binS.nLen );
 
     logRsp( QString( "M = %1").arg( getHexString(binM.pVal, binM.nLen)));
     logRsp( QString( "S = %1").arg(getHexString(binS.pVal, binS.nLen)));
@@ -1270,6 +1378,7 @@ end :
     JS_BIN_reset( &binPub );
     JS_BIN_reset( &binE );
     JS_PKI_resetRSAKeyVal( &sKeyVal );
+    if( uPub > 0 ) pAPI->DestroyObject( hSession, uPub );
 
     return ret;
 }
@@ -1278,28 +1387,48 @@ int CAVPDlg::makeECDH_KPG( const QString strParam, int nCount )
 {
     int ret = 0;
 
-    JECKeyVal sKeyVal;
+    JECKeyVal sPriVal;
+    JECKeyVal sPubVal;
 
     BIN binPub = {0,0};
     BIN binPri = {0,0};
 
-    memset( &sKeyVal, 0x00, sizeof(sKeyVal));
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+    long hSession = mSessionText->text().toLong();
+
+    CK_MECHANISM sMech;
+
+    long uOutLen = 2048;
+    unsigned char sOut[2048];
+
+    memset( sOut, 0x00, sizeof(sOut));
+    memset( &sMech, 0x00, sizeof(sMech));
+    memset( &sPriVal, 0x00, sizeof(sPriVal));
+    memset( &sPubVal, 0x00, sizeof(sPubVal));
 
     for( int i = 0; i < nCount; i++ )
     {
+        long uPub = -1;
+        long uPri = -1;
+
         JS_BIN_reset( &binPri );
         JS_BIN_reset( &binPub );
-        JS_PKI_resetECKeyVal( &sKeyVal );
+        JS_PKI_resetECKeyVal( &sPriVal );
+        JS_PKI_resetECKeyVal( &sPubVal );
 
-        ret = JS_PKI_ECCGenKeyPair( strParam.toStdString().c_str(), &binPub, &binPri );
+        ret = genECCKeyPair( strParam, &uPri, &uPub );
         if( ret != 0 ) goto end;
 
-        ret = JS_PKI_getECKeyVal( &binPri, &sKeyVal );
+        ret = pAPI->getECCKeyVal( hSession, uPri, &sPriVal );
         if( ret != 0 ) goto end;
 
-        logRsp( QString( "d = %1").arg( sKeyVal.pPrivate));
-        logRsp( QString( "Qx = %1").arg( getHexString( &binPub.pVal[1], binPub.nLen/2) ));
-        logRsp( QString( "Qy = %1").arg( getHexString( &binPub.pVal[binPub.nLen/2+1], binPub.nLen/2)));
+        ret = pAPI->getECCKeyVal( hSession, uPub, &sPubVal );
+        if( ret != 0 ) goto end;
+
+
+        logRsp( QString( "d = %1").arg( sPriVal.pPrivate));
+        logRsp( QString( "Qx = %1").arg( sPubVal.pPubX ));
+        logRsp( QString( "Qy = %1").arg( sPubVal.pPubY ));
         logRsp( "" );
 
         if( ret != 0 ) goto end;
@@ -1308,7 +1437,8 @@ int CAVPDlg::makeECDH_KPG( const QString strParam, int nCount )
 end :
     JS_BIN_reset( &binPri );
     JS_BIN_reset( &binPub );
-    JS_PKI_resetECKeyVal( &sKeyVal );
+    JS_PKI_resetECKeyVal( &sPriVal );
+    JS_PKI_resetECKeyVal( &sPubVal );
 
     return ret;
 }
@@ -1319,6 +1449,18 @@ int CAVPDlg::makeECDH_PKV( const QString strParam, const QString strPubX, const 
 
     BIN binPubX = {0,0};
     BIN binPubY = {0,0};
+
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+    long hSession = mSessionText->text().toLong();
+
+    CK_MECHANISM sMech;
+
+    long uOutLen = 2048;
+    unsigned char sOut[2048];
+
+    memset( sOut, 0x00, sizeof(sOut));
+
+    memset( &sMech, 0x00, sizeof(sMech));
 
     JS_BIN_decodeHex( strPubX.toStdString().c_str(), &binPubX );
     JS_BIN_decodeHex( strPubY.toStdString().c_str(), &binPubY );
@@ -1356,6 +1498,18 @@ int CAVPDlg::makeECDH_KAKAT( const QString strParam, const QString strRA, const 
     BIN binPubY = {0,0};
     BIN binSecX = {0,0};
     BIN binSecY = {0,0};
+
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+    long hSession = mSessionText->text().toLong();
+
+    CK_MECHANISM sMech;
+
+    long uOutLen = 2048;
+    unsigned char sOut[2048];
+
+    memset( sOut, 0x00, sizeof(sOut));
+
+    memset( &sMech, 0x00, sizeof(sMech));
 
     JS_BIN_decodeHex( strRA.toStdString().c_str(), &binRA );
     JS_BIN_decodeHex( strRB.toStdString().c_str(), &binRB );
@@ -1395,12 +1549,21 @@ int CAVPDlg::makeECDSA_KPG( const QString strParam, int nNum )
 {
     int ret = 0;
 
-    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
-
     BIN binPri = {0,0};
     BIN binPub = {0,0};
     JECKeyVal sKeyVal;
+
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+    long hSession = mSessionText->text().toLong();
+
+    CK_MECHANISM sMech;
+
+    long uOutLen = 2048;
+    unsigned char sOut[2048];
+
+    memset( sOut, 0x00, sizeof(sOut));
+    memset( &sMech, 0x00, sizeof(sMech));
+
     memset( &sKeyVal, 0x00, sizeof(sKeyVal));
 
     long uPri = -1;
@@ -1442,6 +1605,18 @@ int CAVPDlg::makeECDSA_PKV( const QString strParam, const QString strYX, const Q
     BIN binPubX = {0,0};
     BIN binPubY = {0,0};
 
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+    long hSession = mSessionText->text().toLong();
+
+    CK_MECHANISM sMech;
+
+    long uOutLen = 2048;
+    unsigned char sOut[2048];
+
+    memset( sOut, 0x00, sizeof(sOut));
+
+    memset( &sMech, 0x00, sizeof(sMech));
+
     JS_BIN_decodeHex( strYX.toStdString().c_str(), &binPubX );
     JS_BIN_decodeHex( strYY.toStdString().c_str(), &binPubY );
 
@@ -1475,6 +1650,17 @@ int CAVPDlg::makeECDSA_SGT( const QString strParam, const QString strHash, const
     BIN binSignS = {0,0};
 
     JECKeyVal   sKeyVal;
+
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+    long hSession = mSessionText->text().toLong();
+
+    CK_MECHANISM sMech;
+
+    long uOutLen = 2048;
+    unsigned char sOut[2048];
+
+    memset( sOut, 0x00, sizeof(sOut));
+    memset( &sMech, 0x00, sizeof(sMech));
 
     memset( &sKeyVal, 0x00, sizeof(sKeyVal));
 
@@ -1523,6 +1709,18 @@ int CAVPDlg::makeECDSA_SVT( const QString strParam, const QString strHash, const
     BIN binSignR = {0,0};
     BIN binSignS = {0,0};
     BIN binM = {0,0};
+
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+    long hSession = mSessionText->text().toLong();
+
+    CK_MECHANISM sMech;
+
+    long uOutLen = 2048;
+    unsigned char sOut[2048];
+
+    memset( sOut, 0x00, sizeof(sOut));
+
+    memset( &sMech, 0x00, sizeof(sMech));
 
     JS_BIN_decodeHex( strM.toStdString().c_str(), &binM );
     JS_BIN_decodeHex( strYX.toStdString().c_str(), &binPubX );

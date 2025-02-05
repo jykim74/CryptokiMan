@@ -177,7 +177,11 @@ private:
     int createKey( int nKeyType, const BIN *pKey, long *phObj );
     int genRSAKeyPair( int nKeyLen, int nE, long *phPri, long *phPub );
     int importRSAPriKey( const BIN *pRSAPri, long *phPri );
+    int importRSAPubKey( const BIN *pRSAPub, long *phPub );
+
     int genECCKeyPair( const QString strParam, long *phPri, long *phPub );
+    int importECCPriKey( const BIN *pECCPri, long *phPri );
+    int importECCPubKey( const BIN *pECCPub, long *phPub );
 
     bool isSkipTestType( const QString strTestType );
     void saveJsonRsp( const QJsonDocument& pJsonDoc );
