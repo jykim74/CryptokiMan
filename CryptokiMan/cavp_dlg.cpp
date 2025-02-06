@@ -93,6 +93,21 @@ int _getCKM_Hash( const QString strHash )
     return -1;
 }
 
+int _getCKM_ECDSA( const QString strHash )
+{
+    if( strHash == "SHA1" || strHash == "SHA-1" )
+        return CKM_ECDSA_SHA1;
+    else if( strHash == "SHA224" )
+        return CKM_ECDSA_SHA224;
+    else if( strHash == "SHA256" )
+        return CKM_ECDSA_SHA256;
+    else if( strHash == "SHA384" )
+        return CKM_ECDSA_SHA384;
+    else if( strHash == "SHA512" )
+        return CKM_ECDSA_SHA512;
+
+    return -1;
+}
 
 static QString _getHashName( const QString strACVPHash )
 {

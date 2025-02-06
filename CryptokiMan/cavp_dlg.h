@@ -62,6 +62,7 @@ int _getCKK( const QString strAlg );
 int _getCKM( const QString strAlg, const QString strMode );
 int _getCKM_HMAC( const QString strHash );
 int _getCKM_Hash( const QString strHash );
+int _getCKM_ECDSA( const QString strHash );
 
 class CAVPDlg : public QDialog, public Ui::CAVPDlg
 {

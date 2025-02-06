@@ -1449,18 +1449,15 @@ int CAVPDlg::makeECDH_PKV( const QString strParam, const QString strPubX, const 
 
     BIN binPubX = {0,0};
     BIN binPubY = {0,0};
+    BIN binPub = {0,0};
+    JECKeyVal   sECVal;
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
     long hSession = mSessionText->text().toLong();
 
-    CK_MECHANISM sMech;
+    long uPub = -1;
 
-    long uOutLen = 2048;
-    unsigned char sOut[2048];
-
-    memset( sOut, 0x00, sizeof(sOut));
-
-    memset( &sMech, 0x00, sizeof(sMech));
+    memset( &sECVal, 0x00, sizeof(sECVal));
 
     JS_BIN_decodeHex( strPubX.toStdString().c_str(), &binPubX );
     JS_BIN_decodeHex( strPubY.toStdString().c_str(), &binPubY );
@@ -1468,19 +1465,32 @@ int CAVPDlg::makeECDH_PKV( const QString strParam, const QString strPubX, const 
     logRsp( QString( "Qx = %1" ).arg( strPubX ));
     logRsp( QString( "Qy = %1").arg( strPubY));
 
-    ret = JS_PKI_IsValidECCPubKey( strParam.toStdString().c_str(), &binPubX, &binPubY );
+    JS_PKI_setECKeyVal( &sECVal,
+                       strParam.toStdString().c_str(),
+                       strPubX.toStdString().c_str(),
+                       strPubY.toStdString().c_str(),
+                       NULL );
 
-    if( ret == 1 )
+    ret = JS_PKI_encodeECPublicKey( &sECVal, &binPub );
+    if( ret != 0 ) goto end;
+
+    ret = importECCPubKey( &binPub, &uPub );
+    if( ret != 0 ) goto end;
+
+end :
+    if( ret == 0 )
         logRsp( "Result = P" );
     else
         logRsp( "Result = F" );
 
     logRsp( "" );
-    ret = 0;
 
-end :
+    if( uPub > 0 ) pAPI->DestroyObject( hSession, uPub );
+
     JS_BIN_reset( &binPubX );
     JS_BIN_reset( &binPubY );
+    JS_BIN_reset( &binPub );
+    JS_PKI_resetECKeyVal( &sECVal );
 
     return ret;
 }
@@ -1502,15 +1512,6 @@ int CAVPDlg::makeECDH_KAKAT( const QString strParam, const QString strRA, const 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
     long hSession = mSessionText->text().toLong();
 
-    CK_MECHANISM sMech;
-
-    long uOutLen = 2048;
-    unsigned char sOut[2048];
-
-    memset( sOut, 0x00, sizeof(sOut));
-
-    memset( &sMech, 0x00, sizeof(sMech));
-
     JS_BIN_decodeHex( strRA.toStdString().c_str(), &binRA );
     JS_BIN_decodeHex( strRB.toStdString().c_str(), &binRB );
     JS_BIN_decodeHex( strKTA1X.toStdString().c_str(), &binKTA1X );
@@ -1519,7 +1520,6 @@ int CAVPDlg::makeECDH_KAKAT( const QString strParam, const QString strRA, const 
     ret = JS_PKI_genECPubKey( strParam.toStdString().c_str(), &binRA, &binPubX, &binPubY );
     if( ret != 0 ) goto end;
 
-    //    ret = JS_PKI_getECDHSecretWithValue( "prime256v1", &binRB, &binPubX, &binPubY, &binSecret );
     ret = JS_PKI_getECDHComputeKey( strParam.toStdString().c_str(), &binRB, &binPubX, &binPubY, &binSecX, &binSecY );
     if( ret != 0 ) goto end;
 
@@ -1551,7 +1551,8 @@ int CAVPDlg::makeECDSA_KPG( const QString strParam, int nNum )
 
     BIN binPri = {0,0};
     BIN binPub = {0,0};
-    JECKeyVal sKeyVal;
+    JECKeyVal sPriVal;
+    JECKeyVal sPubVal;
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
     long hSession = mSessionText->text().toLong();
@@ -1564,26 +1565,32 @@ int CAVPDlg::makeECDSA_KPG( const QString strParam, int nNum )
     memset( sOut, 0x00, sizeof(sOut));
     memset( &sMech, 0x00, sizeof(sMech));
 
-    memset( &sKeyVal, 0x00, sizeof(sKeyVal));
+    memset( &sPriVal, 0x00, sizeof(sPriVal));
+    memset( &sPubVal, 0x00, sizeof(sPubVal));
 
     long uPri = -1;
     long uPub = -1;
 
     for( int i = 0; i < nNum; i++ )
     {
-        JS_PKI_resetECKeyVal( &sKeyVal );
+        JS_PKI_resetECKeyVal( &sPriVal );
+        JS_PKI_resetECKeyVal( &sPubVal );
+
         JS_BIN_reset( &binPri );
         JS_BIN_reset( &binPub );
 
         ret = genECCKeyPair( strParam, &uPri, &uPub );
         if( ret != 0 ) goto end;
 
-        ret = pAPI->getECCKeyVal( hSession, uPri, &sKeyVal );
+        ret = pAPI->getECCKeyVal( hSession, uPri, &sPriVal );
         if( ret != 0 ) goto end;
 
-        logRsp( QString( "X = %1").arg( sKeyVal.pPrivate ));
-        logRsp( QString( "Yx = %1").arg( sKeyVal.pPubX ));
-        logRsp( QString( "Yy = %1").arg( sKeyVal.pPubY ));
+        ret = pAPI->getECCKeyVal( hSession, uPub, &sPubVal );
+        if( ret != 0 ) goto end;
+
+        logRsp( QString( "X = %1").arg( sPriVal.pPrivate ));
+        logRsp( QString( "Yx = %1").arg( sPubVal.pPubX ));
+        logRsp( QString( "Yy = %1").arg( sPubVal.pPubY ));
         logRsp( "" );
 
         pAPI->DestroyObject( hSession, uPri );
@@ -1593,7 +1600,8 @@ int CAVPDlg::makeECDSA_KPG( const QString strParam, int nNum )
 end :
     JS_BIN_reset( &binPub );
     JS_BIN_reset( &binPri );
-    JS_PKI_resetECKeyVal( &sKeyVal );
+    JS_PKI_resetECKeyVal( &sPriVal );
+    JS_PKI_resetECKeyVal( &sPubVal );
 
     return ret;
 }
@@ -1604,35 +1612,44 @@ int CAVPDlg::makeECDSA_PKV( const QString strParam, const QString strYX, const Q
 
     BIN binPubX = {0,0};
     BIN binPubY = {0,0};
+    BIN binPub = {0,0};
+    JECKeyVal   sECVal;
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
     long hSession = mSessionText->text().toLong();
 
-    CK_MECHANISM sMech;
+    long uPub = -1;
 
-    long uOutLen = 2048;
-    unsigned char sOut[2048];
-
-    memset( sOut, 0x00, sizeof(sOut));
-
-    memset( &sMech, 0x00, sizeof(sMech));
+    memset( &sECVal, 0x00, sizeof(sECVal));
 
     JS_BIN_decodeHex( strYX.toStdString().c_str(), &binPubX );
     JS_BIN_decodeHex( strYY.toStdString().c_str(), &binPubY );
 
-    ret = JS_PKI_IsValidECCPubKey( strParam.toStdString().c_str(), &binPubX, &binPubY );
+    JS_PKI_setECKeyVal( &sECVal,
+                       strParam.toStdString().c_str(),
+                       strYX.toStdString().c_str(),
+                       strYY.toStdString().c_str(),
+                       NULL );
+
+    ret = JS_PKI_encodeECPublicKey( &sECVal, &binPub );
+    if( ret != 0 ) goto end;
+
+    ret = importECCPubKey( &binPub, &uPub );
+    if( ret != 0 ) goto end;
 
     logRsp( QString( "Yx = %1" ).arg( strYX ));
     logRsp( QString( "Yy = %1").arg( strYY ));
 
-    if( ret == 1 )
+end:
+    if( ret == 0 )
         logRsp( "Result = P" );
     else
         logRsp( "Result = F" );
 
     logRsp( "" );
 
-end:
+    if( uPub > 0 ) pAPI->DestroyObject( hSession, uPub );
+
     JS_BIN_reset( &binPubX );
     JS_BIN_reset( &binPubY );
     return 0;
@@ -1642,8 +1659,6 @@ int CAVPDlg::makeECDSA_SGT( const QString strParam, const QString strHash, const
 {
     int ret = 0;
 
-    BIN binPub = {0,0};
-    BIN binPri = {0,0};
     BIN binM = {0,0};
     BIN binSign = {0,0};
     BIN binSignR = {0,0};
@@ -1659,21 +1674,29 @@ int CAVPDlg::makeECDSA_SGT( const QString strParam, const QString strHash, const
     long uOutLen = 2048;
     unsigned char sOut[2048];
 
+    long uPri = -1;
+    long uPub = -1;
+
     memset( sOut, 0x00, sizeof(sOut));
     memset( &sMech, 0x00, sizeof(sMech));
-
     memset( &sKeyVal, 0x00, sizeof(sKeyVal));
 
     JS_BIN_decodeHex( strM.toStdString().c_str(), &binM );
 
-    ret = JS_PKI_ECCGenKeyPair( strParam.toStdString().c_str(), &binPub, &binPri );
+    ret = genECCKeyPair( strParam, &uPri, &uPub );
     if( ret != 0 ) goto end;
 
-    ret = JS_PKI_getECKeyVal( &binPri, &sKeyVal );
+    ret = pAPI->getECCKeyVal( hSession, uPub, &sKeyVal );
     if( ret != 0 ) goto end;
 
-    ret = JS_PKI_ECCMakeSign( strHash.toStdString().c_str(), &binM, &binPri, &binSign );
+    sMech.mechanism = _getCKM_ECDSA( strHash );
+    ret = pAPI->SignInit( hSession, &sMech, uPri );
     if( ret != 0 ) goto end;
+
+    ret = pAPI->Sign( hSession, binM.pVal, binM.nLen, sOut, (CK_ULONG_PTR)&uOutLen );
+    if( ret != 0 ) goto end;
+
+    JS_BIN_set( &binSign, sOut, uOutLen );
 
     ret = JS_PKI_ECCSignValue( &binSign, &binSignR, &binSignS );
     if( ret != 0 ) goto end;
@@ -1686,14 +1709,14 @@ int CAVPDlg::makeECDSA_SGT( const QString strParam, const QString strHash, const
     logRsp( "" );
 
 end :
-    JS_BIN_reset( &binPri );
-    JS_BIN_reset( &binPub );
     JS_BIN_reset( &binM );
     JS_BIN_reset( &binSign );
     JS_BIN_reset( &binSignR );
     JS_BIN_reset( &binSignS );
 
     JS_PKI_resetECKeyVal( &sKeyVal );
+    if( uPri > 0 ) pAPI->DestroyObject( hSession, uPri );
+    if( uPub > 0 ) pAPI->DestroyObject( hSession, uPub );
 
     return ret;
 }
@@ -1713,13 +1736,13 @@ int CAVPDlg::makeECDSA_SVT( const QString strParam, const QString strHash, const
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
     long hSession = mSessionText->text().toLong();
 
+    JECKeyVal sECVal;
+
     CK_MECHANISM sMech;
 
-    long uOutLen = 2048;
-    unsigned char sOut[2048];
+    long uPub = -1;
 
-    memset( sOut, 0x00, sizeof(sOut));
-
+    memset( &sECVal, 0x00, sizeof(sECVal));
     memset( &sMech, 0x00, sizeof(sMech));
 
     JS_BIN_decodeHex( strM.toStdString().c_str(), &binM );
@@ -1734,7 +1757,15 @@ int CAVPDlg::makeECDSA_SVT( const QString strParam, const QString strHash, const
     ret = JS_PKI_ECCEncodeSignValue( &binSignR, &binSignS, &binSign );
     if( ret != 0 ) goto end;
 
-    ret = JS_PKI_ECCVerifySign( strHash.toStdString().c_str(), &binM, &binSign, &binPub );
+    sMech.mechanism = _getCKM_ECDSA( strHash );
+
+    ret = importECCPubKey( &binPub, &uPub );
+    if( ret != 0 ) goto end;
+
+    ret = pAPI->VerifyInit( hSession, &sMech, uPub );
+    if( ret != 0 ) goto end;
+
+    ret = pAPI->Verify( hSession, binM.pVal, binM.nLen, binSign.pVal, binSign.nLen );
 
     logRsp( QString( "M = %1").arg( strM ));
     logRsp( QString( "Yx = %1").arg( strYX));
@@ -1742,7 +1773,7 @@ int CAVPDlg::makeECDSA_SVT( const QString strParam, const QString strHash, const
     logRsp( QString( "R = %1" ).arg( strR ));
     logRsp( QString( "S = %1").arg( strS ));
 
-    if( ret == 1 )
+    if( ret == 0 )
         logRsp( "Result = P" );
     else
         logRsp( "Result = F" );
@@ -1759,6 +1790,8 @@ end :
     JS_BIN_reset( &binSignR );
     JS_BIN_reset( &binSignS );
     JS_BIN_reset( &binM );
+
+    JS_PKI_resetECKeyVal( &sECVal );
 
     return ret;
 }
