@@ -1788,21 +1788,7 @@ int CAVPDlg::makeHashData( int nLen, const BIN *pVal )
     CK_MECHANISM sMech;
     memset( &sMech, 0x00, sizeof(sMech));
 
-    if( strAlg == "SHA-1" )
-        sMech.mechanism = CKM_SHA_1;
-    else if( strAlg == "SHA2-224" )
-        sMech.mechanism = CKM_SHA224;
-    else if( strAlg == "SHA2-256" )
-        sMech.mechanism = CKM_SHA256;
-    else if( strAlg == "SHA2-384" )
-        sMech.mechanism = CKM_SHA384;
-    else if( strAlg == "SHA2-512" )
-        sMech.mechanism = CKM_SHA512;
-    else
-    {
-        manApplet->warningBox( QString("Invalid algorithm: %1").arg( strAlg ), this );
-        return -1;
-    }
+    sMech.mechanism = _getCKM_Hash( strAlg );
 
     ret = pAPI->DigestInit( hSession, &sMech );
     if( ret != 0 ) goto end;
@@ -4035,6 +4021,15 @@ int CAVPDlg::hashJsonWork( const QString strAlg, const QJsonObject jObject, QJso
     BIN binMD = {0,0};
 
     QString strHash = _getHashName( strAlg );
+
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+    long hSession = mSessionText->text().toLong();
+
+    unsigned char sOut[1024];
+    int nOutLen = 0;
+
+    CK_MECHANISM sMech;
+    memset( &sMech, 0x00, sizeof(sMech));
 
     if( strHash.length() < 1 )
     {
