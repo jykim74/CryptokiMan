@@ -147,6 +147,12 @@ void HsmManDlg::setMode( int nMode, int nUsage )
         mTabWidget->setCurrentIndex( TAB_SECRET_IDX );
         mTabWidget->setTabEnabled( TAB_SECRET_IDX, true );
     }
+    else if( nMode == HsmModeSelectDeriveKey )
+    {
+        mTabWidget->setCurrentIndex( TAB_PRIVATE_IDX );
+        mTabWidget->setTabEnabled( TAB_PRIVATE_IDX, true );
+        mTabWidget->setTabEnabled( TAB_SECRET_IDX, true );
+    }
 
     if( nMode != HsmModeManage && nMode != HsmModeSelectCert )
     {

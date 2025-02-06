@@ -10,7 +10,8 @@ enum {
     HsmModeSelectCert,
     HsmModeSelectPublicKey,
     HsmModeSelectPrivateKey,
-    HsmModeSelectSecretKey
+    HsmModeSelectSecretKey,
+    HsmModeSelectDeriveKey
 };
 
 enum {

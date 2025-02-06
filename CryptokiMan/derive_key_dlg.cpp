@@ -108,7 +108,7 @@ void DeriveKeyDlg::clickSelectSrcKey()
     hsmMan.setSelectedSlot( slot_index_ );
     hsmMan.setTitle( "Select Key" );
 
-    hsmMan.setMode( HsmModeSelectSecretKey, HsmUsageDerive );
+    hsmMan.setMode( HsmModeSelectDeriveKey, HsmUsageDerive );
 
     if( hsmMan.exec() == QDialog::Accepted )
     {

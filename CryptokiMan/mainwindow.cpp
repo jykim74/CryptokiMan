@@ -706,6 +706,7 @@ void MainWindow::createActions()
         derive_key_act_->setEnabled( false );
 
         type_name_act_->setEnabled( false );
+        make_csr_act_->setEnabled( false );
         cavp_act_->setEnabled( false );
     }
 
