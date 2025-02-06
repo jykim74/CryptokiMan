@@ -1489,6 +1489,76 @@ end :
     return ret;
 }
 
+int CAVPDlg::deriveKeyECDH( long uPri, const BIN *pPubX, const BIN *pPubY, long* phObj )
+{
+    int ret = 0;
+
+    bool bTrue = false;
+    bool bFalse  = false;
+
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+    long hSession = mSessionText->text().toLong();
+    long uObj = -1;
+
+    CK_ATTRIBUTE sTemplate[10];
+    long uCount = 0;
+
+    CK_MECHANISM sMech;
+    CK_ECDH1_DERIVE_PARAMS sParam;
+
+    BIN binPub = {0,0};
+
+    CK_OBJECT_CLASS objClass = CKO_SECRET_KEY;
+    CK_KEY_TYPE keyType = CKK_GENERIC_SECRET;
+
+    CK_ULONG uKeyLen = 16;
+
+    memset( &sMech, 0x00, sizeof(sMech));
+    memset( &sParam, 0x00, sizeof(sParam));
+
+    JS_BIN_copy( &binPub, pPubX );
+    JS_BIN_appendBin( &binPub, pPubY );
+
+    sParam.kdf = CKD_NULL;
+    sParam.pPublicData = binPub.pVal;
+    sParam.ulPublicDataLen = binPub.nLen;
+
+    sTemplate[uCount].type = CKA_CLASS;
+    sTemplate[uCount].pValue = &objClass;
+    sTemplate[uCount].ulValueLen = sizeof(objClass);
+    uCount++;
+
+    sTemplate[uCount].type = CKA_KEY_TYPE;
+    sTemplate[uCount].pValue = &keyType;
+    sTemplate[uCount].ulValueLen = sizeof(keyType);
+    uCount++;
+
+    sTemplate[uCount].type = CKA_VALUE_LEN;
+    sTemplate[uCount].pValue = &uKeyLen;
+    sTemplate[uCount].ulValueLen = sizeof(uKeyLen);
+    uCount++;
+
+    sTemplate[uCount].type = CKA_SENSITIVE;
+    sTemplate[uCount].pValue = &bFalse;
+    sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+    uCount++;
+
+    sTemplate[uCount].type = CKA_EXTRACTABLE;
+    sTemplate[uCount].pValue = &bTrue;
+    sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
+    uCount++;
+
+    ret = pAPI->DeriveKey( hSession, &sMech, uPri, sTemplate, uCount, (CK_ULONG_PTR)&uObj );
+    if( ret == CKR_OK )
+    {
+        *phObj = uObj;
+    }
+
+end :
+    JS_BIN_reset( &binPub );
+    return ret;
+}
+
 int CAVPDlg::makeSymData( const QString strAlgMode, const BIN *pKey, const BIN *pIV, const BIN *pPT )
 {
     int ret = 0;

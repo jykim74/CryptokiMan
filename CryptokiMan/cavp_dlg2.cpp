@@ -1509,8 +1509,17 @@ int CAVPDlg::makeECDH_KAKAT( const QString strParam, const QString strRA, const 
     BIN binSecX = {0,0};
     BIN binSecY = {0,0};
 
+    BIN binPriB = {0,0};
+    BIN binValue = {0,0};
+
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
     long hSession = mSessionText->text().toLong();
+
+    JECKeyVal sECVal;
+    long uPriB = -1;
+    long uObj = -1;
+
+    memset( &sECVal, 0x00, sizeof(sECVal));
 
     JS_BIN_decodeHex( strRA.toStdString().c_str(), &binRA );
     JS_BIN_decodeHex( strRB.toStdString().c_str(), &binRB );
@@ -1519,6 +1528,27 @@ int CAVPDlg::makeECDH_KAKAT( const QString strParam, const QString strRA, const 
 
     ret = JS_PKI_genECPubKey( strParam.toStdString().c_str(), &binRA, &binPubX, &binPubY );
     if( ret != 0 ) goto end;
+
+    JS_PKI_setECKeyVal( &sECVal,
+                       strParam.toStdString().c_str(),
+                       NULL,
+                       NULL,
+                       getHexString( &binRB ).toStdString().c_str() );
+
+    ret = JS_PKI_encodeECPrivateKey( &sECVal, &binPriB );
+    if( ret != 0 ) goto end;
+
+    ret = importECCPriKey( &binPriB, &uPriB );
+    if( ret != 0 ) goto end;
+
+    ret = deriveKeyECDH( uPriB, &binPubX, &binPubY, &uObj );
+    if( ret != 0 ) goto end;
+
+    ret = pAPI->GetAttributeValue2( hSession, uObj, CKA_VALUE, &binValue );
+    if( ret != 0 ) goto end;
+
+    JS_BIN_set( &binSecX, binValue.pVal, binValue.nLen / 2 );
+    JS_BIN_set( &binSecY, &binValue.pVal[binValue.nLen/2], binValue.nLen / 2 );
 
     ret = JS_PKI_getECDHComputeKey( strParam.toStdString().c_str(), &binRB, &binPubX, &binPubY, &binSecX, &binSecY );
     if( ret != 0 ) goto end;
@@ -1541,6 +1571,13 @@ end :
     JS_BIN_reset( &binPubY );
     JS_BIN_reset( &binSecX );
     JS_BIN_reset( &binSecY );
+
+    JS_BIN_reset( &binPriB );
+    JS_BIN_reset( &binValue );
+
+    JS_PKI_resetECKeyVal( &sECVal );
+    if( uPriB > 0 ) pAPI->DestroyObject( hSession, uPriB );
+    if( uObj > 0 ) pAPI->DestroyObject( hSession, uObj );
 
     return ret;
 }

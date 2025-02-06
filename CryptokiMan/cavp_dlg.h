@@ -184,6 +184,8 @@ private:
     int importECCPriKey( const BIN *pECCPri, long *phPri );
     int importECCPubKey( const BIN *pECCPub, long *phPub );
 
+    int deriveKeyECDH( long uPri, const BIN *pPubX, const BIN *pPubY, long* phObj );
+
     bool isSkipTestType( const QString strTestType );
     void saveJsonRsp( const QJsonDocument& pJsonDoc );
     int readJsonReq( const QString strPath, QJsonDocument& pJsonDoc );
