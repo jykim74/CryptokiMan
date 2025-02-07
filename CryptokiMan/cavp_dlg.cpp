@@ -4026,7 +4026,7 @@ int CAVPDlg::hashJsonWork( const QString strAlg, const QJsonObject jObject, QJso
     long hSession = mSessionText->text().toLong();
 
     unsigned char sOut[1024];
-    int nOutLen = 0;
+    int nOutLen = 1024;
 
     CK_MECHANISM sMech;
     memset( &sMech, 0x00, sizeof(sMech));
@@ -4036,6 +4036,8 @@ int CAVPDlg::hashJsonWork( const QString strAlg, const QJsonObject jObject, QJso
         manApplet->warningBox( QString("Invalid algorithm: %1").arg( strAlg ), this );
         return -1;
     }
+
+    sMech.mechanism = _getCKM_Hash( strHash );
 
     for( int i = 0; i < jArr.size(); i++ )
     {
@@ -4076,7 +4078,7 @@ int CAVPDlg::hashJsonWork( const QString strAlg, const QJsonObject jObject, QJso
 
             JS_BIN_decodeHex( strContent.toStdString().c_str(), &binData );
 
-            ret = JS_PKI_hashInit( &pCTX, strHash.toStdString().c_str() );
+            ret = pAPI->DigestInit( hSession, &sMech );
 
             if( ret != 0 )
             {
@@ -4086,7 +4088,8 @@ int CAVPDlg::hashJsonWork( const QString strAlg, const QJsonObject jObject, QJso
 
             while( nLeft > 0 )
             {
-                ret = JS_PKI_hashUpdate( pCTX, &binData );
+ //               ret = JS_PKI_hashUpdate( pCTX, &binData );
+                ret = pAPI->DigestUpdate( hSession, binData.pVal, binData.nLen );
                 if( ret != 0 )
                 {
                     JS_BIN_reset( &binData );
@@ -4096,32 +4099,42 @@ int CAVPDlg::hashJsonWork( const QString strAlg, const QJsonObject jObject, QJso
                 nLeft -= binData.nLen;
             }
 
-            ret = JS_PKI_hashFinal( pCTX, &binMD );
 
-            if( ret == 0 ) jRspObject["md"] = getHexString( &binMD );
+            ret = pAPI->DigestFinal( hSession, sOut, (CK_ULONG_PTR)&nOutLen );
 
-            JS_BIN_reset( &binMD );
+            if( ret == 0 ) jRspObject["md"] = getHexString( sOut, nOutLen );
+
             JS_BIN_reset( &binData );
         }
         else if( strTestType == "MCT" )
         {
             QJsonArray jMDArr;
-#if 0
+            BIN binSeed = {0,0};
+            JS_BIN_decodeHex( strMsg.toStdString().c_str(), &binSeed );
+
             if( strMctVersion == "alternate" )
-                ret = makeHashAlternateMCT( strAlg.toStdString().c_str(), strMsg, &jMDArr );
+            {
+                ret = makeHash_AlternateMCT( strAlg, &binSeed, jMDArr );
+            }
             else
-                ret = makeHashMCT( strAlg.toStdString().c_str(), strMsg, &jMDArr );
-#endif
+            {
+                ret = makeHash_MCT( strAlg, &binSeed, jMDArr );
+            }
+
+            JS_BIN_reset( &binSeed );
             if( ret != 0 ) goto end;
 
             jRspTestObj["resultsArray"] = jMDArr;
         }
         else
         {
-            ret = JS_PKI_genHash( strHash.toStdString().c_str(), &binMsg, &binMD );
+            ret = pAPI->DigestInit( hSession, &sMech );
             if( ret != 0 ) goto end;
 
-            jRspTestObj["md"] = getHexString( &binMD );
+            ret = pAPI->Digest( hSession, binMsg.pVal, binMsg.nLen, sOut, (CK_ULONG_PTR)&nOutLen );
+            if( ret != 0 ) goto end;
+
+            jRspTestObj["md"] = getHexString( sOut, nOutLen );
         }
 
         if( mACVP_SetTCIDCheck->isChecked() == true )
@@ -4890,6 +4903,7 @@ end :
     return ret;
 }
 
+
 int CAVPDlg::macJsonWork( const QString strAlg, const QJsonObject jObject, QJsonObject& jRspObject )
 {
     int ret = 0;
@@ -4917,6 +4931,10 @@ int CAVPDlg::macJsonWork( const QString strAlg, const QJsonObject jObject, QJson
     int nPayloadLen = jObject["payloadLen"].toInt();
     int nIVLen = jObject["ivLen"].toInt();
     int nTagLen = jObject["tagLen"].toInt();
+
+    long hSession = mSessionText->text().toLong();
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+
 
     for( int i = 0; i < jArr.size(); i++ )
     {
@@ -4960,8 +4978,20 @@ int CAVPDlg::macJsonWork( const QString strAlg, const QJsonObject jObject, QJson
             if( nSetTcId != nTcId ) continue;
         }
 
+        long uObj = -1;
+        if( strAlg == "AES" )
+            createKey( CKK_AES, &binKey, &uObj );
+        else
+            createKey( CKK_GENERIC_SECRET, &binKey, &uObj );
+
         if( strTestType == "AFT" )
         {
+            CK_MECHANISM sMech;
+            unsigned char sOut[2048];
+            int nOutLen = 2048;
+
+            memset( &sMech, 0x00, sizeof(sMech));
+
             if( strDirection == "decrypt" || strDirection == "ver" )
             {
                 bool bRes = false;
@@ -4969,23 +4999,33 @@ int CAVPDlg::macJsonWork( const QString strAlg, const QJsonObject jObject, QJson
 
                 if( strMode == "GMAC" )
                 {
+                    /*
                     ret = JS_PKI_genGMAC( strSymAlg.toStdString().c_str(), &binAAD, &binKey, &binIV, &binGenMAC );
                     if( ret != 0 ) goto end;
 
                     JS_BIN_copy( &binMAC, &binTag );
+                    */
                 }
                 else if( strMode == "AES" && strSymAlg == "CMAC" )
                 {
+                    /*
                     QString strMACAlg;
-//                    strMACAlg = getSymAlg( strMode, "CBC", binKey.nLen );
                     ret = JS_PKI_genCMAC( strMACAlg.toStdString().c_str(), &binMsg, &binKey, &binGenMAC );
                     if( ret != 0 ) goto end;
+                    */
                 }
                 else
                 {
                     QString strUseHash = _getHashNameFromMAC( strAlg );
-                    ret = JS_PKI_genHMAC( strUseHash.toStdString().c_str(), &binMsg, &binKey, &binGenMAC );
+                    sMech.mechanism = _getCKM_Hash( strUseHash );
+
+                    ret = pAPI->SignInit( hSession, &sMech, uObj );
                     if( ret != 0 ) goto end;
+
+                    ret = pAPI->Sign( hSession, binMsg.pVal, binMsg.nLen, sOut, (CK_ULONG_PTR)&nOutLen );
+                    if( ret != 0 ) goto end;
+
+                    JS_BIN_set( &binGenMAC, sOut, nOutLen );
                 }
 
                 if( JS_BIN_cmp( &binGenMAC, &binMAC ) == 0 )
@@ -4999,24 +5039,35 @@ int CAVPDlg::macJsonWork( const QString strAlg, const QJsonObject jObject, QJson
             {
                 if( strMode == "GMAC" )
                 {
+                    /*
                     ret = JS_PKI_genGMAC( strSymAlg.toStdString().c_str(), &binAAD, &binKey, &binIV, &binMAC );
                     if( ret != 0 ) goto end;
 
                     jRspTestObj["tag"] = getHexString( &binMAC );
+                    */
                 }
                 else if( strMode == "AES" && strSymAlg == "CMAC" )
                 {
+                    /*
                     QString strMACAlg;
- //                   strMACAlg = getSymAlg( strMode, "CBC", binKey.nLen );
+
                     ret = JS_PKI_genCMAC( strMACAlg.toStdString().c_str(), &binMsg, &binKey, &binMAC );
                     if( ret != 0 ) goto end;
                     jRspTestObj["mac"] = getHexString( &binMAC );
+                    */
                 }
                 else
                 {
                     QString strUseHash = _getHashNameFromMAC( strAlg );
-                    ret = JS_PKI_genHMAC( strUseHash.toStdString().c_str(), &binMsg, &binKey, &binMAC );
+                    sMech.mechanism = _getCKM_Hash( strUseHash );
+
+                    ret = pAPI->SignInit( hSession, &sMech, uObj );
                     if( ret != 0 ) goto end;
+
+                    ret = pAPI->Sign( hSession, binMsg.pVal, binMsg.nLen, sOut, (CK_ULONG_PTR)&nOutLen );
+                    if( ret != 0 ) goto end;
+
+                    JS_BIN_set( &binMAC, sOut, nOutLen );
 
                     jRspTestObj["mac"] = getHexString( &binMAC );
                 }
@@ -5033,6 +5084,8 @@ int CAVPDlg::macJsonWork( const QString strAlg, const QJsonObject jObject, QJson
             jRspArr.insert( 0, jRspTestObj );
         else
             jRspArr.insert( i, jRspTestObj );
+
+        if( uObj > 0 ) pAPI->DestroyObject( hSession, uObj );
     }
 
     jRspObject["tests"] = jRspArr;
@@ -5099,6 +5152,13 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
         QString strAAD = jObj["aad"].toString();
         QString strTag = jObj["tag"].toString();
 
+        CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+        long hSession = mSessionText->text().toLong();
+
+
+
+        CK_MECHANISM sMech;
+
         JS_BIN_reset( &binKey );
         JS_BIN_reset( &binCT );
         JS_BIN_reset( &binPT );
@@ -5123,38 +5183,42 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
         {
             QJsonArray jSymArr;
 
+            unsigned char sOut[1024];
+            int nOutLen = 1024;
+            int nKeyAlg = CKK_AES;
+
             if( strMode == "CCM" || strMode == "GCM" )
                 return -2;
 
             if( strMode == "CFB128" ) strMode = "CFB";
-#if 0
+
             if( strDirection == "encrypt" )
             {
                 if( strMode == "ECB" )
-                    ret = makeSymECB_MCT( strSymAlg, strKey, strPT, &jSymArr );
+                    ret = makeSymECB_MCT( nKeyAlg, &binKey, &binPT, jSymArr );
                 else if( strMode == "CBC" )
-                    ret = makeSymCBC_MCT( strSymAlg, strKey, strIV, strPT, &jSymArr );
+                    ret = makeSymCBC_MCT( nKeyAlg, &binKey, &binIV, &binPT, jSymArr );
                 else if( strMode == "CTR" )
-                    ret = makeSymCTR_MCT( strSymAlg, strKey, strIV, strPT, &jSymArr );
+                    ret = makeSymCTR_MCT( nKeyAlg, &binKey, &binIV, &binPT, jSymArr );
                 else if( strMode == "CFB" )
-                    ret = makeSymCFB_MCT( strSymAlg, strKey, strIV, strPT, &jSymArr );
+                    ret = makeSymCFB_MCT( nKeyAlg, &binKey, &binIV, &binPT, jSymArr );
                 else if( strMode == "OFB" )
-                    ret = makeSymOFB_MCT( strSymAlg, strKey, strIV, strPT, &jSymArr );
+                    ret = makeSymOFB_MCT( nKeyAlg, &binKey, &binIV, &binPT, jSymArr );
             }
             else
             {
                 if( strMode == "ECB" )
-                    ret = makeSymDecECB_MCT( strSymAlg, strKey, strCT, &jSymArr );
+                    ret = makeSymDecECB_MCT( nKeyAlg, &binKey, &binCT, jSymArr );
                 else if( strMode == "CBC" )
-                    ret = makeSymDecCBC_MCT( strSymAlg, strKey, strIV, strCT, &jSymArr );
+                    ret = makeSymDecCBC_MCT( nKeyAlg, &binKey, &binIV, &binCT, jSymArr );
                 else if( strMode == "CTR" )
-                    ret = makeSymDecCTR_MCT( strSymAlg, strKey, strIV, strCT, &jSymArr );
+                    ret = makeSymDecCTR_MCT( nKeyAlg, &binKey, &binIV, &binCT, jSymArr );
                 else if( strMode == "CFB" )
-                    ret = makeSymDecCFB_MCT( strSymAlg, strKey, strIV, strCT, &jSymArr );
+                    ret = makeSymDecCFB_MCT( nKeyAlg, &binKey, &binIV, &binCT, jSymArr );
                 else if( strMode == "OFB" )
-                    ret = makeSymDecOFB_MCT( strSymAlg, strKey, strIV, strCT, &jSymArr );
+                    ret = makeSymDecOFB_MCT( nKeyAlg, &binKey, &binIV, &binCT, jSymArr );
             }
-#endif
+
             if( ret != 0 ) goto end;
 
             jRspTestObj["resultsArray"] = jSymArr;
