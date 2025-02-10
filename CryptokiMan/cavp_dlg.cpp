@@ -109,6 +109,45 @@ int _getCKM_ECDSA( const QString strHash )
     return -1;
 }
 
+int _getCKM_RSA( const QString strHash, bool bPSS )
+{
+    if( bPSS == true )
+    {
+        if( strHash == "SHA1" || strHash == "SHA-1" )
+            return CKM_SHA1_RSA_PKCS_PSS;
+        else if( strHash == "SHA224" )
+            return CKM_SHA224_RSA_PKCS_PSS;
+        else if( strHash == "SHA256" )
+            return CKM_SHA256_RSA_PKCS_PSS;
+        else if( strHash == "SHA384" )
+            return CKM_SHA384_RSA_PKCS_PSS;
+        else if( strHash == "SHA512" )
+            return CKM_SHA512_RSA_PKCS_PSS;
+
+        return CKM_RSA_PKCS_PSS;
+    }
+    else
+    {
+        if( strHash == "SHA1" || strHash == "SHA-1" )
+            return CKM_SHA1_RSA_PKCS;
+        else if( strHash == "SHA224" )
+            return CKM_SHA224_RSA_PKCS;
+        else if( strHash == "SHA256" )
+            return CKM_SHA256_RSA_PKCS;
+        else if( strHash == "SHA384" )
+            return CKM_SHA384_RSA_PKCS;
+        else if( strHash == "SHA512" )
+            return CKM_SHA512_RSA_PKCS;
+
+        return CKM_RSA_PKCS;
+    }
+}
+
+int _getCKM_Cipher( const QString strAlg, const QString strMode )
+{
+    return -1;
+}
+
 static QString _getHashName( const QString strACVPHash )
 {
     if( strACVPHash == "SHA-1" )
@@ -3982,10 +4021,6 @@ int CAVPDlg::makeUnitJsonWork( const QString strAlg, const QString strMode, cons
         ret = kdaJsonWork( strAlg, jObject, jRspObject );
         break;
 
-    case kACVP_TYPE_EDDSA:
-        ret = eddsaJsonWork( strMode, jObject, jRspObject );
-        break;
-
     case kACVP_TYPE_DSA:
         ret = dsaJsonWork( strMode, jObject, jRspObject );
         break;
@@ -4156,6 +4191,7 @@ end :
 int CAVPDlg::ecdsaJsonWork( const QString strMode, const QJsonObject jObject, QJsonObject& jRspObject )
 {
     int ret = 0;
+
     QString strTestType = jObject["testType"].toString();
     int nTgId = jObject["tgId"].toInt();
 
@@ -4181,16 +4217,28 @@ int CAVPDlg::ecdsaJsonWork( const QString strMode, const QJsonObject jObject, QJ
     QString strUseHash = _getHashName( strHashAlg );
     QString strUseCurve = _getECCurveName( strCurve );
 
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+    long hSession = mSessionText->text().toLong();
+
+    unsigned char sOut[1024];
+    int nOutLen = 1024;
+
+    long uPri = -1;
+    long uPub = -1;
+
+    CK_MECHANISM sMech;
+    memset( &sMech, 0x00, sizeof(sMech));
+
     if( strMode == "sigGen" )
     {
         JECKeyVal sECKeyVal;
 
         memset( &sECKeyVal, 0x00, sizeof(sECKeyVal));
 
-        ret = JS_PKI_ECCGenKeyPair( strUseCurve.toStdString().c_str(), &binPub, &binPri );
+        ret = genECCKeyPair( strUseCurve, &uPri, &uPub );
         if( ret != 0 ) goto end;
 
-        ret = JS_PKI_getECKeyVal( &binPri, &sECKeyVal );
+        ret = pAPI->getECCKeyVal( hSession, uPub, &sECKeyVal );
         if( ret != 0 ) goto end;
 
         jRspObject["qx"] = sECKeyVal.pPubX;
@@ -4232,28 +4280,39 @@ int CAVPDlg::ecdsaJsonWork( const QString strMode, const QJsonObject jObject, QJ
         {
             if( strMode == "keyGen" )
             {
-                JECKeyVal sECKeyVal;
+                JECKeyVal sPriVal;
+                JECKeyVal sPubVal;
 
-                memset( &sECKeyVal, 0x00, sizeof(sECKeyVal));
+                memset( &sPriVal, 0x00, sizeof(sPriVal));
+                memset( &sPubVal, 0x00, sizeof(sPubVal));
 
-                JS_BIN_reset( &binPub );
-                JS_BIN_reset( &binPri );
+                uPri = -1;
+                uPub = -1;
 
-                ret = JS_PKI_ECCGenKeyPair( strUseCurve.toStdString().c_str(), &binPub, &binPri );
+                ret = genECCKeyPair( strUseCurve, &uPri, &uPub );
                 if( ret != 0 ) goto end;
 
-                ret = JS_PKI_getECKeyVal( &binPri, &sECKeyVal );
+                ret = pAPI->getECCKeyVal( hSession, uPri, &sPriVal );
                 if( ret != 0 ) goto end;
 
-                jRspTestObj["d"] = sECKeyVal.pPrivate;
-                jRspTestObj["qx"] = sECKeyVal.pPubX;
-                jRspTestObj["qy"] = sECKeyVal.pPubY;
+                ret = pAPI->getECCKeyVal( hSession, uPub, &sPubVal );
+                if( ret != 0 ) goto end;
 
-                JS_PKI_resetECKeyVal( &sECKeyVal );
+                jRspTestObj["d"] = sPriVal.pPrivate;
+                jRspTestObj["qx"] = sPubVal.pPubX;
+                jRspTestObj["qy"] = sPubVal.pPubY;
+
+                JS_PKI_resetECKeyVal( &sPriVal );
+                JS_PKI_resetECKeyVal( &sPubVal );
+                if( uPri > 0 ) pAPI->DestroyObject( hSession, uPri );
+                if( uPub > 0 ) pAPI->DestroyObject( hSession, uPub );
             }
             else if( strMode == "keyVer" )
             {
                 bool bRes = false;
+                JECKeyVal sECVal;
+
+                memset( &sECVal, 0x00, sizeof(sECVal));
 
                 JS_BIN_decodeHex( strQX.toStdString().c_str(), &binQX );
                 JS_BIN_decodeHex( strQY.toStdString().c_str(), &binQY );
@@ -4264,7 +4323,28 @@ int CAVPDlg::ecdsaJsonWork( const QString strMode, const QJsonObject jObject, QJ
                 else
                     bRes = false;
 
+                JS_PKI_setECKeyVal( &sECVal,
+                                   strUseCurve.toStdString().c_str(),
+                                   strQX.toStdString().c_str(),
+                                   strQY.toStdString().c_str(),
+                                   NULL );
+
+                ret = JS_PKI_encodeECPublicKey( &sECVal, &binPub );
+                if( ret != 0 )
+                {
+                    bRes = false;
+                }
+
+                ret = importECCPubKey( &binPub, &uPub );
+                if( ret != 0 )
+                {
+                    bRes = false;
+                }
+                else
+                    bRes = true;
+
                 jRspTestObj["testPassed"] = bRes;
+                JS_PKI_resetECKeyVal( &sECVal );
 
                 ret = 0;
             }
@@ -4278,8 +4358,27 @@ int CAVPDlg::ecdsaJsonWork( const QString strMode, const QJsonObject jObject, QJ
                 ret = JS_PKI_decodeECCSign( &binSign, &binR, &binS );
                 if( ret != 0 ) goto end;
 
+                uPri = -1;
+                ret = importECCPriKey( &binPri, &uPri );
+                if( ret != 0 ) goto end;
+
+                nOutLen = sizeof(sOut);
+
+                sMech.mechanism = _getCKM_ECDSA( strUseHash );
+
+                ret = pAPI->SignInit( hSession, &sMech, uPri );
+                if( ret != 0 ) goto end;
+
+                ret = pAPI->Sign( hSession, binMsg.pVal, binMsg.nLen, sOut, (CK_ULONG_PTR)&nOutLen );
+                if( ret != 0 ) goto end;
+
+                JS_BIN_set( &binSign, sOut, nOutLen );
+                JS_PKI_decodeECCSign( &binSign, &binR, &binS );
+
                 jRspTestObj["r"] = getHexString( &binR );
                 jRspTestObj["s"] = getHexString( &binS );
+
+                if( uPri > 0 ) pAPI->DestroyObject( hSession, uPri );
             }
             else if( strMode == "sigVer" )
             {
@@ -4311,12 +4410,29 @@ int CAVPDlg::ecdsaJsonWork( const QString strMode, const QJsonObject jObject, QJ
                 if( ret != 0 ) goto end;
 
                 ret = JS_PKI_ECCVerifySign( strUseHash.toStdString().c_str(), &binMsg, &binSign, &binPub );
+
+                nOutLen = sizeof(sOut);
+
+                sMech.mechanism = _getCKM_ECDSA( strUseHash );
+
+                uPub = -1;
+                ret = importECCPubKey( &binPub, &uPub );
+                if( ret != 0 ) bRes = false;
+
+                ret = pAPI->VerifyInit( hSession, &sMech, uPub );
+                if( ret != 0 ) bRes = false;
+
+                ret = pAPI->Verify( hSession, binMsg.pVal, binMsg.nLen, binSign.pVal, binSign.nLen );
+                if( ret == 0 ) bRes = true;
+
                 if( ret == JSR_VERIFY )
                     bRes = true;
                 else
                     bRes = false;
 
                 jRspTestObj["testPassed"] = bRes;
+                if( uPub > 0 ) pAPI->DestroyObject( hSession, uPub );
+
                 ret = 0;
             }
             else
@@ -4355,154 +4471,7 @@ end :
     return ret;
 }
 
-int CAVPDlg::eddsaJsonWork( const QString strMode, const QJsonObject jObject, QJsonObject& jRspObject )
-{
-    int ret = 0;
-    QString strTestType = jObject["testType"].toString();
-    int nTgId = jObject["tgId"].toInt();
 
-    QString strCurve = jObject["curve"].toString();
-
-    QJsonArray jArr = jObject["tests"].toArray();
-    QJsonArray jRspArr;
-
-    int nEdDSA_Type = _getEdDSAType( strCurve );
-
-    bool bPreHash = jObject["preHash"].toBool();
-
-    BIN binMsg = {0,0};
-    BIN binSign = {0,0};
-    BIN binD = {0,0};
-    BIN binQ = {0,0};
-
-    BIN binPri = {0,0};
-    BIN binPub = {0,0};
-
-    if( strMode == "sigGen" )
-    {
-        ret = JS_PKI_EdDSA_GenKeyPair( nEdDSA_Type, &binPub, &binPri );
-        if( ret != 0 ) goto end;
-
-        jRspObject["q"] = getHexString( &binPub );
-    }
-
-    for( int i = 0; i < jArr.size(); i++ )
-    {
-        QJsonValue jVal = jArr.at(i);
-        QJsonObject jObj = jVal.toObject();
-        int nTcId = jObj["tcId"].toInt();
-        QString strMsg = jObj["message"].toString();
-        QString strSign = jObj["signature"].toString();
-        QString strQ = jObj["q"].toString();
-
-        QJsonObject jRspTestObj;
-        jRspTestObj["tcId"] = nTcId;
-
-        JS_BIN_reset( &binMsg );
-        JS_BIN_reset( &binSign );
-        JS_BIN_reset( &binD );
-        JS_BIN_reset( &binQ );
-
-        if( strMsg.length() > 0 ) JS_BIN_decodeHex( strMsg.toStdString().c_str(), &binMsg );
-        if( strSign.length() > 0 ) JS_BIN_decodeHex( strSign.toStdString().c_str(), &binSign );
-        if( strQ.length() > 0 ) JS_BIN_decodeHex( strQ.toStdString().c_str(), &binQ );
-
-        if( mACVP_SetTCIDCheck->isChecked() == true )
-        {
-            int nSetTcId = mACVP_SetTCIDText->text().toInt();
-            if( nSetTcId != nTcId ) continue;
-        }
-
-        if( strTestType == "AFT" || strTestType == "BFT" )
-        {
-            if( strMode == "keyGen" )
-            {
-                ret = JS_PKI_EdDSA_GenKeyPair( nEdDSA_Type, &binQ, &binD );
-                if( ret != 0 ) goto end;
-
-                jRspTestObj["d"] = getHexString( &binD );
-                jRspTestObj["q"] = getHexString( &binQ );
-            }
-            else if( strMode == "keyVer" )
-            {
-#if 1
-                manApplet->elog( QString( "(%1) does not support" ).arg( strMode ));
-                ret = -1;
-                goto end;
-#else
-                bool bRes = false;
-                ret = JS_PKI_encodeRawPublicKeyValue( nEdDSA_Type, &binQ, &binPub );
-                if( ret != 0 ) goto end;
-
-                ret = JS_PKI_checkPublicKey( &binPub );
-
-                if( ret == JSR_VALID )
-                    bRes = true;
-                else
-                    bRes = false;
-
-                jRspTestObj["testPassed"] = bRes;
-
-                ret = 0;
-#endif
-            }
-            else if( strMode == "sigGen" )
-            {
-                ret = JS_PKI_EdDSA_Sign( nEdDSA_Type, &binMsg, &binPri, &binSign );
-                if( ret != 0 ) goto end;
-
-                jRspTestObj["signature"] = getHexString( &binSign );
-            }
-            else if( strMode == "sigVer" )
-            {
-                bool bRes = false;
-
-                ret = JS_PKI_encodeRawPublicKeyValue( nEdDSA_Type, &binQ, &binPub );
-                if( ret != 0 ) goto end;
-
-                ret = JS_PKI_EdDSA_Verify( &binMsg, &binSign, &binPub );
-                if( ret == JSR_VERIFY )
-                    bRes = true;
-                else
-                    bRes = false;
-
-                jRspTestObj["testPassed"] = bRes;
-
-                ret = 0;
-            }
-            else
-            {
-                manApplet->warnLog( tr("Invalid Mode: %1").arg( strMode ), this );
-                ret = -1;
-                goto end;
-            }
-        }
-        else
-        {
-            manApplet->warnLog( tr("Invalid test type: %1").arg( strTestType), this );
-            ret = -1;
-            goto end;
-        }
-
-        if( mACVP_SetTCIDCheck->isChecked() == true )
-            jRspArr.insert( 0, jRspTestObj );
-        else
-            jRspArr.insert( i, jRspTestObj );
-    }
-
-    jRspObject["tests"] = jRspArr;
-    jRspObject["tgId"] = nTgId;
-
-end :
-    JS_BIN_reset( &binMsg );
-    JS_BIN_reset( &binSign );
-    JS_BIN_reset( &binD );
-    JS_BIN_reset( &binQ );
-    JS_BIN_reset( &binPri );
-    JS_BIN_reset( &binPub );
-
-    return ret;
-}
 
 int CAVPDlg::rsaJsonWork( const QString strMode, const QJsonObject jObject, QJsonObject& jRspObject )
 {
@@ -4541,6 +4510,18 @@ int CAVPDlg::rsaJsonWork( const QString strMode, const QJsonObject jObject, QJso
 
     QString strUseHash = _getHashName( strHashAlg );
 
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+    long hSession = mSessionText->text().toLong();
+
+    unsigned char sOut[1024];
+    int nOutLen = 1024;
+
+    long uPri = -1;
+    long uPub = -1;
+
+    CK_MECHANISM sMech;
+    memset( &sMech, 0x00, sizeof(sMech));
+
     if( strMode == "sigGen" )
     {
         int nExponent = 65537;
@@ -4548,10 +4529,10 @@ int CAVPDlg::rsaJsonWork( const QString strMode, const QJsonObject jObject, QJso
 
         memset( &sRSAKeyVal, 0x00, sizeof(sRSAKeyVal));
 
-        ret = JS_PKI_RSAGenKeyPair( nModulo, nExponent, &binPub, &binPri );
+        ret = genRSAKeyPair( nModulo, nExponent, &uPri, &uPub );
         if( ret != 0 ) goto end;
 
-        ret = JS_PKI_getRSAKeyVal( &binPri, &sRSAKeyVal );
+        ret = pAPI->getRSAKeyVal( hSession, uPri, &sRSAKeyVal );
         if( ret != 0 ) goto end;
 
         jRspObject["e"] = sRSAKeyVal.pE;
@@ -4569,6 +4550,9 @@ int CAVPDlg::rsaJsonWork( const QString strMode, const QJsonObject jObject, QJso
         sRSAKeyVal.pN = (char *)strN.toStdString().c_str();
 
         ret = JS_PKI_encodeRSAPublicKey( &sRSAKeyVal, &binPub );
+        if( ret != 0 ) goto end;
+
+        ret = importRSAPubKey( &binPub, &uPub );
         if( ret != 0 ) goto end;
     }
 
@@ -4611,10 +4595,10 @@ int CAVPDlg::rsaJsonWork( const QString strMode, const QJsonObject jObject, QJso
 
                 memset( &sRSAKey, 0x00, sizeof(sRSAKey));
 
-                ret = JS_PKI_RSAGenKeyPair( nModulo, nExponent, &binPub, &binPri );
+                ret = genRSAKeyPair( nModulo, nExponent, &uPri, &uPub );
                 if( ret != 0 ) goto end;
 
-                ret = JS_PKI_getRSAKeyVal( &binPri, &sRSAKey );
+                ret = pAPI->getRSAKeyVal( hSession, uPri, &sRSAKey );
                 if( ret != 0 ) goto end;
 
                 jRspTestObj["d"] = sRSAKey.pD;
@@ -4624,23 +4608,44 @@ int CAVPDlg::rsaJsonWork( const QString strMode, const QJsonObject jObject, QJso
                 jRspTestObj["q"] = sRSAKey.pQ;
 
                 JS_PKI_resetRSAKeyVal( &sRSAKey );
+
+                if( uPri > 0 ) pAPI->DestroyObject( hSession, uPri );
+                if( uPub > 0 ) pAPI->DestroyObject( hSession, uPub );
             }
             else if( strMode == "sigGen" )
             {
                 int nVersion = JS_PKI_RSA_PADDING_V15;
 
                 if( strSigType == "pss" )
+                {
                     nVersion = JS_PKI_RSA_PADDING_V21;
+                    sMech.mechanism = _getCKM_RSA( strUseHash, true );
+                }
+                else
+                {
+                    sMech.mechanism = _getCKM_RSA( strUseHash, false );
+                }
 
                 JS_BIN_reset( &binMsg );
                 JS_BIN_reset( &binSign );
 
                 if( strMsg.length() > 0 ) JS_BIN_decodeHex( strMsg.toStdString().c_str(), &binMsg );
 
-                ret = JS_PKI_RSAMakeSign( strUseHash.toStdString().c_str(), nVersion, &binMsg, &binPri, &binSign );
+                ret = importRSAPriKey( &binPri, &uPri );
                 if( ret != 0 ) goto end;
 
+                nOutLen = sizeof(sOut );
+
+                ret = pAPI->SignInit( hSession, &sMech, uPri );
+                if( ret != 0 ) goto end;
+
+                ret = pAPI->Sign( hSession, binMsg.pVal, binMsg.nLen, sOut, (CK_ULONG_PTR)&nOutLen );
+                if( ret != 0 ) goto end;
+
+                JS_BIN_set( &binSign, sOut, nOutLen );
+
                 jRspTestObj["signature"] = getHexString( &binSign );
+                if( uPri > 0 ) pAPI->DestroyObject( hSession, uPri );
             }
             else if( strMode == "sigVer" )
             {
@@ -4649,7 +4654,14 @@ int CAVPDlg::rsaJsonWork( const QString strMode, const QJsonObject jObject, QJso
                 int nVersion = JS_PKI_RSA_PADDING_V15;
 
                 if( strSigType == "pss" )
+                {
                     nVersion = JS_PKI_RSA_PADDING_V21;
+                    sMech.mechanism = _getCKM_RSA( strUseHash, true );
+                }
+                else
+                {
+                    sMech.mechanism = _getCKM_RSA( strUseHash, false );
+                }
 
                 JS_BIN_reset( &binMsg );
                 JS_BIN_reset( &binSign );
@@ -4657,10 +4669,24 @@ int CAVPDlg::rsaJsonWork( const QString strMode, const QJsonObject jObject, QJso
                 if( strMsg.length() > 0 ) JS_BIN_decodeHex( strMsg.toStdString().c_str(), &binMsg );
                 if( strSign.length() > 0 ) JS_BIN_decodeHex( strSign.toStdString().c_str(), &binSign );
 
-                ret = JS_PKI_RSAVerifySign( strUseHash.toStdString().c_str(), nVersion, &binMsg, &binSign, &binPub );
-                if( ret == JSR_VERIFY ) bRes = true;
+                ret = importRSAPubKey( &binPub, &uPub );
+                if( ret != 0 ) goto end;
+
+                ret = pAPI->VerifyInit( hSession, &sMech, uPub );
+                if( ret != 0 ) goto end;
+
+                ret = pAPI->Verify( hSession, binMsg.pVal, binMsg.nLen, binSign.pVal, binSign.nLen );
+                if( ret != 0 )
+                {
+                    bRes = false;
+                }
+                else
+                {
+                    bRes = true;
+                }
 
                 jRspTestObj["testPassed"] = bRes;
+                if( uPub > 0 ) pAPI->DestroyObject( hSession, uPub );
 
                 ret = 0;
             }
@@ -4693,6 +4719,9 @@ end :
     JS_BIN_reset( &binSign );
     JS_BIN_reset( &binMsg );
     JS_BIN_reset( &binE );
+
+    if( uPri > 0 ) pAPI->DestroyObject( hSession, uPri );
+    if( uPub > 0 ) pAPI->DestroyObject( hSession, uPub );
 
     return ret;
 }
@@ -5134,6 +5163,17 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
     BIN binTag = {0,0};
     BIN binAAD = {0,0};
 
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+    long hSession = mSessionText->text().toLong();
+
+    unsigned char sOut[1024];
+    int nOutLen = 1024;
+
+    long uObj = -1;
+
+    CK_MECHANISM sMech;
+    memset( &sMech, 0x00, sizeof(sMech));
+
     for( int i = 0; i < jArr.size(); i++ )
     {
         QJsonValue jVal = jArr.at(i);
@@ -5151,13 +5191,6 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
 
         QString strAAD = jObj["aad"].toString();
         QString strTag = jObj["tag"].toString();
-
-        CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-        long hSession = mSessionText->text().toLong();
-
-
-
-        CK_MECHANISM sMech;
 
         JS_BIN_reset( &binKey );
         JS_BIN_reset( &binCT );
@@ -5237,9 +5270,19 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
             if( strMode.toUpper() != "CTR" )
                 return -2;
 
+            sMech.mechanism = _getCKM_Cipher( strSymAlg, strMode );
+            sMech.pParameter = binIV.pVal;
+            sMech.ulParameterLen = binIV.nLen;
+
+            ret = createKey( CKK_AES, &binKey, &uObj );
+            if( ret != 0 ) goto end;
+
             if( strDirection == "encrypt" )
             {
                 nLeft = binPT.nLen;
+
+                ret = pAPI->EncryptInit( hSession, &sMech, uObj );
+                if( ret != 0 ) goto end;
 
                 while( nLeft > 0 )
                 {
@@ -5248,8 +5291,14 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
                     binPart.nLen = nBlock;
                     binPart.pVal = &binPT.pVal[nPos];
 
-                    ret = JS_PKI_encryptData( strCipher.toStdString().c_str(), 0, &binPart, &binIV, &binKey, &binRes );
+ //                   ret = JS_PKI_encryptData( strCipher.toStdString().c_str(), 0, &binPart, &binIV, &binKey, &binRes );
+
+                    nOutLen = sizeof(sOut);
+
+                    ret = pAPI->Encrypt( hSession, binPart.pVal, binPart.nLen, sOut, (CK_ULONG_PTR)&nOutLen );
                     if( ret != 0 ) return ret;
+
+                    JS_BIN_set( &binRes, sOut, nOutLen );
 
                     JS_BIN_appendBin( &binCT, &binRes );
                     JS_BIN_reset( &binRes );
@@ -5265,6 +5314,9 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
             {
                 nLeft = binCT.nLen;
 
+                ret = pAPI->EncryptInit( hSession, &sMech, uObj );
+                if( ret != 0 ) goto end;
+
                 while( nLeft > 0 )
                 {
                     if( nLeft < nBlock ) nBlock = nLeft;
@@ -5272,8 +5324,14 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
                     binPart.nLen = nBlock;
                     binPart.pVal = &binCT.pVal[nPos];
 
-                    ret = JS_PKI_encryptData( strCipher.toStdString().c_str(), 0, &binPart, &binIV, &binKey, &binRes );
+//                    ret = JS_PKI_encryptData( strCipher.toStdString().c_str(), 0, &binPart, &binIV, &binKey, &binRes );
+
+                    nOutLen = sizeof(sOut);
+
+                    ret = pAPI->Encrypt( hSession, binPart.pVal, binPart.nLen, sOut, (CK_ULONG_PTR)&nOutLen );
                     if( ret != 0 ) return ret;
+
+                    JS_BIN_set( &binRes, sOut, nOutLen );
 
                     JS_BIN_appendBin( &binPT, &binRes );
                     JS_BIN_reset( &binRes );

@@ -63,6 +63,8 @@ int _getCKM( const QString strAlg, const QString strMode );
 int _getCKM_HMAC( const QString strHash );
 int _getCKM_Hash( const QString strHash );
 int _getCKM_ECDSA( const QString strHash );
+int _getCKM_RSA( const QString strHash, bool bPSS = false );
+int _getCKM_Cipher( const QString strAlg, const QString strMode );
 
 class CAVPDlg : public QDialog, public Ui::CAVPDlg
 {
@@ -192,7 +194,6 @@ private:
     int makeUnitJsonWork( const QString strAlg, const QString strMode, const QJsonObject jObject, QJsonObject& jRspObject );
     int hashJsonWork( const QString strAlg, const QJsonObject jObject, QJsonObject& jRspObject );
     int ecdsaJsonWork( const QString strMode, const QJsonObject jObject, QJsonObject& jRspObject );
-    int eddsaJsonWork( const QString strMode, const QJsonObject jObject, QJsonObject& jRspObject );
     int rsaJsonWork( const QString strMode, const QJsonObject jObject, QJsonObject& jRspObject );
     int dsaJsonWork( const QString strMode, const QJsonObject jObject, QJsonObject& jRspObject );
     int macJsonWork( const QString strAlg, const QJsonObject jObject, QJsonObject& jRspObject );
