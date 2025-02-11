@@ -169,7 +169,7 @@ void MainWindow::initialize()
     hsplitter_->setStretchFactor(1,2);
     setCentralWidget(hsplitter_);
 
-    resize(900,768);
+    resize(920,768);
 
     connect( right_table_, SIGNAL(clicked(QModelIndex)), this, SLOT(rightTableClick(QModelIndex) ));
 

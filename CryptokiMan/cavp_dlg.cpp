@@ -5352,18 +5352,42 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
 
             if( strDirection == "encrypt" )
             {
+                ret = createKey( CKK_AES, &binKey, &uObj );
+                if( ret != 0 ) goto end;
+
                 if( strMode.toUpper() == "GCM" || strMode.toUpper() == "CCM" )
                 {
                     if( strMode == "CCM" )
                     {
-                        ret = JS_PKI_encryptCCM( strCipher.toStdString().c_str(), &binPT, &binKey, &binIV, &binAAD, nTagLen/8, &binTag, &binCT );
+                        setAES_CCMParam( &binIV, &binAAD, binPT.nLen, nTagLen/8, &sMech );
+
+                        ret = pAPI->EncryptInit( hSession, &sMech, uObj );
+                        if( ret != 0 ) goto end;
+
+                        ret = pAPI->Encrypt( hSession, binPT.pVal, binPT.nLen, sOut, (CK_ULONG_PTR)&nOutLen );
+                        if( ret != 0 ) goto end;
+
+                        JS_BIN_set( &binTag, sOut, nTagLen/8 );
+                        JS_BIN_set( &binCT, &sOut[nTagLen/8], nOutLen - nTagLen/8 );
 
                         JS_BIN_appendBin( &binCT, &binTag );
                         jRspTestObj["ct"] = getHexString( &binCT );
                     }
                     else
                     {
-                        ret = JS_PKI_encryptGCM( strCipher.toStdString().c_str(), &binPT, &binKey, &binIV, &binAAD, nTagLen/8, &binTag, &binCT );
+                        setAES_GCMParam( &binIV, &binAAD, nTagLen/8, &sMech );
+
+                        ret = pAPI->EncryptInit( hSession, &sMech, uObj );
+                        if( ret != 0 ) goto end;
+
+                        ret = pAPI->Encrypt( hSession, binPT.pVal, binPT.nLen, sOut, (CK_ULONG_PTR)&nOutLen );
+                        if( ret != 0 ) goto end;
+
+                        JS_BIN_set( &binTag, sOut, nTagLen/8 );
+                        JS_BIN_set( &binCT, &sOut[nTagLen/8], nOutLen - nTagLen/8 );
+
+                        JS_BIN_appendBin( &binCT, &binTag );
+                        jRspTestObj["ct"] = getHexString( &binCT );
 
                         if( ret != 0 ) goto end;
 
