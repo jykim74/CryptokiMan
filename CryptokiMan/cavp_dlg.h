@@ -195,7 +195,7 @@ private:
     int hashJsonWork( const QString strAlg, const QJsonObject jObject, QJsonObject& jRspObject );
     int ecdsaJsonWork( const QString strMode, const QJsonObject jObject, QJsonObject& jRspObject );
     int rsaJsonWork( const QString strMode, const QJsonObject jObject, QJsonObject& jRspObject );
-    int dsaJsonWork( const QString strMode, const QJsonObject jObject, QJsonObject& jRspObject );
+//    int dsaJsonWork( const QString strMode, const QJsonObject jObject, QJsonObject& jRspObject );
     int macJsonWork( const QString strAlg, const QJsonObject jObject, QJsonObject& jRspObject );
     int blockCipherJsonWork( const QString strAlg, const QJsonObject jObject, QJsonObject& jRspObject );
     int kdaJsonWork( const QString strAlg, const QJsonObject jObject, QJsonObject& jRspObject );

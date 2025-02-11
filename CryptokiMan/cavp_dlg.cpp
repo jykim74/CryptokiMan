@@ -4020,11 +4020,11 @@ int CAVPDlg::makeUnitJsonWork( const QString strAlg, const QString strMode, cons
     case kACVP_TYPE_KDA :
         ret = kdaJsonWork( strAlg, jObject, jRspObject );
         break;
-
+/*
     case kACVP_TYPE_DSA:
         ret = dsaJsonWork( strMode, jObject, jRspObject );
         break;
-
+*/
     default:
         ret = -1;
         manApplet->warnLog( QString( "Invalid Algorithm: %1" ).arg( strAlg ), this );
@@ -4726,6 +4726,7 @@ end :
     return ret;
 }
 
+/*
 int CAVPDlg::dsaJsonWork( const QString strMode, const QJsonObject jObject, QJsonObject& jRspObject )
 {
     int ret = 0;
@@ -4931,7 +4932,7 @@ end :
 
     return ret;
 }
-
+*/
 
 int CAVPDlg::macJsonWork( const QString strAlg, const QJsonObject jObject, QJsonObject& jRspObject )
 {
@@ -5372,8 +5373,17 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
                 }
                 else if( strMode.toUpper() == "KW" || strMode.toUpper() == "KWP" )
                 {
-                    int nPad = 0;
-                    if( strMode == "KWP" ) nPad = 1;
+                    long uWrappingObj = -1;
+                    long uObj = -1;
+
+                    if( strMode == "KWP" )
+                    {
+                        sMech.mechanism = CKM_AES_KEY_WRAP_PAD;
+                    }
+                    else
+                    {
+                        sMech.mechanism = CKM_AES_KEY_WRAP;
+                    }
 
                     if( strKwCipher == "inverse" )
                     {
@@ -5382,10 +5392,21 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
                         goto end;
                     }
 
-                    ret = JS_PKI_WrapKey( nPad, &binKey, &binPT, &binCT );
+                    ret = createKey( CKK_AES, &binKey, &uWrappingObj );
                     if( ret != 0 ) goto end;
 
+                    ret = createKey( CKK_GENERIC_SECRET, &binPT, &uObj );
+                    if( ret != 0 ) goto end;
+
+                    ret = pAPI->WrapKey( hSession, &sMech, uWrappingObj, uObj, sOut, (CK_ULONG_PTR)&nOutLen );
+                    if( ret != 0 ) goto end;
+
+                    JS_BIN_set( &binCT, sOut, nOutLen );
+
                     jRspTestObj["ct"] = getHexString( &binCT );
+
+                    if( uWrappingObj > 0 ) pAPI->DestroyObject( hSession, uWrappingObj );
+                    if( uObj > 0 ) pAPI->DestroyObject( hSession, uObj );
                 }
                 else
                 {
@@ -5424,10 +5445,28 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
                 }
                 else if( strMode.toUpper() == "KW" || strMode.toUpper() == "KWP" )
                 {
-                    int nPad = 0;
-                    if( strMode == "KWP" ) nPad = 1;
+                    long uWrappingObj = -1;
+                    long uObj = -1;
+                    CK_ATTRIBUTE sTemplate[10];
+                    int nCount = 0;
 
-                    ret = JS_PKI_UnwrapKey( nPad, &binKey, &binCT, &binPT );
+                    if( strMode == "KWP" )
+                    {
+                        sMech.mechanism = CKM_AES_KEY_WRAP_PAD;
+                    }
+                    else
+                    {
+                        sMech.mechanism = CKM_AES_KEY_WRAP;
+                    }
+
+                    ret = createKey( CKK_AES, &binKey, &uWrappingObj );
+                    if( ret != 0 ) goto end;
+
+                    ret = pAPI->UnwrapKey( hSession, &sMech, uWrappingObj, binCT.pVal, binCT.nLen, sTemplate, nCount, (CK_OBJECT_HANDLE_PTR)&uObj );
+                    if( ret != 0 ) goto end;
+
+                    ret = pAPI->GetAttributeValue2( hSession, uObj, CKA_VALUE, &binPT );
+                    if( ret != 0 ) goto end;
 
                     if( ret == 0 )
                         jRspTestObj["pt"] = getHexString( &binPT );
@@ -5506,6 +5545,16 @@ int CAVPDlg::kdaJsonWork( const QString strAlg, const QJsonObject jObject, QJson
     BIN binSalt = {0,0};
     BIN binDerivedKey = {0,0};
 
+    CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+    long hSession = mSessionText->text().toLong();
+
+    unsigned char sOut[1024];
+    int nOutLen = 1024;
+
+
+    CK_MECHANISM sMech;
+    memset( &sMech, 0x00, sizeof(sMech));
+
     for( int i = 0; i < jArr.size(); i++ )
     {
         QJsonValue jVal = jArr.at(i);
@@ -5564,23 +5613,85 @@ int CAVPDlg::kdaJsonWork( const QString strAlg, const QJsonObject jObject, QJson
             {
                 BIN binPri = {0,0};
                 BIN binPub = {0,0};
+                BIN binPubX = {0,0};
+                BIN binPubY = {0,0};
 
                 JECKeyVal sECKey;
+                long uPri = -1;
+                long uPub = -1;
+                long uObj = -1;
+
+                CK_ATTRIBUTE sTemplate[10];
+                int nCount = 0;
+
+                CK_ECDH1_DERIVE_PARAMS sParam;
+
+                memset( &sParam, 0x00, sizeof(sParam));
 
                 memset( &sECKey, 0x00, sizeof(sECKey));
 
-                ret = JS_PKI_ECCGenKeyPair( strUseCurve.toStdString().c_str(), &binPub, &binPri );
+                CK_OBJECT_CLASS keyClass = CKO_SECRET_KEY;
+                int nKeyType = CKK_GENERIC_SECRET;
+
+                int uKeyLen = -1;
+
+
+                ret = genECCKeyPair( strUseCurve, &uPri, &uPub );
                 if( ret != 0 ) goto end;
 
-                ret = JS_PKI_getECDHSecretWithValue( strUseCurve.toStdString().c_str(), &binPri, &binPubSrvX, &binPubSrvY, &binSecret );
-                if( ret != 0 )
+                if( strCurve == "P-256" )
                 {
-                    JS_BIN_reset( &binPri );
-                    JS_BIN_reset( &binPub );
-                    goto end;
+                    uKeyLen = 32;
+                }
+                else if( strCurve == "P-384" )
+                {
+                    uKeyLen = 48;
                 }
 
-                ret = JS_PKI_getECKeyVal( &binPri, &sECKey );
+                sTemplate[nCount].type = CKA_CLASS;
+                sTemplate[nCount].pValue = &keyClass;
+                sTemplate[nCount].ulValueLen = sizeof(keyClass);
+                nCount++;
+
+                sTemplate[nCount].type = CKA_KEY_TYPE;
+                sTemplate[nCount].pValue = &nKeyType;
+                sTemplate[nCount].ulValueLen = sizeof(nKeyType);
+                nCount++;
+
+                sTemplate[nCount].type = CKA_VALUE_LEN;
+                sTemplate[nCount].pValue = &uKeyLen;
+                sTemplate[nCount].ulValueLen = sizeof(long);
+                nCount++;
+
+                sTemplate[nCount].type = CKA_EXTRACTABLE;
+                sTemplate[nCount].pValue = &kTrue;
+                sTemplate[nCount].ulValueLen = sizeof(CK_BBOOL);
+                nCount++;
+
+                JS_BIN_decodeHex( strPublicServerX.toStdString().c_str(), &binPubX );
+                JS_BIN_decodeHex( strPublicServerY.toStdString().c_str(), &binPubY );
+
+                JS_BIN_copy( &binPub, &binPubX );
+                JS_BIN_appendBin( &binPub, &binPubY );
+
+                sMech.mechanism = CKM_ECDH1_DERIVE;
+
+                sParam.kdf = CKD_NULL;
+                sParam.pPublicData = binPub.pVal;
+                sParam.ulPublicDataLen = binPub.nLen;
+
+                sMech.pParameter = &sParam;
+                sMech.ulParameterLen = sizeof(sParam);
+
+                ret = pAPI->DeriveKey( hSession, &sMech, uPri, sTemplate, nCount, (CK_OBJECT_HANDLE_PTR)&uObj );
+                if( ret != 0 ) goto end;
+
+                ret = pAPI->GetAttributeValue2( hSession, uObj, CKA_VALUE, &binSecret );
+                if( ret != 0 ) goto end;
+
+                ret = pAPI->getECCKeyVal( hSession, uPri, &sECKey );
+                if( ret != 0 ) goto end;
+
 
                 jRspTestObj["publicIutX"] = sECKey.pPubX;
                 jRspTestObj["publicIutY"] = sECKey.pPubY;
@@ -5590,6 +5701,8 @@ int CAVPDlg::kdaJsonWork( const QString strAlg, const QJsonObject jObject, QJson
 
                 JS_BIN_reset( &binPri );
                 JS_BIN_reset( &binPub );
+                JS_BIN_reset( &binPubX );
+                JS_BIN_reset( &binPubY );
             }
             else if( strAlg == "PBKDF" )
             {
