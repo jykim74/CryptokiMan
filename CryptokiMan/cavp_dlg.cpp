@@ -5444,20 +5444,46 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
             }
             else
             {
+                long uObj = -1;
+                ret = createKey( CKK_AES, &binKey, &uObj );
+                if( ret != 0 ) goto end;
+
                 if( strMode.toUpper() == "GCM" || strMode.toUpper() == "CCM" )
                 {
                     if( strMode == "CCM" )
                     {
                         int nTagBytes = nTagLen / 8;
 
+                        setAES_CCMParam( &binIV, &binAAD, binCT.nLen, nTagBytes, &sMech );
                         JS_BIN_set( &binTag, &binCT.pVal[binCT.nLen-nTagBytes], nTagBytes );
                         binCT.nLen = binCT.nLen - nTagBytes;
 
-                        ret = JS_PKI_decryptCCM( strCipher.toStdString().c_str(), &binCT, &binKey, &binIV, &binAAD, &binTag, &binPT );
+                        ret = pAPI->DecryptInit( hSession, &sMech, uObj );
+                        if( ret != 0 ) goto end;
+
+                        nOutLen = sizeof(sOut);
+                        ret = pAPI->Decrypt( hSession, binCT.pVal, binCT.nLen, sOut, (CK_ULONG_PTR)&nOutLen );
+                        if( ret != 0 ) goto end;
+
+                        JS_BIN_set( &binPT, sOut, nOutLen );
                     }
                     else
                     {
-                        ret = JS_PKI_decryptGCM( strCipher.toStdString().c_str(), &binCT, &binKey, &binIV, &binAAD, &binTag, &binPT );
+                        int nTagBytes = nTagLen / 8;
+
+                        setAES_GCMParam( &binIV, &binAAD, nTagBytes, &sMech );
+                        JS_BIN_set( &binTag, &binCT.pVal[binCT.nLen-nTagBytes], nTagBytes );
+                        binCT.nLen = binCT.nLen - nTagBytes;
+
+                        ret = pAPI->DecryptInit( hSession, &sMech, uObj );
+                        if( ret != 0 ) goto end;
+
+                        nOutLen = sizeof(sOut);
+                        ret = pAPI->Decrypt( hSession, binCT.pVal, binCT.nLen, sOut, (CK_ULONG_PTR)&nOutLen );
+                        if( ret != 0 ) goto end;
+
+                        JS_BIN_set( &binPT, sOut, nOutLen );
+
                     }
 
                     if( ret == 0 )
