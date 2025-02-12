@@ -47,6 +47,7 @@ public:
     void setMode( int nMode, int nUsage = HsmUsageAny );
     void setTitle( const QString strTitle );
     const QString getData() { return str_data_; };
+    void setTabIdx( int nIdx );
 
 private slots:
     void slotChanged( int index );

@@ -178,6 +178,14 @@ void HsmManDlg::setTitle( const QString strTitle )
     mTitleLabel->setText( strTitle );
 }
 
+void HsmManDlg::setTabIdx( int nIdx )
+{
+    if( nIdx < 0 || nIdx > TAB_SECRET_IDX )
+        return;
+
+    mTabWidget->setCurrentIndex( nIdx );
+}
+
 void HsmManDlg::setSelectedSlot(int index)
 {
     slotChanged(index);

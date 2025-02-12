@@ -110,6 +110,13 @@ void DeriveKeyDlg::clickSelectSrcKey()
 
     hsmMan.setMode( HsmModeSelectDeriveKey, HsmUsageDerive );
 
+    int nMech = JS_PKCS11_GetCKMType( mSrcMethodCombo->currentText().toStdString().c_str() );
+
+    if( nMech == CKM_ECDH1_DERIVE || nMech == CKM_DH_PKCS_DERIVE )
+        hsmMan.setTabIdx( TAB_PRIVATE_IDX );
+    else
+        hsmMan.setTabIdx( TAB_SECRET_IDX );
+
     if( hsmMan.exec() == QDialog::Accepted )
     {
         mSrcLabelText->clear();
