@@ -987,7 +987,7 @@ void CAVPDlg::clickRSARun()
 void CAVPDlg::clickSymFind()
 {
     QString strRspPath = mSymReqPathText->text();
-    if( strRspPath.length() < 1 ) strRspPath = manApplet->curPath();
+    strRspPath = manApplet->curPath( strRspPath );
 
     QString strFileName = findFile( this, JS_FILE_TYPE_TXT, strRspPath );
     if( strFileName.length() > 0 )
@@ -999,7 +999,7 @@ void CAVPDlg::clickSymFind()
 void CAVPDlg::clickAEFind()
 {
     QString strRspPath = mAEReqPathText->text();
-    if( strRspPath.length() < 1 ) strRspPath = manApplet->curPath();
+    strRspPath = manApplet->curPath( strRspPath );
 
     QString strFileName = findFile( this, JS_FILE_TYPE_TXT, strRspPath );
     if( strFileName.length() > 0 )
@@ -1011,7 +1011,7 @@ void CAVPDlg::clickAEFind()
 void CAVPDlg::clickHashFind()
 {
     QString strRspPath = mHashReqPathText->text();
-    if( strRspPath.length() < 1 ) strRspPath = manApplet->curPath();
+    strRspPath = manApplet->curPath( strRspPath );
 
     QString strFileName = findFile( this, JS_FILE_TYPE_TXT, strRspPath );
     if( strFileName.length() > 0 )
@@ -1023,7 +1023,7 @@ void CAVPDlg::clickHashFind()
 void CAVPDlg::clickMACFind()
 {
     QString strRspPath = mMACReqPathText->text();
-    if( strRspPath.length() < 1 ) strRspPath = manApplet->curPath();
+    strRspPath = manApplet->curPath( strRspPath );
 
     QString strFileName = findFile( this, JS_FILE_TYPE_TXT, strRspPath );
     if( strFileName.length() > 0 )
@@ -1035,7 +1035,7 @@ void CAVPDlg::clickMACFind()
 void CAVPDlg::clickECCFind()
 {
     QString strRspPath = mECCReqPathText->text();
-    if( strRspPath.length() < 1 ) strRspPath = manApplet->curPath();
+    strRspPath = manApplet->curPath( strRspPath );
 
     QString strFileName = findFile( this, JS_FILE_TYPE_TXT, strRspPath );
     if( strFileName.length() > 0 )
@@ -1047,7 +1047,7 @@ void CAVPDlg::clickECCFind()
 void CAVPDlg::clickRSAFind()
 {
     QString strRspPath = mRSAReqPathText->text();
-    if( strRspPath.length() < 1 ) strRspPath = manApplet->curPath();
+    strRspPath = manApplet->curPath( strRspPath );
 
     QString strFileName = findFile( this, JS_FILE_TYPE_TXT, strRspPath );
     if( strFileName.length() > 0 )

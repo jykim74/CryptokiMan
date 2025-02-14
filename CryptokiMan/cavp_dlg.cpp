@@ -5434,13 +5434,26 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
                 }
                 else
                 {
-                    ret = JS_PKI_encryptData( strCipher.toStdString().c_str(), 0, &binPT, &binIV, &binKey, &binCT);
+                    long uObj = -1;
+
+                    memset( &sMech, 0x00, sizeof(sMech));
+                    sMech.mechanism = _getCKM_Cipher( strSymAlg, strMode );
+
+                    ret = createKey( CKK_AES, &binKey, &uObj );
                     if( ret != 0 ) goto end;
+
+                    ret = pAPI->EncryptInit( hSession, &sMech, uObj );
+                    if( ret != 0 ) goto end;
+
+                    nOutLen = sizeof(sOut);
+                    ret = pAPI->Encrypt( hSession, binPT.pVal, binPT.nLen, sOut, (CK_ULONG_PTR)&nOutLen );
+                    if( ret != 0 ) goto end;
+
+                    JS_BIN_set( &binCT, sOut, nOutLen );
+
 
                     jRspTestObj["ct"] = getHexString( &binCT );
                 }
-
-
             }
             else
             {
@@ -5527,7 +5540,23 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
                 }
                 else
                 {
-                    ret = JS_PKI_decryptData( strCipher.toStdString().c_str(), 0, &binCT, &binIV, &binKey, &binPT );
+                    long uObj = -1;
+
+                    memset( &sMech, 0x00, sizeof(sMech));
+                    sMech.mechanism = _getCKM_Cipher( strSymAlg, strMode );
+
+                    ret = createKey( CKK_AES, &binKey, &uObj );
+                    if( ret != 0 ) goto end;
+
+                    ret = pAPI->DecryptInit( hSession, &sMech, uObj );
+                    if( ret != 0 ) goto end;
+
+                    nOutLen = sizeof(sOut);
+                    ret = pAPI->Decrypt( hSession, binCT.pVal, binCT.nLen, sOut, (CK_ULONG_PTR)&nOutLen );
+                    if( ret != 0 ) goto end;
+
+                    JS_BIN_set( &binPT, sOut, nOutLen );
+
                     jRspTestObj["pt"] = getHexString( &binPT );
 
                     if( ret != 0 ) goto end;
