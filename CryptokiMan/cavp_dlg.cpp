@@ -1644,6 +1644,8 @@ int CAVPDlg::makeSymData( const QString strAlgMode, const BIN *pKey, const BIN *
         goto end;
     }
 
+    JS_BIN_set( &binEnc, pOut, uOutLen );
+
     logRsp( QString( "CT = %1").arg( getHexString(binEnc.pVal, binEnc.nLen)));
     logRsp( "" );
 
@@ -1704,14 +1706,31 @@ int CAVPDlg::makeAEData( const BIN *pKey, const BIN *pIV, const BIN *pPT, const 
     ret = pAPI->EncryptInit( hSession, &sMech, hKey );
     if( ret != 0 ) goto end;
 
-    ret = pAPI->Encrypt( hSession, pPT->pVal, pPT->nLen, NULL, (CK_ULONG_PTR)&uOutLen );
-    if( ret != 0 ) goto end;
-    pOut = (unsigned char *)JS_calloc( 1, uOutLen );
+    if( pPT->nLen > 0 )
+    {
+        ret = pAPI->Encrypt( hSession, pPT->pVal, pPT->nLen, NULL, (CK_ULONG_PTR)&uOutLen );
+        if( ret != 0 ) goto end;
+        pOut = (unsigned char *)JS_calloc( 1, uOutLen );
 
-    ret = pAPI->Encrypt( hSession, pPT->pVal, pPT->nLen, pOut, (CK_ULONG_PTR)&uOutLen );
-    if( ret != 0 ) goto end;
+        ret = pAPI->Encrypt( hSession, pPT->pVal, pPT->nLen, pOut, (CK_ULONG_PTR)&uOutLen );
+        if( ret != 0 ) goto end;
 
-    JS_BIN_set( &binEnc, pOut, uOutLen );
+        JS_BIN_set( &binEnc, pOut, uOutLen - nTagLen );
+        JS_BIN_set( &binTag, &pOut[uOutLen - nTagLen], nTagLen );
+    }
+    else
+    {
+        unsigned char sTag[128];
+        int nTagLen = sizeof(sTag);
+
+        memset( sTag, 0x00, sizeof(sTag));
+        ret = pAPI->EncryptFinal( hSession, sTag, (CK_ULONG_PTR)&nTagLen );
+        if( ret != 0 ) goto end;
+
+        JS_BIN_set( &binTag, sTag, nTagLen );
+    }
+
+
 
     logRsp( QString( "C = %1").arg(getHexString( binEnc.pVal, binEnc.nLen)));
     logRsp( QString( "T = %1").arg(getHexString( binTag.pVal, binTag.nLen)));
@@ -1755,6 +1774,7 @@ int CAVPDlg::makeADData( const BIN *pKey, const BIN *pIV, const BIN *pCT, const 
     logRsp( QString( "Key = %1").arg( getHexString( pKey ) ));
     logRsp( QString( "IV = %1").arg( getHexString( pIV )));
     logRsp( QString( "CT = %1").arg( getHexString( pCT )));
+    logRsp( QString( "T = %1").arg( getHexString( pTag )));
     logRsp( QString( "Adata = %1").arg( getHexString( pAAD )));
 
     sMech.mechanism = _getCKM( strAlg, strMode );
@@ -1774,20 +1794,28 @@ int CAVPDlg::makeADData( const BIN *pKey, const BIN *pIV, const BIN *pCT, const 
     }
 
     ret = createKey( nKeyAlg, pKey, &hKey );
-    if( ret != 0 ) goto end;
+    if( ret != 0 ) goto err;
 
-    ret = pAPI->EncryptInit( hSession, &sMech, hKey );
-    if( ret != 0 ) goto end;
+    ret = pAPI->DecryptInit( hSession, &sMech, hKey );
+    if( ret != 0 ) goto err;
 
-    ret = pAPI->Decrypt( hSession, pCT->pVal, pCT->nLen, NULL, (CK_ULONG_PTR)&uOutLen );
-    if( ret != 0 ) goto end;
-    pOut = (unsigned char *)JS_calloc( 1, uOutLen );
+    if( pCT->nLen > 0 )
+    {
+        ret = pAPI->Decrypt( hSession, pCT->pVal, pCT->nLen, NULL, (CK_ULONG_PTR)&uOutLen );
+        if( ret != 0 ) goto end;
+        pOut = (unsigned char *)JS_calloc( 1, uOutLen );
 
-    ret = pAPI->Decrypt( hSession, pCT->pVal, pCT->nLen, pOut, (CK_ULONG_PTR)&uOutLen );
-    if( ret != 0 ) goto end;
+        ret = pAPI->Decrypt( hSession, pCT->pVal, pCT->nLen, pOut, (CK_ULONG_PTR)&uOutLen );
+        if( ret != 0 ) goto end;
 
-    JS_BIN_set( &binPT, pOut, uOutLen );
+        JS_BIN_set( &binPT, pOut, uOutLen );
+    }
+    else
+    {
+        ret = pAPI->DecryptFinal( hSession, pTag->pVal, (CK_ULONG_PTR)&pTag->nLen );
+    }
 
+ end :
     if( ret == 0 )
     {
         logRsp( QString( "PT = %1").arg( getHexString(binPT.pVal, binPT.nLen)));
@@ -1795,11 +1823,11 @@ int CAVPDlg::makeADData( const BIN *pKey, const BIN *pIV, const BIN *pCT, const 
     else
     {
         logRsp( "Invalid" );
+        ret = 0;
     }
 
     logRsp( "" );
-
-end :
+err:
     if( sMech.mechanism == CKM_AES_GCM || sMech.mechanism == CKM_AES_CCM )
     {
         if( sMech.pParameter ) JS_free( sMech.pParameter );

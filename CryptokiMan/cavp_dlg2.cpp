@@ -90,6 +90,10 @@ void CAVPDlg::clickSymRun()
                 if( strIV.length() > 0 ) logRsp( QString( "IV = %1").arg( strIV ));
                 if( strPT.length() > 0 ) logRsp( QString( "PT = %1").arg( strPT ));
 
+                JS_BIN_decodeHex( strKey.toStdString().c_str(), &binKey );
+                JS_BIN_decodeHex( strIV.toStdString().c_str(), &binIV );
+                JS_BIN_decodeHex( strPT.toStdString().c_str(), &binPT );
+
                 QString strAlgMode = QString( "%1-%2" ).arg( strAlg ).arg( strMode );
 
                 if( strType == "MCT" )
@@ -167,6 +171,13 @@ void CAVPDlg::clickAERun()
     int nAADLen = -1;
     int nTagLen = -1;
 
+    BIN binKey = {0,0};
+    BIN binIV = {0,0};
+    BIN binAAD = {0,0};
+    BIN binTag = {0,0};
+    BIN binPT = {0,0};
+    BIN binCT = {0,0};
+
     QTextStream in( &reqFile );
     QString strLine = in.readLine();
 
@@ -219,6 +230,13 @@ void CAVPDlg::clickAERun()
 
         if( nLen == 0 || strNext.isNull() )
         {
+            JS_BIN_reset( &binKey );
+            JS_BIN_reset( &binIV );
+            JS_BIN_reset( &binAAD );
+            JS_BIN_reset( &binTag );
+            JS_BIN_reset( &binPT );
+            JS_BIN_reset( &binCT );
+
             if( nKeyLen >= 0 && nIVLen >= 0 && nAADLen >= 0 && nPTLen >= 0 && nTagLen >= 0 )
             {
                 logRsp( QString( "[KeyLen = %1]").arg( nKeyLen ));
@@ -234,13 +252,19 @@ void CAVPDlg::clickAERun()
                 nPTLen = -1;
             }
 
+            if( strKey.length() > 0 ) JS_BIN_decodeHex( strKey.toStdString().c_str(), &binKey );
+            if( strIV.length() > 0 ) JS_BIN_decodeHex( strIV.toStdString().c_str(), &binIV );
+            if( strT.length() > 0 ) JS_BIN_decodeHex( strT.toStdString().c_str(), &binTag );
+            if( strPT.length() > 0 ) JS_BIN_decodeHex( strPT.toStdString().c_str(), &binPT );
+            if( strC.length() > 0 ) JS_BIN_decodeHex( strC.toStdString().c_str(), &binCT );
+            if( strAdata.length() > 0 ) JS_BIN_decodeHex( strAdata.toStdString().c_str(), &binAAD );
+
             if( mAETypeCombo->currentText() == "AD" )
             {
                 if( strCount.length() > 0 && strKey.length() > 0 && strIV.length() > 0 && strT.length() > 0 )
                 {
                     manApplet->log( QString( "COUNT = %1").arg( strCount ));
-                    //                   ret = makeGCM_AD( RNX_ALG_ARIA, &binKey, &binIV, &binAdata, &binC, &binT );
-                    //                    ret = makeADData( strKey, strIV, strC, strAdata, strT );
+                    ret = makeADData( &binKey, &binIV, &binCT, &binAAD, &binTag, binCT.nLen );
 
                     if( ret != 0 ) break;
                 }
@@ -250,8 +274,7 @@ void CAVPDlg::clickAERun()
                 if( strCount.length() > 0 && strKey.length() > 0 && strIV.length() > 0 && nTagLen > 0 )
                 {
                     manApplet->log( QString( "COUNT = %1").arg( strCount ));
-                    //                   ret = makeGCM_AE( RNX_ALG_ARIA, &binKey, &binIV, &binAdata, &binPT, nTagLen / 8 );
-                    //                    ret = makeAEData( strKey, strIV, strPT, strAdata, nTagLen/8 );
+                    ret = makeAEData( &binKey, &binIV, &binPT, &binAAD, nTagLen/8, binPT.nLen );
 
                     if( ret != 0 ) break;
                 }
@@ -263,6 +286,7 @@ void CAVPDlg::clickAERun()
             strT.clear();
             strC.clear();
             strAdata.clear();
+            strPT.clear();
         }
 
 
@@ -270,7 +294,14 @@ void CAVPDlg::clickAERun()
         nPos++;
     }
 
+end :
     manApplet->messageBox( tr("CAVP completed[Rsp: %1]").arg(strRspName), this );
+    JS_BIN_reset( &binKey );
+    JS_BIN_reset( &binIV );
+    JS_BIN_reset( &binAAD );
+    JS_BIN_reset( &binTag );
+    JS_BIN_reset( &binPT );
+    JS_BIN_reset( &binCT );
 }
 
 void CAVPDlg::clickHashRun()

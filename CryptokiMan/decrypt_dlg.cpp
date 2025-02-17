@@ -601,12 +601,15 @@ void DecryptDlg::runDataDecrypt()
     int rv = -1;
 
     QString strInput = mInputText->toPlainText();
+
+    /*
     if( strInput.isEmpty() )
     {
         manApplet->warningBox( tr("Enter your data"), this );
         mInputText->setFocus();
         return;
     }
+    */
 
     if( mInitAutoCheck->isChecked() )
     {
