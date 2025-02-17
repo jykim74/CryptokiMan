@@ -396,7 +396,7 @@ void CAVPDlg::clickHashRun()
             }
 
             strMsg.clear();
-            strLen.clear();
+//            strLen.clear();
             strSeed.clear();
 
             if( ret != 0 )

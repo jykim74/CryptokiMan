@@ -81,13 +81,13 @@ int _getCKM_Hash( const QString strHash )
 {
     if( strHash == "SHA1" || strHash == "SHA-1" )
         return CKM_SHA_1;
-    else if( strHash == "SHA224" )
+    else if( strHash == "SHA224" || strHash == "SHA2-224" )
         return CKM_SHA224;
-    else if( strHash == "SHA256" )
+    else if( strHash == "SHA256" || strHash == "SHA2-256" )
         return CKM_SHA256;
-    else if( strHash == "SHA384" )
+    else if( strHash == "SHA384" || strHash == "SHA2-384" )
         return CKM_SHA384;
-    else if( strHash == "SHA512" )
+    else if( strHash == "SHA512" || strHash == "SHA2-512" )
         return CKM_SHA512;;
 
     return -1;
