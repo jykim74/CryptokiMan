@@ -131,7 +131,7 @@ void DeriveKeyDlg::clickSelectSrcKey()
         QString strID = listData.at(2);
         QString strLabel = manApplet->cryptokiAPI()->getLabel( session_, hObj );
         mSrcLabelText->setText( strLabel );
-        mSrcLabelText->setText( QString("%1").arg( hObj ));
+        mSrcObjectText->setText( QString("%1").arg( hObj ));
     }
 }
 

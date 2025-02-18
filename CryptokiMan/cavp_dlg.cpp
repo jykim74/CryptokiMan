@@ -1379,7 +1379,9 @@ int CAVPDlg::genECCKeyPair( const QString strParam, long *phPri, long *phPub )
 int CAVPDlg::importECCPriKey( const BIN *pECCPri, long *phPri )
 {
     int ret = 0;
-    bool bToken = false;
+    CK_BBOOL bFalse = false;
+    CK_BBOOL bTrue = true;
+
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
     long hSession = mSessionText->text().toLong();
     long uObj = -1;
@@ -1428,7 +1430,12 @@ int CAVPDlg::importECCPriKey( const BIN *pECCPri, long *phPri )
     sTemplate[uCount].ulValueLen = binValue.nLen;
     uCount++;
 
-    ret = pAPI->CreateObject( hSession, sTemplate, uCount, (CK_ULONG_PTR)&uObj );
+    sTemplate[uCount].type = CKA_DERIVE;
+    sTemplate[uCount].pValue = &bTrue;
+    sTemplate[uCount].ulValueLen = sizeof(bTrue);
+    uCount++;
+
+    ret = pAPI->CreateObject( hSession, sTemplate, uCount, (CK_OBJECT_HANDLE_PTR)&uObj );
     if( ret == CKR_OK )
     {
         *phPri = uObj;
@@ -1532,8 +1539,8 @@ int CAVPDlg::deriveKeyECDH( long uPri, const BIN *pPubX, const BIN *pPubY, long*
 {
     int ret = 0;
 
-    bool bTrue = false;
-    bool bFalse  = false;
+    CK_BBOOL bTrue = CK_TRUE;
+    CK_BBOOL bFalse = CK_FALSE;
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
     long hSession = mSessionText->text().toLong();
@@ -1543,7 +1550,8 @@ int CAVPDlg::deriveKeyECDH( long uPri, const BIN *pPubX, const BIN *pPubY, long*
     long uCount = 0;
 
     CK_MECHANISM sMech;
-    CK_ECDH1_DERIVE_PARAMS sParam;
+    CK_ECDH1_DERIVE_PARAMS_PTR pParam = NULL;
+    pParam = (CK_ECDH1_DERIVE_PARAMS *)JS_calloc( 1, sizeof(CK_ECDH1_DERIVE_PARAMS));
 
     BIN binPub = {0,0};
 
@@ -1551,20 +1559,32 @@ int CAVPDlg::deriveKeyECDH( long uPri, const BIN *pPubX, const BIN *pPubY, long*
     CK_KEY_TYPE keyType = CKK_GENERIC_SECRET;
 
     CK_ULONG uKeyLen = 16;
+    char sLabel[16] = "DeriveKey";
 
     memset( &sMech, 0x00, sizeof(sMech));
-    memset( &sParam, 0x00, sizeof(sParam));
 
-    JS_BIN_copy( &binPub, pPubX );
+    JS_BIN_setChar( &binPub, 0x04, 1 );
+    JS_BIN_appendBin( &binPub, pPubX );
     JS_BIN_appendBin( &binPub, pPubY );
 
-    sParam.kdf = CKD_NULL;
-    sParam.pPublicData = binPub.pVal;
-    sParam.ulPublicDataLen = binPub.nLen;
+    pParam->kdf = CKD_NULL;
+    pParam->pPublicData = binPub.pVal;
+    pParam->ulPublicDataLen = binPub.nLen;
+    pParam->pSharedData = NULL;
+    pParam->ulSharedDataLen = 0;
+
+    sMech.mechanism = CKM_ECDH1_DERIVE;
+    sMech.pParameter = pParam;
+    sMech.ulParameterLen = sizeof(CK_ECDH1_DERIVE_PARAMS);
 
     sTemplate[uCount].type = CKA_CLASS;
     sTemplate[uCount].pValue = &objClass;
     sTemplate[uCount].ulValueLen = sizeof(objClass);
+    uCount++;
+
+    sTemplate[uCount].type = CKA_LABEL;
+    sTemplate[uCount].pValue = sLabel;
+    sTemplate[uCount].ulValueLen = sizeof(sLabel);
     uCount++;
 
     sTemplate[uCount].type = CKA_KEY_TYPE;
@@ -1587,7 +1607,7 @@ int CAVPDlg::deriveKeyECDH( long uPri, const BIN *pPubX, const BIN *pPubY, long*
     sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
     uCount++;
 
-    ret = pAPI->DeriveKey( hSession, &sMech, uPri, sTemplate, uCount, (CK_ULONG_PTR)&uObj );
+    ret = pAPI->DeriveKey( hSession, &sMech, uPri, sTemplate, uCount, (CK_OBJECT_HANDLE_PTR)&uObj );
     if( ret == CKR_OK )
     {
         *phObj = uObj;
@@ -1595,6 +1615,8 @@ int CAVPDlg::deriveKeyECDH( long uPri, const BIN *pPubX, const BIN *pPubY, long*
 
 end :
     JS_BIN_reset( &binPub );
+    if( pParam ) JS_free( pParam );
+
     return ret;
 }
 
@@ -1768,6 +1790,8 @@ int CAVPDlg::makeADData( const BIN *pKey, const BIN *pIV, const BIN *pCT, const 
     long hKey = -1;
     int nKeyAlg = _getCKK( strAlg );
 
+    BIN binSrc = {0,0};
+
     CK_MECHANISM sMech;
     memset( &sMech, 0x00, sizeof(sMech));
 
@@ -1799,21 +1823,17 @@ int CAVPDlg::makeADData( const BIN *pKey, const BIN *pIV, const BIN *pCT, const 
     ret = pAPI->DecryptInit( hSession, &sMech, hKey );
     if( ret != 0 ) goto err;
 
-    if( pCT->nLen > 0 )
-    {
-        ret = pAPI->Decrypt( hSession, pCT->pVal, pCT->nLen, NULL, (CK_ULONG_PTR)&uOutLen );
-        if( ret != 0 ) goto end;
-        pOut = (unsigned char *)JS_calloc( 1, uOutLen );
+    JS_BIN_copy( &binSrc, pCT );
+    JS_BIN_appendBin( &binSrc, pTag );
 
-        ret = pAPI->Decrypt( hSession, pCT->pVal, pCT->nLen, pOut, (CK_ULONG_PTR)&uOutLen );
-        if( ret != 0 ) goto end;
+    ret = pAPI->Decrypt( hSession, binSrc.pVal, binSrc.nLen, NULL, (CK_ULONG_PTR)&uOutLen );
+    if( ret != 0 ) goto end;
+    pOut = (unsigned char *)JS_calloc( 1, uOutLen );
 
-        JS_BIN_set( &binPT, pOut, uOutLen );
-    }
-    else
-    {
-        ret = pAPI->DecryptFinal( hSession, pTag->pVal, (CK_ULONG_PTR)&pTag->nLen );
-    }
+    ret = pAPI->Decrypt( hSession, binSrc.pVal, binSrc.nLen, pOut, (CK_ULONG_PTR)&uOutLen );
+    if( ret != 0 ) goto end;
+
+    JS_BIN_set( &binPT, pOut, uOutLen );
 
  end :
     if( ret == 0 )
@@ -1835,6 +1855,7 @@ err:
 
     if( pOut ) JS_free( pOut );
     JS_BIN_reset( &binPT );
+    JS_BIN_reset( &binSrc );
 
     return ret;
 }
