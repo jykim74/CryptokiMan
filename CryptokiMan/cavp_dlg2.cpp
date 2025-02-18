@@ -1510,9 +1510,14 @@ int CAVPDlg::makeECDH_PKV( const QString strParam, const QString strPubX, const 
 
 end :
     if( ret == 0 )
+    {
         logRsp( "Result = P" );
+    }
     else
+    {
         logRsp( "Result = F" );
+        ret = 0;
+    }
 
     logRsp( "" );
 
