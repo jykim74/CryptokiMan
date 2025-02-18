@@ -1163,7 +1163,7 @@ int CAVPDlg::makeRSA_ES_ENT( int nE, const QString strN, const QString strM )
     JS_BIN_trimLeft( 0x00, &binE );
     JS_PKI_encodeRSAPublicKeyValue( &binN, &binE, &binPub );
 
-    sMech.mechanism = CKM_RSA_PKCS_OAEP;
+    sMech.mechanism = CKM_RSA_PKCS;
 
     ret = importRSAPubKey( &binPub, &uPub );
     if( ret != 0 ) goto end;
