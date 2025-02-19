@@ -1308,18 +1308,18 @@ int CAVPDlg::makeRSA_PSS_SGT( int nE, const QString strPri, const QString strHas
     //    BIN binPub = {0,0};
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    CK_SESSION_HANDLE hSession = mSessionText->text().toLong();
 
     CK_MECHANISM sMech;
 
     long uOutLen = 2048;
     unsigned char sOut[2048];
-    long uPri = -1;
+    CK_OBJECT_HANDLE uPri = -1;
 
     memset( sOut, 0x00, sizeof(sOut));
     memset( &sMech, 0x00, sizeof(sMech));
 
-    sMech.mechanism = CKM_RSA_PKCS_PSS;
+    sMech.mechanism = _getCKM_RSA( strHash, true );
 
     JS_BIN_decodeHex( strM.toStdString().c_str(), &binM );
     JS_BIN_decodeHex( strPri.toStdString().c_str(), &binPri );
@@ -1327,7 +1327,7 @@ int CAVPDlg::makeRSA_PSS_SGT( int nE, const QString strPri, const QString strHas
     //    ret = JS_PKI_RSAGenKeyPair( 2048, nE, &binPub, &binPri );
     //    if( ret != 0 ) goto end;
 
-    ret = importRSAPriKey( &binPri, &uPri );
+    ret = importRSAPriKey( &binPri, (long *)&uPri );
     if( ret != 0 ) goto end;
 
     ret = pAPI->SignInit( hSession, &sMech, uPri );
@@ -1385,7 +1385,7 @@ int CAVPDlg::makeRSA_PSS_SVT( int nE, const QString strN, const QString strHash,
     ret = importRSAPubKey( &binPub, &uPub );
     if( ret != 0 ) goto end;
 
-    sMech.mechanism = CKM_RSA_PKCS_PSS;
+    sMech.mechanism = _getCKM_RSA( strHash, true );
 
     ret = pAPI->VerifyInit( hSession, &sMech, uPub );
     if( ret != 0 ) goto end;

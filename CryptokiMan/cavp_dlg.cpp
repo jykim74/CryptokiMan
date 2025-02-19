@@ -115,13 +115,13 @@ int _getCKM_RSA( const QString strHash, bool bPSS )
     {
         if( strHash == "SHA1" || strHash == "SHA-1" )
             return CKM_SHA1_RSA_PKCS_PSS;
-        else if( strHash == "SHA224" )
+        else if( strHash == "SHA224" || strHash == "SHA2-224" )
             return CKM_SHA224_RSA_PKCS_PSS;
-        else if( strHash == "SHA256" )
+        else if( strHash == "SHA256" || strHash == "SHA2-256" )
             return CKM_SHA256_RSA_PKCS_PSS;
-        else if( strHash == "SHA384" )
+        else if( strHash == "SHA384" || strHash == "SHA2-384" )
             return CKM_SHA384_RSA_PKCS_PSS;
-        else if( strHash == "SHA512" )
+        else if( strHash == "SHA512" || strHash == "SHA2-512" )
             return CKM_SHA512_RSA_PKCS_PSS;
 
         return CKM_RSA_PKCS_PSS;
@@ -130,13 +130,13 @@ int _getCKM_RSA( const QString strHash, bool bPSS )
     {
         if( strHash == "SHA1" || strHash == "SHA-1" )
             return CKM_SHA1_RSA_PKCS;
-        else if( strHash == "SHA224" )
+        else if( strHash == "SHA224" || strHash == "SHA2-224" )
             return CKM_SHA224_RSA_PKCS;
-        else if( strHash == "SHA256" )
+        else if( strHash == "SHA256" || strHash == "SHA2-256" )
             return CKM_SHA256_RSA_PKCS;
-        else if( strHash == "SHA384" )
+        else if( strHash == "SHA384" || strHash == "SHA2-384" )
             return CKM_SHA384_RSA_PKCS;
-        else if( strHash == "SHA512" )
+        else if( strHash == "SHA512" || strHash == "SHA2-512" )
             return CKM_SHA512_RSA_PKCS;
 
         return CKM_RSA_PKCS;
@@ -1073,12 +1073,12 @@ int CAVPDlg::genRSAKeyPair( int nKeyLen, int nE, long *phPri, long *phPub )
 int CAVPDlg::importRSAPriKey( const BIN *pRSAPri, long *phPri )
 {
     int ret = 0;
-    bool bToken = false;
+    CK_BBOOL bTrue = CK_TRUE;
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
     long hSession = mSessionText->text().toLong();
     long uObj = -1;
 
-    CK_ATTRIBUTE sTemplate[10];
+    CK_ATTRIBUTE sTemplate[20];
     long uCount = 0;
 
     CK_OBJECT_CLASS objClass = CKO_PRIVATE_KEY;
@@ -1108,6 +1108,11 @@ int CAVPDlg::importRSAPriKey( const BIN *pRSAPri, long *phPri )
     sTemplate[uCount].type = CKA_KEY_TYPE;
     sTemplate[uCount].pValue = &keyType;
     sTemplate[uCount].ulValueLen = sizeof(keyType);
+    uCount++;
+
+    sTemplate[uCount].type = CKA_SIGN;
+    sTemplate[uCount].pValue = &bTrue;
+    sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
     uCount++;
 
     if( sRSAVal.pN )
@@ -1205,7 +1210,7 @@ end :
 int CAVPDlg::importRSAPubKey( const BIN *pRSAPub, long *phPub )
 {
     int ret = 0;
-    bool bToken = false;
+    CK_BBOOL bTrue = CK_TRUE;
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
     long hSession = mSessionText->text().toLong();
     long uObj = -1;
@@ -1234,6 +1239,11 @@ int CAVPDlg::importRSAPubKey( const BIN *pRSAPub, long *phPub )
     sTemplate[uCount].type = CKA_KEY_TYPE;
     sTemplate[uCount].pValue = &keyType;
     sTemplate[uCount].ulValueLen = sizeof(keyType);
+    uCount++;
+
+    sTemplate[uCount].type = CKA_VERIFY;
+    sTemplate[uCount].pValue = &bTrue;
+    sTemplate[uCount].ulValueLen = sizeof(CK_BBOOL);
     uCount++;
 
     if( sRSAVal.pN )
