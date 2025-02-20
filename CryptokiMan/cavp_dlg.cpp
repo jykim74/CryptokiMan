@@ -4611,7 +4611,15 @@ int CAVPDlg::rsaJsonWork( const QString strMode, const QJsonObject jObject, QJso
         sRSAKeyVal.pE = (char *)strE.toStdString().c_str();
         sRSAKeyVal.pN = (char *)strN.toStdString().c_str();
 
+        JS_PKI_setRSAKeyVal( &sRSAKeyVal,
+                            strN.toStdString().c_str(),
+                            strE.toStdString().c_str(),
+                            NULL, NULL, NULL, NULL, NULL, NULL );
+
         ret = JS_PKI_encodeRSAPublicKey( &sRSAKeyVal, &binPub );
+
+        JS_PKI_resetRSAKeyVal( &sRSAKeyVal );
+
         if( ret != 0 ) goto end;
 
         ret = importRSAPubKey( &binPub, &uPub );
@@ -4633,6 +4641,10 @@ int CAVPDlg::rsaJsonWork( const QString strMode, const QJsonObject jObject, QJso
 
         QJsonObject jRspTestObj;
         jRspTestObj["tcId"] = nTcId;
+
+        uPri = -1;
+        uPub = -1;
+
 
         if( mACVP_SetTCIDCheck->isChecked() == true )
         {
@@ -4657,6 +4669,7 @@ int CAVPDlg::rsaJsonWork( const QString strMode, const QJsonObject jObject, QJso
 
                 memset( &sRSAKey, 0x00, sizeof(sRSAKey));
 
+
                 ret = genRSAKeyPair( nModulo, nExponent, &uPri, &uPub );
                 if( ret != 0 ) goto end;
 
@@ -4673,6 +4686,9 @@ int CAVPDlg::rsaJsonWork( const QString strMode, const QJsonObject jObject, QJso
 
                 if( uPri > 0 ) pAPI->DestroyObject( hSession, uPri );
                 if( uPub > 0 ) pAPI->DestroyObject( hSession, uPub );
+
+                uPri = -1;
+                uPub = -1;
             }
             else if( strMode == "sigGen" )
             {
@@ -5109,12 +5125,20 @@ int CAVPDlg::macJsonWork( const QString strAlg, const QJsonObject jObject, QJson
                 else
                 {
                     QString strUseHash = _getHashNameFromMAC( strAlg );
-                    sMech.mechanism = _getCKM_Hash( strUseHash );
+                    sMech.mechanism = _getCKM_HMAC( strUseHash );
 
                     ret = pAPI->SignInit( hSession, &sMech, uObj );
                     if( ret != 0 ) goto end;
 
-                    ret = pAPI->Sign( hSession, binMsg.pVal, binMsg.nLen, sOut, (CK_ULONG_PTR)&nOutLen );
+                    if( binMsg.nLen > 0 )
+                    {
+                        ret = pAPI->SignUpdate( hSession, binMsg.pVal, binMsg.nLen );
+                        if( ret != 0 ) goto end;
+                    }
+
+                    nOutLen = sizeof(sOut);
+
+                    ret = pAPI->SignFinal( hSession, sOut, (CK_ULONG_PTR)&nOutLen );
                     if( ret != 0 ) goto end;
 
                     JS_BIN_set( &binGenMAC, sOut, nOutLen );
@@ -5151,12 +5175,20 @@ int CAVPDlg::macJsonWork( const QString strAlg, const QJsonObject jObject, QJson
                 else
                 {
                     QString strUseHash = _getHashNameFromMAC( strAlg );
-                    sMech.mechanism = _getCKM_Hash( strUseHash );
+                    sMech.mechanism = _getCKM_HMAC( strUseHash );
 
                     ret = pAPI->SignInit( hSession, &sMech, uObj );
                     if( ret != 0 ) goto end;
 
-                    ret = pAPI->Sign( hSession, binMsg.pVal, binMsg.nLen, sOut, (CK_ULONG_PTR)&nOutLen );
+                    if( binMsg.nLen > 0 )
+                    {
+                        ret = pAPI->SignUpdate( hSession, binMsg.pVal, binMsg.nLen );
+                        if( ret != 0 ) goto end;
+                    }
+
+                    nOutLen = sizeof(sOut);
+
+                    ret = pAPI->SignFinal( hSession, sOut, (CK_ULONG_PTR)&nOutLen );
                     if( ret != 0 ) goto end;
 
                     JS_BIN_set( &binMAC, sOut, nOutLen );
@@ -5812,7 +5844,8 @@ int CAVPDlg::kdaJsonWork( const QString strAlg, const QJsonObject jObject, QJson
                 JS_BIN_decodeHex( strPublicServerX.toStdString().c_str(), &binPubX );
                 JS_BIN_decodeHex( strPublicServerY.toStdString().c_str(), &binPubY );
 
-                JS_BIN_copy( &binPub, &binPubX );
+                JS_BIN_setChar( &binPub, 0x04, 1 );
+                JS_BIN_appendBin( &binPub, &binPubX );
                 JS_BIN_appendBin( &binPub, &binPubY );
 
                 sMech.mechanism = CKM_ECDH1_DERIVE;
