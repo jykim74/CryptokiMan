@@ -31,7 +31,7 @@ int _getCKK( const QString strAlg )
     return -1;
 }
 
-int _getCKM( const QString strAlg, const QString strMode )
+int _getCKM_Cipher( const QString strAlg, const QString strMode )
 {
     if( strAlg == "AES" )
     {
@@ -141,11 +141,6 @@ int _getCKM_RSA( const QString strHash, bool bPSS )
 
         return CKM_RSA_PKCS;
     }
-}
-
-int _getCKM_Cipher( const QString strAlg, const QString strMode )
-{
-    return -1;
 }
 
 static QString _getHashName( const QString strACVPHash )
@@ -1653,7 +1648,7 @@ int CAVPDlg::makeSymData( const QString strAlgMode, const BIN *pKey, const BIN *
 
     memset( &sMech, 0x00, sizeof(sMech));
 
-    sMech.mechanism = _getCKM( strAlg, strMode );
+    sMech.mechanism = _getCKM_Cipher( strAlg, strMode );
     sMech.pParameter = pIV->pVal;
     sMech.ulParameterLen = pIV->nLen;
 
@@ -1716,7 +1711,7 @@ int CAVPDlg::makeAEData( const BIN *pKey, const BIN *pIV, const BIN *pPT, const 
     logRsp( QString( "PT = %1").arg( getHexString( pPT )));
     logRsp( QString( "Adata = %1").arg( getHexString( pAAD )));
 
-    sMech.mechanism = _getCKM( strAlg, strMode );
+    sMech.mechanism = _getCKM_Cipher( strAlg, strMode );
 
     if( sMech.mechanism == CKM_AES_GCM )
     {
@@ -1811,7 +1806,7 @@ int CAVPDlg::makeADData( const BIN *pKey, const BIN *pIV, const BIN *pCT, const 
     logRsp( QString( "T = %1").arg( getHexString( pTag )));
     logRsp( QString( "Adata = %1").arg( getHexString( pAAD )));
 
-    sMech.mechanism = _getCKM( strAlg, strMode );
+    sMech.mechanism = _getCKM_Cipher( strAlg, strMode );
 
     if( sMech.mechanism == CKM_AES_GCM )
     {
@@ -4222,10 +4217,18 @@ int CAVPDlg::hashJsonWork( const QString strAlg, const QJsonObject jObject, QJso
         }
         else
         {
+            nOutLen = sizeof(sOut);
+
             ret = pAPI->DigestInit( hSession, &sMech );
             if( ret != 0 ) goto end;
 
-            ret = pAPI->Digest( hSession, binMsg.pVal, binMsg.nLen, sOut, (CK_ULONG_PTR)&nOutLen );
+            if( binMsg.nLen > 0 )
+            {
+                ret = pAPI->DigestUpdate( hSession, binMsg.pVal, binMsg.nLen );
+                if( ret != 0 ) goto end;
+            }
+
+            ret = pAPI->DigestFinal( hSession, sOut, (CK_ULONG_PTR)&nOutLen );
             if( ret != 0 ) goto end;
 
             jRspTestObj["md"] = getHexString( sOut, nOutLen );
@@ -5403,6 +5406,8 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
 
                 jRspTestObj["pt"] = getHexString( &binPT );
             }
+
+            if( uObj > 0 ) pAPI->DestroyObject( hSession, uObj );
         }
         else // AFT
         {
@@ -5498,8 +5503,6 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
                     memset( &sMech, 0x00, sizeof(sMech));
                     sMech.mechanism = _getCKM_Cipher( strSymAlg, strMode );
 
-                    ret = createKey( CKK_AES, &binKey, &uObj );
-                    if( ret != 0 ) goto end;
 
                     ret = pAPI->EncryptInit( hSession, &sMech, uObj );
                     if( ret != 0 ) goto end;
@@ -5513,6 +5516,8 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
 
                     jRspTestObj["ct"] = getHexString( &binCT );
                 }
+
+                if( uObj > 0 ) pAPI->DestroyObject( hSession, uObj );
             }
             else
             {
@@ -5604,8 +5609,6 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
                     memset( &sMech, 0x00, sizeof(sMech));
                     sMech.mechanism = _getCKM_Cipher( strSymAlg, strMode );
 
-                    ret = createKey( CKK_AES, &binKey, &uObj );
-                    if( ret != 0 ) goto end;
 
                     ret = pAPI->DecryptInit( hSession, &sMech, uObj );
                     if( ret != 0 ) goto end;
@@ -5621,7 +5624,7 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
                     if( ret != 0 ) goto end;
                 }
 
-
+                if( uObj > 0 ) pAPI->DestroyObject( hSession, uObj );
             }
         }
 
