@@ -100,7 +100,9 @@ SOURCES += \
         csr_info_dlg.cpp \
         code_editor.cpp \
         hsm_man_dlg.cpp \
-        secret_info_dlg.cpp
+        secret_info_dlg.cpp \
+        cavp_dlg.cpp \
+        cavp_dlg2.cpp
 
 HEADERS += \
         about_dlg.h \
@@ -173,7 +175,8 @@ HEADERS += \
         csr_info_dlg.h \
         code_editor.h \
         hsm_man_dlg.h \
-        secret_info_dlg.h
+        secret_info_dlg.h \
+        cavp_dlg.h
 
 FORMS += \
         about_dlg.ui \
@@ -223,7 +226,8 @@ FORMS += \
         make_csr_dlg.ui \
         csr_info_dlg.ui \
         hsm_man_dlg.ui \
-        secret_info_dlg.ui
+        secret_info_dlg.ui \
+        cavp_dlg.ui
 
 
 # Default rules for deployment.
