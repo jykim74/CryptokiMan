@@ -901,6 +901,7 @@ int CAVPDlg::createKey( int nKeyType, const BIN *pKey, long *phObj )
     int nCount = 0;
 
     CK_OBJECT_CLASS keyClass = CKO_SECRET_KEY;
+    CK_KEY_TYPE keyType = nKeyType;
 
     memset( sTemplate, 0x00, sizeof(sTemplate));
 
@@ -915,8 +916,8 @@ int CAVPDlg::createKey( int nKeyType, const BIN *pKey, long *phObj )
     nCount++;
 
     sTemplate[nCount].type = CKA_KEY_TYPE;
-    sTemplate[nCount].pValue = &nKeyType;
-    sTemplate[nCount].ulValueLen = sizeof(nKeyType);
+    sTemplate[nCount].pValue = &keyType;
+    sTemplate[nCount].ulValueLen = sizeof(keyType);
     nCount++;
 
     if( bToken == true )
@@ -979,7 +980,7 @@ int CAVPDlg::genRSAKeyPair( int nKeyLen, int nE, long *phPri, long *phPub )
     CK_OBJECT_CLASS priClass = CKO_PRIVATE_KEY;
 
     long hSession = -1;
-    int nKeyType = CKK_RSA;
+    CK_KEY_TYPE nKeyType = CKK_RSA;
 
     CK_OBJECT_HANDLE hPubKey = -1;
     CK_OBJECT_HANDLE hPriKey = -1;
@@ -1304,7 +1305,7 @@ int CAVPDlg::genECCKeyPair( const QString strParam, long *phPri, long *phPub )
     char sPriLabel[128] = "GenECCPriKey";
 
     CK_MECHANISM sMech;
-    int nKeyType = CKK_EC;
+    CK_KEY_TYPE nKeyType = CKK_EC;
 
     BIN binParam = {0,0};
     char sParamHex[256];
