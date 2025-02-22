@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>592</width>
-    <height>696</height>
+    <width>726</width>
+    <height>953</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -261,7 +261,7 @@
      <property name="currentIndex">
       <number>2</number>
      </property>
-     <widget class="QWidget" name="tab_3">
+     <widget class="QWidget" name="mTabMCT">
       <attribute name="title">
        <string>Monte Carlo Test</string>
       </attribute>
@@ -1296,7 +1296,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab">
+     <widget class="QWidget" name="mTabCAVP">
       <attribute name="title">
        <string>CAVP</string>
       </attribute>
@@ -1895,7 +1895,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_2">
+     <widget class="QWidget" name="mTabACVP">
       <attribute name="title">
        <string>ACVP</string>
       </attribute>

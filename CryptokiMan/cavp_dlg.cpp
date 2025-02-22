@@ -334,6 +334,13 @@ CAVPDlg::CAVPDlg(QWidget *parent) :
 
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);
+
+    mTabMCT->layout()->setSpacing(5);
+    mTabMCT->layout()->setMargin(5);
+    mTabCAVP->layout()->setSpacing(5);
+    mTabCAVP->layout()->setMargin(5);
+    mTabACVP->layout()->setSpacing(5);
+    mTabACVP->layout()->setMargin(5);
 #endif
     initUI();
 
