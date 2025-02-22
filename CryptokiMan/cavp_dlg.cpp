@@ -5,6 +5,7 @@
 #include <QJsonDocument>
 #include <QDateTime>
 #include <QStringList>
+#include <QSettings>
 
 #include "cavp_dlg.h"
 #include "man_applet.h"
@@ -392,6 +393,8 @@ void CAVPDlg::initUI()
     checkACVPSetTcId();
     checkACVPSetTgId();
 
+    mRspPathText->setText( gettingRspPath() );
+
     mTabWidget->setCurrentIndex(0);
 }
 
@@ -428,11 +431,45 @@ void CAVPDlg::clickFindRsp()
     QString strRspPath = mRspPathText->text();
     if( strRspPath.length() < 1 ) strRspPath = manApplet->curPath();
 
-    QString strFileName = findFile( this, JS_FILE_TYPE_TXT, strRspPath );
-    if( strFileName.length() > 0 )
+    QString strFolderName = findFolder( this, strRspPath );
+    if( strFolderName.length() > 0 )
     {
-        mRspPathText->setText( strFileName );
+        mRspPathText->setText( strFolderName );
+        settingRspPath( strFolderName );
     }
+}
+
+void CAVPDlg::settingRspPath( const QString strPath )
+{
+    QSettings setting;
+    setting.beginGroup( "CAVP" );
+    setting.setValue( "CAVP_RSP_PATH", strPath );
+    setting.endGroup();
+}
+
+QString CAVPDlg::gettingRspPath()
+{
+    QSettings setting;
+    QString strPath;
+
+    setting.beginGroup( "CAVP" );
+    strPath = setting.value( "CAVP_RSP_PATH", "" ).toString();
+    setting.endGroup();
+
+    return strPath;
+}
+
+const QString CAVPDlg::setRspName( const QString strFileName )
+{
+    QString strRspPath = mRspPathText->text();
+
+    rsp_name_ = QString( "%1/%2").arg( strRspPath ).arg( strFileName );
+    return rsp_name_;
+}
+
+void CAVPDlg::clearRspName()
+{
+    rsp_name_.clear();
 }
 
 void CAVPDlg::clickACVPFindJson()
@@ -842,17 +879,16 @@ void CAVPDlg::logRsp( QString strLog )
 {
     manApplet->log( strLog );
 
-    QString strRspPath = mRspPathText->text();
-    if( strRspPath.length() < 2 ) return;
+    if( rsp_name_.length() < 2 ) return;
 
-    QFile file( strRspPath );
+    QFile file( rsp_name_ );
     file.open(QFile::WriteOnly | QFile::Append| QFile::Text );
     QTextStream SaveFile( &file );
     SaveFile << strLog << "\n";
     file.close();
 }
 
-QString CAVPDlg::getRspFile(const QString &reqFileName )
+QString CAVPDlg::getRspFile(const QString &reqFileName, const QString strExt )
 {
     QFileInfo fileInfo;
     fileInfo.setFile( reqFileName );
@@ -864,9 +900,9 @@ QString CAVPDlg::getRspFile(const QString &reqFileName )
     QString extName = fileInfo.completeSuffix();
     QString filePath = fileInfo.canonicalPath();
 
-    QString fileRspName = QString( "%1.rsp" ).arg( fileName );
-    QString strPath = QString( "%1/%2").arg( strRspPath ).arg( fileRspName );
+    QString fileRspName = QString( "%1.%2" ).arg( fileName ).arg( strExt );
 
+    QString strPath = setRspName( fileRspName );
     manApplet->log( QString( "RspName: %1").arg(strPath));
 
     return strPath;

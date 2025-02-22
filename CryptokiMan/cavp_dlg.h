@@ -130,7 +130,7 @@ private:
     void initUI();
     void initialize();
     void logRsp( const QString strLog );
-    QString getRspFile(const QString &reqFileName );
+    QString getRspFile(const QString &reqFileName, const QString strExt = "rsp" );
     int getNameValue( const QString strLine, QString& name, QString& value );
 
     int makeSymData( const QString strAlgMode, const BIN *pKey, const BIN *pIV, const BIN *pPT );
@@ -199,8 +199,15 @@ private:
     int blockCipherJsonWork( const QString strAlg, const QJsonObject jObject, QJsonObject& jRspObject );
     int kdaJsonWork( const QString strAlg, const QJsonObject jObject, QJsonObject& jRspObject );
 
+
+    void settingRspPath( const QString strPath );
+    QString gettingRspPath();
+    const QString setRspName( const QString strFileName );
+    void clearRspName();
+
     long session_;
     int slot_index_;
+    QString rsp_name_;
 };
 
 #endif // CAVP_DLG_H
