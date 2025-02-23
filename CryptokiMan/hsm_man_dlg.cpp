@@ -435,7 +435,12 @@ void HsmManDlg::loadCertList()
         mCertTable->setItem(0, 1, new QTableWidgetItem( QString("%1").arg( hObjects[i] )));
         mCertTable->setItem(0, 2, new QTableWidgetItem( QString("%1").arg( pDN)));
 
-        if( pLabel ) JS_free( pLabel );
+        if( pLabel )
+        {
+            JS_free( pLabel );
+            pLabel = NULL;
+        }
+
         if( pDN ) JS_free( pDN );
     }
 
@@ -532,7 +537,11 @@ void HsmManDlg::loadPublicList()
         mPublicTable->setItem(0, 2, new QTableWidgetItem( QString("%1").arg( hObjects[i] )));
         mPublicTable->setItem(0, 3, new QTableWidgetItem( QString("%1").arg( getHexString( &binID ))));
 
-        if( pLabel ) JS_free( pLabel );
+        if( pLabel )
+        {
+            JS_free( pLabel );
+            pLabel = NULL;
+        }
     }
 
 end :
@@ -624,7 +633,11 @@ void HsmManDlg::loadPrivateList()
         mPrivateTable->setItem(0, 2, new QTableWidgetItem( QString("%1").arg( hObjects[i] )));
         mPrivateTable->setItem(0, 3, new QTableWidgetItem( QString("%1").arg( getHexString( &binID ))));
 
-        if( pLabel ) JS_free( pLabel );
+        if( pLabel )
+        {
+            JS_free( pLabel );
+            pLabel = NULL;
+        }
     }
 
 end :
@@ -715,7 +728,11 @@ void HsmManDlg::loadSecretList()
         mSecretTable->setItem(0, 2, new QTableWidgetItem( QString("%1").arg( hObjects[i] )));
         mSecretTable->setItem(0, 3, new QTableWidgetItem( QString("%1").arg( getHexString( &binID ))));
 
-        if( pLabel ) JS_free( pLabel );
+        if( pLabel )
+        {
+            JS_free( pLabel );
+            pLabel = NULL;
+        }
     }
 
 end :

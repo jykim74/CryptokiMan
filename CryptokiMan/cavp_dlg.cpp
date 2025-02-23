@@ -98,13 +98,13 @@ int _getCKM_ECDSA( const QString strHash )
 {
     if( strHash == "SHA1" || strHash == "SHA-1" )
         return CKM_ECDSA_SHA1;
-    else if( strHash == "SHA224" )
+    else if( strHash == "SHA224" || strHash == "SHA2-224" )
         return CKM_ECDSA_SHA224;
-    else if( strHash == "SHA256" )
+    else if( strHash == "SHA256" || strHash == "SHA2-256" )
         return CKM_ECDSA_SHA256;
-    else if( strHash == "SHA384" )
+    else if( strHash == "SHA384" || strHash == "SHA2-384" )
         return CKM_ECDSA_SHA384;
-    else if( strHash == "SHA512" )
+    else if( strHash == "SHA512" || strHash == "SHA2-512" )
         return CKM_ECDSA_SHA512;
 
     return -1;
@@ -1503,7 +1503,7 @@ end :
 int CAVPDlg::importECCPubKey( const BIN *pECCPub, long *phPub )
 {
     int ret = 0;
-    bool bToken = false;
+    CK_BBOOL bTrue = CK_TRUE;
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
     long hSession = mSessionText->text().toLong();
     long uObj = -1;
@@ -1537,6 +1537,11 @@ int CAVPDlg::importECCPubKey( const BIN *pECCPub, long *phPub )
     sTemplate[uCount].type = CKA_KEY_TYPE;
     sTemplate[uCount].pValue = &keyType;
     sTemplate[uCount].ulValueLen = sizeof(keyType);
+    uCount++;
+
+    sTemplate[uCount].type = CKA_VERIFY;
+    sTemplate[uCount].pValue = &bTrue;
+    sTemplate[uCount].ulValueLen = sizeof(bTrue);
     uCount++;
 
     JS_PKI_getHexOIDFromSN( sECVal.pCurveOID, sParamHex );
