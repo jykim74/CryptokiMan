@@ -1027,6 +1027,8 @@ int CAVPDlg::genRSAKeyPair( int nKeyLen, int nE, long *phPri, long *phPub )
     CK_MECHANISM sMech;
     BIN binExp = {0,0};
 
+    CK_ULONG uModulusBits = nKeyLen;
+
     memset( &sMech, 0x00, sizeof(sMech));
     sMech.mechanism = CKM_RSA_PKCS_KEY_PAIR_GEN;
 
@@ -1044,8 +1046,8 @@ int CAVPDlg::genRSAKeyPair( int nKeyLen, int nE, long *phPri, long *phPub )
     nPubCount++;
 
     sPubTemplate[nPubCount].type = CKA_MODULUS_BITS;
-    sPubTemplate[nPubCount].pValue = &nKeyLen;
-    sPubTemplate[nPubCount].ulValueLen = sizeof( nKeyLen );
+    sPubTemplate[nPubCount].pValue = &uModulusBits;
+    sPubTemplate[nPubCount].ulValueLen = sizeof( uModulusBits );
     nPubCount++;
 
     JS_BIN_intToBin( nE, &binExp );
@@ -1071,6 +1073,11 @@ int CAVPDlg::genRSAKeyPair( int nKeyLen, int nE, long *phPri, long *phPub )
     sPriTemplate[nPriCount].type = CKA_CLASS;
     sPriTemplate[nPriCount].pValue = &priClass;
     sPriTemplate[nPriCount].ulValueLen = sizeof(priClass);
+    nPriCount++;
+
+    sPriTemplate[nPriCount].type = CKA_KEY_TYPE;
+    sPriTemplate[nPriCount].pValue = &nKeyType;
+    sPriTemplate[nPriCount].ulValueLen = sizeof(nKeyType);
     nPriCount++;
 
     if( bToken == true )
@@ -5543,7 +5550,6 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
                 else if( strMode.toUpper() == "KW" || strMode.toUpper() == "KWP" )
                 {
                     long uWrappingObj = -1;
-                    long uObj = -1;
 
                     if( strMode == "KWP" )
                     {
@@ -5579,8 +5585,6 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
                 }
                 else
                 {
-                    long uObj = -1;
-
                     memset( &sMech, 0x00, sizeof(sMech));
                     sMech.mechanism = _getCKM_Cipher( strSymAlg, strMode );
 
@@ -5602,7 +5606,6 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
             }
             else
             {
-                long uObj = -1;
                 ret = createKey( CKK_AES, &binKey, &uObj );
                 if( ret != 0 ) goto end;
 
@@ -5654,7 +5657,6 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
                 else if( strMode.toUpper() == "KW" || strMode.toUpper() == "KWP" )
                 {
                     long uWrappingObj = -1;
-                    long uObj = -1;
                     CK_ATTRIBUTE sTemplate[10];
                     int nCount = 0;
 
@@ -5685,7 +5687,6 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
                 }
                 else
                 {
-                    long uObj = -1;
 
                     memset( &sMech, 0x00, sizeof(sMech));
                     sMech.mechanism = _getCKM_Cipher( strSymAlg, strMode );
