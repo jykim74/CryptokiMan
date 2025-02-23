@@ -5854,9 +5854,9 @@ int CAVPDlg::kdaJsonWork( const QString strAlg, const QJsonObject jObject, QJson
                 memset( &sECKey, 0x00, sizeof(sECKey));
 
                 CK_OBJECT_CLASS keyClass = CKO_SECRET_KEY;
-                int nKeyType = CKK_GENERIC_SECRET;
+                CK_KEY_TYPE nKeyType = CKK_GENERIC_SECRET;
 
-                int uKeyLen = -1;
+                CK_ULONG uKeyLen = -1;
 
 
                 ret = genECCKeyPair( strUseCurve, &uPri, &uPub );
@@ -5864,11 +5864,11 @@ int CAVPDlg::kdaJsonWork( const QString strAlg, const QJsonObject jObject, QJson
 
                 if( strCurve == "P-256" )
                 {
-                    uKeyLen = 32;
+                    uKeyLen = 32 * 8;
                 }
                 else if( strCurve == "P-384" )
                 {
-                    uKeyLen = 48;
+                    uKeyLen = 48 * 8;
                 }
 
                 sTemplate[nCount].type = CKA_CLASS;
