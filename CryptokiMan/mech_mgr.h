@@ -39,6 +39,8 @@ public:
     const QStringList getEncList( int type = MECH_TYPE_ALL );
     const QStringList getDecList( int type = MECH_TYPE_ALL );
 
+    bool isValid( int nCKM_ID );
+
 private:
     long slot_id_;
 };

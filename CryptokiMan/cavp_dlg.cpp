@@ -472,6 +472,24 @@ void CAVPDlg::clearRspName()
     rsp_name_.clear();
 }
 
+bool CAVPDlg::checkValidMech( int nCKM_ID )
+{
+    if( manApplet->settingsMgr()->useDeviceMech() == true )
+    {
+        MechMgr* mechMgr = manApplet->mechMgr();
+        bool bVal = mechMgr->isValid( nCKM_ID );
+
+        if( bVal == false )
+            manApplet->elog( QString( "This mechanism(%1) is not supported" ).arg( nCKM_ID ));
+
+        return bVal;
+    }
+    else
+    {
+        return true;
+    }
+}
+
 void CAVPDlg::clickACVPFindJson()
 {
     QString strRspPath = mACVP_ReqPathText->text();

@@ -394,3 +394,14 @@ const QStringList MechMgr::getDecList( int type )
 
     return decList;
 }
+
+bool MechMgr::isValid( int nCKM_ID )
+{
+    for( int i = 0; i < mech_list_.size(); i++ )
+    {
+        MechRec rec = mech_list_.at(i);
+        if( nCKM_ID == rec.getID() ) return true;
+    }
+
+    return false;
+}

@@ -205,6 +205,8 @@ private:
     const QString setRspName( const QString strFileName );
     void clearRspName();
 
+    bool checkValidMech( int nCKM_ID );
+
     long session_;
     int slot_index_;
     QString rsp_name_;

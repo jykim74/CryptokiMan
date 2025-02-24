@@ -440,41 +440,41 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation>닫기</translation>
     </message>
     <message>
-        <location filename="../cavp_dlg.cpp" line="677"/>
+        <location filename="../cavp_dlg.cpp" line="721"/>
         <source>Enter a tgId</source>
         <translation>tgId를 입력하세요</translation>
     </message>
     <message>
-        <location filename="../cavp_dlg.cpp" line="687"/>
+        <location filename="../cavp_dlg.cpp" line="731"/>
         <source>Enter a tcId</source>
         <translation>tcId를 입력하세요</translation>
     </message>
     <message>
-        <location filename="../cavp_dlg.cpp" line="777"/>
+        <location filename="../cavp_dlg.cpp" line="821"/>
         <source>Enter a full length</source>
         <translation>전체 길이를 입력하세요</translation>
     </message>
     <message>
-        <location filename="../cavp_dlg.cpp" line="785"/>
+        <location filename="../cavp_dlg.cpp" line="829"/>
         <source>Enter a content</source>
         <translation>내용을 입력하세요</translation>
     </message>
     <message>
-        <location filename="../cavp_dlg.cpp" line="4010"/>
+        <location filename="../cavp_dlg.cpp" line="4066"/>
         <source>%1 file save successfully</source>
         <translation>%1 파일 저장에 성공하였습니다.</translation>
     </message>
     <message>
-        <location filename="../cavp_dlg.cpp" line="4502"/>
-        <location filename="../cavp_dlg.cpp" line="4773"/>
+        <location filename="../cavp_dlg.cpp" line="4558"/>
+        <location filename="../cavp_dlg.cpp" line="4829"/>
         <source>Invalid Mode: %1</source>
         <translation>유효하지 않는 모드: %1</translation>
     </message>
     <message>
-        <location filename="../cavp_dlg.cpp" line="4509"/>
-        <location filename="../cavp_dlg.cpp" line="4780"/>
-        <location filename="../cavp_dlg.cpp" line="5202"/>
-        <location filename="../cavp_dlg.cpp" line="5893"/>
+        <location filename="../cavp_dlg.cpp" line="4565"/>
+        <location filename="../cavp_dlg.cpp" line="4836"/>
+        <location filename="../cavp_dlg.cpp" line="5258"/>
+        <location filename="../cavp_dlg.cpp" line="5943"/>
         <source>Invalid test type: %1</source>
         <translation>유효하지 않는 테스트 타입: %1</translation>
     </message>
@@ -5162,33 +5162,33 @@ Do you want to delete the file and continue?</source>
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="737"/>
-        <location filename="../hsm_man_dlg.cpp" line="774"/>
-        <location filename="../hsm_man_dlg.cpp" line="804"/>
-        <location filename="../hsm_man_dlg.cpp" line="854"/>
-        <location filename="../hsm_man_dlg.cpp" line="920"/>
-        <location filename="../hsm_man_dlg.cpp" line="945"/>
-        <location filename="../hsm_man_dlg.cpp" line="975"/>
-        <location filename="../hsm_man_dlg.cpp" line="1014"/>
-        <location filename="../hsm_man_dlg.cpp" line="1041"/>
-        <location filename="../hsm_man_dlg.cpp" line="1069"/>
-        <location filename="../hsm_man_dlg.cpp" line="1094"/>
-        <location filename="../hsm_man_dlg.cpp" line="1124"/>
-        <location filename="../hsm_man_dlg.cpp" line="1162"/>
-        <location filename="../hsm_man_dlg.cpp" line="1189"/>
-        <location filename="../hsm_man_dlg.cpp" line="1216"/>
-        <location filename="../hsm_man_dlg.cpp" line="1240"/>
-        <location filename="../hsm_man_dlg.cpp" line="1270"/>
-        <location filename="../hsm_man_dlg.cpp" line="1297"/>
-        <location filename="../hsm_man_dlg.cpp" line="1324"/>
-        <location filename="../hsm_man_dlg.cpp" line="1351"/>
-        <location filename="../hsm_man_dlg.cpp" line="1402"/>
+        <location filename="../hsm_man_dlg.cpp" line="754"/>
+        <location filename="../hsm_man_dlg.cpp" line="791"/>
+        <location filename="../hsm_man_dlg.cpp" line="821"/>
+        <location filename="../hsm_man_dlg.cpp" line="871"/>
+        <location filename="../hsm_man_dlg.cpp" line="937"/>
+        <location filename="../hsm_man_dlg.cpp" line="962"/>
+        <location filename="../hsm_man_dlg.cpp" line="992"/>
+        <location filename="../hsm_man_dlg.cpp" line="1031"/>
+        <location filename="../hsm_man_dlg.cpp" line="1058"/>
+        <location filename="../hsm_man_dlg.cpp" line="1086"/>
+        <location filename="../hsm_man_dlg.cpp" line="1111"/>
+        <location filename="../hsm_man_dlg.cpp" line="1141"/>
+        <location filename="../hsm_man_dlg.cpp" line="1179"/>
+        <location filename="../hsm_man_dlg.cpp" line="1206"/>
+        <location filename="../hsm_man_dlg.cpp" line="1233"/>
+        <location filename="../hsm_man_dlg.cpp" line="1257"/>
+        <location filename="../hsm_man_dlg.cpp" line="1287"/>
+        <location filename="../hsm_man_dlg.cpp" line="1314"/>
+        <location filename="../hsm_man_dlg.cpp" line="1341"/>
+        <location filename="../hsm_man_dlg.cpp" line="1368"/>
+        <location filename="../hsm_man_dlg.cpp" line="1419"/>
         <source>There are no selected items</source>
         <translation>선택한 아이템이 없습니다</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="756"/>
-        <location filename="../hsm_man_dlg.cpp" line="823"/>
+        <location filename="../hsm_man_dlg.cpp" line="773"/>
+        <location filename="../hsm_man_dlg.cpp" line="840"/>
         <source>failed to get certificate: %1</source>
         <translation>인증서 정보 가져오기 실패: %1</translation>
     </message>
@@ -5197,73 +5197,73 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">인증서를 정말로 지우겠습니까?</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="786"/>
+        <location filename="../hsm_man_dlg.cpp" line="803"/>
         <source>Are you sure to delete the ceritificate?</source>
         <translation>인증서를 정말로 지우겠습니까?</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="792"/>
-        <location filename="../hsm_man_dlg.cpp" line="905"/>
+        <location filename="../hsm_man_dlg.cpp" line="809"/>
+        <location filename="../hsm_man_dlg.cpp" line="922"/>
         <source>The certificate is deleted</source>
         <translation>인증서가 삭제 되었습니다</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="832"/>
+        <location filename="../hsm_man_dlg.cpp" line="849"/>
         <source>Invalid certificate</source>
         <translation>유효하지 않는 인증서</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="869"/>
+        <location filename="../hsm_man_dlg.cpp" line="886"/>
         <source>Do you want to delete a certificate and key pair with the same CKA_ID?</source>
         <translation>인증서와 동일한 CKA_ID 를 가진 키 쌍 모두 지우겠습니까?</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="878"/>
+        <location filename="../hsm_man_dlg.cpp" line="895"/>
         <source>fail to get private handle: %1</source>
         <translation>개인키 핸들 가져오기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="885"/>
+        <location filename="../hsm_man_dlg.cpp" line="902"/>
         <source>fail to get public handle: %1</source>
         <translation>공개키 핸들 가져오기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="993"/>
+        <location filename="../hsm_man_dlg.cpp" line="1010"/>
         <source>failed to get public key: %1</source>
         <translation>공개키 가져오기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="957"/>
+        <location filename="../hsm_man_dlg.cpp" line="974"/>
         <source>Are you sure to delete the public key</source>
         <translation>공개키를 정말로 지우겠습니까?</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="963"/>
+        <location filename="../hsm_man_dlg.cpp" line="980"/>
         <source>The public key is deleted</source>
         <translation>공개키가 삭제 되었습니다</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1142"/>
+        <location filename="../hsm_man_dlg.cpp" line="1159"/>
         <source>failed to get private key: %1</source>
         <translation>개인키 가져오기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1106"/>
+        <location filename="../hsm_man_dlg.cpp" line="1123"/>
         <source>Are you sure to delete the private key</source>
         <translation>개인키를 정말로 지우겠습니까?</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1112"/>
+        <location filename="../hsm_man_dlg.cpp" line="1129"/>
         <source>The private key is deleted</source>
         <translation>개인키가 삭제 되었습니다</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1252"/>
+        <location filename="../hsm_man_dlg.cpp" line="1269"/>
         <source>Are you sure to delete the secret key</source>
         <translation>비밀키를 정말로 지우겠습니까?</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1258"/>
+        <location filename="../hsm_man_dlg.cpp" line="1275"/>
         <source>The secret key is deleted</source>
         <translation>비밀키가 삭제 되었습니다</translation>
     </message>
