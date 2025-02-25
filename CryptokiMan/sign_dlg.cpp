@@ -77,6 +77,8 @@ void SignDlg::initUI()
 
     mKeyTypeCombo->addItems(sKeyList);
     mMechCombo->addItems( sMechSignAsymList );
+    mPSSHashAlgCombo->addItems( kMechDigestList );
+    mPSSMgfCombo->addItems( kMGFList );
 
     connect( mKeyTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(keyTypeChanged(int)));
     connect( mParamText, SIGNAL(textChanged(const QString)), this, SLOT(changeParam(const QString)));
@@ -142,9 +144,15 @@ void SignDlg::setSelectedSlot(int index)
 void SignDlg::changeType( int type )
 {
     if( type == OBJ_SECRET_IDX )
+    {
         mKeyTypeCombo->setCurrentIndex(1);
+
+    }
     else
+    {
         mKeyTypeCombo->setCurrentIndex(0);
+
+    }
 }
 
 void SignDlg::setObject( int type, long hObj )
@@ -155,10 +163,12 @@ void SignDlg::setObject( int type, long hObj )
     if( type == OBJ_PRIKEY_IDX )
     {
         mKeyTypeCombo->setCurrentText( sKeyList[0] );
+
     }
     else if( type == OBJ_SECRET_IDX )
     {
         mKeyTypeCombo->setCurrentText( sKeyList[1] );
+
     }
 
     manApplet->cryptokiAPI()->GetAttributeValue2( session_, hObj, CKA_LABEL, &binVal );
@@ -198,10 +208,14 @@ void SignDlg::keyTypeChanged( int index )
     if( mKeyTypeCombo->currentText() == sKeyList[0] )
     {
         mMechCombo->addItems( sMechSignAsymList );
+        mParamGroup->hide();
+        mPSSGroup->show();
     }
     else if( mKeyTypeCombo->currentText() == sKeyList[1] )
     {
         mMechCombo->addItems( sMechSignSymList );
+        mParamGroup->show();
+        mPSSGroup->hide();
     }
 
     mLabelText->clear();
