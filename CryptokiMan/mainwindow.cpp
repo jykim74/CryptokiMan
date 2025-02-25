@@ -2532,16 +2532,18 @@ void MainWindow::showMechaismInfoDetail( QModelIndex index )
     QTableWidgetItem *item2 = right_table_->item( row, 1 );
     QTableWidgetItem *item3 = right_table_->item( row, 2 );
     QTableWidgetItem *item4 = right_table_->item( row, 3 );
+    QTableWidgetItem *item5 = right_table_->item( row, 4 );
 
     info_text_->clear();
 
     infoLine();
     info( "== Mechanism Information\n" );
     infoLine();
-    info( QString( "Algorithm    : %1\n" ).arg( item1->text() ));
-    info( QString( "Min Key Size : %1\n" ).arg( item2->text() ));
-    info( QString( "Max Key Size : %1\n" ).arg( item3->text() ));
-    info( QString( "Flags        : %1\n" ).arg( item4->text() ));
+    info( QString( "Mechanism    : %1\n" ).arg( item1->text() ));
+    info( QString( "ID           : %1\n" ).arg( item2->text() ));
+    info( QString( "Min Key Size : %1\n" ).arg( item3->text() ));
+    info( QString( "Max Key Size : %1\n" ).arg( item4->text() ));
+    info( QString( "Flags        : %1\n" ).arg( item5->text() ));
     infoLine();
 
     info_text_->moveCursor(QTextCursor::Start);
@@ -3396,7 +3398,7 @@ void MainWindow::showMechanismInfoList(int index)
 
     removeAllRightTable();
 
-    QStringList headerList = { tr("Mechanism"), tr("MinSize"), tr("MaxSize"), tr( "Flags") };
+    QStringList headerList = { tr("Mechanism"), tr( "ID" ), tr("MinSize"), tr("MaxSize"), tr( "Flags") };
 
     right_table_->clear();
     right_table_->horizontalHeader()->setStretchLastSection(true);
@@ -3410,6 +3412,7 @@ void MainWindow::showMechanismInfoList(int index)
     right_table_->setColumnWidth( 0, 180 );
     right_table_->setColumnWidth( 1, 60 );
     right_table_->setColumnWidth( 2, 60 );
+    right_table_->setColumnWidth( 3, 60 );
 
 
     pMechType = (CK_MECHANISM_TYPE_PTR)JS_calloc( ulMechCnt, sizeof(CK_MECHANISM_TYPE));
@@ -3440,15 +3443,17 @@ void MainWindow::showMechanismInfoList(int index)
 
         right_table_->setItem( row, 0, item );
 
+        right_table_->setItem( row, 1, new QTableWidgetItem( QString( "%1" ).arg( pMechType[i] )));
+
         strMsg = QString("%1").arg( stMechInfo.ulMinKeySize );
-        right_table_->setItem( row, 1, new QTableWidgetItem( strMsg ) );
+        right_table_->setItem( row, 2, new QTableWidgetItem( strMsg ) );
 
         strMsg = QString("%1").arg( stMechInfo.ulMaxKeySize );
-        right_table_->setItem( row, 2, new QTableWidgetItem( strMsg ) );
+        right_table_->setItem( row, 3, new QTableWidgetItem( strMsg ) );
 
         strMsg = getMechFlagString( stMechInfo.flags );
 
-        right_table_->setItem( row, 3, new QTableWidgetItem( strMsg ) );
+        right_table_->setItem( row, 4, new QTableWidgetItem( strMsg ) );
 
 
 
