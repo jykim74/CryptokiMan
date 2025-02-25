@@ -1050,6 +1050,11 @@ int CAVPDlg::genRSAKeyPair( int nKeyLen, int nE, long *phPri, long *phPub )
     memset( &sMech, 0x00, sizeof(sMech));
     sMech.mechanism = CKM_RSA_PKCS_KEY_PAIR_GEN;
 
+    if( checkValidMech( sMech.mechanism ) == false )
+    {
+        return -1;
+    }
+
     hSession = mSessionText->text().toLong();
 
     /* Pub Template */
@@ -1375,6 +1380,11 @@ int CAVPDlg::genECCKeyPair( const QString strParam, long *phPri, long *phPub )
     memset( sParamHex, 0x00, sizeof(sParamHex));
     sMech.mechanism = CKM_ECDSA_KEY_PAIR_GEN;
 
+    if( checkValidMech( sMech.mechanism ) == false )
+    {
+        return -1;
+    }
+
     hSession = mSessionText->text().toLong();
 
     /* Pub Template */
@@ -1656,6 +1666,12 @@ int CAVPDlg::deriveKeyECDH( long uPri, const BIN *pPubX, const BIN *pPubY, long*
     sMech.pParameter = pParam;
     sMech.ulParameterLen = sizeof(CK_ECDH1_DERIVE_PARAMS);
 
+    if( checkValidMech( sMech.mechanism ) == false )
+    {
+        ret = -1;
+        goto end;
+    }
+
     sTemplate[uCount].type = CKA_CLASS;
     sTemplate[uCount].pValue = &objClass;
     sTemplate[uCount].ulValueLen = sizeof(objClass);
@@ -1726,6 +1742,12 @@ int CAVPDlg::makeSymData( const QString strAlgMode, const BIN *pKey, const BIN *
     sMech.pParameter = pIV->pVal;
     sMech.ulParameterLen = pIV->nLen;
 
+    if( checkValidMech( sMech.mechanism ) == false )
+    {
+        ret = -1;
+        goto end;
+    }
+
     ret = createKey( nKeyAlg, pKey, &hKey );
     if( ret != 0 ) goto end;
 
@@ -1786,6 +1808,12 @@ int CAVPDlg::makeAEData( const BIN *pKey, const BIN *pIV, const BIN *pPT, const 
     logRsp( QString( "Adata = %1").arg( getHexString( pAAD )));
 
     sMech.mechanism = _getCKM_Cipher( strAlg, strMode );
+
+    if( checkValidMech( sMech.mechanism ) == false )
+    {
+        ret = -1;
+        goto end;
+    }
 
     if( sMech.mechanism == CKM_AES_GCM )
     {
@@ -1882,6 +1910,12 @@ int CAVPDlg::makeADData( const BIN *pKey, const BIN *pIV, const BIN *pCT, const 
 
     sMech.mechanism = _getCKM_Cipher( strAlg, strMode );
 
+    if( checkValidMech( sMech.mechanism ) == false )
+    {
+        ret = -1;
+        goto end;
+    }
+
     if( sMech.mechanism == CKM_AES_GCM )
     {
         setAES_GCMParam( pIV, pAAD, pTag->nLen, &sMech );
@@ -1956,6 +1990,11 @@ int CAVPDlg::makeHashData( int nLen, const BIN *pVal )
     memset( &sMech, 0x00, sizeof(sMech));
 
     sMech.mechanism = _getCKM_Hash( strAlg );
+    if( checkValidMech( sMech.mechanism ) == false )
+    {
+        ret = -1;
+        goto end;
+    }
 
     ret = pAPI->DigestInit( hSession, &sMech );
     if( ret != 0 ) goto end;
@@ -2005,6 +2044,13 @@ int CAVPDlg::makeHMACData( const QString strCount, const QString strKLen, const 
     logRsp( QString( "Key = %1").arg( getHexString( pKey ) ));
     logRsp( QString( "Msg = %1").arg( getHexString( pMsg ) ));
 
+    sMech.mechanism = _getCKM_HMAC( strAlg );
+    if( checkValidMech( sMech.mechanism ) == false )
+    {
+        ret = -1;
+        goto end;
+    }
+
 
     ret = createKey( nKeyType, pKey, &uObj );
     if( ret != 0 )
@@ -2013,7 +2059,7 @@ int CAVPDlg::makeHMACData( const QString strCount, const QString strKLen, const 
         goto end;
     }
 
-    sMech.mechanism = _getCKM_HMAC( strAlg );
+
 
     ret = pAPI->SignInit( hSession, &sMech, uObj );
     if( ret != 0 )
@@ -4201,6 +4247,11 @@ int CAVPDlg::hashJsonWork( const QString strAlg, const QJsonObject jObject, QJso
     }
 
     sMech.mechanism = _getCKM_Hash( strHash );
+    if( checkValidMech( sMech.mechanism ) == false )
+    {
+        ret = -1;
+        goto end;
+    }
 
     for( int i = 0; i < jArr.size(); i++ )
     {
@@ -4501,6 +4552,11 @@ int CAVPDlg::ecdsaJsonWork( const QString strMode, const QJsonObject jObject, QJ
                 nOutLen = sizeof(sOut);
 
                 sMech.mechanism = _getCKM_ECDSA( strUseHash );
+                if( checkValidMech( sMech.mechanism ) == false )
+                {
+                    ret = -1;
+                    goto end;
+                }
 
                 ret = pAPI->SignInit( hSession, &sMech, uPri );
                 if( ret != 0 ) goto end;
@@ -4550,6 +4606,11 @@ int CAVPDlg::ecdsaJsonWork( const QString strMode, const QJsonObject jObject, QJ
                 nOutLen = sizeof(sOut);
 
                 sMech.mechanism = _getCKM_ECDSA( strUseHash );
+                if( checkValidMech( sMech.mechanism ) == false )
+                {
+                    ret = -1;
+                    goto end;
+                }
 
                 uPub = -1;
                 ret = importECCPubKey( &binPub, &uPub );
@@ -4778,6 +4839,12 @@ int CAVPDlg::rsaJsonWork( const QString strMode, const QJsonObject jObject, QJso
                     sMech.mechanism = _getCKM_RSA( strUseHash, false );
                 }
 
+                if( checkValidMech( sMech.mechanism ) == false )
+                {
+                    ret = -1;
+                    goto end;
+                }
+
                 JS_BIN_reset( &binMsg );
                 JS_BIN_reset( &binSign );
 
@@ -4813,6 +4880,12 @@ int CAVPDlg::rsaJsonWork( const QString strMode, const QJsonObject jObject, QJso
                 else
                 {
                     sMech.mechanism = _getCKM_RSA( strUseHash, false );
+                }
+
+                if( checkValidMech( sMech.mechanism ) == false )
+                {
+                    ret = -1;
+                    goto end;
                 }
 
                 JS_BIN_reset( &binMsg );
@@ -5200,6 +5273,11 @@ int CAVPDlg::macJsonWork( const QString strAlg, const QJsonObject jObject, QJson
                 {
                     QString strUseHash = _getHashNameFromMAC( strAlg );
                     sMech.mechanism = _getCKM_HMAC( strUseHash );
+                    if( checkValidMech( sMech.mechanism ) == false )
+                    {
+                        ret = -1;
+                        goto end;
+                    }
 
                     ret = pAPI->SignInit( hSession, &sMech, uObj );
                     if( ret != 0 ) goto end;
@@ -5250,6 +5328,11 @@ int CAVPDlg::macJsonWork( const QString strAlg, const QJsonObject jObject, QJson
                 {
                     QString strUseHash = _getHashNameFromMAC( strAlg );
                     sMech.mechanism = _getCKM_HMAC( strUseHash );
+                    if( checkValidMech( sMech.mechanism ) == false )
+                    {
+                        ret = -1;
+                        goto end;
+                    }
 
                     ret = pAPI->SignInit( hSession, &sMech, uObj );
                     if( ret != 0 ) goto end;
@@ -5443,6 +5526,12 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
             sMech.pParameter = binIV.pVal;
             sMech.ulParameterLen = binIV.nLen;
 
+            if( checkValidMech( sMech.mechanism ) == false )
+            {
+                ret = -1;
+                goto end;
+            }
+
             ret = createKey( CKK_AES, &binKey, &uObj );
             if( ret != 0 ) goto end;
 
@@ -5531,6 +5620,12 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
                     {
                         setAES_CCMParam( &binIV, &binAAD, binPT.nLen, nTagLen/8, &sMech );
 
+                        if( checkValidMech( sMech.mechanism ) == false )
+                        {
+                            ret = -1;
+                            goto end;
+                        }
+
                         ret = pAPI->EncryptInit( hSession, &sMech, uObj );
                         if( ret != 0 ) goto end;
 
@@ -5546,6 +5641,12 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
                     else
                     {
                         setAES_GCMParam( &binIV, &binAAD, nTagLen/8, &sMech );
+
+                        if( checkValidMech( sMech.mechanism ) == false )
+                        {
+                            ret = -1;
+                            goto end;
+                        }
 
                         ret = pAPI->EncryptInit( hSession, &sMech, uObj );
                         if( ret != 0 ) goto end;
@@ -5578,6 +5679,12 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
                         sMech.mechanism = CKM_AES_KEY_WRAP;
                     }
 
+                    if( checkValidMech( sMech.mechanism ) == false )
+                    {
+                        ret = -1;
+                        goto end;
+                    }
+
                     if( strKwCipher == "inverse" )
                     {
                         manApplet->elog( QString( "KwCiper(%1) does not support" ).arg( strKwCipher ));
@@ -5605,6 +5712,12 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
                 {
                     memset( &sMech, 0x00, sizeof(sMech));
                     sMech.mechanism = _getCKM_Cipher( strSymAlg, strMode );
+
+                    if( checkValidMech( sMech.mechanism ) == false )
+                    {
+                        ret = -1;
+                        goto end;
+                    }
 
 
                     ret = pAPI->EncryptInit( hSession, &sMech, uObj );
@@ -5634,6 +5747,12 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
                         int nTagBytes = nTagLen / 8;
 
                         setAES_CCMParam( &binIV, &binAAD, binCT.nLen, nTagBytes, &sMech );
+                        if( checkValidMech( sMech.mechanism ) == false )
+                        {
+                            ret = -1;
+                            goto end;
+                        }
+
                         JS_BIN_set( &binTag, &binCT.pVal[binCT.nLen-nTagBytes], nTagBytes );
                         binCT.nLen = binCT.nLen - nTagBytes;
 
@@ -5651,6 +5770,12 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
                         int nTagBytes = nTagLen / 8;
 
                         setAES_GCMParam( &binIV, &binAAD, nTagBytes, &sMech );
+                        if( checkValidMech( sMech.mechanism ) == false )
+                        {
+                            ret = -1;
+                            goto end;
+                        }
+
                         JS_BIN_set( &binTag, &binCT.pVal[binCT.nLen-nTagBytes], nTagBytes );
                         binCT.nLen = binCT.nLen - nTagBytes;
 
@@ -5687,6 +5812,12 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
                         sMech.mechanism = CKM_AES_KEY_WRAP;
                     }
 
+                    if( checkValidMech( sMech.mechanism ) == false )
+                    {
+                        ret = -1;
+                        goto end;
+                    }
+
                     ret = createKey( CKK_AES, &binKey, &uWrappingObj );
                     if( ret != 0 ) goto end;
 
@@ -5709,6 +5840,11 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
                     memset( &sMech, 0x00, sizeof(sMech));
                     sMech.mechanism = _getCKM_Cipher( strSymAlg, strMode );
 
+                    if( checkValidMech( sMech.mechanism ) == false )
+                    {
+                        ret = -1;
+                        goto end;
+                    }
 
                     ret = pAPI->DecryptInit( hSession, &sMech, uObj );
                     if( ret != 0 ) goto end;
@@ -5917,6 +6053,11 @@ int CAVPDlg::kdaJsonWork( const QString strAlg, const QJsonObject jObject, QJson
                 JS_BIN_appendBin( &binPub, &binPubY );
 
                 sMech.mechanism = CKM_ECDH1_DERIVE;
+                if( checkValidMech( sMech.mechanism ) == false )
+                {
+                    ret = -1;
+                    goto end;
+                }
 
                 sParam.kdf = CKD_NULL;
                 sParam.pPublicData = binPub.pVal;

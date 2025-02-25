@@ -1106,6 +1106,11 @@ int CAVPDlg::makeRSA_ES_DET( const QString strPri, const QString strC )
     memset( &sMech, 0x00, sizeof(sMech));
 
     sMech.mechanism = CKM_RSA_PKCS_OAEP;
+    if( checkValidMech( sMech.mechanism ) == false )
+    {
+        ret = -1;
+        goto end;
+    }
 
     JS_BIN_decodeHex( strPri.toStdString().c_str(), &binPri );
     JS_BIN_decodeHex( strC.toStdString().c_str(), &binC );
@@ -1164,6 +1169,11 @@ int CAVPDlg::makeRSA_ES_ENT( int nE, const QString strN, const QString strM )
     JS_PKI_encodeRSAPublicKeyValue( &binN, &binE, &binPub );
 
     sMech.mechanism = CKM_RSA_PKCS;
+    if( checkValidMech( sMech.mechanism ) == false )
+    {
+        ret = -1;
+        goto end;
+    }
 
     ret = importRSAPubKey( &binPub, &uPub );
     if( ret != 0 ) goto end;
@@ -1320,6 +1330,11 @@ int CAVPDlg::makeRSA_PSS_SGT( int nE, const QString strPri, const QString strHas
     memset( &sMech, 0x00, sizeof(sMech));
 
     sMech.mechanism = _getCKM_RSA( strHash, true );
+    if( checkValidMech( sMech.mechanism ) == false )
+    {
+        ret = -1;
+        goto end;
+    }
 
     JS_BIN_decodeHex( strM.toStdString().c_str(), &binM );
     JS_BIN_decodeHex( strPri.toStdString().c_str(), &binPri );
@@ -1386,6 +1401,11 @@ int CAVPDlg::makeRSA_PSS_SVT( int nE, const QString strN, const QString strHash,
     if( ret != 0 ) goto end;
 
     sMech.mechanism = _getCKM_RSA( strHash, true );
+    if( checkValidMech( sMech.mechanism ) == false )
+    {
+        ret = -1;
+        goto end;
+    }
 
     ret = pAPI->VerifyInit( hSession, &sMech, uPub );
     if( ret != 0 ) goto end;
@@ -1763,6 +1783,12 @@ int CAVPDlg::makeECDSA_SGT( const QString strParam, const QString strHash, const
     if( ret != 0 ) goto end;
 
     sMech.mechanism = _getCKM_ECDSA( strHash );
+    if( checkValidMech( sMech.mechanism ) == false )
+    {
+        ret = -1;
+        goto end;
+    }
+
     ret = pAPI->SignInit( hSession, &sMech, uPri );
     if( ret != 0 ) goto end;
 
@@ -1831,6 +1857,11 @@ int CAVPDlg::makeECDSA_SVT( const QString strParam, const QString strHash, const
     if( ret != 0 ) goto end;
 
     sMech.mechanism = _getCKM_ECDSA( strHash );
+    if( checkValidMech( sMech.mechanism ) == false )
+    {
+        ret = -1;
+        goto end;
+    }
 
     ret = importECCPubKey( &binPub, &uPub );
     if( ret != 0 ) goto end;
