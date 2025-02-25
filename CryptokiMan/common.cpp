@@ -1585,3 +1585,20 @@ void setAES_CCMParam( const BIN *pIV, const BIN *pAAD, int nSrcLen, int nReqLen,
     pMech->pParameter = pCCMParam;
     pMech->ulParameterLen = sizeof(CK_CCM_PARAMS);
 }
+
+bool isRSA_PSS( int nMech )
+{
+    switch (nMech) {
+    case CKM_RSA_PKCS_PSS:
+    case CKM_SHA1_RSA_PKCS_PSS:
+    case CKM_SHA224_RSA_PKCS_PSS:
+    case CKM_SHA256_RSA_PKCS_PSS:
+    case CKM_SHA384_RSA_PKCS_PSS:
+    case CKM_SHA512_RSA_PKCS_PSS:
+        return true;
+    default:
+        return false;
+    }
+
+    return false;
+}

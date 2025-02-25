@@ -192,5 +192,6 @@ bool isURLEncode( const QString strURLEncode );
 void setAES_GCMParam( const BIN *pIV, const BIN *pAAD, int nReqLen, CK_MECHANISM *pMech );
 void setAES_CCMParam( const BIN *pIV, const BIN *pAAD, int nSrcLen, int nReqLen, CK_MECHANISM *pMech );
 
+bool isRSA_PSS( int nMech );
 
 #endif // COMMON_H
