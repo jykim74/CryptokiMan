@@ -80,6 +80,8 @@ void EncryptDlg::initUI()
     mMechCombo->addItems( sMechEncSymList );
     mInputCombo->addItems( kDataTypeList );
     mAADTypeCombo->addItems( kDataTypeList );
+    mOAEPHashAlgCombo->addItems( kMechDigestList );
+    mOAEPMgfCombo->addItems( kMGFList );
 
     connect( mKeyTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(keyTypeChanged(int)));
 
@@ -91,6 +93,7 @@ void EncryptDlg::initUI()
     connect( mSelectBtn, SIGNAL(clicked()), this, SLOT(clickSelect()));
 
     connect( mInputCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(inputChanged()));
+    connect( mOAEPSourceText, SIGNAL(textChanged(QString)), this, SLOT(oaepSourceChanged()));
 
     connect( mInputText, SIGNAL(textChanged()), this, SLOT(inputChanged()));
     connect( mOutputText, SIGNAL(textChanged()), this, SLOT(outputChanged()));
@@ -136,20 +139,6 @@ void EncryptDlg::setMechanism( void *pMech )
         getBINFromString( &binAAD, mAADTypeCombo->currentText(), strAAD );
 
         setAES_GCMParam( &binIV, &binAAD, nReqLen, pPtr );
-        /*
-        CK_GCM_PARAMS_PTR gcmParam;
-        gcmParam = (CK_GCM_PARAMS *)JS_calloc( 1, sizeof(CK_GCM_PARAMS));
-
-        gcmParam->ulIvLen = binIV.nLen;
-        gcmParam->pIv = binIV.pVal;
-        gcmParam->ulAADLen = binAAD.nLen;
-        gcmParam->pAAD = binAAD.pVal;
-        gcmParam->ulIvBits = binIV.nLen * 8;
-        gcmParam->ulTagBits = nReqLen * 8;
-
-        pPtr->pParameter = gcmParam;
-        pPtr->ulParameterLen = sizeof(CK_GCM_PARAMS);
-        */
     }
     else if( nMech == CKM_AES_CCM )
     {
@@ -166,18 +155,26 @@ void EncryptDlg::setMechanism( void *pMech )
         getBINFromString( &binAAD, mAADTypeCombo->currentText(), strAAD );
 
         setAES_CCMParam( &binIV, &binAAD, nSrcLen, nReqLen, pPtr );
-        /*
-        CK_CCM_PARAMS_PTR ccmParam;
-        ccmParam->ulDataLen = nSrcLen;
-        ccmParam->pNonce = binIV.pVal;
-        ccmParam->ulNonceLen = binIV.nLen;
-        ccmParam->pAAD = binAAD.pVal;
-        ccmParam->ulAADLen = binAAD.nLen;
-        ccmParam->ulMACLen = nReqLen;
+    }
+    else if( nMech == CKM_RSA_PKCS_OAEP )
+    {
+        BIN binSrc = {0,0};
+        CK_RSA_PKCS_OAEP_PARAMS *pOAEPParam = NULL;
+        QString strHashAlg = mOAEPHashAlgCombo->currentText();
+        QString strMgf = mOAEPMgfCombo->currentText();
+        QString strSrc = mOAEPSourceText->text();
 
-        pPtr->pParameter = ccmParam;
-        pPtr->ulParameterLen = sizeof(CK_CCM_PARAMS);
-        */
+        pOAEPParam = (CK_RSA_PKCS_OAEP_PARAMS *)JS_calloc( 1, sizeof(CK_RSA_PKCS_OAEP_PARAMS));
+        getBINFromString( &binSrc, DATA_HEX, strSrc.toStdString().c_str() );
+
+        pOAEPParam->hashAlg = JS_PKCS11_GetCKMType( strHashAlg.toStdString().c_str() );
+        pOAEPParam->mgf = JS_PKCS11_GetCKGType( strMgf.toStdString().c_str() );
+        pOAEPParam->source = CKZ_DATA_SPECIFIED;
+        pOAEPParam->pSourceData = binSrc.pVal;
+        pOAEPParam->ulSourceDataLen = binSrc.nLen;
+
+        pPtr->pParameter = pOAEPParam;
+        pPtr->ulParameterLen = sizeof(CK_RSA_PKCS_OAEP_PARAMS);
     }
     else
     {
@@ -200,6 +197,7 @@ void EncryptDlg::freeMechanism( void *pMech )
 
         if( gcmParam->pIv ) JS_free( gcmParam->pIv );
         if( gcmParam->pAAD ) JS_free( gcmParam->pAAD );
+        JS_free( gcmParam );
     }
     else if( pPtr->mechanism == CKM_AES_CCM )
     {
@@ -207,6 +205,13 @@ void EncryptDlg::freeMechanism( void *pMech )
 
         if( ccmParam->pNonce ) JS_free( ccmParam->pNonce );
         if( ccmParam->pAAD ) JS_free( ccmParam->pAAD );
+        JS_free( ccmParam );
+    }
+    else if( pPtr->mechanism == CKM_RSA_PKCS_OAEP )
+    {
+        CK_RSA_PKCS_OAEP_PARAMS_PTR oaepParam = (CK_RSA_PKCS_OAEP_PARAMS_PTR)pPtr->pParameter;
+        if( oaepParam->pSourceData ) JS_free( oaepParam->pSourceData );
+        JS_free( oaepParam );
     }
     else
     {
@@ -262,6 +267,17 @@ void EncryptDlg::mechChanged( int index )
     else
     {
         mAEGroup->setEnabled(false);
+    }
+
+    if( uMech == CKM_RSA_PKCS_OAEP )
+    {
+        mOAEPGroup->show();
+        mParamGroup->hide();
+    }
+    else
+    {
+        mOAEPGroup->hide();
+        mParamGroup->show();
     }
 }
 
@@ -369,6 +385,13 @@ void EncryptDlg::aadChanged()
     mAADLenText->setText( QString("%1").arg(strLen));
 }
 
+void EncryptDlg::oaepSourceChanged()
+{
+    QString strSrc = mOAEPSourceText->text();
+    QString strLen = getDataLenString( DATA_HEX, strSrc );
+    mOAEPSourceLenText->setText( QString("%1").arg(strLen));
+}
+
 void EncryptDlg::clickInputClear()
 {
     mInputText->clear();
@@ -440,20 +463,9 @@ int EncryptDlg::clickInit()
     }
 
     long hObject = mObjectText->text().toLong();
-#if 0
-    BIN binParam = {0,0};
-    sMech.mechanism = JS_PKCS11_GetCKMType( mMechCombo->currentText().toStdString().c_str());
-    QString strParam = mParamText->text();
 
-    if( !strParam.isEmpty() )
-    {
-        JS_BIN_decodeHex( strParam.toStdString().c_str(), &binParam );
-        sMech.pParameter = binParam.pVal;
-        sMech.ulParameterLen = binParam.nLen;
-    }
-#else
     setMechanism( &sMech );
-#endif
+
     rv = manApplet->cryptokiAPI()->EncryptInit( session_, &sMech, hObject );
 
     if( rv != CKR_OK )

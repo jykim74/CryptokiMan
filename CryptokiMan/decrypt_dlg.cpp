@@ -81,6 +81,8 @@ void DecryptDlg::initUI()
     mMechCombo->addItems( sMechEncSymList );
     mOutputCombo->addItems( kDataTypeList );
     mAADTypeCombo->addItems( kDataTypeList );
+    mOAEPHashAlgCombo->addItems( kMechDigestList );
+    mOAEPMgfCombo->addItems( kMGFList );
 
     connect( mKeyTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(keyTypeChanged(int)));
 
@@ -90,6 +92,8 @@ void DecryptDlg::initUI()
     connect( mDecryptBtn, SIGNAL(clicked()), this, SLOT(clickDecrypt()));
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(clickClose()));
     connect( mSelectBtn, SIGNAL(clicked()), this, SLOT(clickSelect()));
+
+    connect( mOAEPSourceText, SIGNAL(textChanged(QString)), this, SLOT(oaepSourceChanged()));
 
     connect( mInputText, SIGNAL(textChanged()), this, SLOT(inputChanged()));
     connect( mOutputText, SIGNAL(textChanged()), this, SLOT(outputChanged()));
@@ -172,6 +176,26 @@ void DecryptDlg::setMechanism( void *pMech )
         pPtr->pParameter = ccmParam;
         pPtr->ulParameterLen = sizeof(CK_CCM_PARAMS);
     }
+    else if( nMech == CKM_RSA_PKCS_OAEP )
+    {
+        BIN binSrc = {0,0};
+        CK_RSA_PKCS_OAEP_PARAMS *pOAEPParam = NULL;
+        QString strHashAlg = mOAEPHashAlgCombo->currentText();
+        QString strMgf = mOAEPMgfCombo->currentText();
+        QString strSrc = mOAEPSourceText->text();
+
+        pOAEPParam = (CK_RSA_PKCS_OAEP_PARAMS *)JS_calloc( 1, sizeof(CK_RSA_PKCS_OAEP_PARAMS));
+        getBINFromString( &binSrc, DATA_HEX, strSrc.toStdString().c_str() );
+
+        pOAEPParam->hashAlg = JS_PKCS11_GetCKMType( strHashAlg.toStdString().c_str() );
+        pOAEPParam->mgf = JS_PKCS11_GetCKGType( strMgf.toStdString().c_str() );
+        pOAEPParam->source = CKZ_DATA_SPECIFIED;
+        pOAEPParam->pSourceData = binSrc.pVal;
+        pOAEPParam->ulSourceDataLen = binSrc.nLen;
+
+        pPtr->pParameter = pOAEPParam;
+        pPtr->ulParameterLen = sizeof(CK_RSA_PKCS_OAEP_PARAMS);
+    }
     else
     {
         BIN binParam = {0,0};
@@ -193,6 +217,7 @@ void DecryptDlg::freeMechanism( void *pMech )
 
         if( gcmParam->pIv ) JS_free( gcmParam->pIv );
         if( gcmParam->pAAD ) JS_free( gcmParam->pAAD );
+        JS_free( gcmParam );
     }
     else if( pPtr->mechanism == CKM_AES_CCM )
     {
@@ -200,6 +225,13 @@ void DecryptDlg::freeMechanism( void *pMech )
 
         if( ccmParam->pNonce ) JS_free( ccmParam->pNonce );
         if( ccmParam->pAAD ) JS_free( ccmParam->pAAD );
+        JS_free( ccmParam );
+    }
+    else if( pPtr->mechanism == CKM_RSA_PKCS_OAEP )
+    {
+        CK_RSA_PKCS_OAEP_PARAMS_PTR oaepParam = (CK_RSA_PKCS_OAEP_PARAMS_PTR)pPtr->pParameter;
+        if( oaepParam->pSourceData ) JS_free( oaepParam->pSourceData );
+        JS_free( oaepParam );
     }
     else
     {
@@ -255,6 +287,17 @@ void DecryptDlg::mechChanged( int index )
     else
     {
         mAEGroup->setEnabled(false);
+    }
+
+    if( uMech == CKM_RSA_PKCS_OAEP )
+    {
+        mOAEPGroup->show();
+        mParamGroup->hide();
+    }
+    else
+    {
+        mOAEPGroup->hide();
+        mParamGroup->show();
     }
 }
 
@@ -362,6 +405,14 @@ void DecryptDlg::aadChanged()
     mAADLenText->setText( QString("%1").arg(strLen));
 }
 
+void DecryptDlg::oaepSourceChanged()
+{
+    QString strSrc = mOAEPSourceText->text();
+    QString strLen = getDataLenString( DATA_HEX, strSrc );
+    mOAEPSourceLenText->setText( QString("%1").arg(strLen));
+}
+
+
 void DecryptDlg::clickInputClear()
 {
     mInputText->clear();
@@ -437,21 +488,7 @@ int DecryptDlg::clickInit()
 
     memset( &sMech, 0x00, sizeof(sMech));
 
-#if 0
-    BIN binParam = {0,0};
-    sMech.mechanism = JS_PKCS11_GetCKMType( mMechCombo->currentText().toStdString().c_str());
-
-    QString strParam = mParamText->text();
-
-    if( !strParam.isEmpty() )
-    {
-        JS_BIN_decodeHex( strParam.toStdString().c_str(), &binParam );
-        sMech.pParameter = binParam.pVal;
-        sMech.ulParameterLen = binParam.nLen;
-    }
-#else
     setMechanism( &sMech );
-#endif
 
     rv = manApplet->cryptokiAPI()->DecryptInit( session_, &sMech, hObject );
 

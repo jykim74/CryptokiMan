@@ -47,6 +47,7 @@ private slots:
     void outputChanged();
     void paramChanged();
     void aadChanged();
+    void oaepSourceChanged();
 
     void clickInputClear();
     void clickOutputClear();
