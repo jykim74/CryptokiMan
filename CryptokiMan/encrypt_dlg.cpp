@@ -243,7 +243,7 @@ void EncryptDlg::mechChanged( int index )
     QStringList algList = strMech.split( "_" );
 
     long uMech = JS_PKCS11_GetCKMType( strMech.toStdString().c_str() );
-    mMechText->setText( QString("%1").arg( uMech, 8, 16, QLatin1Char('0')));
+    mMechText->setText( QString("%1").arg( uMech, 8, 16, QLatin1Char('0')).toUpper());
 
     int size = algList.size();
 
@@ -642,10 +642,18 @@ void EncryptDlg::runDataEncrypt()
         JS_BIN_decodeBase64( strInput.toStdString().c_str(), &binInput );
 
     unsigned char *pEncData = NULL;
-    long uEncDataLen = binInput.nLen + 64;
+    long uEncDataLen = 0;
     BIN binEncData = {0,0};
 
-    pEncData = (unsigned char *)JS_malloc( binInput.nLen + 64 );
+    rv = manApplet->cryptokiAPI()->Encrypt( session_, binInput.pVal, binInput.nLen, NULL, (CK_ULONG_PTR)&uEncDataLen );
+    if( rv != CKR_OK )
+    {
+        mOutputText->setPlainText( "" );
+        manApplet->warningBox( tr("Encrypt execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        return;
+    }
+
+    pEncData = (unsigned char *)JS_malloc( uEncDataLen );
     if( pEncData == NULL ) return;
 
     rv = manApplet->cryptokiAPI()->Encrypt( session_, binInput.pVal, binInput.nLen, pEncData, (CK_ULONG_PTR)&uEncDataLen );
@@ -654,7 +662,7 @@ void EncryptDlg::runDataEncrypt()
     {
         mOutputText->setPlainText( "" );
         if( pEncData ) JS_free( pEncData );
-        manApplet->warningBox( tr("Encrypt execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("Encrypt execution failure2 [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 

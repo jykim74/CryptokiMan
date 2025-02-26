@@ -119,6 +119,8 @@ private slots:
     void clickECCFind();
     void clickRSAFind();
 
+    void clickRSA_DETPriKeyFind();
+
     void clickMCT_SymClear();
     void clickMCT_HashClear();
     void clickMCT_SymRun();

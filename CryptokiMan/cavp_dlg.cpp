@@ -379,6 +379,7 @@ CAVPDlg::CAVPDlg(QWidget *parent) :
     connect( mMACRunBtn, SIGNAL(clicked()), this, SLOT(clickMACRun()));
     connect( mECCRunBtn, SIGNAL(clicked()), this, SLOT(clickECCRun()));
     connect( mRSARunBtn, SIGNAL(clicked()), this, SLOT(clickRSARun()));
+    connect( mRSA_DETPriKeyFindBtn, SIGNAL(clicked()), this, SLOT(clickRSA_DETPriKeyFind()));
 
     connect( mSymFindBtn, SIGNAL(clicked()), this, SLOT(clickSymFind()));
     connect( mAEFindBtn, SIGNAL(clicked()), this, SLOT(clickAEFind()));

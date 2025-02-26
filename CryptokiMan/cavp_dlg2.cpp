@@ -1087,6 +1087,18 @@ void CAVPDlg::clickRSAFind()
     }
 }
 
+void CAVPDlg::clickRSA_DETPriKeyFind()
+{
+    QString strRspPath = mRSA_DETPriKeyPathText->text();
+    strRspPath = manApplet->curPath( strRspPath );
+
+    QString strFileName = findFile( this, JS_FILE_TYPE_TXT, strRspPath );
+    if( strFileName.length() > 0 )
+    {
+        mRSA_DETPriKeyPathText->setText( strFileName );
+    }
+}
+
 int CAVPDlg::makeRSA_ES_DET( const QString strPri, const QString strC )
 {
     int ret = 0;

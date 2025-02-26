@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>532</width>
-    <height>713</height>
+    <width>624</width>
+    <height>804</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1376,7 +1376,7 @@
     <widget class="QPlainTextEdit" name="mSignText">
      <property name="minimumSize">
       <size>
-       <width>500</width>
+       <width>600</width>
        <height>0</height>
       </size>
      </property>

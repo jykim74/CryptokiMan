@@ -263,7 +263,7 @@ void DecryptDlg::mechChanged( int index )
     QStringList algList = strMech.split( "_" );
 
     long uMech = JS_PKCS11_GetCKMType( strMech.toStdString().c_str() );
-    mMechText->setText( QString("%1").arg( uMech, 8, 16, QLatin1Char('0')));
+    mMechText->setText( QString("%1").arg( uMech, 8, 16, QLatin1Char('0')).toUpper());
 
     int size = algList.size();
 
@@ -659,8 +659,18 @@ void DecryptDlg::runDataDecrypt()
     getBINFromString( &binInput, DATA_HEX, strInput );
 
     unsigned char *pDecData = NULL;
-    long uDecDataLen = mInputText->toPlainText().length();
-    pDecData = (unsigned char *)JS_malloc( mInputText->toPlainText().length() );
+    long uDecDataLen = 0;
+
+    rv = manApplet->cryptokiAPI()->Decrypt( session_, binInput.pVal, binInput.nLen, NULL, (CK_ULONG_PTR)&uDecDataLen );
+
+    if( rv != CKR_OK )
+    {
+        mOutputText->setPlainText( "" );
+        manApplet->warningBox( tr("Decrypt execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        return;
+    }
+
+    pDecData = (unsigned char *)JS_malloc( uDecDataLen );
 
     rv = manApplet->cryptokiAPI()->Decrypt( session_, binInput.pVal, binInput.nLen, pDecData, (CK_ULONG_PTR)&uDecDataLen );
 
@@ -668,7 +678,7 @@ void DecryptDlg::runDataDecrypt()
     {
         if( pDecData ) JS_free( pDecData );
         mOutputText->setPlainText( "" );
-        manApplet->warningBox( tr("Decrypt execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("Decrypt execution failure2 [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
