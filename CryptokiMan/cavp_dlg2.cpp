@@ -950,7 +950,7 @@ void CAVPDlg::clickRSARun()
                 {
                     logRsp( QString( "SHAAlg = %1").arg(strHash));
 
-                    ret = makeRSA_ES_DET( strHash, getHexString( &binPri ), strC );
+                    ret = makeRSA_ES_DET( getHexString( &binPri ), strC );
 
                     if( ret != 0 )
                     {
@@ -973,7 +973,7 @@ void CAVPDlg::clickRSARun()
 
                 if( strM.length() > 0 && strN.length() > 0 )
                 {
-                    ret = makeRSA_ES_ENT( strHash, nE, strN, strM );
+                    ret = makeRSA_ES_ENT( nE, strN, strM );
 
                     if( ret != 0 ) return;
                 }
@@ -1087,7 +1087,7 @@ void CAVPDlg::clickRSAFind()
     }
 }
 
-int CAVPDlg::makeRSA_ES_DET( const QString strHash, const QString strPri, const QString strC )
+int CAVPDlg::makeRSA_ES_DET( const QString strPri, const QString strC )
 {
     int ret = 0;
     BIN binC = {0,0};
@@ -1112,7 +1112,7 @@ int CAVPDlg::makeRSA_ES_DET( const QString strHash, const QString strPri, const 
         goto end;
     }
 
-    _setMechRSA_OAEP( strHash, &sMech );
+    _setMechRSA_OAEP( &sMech );
     JS_BIN_decodeHex( strPri.toStdString().c_str(), &binPri );
     JS_BIN_decodeHex( strC.toStdString().c_str(), &binC );
 
@@ -1142,7 +1142,7 @@ end :
     return ret;
 }
 
-int CAVPDlg::makeRSA_ES_ENT( const QString strHash, int nE, const QString strN, const QString strM )
+int CAVPDlg::makeRSA_ES_ENT( int nE, const QString strN, const QString strM )
 {
     int ret = 0;
     BIN binM = {0,0};
@@ -1177,7 +1177,7 @@ int CAVPDlg::makeRSA_ES_ENT( const QString strHash, int nE, const QString strN, 
         goto end;
     }
 
-    _setMechRSA_OAEP( strHash, &sMech );
+    _setMechRSA_OAEP( &sMech );
     ret = importRSAPubKey( &binPub, &uPub );
     if( ret != 0 ) goto end;
 

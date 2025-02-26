@@ -149,6 +149,10 @@ static QStringList kMechDigestList = {
     "CKM_MD5", "CKM_SHA_1", "CKM_SHA224", "CKM_SHA256", "CKM_SHA384", "CKM_SHA512"
 };
 
+static QStringList kMechSHAList = {
+    "CKM_SHA_1", "CKM_SHA224", "CKM_SHA256", "CKM_SHA384", "CKM_SHA512"
+};
+
 static QStringList kMechEncSymList = {
     "CKM_DES3_ECB", "CKM_DES3_CBC", "CKM_DES3_CBC_PAD",
     "CKM_AES_ECB", "CKM_AES_CBC","CKM_AES_CBC_PAD", "CKM_AES_CTR",

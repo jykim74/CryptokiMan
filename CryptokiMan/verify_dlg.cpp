@@ -76,7 +76,7 @@ void VerifyDlg::initUI()
 
     mKeyTypeCombo->addItems(sKeyList);
     mMechCombo->addItems( sMechSignAsymList );
-    mPSSHashAlgCombo->addItems( kMechDigestList );
+    mPSSHashAlgCombo->addItems( kMechSHAList );
     mPSSMgfCombo->addItems( kMGFList );
 
     connect( mKeyTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(keyTypeChanged(int)));

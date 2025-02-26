@@ -193,38 +193,10 @@ void _setMechRSA_PSS( const QString strHash, CK_MECHANISM_PTR pMech )
     pMech->ulParameterLen = sizeof(CK_RSA_PKCS_PSS_PARAMS);
 }
 
-void _setMechRSA_OAEP(  const QString strHash, CK_MECHANISM_PTR pMech )
+void _setMechRSA_OAEP( CK_MECHANISM_PTR pMech )
 {
-    int nHashAlg = 0;
-    int nMGF1 = 0;
-
-    if( strHash == "SHA1" || strHash == "SHA-1" )
-    {
-        nHashAlg = CKM_SHA_1;
-        nMGF1 = CKG_MGF1_SHA1;
-    }
-    else if( strHash == "SHA224" || strHash == "SHA2-224" )
-    {
-        nHashAlg = CKM_SHA224;
-        nMGF1 = CKG_MGF1_SHA224;
-    }
-    else if( strHash == "SHA256" || strHash == "SHA2-256" )
-    {
-        nHashAlg = CKM_SHA256;
-        nMGF1 = CKG_MGF1_SHA256;
-    }
-    else if( strHash == "SHA384" || strHash == "SHA2-384" )
-    {
-        nHashAlg = CKM_SHA384;
-        nMGF1 = CKG_MGF1_SHA384;
-    }
-    else if( strHash == "SHA512" || strHash == "SHA2-512" )
-    {
-        nHashAlg = CKM_SHA512;
-        nMGF1 = CKG_MGF1_SHA512;
-    }
-    else
-        return;
+    int nHashAlg = CKM_SHA_1;
+    int nMGF1 = CKG_MGF1_SHA1;
 
     CK_RSA_PKCS_OAEP_PARAMS *pOAEPParam = NULL;
     pOAEPParam = (CK_RSA_PKCS_OAEP_PARAMS *)JS_calloc( 1, sizeof(CK_RSA_PKCS_OAEP_PARAMS));
@@ -634,7 +606,7 @@ void CAVPDlg::changeRSAType(int index)
 {
     QString strType = mRSATypeCombo->currentText();
 
-    if( strType == "SGT" || strType == "SVT" || strType == "DET" || strType == "ENT" )
+    if( strType == "SGT" || strType == "SVT" )
         mRSAHashCombo->setEnabled(true);
     else
         mRSAHashCombo->setEnabled(false);

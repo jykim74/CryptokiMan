@@ -80,7 +80,7 @@ void EncryptDlg::initUI()
     mMechCombo->addItems( sMechEncSymList );
     mInputCombo->addItems( kDataTypeList );
     mAADTypeCombo->addItems( kDataTypeList );
-    mOAEPHashAlgCombo->addItems( kMechDigestList );
+    mOAEPHashAlgCombo->addItems( kMechSHAList );
     mOAEPMgfCombo->addItems( kMGFList );
 
     connect( mKeyTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(keyTypeChanged(int)));
