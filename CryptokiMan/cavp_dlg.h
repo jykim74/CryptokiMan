@@ -4,6 +4,7 @@
 #include <QDialog>
 #include "ui_cavp_dlg.h"
 #include "js_bin.h"
+#include "js_pkcs11.h"
 
 static const int kACVP_TYPE_BLOCK_CIPHER = 0;
 static const int kACVP_TYPE_HASH = 1;
@@ -64,6 +65,9 @@ int _getCKM_HMAC( const QString strHash );
 int _getCKM_Hash( const QString strHash );
 int _getCKM_ECDSA( const QString strHash );
 int _getCKM_RSA( const QString strHash, bool bPSS = false );
+
+void _setMechRSA_PSS( const QString strHash, CK_MECHANISM_PTR pMech );
+void _setMechRSA_OAEP( const QString strHash, CK_MECHANISM_PTR pMech );
 
 class CAVPDlg : public QDialog, public Ui::CAVPDlg
 {
@@ -139,8 +143,8 @@ private:
     int makeHashData( int nLen, const BIN *pVal );
     int makeHMACData( const QString strCount, const QString strKLen, const QString strTLen, const BIN *pKey, const BIN *pMsg );
 
-    int makeRSA_ES_DET( const QString strPri, const QString strC );
-    int makeRSA_ES_ENT( int nE, const QString strN, const QString strM );
+    int makeRSA_ES_DET( const QString strHash, const QString strPri, const QString strC );
+    int makeRSA_ES_ENT( const QString strHash, int nE, const QString strN, const QString strM );
     int makeRSA_ES_KGT( int nKeyLen, int nE, int nCount );
 
     int makeRSA_PSS_KPG( int nLen, int nE, int nCount );

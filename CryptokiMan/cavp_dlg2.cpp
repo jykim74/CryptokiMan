@@ -950,7 +950,7 @@ void CAVPDlg::clickRSARun()
                 {
                     logRsp( QString( "SHAAlg = %1").arg(strHash));
 
-                    ret = makeRSA_ES_DET( getHexString( &binPri ), strC );
+                    ret = makeRSA_ES_DET( strHash, getHexString( &binPri ), strC );
 
                     if( ret != 0 )
                     {
@@ -973,7 +973,7 @@ void CAVPDlg::clickRSARun()
 
                 if( strM.length() > 0 && strN.length() > 0 )
                 {
-                    ret = makeRSA_ES_ENT( nE, strN, strM );
+                    ret = makeRSA_ES_ENT( strHash, nE, strN, strM );
 
                     if( ret != 0 ) return;
                 }
@@ -1087,7 +1087,7 @@ void CAVPDlg::clickRSAFind()
     }
 }
 
-int CAVPDlg::makeRSA_ES_DET( const QString strPri, const QString strC )
+int CAVPDlg::makeRSA_ES_DET( const QString strHash, const QString strPri, const QString strC )
 {
     int ret = 0;
     BIN binC = {0,0};
@@ -1112,6 +1112,7 @@ int CAVPDlg::makeRSA_ES_DET( const QString strPri, const QString strC )
         goto end;
     }
 
+    _setMechRSA_OAEP( strHash, &sMech );
     JS_BIN_decodeHex( strPri.toStdString().c_str(), &binPri );
     JS_BIN_decodeHex( strC.toStdString().c_str(), &binC );
 
@@ -1136,11 +1137,12 @@ end :
     JS_BIN_reset( &binPri );
 
     if( uPri > 0 ) pAPI->DestroyObject( hSession, uPri );
+    if( sMech.pParameter ) JS_free( sMech.pParameter );
 
     return ret;
 }
 
-int CAVPDlg::makeRSA_ES_ENT( int nE, const QString strN, const QString strM )
+int CAVPDlg::makeRSA_ES_ENT( const QString strHash, int nE, const QString strN, const QString strM )
 {
     int ret = 0;
     BIN binM = {0,0};
@@ -1168,13 +1170,14 @@ int CAVPDlg::makeRSA_ES_ENT( int nE, const QString strN, const QString strM )
     JS_BIN_trimLeft( 0x00, &binE );
     JS_PKI_encodeRSAPublicKeyValue( &binN, &binE, &binPub );
 
-    sMech.mechanism = CKM_RSA_PKCS;
+    sMech.mechanism = CKM_RSA_PKCS_OAEP;
     if( checkValidMech( sMech.mechanism ) == false )
     {
         ret = -1;
         goto end;
     }
 
+    _setMechRSA_OAEP( strHash, &sMech );
     ret = importRSAPubKey( &binPub, &uPub );
     if( ret != 0 ) goto end;
 
@@ -1195,6 +1198,7 @@ end :
     JS_BIN_reset( &binN );
 
     if( uPub > 0 ) pAPI->DestroyObject( hSession, uPub );
+    if( sMech.pParameter ) JS_free( sMech.pParameter );
 
     return ret;
 }
@@ -1336,6 +1340,8 @@ int CAVPDlg::makeRSA_PSS_SGT( int nE, const QString strPri, const QString strHas
         goto end;
     }
 
+    _setMechRSA_PSS( strHash, &sMech );
+
     JS_BIN_decodeHex( strM.toStdString().c_str(), &binM );
     JS_BIN_decodeHex( strPri.toStdString().c_str(), &binPri );
 
@@ -1360,6 +1366,7 @@ end :
     JS_BIN_reset( &binPri );
     //    JS_BIN_reset( &binPub );
     if( uPri > 0 ) pAPI->DestroyObject( hSession, uPri );
+    if( sMech.pParameter ) JS_free( sMech.pParameter );
 
     return ret;
 }
@@ -1407,6 +1414,8 @@ int CAVPDlg::makeRSA_PSS_SVT( int nE, const QString strN, const QString strHash,
         goto end;
     }
 
+    _setMechRSA_PSS( strHash, &sMech );
+
     ret = pAPI->VerifyInit( hSession, &sMech, uPub );
     if( ret != 0 ) goto end;
 
@@ -1430,6 +1439,7 @@ end :
     JS_BIN_reset( &binE );
     JS_PKI_resetRSAKeyVal( &sKeyVal );
     if( uPub > 0 ) pAPI->DestroyObject( hSession, uPub );
+    if( sMech.pParameter ) JS_free( sMech.pParameter );
 
     return ret;
 }

@@ -144,6 +144,100 @@ int _getCKM_RSA( const QString strHash, bool bPSS )
     }
 }
 
+void _setMechRSA_PSS( const QString strHash, CK_MECHANISM_PTR pMech )
+{
+    int nHashAlg = -1;
+    int nMGF1 = -1;
+    int nLen = 0;
+    CK_RSA_PKCS_PSS_PARAMS *pPSSParam = NULL;
+
+    if( strHash == "SHA1" || strHash == "SHA-1" )
+    {
+        nHashAlg = CKM_SHA_1;
+        nMGF1 = CKG_MGF1_SHA1;
+        nLen = 20;
+    }
+    else if( strHash == "SHA224" || strHash == "SHA2-224" )
+    {
+        nHashAlg = CKM_SHA224;
+        nMGF1 = CKG_MGF1_SHA224;
+        nLen = 24;
+    }
+    else if( strHash == "SHA256" || strHash == "SHA2-256" )
+    {
+        nHashAlg = CKM_SHA256;
+        nMGF1 = CKG_MGF1_SHA256;
+        nLen = 32;
+    }
+    else if( strHash == "SHA384" || strHash == "SHA2-384" )
+    {
+        nHashAlg = CKM_SHA384;
+        nMGF1 = CKG_MGF1_SHA384;
+        nLen = 48;
+    }
+    else if( strHash == "SHA512" || strHash == "SHA2-512" )
+    {
+        nHashAlg = CKM_SHA512;
+        nMGF1 = CKG_MGF1_SHA512;
+        nLen = 64;
+    }
+    else
+        return;
+
+    pPSSParam = (CK_RSA_PKCS_PSS_PARAMS *)JS_calloc( 1, sizeof(CK_RSA_PKCS_PSS_PARAMS));
+    pPSSParam->hashAlg = nHashAlg;
+    pPSSParam->mgf = nMGF1;
+    pPSSParam->sLen = nLen;
+
+    pMech->pParameter = pPSSParam;
+    pMech->ulParameterLen = sizeof(CK_RSA_PKCS_PSS_PARAMS);
+}
+
+void _setMechRSA_OAEP(  const QString strHash, CK_MECHANISM_PTR pMech )
+{
+    int nHashAlg = 0;
+    int nMGF1 = 0;
+
+    if( strHash == "SHA1" || strHash == "SHA-1" )
+    {
+        nHashAlg = CKM_SHA_1;
+        nMGF1 = CKG_MGF1_SHA1;
+    }
+    else if( strHash == "SHA224" || strHash == "SHA2-224" )
+    {
+        nHashAlg = CKM_SHA224;
+        nMGF1 = CKG_MGF1_SHA224;
+    }
+    else if( strHash == "SHA256" || strHash == "SHA2-256" )
+    {
+        nHashAlg = CKM_SHA256;
+        nMGF1 = CKG_MGF1_SHA256;
+    }
+    else if( strHash == "SHA384" || strHash == "SHA2-384" )
+    {
+        nHashAlg = CKM_SHA384;
+        nMGF1 = CKG_MGF1_SHA384;
+    }
+    else if( strHash == "SHA512" || strHash == "SHA2-512" )
+    {
+        nHashAlg = CKM_SHA512;
+        nMGF1 = CKG_MGF1_SHA512;
+    }
+    else
+        return;
+
+    CK_RSA_PKCS_OAEP_PARAMS *pOAEPParam = NULL;
+    pOAEPParam = (CK_RSA_PKCS_OAEP_PARAMS *)JS_calloc( 1, sizeof(CK_RSA_PKCS_OAEP_PARAMS));
+    pOAEPParam->hashAlg = nHashAlg;
+    pOAEPParam->mgf = nMGF1;
+    pOAEPParam->source = CKZ_DATA_SPECIFIED;
+    pOAEPParam->pSourceData = NULL;
+    pOAEPParam->ulSourceDataLen = 0;
+
+    pMech->pParameter = pOAEPParam;
+    pMech->ulParameterLen = sizeof(CK_RSA_PKCS_OAEP_PARAMS);
+}
+
 static QString _getHashName( const QString strACVPHash )
 {
     if( strACVPHash == "SHA-1" )
@@ -540,7 +634,7 @@ void CAVPDlg::changeRSAType(int index)
 {
     QString strType = mRSATypeCombo->currentText();
 
-    if( strType == "SGT" || strType == "SVT" )
+    if( strType == "SGT" || strType == "SVT" || strType == "DET" || strType == "ENT" )
         mRSAHashCombo->setEnabled(true);
     else
         mRSAHashCombo->setEnabled(false);
@@ -4827,12 +4921,10 @@ int CAVPDlg::rsaJsonWork( const QString strMode, const QJsonObject jObject, QJso
             }
             else if( strMode == "sigGen" )
             {
-                int nVersion = JS_PKI_RSA_PADDING_V15;
-
                 if( strSigType == "pss" )
                 {
-                    nVersion = JS_PKI_RSA_PADDING_V21;
                     sMech.mechanism = _getCKM_RSA( strUseHash, true );
+                    _setMechRSA_PSS( strUseHash, &sMech );
                 }
                 else
                 {
@@ -4865,17 +4957,16 @@ int CAVPDlg::rsaJsonWork( const QString strMode, const QJsonObject jObject, QJso
 
                 jRspTestObj["signature"] = getHexString( &binSign );
                 if( uPri > 0 ) pAPI->DestroyObject( hSession, uPri );
+                if( sMech.pParameter ) JS_free( sMech.pParameter );
             }
             else if( strMode == "sigVer" )
             {
                 bool bRes = false;
 
-                int nVersion = JS_PKI_RSA_PADDING_V15;
-
                 if( strSigType == "pss" )
                 {
-                    nVersion = JS_PKI_RSA_PADDING_V21;
                     sMech.mechanism = _getCKM_RSA( strUseHash, true );
+                    _setMechRSA_PSS( strUseHash, &sMech );
                 }
                 else
                 {
@@ -4912,6 +5003,7 @@ int CAVPDlg::rsaJsonWork( const QString strMode, const QJsonObject jObject, QJso
 
                 jRspTestObj["testPassed"] = bRes;
                 if( uPub > 0 ) pAPI->DestroyObject( hSession, uPub );
+                if( sMech.pParameter ) JS_free( sMech.pParameter );
 
                 ret = 0;
             }
