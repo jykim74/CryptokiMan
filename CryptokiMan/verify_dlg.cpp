@@ -76,6 +76,8 @@ void VerifyDlg::initUI()
 
     mKeyTypeCombo->addItems(sKeyList);
     mMechCombo->addItems( sMechSignAsymList );
+    mPSSHashAlgCombo->addItems( kMechDigestList );
+    mPSSMgfCombo->addItems( kMGFList );
 
     connect( mKeyTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(keyTypeChanged(int)));
     connect( mParamText, SIGNAL(textChanged(const QString)), this, SLOT(changeParam(const QString)));
@@ -227,6 +229,17 @@ void VerifyDlg::mechChanged( int index )
         long uMech = JS_PKCS11_GetCKMType( strMech.toStdString().c_str() );
         mMechText->setText(QString("%1").arg( uMech, 8, 16, QLatin1Char('0')));
     }
+
+    if( isRSA_PSS( JS_PKCS11_GetCKMType( strMech.toStdString().c_str() )) == true )
+    {
+        mPSSGroup->show();
+        mParamGroup->hide();
+    }
+    else
+    {
+        mPSSGroup->hide();
+        mParamGroup->show();
+    }
 }
 
 void VerifyDlg::changeInput()
@@ -257,6 +270,10 @@ int VerifyDlg::clickInit()
 
     CK_MECHANISM sMech;
     BIN binParam = {0,0};
+    CK_RSA_PKCS_PSS_PARAMS sRSA_PSS;
+
+    memset( &sMech, 0x00, sizeof(sMech));
+    memset( &sRSA_PSS, 0x00, sizeof(sRSA_PSS));
 
     if( mObjectText->text().isEmpty() )
     {
@@ -271,13 +288,29 @@ int VerifyDlg::clickInit()
     long uObject = mObjectText->text().toLong();
 
     sMech.mechanism = JS_PKCS11_GetCKMType( mMechCombo->currentText().toStdString().c_str());
-    QString strParam = mParamText->text();
-
-    if( !strParam.isEmpty() )
+    if( isRSA_PSS( sMech.mechanism ) == true )
     {
-        JS_BIN_decodeHex( strParam.toStdString().c_str(), &binParam );
-        sMech.pParameter = binParam.pVal;
-        sMech.ulParameterLen = binParam.nLen;
+        QString strHashAlg = mPSSHashAlgCombo->currentText();
+        QString strMgf1 = mPSSMgfCombo->currentText();
+        int nLen = mPSSLenText->text().toInt();
+
+        sRSA_PSS.hashAlg = JS_PKCS11_GetCKMType( strHashAlg.toStdString().c_str() );
+        sRSA_PSS.mgf = JS_PKCS11_GetCKGType( strMgf1.toStdString().c_str() );
+        sRSA_PSS.sLen = nLen;
+
+        sMech.pParameter = &sRSA_PSS;
+        sMech.ulParameterLen = sizeof(sRSA_PSS);
+    }
+    else
+    {
+        QString strParam = mParamText->text();
+        if( !strParam.isEmpty() )
+        {
+            JS_BIN_decodeHex( strParam.toStdString().c_str(), &binParam );
+
+            sMech.pParameter = binParam.pVal;
+            sMech.ulParameterLen = binParam.nLen;
+        }
     }
 
     rv = manApplet->cryptokiAPI()->VerifyInit( session_, &sMech, uObject );
