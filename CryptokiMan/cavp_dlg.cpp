@@ -5319,20 +5319,56 @@ int CAVPDlg::macJsonWork( const QString strAlg, const QJsonObject jObject, QJson
 
                 if( strMode == "GMAC" )
                 {
-                    /*
-                    ret = JS_PKI_genGMAC( strSymAlg.toStdString().c_str(), &binAAD, &binKey, &binIV, &binGenMAC );
+                    sMech.mechanism = CKM_AES_GMAC;
+                    if( checkValidMech( sMech.mechanism ) == false )
+                    {
+                        ret = -1;
+                        goto end;
+                    }
+
+                    sMech.pParameter = binIV.pVal;
+                    sMech.ulParameterLen = binIV.nLen;
+
+                    ret = pAPI->SignInit( hSession, &sMech, uObj );
                     if( ret != 0 ) goto end;
 
-                    JS_BIN_copy( &binMAC, &binTag );
-                    */
+                    if( binAAD.nLen > 0 )
+                    {
+                        ret = pAPI->SignUpdate( hSession, binAAD.pVal, binAAD.nLen );
+                        if( ret != 0 ) goto end;
+                    }
+
+                    nOutLen = sizeof(sOut);
+
+                    ret = pAPI->SignFinal( hSession, sOut, (CK_ULONG_PTR)&nOutLen );
+                    if( ret != 0 ) goto end;
+
+                    JS_BIN_set( &binGenMAC, sOut, nOutLen );
                 }
                 else if( strMode == "AES" && strSymAlg == "CMAC" )
                 {
-                    /*
-                    QString strMACAlg;
-                    ret = JS_PKI_genCMAC( strMACAlg.toStdString().c_str(), &binMsg, &binKey, &binGenMAC );
+                    sMech.mechanism = CKM_AES_CMAC;
+                    if( checkValidMech( sMech.mechanism ) == false )
+                    {
+                        ret = -1;
+                        goto end;
+                    }
+
+                    ret = pAPI->SignInit( hSession, &sMech, uObj );
                     if( ret != 0 ) goto end;
-                    */
+
+                    if( binMsg.nLen > 0 )
+                    {
+                        ret = pAPI->SignUpdate( hSession, binMsg.pVal, binMsg.nLen );
+                        if( ret != 0 ) goto end;
+                    }
+
+                    nOutLen = sizeof(sOut);
+
+                    ret = pAPI->SignFinal( hSession, sOut, (CK_ULONG_PTR)&nOutLen );
+                    if( ret != 0 ) goto end;
+
+                    JS_BIN_set( &binGenMAC, sOut, nOutLen );
                 }
                 else
                 {
