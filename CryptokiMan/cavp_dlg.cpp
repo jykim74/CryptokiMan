@@ -1079,6 +1079,11 @@ int CAVPDlg::createKey( int nKeyType, const BIN *pKey, long *phObj )
     sTemplate[nCount].ulValueLen = sizeof(CK_BBOOL);
     nCount++;
 
+    sTemplate[nCount].type = CKA_VERIFY;
+    sTemplate[nCount].pValue = &kTrue;
+    sTemplate[nCount].ulValueLen = sizeof(CK_BBOOL);
+    nCount++;
+
     ret = pAPI->CreateObject( hSession, sTemplate, nCount, (CK_OBJECT_HANDLE_PTR)phObj );
 
 
@@ -5299,7 +5304,7 @@ int CAVPDlg::macJsonWork( const QString strAlg, const QJsonObject jObject, QJson
         }
 
         long uObj = -1;
-        if( strAlg == "AES" )
+        if( strAlg == "AES" || strMode == "AES" )
             createKey( CKK_AES, &binKey, &uObj );
         else
             createKey( CKK_GENERIC_SECRET, &binKey, &uObj );
@@ -5329,6 +5334,89 @@ int CAVPDlg::macJsonWork( const QString strAlg, const QJsonObject jObject, QJson
                     sMech.pParameter = binIV.pVal;
                     sMech.ulParameterLen = binIV.nLen;
 
+                    ret = pAPI->VerifyInit( hSession, &sMech, uObj );
+                    if( ret != 0 ) goto end;
+
+                    if( binAAD.nLen > 0 )
+                    {
+                        ret = pAPI->VerifyUpdate( hSession, binAAD.pVal, binAAD.nLen );
+                        if( ret != 0 ) goto end;
+                    }
+
+                    nOutLen = sizeof(sOut);
+
+                    ret = pAPI->VerifyFinal( hSession, binMAC.pVal, binMAC.nLen );
+                    if( ret == CKR_OK ) bRes = true;
+                }
+                else if( strMode == "AES" && strSymAlg == "CMAC" )
+                {
+                    sMech.mechanism = CKM_AES_CMAC;
+                    if( checkValidMech( sMech.mechanism ) == false )
+                    {
+                        ret = -1;
+                        goto end;
+                    }
+
+                    ret = pAPI->VerifyInit( hSession, &sMech, uObj );
+                    if( ret != 0 ) goto end;
+
+                    if( binMsg.nLen > 0 )
+                    {
+                        ret = pAPI->VerifyUpdate( hSession, binMsg.pVal, binMsg.nLen );
+                        if( ret != 0 ) goto end;
+                    }
+
+                    nOutLen = sizeof(sOut);
+
+                    ret = pAPI->VerifyFinal( hSession, binMAC.pVal, binMAC.nLen );
+                    if( ret == CKR_OK ) bRes = true;
+                }
+                else
+                {
+                    QString strUseHash = _getHashNameFromMAC( strAlg );
+                    sMech.mechanism = _getCKM_HMAC( strUseHash );
+                    if( checkValidMech( sMech.mechanism ) == false )
+                    {
+                        ret = -1;
+                        goto end;
+                    }
+
+                    ret = pAPI->VerifyInit( hSession, &sMech, uObj );
+                    if( ret != 0 ) goto end;
+
+                    if( binMsg.nLen > 0 )
+                    {
+                        ret = pAPI->VerifyUpdate( hSession, binMsg.pVal, binMsg.nLen );
+                        if( ret != 0 ) goto end;
+                    }
+
+                    nOutLen = sizeof(sOut);
+
+                    ret = pAPI->VerifyFinal( hSession, binMAC.pVal, binMAC.nLen );
+                    if( ret == CKR_OK ) bRes = true;
+                }
+
+                if( JS_BIN_cmp( &binGenMAC, &binMAC ) == 0 )
+                    bRes = true;
+                else
+                    bRes = false;
+
+                jRspTestObj["testPassed"] = bRes;
+            }
+            else
+            {
+                if( strMode == "GMAC" )
+                {
+                    sMech.mechanism = CKM_AES_GMAC;
+                    if( checkValidMech( sMech.mechanism ) == false )
+                    {
+                        ret = -1;
+                        goto end;
+                    }
+
+                    sMech.pParameter = binIV.pVal;
+                    sMech.ulParameterLen = binIV.nLen;
+
                     ret = pAPI->SignInit( hSession, &sMech, uObj );
                     if( ret != 0 ) goto end;
 
@@ -5343,7 +5431,9 @@ int CAVPDlg::macJsonWork( const QString strAlg, const QJsonObject jObject, QJson
                     ret = pAPI->SignFinal( hSession, sOut, (CK_ULONG_PTR)&nOutLen );
                     if( ret != 0 ) goto end;
 
-                    JS_BIN_set( &binGenMAC, sOut, nOutLen );
+                    JS_BIN_set( &binMAC, sOut, nOutLen );
+
+                    jRspTestObj["tag"] = getHexString( &binMAC );
                 }
                 else if( strMode == "AES" && strSymAlg == "CMAC" )
                 {
@@ -5368,62 +5458,8 @@ int CAVPDlg::macJsonWork( const QString strAlg, const QJsonObject jObject, QJson
                     ret = pAPI->SignFinal( hSession, sOut, (CK_ULONG_PTR)&nOutLen );
                     if( ret != 0 ) goto end;
 
-                    JS_BIN_set( &binGenMAC, sOut, nOutLen );
-                }
-                else
-                {
-                    QString strUseHash = _getHashNameFromMAC( strAlg );
-                    sMech.mechanism = _getCKM_HMAC( strUseHash );
-                    if( checkValidMech( sMech.mechanism ) == false )
-                    {
-                        ret = -1;
-                        goto end;
-                    }
-
-                    ret = pAPI->SignInit( hSession, &sMech, uObj );
-                    if( ret != 0 ) goto end;
-
-                    if( binMsg.nLen > 0 )
-                    {
-                        ret = pAPI->SignUpdate( hSession, binMsg.pVal, binMsg.nLen );
-                        if( ret != 0 ) goto end;
-                    }
-
-                    nOutLen = sizeof(sOut);
-
-                    ret = pAPI->SignFinal( hSession, sOut, (CK_ULONG_PTR)&nOutLen );
-                    if( ret != 0 ) goto end;
-
-                    JS_BIN_set( &binGenMAC, sOut, nOutLen );
-                }
-
-                if( JS_BIN_cmp( &binGenMAC, &binMAC ) == 0 )
-                    bRes = true;
-                else
-                    bRes = false;
-
-                jRspTestObj["testPassed"] = bRes;
-            }
-            else
-            {
-                if( strMode == "GMAC" )
-                {
-                    /*
-                    ret = JS_PKI_genGMAC( strSymAlg.toStdString().c_str(), &binAAD, &binKey, &binIV, &binMAC );
-                    if( ret != 0 ) goto end;
-
-                    jRspTestObj["tag"] = getHexString( &binMAC );
-                    */
-                }
-                else if( strMode == "AES" && strSymAlg == "CMAC" )
-                {
-                    /*
-                    QString strMACAlg;
-
-                    ret = JS_PKI_genCMAC( strMACAlg.toStdString().c_str(), &binMsg, &binKey, &binMAC );
-                    if( ret != 0 ) goto end;
+                    JS_BIN_set( &binMAC, sOut, nOutLen );
                     jRspTestObj["mac"] = getHexString( &binMAC );
-                    */
                 }
                 else
                 {
