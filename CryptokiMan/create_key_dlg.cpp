@@ -72,7 +72,7 @@ void CreateKeyDlg::keyTypeChanged( int index )
 {
     QString strKeyType = mKeyTypeCombo->currentText();
     long uType = JS_PKCS11_GetCKKType( strKeyType.toStdString().c_str() );
-    mKeyTypeText->setText( QString("%1").arg( uType, 8, 16, QLatin1Char('0')));
+    mKeyTypeText->setText( QString("0x%1").arg( uType, 8, 16, QLatin1Char('0')).toUpper());
 }
 
 void CreateKeyDlg::initUI()

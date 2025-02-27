@@ -243,7 +243,7 @@ void EncryptDlg::mechChanged( int index )
     QStringList algList = strMech.split( "_" );
 
     long uMech = JS_PKCS11_GetCKMType( strMech.toStdString().c_str() );
-    mMechText->setText( QString("%1").arg( uMech, 8, 16, QLatin1Char('0')).toUpper());
+    mMechText->setText( QString("0x%1").arg( uMech, 8, 16, QLatin1Char('0')).toUpper());
 
     int size = algList.size();
 

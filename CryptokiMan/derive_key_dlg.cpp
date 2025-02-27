@@ -77,7 +77,7 @@ void DeriveKeyDlg::classChanged( int index )
     else
     {
         long uClass = JS_PKCS11_GetCKOType( strClass.toStdString().c_str() );
-        mClassText->setText( QString("%1").arg( uClass, 8, 16, QLatin1Char('0')));
+        mClassText->setText( QString("0x%1").arg( uClass, 8, 16, QLatin1Char('0')).toUpper());
     }
 
     mTypeCombo->clear();
@@ -98,7 +98,7 @@ void DeriveKeyDlg::typeChanged( int index )
     else
     {
         long uType = JS_PKCS11_GetCKKType( strType.toStdString().c_str() );
-        mTypeText->setText(QString("%1").arg( uType, 8, 16, QLatin1Char('0')));
+        mTypeText->setText(QString("0x%1").arg( uType, 8, 16, QLatin1Char('0')).toUpper());
     }
 }
 
@@ -665,7 +665,7 @@ void DeriveKeyDlg::changeMechanism( int index )
 {
     long nMech = JS_PKCS11_GetCKMType( mSrcMethodCombo->currentText().toStdString().c_str());
 
-    mSrcMethodText->setText( QString( "%1" ).arg( nMech, 8, 16, QLatin1Char('0')));
+    mSrcMethodText->setText( QString( "0x%1" ).arg( nMech, 8, 16, QLatin1Char('0')).toUpper());
 
     if( nMech == CKM_ECDH1_DERIVE )
     {

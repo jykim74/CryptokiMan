@@ -860,7 +860,7 @@ void GenKeyPairDlg::mechChanged(int nIndex)
     QString strMech = mMechCombo->currentText();
     int uMech = JS_PKCS11_GetCKMType( strMech.toStdString().c_str() );
 
-    mMechText->setText( QString("%1").arg( uMech, 8, 16, QLatin1Char('0')).toUpper());
+    mMechText->setText( QString("0x%1").arg( uMech, 8, 16, QLatin1Char('0')).toUpper());
     mPubExponentText->setEnabled(false);
 
     if( strMech == "CKM_RSA_PKCS_KEY_PAIR_GEN" )

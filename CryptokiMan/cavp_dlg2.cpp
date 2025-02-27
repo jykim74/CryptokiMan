@@ -1092,7 +1092,7 @@ void CAVPDlg::clickRSA_DETPriKeyFind()
     QString strRspPath = mRSA_DETPriKeyPathText->text();
     strRspPath = manApplet->curPath( strRspPath );
 
-    QString strFileName = findFile( this, JS_FILE_TYPE_TXT, strRspPath );
+    QString strFileName = findFile( this, JS_FILE_TYPE_PRIKEY, strRspPath );
     if( strFileName.length() > 0 )
     {
         mRSA_DETPriKeyPathText->setText( strFileName );
