@@ -708,6 +708,7 @@ void CAVPDlg::MCT_LastMDChanged( const QString& text )
 
 void CAVPDlg::clickMCT_SymClear()
 {
+    mMCT_SymCountText->clear();
     mMCT_SymKeyText->clear();
     mMCT_SymIVText->clear();
     mMCT_SymPTText->clear();
@@ -720,6 +721,7 @@ void CAVPDlg::clickMCT_SymClear()
 
 void CAVPDlg::clickMCT_HashClear()
 {
+    mMCT_HashCountText->clear();
     mMCT_HashSeedText->clear();
     mMCT_HashFirstMDText->clear();
     mMCT_HashLastMDText->clear();
@@ -2216,19 +2218,19 @@ int CAVPDlg::makeSymDec_MCT( const QString strAlgMode, const BIN *pKey, const BI
 
     nKeyAlg = _getCKK( strAlg );
 
-    if( strAlgMode == "ECB" )
+    if( strMode == "ECB" )
     {
         ret = makeSymDecECB_MCT( nKeyAlg, pKey, pCT, jsonRes, bWin );
     }
-    else if( strAlgMode == "CBC" )
+    else if( strMode == "CBC" )
     {
         ret = makeSymDecCBC_MCT( nKeyAlg, pKey, pIV, pCT, jsonRes, bWin );
     }
-    else if( strAlgMode == "CTR" )
+    else if( strMode == "CTR" )
     {
         ret = makeSymDecCTR_MCT( nKeyAlg, pKey, pIV, pCT, jsonRes, bWin );
     }
-    else if( strAlgMode == "OFB" )
+    else if( strMode == "OFB" )
     {
         ret = makeSymDecOFB_MCT( nKeyAlg, pKey, pIV, pCT, jsonRes, bWin );
     }
@@ -2306,6 +2308,8 @@ int CAVPDlg::makeSymECB_MCT( int nKeyAlg, const BIN *pKey, const BIN *pPT, QJson
             if( ret != 0 ) goto end;
 
             JS_BIN_reset( &binCT[j] );
+            nOutLen = sizeof(sOut);
+
             ret = pAPI->Encrypt( hSession, binPT[j].pVal, binPT[j].nLen, sOut, (CK_ULONG_PTR)&nOutLen );
             JS_BIN_set( &binCT[j], sOut, nOutLen );
 
@@ -3151,7 +3155,7 @@ int CAVPDlg::makeSymDecECB_MCT( int nKeyAlg, const BIN *pKey, const BIN *pCT, QJ
 
         for( j = 0; j < 1000; j++ )
         {
-            ret = pAPI->EncryptInit( hSession, &sMech, hKey );
+            ret = pAPI->DecryptInit( hSession, &sMech, hKey );
             if( ret != 0 ) goto end;
 
             JS_BIN_reset( &binPT[j] );
@@ -3159,7 +3163,7 @@ int CAVPDlg::makeSymDecECB_MCT( int nKeyAlg, const BIN *pKey, const BIN *pCT, QJ
             memset( sOut, 0x00, sizeof(sOut ));
             nOutLen = sizeof( sOut );
 
-            ret = pAPI->Encrypt( hSession, binCT[j].pVal, binCT[j].nLen, sOut, (CK_ULONG_PTR)&nOutLen );
+            ret = pAPI->Decrypt( hSession, binCT[j].pVal, binCT[j].nLen, sOut, (CK_ULONG_PTR)&nOutLen );
             JS_BIN_set( &binPT[j], sOut, nOutLen );
             if( ret != 0 ) goto end;
 
@@ -3307,7 +3311,7 @@ int CAVPDlg::makeSymDecCBC_MCT( int nKeyAlg, const BIN *pKey, const BIN *pIV, co
             BIN binDec = {0,0};
             BIN binParam = {0,0};
 
-            ret = pAPI->EncryptInit( hSession, &sMech, hKey );
+            ret = pAPI->DecryptInit( hSession, &sMech, hKey );
             if( ret != 0 ) goto end;
 
             JS_BIN_reset( &binPT[j] );
@@ -3315,7 +3319,7 @@ int CAVPDlg::makeSymDecCBC_MCT( int nKeyAlg, const BIN *pKey, const BIN *pIV, co
             nOutLen = sizeof(sOut);
             memset( sOut, 0x00, nOutLen );
 
-            ret = pAPI->Encrypt( hSession, binCT[j].pVal, binCT[j].nLen, sOut, (CK_ULONG_PTR)&nOutLen );
+            ret = pAPI->Decrypt( hSession, binCT[j].pVal, binCT[j].nLen, sOut, (CK_ULONG_PTR)&nOutLen );
             JS_BIN_set( &binDec, sOut, nOutLen );
 
             if( ret != 0 ) goto end;
@@ -3481,10 +3485,12 @@ int CAVPDlg::makeSymDecCTR_MCT( int nKeyAlg, const BIN *pKey, const BIN *pIV, co
             BIN binEnc = {0,0};
             BIN binParam = {0,0};
 
-            ret = pAPI->EncryptInit( hSession, &sMech, hKey );
+            ret = pAPI->DecryptInit( hSession, &sMech, hKey );
             if( ret != 0 ) goto end;
 
-            ret = pAPI->Encrypt( hSession, binCTR.pVal, binCTR.nLen, sOut, (CK_ULONG_PTR)&nOutLen );
+            nOutLen = sizeof(sOut);
+
+            ret = pAPI->Decrypt( hSession, binCTR.pVal, binCTR.nLen, sOut, (CK_ULONG_PTR)&nOutLen );
             JS_BIN_set( &binEnc, sOut, nOutLen );
             if( ret != 0 ) goto end;
 
@@ -3644,18 +3650,19 @@ int CAVPDlg::makeSymDecCFB_MCT( int nKeyAlg, const BIN *pKey, const BIN *pIV, co
             BIN binDec = {0,0};
             BIN binParam = {0,0};
 
-            ret = pAPI->EncryptInit( hSession, &sMech, hKey );
+            ret = pAPI->DecryptInit( hSession, &sMech, hKey );
             if( ret != 0 ) goto end;
 
+            nOutLen = sizeof(sOut);
 
             if( j == 0 )
             {
-                ret = pAPI->Encrypt( hSession, binIV[i].pVal, binIV[i].nLen, sOut, (CK_ULONG_PTR)&nOutLen );
+                ret = pAPI->Decrypt( hSession, binIV[i].pVal, binIV[i].nLen, sOut, (CK_ULONG_PTR)&nOutLen );
                 JS_BIN_set( &binDec, sOut, nOutLen );
             }
             else
             {
-                ret = pAPI->Encrypt( hSession, binCT[j-1].pVal, binCT[j-1].nLen, sOut, (CK_ULONG_PTR)&nOutLen );
+                ret = pAPI->Decrypt( hSession, binCT[j-1].pVal, binCT[j-1].nLen, sOut, (CK_ULONG_PTR)&nOutLen );
                 JS_BIN_set( &binDec, sOut, nOutLen );
             }
 
@@ -3822,19 +3829,21 @@ int CAVPDlg::makeSymDecOFB_MCT( int nKeyAlg, const BIN *pKey, const BIN *pIV, co
         {
             BIN binParam = {0,0};
 
-            ret = pAPI->EncryptInit( hSession, &sMech, hKey );
+            ret = pAPI->DecryptInit( hSession, &sMech, hKey );
             if( ret != 0 ) goto end;
 
             JS_BIN_reset( &binOT[j] );
 
+            nOutLen = sizeof(sOut);
+
             if( j == 0 )
             {
-                ret = pAPI->Encrypt( hSession, binIV[i].pVal, binIV[i].nLen, sOut, (CK_ULONG_PTR)&nOutLen );
+                ret = pAPI->Decrypt( hSession, binIV[i].pVal, binIV[i].nLen, sOut, (CK_ULONG_PTR)&nOutLen );
                 JS_BIN_set( &binOT[j], sOut, nOutLen );
             }
             else
             {
-                ret = pAPI->Encrypt( hSession, binOT[j-1].pVal, binOT[j-1].nLen, sOut, (CK_ULONG_PTR)&nOutLen );
+                ret = pAPI->Decrypt( hSession, binOT[j-1].pVal, binOT[j-1].nLen, sOut, (CK_ULONG_PTR)&nOutLen );
                 JS_BIN_set( &binOT[j], sOut, nOutLen );
             }
 
