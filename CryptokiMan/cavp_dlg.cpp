@@ -5564,8 +5564,8 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
     long hSession = mSessionText->text().toLong();
 
-    unsigned char sOut[1024];
-    int nOutLen = 1024;
+    unsigned char sOut[10240];
+    int nOutLen = 10240;
 
     long uObj = -1;
 
@@ -5718,7 +5718,7 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
             {
                 nLeft = binCT.nLen;
 
-                ret = pAPI->EncryptInit( hSession, &sMech, uObj );
+                ret = pAPI->DecryptInit( hSession, &sMech, uObj );
                 if( ret != 0 ) goto end;
 
                 while( nLeft > 0 )
@@ -5732,7 +5732,7 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
 
                     nOutLen = sizeof(sOut);
 
-                    ret = pAPI->Encrypt( hSession, binPart.pVal, binPart.nLen, sOut, (CK_ULONG_PTR)&nOutLen );
+                    ret = pAPI->Decrypt( hSession, binPart.pVal, binPart.nLen, sOut, (CK_ULONG_PTR)&nOutLen );
                     if( ret != 0 ) return ret;
 
                     JS_BIN_set( &binRes, sOut, nOutLen );
@@ -5794,10 +5794,10 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
                             goto end;
                         }
 
-                        ret = pAPI->EncryptInit( hSession, &sMech, uObj );
+                        ret = pAPI->DecryptInit( hSession, &sMech, uObj );
                         if( ret != 0 ) goto end;
 
-                        ret = pAPI->Encrypt( hSession, binPT.pVal, binPT.nLen, sOut, (CK_ULONG_PTR)&nOutLen );
+                        ret = pAPI->Decrypt( hSession, binPT.pVal, binPT.nLen, sOut, (CK_ULONG_PTR)&nOutLen );
                         if( ret != 0 ) goto end;
 
                         JS_BIN_set( &binTag, sOut, nTagLen/8 );
