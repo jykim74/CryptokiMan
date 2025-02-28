@@ -29,7 +29,7 @@ static QStringList kACVP_KDAList = { "KAS-ECC", "kdf-components", "PBKDF" };
 static QStringList kACVP_EDDSAList = { "EDDSA" };
 static QStringList kACVP_DSAList = { "DSA" };
 
-const QStringList kSymAlgList = { "AES", "DES3" };
+const QStringList kSymAlgList = { "AES" };
 const QStringList kSymModeList = { "ECB", "CBC", "CTR", "CFB", "OFB" };
 const QStringList kSymDirection = { "Encrypt", "Decrypt" };
 const QStringList kHashAlgList = { "SHA-1", "SHA2-224", "SHA2-256", "SHA2-384", "SHA2-512" };
