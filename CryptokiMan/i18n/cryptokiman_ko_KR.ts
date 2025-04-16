@@ -440,41 +440,41 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation>닫기</translation>
     </message>
     <message>
-        <location filename="../cavp_dlg.cpp" line="806"/>
+        <location filename="../cavp_dlg.cpp" line="808"/>
         <source>Enter a tgId</source>
         <translation>tgId를 입력하세요</translation>
     </message>
     <message>
-        <location filename="../cavp_dlg.cpp" line="816"/>
+        <location filename="../cavp_dlg.cpp" line="818"/>
         <source>Enter a tcId</source>
         <translation>tcId를 입력하세요</translation>
     </message>
     <message>
-        <location filename="../cavp_dlg.cpp" line="906"/>
+        <location filename="../cavp_dlg.cpp" line="908"/>
         <source>Enter a full length</source>
         <translation>전체 길이를 입력하세요</translation>
     </message>
     <message>
-        <location filename="../cavp_dlg.cpp" line="914"/>
+        <location filename="../cavp_dlg.cpp" line="916"/>
         <source>Enter a content</source>
         <translation>내용을 입력하세요</translation>
     </message>
     <message>
-        <location filename="../cavp_dlg.cpp" line="4197"/>
+        <location filename="../cavp_dlg.cpp" line="4211"/>
         <source>%1 file save successfully</source>
         <translation>%1 파일 저장에 성공하였습니다.</translation>
     </message>
     <message>
-        <location filename="../cavp_dlg.cpp" line="4704"/>
-        <location filename="../cavp_dlg.cpp" line="4985"/>
+        <location filename="../cavp_dlg.cpp" line="4718"/>
+        <location filename="../cavp_dlg.cpp" line="4999"/>
         <source>Invalid Mode: %1</source>
         <translation>유효하지 않는 모드: %1</translation>
     </message>
     <message>
-        <location filename="../cavp_dlg.cpp" line="4711"/>
-        <location filename="../cavp_dlg.cpp" line="4992"/>
-        <location filename="../cavp_dlg.cpp" line="5460"/>
-        <location filename="../cavp_dlg.cpp" line="6203"/>
+        <location filename="../cavp_dlg.cpp" line="4725"/>
+        <location filename="../cavp_dlg.cpp" line="5006"/>
+        <location filename="../cavp_dlg.cpp" line="5505"/>
+        <location filename="../cavp_dlg.cpp" line="6248"/>
         <source>Invalid test type: %1</source>
         <translation>유효하지 않는 테스트 타입: %1</translation>
     </message>
@@ -6362,6 +6362,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../lcn_info_dlg.ui" line="315"/>
+        <location filename="../lcn_info_dlg.cpp" line="519"/>
         <source>Get</source>
         <translation>가져오기</translation>
     </message>
@@ -6468,6 +6469,11 @@ Do you want to delete the file and continue?</source>
         <location filename="../lcn_info_dlg.cpp" line="443"/>
         <source>There is currently no license</source>
         <translation>현재 라이선스가 없습니다</translation>
+    </message>
+    <message>
+        <location filename="../lcn_info_dlg.cpp" line="515"/>
+        <source>Find</source>
+        <translation>찾기</translation>
     </message>
     <message>
         <source>failed to renew license [%1]</source>
