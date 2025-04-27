@@ -340,6 +340,7 @@ void DigestDlg::clickFinal()
     {
         manApplet->warningBox( tr("DigestFinal execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         appendStatusLabel( QString( "|Final failure [%1]").arg( rv ));
+        status_type_ = STATUS_NONE;
     }
 
     JS_BIN_reset( &binDigest );
@@ -416,6 +417,7 @@ void DigestDlg::runDataDigest()
     {
         manApplet->warningBox( tr("Digest execution failure [%1]").arg( JS_PKCS11_GetErrorMsg(rv)), this );
         mOutputText->setText("");
+        status_type_ = STATUS_NONE;
     }
 }
 

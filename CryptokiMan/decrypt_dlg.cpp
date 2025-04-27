@@ -571,6 +571,7 @@ int DecryptDlg::clickFinal()
 
     if( rv != CKR_OK )
     {
+        status_type_ = STATUS_NONE;
         if( pDecPart ) JS_free( pDecPart );
         mOutputText->setPlainText("");
         manApplet->warningBox( tr("DecryptFinal execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
@@ -587,6 +588,7 @@ int DecryptDlg::clickFinal()
 
     if( rv != CKR_OK )
     {
+        status_type_ = STATUS_NONE;
         if( pDecPart ) JS_free( pDecPart );
         appendStatusLabel( QString( "|Final failure[%1]" ).arg(rv));
         manApplet->warningBox( tr("DecryptFinal execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
@@ -670,6 +672,7 @@ void DecryptDlg::runDataDecrypt()
 
     if( rv != CKR_OK )
     {
+        status_type_ = STATUS_NONE;
         mOutputText->setPlainText( "" );
         manApplet->warningBox( tr("Decrypt execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
@@ -681,6 +684,7 @@ void DecryptDlg::runDataDecrypt()
 
     if( rv != CKR_OK )
     {
+        status_type_ = STATUS_NONE;
         if( pDecData ) JS_free( pDecData );
         mOutputText->setPlainText( "" );
         manApplet->warningBox( tr("Decrypt execution failure2 [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );

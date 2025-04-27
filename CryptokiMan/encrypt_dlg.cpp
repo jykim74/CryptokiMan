@@ -549,6 +549,7 @@ int EncryptDlg::clickFinal()
     rv = manApplet->cryptokiAPI()->EncryptFinal( session_, NULL, (CK_ULONG_PTR)&uEncPartLen );
     if( rv != CKR_OK )
     {
+        status_type_ = STATUS_NONE;
         mOutputText->setPlainText( "" );
         if( pEncPart ) JS_free( pEncPart );
         manApplet->warningBox( tr("EncryptFinal execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
@@ -565,6 +566,7 @@ int EncryptDlg::clickFinal()
 
     if( rv != CKR_OK )
     {
+        status_type_ = STATUS_NONE;
         appendStatusLabel( QString( "|Final failure(%1)" ).arg(rv) );
         if( pEncPart ) JS_free( pEncPart );
         manApplet->warningBox( tr("EncryptFinal execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
@@ -651,6 +653,7 @@ void EncryptDlg::runDataEncrypt()
     rv = manApplet->cryptokiAPI()->Encrypt( session_, binInput.pVal, binInput.nLen, NULL, (CK_ULONG_PTR)&uEncDataLen );
     if( rv != CKR_OK )
     {
+        status_type_ = STATUS_NONE;
         mOutputText->setPlainText( "" );
         manApplet->warningBox( tr("Encrypt execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
@@ -663,6 +666,7 @@ void EncryptDlg::runDataEncrypt()
 
     if( rv != CKR_OK )
     {
+        status_type_ = STATUS_NONE;
         mOutputText->setPlainText( "" );
         if( pEncData ) JS_free( pEncData );
         manApplet->warningBox( tr("Encrypt execution failure2 [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );

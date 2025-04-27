@@ -381,6 +381,7 @@ void VerifyDlg::clickFinal()
 
     if( rv != CKR_OK )
     {
+        status_type_ = STATUS_NONE;
         manApplet->warningBox( tr("Signature value is incorrect [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         appendStatusLabel( QString( "|Final failure [%1]" ).arg( rv ));
     }
@@ -456,11 +457,16 @@ void VerifyDlg::runDataVerify()
     rv = manApplet->cryptokiAPI()->Verify( session_, binInput.pVal, binInput.nLen, binSign.pVal, binSign.nLen );
 
     if( rv != CKR_OK )
+    {
+        status_type_ = STATUS_NONE;
         manApplet->warningBox( tr( "Signature value is incorrect [%1]" ).arg(JS_PKCS11_GetErrorMsg(rv)), this );
+    }
     else
+    {
+        status_type_ = STATUS_FINAL;
         manApplet->messageBox( tr( "Signature value is correct" ), this );
+    }
 
-    status_type_ = STATUS_FINAL;
     QString strRes = mStatusLabel->text();
     strRes += "|Verify";
 

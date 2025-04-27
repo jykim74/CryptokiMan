@@ -387,6 +387,7 @@ void SignDlg::clickFinal()
 
     if( rv != CKR_OK )
     {
+        status_type_ = STATUS_NONE;
         manApplet->warningBox( tr("SignFinal execution failure [%1]").arg( JS_PKCS11_GetErrorMsg(rv)), this );
         appendStatusLabel( QString( "|Final failure [%1]").arg( rv ));
         return;
@@ -461,6 +462,7 @@ void SignDlg::runDataSign()
 
     if( rv != CKR_OK )
     {
+        status_type_ = STATUS_NONE;
         mOutputText->setPlainText("");
         manApplet->warningBox( tr("Sign execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
