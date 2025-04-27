@@ -68,6 +68,7 @@ private:
     long session_;
     VerifyThread* thread_;
     int update_cnt_;
+    int status_type_ = -1;
 };
 
 #endif // VERIFY_DLG_H

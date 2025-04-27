@@ -68,6 +68,7 @@ private:
     int slot_index_;
     SignThread* thread_;
     int update_cnt_;
+    int status_type_ = -1;
 };
 
 #endif // SIGN_DLG_H

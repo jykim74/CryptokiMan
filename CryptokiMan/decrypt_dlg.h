@@ -71,6 +71,7 @@ private:
     long session_ = -1;
     DecryptThread* thread_;
     int update_cnt_;
+    int status_type_ = -1;
 };
 
 #endif // DECRYPT_DLG_H

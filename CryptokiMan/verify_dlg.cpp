@@ -179,6 +179,7 @@ void VerifyDlg::initialize()
 {
     mInitAutoCheck->setChecked(true);
     mInputTab->setCurrentIndex(0);
+    status_type_ = STATUS_NONE;
 
     if( manApplet->isLicense() == false ) mInputTab->setTabEnabled( 1, false );
 }
@@ -322,6 +323,7 @@ int VerifyDlg::clickInit()
         return rv;
     }
 
+    status_type_ = STATUS_INIT;
     mStatusLabel->setText( "Init" );
     return rv;
 }
@@ -356,6 +358,7 @@ void VerifyDlg::clickUpdate()
     }
 
     update_cnt_++;
+    status_type_ = STATUS_UPDATE;
     updateStatusLabel();
 }
 
@@ -383,6 +386,7 @@ void VerifyDlg::clickFinal()
     }
     else
     {
+        status_type_ = STATUS_FINAL;
         manApplet->messageBox( tr("Signature value is correct"), this );
         appendStatusLabel( "|Final OK" );
     }
@@ -456,6 +460,7 @@ void VerifyDlg::runDataVerify()
     else
         manApplet->messageBox( tr( "Signature value is correct" ), this );
 
+    status_type_ = STATUS_FINAL;
     QString strRes = mStatusLabel->text();
     strRes += "|Verify";
 
@@ -540,6 +545,7 @@ void VerifyDlg::runFileVerify()
         }
 
         update_cnt_++;
+        status_type_ = STATUS_UPDATE;
         nReadSize += nRead;
         nPercent = ( nReadSize * 100 ) / fileSize;
 
@@ -579,6 +585,12 @@ void VerifyDlg::clickClose()
 
 void VerifyDlg::clickSelect()
 {
+    if( status_type_ == STATUS_INIT || status_type_ == STATUS_UPDATE )
+    {
+        manApplet->warnLog( tr( "Cannot be run in Init or Update state" ), this );
+        return;
+    }
+
     HsmManDlg hsmMan;
     hsmMan.setSelectedSlot( slot_index_ );
     hsmMan.setTitle( "Select Key" );
@@ -779,6 +791,7 @@ void VerifyDlg::onTaskUpdate( int nUpdate )
     int nFileSize = mFileTotalSizeText->text().toInt();
     int nPercent = (nUpdate * 100) / nFileSize;
     update_cnt_++;
+    status_type_ = STATUS_UPDATE;
 
     mFileReadSizeText->setText( QString("%1").arg( nUpdate ));
     mVerifyProgBar->setValue( nPercent );

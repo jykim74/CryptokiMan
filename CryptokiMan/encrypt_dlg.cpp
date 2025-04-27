@@ -324,6 +324,7 @@ void EncryptDlg::initialize()
 {
     mInitAutoCheck->setChecked(true);
     mInputTab->setCurrentIndex(0);
+    status_type_ = STATUS_NONE;
 
     if( manApplet->isLicense() == false ) mInputTab->setTabEnabled( 1, false );
 }
@@ -476,6 +477,7 @@ int EncryptDlg::clickInit()
         return rv;
     }
 
+    status_type_ = STATUS_INIT;
     mStatusLabel->setText( "Init" );
     mOutputText->setPlainText( "" );
 
@@ -526,6 +528,7 @@ void EncryptDlg::clickUpdate()
     JS_BIN_set( &binPart, pEncPart, uEncPartLen );
 
     update_cnt_++;
+    status_type_ = STATUS_UPDATE;
     updateStatusLabel();
 
     mOutputText->appendPlainText( getHexString( binPart.pVal, binPart.nLen ));
@@ -572,7 +575,7 @@ int EncryptDlg::clickFinal()
     JS_BIN_set( &binEncPart, pEncPart, uEncPartLen );
 
     appendStatusLabel( "|Final OK" );
-
+    status_type_ = STATUS_FINAL;
 
     if( mInputTab->currentIndex() == 0 )
     {
@@ -665,6 +668,8 @@ void EncryptDlg::runDataEncrypt()
         manApplet->warningBox( tr("Encrypt execution failure2 [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
+
+    status_type_ = STATUS_FINAL;
 
     char *pHex = NULL;
     JS_BIN_set( &binEncData, pEncData, uEncDataLen );
@@ -774,6 +779,7 @@ void EncryptDlg::runFileEncrypt()
         }
 
         update_cnt_++;
+        status_type_ = STATUS_UPDATE;
 
         if( uEncPartLen > 0 )
         {
@@ -849,6 +855,12 @@ void EncryptDlg::clickClose()
 
 void EncryptDlg::clickSelect()
 {
+    if( status_type_ == STATUS_INIT || status_type_ == STATUS_UPDATE )
+    {
+        manApplet->warnLog( tr( "Cannot be run in Init or Update state" ), this );
+        return;
+    }
+
     HsmManDlg hsmMan;
     hsmMan.setSelectedSlot( slot_index_ );
     hsmMan.setTitle( "Select Key" );
@@ -974,6 +986,7 @@ void EncryptDlg::onTaskUpdate( int nUpdate )
     int nFileSize = mFileTotalSizeText->text().toInt();
     int nPercent = (nUpdate * 100) / nFileSize;
     update_cnt_++;
+    status_type_ = STATUS_UPDATE;
 
     mFileReadSizeText->setText( QString("%1").arg( nUpdate ));
     mEncProgBar->setValue( nPercent );

@@ -71,6 +71,7 @@ private:
     long session_;
     EncryptThread* thread_;
     int update_cnt_;
+    int status_type_ = -1;
 };
 
 #endif // ENCRYPT_DLG_H

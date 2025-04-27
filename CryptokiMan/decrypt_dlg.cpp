@@ -344,6 +344,7 @@ void DecryptDlg::initialize()
 {
     mInitAutoCheck->setChecked(true);
     mInputTab->setCurrentIndex(0);
+    status_type_ = STATUS_NONE;
 
     if( manApplet->isLicense() == false ) mInputTab->setTabEnabled( 1, false );
 }
@@ -497,12 +498,14 @@ int DecryptDlg::clickInit()
         mOutputText->setPlainText("");
         mStatusLabel->setText("");
         manApplet->warningBox( tr("DecryptInit execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+
         return rv;
     }
 
     mOutputText->setPlainText("");
     mStatusLabel->setText( "Init" );
 
+    status_type_ = STATUS_INIT;
     freeMechanism( &sMech );
 
     return rv;
@@ -549,6 +552,7 @@ void DecryptDlg::clickUpdate()
     mOutputText->appendPlainText( strDec );
     JS_BIN_reset( &binDecPart );
 
+    status_type_ = STATUS_UPDATE;
     update_cnt_++;
     updateStatusLabel();
     if( pDecPart ) JS_free( pDecPart );
@@ -604,6 +608,7 @@ int DecryptDlg::clickFinal()
         JS_BIN_fileAppend( &binDecPart, strDstPath.toLocal8Bit().toStdString().c_str() );
     }
 
+    status_type_ = STATUS_FINAL;
     JS_BIN_reset( &binDecPart );
     if( pDecPart ) JS_free( pDecPart );
     JS_BIN_reset( &binDecPart );
@@ -693,6 +698,8 @@ void DecryptDlg::runDataDecrypt()
     mOutputText->setPlainText( strDec );
     if( pDecData ) JS_free( pDecData );
     JS_BIN_reset( &binDecData );
+
+    status_type_ = STATUS_FINAL;
 }
 
 void DecryptDlg::runFileDecrypt()
@@ -791,6 +798,7 @@ void DecryptDlg::runFileDecrypt()
         }
 
         update_cnt_++;
+        status_type_ = STATUS_UPDATE;
 
         if( uDecPartLen > 0 )
         {
@@ -866,6 +874,12 @@ void DecryptDlg::clickClose()
 
 void DecryptDlg::clickSelect()
 {
+    if( status_type_ == STATUS_INIT || status_type_ == STATUS_UPDATE )
+    {
+        manApplet->warnLog( tr( "Cannot be run in Init or Update state" ), this );
+        return;
+    }
+
     HsmManDlg hsmMan;
     hsmMan.setSelectedSlot( slot_index_ );
     hsmMan.setTitle( "Select Key" );
@@ -991,6 +1005,7 @@ void DecryptDlg::onTaskUpdate( int nUpdate )
     int nFileSize = mFileTotalSizeText->text().toInt();
     int nPercent = (nUpdate * 100) / nFileSize;
     update_cnt_++;
+    status_type_ = STATUS_UPDATE;
 
     mFileReadSizeText->setText( QString("%1").arg( nUpdate ));
     mDecProgBar->setValue( nPercent );

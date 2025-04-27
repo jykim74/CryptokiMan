@@ -185,6 +185,7 @@ void SignDlg::initialize()
 {
     mInitAutoCheck->setChecked(true);
     mInputTab->setCurrentIndex(0);
+    status_type_ = STATUS_NONE;
 
     if( manApplet->isLicense() == false ) mInputTab->setTabEnabled( 1, false );
 }
@@ -330,6 +331,7 @@ int SignDlg::clickInit()
     }
     else
     {
+        status_type_ = STATUS_INIT;
         mOutputText->setPlainText( "" );
         mStatusLabel->setText( "Init" );
     }
@@ -369,6 +371,7 @@ void SignDlg::clickUpdate()
         return;
     }
 
+    status_type_ = STATUS_UPDATE;
     update_cnt_++;
     updateStatusLabel();
 }
@@ -389,7 +392,7 @@ void SignDlg::clickFinal()
         return;
     }
 
-
+    status_type_ = STATUS_FINAL;
     BIN binSign = {0,0};
     JS_BIN_set( &binSign, sSign, uSignLen );
     mOutputText->setPlainText( getHexString( binSign.pVal, binSign.nLen) );
@@ -472,6 +475,7 @@ void SignDlg::runDataSign()
     QString strRes = mStatusLabel->text();
     strRes += "|Sign";
     mStatusLabel->setText( strRes );
+    status_type_ = STATUS_FINAL;
 
     if( pHex ) JS_free(pHex);
     JS_BIN_reset(&binSign);
@@ -548,6 +552,7 @@ void SignDlg::runFileSign()
         }
 
         update_cnt_++;
+        status_type_ = STATUS_UPDATE;
         nReadSize += nRead;
         nPercent = ( nReadSize * 100 ) / fileSize;
 
@@ -588,6 +593,12 @@ void SignDlg::clickClose()
 
 void SignDlg::clickSelect()
 {
+    if( status_type_ == STATUS_INIT || status_type_ == STATUS_UPDATE )
+    {
+        manApplet->warnLog( tr( "Cannot be run in Init or Update state" ), this );
+        return;
+    }
+
     HsmManDlg hsmMan;
     hsmMan.setSelectedSlot( slot_index_ );
     hsmMan.setTitle( "Select Key" );
@@ -803,6 +814,7 @@ void SignDlg::onTaskUpdate( int nUpdate )
     int nFileSize = mFileTotalSizeText->text().toInt();
     int nPercent = (nUpdate * 100) / nFileSize;
     update_cnt_++;
+    status_type_ = STATUS_UPDATE;
 
     mFileReadSizeText->setText( QString("%1").arg( nUpdate ));
     mSignProgBar->setValue( nPercent );
