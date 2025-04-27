@@ -54,6 +54,13 @@ enum ViewType {
     VIEW_HELP
 };
 
+enum StatusType {
+    STATUS_NONE = 0,
+    STATUS_INIT,
+    STATUS_UPDATE,
+    STATUS_FINAL
+};
+
 #define VIEW_FILE                       0x01000000
 #define VIEW_MODULE                     0x02000000
 #define VIEW_OBJECT                     0x03000000

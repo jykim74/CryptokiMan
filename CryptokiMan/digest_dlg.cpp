@@ -148,6 +148,7 @@ void DigestDlg::initialize()
 {
     mInitAutoCheck->setChecked(true);
     mInputTab->setCurrentIndex(0);
+    status_type_ = STATUS_NONE;
 
     if( manApplet->isLicense() == false ) mInputTab->setTabEnabled( 1, false );
 
@@ -168,6 +169,12 @@ void DigestDlg::updateStatusLabel()
 
 void DigestDlg::clickSelectKey()
 {
+    if( status_type_ == STATUS_INIT || status_type_ == STATUS_UPDATE )
+    {
+        manApplet->warnLog( tr( "Cannot be run in Init or Update state" ), this );
+        return;
+    }
+
     HsmManDlg hsmMan;
     hsmMan.setSelectedSlot( slot_index_ );
     hsmMan.setTitle( "Select Key" );
@@ -252,6 +259,7 @@ int DigestDlg::clickInit()
     {
         mStatusLabel->setText( "Init" );
         mOutputText->setText( "" );
+        status_type_ = STATUS_INIT;
     }
     else
     {
@@ -294,6 +302,7 @@ void DigestDlg::clickUpdate()
     {
         update_cnt_++;
         updateStatusLabel();
+        status_type_ = STATUS_UPDATE;
     }
     else
     {
@@ -325,6 +334,7 @@ void DigestDlg::clickFinal()
         JS_BIN_set( &binDigest, sDigest, uDigestLen );
         mOutputText->setText( getHexString( binDigest.pVal, binDigest.nLen) );
         appendStatusLabel( "|Final OK" );
+        status_type_ = STATUS_FINAL;
     }
     else
     {
@@ -400,6 +410,7 @@ void DigestDlg::runDataDigest()
         QString strRes = mStatusLabel->text();
         strRes += "|Digest";
         mStatusLabel->setText(strRes);
+        status_type_ = STATUS_FINAL;
     }
     else
     {
@@ -479,6 +490,7 @@ void DigestDlg::runFileDigest()
             goto end;
         }
 
+        status_type_ = STATUS_UPDATE;
         update_cnt_++;
         nReadSize += nRead;
         nPercent = ( nReadSize * 100 ) / fileSize;
@@ -640,6 +652,7 @@ void DigestDlg::onTaskUpdate( int nUpdate )
     int nFileSize = mFileTotalSizeText->text().toInt();
     int nPercent = (nUpdate * 100) / nFileSize;
     update_cnt_++;
+    status_type_ = STATUS_UPDATE;
 
     mFileReadSizeText->setText( QString("%1").arg( nUpdate ));
     mHashProgBar->setValue( nPercent );

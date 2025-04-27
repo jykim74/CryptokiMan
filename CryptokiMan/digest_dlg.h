@@ -65,6 +65,7 @@ private:
 
     int slot_index_ = -1;
     long session_ = -1;
+    int status_type_ = -1;
 };
 
 #endif // DIGEST_DLG_H
