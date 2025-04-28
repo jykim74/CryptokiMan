@@ -54,6 +54,9 @@ DecryptDlg::DecryptDlg(QWidget *parent) :
 DecryptDlg::~DecryptDlg()
 {
     if( thread_ ) delete thread_;
+
+    if( status_type_ == STATUS_INIT || status_type_ == STATUS_UPDATE )
+        clickFinal();
 }
 
 void DecryptDlg::initUI()
@@ -346,19 +349,50 @@ void DecryptDlg::initialize()
     mInputTab->setCurrentIndex(0);
     status_type_ = STATUS_NONE;
 
+    clearStatusLabel();
+
     if( manApplet->isLicense() == false ) mInputTab->setTabEnabled( 1, false );
 }
 
-void DecryptDlg::appendStatusLabel( const QString& strLabel )
+void DecryptDlg::clearStatusLabel()
 {
-    QString strStatus = mStatusLabel->text();
-    strStatus += strLabel;
-    mStatusLabel->setText( strStatus );
+    mInitLabel->clear();
+    mUpdateLabel->clear();
+    mFinalLabel->clear();
 }
 
-void DecryptDlg::updateStatusLabel()
+void DecryptDlg::setStatusInit( int rv )
 {
-    mStatusLabel->setText( QString( "Init|Update X %1").arg( update_cnt_));
+    clearStatusLabel();
+
+    if( rv == CKR_OK )
+        mInitLabel->setText( "Init OK" );
+    else
+        mInitLabel->setText( QString( "Init Fail:%1" ).arg( rv ) );
+}
+
+void DecryptDlg::setStatusUpdate( int rv, int count )
+{
+    if( rv == CKR_OK )
+        mUpdateLabel->setText( QString( "|Update X %1" ).arg( count ) );
+    else
+        mUpdateLabel->setText( QString( "|Update Fail:%1").arg( rv ));
+}
+
+void DecryptDlg::setStatusFinal( int rv )
+{
+    if( rv == CKR_OK )
+        mFinalLabel->setText( QString( "|Final OK" ) );
+    else
+        mFinalLabel->setText( QString( "|Final Fail:%1").arg( rv ));
+}
+
+void DecryptDlg::setStatusDecrypt( int rv )
+{
+    if( rv == CKR_OK )
+        mFinalLabel->setText( QString( "|Decrypt OK" ) );
+    else
+        mFinalLabel->setText( QString( "|Decrypt Fail:%1").arg( rv ));
 }
 
 void DecryptDlg::keyTypeChanged( int index )
@@ -496,14 +530,13 @@ int DecryptDlg::clickInit()
     if( rv != CKR_OK )
     {
         mOutputText->setPlainText("");
-        mStatusLabel->setText("");
         manApplet->warningBox( tr("DecryptInit execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
 
         return rv;
     }
 
     mOutputText->setPlainText("");
-    mStatusLabel->setText( "Init" );
+    setStatusInit( rv );
 
     status_type_ = STATUS_INIT;
     freeMechanism( &sMech );
@@ -543,6 +576,7 @@ void DecryptDlg::clickUpdate()
         if( pDecPart ) JS_free( pDecPart );
         mOutputText->setPlainText("");
         manApplet->warningBox( tr("DecryptUpdate execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this);
+        setStatusUpdate( rv, update_cnt_ );
         return;
     }
 
@@ -554,7 +588,8 @@ void DecryptDlg::clickUpdate()
 
     status_type_ = STATUS_UPDATE;
     update_cnt_++;
-    updateStatusLabel();
+    setStatusUpdate( rv, update_cnt_ );
+
     if( pDecPart ) JS_free( pDecPart );
 }
 
@@ -575,6 +610,7 @@ int DecryptDlg::clickFinal()
         if( pDecPart ) JS_free( pDecPart );
         mOutputText->setPlainText("");
         manApplet->warningBox( tr("DecryptFinal execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        setStatusFinal(rv);
         return rv;
     }
 
@@ -590,12 +626,12 @@ int DecryptDlg::clickFinal()
     {
         status_type_ = STATUS_NONE;
         if( pDecPart ) JS_free( pDecPart );
-        appendStatusLabel( QString( "|Final failure[%1]" ).arg(rv));
+        setStatusFinal(rv);
         manApplet->warningBox( tr("DecryptFinal execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return rv;
     }
 
-    appendStatusLabel( "|Final OK" );
+    setStatusFinal(rv);
 
     JS_BIN_set( &binDecPart, pDecPart, uDecPartLen );
 
@@ -675,6 +711,7 @@ void DecryptDlg::runDataDecrypt()
         status_type_ = STATUS_NONE;
         mOutputText->setPlainText( "" );
         manApplet->warningBox( tr("Decrypt execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        setStatusDecrypt(rv);
         return;
     }
 
@@ -688,12 +725,11 @@ void DecryptDlg::runDataDecrypt()
         if( pDecData ) JS_free( pDecData );
         mOutputText->setPlainText( "" );
         manApplet->warningBox( tr("Decrypt execution failure2 [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        setStatusDecrypt(rv);
         return;
     }
 
-    QString strRes = mStatusLabel->text();
-    strRes += "|Decrypt";
-    mStatusLabel->setText( strRes );
+    setStatusDecrypt(rv);
 
     BIN binDecData = {0,0};
     JS_BIN_set( &binDecData, pDecData, uDecDataLen );
@@ -797,12 +833,14 @@ void DecryptDlg::runFileDecrypt()
         if( rv != CKR_OK )
         {
             if( pDecPart ) JS_free( pDecPart );
+            setStatusUpdate( rv, update_cnt_ );
             manApplet->warningBox( tr("DecryptUpdate execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
             goto end;
         }
 
         update_cnt_++;
         status_type_ = STATUS_UPDATE;
+        setStatusUpdate( rv, update_cnt_ );
 
         if( uDecPartLen > 0 )
         {
@@ -848,7 +886,7 @@ void DecryptDlg::runFileDecrypt()
         if( rv == 0 )
         {
             QString strMsg = QString( "|Update X %1").arg( update_cnt_ );
-            appendStatusLabel( strMsg );
+            setStatusUpdate( rv, update_cnt_ );
             rv = clickFinal();
             if( rv == 0 )
             {
@@ -993,7 +1031,6 @@ void DecryptDlg::onTaskFinished()
 
 
     QString strStatus = QString( "|Update X %1").arg( update_cnt_ );
-    appendStatusLabel( strStatus );
 
     clickFinal();
 
@@ -1009,6 +1046,7 @@ void DecryptDlg::onTaskUpdate( int nUpdate )
     int nFileSize = mFileTotalSizeText->text().toInt();
     int nPercent = (nUpdate * 100) / nFileSize;
     update_cnt_++;
+    setStatusUpdate( CKR_OK, update_cnt_ );
     status_type_ = STATUS_UPDATE;
 
     mFileReadSizeText->setText( QString("%1").arg( nUpdate ));

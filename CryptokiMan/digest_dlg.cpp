@@ -51,6 +51,9 @@ DigestDlg::DigestDlg(QWidget *parent) :
 DigestDlg::~DigestDlg()
 {
     if( thread_ ) delete thread_;
+
+    if( status_type_ == STATUS_INIT || status_type_ == STATUS_UPDATE )
+        clickFinal();
 }
 
 void DigestDlg::initUI()
@@ -150,21 +153,52 @@ void DigestDlg::initialize()
     mInputTab->setCurrentIndex(0);
     status_type_ = STATUS_NONE;
 
+    clearStatusLabel();
+
     if( manApplet->isLicense() == false ) mInputTab->setTabEnabled( 1, false );
 
     changeMech(0);
 }
 
-void DigestDlg::appendStatusLabel( const QString& strLabel )
+void DigestDlg::clearStatusLabel()
 {
-    QString strStatus = mStatusLabel->text();
-    strStatus += strLabel;
-    mStatusLabel->setText( strStatus );
+    mInitLabel->clear();
+    mUpdateLabel->clear();
+    mFinalLabel->clear();
 }
 
-void DigestDlg::updateStatusLabel()
+void DigestDlg::setStatusInit( int rv )
 {
-    mStatusLabel->setText( QString( "Init|Update X %1").arg( update_cnt_));
+    clearStatusLabel();
+
+    if( rv == CKR_OK )
+        mInitLabel->setText( "Init OK" );
+    else
+        mInitLabel->setText( QString( "Init Fail:%1" ).arg( rv ) );
+}
+
+void DigestDlg::setStatusUpdate( int rv, int count )
+{
+    if( rv == CKR_OK )
+        mUpdateLabel->setText( QString( "|Update X %1" ).arg( count ) );
+    else
+        mUpdateLabel->setText( QString( "|Update Fail:%1").arg( rv ));
+}
+
+void DigestDlg::setStatusFinal( int rv )
+{
+    if( rv == CKR_OK )
+        mFinalLabel->setText( QString( "|Final OK" ) );
+    else
+        mFinalLabel->setText( QString( "|Final Fail:%1").arg( rv ));
+}
+
+void DigestDlg::setStatusDigest( int rv )
+{
+    if( rv == CKR_OK )
+        mFinalLabel->setText( QString( "|Digest OK" ) );
+    else
+        mFinalLabel->setText( QString( "|Digest Fail:%1").arg( rv ));
 }
 
 void DigestDlg::clickSelectKey()
@@ -253,20 +287,22 @@ int DigestDlg::clickInit()
         stMech.ulParameterLen = binParam.nLen;
     }
 
+    clearStatusLabel();
+
     rv = manApplet->cryptokiAPI()->DigestInit( session_, &stMech );
 
     if( rv == CKR_OK )
     {
-        mStatusLabel->setText( "Init" );
         mOutputText->setText( "" );
         status_type_ = STATUS_INIT;
     }
     else
     {
         manApplet->warningBox( tr("DigestInit execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
-        mStatusLabel->setText("");
         mOutputText->setText("");
     }
+
+    setStatusInit( rv );
 
     return rv;
 }
@@ -301,7 +337,6 @@ void DigestDlg::clickUpdate()
     if( rv == CKR_OK )
     {
         update_cnt_++;
-        updateStatusLabel();
         status_type_ = STATUS_UPDATE;
     }
     else
@@ -309,6 +344,8 @@ void DigestDlg::clickUpdate()
         manApplet->warningBox( tr("DigestUpdate execution failure [%1]").arg( JS_PKCS11_GetErrorMsg(rv)), this );
         mOutputText->setText("");
     }
+
+    setStatusUpdate( rv, update_cnt_ );
 }
 
 void DigestDlg::clickFinal()
@@ -333,16 +370,15 @@ void DigestDlg::clickFinal()
     {
         JS_BIN_set( &binDigest, sDigest, uDigestLen );
         mOutputText->setText( getHexString( binDigest.pVal, binDigest.nLen) );
-        appendStatusLabel( "|Final OK" );
         status_type_ = STATUS_FINAL;
     }
     else
     {
         manApplet->warningBox( tr("DigestFinal execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
-        appendStatusLabel( QString( "|Final failure [%1]").arg( rv ));
         status_type_ = STATUS_NONE;
     }
 
+    setStatusFinal( rv );
     JS_BIN_reset( &binDigest );
 }
 
@@ -407,10 +443,6 @@ void DigestDlg::runDataDigest()
         JS_BIN_set( &binDigest, sDigest, uDigestLen );
         JS_BIN_encodeHex( &binDigest, &pHex );
         mOutputText->setText( pHex );
-
-        QString strRes = mStatusLabel->text();
-        strRes += "|Digest";
-        mStatusLabel->setText(strRes);
         status_type_ = STATUS_FINAL;
     }
     else
@@ -419,6 +451,8 @@ void DigestDlg::runDataDigest()
         mOutputText->setText("");
         status_type_ = STATUS_NONE;
     }
+
+    setStatusDigest( rv );
 }
 
 void DigestDlg::runFileDigest()
@@ -516,8 +550,7 @@ void DigestDlg::runFileDigest()
 
         if( ret == CKR_OK )
         {
-            QString strMsg = QString( "|Update X %1" ).arg( update_cnt_ );
-            appendStatusLabel( strMsg );
+            setStatusUpdate( ret, update_cnt_ );
             clickFinal();
         }
     }
@@ -636,10 +669,6 @@ void DigestDlg::onTaskFinished()
 {
     manApplet->log("Task finished");
 
-
-    QString strStatus = QString( "|Update X %1").arg( update_cnt_ );
-    appendStatusLabel( strStatus );
-
     clickFinal();
 
     thread_->quit();
@@ -655,6 +684,7 @@ void DigestDlg::onTaskUpdate( int nUpdate )
     int nPercent = (nUpdate * 100) / nFileSize;
     update_cnt_++;
     status_type_ = STATUS_UPDATE;
+    setStatusUpdate( CKR_OK, update_cnt_ );
 
     mFileReadSizeText->setText( QString("%1").arg( nUpdate ));
     mHashProgBar->setValue( nPercent );

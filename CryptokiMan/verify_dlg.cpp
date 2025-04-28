@@ -51,6 +51,9 @@ VerifyDlg::VerifyDlg(QWidget *parent) :
 VerifyDlg::~VerifyDlg()
 {
     if( thread_ ) delete thread_;
+
+    if( status_type_ == STATUS_INIT || status_type_ == STATUS_UPDATE )
+        clickFinal();
 }
 
 void VerifyDlg::initUI()
@@ -181,19 +184,50 @@ void VerifyDlg::initialize()
     mInputTab->setCurrentIndex(0);
     status_type_ = STATUS_NONE;
 
+    clearStatusLabel();
+
     if( manApplet->isLicense() == false ) mInputTab->setTabEnabled( 1, false );
 }
 
-void VerifyDlg::appendStatusLabel( const QString& strLabel )
+void VerifyDlg::clearStatusLabel()
 {
-    QString strStatus = mStatusLabel->text();
-    strStatus += strLabel;
-    mStatusLabel->setText( strStatus );
+    mInitLabel->clear();
+    mUpdateLabel->clear();
+    mFinalLabel->clear();
 }
 
-void VerifyDlg::updateStatusLabel()
+void VerifyDlg::setStatusInit( int rv )
 {
-    mStatusLabel->setText( QString( "Init|Update X %1").arg( update_cnt_));
+    clearStatusLabel();
+
+    if( rv == CKR_OK )
+        mInitLabel->setText( "Init OK" );
+    else
+        mInitLabel->setText( QString( "Init Fail:%1" ).arg( rv ) );
+}
+
+void VerifyDlg::setStatusUpdate( int rv, int count )
+{
+    if( rv == CKR_OK )
+        mUpdateLabel->setText( QString( "|Update X %1" ).arg( count ) );
+    else
+        mUpdateLabel->setText( QString( "|Update Fail:%1").arg( rv ));
+}
+
+void VerifyDlg::setStatusFinal( int rv )
+{
+    if( rv == CKR_OK )
+        mFinalLabel->setText( QString( "|Final OK" ) );
+    else
+        mFinalLabel->setText( QString( "|Final Fail:%1").arg( rv ));
+}
+
+void VerifyDlg::setStatusVerify( int rv )
+{
+    if( rv == CKR_OK )
+        mFinalLabel->setText( QString( "|Verify OK" ) );
+    else
+        mFinalLabel->setText( QString( "|Verify Fail:%1").arg( rv ));
 }
 
 void VerifyDlg::keyTypeChanged( int index )
@@ -315,16 +349,15 @@ int VerifyDlg::clickInit()
     }
 
     rv = manApplet->cryptokiAPI()->VerifyInit( session_, &sMech, uObject );
+    setStatusInit( rv );
 
     if( rv != CKR_OK )
     {
-        mStatusLabel->setText("");
         manApplet->warningBox( tr("VerifyInit execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return rv;
     }
 
     status_type_ = STATUS_INIT;
-    mStatusLabel->setText( "Init" );
     return rv;
 }
 
@@ -353,13 +386,14 @@ void VerifyDlg::clickUpdate()
 
     if( rv != CKR_OK )
     {
+        setStatusUpdate( rv, update_cnt_ );
         manApplet->warningBox( tr("VerifyUpdate execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
     update_cnt_++;
+    setStatusUpdate( rv, update_cnt_ );
     status_type_ = STATUS_UPDATE;
-    updateStatusLabel();
 }
 
 void VerifyDlg::clickFinal()
@@ -367,29 +401,28 @@ void VerifyDlg::clickFinal()
     int rv = -1;
 
     QString strSign = mSignText->toPlainText();
-
+/*
     if( strSign.isEmpty() )
     {
         manApplet->warningBox( tr( "Enter signature."), this );
         return;
     }
-
+*/
     BIN binSign = {0,0};
     JS_BIN_decodeHex( strSign.toStdString().c_str(), &binSign );
 
     rv = manApplet->cryptokiAPI()->VerifyFinal( session_, binSign.pVal, binSign.nLen );
+    setStatusFinal( rv );
 
     if( rv != CKR_OK )
     {
         status_type_ = STATUS_NONE;
         manApplet->warningBox( tr("Signature value is incorrect [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
-        appendStatusLabel( QString( "|Final failure [%1]" ).arg( rv ));
     }
     else
     {
         status_type_ = STATUS_FINAL;
         manApplet->messageBox( tr("Signature value is correct"), this );
-        appendStatusLabel( "|Final OK" );
     }
 }
 
@@ -455,6 +488,7 @@ void VerifyDlg::runDataVerify()
     JS_BIN_decodeHex( strSign.toStdString().c_str(), &binSign );
 
     rv = manApplet->cryptokiAPI()->Verify( session_, binInput.pVal, binInput.nLen, binSign.pVal, binSign.nLen );
+    setStatusVerify( rv );
 
     if( rv != CKR_OK )
     {
@@ -466,11 +500,6 @@ void VerifyDlg::runDataVerify()
         status_type_ = STATUS_FINAL;
         manApplet->messageBox( tr( "Signature value is correct" ), this );
     }
-
-    QString strRes = mStatusLabel->text();
-    strRes += "|Verify";
-
-    mStatusLabel->setText(strRes);
 }
 
 void VerifyDlg::runFileVerify()
@@ -546,11 +575,13 @@ void VerifyDlg::runFileVerify()
         ret = manApplet->cryptokiAPI()->VerifyUpdate( session_, binPart.pVal, binPart.nLen );
         if( ret != CKR_OK )
         {
+            setStatusUpdate( ret, update_cnt_ );
             manApplet->warningBox( tr("VerifyUpdate execution failure [%1]").arg( JS_PKCS11_GetErrorMsg(ret)), this );
             goto end;
         }
 
         update_cnt_++;
+        setStatusUpdate( ret, update_cnt_ );
         status_type_ = STATUS_UPDATE;
         nReadSize += nRead;
         nPercent = ( nReadSize * 100 ) / fileSize;
@@ -574,8 +605,6 @@ void VerifyDlg::runFileVerify()
 
         if( ret == CKR_OK )
         {   
-            QString strMsg = QString( "|Update X %1").arg( update_cnt_ );
-            appendStatusLabel( strMsg );
             clickFinal();
         }
     }
@@ -646,12 +675,9 @@ void VerifyDlg::clickVerifyRecoverInit()
 
     if( rv != CKR_OK )
     {
-        mStatusLabel->setText("");
         manApplet->warningBox( tr("VerifyRecoverInit execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
-
-    mStatusLabel->setText( "VerifyRecoverInit" );
 }
 
 void VerifyDlg::clickVerifyRecover()
@@ -683,11 +709,6 @@ void VerifyDlg::clickVerifyRecover()
         mInputText->setPlainText( getHexString( sData, ulDataLen ));
         manApplet->messageBox( tr( "Signature value is correct" ), this );
     }
-
-    QString strRes = mStatusLabel->text();
-    strRes += "|VerifyRecover";
-
-    mStatusLabel->setText(strRes);
 }
 
 void VerifyDlg::clickInputClear()
@@ -779,10 +800,6 @@ void VerifyDlg::onTaskFinished()
 {
     manApplet->log("Task finished");
 
-
-    QString strStatus = QString( "|Update X %1").arg( update_cnt_ );
-    appendStatusLabel( strStatus );
-
     clickFinal();
 
     thread_->quit();
@@ -797,6 +814,7 @@ void VerifyDlg::onTaskUpdate( int nUpdate )
     int nFileSize = mFileTotalSizeText->text().toInt();
     int nPercent = (nUpdate * 100) / nFileSize;
     update_cnt_++;
+    setStatusUpdate( CKR_OK, update_cnt_ );
     status_type_ = STATUS_UPDATE;
 
     mFileReadSizeText->setText( QString("%1").arg( nUpdate ));

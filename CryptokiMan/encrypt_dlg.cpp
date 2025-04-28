@@ -52,7 +52,10 @@ EncryptDlg::EncryptDlg(QWidget *parent) :
 
 EncryptDlg::~EncryptDlg()
 {
+    if( thread_ ) delete thread_;
 
+    if( status_type_ == STATUS_INIT || status_type_ == STATUS_UPDATE )
+        clickFinal();
 }
 
 void EncryptDlg::initUI()
@@ -326,20 +329,52 @@ void EncryptDlg::initialize()
     mInputTab->setCurrentIndex(0);
     status_type_ = STATUS_NONE;
 
+    clearStatusLabel();
+
     if( manApplet->isLicense() == false ) mInputTab->setTabEnabled( 1, false );
 }
 
-void EncryptDlg::appendStatusLabel( const QString& strLabel )
+void EncryptDlg::clearStatusLabel()
 {
-    QString strStatus = mStatusLabel->text();
-    strStatus += strLabel;
-    mStatusLabel->setText( strStatus );
+    mInitLabel->clear();
+    mUpdateLabel->clear();
+    mFinalLabel->clear();
 }
 
-void EncryptDlg::updateStatusLabel()
+void EncryptDlg::setStatusInit( int rv )
 {
-    mStatusLabel->setText( QString( "Init|Update X %1").arg( update_cnt_));
+    clearStatusLabel();
+
+    if( rv == CKR_OK )
+        mInitLabel->setText( "Init OK" );
+    else
+        mInitLabel->setText( QString( "Init Fail:%1" ).arg( rv ) );
 }
+
+void EncryptDlg::setStatusUpdate( int rv, int count )
+{
+    if( rv == CKR_OK )
+        mUpdateLabel->setText( QString( "|Update X %1" ).arg( count ) );
+    else
+        mUpdateLabel->setText( QString( "|Update Fail:%1").arg( rv ));
+}
+
+void EncryptDlg::setStatusFinal( int rv )
+{
+    if( rv == CKR_OK )
+        mFinalLabel->setText( QString( "|Final OK" ) );
+    else
+        mFinalLabel->setText( QString( "|Final Fail:%1").arg( rv ));
+}
+
+void EncryptDlg::setStatusEncrypt( int rv )
+{
+    if( rv == CKR_OK )
+        mFinalLabel->setText( QString( "|Encryt OK" ) );
+    else
+        mFinalLabel->setText( QString( "|Encryt Fail:%1").arg( rv ));
+}
+
 
 void EncryptDlg::keyTypeChanged( int index )
 {
@@ -469,16 +504,16 @@ int EncryptDlg::clickInit()
 
     rv = manApplet->cryptokiAPI()->EncryptInit( session_, &sMech, hObject );
 
+    setStatusInit(rv);
+
     if( rv != CKR_OK )
     {
-        mStatusLabel->setText("");
         mOutputText->setPlainText("");
         manApplet->warningBox( tr("EncryptInit execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return rv;
     }
 
     status_type_ = STATUS_INIT;
-    mStatusLabel->setText( "Init" );
     mOutputText->setPlainText( "" );
 
     freeMechanism( &sMech );
@@ -518,6 +553,7 @@ void EncryptDlg::clickUpdate()
 
     if( rv != CKR_OK )
     {
+        setStatusUpdate( rv, update_cnt_ );
         mOutputText->setPlainText("");
         if( pEncPart ) JS_free( pEncPart );
         manApplet->warningBox( tr("EncryptUpdate execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
@@ -528,9 +564,8 @@ void EncryptDlg::clickUpdate()
     JS_BIN_set( &binPart, pEncPart, uEncPartLen );
 
     update_cnt_++;
+    setStatusUpdate( rv, update_cnt_ );
     status_type_ = STATUS_UPDATE;
-    updateStatusLabel();
-
     mOutputText->appendPlainText( getHexString( binPart.pVal, binPart.nLen ));
 
     if( pEncPart ) JS_free( pEncPart );
@@ -547,6 +582,8 @@ int EncryptDlg::clickFinal()
     BIN binEncPart = {0,0};
 
     rv = manApplet->cryptokiAPI()->EncryptFinal( session_, NULL, (CK_ULONG_PTR)&uEncPartLen );
+    setStatusFinal(rv);
+
     if( rv != CKR_OK )
     {
         status_type_ = STATUS_NONE;
@@ -564,10 +601,11 @@ int EncryptDlg::clickFinal()
 
     rv = manApplet->cryptokiAPI()->EncryptFinal( session_, pEncPart, (CK_ULONG_PTR)&uEncPartLen );
 
+    setStatusFinal(rv);
+
     if( rv != CKR_OK )
     {
         status_type_ = STATUS_NONE;
-        appendStatusLabel( QString( "|Final failure(%1)" ).arg(rv) );
         if( pEncPart ) JS_free( pEncPart );
         manApplet->warningBox( tr("EncryptFinal execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return rv;
@@ -575,8 +613,6 @@ int EncryptDlg::clickFinal()
 
 
     JS_BIN_set( &binEncPart, pEncPart, uEncPartLen );
-
-    appendStatusLabel( "|Final OK" );
     status_type_ = STATUS_FINAL;
 
     if( mInputTab->currentIndex() == 0 )
@@ -651,6 +687,8 @@ void EncryptDlg::runDataEncrypt()
     BIN binEncData = {0,0};
 
     rv = manApplet->cryptokiAPI()->Encrypt( session_, binInput.pVal, binInput.nLen, NULL, (CK_ULONG_PTR)&uEncDataLen );
+    setStatusEncrypt(rv);
+
     if( rv != CKR_OK )
     {
         status_type_ = STATUS_NONE;
@@ -663,6 +701,7 @@ void EncryptDlg::runDataEncrypt()
     if( pEncData == NULL ) return;
 
     rv = manApplet->cryptokiAPI()->Encrypt( session_, binInput.pVal, binInput.nLen, pEncData, (CK_ULONG_PTR)&uEncDataLen );
+    setStatusEncrypt(rv);
 
     if( rv != CKR_OK )
     {
@@ -679,9 +718,6 @@ void EncryptDlg::runDataEncrypt()
     JS_BIN_set( &binEncData, pEncData, uEncDataLen );
     JS_BIN_encodeHex( &binEncData, &pHex );
     mOutputText->setPlainText( pHex );
-    QString strRes = mStatusLabel->text();
-    strRes += "|Encrypt";
-    mStatusLabel->setText( strRes );
 
     if( pEncData ) JS_free( pEncData );
     if( pHex ) JS_free(pHex);
@@ -777,12 +813,14 @@ void EncryptDlg::runFileEncrypt()
 
         if( rv != CKR_OK )
         {
+            setStatusUpdate( rv, update_cnt_ );
             if( pEncPart ) JS_free( pEncPart );
             manApplet->warningBox( tr("EncryptUpdate execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
             goto end;
         }
 
         update_cnt_++;
+        setStatusUpdate( rv, update_cnt_ );
         status_type_ = STATUS_UPDATE;
 
         if( uEncPartLen > 0 )
@@ -827,9 +865,7 @@ void EncryptDlg::runFileEncrypt()
         mEncProgBar->setValue( 100 );
 
         if( rv == 0 )
-        {
-            QString strMsg = QString( "|Update X %1").arg( update_cnt_ );
-            appendStatusLabel( strMsg );
+        {   
             rv = clickFinal();
             if( rv == 0 )
             {
@@ -972,10 +1008,6 @@ void EncryptDlg::onTaskFinished()
 {
     manApplet->log("Task finished");
 
-
-    QString strStatus = QString( "|Update X %1").arg( update_cnt_ );
-    appendStatusLabel( strStatus );
-
     clickFinal();
 
     thread_->quit();
@@ -990,6 +1022,7 @@ void EncryptDlg::onTaskUpdate( int nUpdate )
     int nFileSize = mFileTotalSizeText->text().toInt();
     int nPercent = (nUpdate * 100) / nFileSize;
     update_cnt_++;
+    setStatusUpdate( CKR_OK, update_cnt_ );
     status_type_ = STATUS_UPDATE;
 
     mFileReadSizeText->setText( QString("%1").arg( nUpdate ));
