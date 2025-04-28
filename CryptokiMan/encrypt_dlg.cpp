@@ -576,43 +576,22 @@ int EncryptDlg::clickFinal()
 {
     int rv = -1;
 
-    unsigned char *pEncPart = NULL;
-    long uEncPartLen = 0;
-
     BIN binEncPart = {0,0};
+    unsigned char sEnc[1024];
+    long uEncLen = 1024;
 
-    rv = manApplet->cryptokiAPI()->EncryptFinal( session_, NULL, (CK_ULONG_PTR)&uEncPartLen );
+    rv = manApplet->cryptokiAPI()->EncryptFinal( session_, sEnc, (CK_ULONG_PTR)&uEncLen );
     setStatusFinal(rv);
 
     if( rv != CKR_OK )
     {
         status_type_ = STATUS_NONE;
         mOutputText->setPlainText( "" );
-        if( pEncPart ) JS_free( pEncPart );
         manApplet->warningBox( tr("EncryptFinal execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return rv;
     }
 
-    if( uEncPartLen > 0 )
-    {
-        pEncPart = (unsigned char *)JS_malloc( uEncPartLen );
-        if( pEncPart == NULL ) return JSR_ERR;
-    }
-
-    rv = manApplet->cryptokiAPI()->EncryptFinal( session_, pEncPart, (CK_ULONG_PTR)&uEncPartLen );
-
-    setStatusFinal(rv);
-
-    if( rv != CKR_OK )
-    {
-        status_type_ = STATUS_NONE;
-        if( pEncPart ) JS_free( pEncPart );
-        manApplet->warningBox( tr("EncryptFinal execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
-        return rv;
-    }
-
-
-    JS_BIN_set( &binEncPart, pEncPart, uEncPartLen );
+    JS_BIN_set( &binEncPart, sEnc, uEncLen );
     status_type_ = STATUS_FINAL;
 
     if( mInputTab->currentIndex() == 0 )
@@ -626,7 +605,6 @@ int EncryptDlg::clickFinal()
         JS_BIN_fileAppend( &binEncPart, strDstPath.toLocal8Bit().toStdString().c_str() );
     }
 
-    if( pEncPart ) JS_free( pEncPart );
     JS_BIN_reset( &binEncPart );
 
     return rv;

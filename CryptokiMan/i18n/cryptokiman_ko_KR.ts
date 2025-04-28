@@ -2629,7 +2629,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <location filename="../decrypt_dlg.ui" line="281"/>
         <source>Key Type</source>
-        <translation>Init 또는 Update 상태에서는 실행 할 수 없습니다</translation>
+        <translation>키 타입</translation>
     </message>
     <message>
         <location filename="../decrypt_dlg.ui" line="31"/>

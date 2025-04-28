@@ -348,6 +348,7 @@ void DecryptDlg::initialize()
     mInitAutoCheck->setChecked(true);
     mInputTab->setCurrentIndex(0);
     status_type_ = STATUS_NONE;
+    mOutputCombo->setCurrentText( "Hex" );
 
     clearStatusLabel();
 
@@ -507,8 +508,6 @@ int DecryptDlg::clickInit()
     int rv = -1;
     update_cnt_ = 0;
 
-    long hObject = mObjectText->text().toLong();
-
     if( mObjectText->text().isEmpty() )
     {
         clickSelect();
@@ -519,6 +518,7 @@ int DecryptDlg::clickInit()
         }
     }
 
+    long hObject = mObjectText->text().toLong();
     CK_MECHANISM sMech;
 
     memset( &sMech, 0x00, sizeof(sMech));
@@ -526,6 +526,7 @@ int DecryptDlg::clickInit()
     setMechanism( &sMech );
 
     rv = manApplet->cryptokiAPI()->DecryptInit( session_, &sMech, hObject );
+    setStatusInit( rv );
 
     if( rv != CKR_OK )
     {
@@ -536,8 +537,6 @@ int DecryptDlg::clickInit()
     }
 
     mOutputText->setPlainText("");
-    setStatusInit( rv );
-
     status_type_ = STATUS_INIT;
     freeMechanism( &sMech );
 
@@ -597,43 +596,23 @@ int DecryptDlg::clickFinal()
 {
     int rv = -1;
 
-    unsigned char *pDecPart = NULL;
-    long uDecPartLen = mInputText->toPlainText().length();
-
     BIN binDecPart = {0,0};
 
-    rv = manApplet->cryptokiAPI()->DecryptFinal( session_, NULL, (CK_ULONG_PTR)&uDecPartLen );
+    unsigned char sDec[1024];
+    long uDecLen = 1024;
 
-    if( rv != CKR_OK )
-    {
-        status_type_ = STATUS_NONE;
-        if( pDecPart ) JS_free( pDecPart );
-        mOutputText->setPlainText("");
-        manApplet->warningBox( tr("DecryptFinal execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
-        setStatusFinal(rv);
-        return rv;
-    }
-
-    if( uDecPartLen > 0 )
-    {
-        pDecPart = (unsigned char *)JS_malloc( uDecPartLen );
-        if( pDecPart == NULL ) return JSR_ERR;
-    }
-
-    rv = manApplet->cryptokiAPI()->DecryptFinal( session_, pDecPart, (CK_ULONG_PTR)&uDecPartLen );
-
-    if( rv != CKR_OK )
-    {
-        status_type_ = STATUS_NONE;
-        if( pDecPart ) JS_free( pDecPart );
-        setStatusFinal(rv);
-        manApplet->warningBox( tr("DecryptFinal execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
-        return rv;
-    }
-
+    rv = manApplet->cryptokiAPI()->DecryptFinal( session_, sDec, (CK_ULONG_PTR)&uDecLen );
     setStatusFinal(rv);
 
-    JS_BIN_set( &binDecPart, pDecPart, uDecPartLen );
+    if( rv != CKR_OK )
+    {
+        status_type_ = STATUS_NONE;
+        mOutputText->setPlainText("");
+        manApplet->warningBox( tr("DecryptFinal execution failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        return rv;
+    }
+
+    JS_BIN_set( &binDecPart, sDec, uDecLen );
 
     if( mInputTab->currentIndex() == 0 )
     {
@@ -647,8 +626,6 @@ int DecryptDlg::clickFinal()
     }
 
     status_type_ = STATUS_FINAL;
-    JS_BIN_reset( &binDecPart );
-    if( pDecPart ) JS_free( pDecPart );
     JS_BIN_reset( &binDecPart );
 
     return rv;

@@ -275,7 +275,7 @@ void WrapKeyDlg::clickWrappingSelect()
     hsmMan.setSelectedSlot( slot_index_ );
     hsmMan.setTitle( "Select Key" );
 
-    if( mWrappingTypeCombo->currentText() == "SECRET" )
+    if( mWrappingTypeCombo->currentText().toUpper() == "SECRET" )
         hsmMan.setMode( HsmModeSelectSecretKey, HsmUsageWrap );
     else
     {
@@ -307,7 +307,7 @@ void WrapKeyDlg::clickSelect()
     hsmMan.setSelectedSlot( slot_index_ );
     hsmMan.setTitle( "Select Key" );
 
-    if( mTypeCombo->currentText() == "SECRET" )
+    if( mTypeCombo->currentText().toUpper() == "SECRET" )
         hsmMan.setMode( HsmModeSelectSecretKey, HsmUsageWrap );
     else
     {

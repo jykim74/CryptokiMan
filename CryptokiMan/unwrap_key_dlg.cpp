@@ -762,7 +762,7 @@ void UnwrapKeyDlg::clickSelect()
     hsmMan.setSelectedSlot( slot_index_ );
     hsmMan.setTitle( "Select Key" );
 
-    if( mUnwrapTypeCombo->currentText() == "SECRET" )
+    if( mUnwrapTypeCombo->currentText().toUpper() == "SECRET" )
         hsmMan.setMode( HsmModeSelectSecretKey, HsmUsageUnwrap );
     else
     {

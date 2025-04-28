@@ -352,14 +352,12 @@ void DigestDlg::clickFinal()
 {
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
-
     int index = mSlotsCombo->currentIndex();
     SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
 
-
     unsigned char sDigest[512];
-    CK_ULONG uDigestLen = 64;
+    CK_ULONG uDigestLen = 512;
     BIN binDigest = {0,0};
 
     memset( sDigest, 0x00, sizeof(sDigest) );
