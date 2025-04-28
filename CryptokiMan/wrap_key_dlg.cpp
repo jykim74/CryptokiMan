@@ -106,7 +106,8 @@ void WrapKeyDlg::initialize()
     }
 
     mWrappingTypeCombo->addItems( kWrapType );
-    mWrappingMechCombo->addItems( kMechWrapSymList );
+//    mWrappingMechCombo->addItems( kMechWrapSymList );
+    mWrappingMechCombo->addItems( sMechWrapSymList );
 
     const QStringList kTypeList = { "Secret", "Private" };
     mTypeCombo->addItems( kTypeList );
