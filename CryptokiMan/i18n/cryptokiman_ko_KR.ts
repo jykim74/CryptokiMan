@@ -2146,7 +2146,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     <message>
         <location filename="../create_key_dlg.ui" line="575"/>
         <source>Derive</source>
-        <translation>유도</translation>
+        <translation>Derive</translation>
     </message>
     <message>
         <location filename="../create_key_dlg.ui" line="271"/>
@@ -4723,7 +4723,7 @@ Do you want to delete the file and continue?</source>
     <message>
         <location filename="../gen_key_dlg.ui" line="549"/>
         <source>Derive</source>
-        <translation>유도</translation>
+        <translation>Derive</translation>
     </message>
     <message>
         <location filename="../gen_key_dlg.ui" line="30"/>
