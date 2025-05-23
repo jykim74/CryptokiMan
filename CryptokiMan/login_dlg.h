@@ -7,6 +7,7 @@
 #define LOGIN_DLG_H
 
 #include <QDialog>
+#include "slot_info.h"
 #include "ui_login_dlg.h"
 
 namespace Ui {
@@ -20,14 +21,16 @@ class LoginDlg : public QDialog, public Ui::LoginDlg
 public:
     explicit LoginDlg(QWidget *parent = nullptr);
     ~LoginDlg();
-    void setSelectedSlot( int index );
+    void setSlotIndex( int index );
+    int getSlotIndex() { return slot_index_; };
 
 private slots:
     void clickLogin();
-    void slotChanged( int index );
 
 private:
     void initialize();
+    SlotInfo slot_info_;
+    int slot_index_ = -1;
 
 };
 

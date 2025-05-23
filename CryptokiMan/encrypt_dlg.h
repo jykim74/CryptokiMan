@@ -7,6 +7,7 @@
 #define ENCRYPT_DLG_H
 
 #include <QDialog>
+#include "slot_info.h"
 #include "ui_encrypt_dlg.h"
 
 class EncryptThread;
@@ -22,12 +23,14 @@ class EncryptDlg : public QDialog, public Ui::EncryptDlg
 public:
     explicit EncryptDlg(QWidget *parent = nullptr);
     ~EncryptDlg();
-    void setSelectedSlot( int index );
+
+    void setSlotIndex( int index );
+    int getSlotIndex() { return slot_index_; };
+
     void setObject( int type, long hObj );
     void changeType( int type );
 
 private slots:
-    void slotChanged( int index );
     void mechChanged( int index );
 
     int clickInit();
@@ -71,8 +74,9 @@ private:
     void setMechanism( void *pMech );
     void freeMechanism( void *pMech );
 
-    int slot_index_;
-    long session_;
+    SlotInfo slot_info_;
+    int slot_index_ = -1;
+
     EncryptThread* thread_;
     int update_cnt_;
     int status_type_ = -1;

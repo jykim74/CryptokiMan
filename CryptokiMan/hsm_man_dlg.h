@@ -2,6 +2,7 @@
 #define HSM_MAN_DLG_H
 
 #include <QDialog>
+#include "slot_info.h"
 #include "ui_hsm_man_dlg.h"
 #include "js_pkcs11.h"
 
@@ -43,14 +44,16 @@ class HsmManDlg : public QDialog, public Ui::HsmManDlg
 public:
     explicit HsmManDlg(QWidget *parent = nullptr);
     ~HsmManDlg();
-    void setSelectedSlot( int index );
+
+    void setSlotIndex( int index );
+    int getSlotIndex() { return slot_index_; };
+
     void setMode( int nMode, int nUsage = HsmUsageAny );
     void setTitle( const QString strTitle );
     const QString getData() { return str_data_; };
     void setTabIdx( int nIdx );
 
 private slots:
-    void slotChanged( int index );
     void showEvent(QShowEvent *event);
     void closeEvent(QCloseEvent *event );
 
@@ -93,8 +96,9 @@ private:
     void initialize();
     void setUsageTemplate( CK_ATTRIBUTE sTemplate[], long& uCount );
 
-    int slot_index_;
-    long session_;
+    SlotInfo slot_info_;
+    int slot_index_ = -1;
+
     QString str_data_;
 };
 

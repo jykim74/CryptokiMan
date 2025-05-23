@@ -23,7 +23,6 @@ WrapKeyDlg::WrapKeyDlg(QWidget *parent) :
     QDialog(parent)
 {
     slot_index_ = -1;
-    session_ = -1;
 
     setupUi(this);
 
@@ -64,27 +63,20 @@ void WrapKeyDlg::initUI()
     initialize();
 }
 
-void WrapKeyDlg::slotChanged(int index)
+void WrapKeyDlg::setSlotIndex(int index)
 {
-    if( index < 0 ) return;
-
     slot_index_ = index;
-
     QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-    SlotInfo slotInfo = slot_infos.at(index);
 
-    mSlotIDText->setText( QString( "%1").arg(slotInfo.getSlotID()));
-    session_ = slotInfo.getSessionHandle();
-    mSessionText->setText( QString("%1").arg(slotInfo.getSessionHandle()));
-    mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
+    if( index >= 0 )
+    {
+        slot_info_ = slot_infos.at(slot_index_);
+        mSlotNameText->setText( slot_info_.getDesc() );
+    }
 
-    mSlotsCombo->clear();
-    mSlotsCombo->addItem( slotInfo.getDesc() );
-}
-
-void WrapKeyDlg::setSelectedSlot(int index)
-{
-    slotChanged( index );
+    mSlotIDText->setText( QString( "%1").arg(slot_info_.getSlotID()));
+    mSessionText->setText( QString("%1").arg(slot_info_.getSessionHandle()));
+    mLoginText->setText( slot_info_.getLogin() ? "YES" : "NO" );
 
 //    setWrapLabelList();
     wrappingTypeChanged(0);
@@ -159,7 +151,7 @@ void WrapKeyDlg::clickWrapKey()
     CK_BYTE_PTR pData = NULL;
     CK_ULONG uDataLen = 0;
 
-    rv = manApplet->cryptokiAPI()->WrapKey( session_, &sMech, hWrappingKey, hKey, pData, &uDataLen );
+    rv = manApplet->cryptokiAPI()->WrapKey( slot_info_.getSessionHandle(), &sMech, hWrappingKey, hKey, pData, &uDataLen );
 
     if( rv != CKR_OK )
     {
@@ -170,7 +162,7 @@ void WrapKeyDlg::clickWrapKey()
     pData = (CK_BYTE_PTR)JS_malloc( uDataLen );
     if( pData == NULL ) return;
 
-    rv = manApplet->cryptokiAPI()->WrapKey( session_, &sMech, hWrappingKey, hKey, pData, &uDataLen );
+    rv = manApplet->cryptokiAPI()->WrapKey( slot_info_.getSessionHandle(), &sMech, hWrappingKey, hKey, pData, &uDataLen );
 
     JS_BIN_reset( &binParam );
 
@@ -273,7 +265,7 @@ void WrapKeyDlg::changeWrappingParam(const QString& text )
 void WrapKeyDlg::clickWrappingSelect()
 {
     HsmManDlg hsmMan;
-    hsmMan.setSelectedSlot( slot_index_ );
+    hsmMan.setSlotIndex( slot_index_ );
     hsmMan.setTitle( "Select Key" );
 
     if( mWrappingTypeCombo->currentText().toUpper() == "SECRET" )
@@ -296,7 +288,7 @@ void WrapKeyDlg::clickWrappingSelect()
         QString strType = listData.at(0);
         long hObj = listData.at(1).toLong();
         QString strID = listData.at(2);
-        QString strLabel = manApplet->cryptokiAPI()->getLabel( session_, hObj );
+        QString strLabel = manApplet->cryptokiAPI()->getLabel( slot_info_.getSessionHandle(), hObj );
         mWrappingLabelText->setText( strLabel );
         mWrappingObjectText->setText( QString("%1").arg( hObj ));
     }
@@ -305,7 +297,7 @@ void WrapKeyDlg::clickWrappingSelect()
 void WrapKeyDlg::clickSelect()
 {
     HsmManDlg hsmMan;
-    hsmMan.setSelectedSlot( slot_index_ );
+    hsmMan.setSlotIndex( slot_index_ );
     hsmMan.setTitle( "Select Key" );
 
     if( mTypeCombo->currentText().toUpper() == "SECRET" )
@@ -327,7 +319,7 @@ void WrapKeyDlg::clickSelect()
         QString strType = listData.at(0);
         long hObj = listData.at(1).toLong();
         QString strID = listData.at(2);
-        QString strLabel = manApplet->cryptokiAPI()->getLabel( session_, hObj );
+        QString strLabel = manApplet->cryptokiAPI()->getLabel( slot_info_.getSessionHandle(), hObj );
         mLabelText->setText( strLabel );
         mObjectText->setText( QString("%1").arg( hObj ));
     }

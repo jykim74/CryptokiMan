@@ -7,6 +7,7 @@
 #define SIGN_DLG_H
 
 #include <QDialog>
+#include "slot_info.h"
 #include "ui_sign_dlg.h"
 
 class SignThread;
@@ -22,13 +23,14 @@ class SignDlg : public QDialog, public Ui::SignDlg
 public:
     explicit SignDlg(QWidget *parent = nullptr);
     ~SignDlg();
-    void setSelectedSlot( int index );
+
+    void setSlotIndex( int index );
+    int getSlotIndex() { return slot_index_; };
+
     void setObject( int type, long hObj );
     void changeType( int type );
 
 private slots:
-    void slotChanged( int index );
-
     int clickInit();
     void clickUpdate();
     void clickFinal();
@@ -69,8 +71,9 @@ private:
 
     void initUI();
 
-    long session_;
-    int slot_index_;
+    SlotInfo slot_info_;
+    int slot_index_ = -1;
+
     SignThread* thread_;
     int update_cnt_;
     int status_type_ = -1;

@@ -15,8 +15,6 @@ LogoutDlg::LogoutDlg(QWidget *parent) :
 {
     setupUi(this);
 
-    connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
-
     initialize();
 
 #if defined(Q_OS_MAC)
@@ -30,26 +28,25 @@ LogoutDlg::~LogoutDlg()
 
 }
 
-void LogoutDlg::setSelectedSlot(int index)
+void LogoutDlg::setSlotIndex(int index)
 {
+    slot_index_ = index;
+    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
+
     if( index >= 0 )
-        mSlotsCombo->setCurrentIndex(index);
+    {
+        slot_info_ = slot_infos.at(slot_index_);
+        mSlotNameText->setText( slot_info_.getDesc() );
+    }
+
+    mSlotIDText->setText( QString( "%1").arg(slot_info_.getSlotID()));
+    mSessionText->setText( QString("%1").arg(slot_info_.getSessionHandle()));
+    mLoginText->setText( slot_info_.getLogin() ? "YES" : "NO" );
 }
 
 void LogoutDlg::initialize()
 {
-    mSlotsCombo->clear();
 
-    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    for( int i=0; i < slot_infos.size(); i++ )
-    {
-        SlotInfo slotInfo = slot_infos.at(i);
-
-        mSlotsCombo->addItem( slotInfo.getDesc() );
-    }
-
-    if( slot_infos.size() > 0 ) slotChanged(0);
 }
 
 void LogoutDlg::accept()
@@ -57,10 +54,8 @@ void LogoutDlg::accept()
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     CK_SESSION_HANDLE   hSession = -1;
-    int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    hSession = slotInfo.getSessionHandle();
+    hSession = slot_info_.getSessionHandle();
 
     if( (long)hSession == -1 )
     {
@@ -72,8 +67,8 @@ void LogoutDlg::accept()
 
     if( rv == CKR_OK )
     {
-        slotInfo.setLogin(false);
-        slot_infos.replace(index, slotInfo);
+        slot_info_.setLogin(false);
+        slot_infos.replace(slot_index_, slot_info_);
 
         QDialog::accept();
     }
@@ -81,16 +76,4 @@ void LogoutDlg::accept()
         manApplet->warningBox(tr("Logout failure [%1]").arg(rv), this );
         QDialog::reject();
     }
-}
-
-void LogoutDlg::slotChanged(int index)
-{
-    if( index < 0 ) return;
-
-    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-    SlotInfo slotInfo = slot_infos.at(index);
-
-    mSlotIDText->setText( QString( "%1").arg(slotInfo.getSlotID()));
-    mSessionText->setText( QString("%1").arg(slotInfo.getSessionHandle()));
-    mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
 }

@@ -7,6 +7,7 @@
 #define FIND_OBJECT_DLG_H
 
 #include <QDialog>
+#include "slot_info.h"
 #include "ui_find_object_dlg.h"
 
 namespace Ui {
@@ -21,7 +22,8 @@ public:
     explicit FindObjectDlg(QWidget *parent = nullptr);
     ~FindObjectDlg();
 
-    void setSelectedSlot( int index );
+    void setSlotIndex( int index );
+    int getSlotIndex() { return slot_index_; };
 
 private slots:
     void slotChanged( int index );
@@ -55,6 +57,9 @@ private:
     void setAttributes();
     void connectAttributes();
     void setDefaults();
+
+    SlotInfo slot_info_;
+    int slot_index_ = -1;
 };
 
 #endif // FIND_OBJECT_DLG_H

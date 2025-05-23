@@ -1,3 +1,5 @@
+#include <QStringList>
+
 #include "hsm_man_dlg.h"
 #include "common.h"
 #include "man_applet.h"
@@ -17,15 +19,15 @@
 #include "encrypt_dlg.h"
 #include "decrypt_dlg.h"
 
-static const QStringList kUsageList = { "Any", "Sign", "Verify", "Encrypt", "Decrypt", "Wrap", "Unwrap", "Derive" };
+const QStringList kUsageList = { "Any", "Sign", "Verify", "Encrypt", "Decrypt", "Wrap", "Unwrap", "Derive" };
 
 HsmManDlg::HsmManDlg(QWidget *parent) :
     QDialog(parent)
 {
     slot_index_ = -1;
-    session_ = -1;
 
     setupUi(this);
+    initUI();
 
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(close()));
     connect( mOKBtn, SIGNAL(clicked()), this, SLOT(clickOK()));
@@ -85,7 +87,7 @@ HsmManDlg::HsmManDlg(QWidget *parent) :
     mSecretGroup->layout()->setMargin(5);
 #endif
 
-    initUI();
+
     mTabWidget->setCurrentIndex(0);
     mOKBtn->setDefault(true);
     mOKBtn->hide();
@@ -186,29 +188,23 @@ void HsmManDlg::setTabIdx( int nIdx )
     mTabWidget->setCurrentIndex( nIdx );
 }
 
-void HsmManDlg::setSelectedSlot(int index)
-{
-    slotChanged(index);
-}
-
-void HsmManDlg::slotChanged(int index)
+void HsmManDlg::setSlotIndex(int index)
 {
     if( index < 0 ) return;
 
     slot_index_ = index;
-
     QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-    SlotInfo slotInfo = slot_infos.at(index);
 
-    mSlotIDText->setText( QString( "%1").arg(slotInfo.getSlotID()));
-    session_ = slotInfo.getSessionHandle();
-    mSessionText->setText( QString("%1").arg(slotInfo.getSessionHandle()));
-    mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
+    if( index >= 0 )
+    {
+        slot_info_ = slot_infos.at(slot_index_);
+        mSlotNameText->setText( slot_info_.getDesc() );
+    }
 
-    mSlotsCombo->clear();
-    mSlotsCombo->addItem( slotInfo.getDesc() );
+    mSlotIDText->setText( QString( "%1").arg(slot_info_.getSlotID()));
+    mSessionText->setText( QString("%1").arg(slot_info_.getSessionHandle()));
+    mLoginText->setText( slot_info_.getLogin() ? "YES" : "NO" );
 }
-
 
 void HsmManDlg::showEvent(QShowEvent *event)
 {
@@ -366,8 +362,6 @@ void HsmManDlg::loadCertList()
     BIN binID = {0,0};
     BIN binDN = {0,0};
 
-    if( session_ < 0 ) return;
-
     CryptokiAPI *pP11 = manApplet->cryptokiAPI();
 
     CK_ATTRIBUTE sTemplate[20];
@@ -385,13 +379,13 @@ void HsmManDlg::loadCertList()
 
     mCertTable->setRowCount(0);
 
-    rv = pP11->FindObjectsInit( session_, sTemplate, uCount );
+    rv = pP11->FindObjectsInit( slot_info_.getSessionHandle(), sTemplate, uCount );
     if( rv != CKR_OK ) goto end;
 
-    rv = pP11->FindObjects( session_, hObjects, 100, &uObjCnt );
+    rv = pP11->FindObjects( slot_info_.getSessionHandle(), hObjects, 100, &uObjCnt );
     if( rv != CKR_OK ) goto end;
 
-    rv = pP11->FindObjectsFinal( session_ );
+    rv = pP11->FindObjectsFinal( slot_info_.getSessionHandle() );
     if( rv != CKR_OK ) goto end;
 
 
@@ -400,23 +394,23 @@ void HsmManDlg::loadCertList()
         char *pLabel = NULL;
         char *pDN = NULL;
 
-        rv = pP11->GetAttributeValue2( session_, hObjects[i], CKA_LABEL, &binLabel );
+        rv = pP11->GetAttributeValue2( slot_info_.getSessionHandle(), hObjects[i], CKA_LABEL, &binLabel );
         if( rv != CKR_OK ) goto end;
 
-        rv = pP11->GetAttributeValue2( session_, hObjects[i], CKA_SUBJECT, &binDN );
+        rv = pP11->GetAttributeValue2( slot_info_.getSessionHandle(), hObjects[i], CKA_SUBJECT, &binDN );
         if( rv != CKR_OK ) goto end;
 
-        rv = pP11->GetAttributeValue2( session_, hObjects[i], CKA_ID, &binID );
+        rv = pP11->GetAttributeValue2( slot_info_.getSessionHandle(), hObjects[i], CKA_ID, &binID );
         if( rv != CKR_OK ) goto end;
 
         if( binID.nLen < 1 ) continue;
 
         if( mCertKeyPairCheck->isChecked() == true )
         {
-            long hPri = pP11->getHandle( session_, CKO_PRIVATE_KEY, &binID );
+            long hPri = pP11->getHandle( slot_info_.getSessionHandle(), CKO_PRIVATE_KEY, &binID );
             if( hPri < 0 ) continue;
 
-            long hPub = pP11->getHandle( session_, CKO_PUBLIC_KEY, &binID );
+            long hPub = pP11->getHandle( slot_info_.getSessionHandle(), CKO_PUBLIC_KEY, &binID );
             if( hPub < 0 ) continue;
         }
 
@@ -461,7 +455,7 @@ void HsmManDlg::loadPublicList()
     BIN binID = {0,0};
     BIN binKeyType = {0,0};
 
-    if( session_ < 0 ) return;
+    if( slot_info_.getSessionHandle() < 0 ) return;
 
     CryptokiAPI *pP11 = manApplet->cryptokiAPI();
 
@@ -495,13 +489,13 @@ void HsmManDlg::loadPublicList()
 
     setUsageTemplate( sTemplate, uCount );
 
-    rv = pP11->FindObjectsInit( session_, sTemplate, uCount );
+    rv = pP11->FindObjectsInit( slot_info_.getSessionHandle(), sTemplate, uCount );
     if( rv != CKR_OK ) goto end;
 
-    rv = pP11->FindObjects( session_, hObjects, 100, &uObjCnt );
+    rv = pP11->FindObjects( slot_info_.getSessionHandle(), hObjects, 100, &uObjCnt );
     if( rv != CKR_OK ) goto end;
 
-    rv = pP11->FindObjectsFinal( session_ );
+    rv = pP11->FindObjectsFinal( slot_info_.getSessionHandle() );
     if( rv != CKR_OK ) goto end;
 
 
@@ -510,13 +504,13 @@ void HsmManDlg::loadPublicList()
         char *pLabel = NULL;
         long nKeyType = -1;
 
-        rv = pP11->GetAttributeValue2( session_, hObjects[i], CKA_LABEL, &binLabel );
+        rv = pP11->GetAttributeValue2( slot_info_.getSessionHandle(), hObjects[i], CKA_LABEL, &binLabel );
         if( rv != CKR_OK ) goto end;
 
-        rv = pP11->GetAttributeValue2( session_, hObjects[i], CKA_KEY_TYPE, &binKeyType );
+        rv = pP11->GetAttributeValue2( slot_info_.getSessionHandle(), hObjects[i], CKA_KEY_TYPE, &binKeyType );
         if( rv != CKR_OK ) goto end;
 
-        rv = pP11->GetAttributeValue2( session_, hObjects[i], CKA_ID, &binID );
+        rv = pP11->GetAttributeValue2( slot_info_.getSessionHandle(), hObjects[i], CKA_ID, &binID );
         if( rv != CKR_OK ) goto end;
 
         if( binID.nLen < 1 ) continue;
@@ -559,7 +553,7 @@ void HsmManDlg::loadPrivateList()
     BIN binID = {0,0};
     BIN binKeyType = {0,0};
 
-    if( session_ < 0 ) return;
+    if( slot_info_.getSessionHandle() < 0 ) return;
 
     CryptokiAPI *pP11 = manApplet->cryptokiAPI();
 
@@ -591,13 +585,13 @@ void HsmManDlg::loadPrivateList()
 
     setUsageTemplate( sTemplate, uCount );
 
-    rv = pP11->FindObjectsInit( session_, sTemplate, uCount );
+    rv = pP11->FindObjectsInit( slot_info_.getSessionHandle(), sTemplate, uCount );
     if( rv != CKR_OK ) goto end;
 
-    rv = pP11->FindObjects( session_, hObjects, 100, &uObjCnt );
+    rv = pP11->FindObjects( slot_info_.getSessionHandle(), hObjects, 100, &uObjCnt );
     if( rv != CKR_OK ) goto end;
 
-    rv = pP11->FindObjectsFinal( session_ );
+    rv = pP11->FindObjectsFinal( slot_info_.getSessionHandle() );
     if( rv != CKR_OK ) goto end;
 
 
@@ -606,13 +600,13 @@ void HsmManDlg::loadPrivateList()
         char *pLabel = NULL;
         long nKeyType = -1;
 
-        rv = pP11->GetAttributeValue2( session_, hObjects[i], CKA_LABEL, &binLabel );
+        rv = pP11->GetAttributeValue2( slot_info_.getSessionHandle(), hObjects[i], CKA_LABEL, &binLabel );
         if( rv != CKR_OK ) goto end;
 
-        rv = pP11->GetAttributeValue2( session_, hObjects[i], CKA_KEY_TYPE, &binKeyType );
+        rv = pP11->GetAttributeValue2( slot_info_.getSessionHandle(), hObjects[i], CKA_KEY_TYPE, &binKeyType );
         if( rv != CKR_OK ) goto end;
 
-        rv = pP11->GetAttributeValue2( session_, hObjects[i], CKA_ID, &binID );
+        rv = pP11->GetAttributeValue2( slot_info_.getSessionHandle(), hObjects[i], CKA_ID, &binID );
         if( rv != CKR_OK ) goto end;
 
         if( binID.nLen < 1 ) continue;
@@ -655,7 +649,7 @@ void HsmManDlg::loadSecretList()
     BIN binID = {0,0};
     BIN binKeyType = {0,0};
 
-    if( session_ < 0 ) return;
+    if( slot_info_.getSessionHandle() < 0 ) return;
 
     CryptokiAPI *pP11 = manApplet->cryptokiAPI();
 
@@ -686,13 +680,13 @@ void HsmManDlg::loadSecretList()
 
     setUsageTemplate( sTemplate, uCount );
 
-    rv = pP11->FindObjectsInit( session_, sTemplate, uCount );
+    rv = pP11->FindObjectsInit( slot_info_.getSessionHandle(), sTemplate, uCount );
     if( rv != CKR_OK ) goto end;
 
-    rv = pP11->FindObjects( session_, hObjects, 100, &uObjCnt );
+    rv = pP11->FindObjects( slot_info_.getSessionHandle(), hObjects, 100, &uObjCnt );
     if( rv != CKR_OK ) goto end;
 
-    rv = pP11->FindObjectsFinal( session_ );
+    rv = pP11->FindObjectsFinal( slot_info_.getSessionHandle() );
     if( rv != CKR_OK ) goto end;
 
 
@@ -701,13 +695,13 @@ void HsmManDlg::loadSecretList()
         char *pLabel = NULL;
         long nKeyType = -1;
 
-        rv = pP11->GetAttributeValue2( session_, hObjects[i], CKA_LABEL, &binLabel );
+        rv = pP11->GetAttributeValue2( slot_info_.getSessionHandle(), hObjects[i], CKA_LABEL, &binLabel );
         if( rv != CKR_OK ) goto end;
 
-        rv = pP11->GetAttributeValue2( session_, hObjects[i], CKA_KEY_TYPE, &binKeyType );
+        rv = pP11->GetAttributeValue2( slot_info_.getSessionHandle(), hObjects[i], CKA_KEY_TYPE, &binKeyType );
         if( rv != CKR_OK ) goto end;
 
-        rv = pP11->GetAttributeValue2( session_, hObjects[i], CKA_ID, &binID );
+        rv = pP11->GetAttributeValue2( slot_info_.getSessionHandle(), hObjects[i], CKA_ID, &binID );
         if( rv != CKR_OK ) goto end;
 
         if( binID.nLen < 1 ) continue;
@@ -767,7 +761,7 @@ void HsmManDlg::clickCertView()
     BIN binCert = {0,0};
     CertInfoDlg certInfoDlg;
 
-    ret = manApplet->cryptokiAPI()->GetAttributeValue2( session_, hObj, CKA_VALUE, &binCert );
+    ret = manApplet->cryptokiAPI()->GetAttributeValue2( slot_info_.getSessionHandle(), hObj, CKA_VALUE, &binCert );
     if( ret != CKR_OK )
     {
         manApplet->warningBox( tr( "failed to get certificate: %1").arg(ret), this );
@@ -803,7 +797,7 @@ void HsmManDlg::clickCertDelete()
     bool bVal = manApplet->yesOrCancelBox( tr( "Are you sure to delete the ceritificate?" ), this, false );
     if( bVal == false ) return;
 
-    int rv = manApplet->cryptokiAPI()->DestroyObject( session_, hObj );
+    int rv = manApplet->cryptokiAPI()->DestroyObject( slot_info_.getSessionHandle(), hObj );
     if( rv == CKR_OK )
     {
         manApplet->messageBox( tr("The certificate is deleted"), this );
@@ -834,7 +828,7 @@ void HsmManDlg::clickCertExport()
     ExportDlg exportDlg;
     BIN binCert = {0,0};
 
-    int ret = manApplet->cryptokiAPI()->GetAttributeValue2( session_, hObj, CKA_VALUE, &binCert );
+    int ret = manApplet->cryptokiAPI()->GetAttributeValue2( slot_info_.getSessionHandle(), hObj, CKA_VALUE, &binCert );
     if( ret != CKR_OK )
     {
         manApplet->warningBox( tr( "failed to get certificate: %1").arg(ret), this );
@@ -889,14 +883,14 @@ void HsmManDlg::clickCertDeleteKeyPair()
     JS_BIN_decodeHex( strID.toStdString().c_str(), &binID );
     if( binID.nLen > 0 )
     {
-        hPri = manApplet->cryptokiAPI()->getHandle( session_, CKO_PRIVATE_KEY, &binID );
+        hPri = manApplet->cryptokiAPI()->getHandle( slot_info_.getSessionHandle(), CKO_PRIVATE_KEY, &binID );
         if( hPri < 0 )
         {
             manApplet->warningBox( tr( "fail to get private handle: %1").arg( hPri ), this );
             goto end;
         }
 
-        hPub = manApplet->cryptokiAPI()->getHandle( session_, CKO_PUBLIC_KEY, &binID );
+        hPub = manApplet->cryptokiAPI()->getHandle( slot_info_.getSessionHandle(), CKO_PUBLIC_KEY, &binID );
         if( hPub < 0 )
         {
             manApplet->warningBox( tr( "fail to get public handle: %1").arg( hPri ), this );
@@ -904,19 +898,19 @@ void HsmManDlg::clickCertDeleteKeyPair()
         }
     }
 
-    rv = manApplet->cryptokiAPI()->DestroyObject( session_, hPri );
+    rv = manApplet->cryptokiAPI()->DestroyObject( slot_info_.getSessionHandle(), hPri );
     if( rv != CKR_OK )
     {
         manApplet->elog( QString( "fail to delete private key[H:%1]").arg(hPri));
     }
 
-    rv = manApplet->cryptokiAPI()->DestroyObject( session_, hPub );
+    rv = manApplet->cryptokiAPI()->DestroyObject( slot_info_.getSessionHandle(), hPub );
     if( rv != CKR_OK )
     {
         manApplet->elog( QString( "fail to delete public key[H:%1]").arg(hPub));
     }
 
-    rv = manApplet->cryptokiAPI()->DestroyObject( session_, hObj );
+    rv = manApplet->cryptokiAPI()->DestroyObject( slot_info_.getSessionHandle(), hObj );
     if( rv == CKR_OK )
     {
         manApplet->messageBox( tr("The certificate is deleted"), this );
@@ -948,7 +942,7 @@ void HsmManDlg::clickPublicView()
     int nKeyType = listData.at(3).toInt();
 
     PriKeyInfoDlg priKeyInfo;
-    priKeyInfo.setPublicKey( session_, hObj );
+    priKeyInfo.setPublicKey( slot_info_.getSessionHandle(), hObj );
     priKeyInfo.exec(); 
 }
 
@@ -974,7 +968,7 @@ void HsmManDlg::clickPublicDelete()
     bool bVal = manApplet->yesOrCancelBox( tr( "Are you sure to delete the public key" ), this, false );
     if( bVal == false ) return;
 
-    int rv = manApplet->cryptokiAPI()->DestroyObject( session_, hObj );
+    int rv = manApplet->cryptokiAPI()->DestroyObject( slot_info_.getSessionHandle(), hObj );
     if( rv == CKR_OK )
     {
         manApplet->messageBox( tr("The public key is deleted"), this );
@@ -1004,7 +998,7 @@ void HsmManDlg::clickPublicExport()
     BIN binPubKey = {0,0};
     ExportDlg exportDlg;
 
-    int ret = getPublicKey( manApplet->cryptokiAPI(), session_, hObj, &binPubKey );
+    int ret = getPublicKey( manApplet->cryptokiAPI(), slot_info_.getSessionHandle(), hObj, &binPubKey );
     if( ret !=  0 )
     {
         manApplet->warningBox( tr( "failed to get public key: %1").arg(ret), this );
@@ -1041,10 +1035,10 @@ void HsmManDlg::clickPublicVerify()
     QString strID = listData.at(2);
 
     VerifyDlg verifyDlg;
-    verifyDlg.setSelectedSlot( slot_index_ );
+    verifyDlg.setSlotIndex( slot_index_ );
     verifyDlg.mKeyTypeCombo->setCurrentText( "PUBLIC" );
     verifyDlg.mObjectText->setText( QString("%1").arg( hObj));
-    verifyDlg.mLabelText->setText( manApplet->cryptokiAPI()->getLabel( session_, hObj ));
+    verifyDlg.mLabelText->setText( manApplet->cryptokiAPI()->getLabel( slot_info_.getSessionHandle(), hObj ));
     verifyDlg.exec();
 }
 
@@ -1068,10 +1062,10 @@ void HsmManDlg::clickPublicEncrypt()
     QString strID = listData.at(2);
 
     EncryptDlg encDlg;
-    encDlg.setSelectedSlot( slot_index_ );
+    encDlg.setSlotIndex( slot_index_ );
     encDlg.mKeyTypeCombo->setCurrentText( "PUBLIC" );
     encDlg.mObjectText->setText( QString("%1").arg( hObj));
-    encDlg.mLabelText->setText( manApplet->cryptokiAPI()->getLabel( session_, hObj ));
+    encDlg.mLabelText->setText( manApplet->cryptokiAPI()->getLabel( slot_info_.getSessionHandle(), hObj ));
     encDlg.exec();
 }
 
@@ -1097,7 +1091,7 @@ void HsmManDlg::clickPrivateView()
 
 
     PriKeyInfoDlg priKeyInfo;
-    priKeyInfo.setPrivateKey( session_, hObj );
+    priKeyInfo.setPrivateKey( slot_info_.getSessionHandle(), hObj );
     priKeyInfo.exec(); 
 }
 
@@ -1123,7 +1117,7 @@ void HsmManDlg::clickPrivateDelete()
     bool bVal = manApplet->yesOrCancelBox( tr( "Are you sure to delete the private key" ), this, false );
     if( bVal == false ) return;
 
-    int rv = manApplet->cryptokiAPI()->DestroyObject( session_, hObj );
+    int rv = manApplet->cryptokiAPI()->DestroyObject( slot_info_.getSessionHandle(), hObj );
     if( rv == CKR_OK )
     {
         manApplet->messageBox( tr("The private key is deleted"), this );
@@ -1153,7 +1147,7 @@ void HsmManDlg::clickPrivateExport()
     BIN binPriKey = {0,0};
     ExportDlg exportDlg;
 
-    int ret = getPrivateKey( manApplet->cryptokiAPI(), session_, hObj, &binPriKey );
+    int ret = getPrivateKey( manApplet->cryptokiAPI(), slot_info_.getSessionHandle(), hObj, &binPriKey );
     if( ret !=  0 )
     {
         manApplet->warningBox( tr( "failed to get private key: %1").arg(ret), this );
@@ -1189,10 +1183,10 @@ void HsmManDlg::clickPrivateSign()
     QString strID = listData.at(2);
 
     SignDlg signDlg;
-    signDlg.setSelectedSlot( slot_index_ );
+    signDlg.setSlotIndex( slot_index_ );
     signDlg.mKeyTypeCombo->setCurrentText( "PRIVATE" );
     signDlg.mObjectText->setText( QString("%1").arg( hObj));
-    signDlg.mLabelText->setText( manApplet->cryptokiAPI()->getLabel( session_, hObj ));
+    signDlg.mLabelText->setText( manApplet->cryptokiAPI()->getLabel( slot_info_.getSessionHandle(), hObj ));
     signDlg.exec();
 }
 
@@ -1216,10 +1210,10 @@ void HsmManDlg::clickPrivateDecrypt()
     QString strID = listData.at(2);
 
     DecryptDlg decDlg;
-    decDlg.setSelectedSlot( slot_index_ );
+    decDlg.setSlotIndex( slot_index_ );
     decDlg.mKeyTypeCombo->setCurrentText( "PRIVATE" );
     decDlg.mObjectText->setText( QString("%1").arg( hObj));
-    decDlg.mLabelText->setText( manApplet->cryptokiAPI()->getLabel( session_, hObj ));
+    decDlg.mLabelText->setText( manApplet->cryptokiAPI()->getLabel( slot_info_.getSessionHandle(), hObj ));
     decDlg.exec();
 }
 
@@ -1243,7 +1237,7 @@ void HsmManDlg::clickSecretView()
     QString strID = listData.at(2);
 
     SecretInfoDlg secretInfo;
-    secretInfo.setHandle( session_, hObj );
+    secretInfo.setHandle( slot_info_.getSessionHandle(), hObj );
     secretInfo.exec();
 }
 
@@ -1269,7 +1263,7 @@ void HsmManDlg::clickSecretDelete()
     bool bVal = manApplet->yesOrCancelBox( tr( "Are you sure to delete the secret key" ), this, false );
     if( bVal == false ) return;
 
-    int rv = manApplet->cryptokiAPI()->DestroyObject( session_, hObj );
+    int rv = manApplet->cryptokiAPI()->DestroyObject( slot_info_.getSessionHandle(), hObj );
     if( rv == CKR_OK )
     {
         manApplet->messageBox( tr("The secret key is deleted"), this );
@@ -1297,10 +1291,10 @@ void HsmManDlg::clickSecretEncrypt()
     QString strID = listData.at(2);
 
     EncryptDlg encDlg;
-    encDlg.setSelectedSlot( slot_index_ );
+    encDlg.setSlotIndex( slot_index_ );
     encDlg.mKeyTypeCombo->setCurrentText( "SECRET" );
     encDlg.mObjectText->setText( QString("%1").arg( hObj));
-    encDlg.mLabelText->setText( manApplet->cryptokiAPI()->getLabel( session_, hObj ));
+    encDlg.mLabelText->setText( manApplet->cryptokiAPI()->getLabel( slot_info_.getSessionHandle(), hObj ));
     encDlg.exec();
 }
 
@@ -1324,10 +1318,10 @@ void HsmManDlg::clickSecretDecrypt()
     QString strID = listData.at(2);
 
     DecryptDlg decDlg;
-    decDlg.setSelectedSlot( slot_index_ );
+    decDlg.setSlotIndex( slot_index_ );
     decDlg.mKeyTypeCombo->setCurrentText( "SECRET" );
     decDlg.mObjectText->setText( QString("%1").arg( hObj));
-    decDlg.mLabelText->setText( manApplet->cryptokiAPI()->getLabel( session_, hObj ));
+    decDlg.mLabelText->setText( manApplet->cryptokiAPI()->getLabel( slot_info_.getSessionHandle(), hObj ));
     decDlg.exec();
 }
 
@@ -1351,10 +1345,10 @@ void HsmManDlg::clickSecretSign()
     QString strID = listData.at(2);
 
     SignDlg signDlg;
-    signDlg.setSelectedSlot( slot_index_ );
+    signDlg.setSlotIndex( slot_index_ );
     signDlg.mKeyTypeCombo->setCurrentText( "SECRET" );
     signDlg.mObjectText->setText( QString("%1").arg( hObj));
-    signDlg.mLabelText->setText( manApplet->cryptokiAPI()->getLabel( session_, hObj ));
+    signDlg.mLabelText->setText( manApplet->cryptokiAPI()->getLabel( slot_info_.getSessionHandle(), hObj ));
     signDlg.exec();
 }
 
@@ -1378,10 +1372,10 @@ void HsmManDlg::clickSecretVerify()
     QString strID = listData.at(2);
 
     VerifyDlg verifyDlg;
-    verifyDlg.setSelectedSlot( slot_index_ );
+    verifyDlg.setSlotIndex( slot_index_ );
     verifyDlg.mKeyTypeCombo->setCurrentText( "SECRET" );
     verifyDlg.mObjectText->setText( QString("%1").arg( hObj));
-    verifyDlg.mLabelText->setText( manApplet->cryptokiAPI()->getLabel( session_, hObj ));
+    verifyDlg.mLabelText->setText( manApplet->cryptokiAPI()->getLabel( slot_info_.getSessionHandle(), hObj ));
     verifyDlg.exec();
 }
 

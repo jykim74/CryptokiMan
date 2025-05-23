@@ -7,6 +7,7 @@
 #define INIT_TOKEN_DLG_H
 
 #include <QDialog>
+#include "slot_info.h"
 #include "ui_init_token_dlg.h"
 
 namespace Ui {
@@ -20,14 +21,18 @@ class InitTokenDlg : public QDialog, public Ui::InitTokenDlg
 public:
     explicit InitTokenDlg(QWidget *parent = nullptr);
     ~InitTokenDlg();
-    void setSelectedSlot( int index );
+
+    void setSlotIndex( int index );
+    int getSlotIndex() { return slot_index_; };
 
 private slots:
     virtual void accept();
-    void slotChanged( int index );
 
 private:
     void initialize();
+
+    SlotInfo slot_info_;
+    int slot_index_ = -1;
 };
 
 #endif // INIT_TOKEN_DLG_H

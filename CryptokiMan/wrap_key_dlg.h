@@ -7,6 +7,7 @@
 #define WRAP_KEY_DLG_H
 
 #include <QDialog>
+#include "slot_info.h"
 #include "ui_wrap_key_dlg.h"
 
 namespace Ui {
@@ -20,11 +21,12 @@ class WrapKeyDlg : public QDialog, public Ui::WrapKeyDlg
 public:
     explicit WrapKeyDlg(QWidget *parent = nullptr);
     ~WrapKeyDlg();
-    void setSelectedSlot( int index );
+
+    void setSlotIndex( int index );
+    int getSlotIndex() { return slot_index_; };
 
 private slots:
     void clickWrapKey();
-    void slotChanged( int index );
 
     void wrappingTypeChanged( int index );
     void wrappingMechChanged( int index );
@@ -40,8 +42,8 @@ private:
     void initialize();
     void initUI();
 
-    int slot_index_;
-    long session_;
+    SlotInfo slot_info_;
+    int slot_index_ = -1;
 };
 
 #endif // WRAP_KEY_DLG_H

@@ -7,6 +7,7 @@
 #define RAND_DLG_H
 
 #include <QDialog>
+#include "slot_info.h"
 #include "ui_rand_dlg.h"
 
 namespace Ui {
@@ -20,10 +21,11 @@ class RandDlg : public QDialog, public Ui::RandDlg
 public:
     explicit RandDlg(QWidget *parent = nullptr);
     ~RandDlg();
-    void setSelectedSlot( int index );
+
+    void setSlotIndex( int index );
+    int getSlotIndex() { return slot_index_; };
 
 private slots:
-    void slotChanged( int index );
     void clickSeed();
     void clickGenRand();
 
@@ -35,6 +37,9 @@ private slots:
 private:
     void initialize();
     void initUI();
+
+    SlotInfo slot_info_;
+    int slot_index_ = -1;
 };
 
 #endif // RAND_DLG_H

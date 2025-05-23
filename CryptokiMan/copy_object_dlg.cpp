@@ -16,8 +16,6 @@ static QStringList sFalseTrue = { "false", "true" };
 CopyObjectDlg::CopyObjectDlg(QWidget *parent) :
     QDialog(parent)
 {
-    slot_index_ = -1;
-    session_ = -1;
     is_fix_ = false;
 
     setupUi(this);
@@ -50,27 +48,21 @@ void CopyObjectDlg::initUI()
     mSrcTypeCombo->addItems( kObjectTypeList );
 }
 
-void CopyObjectDlg::slotChanged(int index)
+void CopyObjectDlg::setSlotIndex(int index)
 {
-    if( index < 0 ) return;
-
     slot_index_ = index;
-
     QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-    SlotInfo slotInfo = slot_infos.at(index);
 
-    mSlotIDText->setText( QString( "%1").arg(slotInfo.getSlotID()));
-    session_ = slotInfo.getSessionHandle();
-    mSessionText->setText( QString("%1").arg(slotInfo.getSessionHandle()));
-    mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
+    if( index >= 0 )
+    {
+        slot_info_ = slot_infos.at(slot_index_);
+        mSlotNameText->setText( slot_info_.getDesc() );
+    }
 
-    mSlotsCombo->clear();
-    mSlotsCombo->addItem( slotInfo.getDesc() );
-}
+    mSlotIDText->setText( QString( "%1").arg(slot_info_.getSlotID()));
+    mSessionText->setText( QString("%1").arg(slot_info_.getSessionHandle()));
+    mLoginText->setText( slot_info_.getLogin() ? "YES" : "NO" );
 
-void CopyObjectDlg::setSelectedSlot(int index)
-{
-    slotChanged( index );
     changeSrcType(0);
 }
 
@@ -153,7 +145,6 @@ void CopyObjectDlg::accept()
     int rv = -1;
 
     QString strSrcObject = mSrcObjectText->text();
-    int index = mSlotsCombo->currentIndex();
 
     if( strSrcObject.toInt() <= 0  )
     {
@@ -200,7 +191,7 @@ void CopyObjectDlg::accept()
         uCount++;
     }
 
-    rv = manApplet->cryptokiAPI()->CopyObject( session_, strSrcObject.toLong(), sTemplate, uCount, &uNewObj );
+    rv = manApplet->cryptokiAPI()->CopyObject( slot_info_.getSessionHandle(), strSrcObject.toLong(), sTemplate, uCount, &uNewObj );
 
     if( rv != CKR_OK )
     {
@@ -214,15 +205,15 @@ void CopyObjectDlg::accept()
     manApplet->messageBox( tr("CopyObject successful [New Object Handle: %1]").arg( strNewObject), this );
 
     if( strSrcType == kCertificate )
-        manApplet->showTypeList( index, HM_ITEM_TYPE_CERTIFICATE );
+        manApplet->showTypeList( slot_index_, HM_ITEM_TYPE_CERTIFICATE );
     else if( strSrcType == kPublicKey )
-        manApplet->showTypeList( index, HM_ITEM_TYPE_PUBLICKEY );
+        manApplet->showTypeList( slot_index_, HM_ITEM_TYPE_PUBLICKEY );
     else if( strSrcType == kPrivateKey )
-        manApplet->showTypeList( index, HM_ITEM_TYPE_PRIVATEKEY );
+        manApplet->showTypeList( slot_index_, HM_ITEM_TYPE_PRIVATEKEY );
     else if( strSrcType == kSecretKey )
-        manApplet->showTypeList( index, HM_ITEM_TYPE_SECRETKEY );
+        manApplet->showTypeList( slot_index_, HM_ITEM_TYPE_SECRETKEY );
     else if( strSrcType == kData )
-        manApplet->showTypeList( index, HM_ITEM_TYPE_DATA );
+        manApplet->showTypeList( slot_index_, HM_ITEM_TYPE_DATA );
 
     QDialog::accept();
 }
@@ -273,13 +264,13 @@ void CopyObjectDlg::readSrcLabels( CK_OBJECT_CLASS objClass )
     sTemplate[uCnt].ulValueLen = sizeof(CK_BBOOL);
     uCnt++;
 
-    rv = manApplet->cryptokiAPI()->FindObjectsInit( session_, sTemplate, uCnt );
+    rv = manApplet->cryptokiAPI()->FindObjectsInit( slot_info_.getSessionHandle(), sTemplate, uCnt );
     if( rv != CKR_OK ) return;
 
-    rv = manApplet->cryptokiAPI()->FindObjects( session_, sObjects, uMaxObjCnt, &uObjCnt );
+    rv = manApplet->cryptokiAPI()->FindObjects( slot_info_.getSessionHandle(), sObjects, uMaxObjCnt, &uObjCnt );
     if( rv != CKR_OK ) return;
 
-    rv = manApplet->cryptokiAPI()->FindObjectsFinal( session_ );
+    rv = manApplet->cryptokiAPI()->FindObjectsFinal( slot_info_.getSessionHandle() );
     if( rv != CKR_OK ) return;
 
     mSrcLabelCombo->clear();
@@ -291,7 +282,7 @@ void CopyObjectDlg::readSrcLabels( CK_OBJECT_CLASS objClass )
         BIN binLabel = {0,0};
         QVariant objVal = QVariant( (int)sObjects[i] );
 
-        rv = manApplet->cryptokiAPI()->GetAttributeValue2( session_, sObjects[i], CKA_LABEL, &binLabel );
+        rv = manApplet->cryptokiAPI()->GetAttributeValue2( slot_info_.getSessionHandle(), sObjects[i], CKA_LABEL, &binLabel );
 
         JS_BIN_string( &binLabel, &pLabel );
 

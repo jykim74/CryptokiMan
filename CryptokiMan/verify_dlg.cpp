@@ -27,7 +27,7 @@ VerifyDlg::VerifyDlg(QWidget *parent) :
     QDialog(parent)
 {
     slot_index_ = -1;
-    session_ = -1;
+
     update_cnt_ = 0;
     thread_ = NULL;
 
@@ -121,27 +121,20 @@ void VerifyDlg::initUI()
     resize(minimumSizeHint().width(), minimumSizeHint().height());
 }
 
-void VerifyDlg::slotChanged(int index)
+void VerifyDlg::setSlotIndex(int index)
 {
-    if( index < 0 ) return;
-
     slot_index_ = index;
-
     QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-    SlotInfo slotInfo = slot_infos.at(index);
 
-    mSlotIDText->setText( QString( "%1").arg(slotInfo.getSlotID()));
-    session_ = slotInfo.getSessionHandle();
-    mSessionText->setText( QString("%1").arg(slotInfo.getSessionHandle()));
-    mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
+    if( index >= 0 )
+    {
+        slot_info_ = slot_infos.at(slot_index_);
+        mSlotNameText->setText( slot_info_.getDesc() );
+    }
 
-    mSlotsCombo->clear();
-    mSlotsCombo->addItem( slotInfo.getDesc() );
-}
-
-void VerifyDlg::setSelectedSlot(int index)
-{
-    slotChanged( index );
+    mSlotIDText->setText( QString( "%1").arg(slot_info_.getSlotID()));
+    mSessionText->setText( QString("%1").arg(slot_info_.getSessionHandle()));
+    mLoginText->setText( slot_info_.getLogin() ? "YES" : "NO" );
 
     keyTypeChanged( 0 );
 }
@@ -168,7 +161,7 @@ void VerifyDlg::setObject( int type, long hObj )
         mKeyTypeCombo->setCurrentText( sKeyList[1] );
     }
 
-    manApplet->cryptokiAPI()->GetAttributeValue2( session_, hObj, CKA_LABEL, &binVal );
+    manApplet->cryptokiAPI()->GetAttributeValue2( slot_info_.getSessionHandle(), hObj, CKA_LABEL, &binVal );
     JS_BIN_string( &binVal, &pLabel );
     JS_BIN_reset( &binVal );
 
@@ -348,7 +341,7 @@ int VerifyDlg::clickInit()
         }
     }
 
-    rv = manApplet->cryptokiAPI()->VerifyInit( session_, &sMech, uObject );
+    rv = manApplet->cryptokiAPI()->VerifyInit( slot_info_.getSessionHandle(), &sMech, uObject );
     setStatusInit( rv );
 
     if( rv != CKR_OK )
@@ -382,7 +375,7 @@ void VerifyDlg::clickUpdate()
     else if( mInputBase64Radio->isChecked() )
         JS_BIN_decodeBase64( strInput.toStdString().c_str(), &binInput );
 
-    rv = manApplet->cryptokiAPI()->VerifyUpdate( session_, binInput.pVal, binInput.nLen );
+    rv = manApplet->cryptokiAPI()->VerifyUpdate( slot_info_.getSessionHandle(), binInput.pVal, binInput.nLen );
 
     if( rv != CKR_OK )
     {
@@ -411,7 +404,7 @@ void VerifyDlg::clickFinal()
     BIN binSign = {0,0};
     JS_BIN_decodeHex( strSign.toStdString().c_str(), &binSign );
 
-    rv = manApplet->cryptokiAPI()->VerifyFinal( session_, binSign.pVal, binSign.nLen );
+    rv = manApplet->cryptokiAPI()->VerifyFinal( slot_info_.getSessionHandle(), binSign.pVal, binSign.nLen );
     setStatusFinal( rv );
 
     if( rv != CKR_OK )
@@ -487,7 +480,7 @@ void VerifyDlg::runDataVerify()
     BIN binSign = {0,0};
     JS_BIN_decodeHex( strSign.toStdString().c_str(), &binSign );
 
-    rv = manApplet->cryptokiAPI()->Verify( session_, binInput.pVal, binInput.nLen, binSign.pVal, binSign.nLen );
+    rv = manApplet->cryptokiAPI()->Verify( slot_info_.getSessionHandle(), binInput.pVal, binInput.nLen, binSign.pVal, binSign.nLen );
     setStatusVerify( rv );
 
     if( rv != CKR_OK )
@@ -572,7 +565,7 @@ void VerifyDlg::runFileVerify()
             goto end;
         }
 
-        ret = manApplet->cryptokiAPI()->VerifyUpdate( session_, binPart.pVal, binPart.nLen );
+        ret = manApplet->cryptokiAPI()->VerifyUpdate( slot_info_.getSessionHandle(), binPart.pVal, binPart.nLen );
         if( ret != CKR_OK )
         {
             setStatusUpdate( ret, update_cnt_ );
@@ -627,7 +620,7 @@ void VerifyDlg::clickSelect()
     }
 
     HsmManDlg hsmMan;
-    hsmMan.setSelectedSlot( slot_index_ );
+    hsmMan.setSlotIndex( slot_index_ );
     hsmMan.setTitle( "Select Key" );
 
     if( mKeyTypeCombo->currentText() == "SECRET" )
@@ -647,7 +640,7 @@ void VerifyDlg::clickSelect()
         QString strType = listData.at(0);
         long hObj = listData.at(1).toLong();
         QString strID = listData.at(2);
-        QString strLabel = manApplet->cryptokiAPI()->getLabel( session_, hObj );
+        QString strLabel = manApplet->cryptokiAPI()->getLabel( slot_info_.getSessionHandle(), hObj );
         mLabelText->setText( strLabel );
         mObjectText->setText( QString("%1").arg( hObj ));
     }
@@ -671,7 +664,7 @@ void VerifyDlg::clickVerifyRecoverInit()
         sMech.ulParameterLen = binParam.nLen;
     }
 
-    rv = manApplet->cryptokiAPI()->VerifyRecoverInit( session_, &sMech, uObject );
+    rv = manApplet->cryptokiAPI()->VerifyRecoverInit( slot_info_.getSessionHandle(), &sMech, uObject );
 
     if( rv != CKR_OK )
     {
@@ -697,7 +690,7 @@ void VerifyDlg::clickVerifyRecover()
     BIN binSign = {0,0};
     JS_BIN_decodeHex( strSign.toStdString().c_str(), &binSign );
 
-    rv = manApplet->cryptokiAPI()->VerifyRecover( session_, binSign.pVal, binSign.nLen, sData, (CK_ULONG_PTR)&ulDataLen );
+    rv = manApplet->cryptokiAPI()->VerifyRecover( slot_info_.getSessionHandle(), binSign.pVal, binSign.nLen, sData, (CK_ULONG_PTR)&ulDataLen );
 
     if( rv != CKR_OK )
     {
@@ -791,7 +784,7 @@ void VerifyDlg::startTask()
     connect(thread_, &VerifyThread::taskFinished, this, &VerifyDlg::onTaskFinished);
     connect( thread_, &VerifyThread::taskUpdate, this, &VerifyDlg::onTaskUpdate);
 
-    thread_->setSession( session_ );
+    thread_->setSession( slot_info_.getSessionHandle() );
     thread_->setSrcFile( strSrcFile );
     thread_->start();
 }

@@ -17,10 +17,9 @@ const QStringList kTypeList = { "String", "Hex", "Base64" };
 EditAttributeDlg::EditAttributeDlg(QWidget *parent) :
     QDialog(parent)
 {
-    slot_index_ = -1;
     object_type_ = -1;
     object_id_ = -1;
-    session_ = -1;
+
     attr_name_ = "";
 
     setupUi(this);
@@ -51,7 +50,18 @@ EditAttributeDlg::~EditAttributeDlg()
 
 void EditAttributeDlg::setSlotIndex( int index )
 {
-    slotChanged( index );
+    slot_index_ = index;
+    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
+
+    if( index >= 0 )
+    {
+        slot_info_ = slot_infos.at(slot_index_);
+        mSlotNameText->setText( slot_info_.getDesc() );
+    }
+
+    mSlotIDText->setText( QString( "%1").arg(slot_info_.getSlotID()));
+    mSessionText->setText( QString("%1").arg(slot_info_.getSessionHandle()));
+    mLoginText->setText( slot_info_.getLogin() ? "YES" : "NO" );
 }
 
 void EditAttributeDlg::setObjectType( int type )
@@ -69,27 +79,6 @@ void EditAttributeDlg::setAttrName( const QString& strName )
     attr_name_ = strName;
 }
 
-void EditAttributeDlg::slotChanged(int index)
-{
-    if( index < 0 ) return;
-
-    slot_index_ = index;
-
-    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-    SlotInfo slotInfo;
-
-    slotInfo = slot_infos.at( index );
-
-    session_ = slotInfo.getSessionHandle();
-
-    mSlotIDText->setText( QString( "%1").arg(slotInfo.getSlotID()));
-    mSessionText->setText( QString("%1").arg(slotInfo.getSessionHandle()));
-    mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
-
-    mSlotsCombo->clear();
-    mSlotsCombo->addItem( slotInfo.getDesc() );
-    mSlotsCombo->setAcceptDrops(false);
-}
 
 void EditAttributeDlg::labelChanged( int index )
 {
@@ -102,7 +91,7 @@ void EditAttributeDlg::labelChanged( int index )
 
     if( object_type_ == OBJ_PUBKEY_IDX || object_type_ == OBJ_PRIKEY_IDX )
     {
-        ret = manApplet->cryptokiAPI()->GetAttributeValue2( session_, strHandle.toLong(), CKA_KEY_TYPE, &binVal );
+        ret = manApplet->cryptokiAPI()->GetAttributeValue2( slot_info_.getSessionHandle(), strHandle.toLong(), CKA_KEY_TYPE, &binVal );
         if( ret != CKR_OK ) goto end;
 
         memcpy( &nKeyType, binVal.pVal, binVal.nLen );
@@ -190,13 +179,13 @@ void EditAttributeDlg::objectTypeChanged( int type )
 
     if( object_id_ < 0 )
     {
-        rv = manApplet->cryptokiAPI()->FindObjectsInit( session_, sTemplate, uCount );
+        rv = manApplet->cryptokiAPI()->FindObjectsInit( slot_info_.getSessionHandle(), sTemplate, uCount );
         if( rv != CKR_OK ) return;
 
-        rv = manApplet->cryptokiAPI()->FindObjects( session_, sObjects, uMaxObjCnt, &uObjCnt );
+        rv = manApplet->cryptokiAPI()->FindObjects( slot_info_.getSessionHandle(), sObjects, uMaxObjCnt, &uObjCnt );
         if( rv != CKR_OK ) return;
 
-        rv = manApplet->cryptokiAPI()->FindObjectsFinal( session_ );
+        rv = manApplet->cryptokiAPI()->FindObjectsFinal( slot_info_.getSessionHandle() );
         if( rv != CKR_OK ) return;
     }
     else
@@ -212,7 +201,7 @@ void EditAttributeDlg::objectTypeChanged( int type )
         BIN binLabel = {0,0};
         char *pHex = NULL;
 
-        manApplet->cryptokiAPI()->GetAttributeValue2( session_, sObjects[i], CKA_LABEL, &binLabel );
+        manApplet->cryptokiAPI()->GetAttributeValue2( slot_info_.getSessionHandle(), sObjects[i], CKA_LABEL, &binLabel );
 
         const QVariant objVal =  QVariant( (int)sObjects[i] );
 
@@ -267,19 +256,7 @@ void EditAttributeDlg::showEvent(QShowEvent *event)
         mAttributeCombo->clear();
         mAttributeCombo->addItem( attr_name_ );
 
-        QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-        int nSlotSel = mSlotsCombo->currentIndex();
-        if( nSlotSel < 0 ) return;
-
-        SlotInfo slotInfo;
-
-        if( slot_index_ < 0 )
-            slotInfo = slot_infos.at(nSlotSel);
-        else
-            slotInfo = slot_infos.at( slot_index_ );
-
-        CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+        CK_SESSION_HANDLE hSession = slot_info_.getSessionHandle();
 
         BIN binLabel = {0,0};
         char *pHex = NULL;
@@ -333,7 +310,7 @@ void EditAttributeDlg::clickGetAttribute()
     BIN binVal = {0,0};
     QString strValue;
 
-    rv = manApplet->cryptokiAPI()->GetAttributeValue2( session_, hObject, attrType, &binVal );
+    rv = manApplet->cryptokiAPI()->GetAttributeValue2( slot_info_.getSessionHandle(), hObject, attrType, &binVal );
 
     if( rv != CKR_OK )
     {
@@ -371,7 +348,7 @@ void EditAttributeDlg::clickSetAttribute()
 
     getBINFromString( &binVal, mValueTypeCombo->currentText(), strValue );
 
-    rv = manApplet->cryptokiAPI()->SetAttributeValue2( session_, hObject, attrType, &binVal );
+    rv = manApplet->cryptokiAPI()->SetAttributeValue2( slot_info_.getSessionHandle(), hObject, attrType, &binVal );
 
     if( rv != CKR_OK )
     {

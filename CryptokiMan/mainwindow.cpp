@@ -613,6 +613,7 @@ void MainWindow::createActions()
     init_token_act_->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_I));
     connect( init_token_act_, &QAction::triggered, this, &MainWindow::initToken);
     init_token_act_->setStatusTip(tr("Initialize token"));
+    toolsMenu->addAction( init_token_act_ );
     if( isView( ACT_TOOL_INIT_TOKEN ) ) toolsMenu->addAction( init_token_act_ );
 
     const QIcon operIcon = QIcon::fromTheme( "operation1", QIcon(":/images/operation.png"));
@@ -1086,10 +1087,10 @@ void MainWindow::openSession()
     }
 
     OpenSessionDlg openSessionDlg;
-    openSessionDlg.setSelectedSlot( pItem->getSlotIndex() );
+    openSessionDlg.setSlotIndex( pItem->getSlotIndex() );
     if( openSessionDlg.exec() == QDialog::Accepted )
     {
-        int pos = openSessionDlg.mSlotsCombo->currentIndex();
+        int pos = openSessionDlg.getSlotIndex();
 
         ManTreeItem* root = getRootItem();
         ManTreeItem* item = (ManTreeItem *)root->child( pos );
@@ -1119,10 +1120,10 @@ void MainWindow::closeSession()
 
     CloseSessionDlg closeSessionDlg;
     closeSessionDlg.setAll(false);
-    closeSessionDlg.setSelectedSlot( pItem->getSlotIndex() );
+    closeSessionDlg.setSlotIndex( pItem->getSlotIndex() );
     if( closeSessionDlg.exec() == QDialog::Accepted )
     {
-        int pos = closeSessionDlg.mSlotsCombo->currentIndex();
+        int pos = closeSessionDlg.getSlotIndex();
 
         ManTreeItem* root = getRootItem();
         ManTreeItem* item = (ManTreeItem *)root->child( pos );
@@ -1146,10 +1147,13 @@ void MainWindow::closeAllSessions()
 
     CloseSessionDlg closeSessionDlg;
     closeSessionDlg.setAll(true);
+    closeSessionDlg.setSlotIndex( pItem->getSlotIndex() );
+
     if( closeSessionDlg.exec() == QDialog::Accepted )
     {
         ManTreeItem* root = getRootItem();
-        int nCnt = closeSessionDlg.mSlotsCombo->count();
+        int nCnt = manApplet->mainWindow()->getSlotInfos().size();
+
         for( int i = 0; i < nCnt; i++ )
         {
             ManTreeItem* item = (ManTreeItem *)root->child( i );
@@ -1172,10 +1176,10 @@ void MainWindow::login()
     }
 
     LoginDlg loginDlg;
-    loginDlg.setSelectedSlot( pItem->getSlotIndex() );
+    loginDlg.setSlotIndex( pItem->getSlotIndex() );
     if( loginDlg.exec() == QDialog::Accepted )
     {
-        int pos = loginDlg.mSlotsCombo->currentIndex();
+        int pos = loginDlg.getSlotIndex();
 
         ManTreeItem* root = getRootItem();
         ManTreeItem* item = (ManTreeItem *)root->child( pos );
@@ -1197,10 +1201,10 @@ void MainWindow::logout()
     }
 
     LogoutDlg logoutDlg;
-    logoutDlg.setSelectedSlot( pItem->getSlotIndex() );
+    logoutDlg.setSlotIndex( pItem->getSlotIndex() );
     if( logoutDlg.exec() == QDialog::Accepted )
     {
-        int pos = logoutDlg.mSlotsCombo->currentIndex();
+        int pos = logoutDlg.getSlotIndex();
 
         ManTreeItem* root = getRootItem();
         ManTreeItem* item = (ManTreeItem *)root->child( pos );
@@ -1222,7 +1226,7 @@ void MainWindow::generateKeyPair()
     }
 
     GenKeyPairDlg genKeyPairDlg;
-    if( pItem ) genKeyPairDlg.setSelectedSlot( pItem->getSlotIndex() );
+    if( pItem ) genKeyPairDlg.setSlotIndex( pItem->getSlotIndex() );
     genKeyPairDlg.exec();
 }
 
@@ -1237,7 +1241,7 @@ void MainWindow::generateKey()
     }
 
     GenKeyDlg genKeyDlg;
-    if( pItem ) genKeyDlg.setSelectedSlot(pItem->getSlotIndex());
+    if( pItem ) genKeyDlg.setSlotIndex(pItem->getSlotIndex());
     genKeyDlg.exec();
 }
 
@@ -1252,7 +1256,7 @@ void MainWindow::createData()
     }
 
     CreateDataDlg createDataDlg;
-    if( pItem ) createDataDlg.setSelectedSlot( pItem->getSlotIndex() );
+    if( pItem ) createDataDlg.setSlotIndex( pItem->getSlotIndex() );
     createDataDlg.exec();
 }
 
@@ -1267,7 +1271,7 @@ void MainWindow::createRSAPublicKey()
     }
 
     CreateRSAPubKeyDlg createRSAPubKeyDlg;
-    if( pItem ) createRSAPubKeyDlg.setSelectedSlot(pItem->getSlotIndex());
+    if( pItem ) createRSAPubKeyDlg.setSlotIndex(pItem->getSlotIndex());
     createRSAPubKeyDlg.exec();
 }
 
@@ -1282,7 +1286,7 @@ void MainWindow::createRSAPrivateKey()
     }
 
     CreateRSAPriKeyDlg createRSAPriKeyDlg;
-    if( pItem ) createRSAPriKeyDlg.setSelectedSlot(pItem->getSlotIndex());
+    if( pItem ) createRSAPriKeyDlg.setSlotIndex(pItem->getSlotIndex());
     createRSAPriKeyDlg.exec();
 }
 
@@ -1297,7 +1301,7 @@ void MainWindow::createECPublicKey()
     }
 
     CreateECPubKeyDlg createECPubKeyDlg;
-    if( pItem ) createECPubKeyDlg.setSelectedSlot( pItem->getSlotIndex() );
+    if( pItem ) createECPubKeyDlg.setSlotIndex( pItem->getSlotIndex() );
     createECPubKeyDlg.exec();
 }
 
@@ -1312,7 +1316,7 @@ void MainWindow::createECPrivateKey()
     }
 
     CreateECPriKeyDlg createECPriKeyDlg;
-    if( pItem ) createECPriKeyDlg.setSelectedSlot( pItem->getSlotIndex() );
+    if( pItem ) createECPriKeyDlg.setSlotIndex( pItem->getSlotIndex() );
     createECPriKeyDlg.exec();
 }
 
@@ -1327,7 +1331,7 @@ void MainWindow::createEDPublicKey()
     }
 
     CreateECPubKeyDlg createECPubKeyDlg(true);
-    if( pItem ) createECPubKeyDlg.setSelectedSlot( pItem->getSlotIndex() );
+    if( pItem ) createECPubKeyDlg.setSlotIndex( pItem->getSlotIndex() );
     createECPubKeyDlg.exec();
 }
 
@@ -1342,7 +1346,7 @@ void MainWindow::createEDPrivateKey()
     }
 
     CreateECPriKeyDlg createECPriKeyDlg(true);
-    if( pItem ) createECPriKeyDlg.setSelectedSlot( pItem->getSlotIndex() );
+    if( pItem ) createECPriKeyDlg.setSlotIndex( pItem->getSlotIndex() );
     createECPriKeyDlg.exec();
 }
 
@@ -1357,7 +1361,7 @@ void MainWindow::createDSAPublicKey()
     }
 
     CreateDSAPubKeyDlg createDSAPubKeyDlg;
-    if( pItem ) createDSAPubKeyDlg.setSelectedSlot( pItem->getSlotIndex() );
+    if( pItem ) createDSAPubKeyDlg.setSlotIndex( pItem->getSlotIndex() );
     createDSAPubKeyDlg.exec();
 }
 
@@ -1372,7 +1376,7 @@ void MainWindow::createDSAPrivateKey()
     }
 
     CreateDSAPriKeyDlg createDSAPriKeyDlg;
-    if( pItem ) createDSAPriKeyDlg.setSelectedSlot( pItem->getSlotIndex() );
+    if( pItem ) createDSAPriKeyDlg.setSlotIndex( pItem->getSlotIndex() );
     createDSAPriKeyDlg.exec();
 }
 
@@ -1387,7 +1391,7 @@ void MainWindow::createKey()
     }
 
     CreateKeyDlg createKeyDlg;
-    if( pItem ) createKeyDlg.setSelectedSlot( pItem->getSlotIndex() );
+    if( pItem ) createKeyDlg.setSlotIndex( pItem->getSlotIndex() );
     createKeyDlg.exec();
 }
 
@@ -1402,7 +1406,7 @@ void MainWindow::copyObject()
     }
 
     CopyObjectDlg copyObjectDlg;
-    copyObjectDlg.setSelectedSlot( pItem->getSlotIndex() );
+    copyObjectDlg.setSlotIndex( pItem->getSlotIndex() );
     copyObjectDlg.exec();
 }
 
@@ -1417,7 +1421,7 @@ void MainWindow::findObject()
     }
 
     FindObjectDlg findObjectDlg;
-    findObjectDlg.setSelectedSlot( pItem->getSlotIndex() );
+    findObjectDlg.setSlotIndex( pItem->getSlotIndex() );
     findObjectDlg.exec();
 }
 
@@ -1444,7 +1448,7 @@ void MainWindow::copyTableObject()
 
 
     CopyObjectDlg copyObjectDlg;
-    copyObjectDlg.setSelectedSlot( pItem->getSlotIndex() );
+    copyObjectDlg.setSlotIndex( pItem->getSlotIndex() );
     copyObjectDlg.setTypeObject( nType, strLabel, hObj );
     copyObjectDlg.exec();
 }
@@ -1603,7 +1607,7 @@ void MainWindow::digest()
     int nSlot = pItem->getSlotIndex();
 
     DigestDlg digestDlg;
-    if( pItem ) digestDlg.setSelectedSlot(nSlot);
+    if( pItem ) digestDlg.setSlotIndex(nSlot);
     digestDlg.exec();
 }
 
@@ -1618,7 +1622,7 @@ void MainWindow::sign()
     }
 
     SignDlg signDlg;
-    if( pItem ) signDlg.setSelectedSlot( pItem->getSlotIndex() );
+    if( pItem ) signDlg.setSlotIndex( pItem->getSlotIndex() );
     signDlg.exec();
 }
 
@@ -1635,7 +1639,7 @@ void MainWindow::signType()
     SignDlg signDlg;
     int type = getDataType( pItem->getType() );
 
-    signDlg.setSelectedSlot( pItem->getSlotIndex() );
+    signDlg.setSlotIndex( pItem->getSlotIndex() );
     signDlg.changeType( type );
     signDlg.exec();
 }
@@ -1663,7 +1667,7 @@ void MainWindow::signEach()
     int type = getDataType( right_type_ );
     long obj_id = item1->text().toLong();
 
-    signDlg.setSelectedSlot( nSlot );
+    signDlg.setSlotIndex( nSlot );
     signDlg.setObject( type, obj_id );
 
     signDlg.exec();
@@ -1681,7 +1685,7 @@ void MainWindow::hsmMan()
 
     int nSlot = pItem->getSlotIndex();
 
-    hsm_man_dlg_->setSelectedSlot( nSlot );
+    hsm_man_dlg_->setSlotIndex( nSlot );
     hsm_man_dlg_->show();
     hsm_man_dlg_->raise();
     hsm_man_dlg_->activateWindow();
@@ -1700,7 +1704,7 @@ void MainWindow::verify()
     int nSlot = pItem->getSlotIndex();
 
     VerifyDlg verifyDlg;
-    verifyDlg.setSelectedSlot( nSlot );
+    verifyDlg.setSlotIndex( nSlot );
     verifyDlg.exec();
 }
 
@@ -1718,7 +1722,7 @@ void MainWindow::verifyType()
 
     VerifyDlg verifyDlg;
     int type = getDataType( right_type_ );
-    verifyDlg.setSelectedSlot( nSlot );
+    verifyDlg.setSlotIndex( nSlot );
     verifyDlg.changeType( type );
     verifyDlg.exec();
 }
@@ -1745,7 +1749,7 @@ void MainWindow::verifyEach()
     int type = getDataType( right_type_ );
     long obj_id = item1->text().toLong();
 
-    verifyDlg.setSelectedSlot( nSlot );
+    verifyDlg.setSlotIndex( nSlot );
     verifyDlg.setObject( type, obj_id );
     verifyDlg.exec();
 }
@@ -1763,7 +1767,7 @@ void MainWindow::encrypt()
     int nSlot = pItem->getSlotIndex();
 
     EncryptDlg encryptDlg;
-    encryptDlg.setSelectedSlot( nSlot );
+    encryptDlg.setSlotIndex( nSlot );
 
     encryptDlg.exec();
 }
@@ -1783,7 +1787,7 @@ void MainWindow::encryptType()
     EncryptDlg encryptDlg;
     int type = getDataType( right_type_ );
 
-    encryptDlg.setSelectedSlot( nSlot );
+    encryptDlg.setSlotIndex( nSlot );
     encryptDlg.changeType(type);
 
     encryptDlg.exec();
@@ -1812,7 +1816,7 @@ void MainWindow::encryptEach()
     int type = getDataType( right_type_ );
     long obj_id = item1->text().toLong();
 
-    encryptDlg.setSelectedSlot( nSlot );
+    encryptDlg.setSlotIndex( nSlot );
     encryptDlg.setObject( type, obj_id );
     encryptDlg.exec();
 }
@@ -1829,7 +1833,7 @@ void MainWindow::decrypt()
 
     int nSlot = pItem->getSlotIndex();
     DecryptDlg decryptDlg;
-    decryptDlg.setSelectedSlot( nSlot );
+    decryptDlg.setSlotIndex( nSlot );
     decryptDlg.exec();
 }
 
@@ -1848,7 +1852,7 @@ void MainWindow::decryptType()
     DecryptDlg decryptDlg;
     int type = getDataType( right_type_ );
 
-    decryptDlg.setSelectedSlot( nSlot );
+    decryptDlg.setSlotIndex( nSlot );
     decryptDlg.changeType( type );
 
     decryptDlg.exec();
@@ -1876,7 +1880,7 @@ void MainWindow::decryptEach()
     int type = getDataType( right_type_ );
     long obj_id = item1->text().toLong();
 
-    decryptDlg.setSelectedSlot( nSlot );
+    decryptDlg.setSlotIndex( nSlot );
     decryptDlg.setObject( type, obj_id );
 
     decryptDlg.exec();
@@ -1895,7 +1899,7 @@ void MainWindow::importCert()
     int nSlot = pItem->getSlotIndex();
 
     ImportCertDlg importCertDlg;
-    importCertDlg.setSelectedSlot( nSlot );
+    importCertDlg.setSlotIndex( nSlot );
     importCertDlg.exec();
 }
 
@@ -2013,7 +2017,7 @@ void MainWindow::importPFX()
     int nSlot = pItem->getSlotIndex();
 
     ImportPFXDlg importPFXDlg;
-    importPFXDlg.setSelectedSlot( nSlot );
+    importPFXDlg.setSlotIndex( nSlot );
     importPFXDlg.exec();
 }
 
@@ -2030,7 +2034,7 @@ void MainWindow::improtPrivateKey()
     int nSlot = pItem->getSlotIndex();
 
     ImportPriKeyDlg importPriKeyDlg;
-    importPriKeyDlg.setSelectedSlot( nSlot );
+    importPriKeyDlg.setSlotIndex( nSlot );
     importPriKeyDlg.exec();
 }
 
@@ -2180,7 +2184,7 @@ void MainWindow::makeCSR()
     int nSlot = pItem->getSlotIndex();
 
     MakeCSRDlg makeCSR;
-    makeCSR.setSelectedSlot( nSlot );
+    makeCSR.setSlotIndex( nSlot );
     if( makeCSR.exec() == QDialog::Accepted )
     {
         int ret = 0;
@@ -2220,7 +2224,7 @@ void MainWindow::makeCSREach()
     QTableWidgetItem* item1 = right_table_->item( row, 1 );
 
     MakeCSRDlg makeCSR;
-    makeCSR.setSelectedSlot( nSlot );
+    makeCSR.setSlotIndex( nSlot );
     makeCSR.setPriObject( item1->text().toLong());
     if( makeCSR.exec() == QDialog::Accepted )
     {
@@ -2290,7 +2294,7 @@ void MainWindow::initToken()
     int nSlot = pItem->getSlotIndex();
 
     InitTokenDlg initTokenDlg;
-    initTokenDlg.setSelectedSlot( nSlot );
+    initTokenDlg.setSlotIndex( nSlot );
     initTokenDlg.exec();
 }
 
@@ -2307,7 +2311,7 @@ void MainWindow::rand()
     int nSlot = pItem->getSlotIndex();
 
     RandDlg randDlg;
-    randDlg.setSelectedSlot( nSlot );
+    randDlg.setSlotIndex( nSlot );
     randDlg.exec();
 }
 
@@ -2324,7 +2328,7 @@ void MainWindow::setPin()
     int nSlot = pItem->getSlotIndex();
 
     SetPinDlg setPinDlg;
-    setPinDlg.setSelectedSlot( nSlot );
+    setPinDlg.setSlotIndex( nSlot );
     setPinDlg.exec();
 }
 
@@ -2341,7 +2345,7 @@ void MainWindow::initPin()
     int nSlot = pItem->getSlotIndex();
 
     InitPinDlg initPinDlg;
-    initPinDlg.setSelectedSlot( nSlot );
+    initPinDlg.setSlotIndex( nSlot );
     initPinDlg.exec();
 }
 
@@ -2358,7 +2362,7 @@ void MainWindow::wrapKey()
     int nSlot = pItem->getSlotIndex();
 
     WrapKeyDlg wrapKeyDlg;
-    wrapKeyDlg.setSelectedSlot( nSlot );
+    wrapKeyDlg.setSlotIndex( nSlot );
     wrapKeyDlg.exec();
 }
 
@@ -2375,7 +2379,7 @@ void MainWindow::unwrapKey()
     int nSlot = pItem->getSlotIndex();
 
     UnwrapKeyDlg unwrapKeyDlg;
-    unwrapKeyDlg.setSelectedSlot( nSlot );
+    unwrapKeyDlg.setSlotIndex( nSlot );
     unwrapKeyDlg.exec();
 }
 
@@ -2392,7 +2396,7 @@ void MainWindow::deriveKey()
     int nSlot = pItem->getSlotIndex();
 
     DeriveKeyDlg deriveKeyDlg;
-    deriveKeyDlg.setSelectedSlot( nSlot );
+    deriveKeyDlg.setSlotIndex( nSlot );
     deriveKeyDlg.exec();
 }
 
@@ -2415,7 +2419,7 @@ void MainWindow::CAVP()
     int nSlot = pItem->getSlotIndex();
 
     CAVPDlg cavp;
-    cavp.setSelectedSlot( nSlot );
+    cavp.setSlotIndex( nSlot );
     cavp.exec();
 }
 
@@ -2437,7 +2441,7 @@ void MainWindow::operationState()
 
     OperStateDlg operStateDlg;
 
-    if( pItem ) operStateDlg.setSelectedSlot( pItem->getSlotIndex() );
+    if( pItem ) operStateDlg.setSlotIndex( pItem->getSlotIndex() );
 
     operStateDlg.exec();
 }

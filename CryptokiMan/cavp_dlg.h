@@ -2,6 +2,7 @@
 #define CAVP_DLG_H
 
 #include <QDialog>
+#include "slot_info.h"
 #include "ui_cavp_dlg.h"
 #include "js_bin.h"
 #include "js_pkcs11.h"
@@ -77,10 +78,10 @@ public:
     explicit CAVPDlg(QWidget *parent = nullptr);
     ~CAVPDlg();
 
-    void setSelectedSlot( int index );
+    void setSlotIndex( int index );
+    int getSlotIndex() { return slot_index_; };
 
 private slots:
-    void slotChanged( int index );
     void clickFindRsp();
     void clickACVPFindJson();
 
@@ -213,8 +214,9 @@ private:
 
     bool checkValidMech( int nCKM_ID );
 
-    long session_;
-    int slot_index_;
+    SlotInfo slot_info_;
+    int slot_index_ = -1;
+
     QString rsp_name_;
 };
 

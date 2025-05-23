@@ -7,6 +7,7 @@
 #define IMPORT_CERT_DLG_H
 
 #include <QDialog>
+#include "slot_info.h"
 #include "ui_import_cert_dlg.h"
 
 namespace Ui {
@@ -20,10 +21,11 @@ class ImportCertDlg : public QDialog, public Ui::ImportCertDlg
 public:
     explicit ImportCertDlg(QWidget *parent = nullptr);
     ~ImportCertDlg();
-    void setSelectedSlot( int index );
+
+    void setSlotIndex( int index );
+    int getSlotIndex() { return slot_index_; };
 
 private slots:
-    void slotChanged( int index );
     virtual void accept();
     void clickUseSKI();
     void clickUseSPKI();
@@ -46,6 +48,9 @@ private:
     void setAttributes();
     void connectAttributes();
     void setDefaults();
+
+    SlotInfo slot_info_;
+    int slot_index_ = -1;
 };
 
 #endif // IMPORT_CERT_DLG_H

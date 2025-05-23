@@ -34,7 +34,6 @@ void RandDlg::initUI()
 {
     mSeedCombo->addItems( sSeedList );
 
-    connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
     connect( mSetSeedBtn, SIGNAL(clicked()), this, SLOT(clickSeed()));
     connect( mGenRandBtn, SIGNAL(clicked()), this, SLOT(clickGenRand()));
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(close()));
@@ -52,50 +51,32 @@ void RandDlg::initUI()
     resize(minimumSizeHint().width(), minimumSizeHint().height());
 }
 
-void RandDlg::slotChanged(int index)
+void RandDlg::setSlotIndex(int index)
 {
-    if( index < 0 ) return;
-
+    slot_index_ = index;
     QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-    SlotInfo slotInfo = slot_infos.at(index);
 
-    mSlotIDText->setText( QString( "%1").arg(slotInfo.getSlotID()));
-    mSessionText->setText( QString("%1").arg(slotInfo.getSessionHandle()));
-    mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
-}
+    if( index >= 0 )
+    {
+        slot_info_ = slot_infos.at(slot_index_);
+        mSlotNameText->setText( slot_info_.getDesc() );
+    }
 
-void RandDlg::setSelectedSlot(int index)
-{
-    if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
+    mSlotIDText->setText( QString( "%1").arg(slot_info_.getSlotID()));
+    mSessionText->setText( QString("%1").arg(slot_info_.getSessionHandle()));
+    mLoginText->setText( slot_info_.getLogin() ? "YES" : "NO" );
 }
 
 void RandDlg::initialize()
 {
-    mSlotsCombo->clear();
 
-    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    for( int i=0; i < slot_infos.size(); i++ )
-    {
-        SlotInfo slotInfo = slot_infos.at(i);
-
-        mSlotsCombo->addItem( slotInfo.getDesc() );
-    }
-
-    if( slot_infos.size() > 0 ) slotChanged(0);
 }
 
 void RandDlg::clickGenRand()
 {
-    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-    if( slot_infos.size() <= 0 ) return;
-
     int nFlags = 0;
-
-    int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slot_info_.getSessionHandle();
 
     QString strLen = mLengthText->text();
 
@@ -132,11 +113,7 @@ void RandDlg::clickGenRand()
 
 void RandDlg::clickSeed()
 {
-    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.at(index);
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slot_info_.getSessionHandle();
     int rv = -1;
 
     QString strSeed = mSeedText->toPlainText();

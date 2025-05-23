@@ -25,23 +25,41 @@
         </size>
        </property>
        <property name="text">
-        <string>Slot list</string>
+        <string>Slot name</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="mSlotsCombo">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-         <horstretch>1</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
+      <widget class="QLineEdit" name="mSlotNameText">
+       <property name="palette">
+        <palette>
+         <active>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </active>
+         <inactive>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </inactive>
+         <disabled/>
+        </palette>
        </property>
-       <property name="minimumSize">
-        <size>
-         <width>200</width>
-         <height>0</height>
-        </size>
+       <property name="readOnly">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -164,7 +182,6 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>mSlotsCombo</tabstop>
   <tabstop>mSerialCheck</tabstop>
   <tabstop>mRWCheck</tabstop>
   <tabstop>mWaitForSlotEventBtn</tabstop>

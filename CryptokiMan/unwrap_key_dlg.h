@@ -7,6 +7,7 @@
 #define UNWRAP_KEY_DLG_H
 
 #include <QDialog>
+#include "slot_info.h"
 #include "ui_unwrap_key_dlg.h"
 
 namespace Ui {
@@ -20,11 +21,12 @@ class UnwrapKeyDlg : public QDialog, public Ui::UnwrapKeyDlg
 public:
     explicit UnwrapKeyDlg(QWidget *parent = nullptr);
     ~UnwrapKeyDlg();
-    void setSelectedSlot( int index );
+
+    void setSlotIndex( int index );
+    int getSlotIndex() { return slot_index_; };
 
 private slots:
     virtual void accept();
-    void slotChanged( int index );
 
     void unwrapTypeChanged(int index);
     void unwrapMechChanged(int index );
@@ -67,8 +69,8 @@ private:
     void connectAttributes();
     void setDefaults();
 
-    int slot_index_;
-    long session_;
+    SlotInfo slot_info_;
+    int slot_index_ = -1;
 };
 
 #endif // UNWRAP_KEY_DLG_H

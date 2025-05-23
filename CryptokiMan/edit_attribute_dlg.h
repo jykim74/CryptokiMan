@@ -7,6 +7,7 @@
 #define EDIT_ATTRIBUTE_DLG_H
 
 #include <QDialog>
+#include "slot_info.h"
 #include "ui_edit_attribute_dlg.h"
 
 namespace Ui {
@@ -22,6 +23,8 @@ public:
     ~EditAttributeDlg();
 
     void setSlotIndex( int index );
+    int getSlotIndex() { return slot_index_; };
+
     void setObjectType( int type );
     void setObjectID( long id );
     void setAttrName( const QString& strName );
@@ -31,7 +34,6 @@ private slots:
     void showEvent(QShowEvent *event);
     void closeEvent(QCloseEvent *);
 
-    void slotChanged( int index );
     void labelChanged( int index );
     void objectTypeChanged( int type );
     void attributeTypeChanged( int index );
@@ -46,10 +48,11 @@ private:
     void initialize();
     void initAttributes();
 
-    int slot_index_;
     int object_type_;
     long object_id_;
-    long session_;
+    SlotInfo slot_info_;
+    int slot_index_ = -1;
+
     QString attr_name_;
 };
 

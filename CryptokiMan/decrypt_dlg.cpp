@@ -29,7 +29,7 @@ DecryptDlg::DecryptDlg(QWidget *parent) :
     QDialog(parent)
 {
     slot_index_ = -1;
-    session_ = -1;
+
     update_cnt_ = 0;
     thread_ = NULL;
 
@@ -242,24 +242,6 @@ void DecryptDlg::freeMechanism( void *pMech )
     }
 }
 
-void DecryptDlg::slotChanged(int index)
-{
-    if( index < 0 ) return;
-
-    slot_index_ = index;
-
-    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-    SlotInfo slotInfo = slot_infos.at(index);
-
-    mSlotIDText->setText( QString( "%1").arg(slotInfo.getSlotID()));
-    session_ = slotInfo.getSessionHandle();
-    mSessionText->setText( QString("%1").arg(slotInfo.getSessionHandle()));
-    mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
-
-    mSlotsCombo->clear();
-    mSlotsCombo->addItem( slotInfo.getDesc() );
-}
-
 void DecryptDlg::mechChanged( int index )
 {
     QString strMech = mMechCombo->currentText();
@@ -304,9 +286,20 @@ void DecryptDlg::mechChanged( int index )
     }
 }
 
-void DecryptDlg::setSelectedSlot(int index)
+void DecryptDlg::setSlotIndex(int index)
 {
-    slotChanged(index);
+    slot_index_ = index;
+    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
+
+    if( index >= 0 )
+    {
+        slot_info_ = slot_infos.at(slot_index_);
+        mSlotNameText->setText( slot_info_.getDesc() );
+    }
+
+    mSlotIDText->setText( QString( "%1").arg(slot_info_.getSlotID()));
+    mSessionText->setText( QString("%1").arg(slot_info_.getSessionHandle()));
+    mLoginText->setText( slot_info_.getLogin() ? "YES" : "NO" );
 
     keyTypeChanged( 0 );
 }
@@ -325,7 +318,7 @@ void DecryptDlg::setObject( int type, long hObj )
         mKeyTypeCombo->setCurrentText( sKeyList[1] );
     }
 
-    manApplet->cryptokiAPI()->GetAttributeValue2( session_, hObj, CKA_LABEL, &binVal );
+    manApplet->cryptokiAPI()->GetAttributeValue2( slot_info_.getSessionHandle(), hObj, CKA_LABEL, &binVal );
     JS_BIN_string( &binVal, &pLabel );
     JS_BIN_reset( &binVal );
 
@@ -525,7 +518,7 @@ int DecryptDlg::clickInit()
 
     setMechanism( &sMech );
 
-    rv = manApplet->cryptokiAPI()->DecryptInit( session_, &sMech, hObject );
+    rv = manApplet->cryptokiAPI()->DecryptInit( slot_info_.getSessionHandle(), &sMech, hObject );
     setStatusInit( rv );
 
     if( rv != CKR_OK )
@@ -568,7 +561,7 @@ void DecryptDlg::clickUpdate()
 
     BIN binDecPart = {0,0};
 
-    rv = manApplet->cryptokiAPI()->DecryptUpdate( session_, binInput.pVal, binInput.nLen, pDecPart, (CK_ULONG_PTR)&uDecPartLen );
+    rv = manApplet->cryptokiAPI()->DecryptUpdate( slot_info_.getSessionHandle(), binInput.pVal, binInput.nLen, pDecPart, (CK_ULONG_PTR)&uDecPartLen );
 
     if( rv != CKR_OK )
     {
@@ -601,7 +594,7 @@ int DecryptDlg::clickFinal()
     unsigned char sDec[1024];
     long uDecLen = 1024;
 
-    rv = manApplet->cryptokiAPI()->DecryptFinal( session_, sDec, (CK_ULONG_PTR)&uDecLen );
+    rv = manApplet->cryptokiAPI()->DecryptFinal( slot_info_.getSessionHandle(), sDec, (CK_ULONG_PTR)&uDecLen );
     setStatusFinal(rv);
 
     if( rv != CKR_OK )
@@ -681,7 +674,7 @@ void DecryptDlg::runDataDecrypt()
     unsigned char *pDecData = NULL;
     long uDecDataLen = 0;
 
-    rv = manApplet->cryptokiAPI()->Decrypt( session_, binInput.pVal, binInput.nLen, NULL, (CK_ULONG_PTR)&uDecDataLen );
+    rv = manApplet->cryptokiAPI()->Decrypt( slot_info_.getSessionHandle(), binInput.pVal, binInput.nLen, NULL, (CK_ULONG_PTR)&uDecDataLen );
 
     if( rv != CKR_OK )
     {
@@ -694,7 +687,7 @@ void DecryptDlg::runDataDecrypt()
 
     pDecData = (unsigned char *)JS_malloc( uDecDataLen );
 
-    rv = manApplet->cryptokiAPI()->Decrypt( session_, binInput.pVal, binInput.nLen, pDecData, (CK_ULONG_PTR)&uDecDataLen );
+    rv = manApplet->cryptokiAPI()->Decrypt( slot_info_.getSessionHandle(), binInput.pVal, binInput.nLen, pDecData, (CK_ULONG_PTR)&uDecDataLen );
 
     if( rv != CKR_OK )
     {
@@ -805,7 +798,7 @@ void DecryptDlg::runFileDecrypt()
         pDecPart = (unsigned char *)JS_malloc( binPart.nLen + 64 );
         if( pDecPart == NULL ) return;
 
-        rv = manApplet->cryptokiAPI()->DecryptUpdate( session_, binPart.pVal, binPart.nLen, pDecPart, (CK_ULONG_PTR)&uDecPartLen );
+        rv = manApplet->cryptokiAPI()->DecryptUpdate( slot_info_.getSessionHandle(), binPart.pVal, binPart.nLen, pDecPart, (CK_ULONG_PTR)&uDecPartLen );
 
         if( rv != CKR_OK )
         {
@@ -900,7 +893,7 @@ void DecryptDlg::clickSelect()
     }
 
     HsmManDlg hsmMan;
-    hsmMan.setSelectedSlot( slot_index_ );
+    hsmMan.setSlotIndex( slot_index_ );
     hsmMan.setTitle( "Select Key" );
 
     if( mKeyTypeCombo->currentText() == "SECRET" )
@@ -925,7 +918,7 @@ void DecryptDlg::clickSelect()
         QString strType = listData.at(0);
         long hObj = listData.at(1).toLong();
         QString strID = listData.at(2);
-        QString strLabel = manApplet->cryptokiAPI()->getLabel( session_, hObj );
+        QString strLabel = manApplet->cryptokiAPI()->getLabel( slot_info_.getSessionHandle(), hObj );
         mLabelText->setText( strLabel );
         mObjectText->setText( QString("%1").arg( hObj ));
     }
@@ -996,7 +989,7 @@ void DecryptDlg::startTask()
     connect(thread_, &DecryptThread::taskFinished, this, &DecryptDlg::onTaskFinished);
     connect( thread_, &DecryptThread::taskUpdate, this, &DecryptDlg::onTaskUpdate);
 
-    thread_->setSession( session_ );
+    thread_->setSession( slot_info_.getSessionHandle() );
     thread_->setSrcFile( strSrcFile );
     thread_->setDstFile( strDstFile );
     thread_->start();

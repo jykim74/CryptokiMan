@@ -25,7 +25,6 @@ static QStringList sKeyList = { "PRIVATE", "SECRET" };
 SignDlg::SignDlg(QWidget *parent) :
     QDialog(parent)
 {
-    session_ = -1;
     slot_index_ = -1;
     update_cnt_ = 0;
     thread_ = NULL;
@@ -119,27 +118,20 @@ void SignDlg::initUI()
     resize(width(), minimumSizeHint().height());
 }
 
-void SignDlg::slotChanged(int index)
+void SignDlg::setSlotIndex(int index)
 {
-    if( index < 0 ) return;
-
     slot_index_ = index;
-
     QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-    SlotInfo slotInfo = slot_infos.at(index);
 
-    mSlotIDText->setText( QString( "%1").arg(slotInfo.getSlotID()));
-    session_ = slotInfo.getSessionHandle();
-    mSessionText->setText( QString("%1").arg(slotInfo.getSessionHandle()));
-    mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
+    if( index >= 0 )
+    {
+        slot_info_ = slot_infos.at(slot_index_);
+        mSlotNameText->setText( slot_info_.getDesc() );
+    }
 
-    mSlotsCombo->clear();
-    mSlotsCombo->addItem( slotInfo.getDesc() );
-}
-
-void SignDlg::setSelectedSlot(int index)
-{
-    slotChanged( index );
+    mSlotIDText->setText( QString( "%1").arg(slot_info_.getSlotID()));
+    mSessionText->setText( QString("%1").arg(slot_info_.getSessionHandle()));
+    mLoginText->setText( slot_info_.getLogin() ? "YES" : "NO" );
 
     keyTypeChanged( 0 );
 }
@@ -174,7 +166,7 @@ void SignDlg::setObject( int type, long hObj )
 
     }
 
-    manApplet->cryptokiAPI()->GetAttributeValue2( session_, hObj, CKA_LABEL, &binVal );
+    manApplet->cryptokiAPI()->GetAttributeValue2( slot_info_.getSessionHandle(), hObj, CKA_LABEL, &binVal );
     JS_BIN_string( &binVal, &pLabel );
     JS_BIN_reset( &binVal );
 
@@ -355,7 +347,7 @@ int SignDlg::clickInit()
     }
 
     CK_OBJECT_HANDLE uObject = mObjectText->text().toLong();
-    rv = manApplet->cryptokiAPI()->SignInit( session_, &sMech, uObject );
+    rv = manApplet->cryptokiAPI()->SignInit( slot_info_.getSessionHandle(), &sMech, uObject );
 
     setStatusInit( rv );
 
@@ -397,7 +389,7 @@ void SignDlg::clickUpdate()
 
     getBINFromString( &binInput, nDataType, strInput );
 
-    rv = manApplet->cryptokiAPI()->SignUpdate( session_, binInput.pVal, binInput.nLen );
+    rv = manApplet->cryptokiAPI()->SignUpdate( slot_info_.getSessionHandle(), binInput.pVal, binInput.nLen );
     if( rv != CKR_OK )
     {
         setStatusUpdate( rv, update_cnt_ );
@@ -417,7 +409,7 @@ void SignDlg::clickFinal()
     unsigned char sSign[1024];
     long uSignLen = 1024;
 
-    rv = manApplet->cryptokiAPI()->SignFinal( session_, sSign, (CK_ULONG_PTR)&uSignLen );
+    rv = manApplet->cryptokiAPI()->SignFinal( slot_info_.getSessionHandle(), sSign, (CK_ULONG_PTR)&uSignLen );
 
     setStatusFinal( rv );
 
@@ -492,7 +484,7 @@ void SignDlg::runDataSign()
     unsigned char sSign[1024];
     long uSignLen = 1024;
 
-    rv = manApplet->cryptokiAPI()->Sign( session_, binInput.pVal, binInput.nLen, sSign, (CK_ULONG_PTR)&uSignLen );
+    rv = manApplet->cryptokiAPI()->Sign( slot_info_.getSessionHandle(), binInput.pVal, binInput.nLen, sSign, (CK_ULONG_PTR)&uSignLen );
     setStatusSign( rv );
 
     if( rv != CKR_OK )
@@ -578,7 +570,7 @@ void SignDlg::runFileSign()
             goto end;
         }
 
-        ret = manApplet->cryptokiAPI()->SignUpdate( session_, binPart.pVal, binPart.nLen );
+        ret = manApplet->cryptokiAPI()->SignUpdate( slot_info_.getSessionHandle(), binPart.pVal, binPart.nLen );
         if( ret != CKR_OK )
         {
             setStatusUpdate( ret, update_cnt_ );
@@ -633,7 +625,7 @@ void SignDlg::clickSelect()
     }
 
     HsmManDlg hsmMan;
-    hsmMan.setSelectedSlot( slot_index_ );
+    hsmMan.setSlotIndex( slot_index_ );
     hsmMan.setTitle( "Select Key" );
 
     if( mKeyTypeCombo->currentText() == "SECRET" )
@@ -653,7 +645,7 @@ void SignDlg::clickSelect()
         QString strType = listData.at(0);
         long hObj = listData.at(1).toLong();
         QString strID = listData.at(2);
-        QString strLabel = manApplet->cryptokiAPI()->getLabel( session_, hObj );
+        QString strLabel = manApplet->cryptokiAPI()->getLabel( slot_info_.getSessionHandle(), hObj );
         mLabelText->setText( strLabel );
         mObjectText->setText( QString("%1").arg( hObj ));
     }
@@ -678,7 +670,7 @@ void SignDlg::clickSignRecoverInit()
     }
 
     CK_OBJECT_HANDLE uObject = mObjectText->text().toLong();
-    rv = manApplet->cryptokiAPI()->SignRecoverInit( session_, &sMech, uObject );
+    rv = manApplet->cryptokiAPI()->SignRecoverInit( slot_info_.getSessionHandle(), &sMech, uObject );
 
     if( rv != CKR_OK )
     {
@@ -715,7 +707,7 @@ void SignDlg::clickSignRecover()
     unsigned char sSign[1024];
     long uSignLen = 1024;
 
-    rv = manApplet->cryptokiAPI()->SignRecover( session_, binInput.pVal, binInput.nLen, sSign, (CK_ULONG_PTR)&uSignLen );
+    rv = manApplet->cryptokiAPI()->SignRecover( slot_info_.getSessionHandle(), binInput.pVal, binInput.nLen, sSign, (CK_ULONG_PTR)&uSignLen );
 
     if( rv != CKR_OK )
     {
@@ -814,7 +806,7 @@ void SignDlg::startTask()
     connect(thread_, &SignThread::taskFinished, this, &SignDlg::onTaskFinished);
     connect( thread_, &SignThread::taskUpdate, this, &SignDlg::onTaskUpdate);
 
-    thread_->setSession( session_ );
+    thread_->setSession( slot_info_.getSessionHandle() );
     thread_->setSrcFile( strSrcFile );
     thread_->start();
 }

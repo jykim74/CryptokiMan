@@ -17,7 +17,6 @@ LoginDlg::LoginDlg(QWidget *parent) :
 {
     setupUi(this);
 
-    connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
     connect( mLoginBtn, SIGNAL(clicked()), this, SLOT(clickLogin()));
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(close()));
 
@@ -35,26 +34,23 @@ LoginDlg::~LoginDlg()
 
 }
 
-void LoginDlg::setSelectedSlot(int index)
+void LoginDlg::setSlotIndex(int index)
 {
+    slot_index_ = index;
+    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
+
     if( index >= 0 )
-        mSlotsCombo->setCurrentIndex(index);
+    {
+        slot_info_ = slot_infos.at(slot_index_);
+        mSlotNameText->setText( slot_info_.getDesc() );
+    }
+
+    mSlotIDText->setText( QString( "%1").arg(slot_info_.getSlotID()));
+    mSessionText->setText( QString("%1").arg(slot_info_.getSessionHandle()));
 }
 
 void LoginDlg::initialize()
 {
-    mSlotsCombo->clear();
-
-    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    for( int i=0; i < slot_infos.size(); i++ )
-    {
-        SlotInfo slotInfo = slot_infos.at(i);
-
-        mSlotsCombo->addItem( slotInfo.getDesc() );
-    }
-
-    if( slot_infos.size() > 0 ) slotChanged(0);
     mPinText->setEchoMode(QLineEdit::Password);
 
     mTypeCombo->addItems( kLoginType );
@@ -70,9 +66,7 @@ void LoginDlg::clickLogin()
     int nType = 0;
     BIN binPIN = {0,0};
 
-    int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.at(index);
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slot_info_.getSessionHandle();
 
     if( (long)hSession == -1 )
     {
@@ -102,8 +96,8 @@ void LoginDlg::clickLogin()
 
     if( rv == CKR_OK )
     {
-        slotInfo.setLogin(true);
-        slot_infos.replace( index, slotInfo );
+        slot_info_.setLogin(true);
+        slot_infos.replace( slot_index_, slot_info_ );
         manApplet->messageLog( tr( "Login succeed" ), this );
 
         QDialog::accept();
@@ -114,15 +108,4 @@ void LoginDlg::clickLogin()
 
         QDialog::reject();
     }
-}
-
-void LoginDlg::slotChanged(int index)
-{
-    if( index < 0 ) return;
-
-    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-    SlotInfo slotInfo = slot_infos.at(index);
-
-    mSlotIDText->setText( QString( "%1").arg(slotInfo.getSlotID()));
-    mSessionText->setText( QString("%1").arg(slotInfo.getSessionHandle()));
 }

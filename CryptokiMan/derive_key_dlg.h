@@ -7,6 +7,7 @@
 #define DERIVE_KEY_DLG_H
 
 #include <QDialog>
+#include "slot_info.h"
 #include "ui_derive_key_dlg.h"
 #include "js_bin.h"
 
@@ -21,11 +22,12 @@ class DeriveKeyDlg : public QDialog, public Ui::DeriveKeyDlg
 public:
     explicit DeriveKeyDlg(QWidget *parent = nullptr);
     ~DeriveKeyDlg();
-    void setSelectedSlot( int index );
+
+    void setSlotIndex( int index );
+    int getSlotIndex() { return slot_index_; };
 
 private slots:
     virtual void accept();
-    void slotChanged( int index );
 
     void classChanged( int index );
     void typeChanged( int index );
@@ -68,8 +70,8 @@ private:
     void setMechanism( void *pMech );
     void freeMechanism( void *pMech );
 
-    int slot_index_;
-    int session_;
+    SlotInfo slot_info_;
+    int slot_index_ = -1;
 };
 
 #endif // DERIVE_KEY_DLG_H

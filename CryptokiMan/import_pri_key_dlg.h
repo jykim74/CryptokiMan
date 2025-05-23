@@ -7,6 +7,7 @@
 #define IMPORT_PRI_KEY_DLG_H
 
 #include <QDialog>
+#include "slot_info.h"
 #include "ui_import_pri_key_dlg.h"
 #include "js_pki.h"
 #include "js_pki_eddsa.h"
@@ -23,7 +24,9 @@ class ImportPriKeyDlg : public QDialog, public Ui::ImportPriKeyDlg
 public:
     explicit ImportPriKeyDlg(QWidget *parent = nullptr);
     ~ImportPriKeyDlg();
-    void setSelectedSlot( int index );
+
+    void setSlotIndex( int index );
+    int getSlotIndex() { return slot_index_; };
 
 private slots:
     virtual void accept();
@@ -94,6 +97,9 @@ private:
 
     BIN ski_;
     BIN spki_;
+
+    SlotInfo slot_info_;
+    int slot_index_ = -1;
 };
 
 #endif // IMPORT_PRI_KEY_DLG_H

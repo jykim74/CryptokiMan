@@ -7,6 +7,7 @@
 #define GEN_RSA_PUB_KEY_DLG_H
 
 #include <QDialog>
+#include "slot_info.h"
 #include "ui_create_rsa_pub_key_dlg.h"
 #include "js_bin.h"
 
@@ -21,11 +22,12 @@ class CreateRSAPubKeyDlg : public QDialog, public Ui::CreateRSAPubKeyDlg
 public:
     explicit CreateRSAPubKeyDlg(QWidget *parent = nullptr);
     ~CreateRSAPubKeyDlg();
-    void setSelectedSlot( int index );
+
+    void setSlotIndex( int index );
+    int getSlotIndex() { return slot_index_; };
 
 private slots:
     virtual void accept();
-    void slotChanged( int index );
 
     void clickGenKey();
     void clickFindKey();
@@ -52,6 +54,9 @@ private:
     void connectAttributes();
     void setDefaults();
     int getSKI( BIN *pSKI );
+
+    SlotInfo slot_info_;
+    int slot_index_ = -1;
 };
 
 #endif // GEN_RSA_PUB_KEY_DLG_H

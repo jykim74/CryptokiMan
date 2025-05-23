@@ -31,8 +31,6 @@ static QStringList kHashList = {
 MakeCSRDlg::MakeCSRDlg(QWidget *parent) :
     QDialog(parent)
 {
-    session_ = -1;
-
     setupUi(this);
     initUI();
 
@@ -59,9 +57,21 @@ MakeCSRDlg::~MakeCSRDlg()
     JS_BIN_reset( &csr_ );
 }
 
-void MakeCSRDlg::setSelectedSlot(int index)
+void MakeCSRDlg::setSlotIndex(int index)
 {
-    slotChanged( index );
+    slot_index_ = index;
+    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
+
+    if( index >= 0 )
+    {
+        slot_info_ = slot_infos.at(slot_index_);
+        mSlotNameText->setText( slot_info_.getDesc() );
+    }
+
+    mSlotIDText->setText( QString( "%1").arg(slot_info_.getSlotID()));
+    mSessionText->setText( QString("%1").arg(slot_info_.getSessionHandle()));
+    mLoginText->setText( slot_info_.getLogin() ? "YES" : "NO" );
+
     getPriCombo();
 }
 
@@ -70,7 +80,7 @@ void MakeCSRDlg::setPriObject( CK_OBJECT_HANDLE hPriObj )
     BIN binVal = {0,0};
     char *pLabel = NULL;
 
-    manApplet->cryptokiAPI()->GetAttributeValue2( session_, hPriObj, CKA_LABEL, &binVal );
+    manApplet->cryptokiAPI()->GetAttributeValue2( slot_info_.getSessionHandle(), hPriObj, CKA_LABEL, &binVal );
     JS_BIN_string( &binVal, &pLabel );
     JS_BIN_reset( &binVal );
 
@@ -82,7 +92,7 @@ void MakeCSRDlg::setPriObject( CK_OBJECT_HANDLE hPriObj )
 
 void MakeCSRDlg::setSession( CK_SESSION_HANDLE hSession )
 {
-    session_ = hSession;
+    slot_info_.setSessionHandle( hSession );
 }
 
 void MakeCSRDlg::initUI()
@@ -160,24 +170,6 @@ const QString MakeCSRDlg::getDN()
     return strDN;
 }
 
-void MakeCSRDlg::slotChanged(int index)
-{
-    if( index < 0 ) return;
-
-    slot_index_ = index;
-
-    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-    SlotInfo slotInfo = slot_infos.at(index);
-
-    mSlotIDText->setText( QString( "%1").arg(slotInfo.getSlotID()));
-    session_ = slotInfo.getSessionHandle();
-    mSessionText->setText( QString("%1").arg(slotInfo.getSessionHandle()));
-    mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
-
-    mSlotsCombo->clear();
-    mSlotsCombo->addItem( slotInfo.getDesc() );
-}
-
 void MakeCSRDlg::clickClear()
 {
     mEMAILADDRESSText->clear();
@@ -229,14 +221,14 @@ void MakeCSRDlg::clickOK()
         return;
     }
 
-    ret = getPublicKey( manApplet->cryptokiAPI(), session_, hPub, &binPub );
+    ret = getPublicKey( manApplet->cryptokiAPI(), slot_info_.getSessionHandle(), hPub, &binPub );
     if( ret != 0 )
     {
         manApplet->warningBox( tr( "fail to get public key: %1" ).arg( ret ), this );
         return;
     }
 
-    pCTX->hSession = session_;
+    pCTX->hSession = slot_info_.getSessionHandle();
 
     ret = JS_PKI_makeCSRByP11Handle(
         strHash.toStdString().c_str(),
@@ -296,13 +288,13 @@ int MakeCSRDlg::getPriCombo()
     uCnt++;
 
 
-    rv = manApplet->cryptokiAPI()->FindObjectsInit( session_, sTemplate, uCnt );
+    rv = manApplet->cryptokiAPI()->FindObjectsInit( slot_info_.getSessionHandle(), sTemplate, uCnt );
     if( rv != CKR_OK ) return rv;
 
-    rv = manApplet->cryptokiAPI()->FindObjects( session_, sObjects, uMaxObjCnt, &uObjCnt );
+    rv = manApplet->cryptokiAPI()->FindObjects( slot_info_.getSessionHandle(), sObjects, uMaxObjCnt, &uObjCnt );
     if( rv != CKR_OK ) return rv;
 
-    rv = manApplet->cryptokiAPI()->FindObjectsFinal( session_ );
+    rv = manApplet->cryptokiAPI()->FindObjectsFinal( slot_info_.getSessionHandle() );
     if( rv != CKR_OK ) return rv;
 
     mPriLabelCombo->clear();
@@ -313,7 +305,7 @@ int MakeCSRDlg::getPriCombo()
         char    *pStr = NULL;
         BIN binLabel = {0,0};
 
-        rv = manApplet->cryptokiAPI()->GetAttributeValue2( session_, sObjects[i], CKA_LABEL, &binLabel );
+        rv = manApplet->cryptokiAPI()->GetAttributeValue2( slot_info_.getSessionHandle(), sObjects[i], CKA_LABEL, &binLabel );
 
         QVariant objVal = QVariant((int)sObjects[i]);
         JS_BIN_string( &binLabel, &pStr );
@@ -352,7 +344,7 @@ int MakeCSRDlg::getPubCombo()
 
     hPriObj = strPriObject.toLong();
 
-    rv = manApplet->cryptokiAPI()->GetAttributeValue2( session_, hPriObj, CKA_KEY_TYPE, &binType );
+    rv = manApplet->cryptokiAPI()->GetAttributeValue2( slot_info_.getSessionHandle(), hPriObj, CKA_KEY_TYPE, &binType );
     if( rv != CKR_OK ) return JSR_ERR2;
 
 
@@ -372,21 +364,21 @@ int MakeCSRDlg::getPubCombo()
     uCnt++;
 
 
-    rv = manApplet->cryptokiAPI()->FindObjectsInit( session_, sTemplate, uCnt );
+    rv = manApplet->cryptokiAPI()->FindObjectsInit( slot_info_.getSessionHandle(), sTemplate, uCnt );
     if( rv != CKR_OK )
     {
         JS_BIN_reset( &binType );
         return rv;
     }
 
-    rv = manApplet->cryptokiAPI()->FindObjects( session_, sObjects, uMaxObjCnt, &uObjCnt );
+    rv = manApplet->cryptokiAPI()->FindObjects( slot_info_.getSessionHandle(), sObjects, uMaxObjCnt, &uObjCnt );
     if( rv != CKR_OK )
     {
         JS_BIN_reset( &binType );
         return rv;
     }
 
-    rv = manApplet->cryptokiAPI()->FindObjectsFinal( session_ );
+    rv = manApplet->cryptokiAPI()->FindObjectsFinal( slot_info_.getSessionHandle() );
     if( rv != CKR_OK )
     {
         JS_BIN_reset( &binType );
@@ -403,7 +395,7 @@ int MakeCSRDlg::getPubCombo()
         char    *pStr = NULL;
         BIN binLabel = {0,0};
 
-        rv = manApplet->cryptokiAPI()->GetAttributeValue2( session_, sObjects[i], CKA_LABEL, &binLabel );
+        rv = manApplet->cryptokiAPI()->GetAttributeValue2( slot_info_.getSessionHandle(), sObjects[i], CKA_LABEL, &binLabel );
 
         QVariant objVal = QVariant((int)sObjects[i]);
         JS_BIN_string( &binLabel, &pStr );

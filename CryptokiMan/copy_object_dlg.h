@@ -7,6 +7,7 @@
 #define COPY_OBJECT_DLG_H
 
 #include <QDialog>
+#include "slot_info.h"
 #include "ui_copy_object_dlg.h"
 #include "js_pkcs11.h"
 
@@ -22,12 +23,13 @@ public:
     explicit CopyObjectDlg(QWidget *parent = nullptr);
     ~CopyObjectDlg();
 
-    void setSelectedSlot( int index );
+    void setSlotIndex( int index );
+    int getSlotIndex() { return slot_index_; };
+
     void setTypeObject( int nType, const QString strLabel, long hObj );
 
 private slots:
     virtual void accept();
-    void slotChanged( int index );
 
     void changeSrcType( int index );
     void changeSrcLabel( int index );
@@ -53,8 +55,9 @@ private:
     void readSrcCertificateLabels();
     void readSrcDataLabels();
 
-    int slot_index_;
-    long session_;
+    SlotInfo slot_info_;
+    int slot_index_ = -1;
+
     bool is_fix_;
 };
 

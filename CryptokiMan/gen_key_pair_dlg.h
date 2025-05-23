@@ -7,6 +7,7 @@
 #define GEN_KEY_PAIR_DLG_H
 
 #include <QDialog>
+#include "slot_info.h"
 #include "ui_gen_key_pair_dlg.h"
 
 namespace Ui {
@@ -20,11 +21,11 @@ class GenKeyPairDlg : public QDialog, public Ui::GenKeyPairDlg
 public:
     explicit GenKeyPairDlg(QWidget *parent = nullptr);
     ~GenKeyPairDlg();
-    void setSelectedSlot( int index );
+    void setSlotIndex( int index );
+    int getSlotIndex() { return slot_index_; };
 
 private slots:
     virtual void accept();
-    void slotChanged( int index );
     void mechChanged( int nIndex );
 
     void clickPriSameLabel();
@@ -82,6 +83,9 @@ private:
     void setDefaults();
 
     int setSKI_SPKI( long hSession, int nKeyType, long hPri, long hPub );
+
+    SlotInfo slot_info_;
+    int slot_index_ = -1;
 };
 
 #endif // GEN_KEY_PAIR_DLG_H

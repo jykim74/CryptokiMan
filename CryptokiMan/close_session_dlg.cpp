@@ -16,7 +16,6 @@ CloseSessionDlg::CloseSessionDlg(QWidget *parent) :
     setupUi(this);
     setWindowTitle( "CloseSession Dialog" );
 
-    connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
     initialize();
 
 #if defined(Q_OS_MAC)
@@ -38,24 +37,23 @@ void CloseSessionDlg::setAll(bool all)
 
 void CloseSessionDlg::initialize()
 {
-    mSlotsCombo->clear();
 
-    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    for( int i=0; i < slot_infos.size(); i++ )
-    {
-        SlotInfo slotInfo = slot_infos.at(i);
-
-        mSlotsCombo->addItem( slotInfo.getDesc() );
-    }
-
-    if( slot_infos.size() > 0 ) slotChanged(0);
 }
 
-void CloseSessionDlg::setSelectedSlot(int index)
+void CloseSessionDlg::setSlotIndex(int index)
 {
+    slot_index_ = index;
+    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
+
     if( index >= 0 )
-        mSlotsCombo->setCurrentIndex(index);
+    {
+        slot_info_ = slot_infos.at(slot_index_);
+        mSlotNameText->setText( slot_info_.getDesc() );
+    }
+
+    mSlotIDText->setText( QString( "%1").arg(slot_info_.getSlotID()));
+    mSessionText->setText( QString("%1").arg(slot_info_.getSessionHandle()));
+    mLoginText->setText( slot_info_.getLogin() ? "YES" : "NO" );
 }
 
 void CloseSessionDlg::accept()
@@ -63,14 +61,12 @@ void CloseSessionDlg::accept()
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
     QString strType = "";
 
-    int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slot_info_.getSessionHandle();
 
     if( all_ )
     {
-        rv = manApplet->cryptokiAPI()->CloseAllSession( slotInfo.getSlotID() );
+        rv = manApplet->cryptokiAPI()->CloseAllSession( slot_info_.getSlotID() );
         strType = "All";
     }
     else {
@@ -91,9 +87,9 @@ void CloseSessionDlg::accept()
             }
         }
         else {
-            slotInfo.setSessionHandle(-1);
-            slotInfo.setLogin( false );
-            slot_infos.replace( index, slotInfo );
+            slot_info_.setSessionHandle(-1);
+            slot_info_.setLogin( false );
+            slot_infos.replace( slot_index_, slot_info_ );
         }
 
         manApplet->messageBox( tr("CloseSession(%1) successful").arg(strType), this );
@@ -113,14 +109,3 @@ void CloseSessionDlg::accept()
     }
 }
 
-void CloseSessionDlg::slotChanged(int index)
-{
-    if( index < 0 ) return;
-
-    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-    SlotInfo slotInfo = slot_infos.at(index);
-
-    mSlotIDText->setText( QString( "%1").arg(slotInfo.getSlotID()));
-    mSessionText->setText( QString("%1").arg(slotInfo.getSessionHandle()));
-    mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
-}

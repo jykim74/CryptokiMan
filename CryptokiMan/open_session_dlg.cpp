@@ -35,22 +35,19 @@ OpenSessionDlg::~OpenSessionDlg()
 
 void OpenSessionDlg::initialize()
 {
-    mSlotsCombo->clear();
 
-    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    for( int i=0; i < slot_infos.size(); i++ )
-    {
-        SlotInfo slotInfo = slot_infos.at(i);
-
-        mSlotsCombo->addItem( slotInfo.getDesc() );
-    }
 }
 
-void OpenSessionDlg::setSelectedSlot(int index)
+void OpenSessionDlg::setSlotIndex(int index)
 {
+    slot_index_ = index;
+    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
+
     if( index >= 0 )
-        mSlotsCombo->setCurrentIndex(index);
+    {
+        slot_info_ = slot_infos.at(slot_index_);
+        mSlotNameText->setText( slot_info_.getDesc() );
+    }
 }
 
 void OpenSessionDlg::accept()
@@ -59,8 +56,6 @@ void OpenSessionDlg::accept()
 
     int nFlags = 0;
 
-    int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.at(index);
     CK_SESSION_HANDLE hSession = 0;
 
     if( mRWCheck->isChecked() )
@@ -69,12 +64,12 @@ void OpenSessionDlg::accept()
     if( mSerialCheck->isChecked() )
         nFlags |= CKF_SERIAL_SESSION;
 
-    int rv = manApplet->cryptokiAPI()->OpenSession( slotInfo.getSlotID(), nFlags, NULL, NULL, &hSession );
+    int rv = manApplet->cryptokiAPI()->OpenSession( slot_info_.getSlotID(), nFlags, NULL, NULL, &hSession );
 
     if( rv == CKR_OK )
     {
-        slotInfo.setSessionHandle( hSession );
-        slot_infos.replace(index, slotInfo);
+        slot_info_.setSessionHandle( hSession );
+        slot_infos.replace(slot_index_, slot_info_);
 
         manApplet->messageLog( tr( "OpenSession execution successful"), this );
     }

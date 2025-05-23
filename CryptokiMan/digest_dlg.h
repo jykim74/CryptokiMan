@@ -7,6 +7,7 @@
 #define DIGEST_DLG_H
 
 #include <QDialog>
+#include "slot_info.h"
 #include "ui_digest_dlg.h"
 
 class DigestThread;
@@ -22,10 +23,11 @@ class DigestDlg : public QDialog, public Ui::DigestDlg
 public:
     explicit DigestDlg(QWidget *parent = nullptr);
     ~DigestDlg();
-    void setSelectedSlot( int index );
+
+    void setSlotIndex( int index );
+    int getSlotIndex() { return slot_index_; };
 
 private slots:
-    void slotChanged( int index );
     void changeMech( int index );
 
     void changeParam( const QString text );
@@ -67,8 +69,9 @@ private:
     DigestThread* thread_;
     int update_cnt_;
 
+    SlotInfo slot_info_;
     int slot_index_ = -1;
-    long session_ = -1;
+
     int status_type_ = -1;
 };
 

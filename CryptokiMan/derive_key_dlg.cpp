@@ -34,7 +34,6 @@ DeriveKeyDlg::DeriveKeyDlg(QWidget *parent) :
     QDialog(parent)
 {
     slot_index_ = -1;
-    session_ = -1;
 
     setupUi(this);
 
@@ -105,7 +104,7 @@ void DeriveKeyDlg::typeChanged( int index )
 void DeriveKeyDlg::clickSelectSrcKey()
 {
     HsmManDlg hsmMan;
-    hsmMan.setSelectedSlot( slot_index_ );
+    hsmMan.setSlotIndex( slot_index_ );
     hsmMan.setTitle( "Select Key" );
 
     hsmMan.setMode( HsmModeSelectDeriveKey, HsmUsageDerive );
@@ -129,33 +128,26 @@ void DeriveKeyDlg::clickSelectSrcKey()
         QString strType = listData.at(0);
         long hObj = listData.at(1).toLong();
         QString strID = listData.at(2);
-        QString strLabel = manApplet->cryptokiAPI()->getLabel( session_, hObj );
+        QString strLabel = manApplet->cryptokiAPI()->getLabel( slot_info_.getSessionHandle(), hObj );
         mSrcLabelText->setText( strLabel );
         mSrcObjectText->setText( QString("%1").arg( hObj ));
     }
 }
 
-void DeriveKeyDlg::slotChanged(int index)
+void DeriveKeyDlg::setSlotIndex(int index)
 {
-    if( index < 0 ) return;
-
     slot_index_ = index;
-
     QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-    SlotInfo slotInfo = slot_infos.at(index);
 
-    mSlotIDText->setText( QString( "%1").arg(slotInfo.getSlotID()));
-    session_ = slotInfo.getSessionHandle();
-    mSessionText->setText( QString("%1").arg(slotInfo.getSessionHandle()));
-    mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
+    if( index >= 0 )
+    {
+        slot_info_ = slot_infos.at(slot_index_);
+        mSlotNameText->setText( slot_info_.getDesc() );
+    }
 
-    mSlotsCombo->clear();
-    mSlotsCombo->addItem( slotInfo.getDesc() );
-}
-
-void DeriveKeyDlg::setSelectedSlot(int index)
-{
-    slotChanged( index );
+    mSlotIDText->setText( QString( "%1").arg(slot_info_.getSlotID()));
+    mSessionText->setText( QString("%1").arg(slot_info_.getSessionHandle()));
+    mLoginText->setText( slot_info_.getLogin() ? "YES" : "NO" );
 }
 
 void DeriveKeyDlg::initUI()
@@ -439,7 +431,7 @@ void DeriveKeyDlg::accept()
         uCount++;
     }
 
-    rv = manApplet->cryptokiAPI()->DeriveKey( session_, &sMech, hSrcKey, sTemplate, uCount, &uObj );
+    rv = manApplet->cryptokiAPI()->DeriveKey( slot_info_.getSessionHandle(), &sMech, hSrcKey, sTemplate, uCount, &uObj );
 
     JS_BIN_reset( &binLabel );
     JS_BIN_reset( &binID );

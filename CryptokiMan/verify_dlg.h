@@ -7,6 +7,7 @@
 #define VERIFY_DLG_H
 
 #include <QDialog>
+#include "slot_info.h"
 #include "ui_verify_dlg.h"
 
 class VerifyThread;
@@ -22,13 +23,14 @@ class VerifyDlg : public QDialog, public Ui::VerifyDlg
 public:
     explicit VerifyDlg(QWidget *parent = nullptr);
     ~VerifyDlg();
-    void setSelectedSlot( int index );
+
+    void setSlotIndex( int index );
+    int getSlotIndex() { return slot_index_; };
+
     void changeType( int type );
     void setObject( int type, long hObj );
 
 private slots:
-    void slotChanged( int index );
-
     int clickInit();
     void clickUpdate();
     void clickFinal();
@@ -68,8 +70,9 @@ private:
 
     void initUI();
 
-    int slot_index_;
-    long session_;
+    SlotInfo slot_info_;
+    int slot_index_ = -1;
+
     VerifyThread* thread_;
     int update_cnt_;
     int status_type_ = -1;

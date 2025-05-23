@@ -18,8 +18,7 @@ DelObjectDlg::DelObjectDlg(QWidget *parent) :
 {
     object_type_ = -1;
     object_id_ = -1;
-    slot_index_ = -1;
-    session_  = -1;
+
 
     setupUi(this);
 
@@ -46,7 +45,18 @@ DelObjectDlg::~DelObjectDlg()
 
 void DelObjectDlg::setSlotIndex( int index )
 {
-    slotChanged( index );
+    slot_index_ = index;
+    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
+
+    if( index >= 0 )
+    {
+        slot_info_ = slot_infos.at(slot_index_);
+        mSlotNameText->setText( slot_info_.getDesc() );
+    }
+
+    mSlotIDText->setText( QString( "%1").arg(slot_info_.getSlotID()));
+    mSessionText->setText( QString("%1").arg(slot_info_.getSessionHandle()));
+    mLoginText->setText( slot_info_.getLogin() ? "YES" : "NO" );
 }
 
 void DelObjectDlg::setObjectType( int type )
@@ -57,28 +67,6 @@ void DelObjectDlg::setObjectType( int type )
 void DelObjectDlg::setObjectID( long id )
 {
     object_id_ = id;
-}
-
-void DelObjectDlg::slotChanged(int index)
-{
-    if( index < 0 ) return;
-
-    slot_index_ = index;
-
-    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-    SlotInfo slotInfo;
-
-    if( slot_infos.size() <= index ) return;
-
-    slotInfo = slot_infos.at(index);
-    session_ = slotInfo.getSessionHandle();
-
-    mSlotIDText->setText( QString( "%1").arg(slotInfo.getSlotID()));
-    mSessionText->setText( QString("%1").arg(slotInfo.getSessionHandle()));
-    mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
-
-    mSlotsCombo->clear();
-    mSlotsCombo->addItem( slotInfo.getDesc() );
 }
 
 void DelObjectDlg::initialize()
@@ -112,7 +100,7 @@ void DelObjectDlg::deleteObj()
     bool bVal = manApplet->yesOrNoBox( tr( "Are you sure to delete %1 object?").arg( hObject ), this, false );
     if( bVal == false ) return;
 
-    rv = manApplet->cryptokiAPI()->DestroyObject( session_, hObject );
+    rv = manApplet->cryptokiAPI()->DestroyObject( slot_info_.getSessionHandle(), hObject );
 
     if( rv != CKR_OK )
     {
@@ -204,20 +192,20 @@ void DelObjectDlg::deleteAllObj()
     sTemplate[uCount].ulValueLen = sizeof(objClass);
     uCount++;
 
-    rv = manApplet->cryptokiAPI()->FindObjectsInit( session_, sTemplate, uCount );
+    rv = manApplet->cryptokiAPI()->FindObjectsInit( slot_info_.getSessionHandle(), sTemplate, uCount );
     if( rv != CKR_OK ) return;
 
-    rv = manApplet->cryptokiAPI()->FindObjects( session_, sObjects, uMaxObjCnt, &uObjCnt );
+    rv = manApplet->cryptokiAPI()->FindObjects( slot_info_.getSessionHandle(), sObjects, uMaxObjCnt, &uObjCnt );
     if( rv != CKR_OK ) return;
 
-    rv = manApplet->cryptokiAPI()->FindObjectsFinal( session_ );
+    rv = manApplet->cryptokiAPI()->FindObjectsFinal( slot_info_.getSessionHandle() );
     if( rv != CKR_OK ) return;
 
     mLabelCombo->clear();
 
     for( int i=0; i < uObjCnt; i++ )
     {
-        rv = manApplet->cryptokiAPI()->DestroyObject( session_, sObjects[i] );
+        rv = manApplet->cryptokiAPI()->DestroyObject( slot_info_.getSessionHandle(), sObjects[i] );
         if( rv != CKR_OK )
         {
             manApplet->elog( QString( "DestoryObject execution failure [%1]").arg( sObjects[i] ));
@@ -278,13 +266,13 @@ void DelObjectDlg::objectTypeChanged( int type )
 
     if( object_id_ < 0 )
     {
-        rv = manApplet->cryptokiAPI()->FindObjectsInit( session_, sTemplate, uCount );
+        rv = manApplet->cryptokiAPI()->FindObjectsInit( slot_info_.getSessionHandle(), sTemplate, uCount );
         if( rv != CKR_OK ) return;
 
-        rv = manApplet->cryptokiAPI()->FindObjects( session_, sObjects, uMaxObjCnt, &uObjCnt );
+        rv = manApplet->cryptokiAPI()->FindObjects( slot_info_.getSessionHandle(), sObjects, uMaxObjCnt, &uObjCnt );
         if( rv != CKR_OK ) return;
 
-        rv = manApplet->cryptokiAPI()->FindObjectsFinal( session_ );
+        rv = manApplet->cryptokiAPI()->FindObjectsFinal( slot_info_.getSessionHandle() );
         if( rv != CKR_OK ) return;
     }
     else
@@ -300,7 +288,7 @@ void DelObjectDlg::objectTypeChanged( int type )
         BIN binLabel = {0,0};
         char *pHex = NULL;
 
-        rv = manApplet->cryptokiAPI()->GetAttributeValue2( session_, sObjects[i], CKA_LABEL, &binLabel );
+        rv = manApplet->cryptokiAPI()->GetAttributeValue2( slot_info_.getSessionHandle(), sObjects[i], CKA_LABEL, &binLabel );
 
         const QVariant objVal =  QVariant( (int)sObjects[i] );
 

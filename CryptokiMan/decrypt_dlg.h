@@ -7,6 +7,7 @@
 #define DECRYPT_DLG_H
 
 #include <QDialog>
+#include "slot_info.h"
 #include "ui_decrypt_dlg.h"
 
 class DecryptThread;
@@ -22,12 +23,14 @@ class DecryptDlg : public QDialog, public Ui::DecryptDlg
 public:
     explicit DecryptDlg(QWidget *parent = nullptr);
     ~DecryptDlg();
-    void setSelectedSlot( int index );
+
+    void setSlotIndex( int index );
+    int getSlotIndex() { return slot_index_; };
+
     void setObject( int type, long hObj );
     void changeType( int type );
 
 private slots:
-    void slotChanged( int index );
     void mechChanged( int index );
 
     int clickInit();
@@ -71,8 +74,9 @@ private:
     void setMechanism( void *pMech );
     void freeMechanism( void *pMech );
 
+    SlotInfo slot_info_;
     int slot_index_ = -1;
-    long session_ = -1;
+
     DecryptThread* thread_;
     int update_cnt_;
     int status_type_ = -1;

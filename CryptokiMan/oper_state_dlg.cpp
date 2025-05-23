@@ -17,7 +17,6 @@ OperStateDlg::OperStateDlg(QWidget *parent) :
     setupUi(this);
 
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(close()));
-    connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotChanged(int)));
     connect( mGetFunctionStatusBtn, SIGNAL(clicked()), this, SLOT(clickGetFunctionStatus()));
     connect( mCancelFunctionBtn, SIGNAL(clicked()), this, SLOT(clickCancelFunction()));
     connect( mGetOperationStateBtn, SIGNAL(clicked()), this, SLOT(clickGetOperationState()));
@@ -40,45 +39,29 @@ OperStateDlg::~OperStateDlg()
 
 void OperStateDlg::initialize()
 {
-    mSlotsCombo->clear();
 
+}
+
+void OperStateDlg::setSlotIndex(int index)
+{
+    slot_index_ = index;
     QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
 
-    for( int i=0; i < slot_infos.size(); i++ )
+    if( index >= 0 )
     {
-        SlotInfo slotInfo = slot_infos.at(i);
-
-        mSlotsCombo->addItem( slotInfo.getDesc() );
+        slot_info_ = slot_infos.at(slot_index_);
+        mSlotNameText->setText( slot_info_.getDesc() );
     }
 
-    if( slot_infos.size() > 0 ) slotChanged(0);
-}
-
-void OperStateDlg::slotChanged(int index)
-{
-    if( index < 0 ) return;
-
-    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-    SlotInfo slotInfo = slot_infos.at(index);
-
-    mSlotIDText->setText( QString( "%1").arg(slotInfo.getSlotID()));
-    mSessionText->setText( QString("%1").arg(slotInfo.getSessionHandle()));
-    mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
-}
-
-void OperStateDlg::setSelectedSlot(int index)
-{
-    if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
+    mSlotIDText->setText( QString( "%1").arg(slot_info_.getSlotID()));
+    mSessionText->setText( QString("%1").arg(slot_info_.getSessionHandle()));
+    mLoginText->setText( slot_info_.getLogin() ? "YES" : "NO" );
 }
 
 void OperStateDlg::clickGetFunctionStatus()
 {
     int ret = 0;
-    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.at(index);
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slot_info_.getSessionHandle();
 
     ret = manApplet->cryptokiAPI()->GetFunctionStatus( hSession );
     if( ret != CKR_OK )
@@ -95,11 +78,8 @@ void OperStateDlg::clickGetFunctionStatus()
 void OperStateDlg::clickCancelFunction()
 {
     int ret = 0;
-    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
-    int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.at(index);
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slot_info_.getSessionHandle();
 
     ret = manApplet->cryptokiAPI()->CancelFunction( hSession );
     if( ret != CKR_OK )
@@ -116,13 +96,9 @@ void OperStateDlg::clickCancelFunction()
 void OperStateDlg::clickGetOperationState()
 {
     int ret = 0;
-    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
     int nType = 0;
 
-    int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.at(index);
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slot_info_.getSessionHandle();
 
     CK_ULONG ulOperStateLen = 0;
     CK_BYTE sOperState[1024];
@@ -144,14 +120,9 @@ void OperStateDlg::clickSetOperationState()
 {
     int ret = 0;
     BIN binOperState = {0,0};
-
-    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
     int nType = 0;
 
-    int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.at(index);
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slot_info_.getSessionHandle();
 
     CK_SESSION_HANDLE hEncKey = mEncKeyText->text().toLong();
     CK_SESSION_HANDLE hAuthKey = mAuthKeyText->text().toLong();

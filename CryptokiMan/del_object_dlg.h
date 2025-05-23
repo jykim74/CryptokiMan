@@ -7,6 +7,7 @@
 #define DEL_OBJECT_DLG_H
 
 #include <QDialog>
+#include "slot_info.h"
 #include "ui_del_object_dlg.h"
 
 namespace Ui {
@@ -21,6 +22,8 @@ public:
     explicit DelObjectDlg(QWidget *parent = nullptr);
     ~DelObjectDlg();
     void setSlotIndex( int index );
+    int getSlotIndex() { return slot_index_; };
+
     void setObjectType( int type );
     void setObjectID( long id );
 
@@ -31,7 +34,6 @@ private slots:
     void deleteObj();
     void deleteAllObj();
 
-    void slotChanged(int index);
     void labelChanged( int index );
     void objectTypeChanged( int type );
 
@@ -39,9 +41,10 @@ private:
     void initialize();
 
     int object_type_;
-    int slot_index_;
     long object_id_;
-    long session_;
+
+    SlotInfo slot_info_;
+    int slot_index_ = -1;
 };
 
 #endif // DEL_OBJECT_DLG_H

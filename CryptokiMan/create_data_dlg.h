@@ -8,6 +8,7 @@
 
 #include <QDialog>
 #include "js_bin.h"
+#include "slot_info.h"
 #include "ui_create_data_dlg.h"
 
 namespace Ui {
@@ -21,11 +22,12 @@ class CreateDataDlg : public QDialog, public Ui::CreateDataDlg
 public:
     explicit CreateDataDlg(QWidget *parent = nullptr);
     ~CreateDataDlg();
-    void setSelectedSlot( int index );
+
+    void setSlotIndex( int index );
+    int getSlotIndex() { return slot_index_; };
 
 private slots:
     virtual void accept();
-    void slotChanged( int index );
 
     void clickPrivate();
     void clickModifiable();
@@ -42,6 +44,9 @@ private:
     void connectAttributes();
     void setDefaults();
     void getOID( BIN *pOID );
+
+    SlotInfo slot_info_;
+    int slot_index_ = -1;
 };
 
 #endif // GEN_DATA_DLG_H

@@ -24,7 +24,6 @@ ImportCertDlg::ImportCertDlg(QWidget *parent) :
     setAttributes();
     connectAttributes();
 
-    connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT( slotChanged(int) ));
     initialize();
     setDefaults();
 #if defined(Q_OS_MAC)
@@ -38,38 +37,24 @@ ImportCertDlg::~ImportCertDlg()
 
 }
 
-void ImportCertDlg::slotChanged(int index)
+void ImportCertDlg::setSlotIndex(int index)
 {
-    if( index < 0 ) return;
-
+    slot_index_ = index;
     QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-    SlotInfo slotInfo = slot_infos.at(index);
 
-    mSlotIDText->setText( QString( "%1").arg(slotInfo.getSlotID()));
-    mSessionText->setText( QString("%1").arg(slotInfo.getSessionHandle()));
-    mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
-}
+    if( index >= 0 )
+    {
+        slot_info_ = slot_infos.at(slot_index_);
+        mSlotNameText->setText( slot_info_.getDesc() );
+    }
 
-void ImportCertDlg::setSelectedSlot(int index)
-{
-    if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
+    mSlotIDText->setText( QString( "%1").arg(slot_info_.getSlotID()));
+    mSessionText->setText( QString("%1").arg(slot_info_.getSessionHandle()));
+    mLoginText->setText( slot_info_.getLogin() ? "YES" : "NO" );
 }
 
 void ImportCertDlg::initialize()
 {
-    mSlotsCombo->clear();
-
-    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    for( int i=0; i < slot_infos.size(); i++ )
-    {
-        SlotInfo slotInfo = slot_infos.at(i);
-
-        mSlotsCombo->addItem( slotInfo.getDesc() );
-    }
-
-    if( slot_infos.size() > 0 ) slotChanged(0);
-
     mSubjectInCertCheck->setChecked( true );
     clickSubjectInCertCheck();
 }
@@ -134,14 +119,8 @@ void ImportCertDlg::connectAttributes()
 
 void ImportCertDlg::accept()
 {
-    int ret = 0;
-
-    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slot_info_.getSessionHandle();
 
     QString strCertPath = mCertPathText->text();
     QString strSubject;
@@ -157,7 +136,7 @@ void ImportCertDlg::accept()
     rv = JS_BIN_fileReadBER( strCertPath.toLocal8Bit().toStdString().c_str(), &binCert );
     if( rv < 0 )
     {
-        manApplet->warningBox( tr( "failed to read certificate [%1]").arg( ret ), this);
+        manApplet->warningBox( tr( "failed to read certificate [%1]").arg( rv ), this);
         return;
     }
 
@@ -168,10 +147,10 @@ void ImportCertDlg::accept()
         JCertInfo sCertInfo;
         memset( &sCertInfo, 0x00, sizeof(sCertInfo));
 
-        ret = JS_PKI_getCertSubjetDN( &binCert, &binSubject );
-        if( ret != 0 )
+        rv = JS_PKI_getCertSubjetDN( &binCert, &binSubject );
+        if( rv != 0 )
         {
-            manApplet->elog( QString( "failed to decode certificate [%1]" ).arg(ret) );
+            manApplet->elog( QString( "failed to decode certificate [%1]" ).arg(rv) );
             JS_BIN_reset( &binCert );
             return;
         }
@@ -330,7 +309,7 @@ void ImportCertDlg::accept()
     }
 
     manApplet->messageBox(tr("CreationObject execution successful"), this );
-    manApplet->showTypeList( index, HM_ITEM_TYPE_CERTIFICATE );
+    manApplet->showTypeList( slot_index_, HM_ITEM_TYPE_CERTIFICATE );
 
     QDialog::accept();
 }

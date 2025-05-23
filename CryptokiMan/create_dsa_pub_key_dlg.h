@@ -7,6 +7,7 @@
 #define GEN_DSA_PUB_KEY_DLG_H
 
 #include <QDialog>
+#include "slot_info.h"
 #include "ui_create_dsa_pub_key_dlg.h"
 #include "js_bin.h"
 
@@ -21,11 +22,12 @@ class CreateDSAPubKeyDlg : public QDialog, public Ui::CreateDSAPubKeyDlg
 public:
     explicit CreateDSAPubKeyDlg(QWidget *parent = nullptr);
     ~CreateDSAPubKeyDlg();
-    void setSelectedSlot( int index );
+
+    void setSlotIndex( int index );
+    int getSlotIndex() { return slot_index_; };
 
 private slots:
     virtual void accept();
-    void slotChanged( int index );
 
     void clickGenKey();
     void clickFindKey();
@@ -57,6 +59,9 @@ private:
 
     void setDefaults();
     int getSKI( BIN *pSKI );
+
+    SlotInfo slot_info_;
+    int slot_index_ = -1;
 };
 
 #endif // GEN_EC_PUB_KEY_DLG_H

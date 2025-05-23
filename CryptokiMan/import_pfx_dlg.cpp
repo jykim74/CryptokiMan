@@ -28,7 +28,6 @@ ImportPFXDlg::ImportPFXDlg(QWidget *parent) :
     setAttributes();
     connectAttributes();
 
-    connect( mSlotsCombo, SIGNAL(currentIndexChanged(int)), this, SLOT( slotChanged(int) ));
     initialize();
     setDefaults();
 
@@ -56,25 +55,25 @@ ImportPFXDlg::~ImportPFXDlg()
     JS_BIN_reset( &spki_ );
 }
 
-void ImportPFXDlg::setSelectedSlot(int index)
+void ImportPFXDlg::setSlotIndex(int index)
 {
-    if( index >= 0 ) mSlotsCombo->setCurrentIndex(index);
+    slot_index_ = index;
+    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
+
+    if( index >= 0 )
+    {
+        slot_info_ = slot_infos.at(slot_index_);
+        mSlotNameText->setText( slot_info_.getDesc() );
+    }
+
+    mSlotIDText->setText( QString( "%1").arg(slot_info_.getSlotID()));
+    mSessionText->setText( QString("%1").arg(slot_info_.getSessionHandle()));
+    mLoginText->setText( slot_info_.getLogin() ? "YES" : "NO" );
 }
 
 void ImportPFXDlg::initialize()
 {
-    mSlotsCombo->clear();
 
-    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    for( int i=0; i < slot_infos.size(); i++ )
-    {
-        SlotInfo slotInfo = slot_infos.at(i);
-
-        mSlotsCombo->addItem( slotInfo.getDesc() );
-    }
-
-    if( slot_infos.size() > 0 ) slotChanged(0);
 }
 
 void ImportPFXDlg::initAttributes()
@@ -279,10 +278,6 @@ void ImportPFXDlg::connectAttributes()
 
 void ImportPFXDlg::accept()
 {
-    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
     int key_type = -1;
 
@@ -419,7 +414,7 @@ end :
     if( rv == 0 )
     {
         manApplet->messageBox(tr("PFX import successful"), this );
-        manApplet->showTypeList( index, HM_ITEM_TYPE_PRIVATEKEY );
+        manApplet->showTypeList( slot_index_, HM_ITEM_TYPE_PRIVATEKEY );
         QDialog::accept();
     }
     else
@@ -427,18 +422,6 @@ end :
         manApplet->warningBox( tr("PFX import failed [%1]").arg(rv), this );
         QDialog::reject();
     }
-}
-
-void ImportPFXDlg::slotChanged(int index)
-{
-    if( index < 0 ) return;
-
-    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-    SlotInfo slotInfo = slot_infos.at(index);
-
-    mSlotIDText->setText( QString( "%1").arg(slotInfo.getSlotID()));
-    mSessionText->setText( QString("%1").arg(slotInfo.getSessionHandle()));
-    mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
 }
 
 void ImportPFXDlg::clickPriSameLabel()
@@ -934,12 +917,8 @@ void ImportPFXDlg::setPriBoolTemplate( CK_ATTRIBUTE sTemplate[], CK_ULONG& uCoun
 
 int ImportPFXDlg::createCert( BIN *pCert )
 {
-    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slot_info_.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[20];
     CK_ULONG uCount = 0;
@@ -1135,12 +1114,8 @@ int ImportPFXDlg::createCert( BIN *pCert )
 
 int ImportPFXDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
 {
-    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slot_info_.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[20];
     CK_ULONG uCount = 0;
@@ -1359,12 +1334,8 @@ int ImportPFXDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
 
 int ImportPFXDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
 {
-    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slot_info_.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[20];
     CK_ULONG uCount = 0;
@@ -1692,12 +1663,8 @@ int ImportPFXDlg::createRSAPrivateKey( JRSAKeyVal *pRsaKeyVal )
 
 int ImportPFXDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
 {
-    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slot_info_.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[20];
     CK_ULONG uCount = 0;
@@ -1933,12 +1900,8 @@ int ImportPFXDlg::createECPublicKey( JECKeyVal *pEcKeyVal )
 
 int ImportPFXDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
 {
-    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slot_info_.getSessionHandle();
 
 
     CK_ATTRIBUTE sTemplate[20];
@@ -2196,12 +2159,8 @@ int ImportPFXDlg::createECPrivateKey( JECKeyVal *pEcKeyVal )
 
 int ImportPFXDlg::createEDPublicKey( JRawKeyVal *pRawKeyVal )
 {
-    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slot_info_.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[20];
     CK_ULONG uCount = 0;
@@ -2325,12 +2284,8 @@ int ImportPFXDlg::createEDPublicKey( JRawKeyVal *pRawKeyVal )
 
 int ImportPFXDlg::createEDPrivateKey( JRawKeyVal *pRawKeyVal )
 {
-    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slot_info_.getSessionHandle();
 
 
     CK_ATTRIBUTE sTemplate[20];
@@ -2465,12 +2420,8 @@ int ImportPFXDlg::createEDPrivateKey( JRawKeyVal *pRawKeyVal )
 
 int ImportPFXDlg::createDSAPublicKey( JDSAKeyVal *pDSAKeyVal )
 {
-    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slot_info_.getSessionHandle();
 
     CK_ATTRIBUTE sTemplate[20];
     CK_ULONG uCount = 0;
@@ -2705,12 +2656,8 @@ int ImportPFXDlg::createDSAPublicKey( JDSAKeyVal *pDSAKeyVal )
 
 int ImportPFXDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
 {
-    QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
-
-    int index = mSlotsCombo->currentIndex();
-    SlotInfo slotInfo = slot_infos.at(index);
     int rv = -1;
-    CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
+    CK_SESSION_HANDLE hSession = slot_info_.getSessionHandle();
 
 
     CK_ATTRIBUTE sTemplate[20];

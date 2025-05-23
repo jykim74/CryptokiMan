@@ -2,6 +2,7 @@
 #define MAKE_CSR_DLG_H
 
 #include <QDialog>
+#include "slot_info.h"
 #include "ui_make_csr_dlg.h"
 #include "js_pkcs11.h"
 #include "js_bin.h"
@@ -18,7 +19,8 @@ public:
     explicit MakeCSRDlg(QWidget *parent = nullptr);
     ~MakeCSRDlg();
 
-    void setSelectedSlot( int index );
+    void setSlotIndex( int index );
+    int getSlotIndex() { return slot_index_; };
 
     void setPriObject( CK_OBJECT_HANDLE hPriObj );
     void setSession( CK_SESSION_HANDLE hSession );
@@ -27,8 +29,6 @@ public:
     const QString getCSRHex();
 
 private slots:
-    void slotChanged( int index );
-
     void clickOK();
     void clickClear();
 
@@ -44,9 +44,10 @@ private:
     void initialize();
 
 
-    int slot_index_;
+    SlotInfo slot_info_;
+    int slot_index_ = -1;
+
     BIN csr_;
-    CK_SESSION_HANDLE session_;
 };
 
 #endif // MAKE_CSR_DLG_H

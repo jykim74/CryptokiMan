@@ -7,6 +7,7 @@
 #define GEN_DSA_PRI_KEY_DLG_H
 
 #include <QDialog>
+#include "slot_info.h"
 #include "ui_create_dsa_pri_key_dlg.h"
 #include "js_bin.h"
 
@@ -21,11 +22,12 @@ class CreateDSAPriKeyDlg : public QDialog, public Ui::CreateDSAPriKeyDlg
 public:
     explicit CreateDSAPriKeyDlg(QWidget *parent = nullptr);
     ~CreateDSAPriKeyDlg();
-    void setSelectedSlot( int index );
+
+    void setSlotIndex( int index );
+    int getSlotIndex() { return slot_index_; };
 
 private slots:
     virtual void accept();
-    void slotChanged( int index );
 
     void clickGenKey();
     void clickFindKey();
@@ -60,6 +62,9 @@ private:
 
     void setDefaults();
     int getSKI_SPKI( BIN *pSKI, BIN *pSPKI );
+
+    SlotInfo slot_info_;
+    int slot_index_ = -1;
 };
 
 #endif // GEN_EC_PRI_KEY_DLG_H

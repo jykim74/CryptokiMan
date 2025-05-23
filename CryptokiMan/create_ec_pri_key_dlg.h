@@ -7,6 +7,7 @@
 #define GEN_EC_PRI_KEY_DLG_H
 
 #include <QDialog>
+#include "slot_info.h"
 #include "ui_create_ec_pri_key_dlg.h"
 #include "js_bin.h"
 
@@ -21,11 +22,12 @@ class CreateECPriKeyDlg : public QDialog, public Ui::CreateECPriKeyDlg
 public:
     explicit CreateECPriKeyDlg(bool bED = false, QWidget *parent = nullptr);
     ~CreateECPriKeyDlg();
-    void setSelectedSlot( int index );
+
+    void setSlotIndex( int index );
+    int getSlotIndex() { return slot_index_; };
 
 private slots:
     virtual void accept();
-    void slotChanged( int index );
 
     void clickGenKey();
     void clickFindKey();
@@ -60,6 +62,9 @@ private:
     int getSKI_SPKI( BIN *pSKI, BIN *pSPKI );
 
     bool is_ed_;
+
+    SlotInfo slot_info_;
+    int slot_index_ = -1;
 };
 
 #endif // GEN_EC_PRI_KEY_DLG_H
