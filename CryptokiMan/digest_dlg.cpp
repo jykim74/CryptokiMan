@@ -92,6 +92,7 @@ void DigestDlg::initUI()
     connect( mFindSrcFileBtn, SIGNAL(clicked()), this, SLOT(clickFindSrcFile()));
 
     mKeyLabelText->setPlaceholderText( tr( "Select a key from HSM Man" ));
+    mParamText->setPlaceholderText( tr( "Hex value" ));
 
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);

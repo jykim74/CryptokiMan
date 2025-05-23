@@ -17,14 +17,13 @@ TypeNameDlg::TypeNameDlg(QWidget *parent)
     setupUi(this);
 
     connect( mClearBtn, SIGNAL(clicked()), this, SLOT(clickClear()));
-    connect( mSearchBtn, SIGNAL(clicked()), this, SLOT(clickSearch()));
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(close()));
+    connect( mSearchText, SIGNAL(textChanged(QString)), this, SLOT(clickSearch()));
 
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);
 #endif
     initialize();
-    mSearchBtn->setDefault(true);
 
     resize(minimumSizeHint().width(), minimumSizeHint().height());
 }
@@ -73,7 +72,10 @@ void TypeNameDlg::clickSearch()
 
     if( strSearch.length() < 1 )
     {
-        manApplet->warningBox( tr( "Enter a search word"), this );
+//        manApplet->warningBox( tr( "Enter a search word"), this );
+        mDecimalText->clear();
+        mHexText->clear();
+        mNameText->clear();
         mSearchText->setFocus();
         return;
     }
@@ -124,7 +126,10 @@ void TypeNameDlg::clickSearch()
 
         if( strValue.length() < 3 )
         {
-            manApplet->warningBox( tr( "There is no defined value." ), this );
+//            manApplet->warningBox( tr( "There is no defined value." ), this );
+            mDecimalText->clear();
+            mHexText->clear();
+            mNameText->clear();
             mSearchText->setFocus();
             return;
         }
@@ -132,7 +137,10 @@ void TypeNameDlg::clickSearch()
         QString strFirst = strValue.left(2);
         if( strFirst != "CK" )
         {
-            manApplet->warningBox( tr( "There is no defined value." ), this );
+//            manApplet->warningBox( tr( "There is no defined value." ), this );
+            mDecimalText->clear();
+            mHexText->clear();
+            mNameText->clear();
             mSearchText->setFocus();
             return;
         }
@@ -171,7 +179,10 @@ void TypeNameDlg::clickSearch()
 
         if( uValue < 0 )
         {
-            manApplet->warningBox( tr( "There is no defined value." ), this );
+//            manApplet->warningBox( tr( "There is no defined value." ), this );
+            mDecimalText->clear();
+            mHexText->clear();
+            mNameText->clear();
             mSearchText->setFocus();
             return;
         }

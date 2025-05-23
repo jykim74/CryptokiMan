@@ -30,6 +30,9 @@
    </item>
    <item>
     <layout class="QGridLayout" name="gridLayout_3">
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="mSearchText"/>
+     </item>
      <item row="0" column="0">
       <widget class="QComboBox" name="mTypeCombo">
        <property name="minimumSize">
@@ -37,16 +40,6 @@
          <width>80</width>
          <height>0</height>
         </size>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="mSearchText"/>
-     </item>
-     <item row="0" column="2">
-      <widget class="QPushButton" name="mSearchBtn">
-       <property name="text">
-        <string>Search</string>
        </property>
       </widget>
      </item>
@@ -241,7 +234,6 @@
  <tabstops>
   <tabstop>mTypeCombo</tabstop>
   <tabstop>mSearchText</tabstop>
-  <tabstop>mSearchBtn</tabstop>
   <tabstop>mDecimalText</tabstop>
   <tabstop>mHexText</tabstop>
   <tabstop>mNameText</tabstop>

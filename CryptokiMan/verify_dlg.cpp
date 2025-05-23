@@ -114,6 +114,7 @@ void VerifyDlg::initUI()
     mVerifyBtn->setDefault(true);
 
     mLabelText->setPlaceholderText( tr( "Select a key from HSM Man" ));
+    mParamText->setPlaceholderText( tr( "Hex value" ));
 
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);
