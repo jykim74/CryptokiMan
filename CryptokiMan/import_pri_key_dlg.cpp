@@ -71,6 +71,8 @@ void ImportPriKeyDlg::initialize()
 {
     checkPubImport();
     checkEncPriKey();
+
+    mPathText->setPlaceholderText( tr( "Find a private key" ));
 }
 
 void ImportPriKeyDlg::initAttributes()

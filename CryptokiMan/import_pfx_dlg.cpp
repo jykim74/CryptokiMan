@@ -73,7 +73,7 @@ void ImportPFXDlg::setSlotIndex(int index)
 
 void ImportPFXDlg::initialize()
 {
-
+    mPFXPathText->setPlaceholderText( tr( "Find a PFX" ));
 }
 
 void ImportPFXDlg::initAttributes()

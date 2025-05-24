@@ -57,6 +57,8 @@ void ImportCertDlg::initialize()
 {
     mSubjectInCertCheck->setChecked( true );
     clickSubjectInCertCheck();
+
+    mCertPathText->setPlaceholderText(tr("Find a certificate"));
 }
 
 void ImportCertDlg::initAttributes()
