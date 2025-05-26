@@ -19,12 +19,14 @@ TypeNameDlg::TypeNameDlg(QWidget *parent)
     connect( mClearBtn, SIGNAL(clicked()), this, SLOT(clickClear()));
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(close()));
     connect( mSearchText, SIGNAL(textChanged(QString)), this, SLOT(clickSearch()));
+    connect( mTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(clickSearch()));
 
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);
 #endif
     initialize();
 
+    mSearchText->setFocus();
     resize(minimumSizeHint().width(), minimumSizeHint().height());
 }
 
@@ -51,6 +53,9 @@ int TypeNameDlg::getType( const QString strInput )
 void TypeNameDlg::initialize()
 {
     mTypeCombo->addItems( kTypeList );
+    QRegExp regExp("^[0-9a-fA-FxX]*$" );
+    QRegExpValidator* regVal = new QRegExpValidator( regExp );
+    mSearchText->setValidator( regVal );
 }
 
 void TypeNameDlg::clickClear()
@@ -86,7 +91,7 @@ void TypeNameDlg::clickSearch()
     {
         if( isValidNumFormat( strSearch, 10 ) == false )
         {
-            manApplet->warningBox( tr( "Invalid word" ), this );
+//            manApplet->warningBox( tr( "Invalid word" ), this );
             mSearchText->setFocus();
             return;
         }
@@ -99,7 +104,7 @@ void TypeNameDlg::clickSearch()
 
         if( isValidNumFormat( strValue, 16 ) == false )
         {
-            manApplet->warningBox( tr( "Invalid word" ), this );
+//            manApplet->warningBox( tr( "Invalid word" ), this );
             mSearchText->setFocus();
             return;
         }

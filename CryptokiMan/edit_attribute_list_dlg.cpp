@@ -20,7 +20,6 @@ EditAttributeListDlg::EditAttributeListDlg(QWidget *parent) :
     slot_index_ = -1;
     object_type_ = -1;
     object_id_ = -1;
-    session_ = -1;
 
     setupUi(this);
 
@@ -155,13 +154,13 @@ void EditAttributeListDlg::objectTypeChanged( int type )
 
     if( object_id_ < 0 )
     {
-        rv = manApplet->cryptokiAPI()->FindObjectsInit( session_, sTemplate, uCount );
+        rv = manApplet->cryptokiAPI()->FindObjectsInit( slot_info_.getSessionHandle(), sTemplate, uCount );
         if( rv != CKR_OK ) return;
 
-        rv = manApplet->cryptokiAPI()->FindObjects( session_, sObjects, uMaxObjCnt, &uObjCnt );
+        rv = manApplet->cryptokiAPI()->FindObjects( slot_info_.getSessionHandle(), sObjects, uMaxObjCnt, &uObjCnt );
         if( rv != CKR_OK ) return;
 
-        rv = manApplet->cryptokiAPI()->FindObjectsFinal( session_ );
+        rv = manApplet->cryptokiAPI()->FindObjectsFinal( slot_info_.getSessionHandle() );
         if( rv != CKR_OK ) return;
     }
     else
@@ -177,7 +176,7 @@ void EditAttributeListDlg::objectTypeChanged( int type )
         BIN binLabel = {0,0};
         char *pHex = NULL;
 
-        manApplet->cryptokiAPI()->GetAttributeValue2( session_, sObjects[i], CKA_LABEL, &binLabel );
+        manApplet->cryptokiAPI()->GetAttributeValue2( slot_info_.getSessionHandle(), sObjects[i], CKA_LABEL, &binLabel );
 
         const QVariant objVal =  QVariant( (int)sObjects[i] );
 

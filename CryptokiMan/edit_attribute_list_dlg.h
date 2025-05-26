@@ -86,7 +86,6 @@ private:
 
     int object_type_;
     long object_id_;
-    long session_;
 };
 
 #endif // EDIT_ATTRIBUTE_LIST_DLG_H
