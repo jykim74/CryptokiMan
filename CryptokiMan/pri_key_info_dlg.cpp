@@ -82,6 +82,11 @@ PriKeyInfoDlg::~PriKeyInfoDlg()
     JS_BIN_reset( &pub_key_ );
 }
 
+void PriKeyInfoDlg::setInfo( const QString strInfo )
+{
+    mInfoLabel->setText( strInfo );
+}
+
 void PriKeyInfoDlg::initialize()
 {
     mKeyTab->setTabEnabled(0, false);

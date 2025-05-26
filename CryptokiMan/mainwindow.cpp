@@ -1950,6 +1950,8 @@ void MainWindow::viewPriKey()
     QTableWidgetItem* item1 = right_table_->item( row, 1 );
 
     PriKeyInfoDlg priKeyInfo;
+    priKeyInfo.setInfo( QString( "[%1:%2]" ).arg( item0->text() ).arg( item1->text() ));
+
 #if 0
     ret = getPrivateKey( manApplet->cryptokiAPI(), hSession, item1->text().toLong(), &binPriKey );
     if( ret !=  0 )
@@ -1985,6 +1987,7 @@ void MainWindow::viewPubKkey()
     QTableWidgetItem* item1 = right_table_->item( row, 1 );
 
     PriKeyInfoDlg priKeyInfo;
+    priKeyInfo.setInfo( QString( "[%1:%2]" ).arg( item0->text() ).arg( item1->text() ));
 #if 0
     ret = getPublicKey( manApplet->cryptokiAPI(), hSession, item1->text().toLong(), &binPubKey );
     if( ret !=  0 )
@@ -2225,6 +2228,7 @@ void MainWindow::makeCSREach()
 
     MakeCSRDlg makeCSR;
     makeCSR.setSlotIndex( nSlot );
+
     makeCSR.setPriObject( item1->text().toLong());
     if( makeCSR.exec() == QDialog::Accepted )
     {

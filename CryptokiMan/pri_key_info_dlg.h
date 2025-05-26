@@ -23,6 +23,8 @@ public:
     explicit PriKeyInfoDlg(QWidget *parent = nullptr);
     ~PriKeyInfoDlg();
 
+    void setInfo( const QString strInfo );
+
     void setPrivateKey( const BIN *pPriKey );
     void setPublicKey( const BIN *pPubKey );
 

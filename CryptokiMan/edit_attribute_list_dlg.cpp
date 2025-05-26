@@ -195,7 +195,7 @@ void EditAttributeListDlg::objectTypeChanged( int type )
 
 void EditAttributeListDlg::changeLabel( const QString& text )
 {
-    QString strLen = getDataLenString( DATA_HEX, text );
+    QString strLen = getDataLenString( DATA_STRING, text );
     mLabelLenText->setText( QString("%1").arg( strLen ));
 }
 
@@ -207,7 +207,7 @@ void EditAttributeListDlg::changeID( const QString& text )
 
 void EditAttributeListDlg::changeApplication( const QString& text )
 {
-    QString strLen = getDataLenString( DATA_HEX, text );
+    QString strLen = getDataLenString( DATA_STRING, text );
     mApplicationLenText->setText( QString("%1").arg( strLen ));
 }
 
@@ -764,7 +764,21 @@ void EditAttributeListDlg::clickGetAttribute()
     {
         if( sTemplate[i].type == CKA_LABEL )
         {
-            mLabelText->setText( QString("%1").arg(getHexString( (unsigned char *)sTemplate[i].pValue, sTemplate[i].ulValueLen)));
+            char *pLabel = NULL;
+
+            BIN binLabel = {0,0};
+            JS_BIN_set( &binLabel, (unsigned char *)sTemplate[i].pValue, sTemplate[i].ulValueLen );
+            JS_BIN_string( &binLabel, &pLabel );
+
+            if( pLabel )
+            {
+                mLabelText->setText( QString("%1").arg( pLabel ));
+                JS_free( pLabel );
+            }
+            else
+                mLabelText->clear();
+
+            JS_BIN_reset( &binLabel );
         }
         else if( sTemplate[i].type == CKA_ID )
         {
@@ -772,7 +786,21 @@ void EditAttributeListDlg::clickGetAttribute()
         }
         else if( sTemplate[i].type == CKA_APPLICATION )
         {
-            mApplicationText->setText( QString("%1").arg(getHexString( (unsigned char *)sTemplate[i].pValue, sTemplate[i].ulValueLen)));
+            char *pApp = NULL;
+
+            BIN binApp = {0,0};
+            JS_BIN_set( &binApp, (unsigned char *)sTemplate[i].pValue, sTemplate[i].ulValueLen );
+            JS_BIN_string( &binApp, &pApp );
+
+            if( pApp )
+            {
+                mApplicationText->setText( QString("%1").arg( pApp ));
+                JS_free( pApp );
+            }
+            else
+                mApplicationText->clear();
+
+            JS_BIN_reset( &binApp );
         }
         else if( sTemplate[i].type == CKA_OBJECT_ID )
         {
@@ -976,7 +1004,7 @@ void EditAttributeListDlg::clickSetAttribute()
 
     if( mLabelCheck->isChecked() )
     {
-        JS_BIN_decodeHex( strLabel.toStdString().c_str(), &binLabel );
+        JS_BIN_set( &binLabel, (unsigned char *)strLabel.toStdString().c_str(), strLabel.toUtf8().length() );
 
         sTemplate[uCount].type = CKA_LABEL;
         sTemplate[uCount].pValue = binLabel.pVal;
@@ -996,7 +1024,7 @@ void EditAttributeListDlg::clickSetAttribute()
 
     if( mApplicationCheck->isChecked() )
     {
-        JS_BIN_decodeHex( strApplication.toStdString().c_str(), &binApplication );
+        JS_BIN_set( &binApplication, (unsigned char *)strApplication.toStdString().c_str(), strApplication.toUtf8().length() );
 
         sTemplate[uCount].type = CKA_APPLICATION;
         sTemplate[uCount].pValue = binApplication.pVal;
