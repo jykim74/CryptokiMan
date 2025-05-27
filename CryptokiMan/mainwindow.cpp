@@ -165,6 +165,7 @@ void MainWindow::initialize()
 
     right_table_->setSelectionBehavior(QAbstractItemView::SelectRows);
     right_table_->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    right_table_->horizontalHeader()->setHighlightSections(false);
 
     hsplitter_->setStretchFactor(1,2);
     setCentralWidget(hsplitter_);
