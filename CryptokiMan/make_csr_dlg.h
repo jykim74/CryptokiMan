@@ -31,6 +31,7 @@ public:
 private slots:
     void clickOK();
     void clickClear();
+    void changeDN();
 
     void changePriLabel( int index );
     void changePubLabel( int index );
