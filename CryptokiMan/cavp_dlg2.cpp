@@ -1018,9 +1018,8 @@ void CAVPDlg::clickRSARun()
 void CAVPDlg::clickSymFind()
 {
     QString strRspPath = mSymReqPathText->text();
-    strRspPath = manApplet->curPath( strRspPath );
 
-    QString strFileName = findFile( this, JS_FILE_TYPE_TXT, strRspPath );
+    QString strFileName = manApplet->findFile( this, JS_FILE_TYPE_TXT, strRspPath );
     if( strFileName.length() > 0 )
     {
         mSymReqPathText->setText( strFileName );
@@ -1030,9 +1029,8 @@ void CAVPDlg::clickSymFind()
 void CAVPDlg::clickAEFind()
 {
     QString strRspPath = mAEReqPathText->text();
-    strRspPath = manApplet->curPath( strRspPath );
 
-    QString strFileName = findFile( this, JS_FILE_TYPE_TXT, strRspPath );
+    QString strFileName = manApplet->findFile( this, JS_FILE_TYPE_TXT, strRspPath );
     if( strFileName.length() > 0 )
     {
         mAEReqPathText->setText( strFileName );
@@ -1042,9 +1040,8 @@ void CAVPDlg::clickAEFind()
 void CAVPDlg::clickHashFind()
 {
     QString strRspPath = mHashReqPathText->text();
-    strRspPath = manApplet->curPath( strRspPath );
 
-    QString strFileName = findFile( this, JS_FILE_TYPE_TXT, strRspPath );
+    QString strFileName = manApplet->findFile( this, JS_FILE_TYPE_TXT, strRspPath );
     if( strFileName.length() > 0 )
     {
         mHashReqPathText->setText( strFileName );
@@ -1054,9 +1051,8 @@ void CAVPDlg::clickHashFind()
 void CAVPDlg::clickMACFind()
 {
     QString strRspPath = mMACReqPathText->text();
-    strRspPath = manApplet->curPath( strRspPath );
 
-    QString strFileName = findFile( this, JS_FILE_TYPE_TXT, strRspPath );
+    QString strFileName = manApplet->findFile( this, JS_FILE_TYPE_TXT, strRspPath );
     if( strFileName.length() > 0 )
     {
         mMACReqPathText->setText( strFileName );
@@ -1066,9 +1062,8 @@ void CAVPDlg::clickMACFind()
 void CAVPDlg::clickECCFind()
 {
     QString strRspPath = mECCReqPathText->text();
-    strRspPath = manApplet->curPath( strRspPath );
 
-    QString strFileName = findFile( this, JS_FILE_TYPE_TXT, strRspPath );
+    QString strFileName = manApplet->findFile( this, JS_FILE_TYPE_TXT, strRspPath );
     if( strFileName.length() > 0 )
     {
         mECCReqPathText->setText( strFileName );
@@ -1078,9 +1073,8 @@ void CAVPDlg::clickECCFind()
 void CAVPDlg::clickRSAFind()
 {
     QString strRspPath = mRSAReqPathText->text();
-    strRspPath = manApplet->curPath( strRspPath );
 
-    QString strFileName = findFile( this, JS_FILE_TYPE_TXT, strRspPath );
+    QString strFileName = manApplet->findFile( this, JS_FILE_TYPE_TXT, strRspPath );
     if( strFileName.length() > 0 )
     {
         mRSAReqPathText->setText( strFileName );
@@ -1090,9 +1084,8 @@ void CAVPDlg::clickRSAFind()
 void CAVPDlg::clickRSA_DETPriKeyFind()
 {
     QString strRspPath = mRSA_DETPriKeyPathText->text();
-    strRspPath = manApplet->curPath( strRspPath );
 
-    QString strFileName = findFile( this, JS_FILE_TYPE_PRIKEY, strRspPath );
+    QString strFileName = manApplet->findFile( this, JS_FILE_TYPE_PRIKEY, strRspPath );
     if( strFileName.length() > 0 )
     {
         mRSA_DETPriKeyPathText->setText( strFileName );

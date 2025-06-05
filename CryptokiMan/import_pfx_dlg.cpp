@@ -651,8 +651,8 @@ void ImportPFXDlg::clickCertEndDate()
 
 void ImportPFXDlg::clickFind()
 {
-    QString strPath = manApplet->curFilePath();
-    QString fileName = findFile( this, JS_FILE_TYPE_PFX, strPath );
+    QString strPath;
+    QString fileName = manApplet->findFile( this, JS_FILE_TYPE_PFX, strPath );
     if( fileName.isEmpty() ) return;
 
     mPFXPathText->setText( fileName );

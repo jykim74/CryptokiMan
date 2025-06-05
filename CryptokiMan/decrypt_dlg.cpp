@@ -456,9 +456,8 @@ void DecryptDlg::clickOutputClear()
 void DecryptDlg::clickFindSrcFile()
 {
     QString strPath = mSrcFileText->text();
-    strPath = manApplet->curFilePath( strPath );
 
-    QString strSrcFile = findFile( this, JS_FILE_TYPE_ALL, strPath );
+    QString strSrcFile = manApplet->findFile( this, JS_FILE_TYPE_ALL, strPath );
 
     if( strSrcFile.length() > 0 )
     {
@@ -490,9 +489,8 @@ void DecryptDlg::clickFindDstFile()
 {
     int nType = JS_FILE_TYPE_BIN;
     QString strPath = mDstFileText->text();
-    strPath = manApplet->curFilePath( strPath );
 
-    QString fileName = findSaveFile( this, nType, strPath );
+    QString fileName = manApplet->findSaveFile( this, nType, strPath );
 
     if( fileName.length() > 0 ) mDstFileText->setText( fileName );
 }

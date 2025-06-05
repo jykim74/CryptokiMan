@@ -537,8 +537,8 @@ void CreateRSAPriKeyDlg::clickFindKey()
     int nKeyType = -1;
     BIN binPri = {0,0};
     JRSAKeyVal  sRSAKey;
-    QString strPath = manApplet->curFilePath();
-    QString fileName = findFile( this, JS_FILE_TYPE_BER, strPath );
+    QString strPath;
+    QString fileName = manApplet->findFile( this, JS_FILE_TYPE_BER, strPath );
     if( fileName.length() < 1 ) return;
 
     memset( &sRSAKey, 0x00, sizeof(sRSAKey ));

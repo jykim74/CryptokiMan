@@ -590,8 +590,8 @@ void ImportPriKeyDlg::clickPubEndDate()
 
 void ImportPriKeyDlg::clickFind()
 {
-    QString strPath = manApplet->curPath();
-    QString fileName = findFile( this, JS_FILE_TYPE_PRIKEY, strPath );
+    QString strPath;
+    QString fileName = manApplet->findFile( this, JS_FILE_TYPE_PRIKEY, strPath );
     if( fileName.isEmpty() ) return;
 
     mPathText->setText( fileName );

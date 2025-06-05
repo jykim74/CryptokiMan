@@ -151,11 +151,7 @@ static const int kHelpDefault = ACT_HELP_CLEAR_LOG | ACT_HELP_HALT_LOG | ACT_HEL
 
 const QString GetSystemID();
 
-QString findFile( QWidget *parent, int nType, const QString strPath );
-QString findFile( QWidget *parent, int nType, const QString strPath, QString& strSelected );
-QString findSaveFile( QWidget *parent, int nType, const QString strPath );
-QString findSaveFile( QWidget *parent, const QString strFilter, const QString strPath );
-QString findFolder( QWidget *parent, const QString strPath );
+
 
 void getQDateToCKDate( const QDate date, CK_DATE *pCKDate );
 void getCKDateToQDate( const CK_DATE *pCKDate, QDate *pQDate );

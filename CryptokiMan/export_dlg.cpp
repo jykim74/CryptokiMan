@@ -270,13 +270,12 @@ void ExportDlg::clickOK()
 
 void ExportDlg::clickFindFilename()
 {
-    QString strPath = manApplet->curFilePath( mFilenameText->text() );
+    QString strPath = mFilenameText->text();
 
     QString strFilter = mFormatCombo->currentText();
-    QString strFilename = findSaveFile( this, strFilter, strPath );
+    QString strFilename = manApplet->findSaveFile( this, strFilter, strPath );
     if( strFilename.length() < 1 ) return;
 
-    manApplet->curFilePath( strFilename );
     mFilenameText->setText( strFilename );
 }
 

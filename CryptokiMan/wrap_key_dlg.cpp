@@ -223,7 +223,7 @@ void WrapKeyDlg::clickSaveFile()
 {
     BIN binOut = {0,0};
     QString strOutput = mOutputText->toPlainText();
-    QString strPath = manApplet->curFilePath();
+    QString strPath;
 
     if( strOutput.length() < 1 )
     {
@@ -233,7 +233,7 @@ void WrapKeyDlg::clickSaveFile()
 
     getBINFromString( &binOut, DATA_HEX, strOutput );
 
-    QString fileName = findSaveFile( this, JS_FILE_TYPE_BIN, strPath );
+    QString fileName = manApplet->findSaveFile( this, JS_FILE_TYPE_BIN, strPath );
     if( fileName.isEmpty() )
     {
         JS_BIN_reset( &binOut );

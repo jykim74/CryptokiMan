@@ -489,9 +489,8 @@ void CAVPDlg::setSlotIndex(int index)
 void CAVPDlg::clickFindRsp()
 {
     QString strRspPath = mRspPathText->text();
-    if( strRspPath.length() < 1 ) strRspPath = manApplet->curPath();
 
-    QString strFolderName = findFolder( this, strRspPath );
+    QString strFolderName = manApplet->findFolder( this, strRspPath );
     if( strFolderName.length() > 0 )
     {
         mRspPathText->setText( strFolderName );
@@ -553,9 +552,8 @@ bool CAVPDlg::checkValidMech( int nCKM_ID )
 void CAVPDlg::clickACVPFindJson()
 {
     QString strRspPath = mACVP_ReqPathText->text();
-    if( strRspPath.length() < 1 ) strRspPath = manApplet->curPath();
 
-    QString strFileName = findFile( this, JS_FILE_TYPE_JSON, strRspPath );
+    QString strFileName = manApplet->findFile( this, JS_FILE_TYPE_JSON, strRspPath );
     if( strFileName.length() > 0 )
     {
         mACVP_ReqPathText->setText( strFileName );

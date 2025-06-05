@@ -616,9 +616,9 @@ void UnwrapKeyDlg::typeChanged(int index)
 
 void UnwrapKeyDlg::clickReadFile()
 {
-    QString strPath = manApplet->curFilePath();
+    QString strPath;
 
-    QString fileName = findFile( this, JS_FILE_TYPE_PRIKEY, strPath );
+    QString fileName = manApplet->findFile( this, JS_FILE_TYPE_PRIKEY, strPath );
     if( fileName.isEmpty() ) return;
 
     BIN binInput = {0,0};

@@ -89,9 +89,9 @@ void CSRInfoDlg::initUI()
 int CSRInfoDlg::saveAsPEM( const BIN *pData )
 {
     if( pData == NULL || pData->nLen <= 0 ) return -1;
-    QString strPath = manApplet->curPath();
+    QString strPath;
 
-    QString fileName = findSaveFile( this, JS_FILE_TYPE_CSR, strPath );
+    QString fileName = manApplet->findSaveFile( this, JS_FILE_TYPE_CSR, strPath );
 
     if( fileName.length() > 0 )
     {

@@ -740,9 +740,8 @@ void SignDlg::clickOutputClear()
 void SignDlg::clickFindSrcFile()
 {
     QString strPath = mSrcFileText->text();
-    strPath = manApplet->curFilePath( strPath );
 
-    QString strSrcFile = findFile( this, JS_FILE_TYPE_ALL, strPath );
+    QString strSrcFile = manApplet->findFile( this, JS_FILE_TYPE_ALL, strPath );
 
     if( strSrcFile.length() > 0 )
     {
