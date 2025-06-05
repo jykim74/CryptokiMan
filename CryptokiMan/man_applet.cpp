@@ -138,30 +138,20 @@ void ManApplet::start()
 
 QString ManApplet::curFilePath( const QString strPath )
 {
-    if( strPath.length() > 1 )
-    {
-        cur_file_ = strPath;
-    }
-    else
-    {
-        if( cur_file_.length() < 1 )
-            cur_file_ = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
-    }
+    if( strPath.length() > 1 ) return strPath;
+
+    if( cur_file_.length() < 1 )
+        return QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
 
     return cur_file_;
 }
 
 QString ManApplet::curPath( const QString strPath )
 {
-    if( strPath.length() > 1 )
-    {
-        cur_file_ = strPath;
-    }
-    else
-    {
-        if( cur_file_.length() < 1 )
-            cur_file_ = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
-    }
+    if( strPath.length() > 1 ) return strPath;
+
+    if( cur_file_.length() < 1 )
+        return QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
 
     QFileInfo file;
     file.setFile( cur_file_ );
@@ -598,7 +588,7 @@ static const QString _getFileExt( int nType )
 }
 
 
-QString ManApplet::findFile( QWidget *parent, int nType, const QString strPath )
+QString ManApplet::findFile( QWidget *parent, int nType, const QString strPath, bool bSave )
 {
     QString strCurPath = curFilePath( strPath );
 
@@ -618,12 +608,12 @@ QString ManApplet::findFile( QWidget *parent, int nType, const QString strPath )
                                                     &selectedFilter,
                                                     options );
 
-    if( fileName.length() > 0 ) cur_file_ = fileName;
+    if( fileName.length() > 0 && bSave == true ) cur_file_ = fileName;
 
     return fileName;
 };
 
-QString ManApplet::findFile( QWidget *parent, int nType, const QString strPath, QString& strSelected )
+QString ManApplet::findFile( QWidget *parent, int nType, const QString strPath, QString& strSelected, bool bSave )
 {
     QString strCurPath = curFilePath( strPath );
 
@@ -643,13 +633,13 @@ QString ManApplet::findFile( QWidget *parent, int nType, const QString strPath, 
                                                     &strSelected,
                                                     options );
 
-    if( fileName.length() > 0 ) cur_file_ = fileName;
+    if( fileName.length() > 0 && bSave == true ) cur_file_ = fileName;
 
     return fileName;
 };
 
 
-QString ManApplet::findSaveFile( QWidget *parent, int nType, const QString strPath )
+QString ManApplet::findSaveFile( QWidget *parent, int nType, const QString strPath, bool bSave )
 {
     QString strCurPath = curFilePath( strPath );
 
@@ -674,13 +664,13 @@ QString ManApplet::findSaveFile( QWidget *parent, int nType, const QString strPa
         if( nameVal.size() < 2 )
             fileName = QString( "%1.%2" ).arg( fileName ).arg( _getFileExt( nType ) );
 
-        if( fileName.length() > 0 ) cur_file_ = fileName;
+        if( fileName.length() > 0 && bSave == true ) cur_file_ = fileName;
     }
 
     return fileName;
 };
 
-QString ManApplet::findSaveFile( QWidget *parent, const QString strFilter, const QString strPath )
+QString ManApplet::findSaveFile( QWidget *parent, const QString strFilter, const QString strPath, bool bSave )
 {
     QString strCurPath = curFilePath( strPath );
 
@@ -698,12 +688,12 @@ QString ManApplet::findSaveFile( QWidget *parent, const QString strFilter, const
                                                     &selectedFilter,
                                                     options );
 
-    if( fileName.length() > 0 ) cur_file_ = fileName;
+    if( fileName.length() > 0 && bSave == true ) cur_file_ = fileName;
 
     return fileName;
 }
 
-QString ManApplet::findFolder( QWidget *parent, const QString strPath )
+QString ManApplet::findFolder( QWidget *parent, const QString strPath, bool bSave )
 {
     QString strCurPath = curPath( strPath );
 
@@ -715,7 +705,7 @@ QString ManApplet::findFolder( QWidget *parent, const QString strPath )
     QString folderName = QFileDialog::getExistingDirectory(
         parent, QObject::tr("Open Directory"), strCurPath, options);
 
-    if( folderName.length() > 0 ) cur_file_ = folderName;
+    if( folderName.length() > 0 && bSave == true ) cur_file_ = folderName;
 
     return folderName;
 }

@@ -833,7 +833,7 @@ void MainWindow::open()
     }
 
     QString strPath = manApplet->getLibPath();
-    QString fileName = manApplet->findFile( this, JS_FILE_TYPE_DLL, strPath );
+    QString fileName = manApplet->findFile( this, JS_FILE_TYPE_DLL, strPath, false );
 
     if( !fileName.isEmpty() )
     {
