@@ -41,6 +41,7 @@ GenKeyPairDlg::GenKeyPairDlg(QWidget *parent) :
     connect( mGenDHParamBtn, SIGNAL(clicked()), this, SLOT(clickGenDHParam()));
     connect( mDH_PText, SIGNAL(textChanged()), this, SLOT(changeDH_P()));
     connect( mExportDHParamBtn, SIGNAL(clicked()), this, SLOT(clickExportDHParam()));
+    connect( mImpoortDHParamBtn, SIGNAL(clicked()), this, SLOT(clickImportDHParam()));
     connect( mDHClearParamBtn, SIGNAL(clicked()), this, SLOT(clickClearDHParam()));
 
     connect( mDSA_GText, SIGNAL(textChanged(const QString&)), this, SLOT(changeDSA_G()));
@@ -1113,7 +1114,7 @@ void GenKeyPairDlg::clickExportDHParam()
     JS_BIN_decodeHex( mDH_PText->toPlainText().toStdString().c_str(), &binP );
     JS_BIN_decodeHex( mDH_GCombo->currentText().toStdString().c_str(), &binG );
 
-    ret = JS_PKI_encodeDHParam( &binP, &binG, &binParam );
+    ret = JS_PKI_encodeDHParam( &binP, &binG, NULL, &binParam );
     if( ret != 0 )
     {
         manApplet->elog( QString( "fail to encode DH param: %1").arg( ret ));
@@ -1127,6 +1128,40 @@ end :
     JS_BIN_reset( &binP );
     JS_BIN_reset( &binG );
     JS_BIN_reset( &binParam );
+}
+
+void GenKeyPairDlg::clickImportDHParam()
+{
+    int ret = 0;
+    BIN binParam = {0,0};
+    BIN binP = {0,0};
+    BIN binG = {0,0};
+
+    QString strPath = manApplet->curFilePath();
+    QString strFileName = manApplet->findFile( this, JS_FILE_TYPE_DH_PARAM, strPath );
+    if( strFileName.length() < 1 ) return;
+
+    ret = JS_BIN_fileReadBER( strFileName.toLocal8Bit().toStdString().c_str(), &binParam );
+    if( ret <= 0 )
+    {
+        manApplet->elog( QString( "fail to read parameters: %1" ).arg( ret ));
+        goto end;
+    }
+
+    ret = JS_PKI_decodeDHParam( &binParam, &binP, &binG, NULL );
+    if( ret != 0 )
+    {
+        manApplet->warningBox( tr( "fail to decode DH parameters: %1").arg( ret ), this );
+        goto end;
+    }
+
+    mDH_PText->setPlainText( getHexString( &binP ));
+    mDH_GCombo->setCurrentText( getHexString( &binG ));
+
+end :
+    JS_BIN_reset( &binParam );
+    JS_BIN_reset( &binP );
+    JS_BIN_reset( &binG );
 }
 
 void GenKeyPairDlg::clickClearDHParam()

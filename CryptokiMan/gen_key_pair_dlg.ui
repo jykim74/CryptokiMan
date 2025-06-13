@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>583</width>
-    <height>385</height>
+    <width>664</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -712,18 +712,19 @@
           <layout class="QVBoxLayout" name="verticalLayout_6">
            <item>
             <layout class="QGridLayout" name="gridLayout_9">
-             <item row="0" column="3">
-              <spacer name="horizontalSpacer_3">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
+             <item row="0" column="5">
+              <widget class="QLabel" name="label_15">
+               <property name="text">
+                <string>g</string>
                </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QPushButton" name="mExportDHParamBtn">
+               <property name="text">
+                <string>Export</string>
                </property>
-              </spacer>
+              </widget>
              </item>
              <item row="0" column="0">
               <widget class="QPushButton" name="mGenDHParamBtn">
@@ -733,6 +734,13 @@
               </widget>
              </item>
              <item row="0" column="7">
+              <widget class="QLabel" name="label_17">
+               <property name="text">
+                <string>p</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="8">
               <widget class="QLineEdit" name="mDH_PLenText">
                <property name="maximumSize">
                 <size>
@@ -775,7 +783,7 @@
                </property>
               </widget>
              </item>
-             <item row="0" column="2">
+             <item row="0" column="3">
               <widget class="QPushButton" name="mDHClearParamBtn">
                <property name="text">
                 <string>Clear</string>
@@ -783,26 +791,25 @@
               </widget>
              </item>
              <item row="0" column="4">
-              <widget class="QLabel" name="label_15">
-               <property name="text">
-                <string>g</string>
+              <spacer name="horizontalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
                </property>
-              </widget>
-             </item>
-             <item row="0" column="5">
-              <widget class="QComboBox" name="mDH_GCombo"/>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
              </item>
              <item row="0" column="6">
-              <widget class="QLabel" name="label_17">
-               <property name="text">
-                <string>p</string>
-               </property>
-              </widget>
+              <widget class="QComboBox" name="mDH_GCombo"/>
              </item>
              <item row="0" column="1">
-              <widget class="QPushButton" name="mExportDHParamBtn">
+              <widget class="QPushButton" name="mImpoortDHParamBtn">
                <property name="text">
-                <string>Export</string>
+                <string>Import</string>
                </property>
               </widget>
              </item>
