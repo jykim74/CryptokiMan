@@ -69,6 +69,7 @@ private slots:
 
     void clickGenDSAParam();
     void clickClearDSAParam();
+    void clickExportDHParam();
     void clickClearDHParam();
     void changeDSA_P();
     void changeDSA_G();

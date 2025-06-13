@@ -14,6 +14,7 @@
 #include "cryptoki_api.h"
 #include "mech_mgr.h"
 #include "settings_mgr.h"
+#include "export_dlg.h"
 
 static QStringList sMechGenKeyPairList;
 static QStringList sRSAOptionList = { "1024", "2048", "3072", "4096" };
@@ -39,6 +40,7 @@ GenKeyPairDlg::GenKeyPairDlg(QWidget *parent) :
     connect( mMechCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(mechChanged(int)));
     connect( mGenDHParamBtn, SIGNAL(clicked()), this, SLOT(clickGenDHParam()));
     connect( mDH_PText, SIGNAL(textChanged()), this, SLOT(changeDH_P()));
+    connect( mExportDHParamBtn, SIGNAL(clicked()), this, SLOT(clickExportDHParam()));
     connect( mDHClearParamBtn, SIGNAL(clicked()), this, SLOT(clickClearDHParam()));
 
     connect( mDSA_GText, SIGNAL(textChanged(const QString&)), this, SLOT(changeDSA_G()));
@@ -1090,6 +1092,41 @@ void GenKeyPairDlg::clickClearDSAParam()
     mDSA_GText->clear();
     mDSA_PText->clear();
     mDSA_QText->clear();
+}
+
+void GenKeyPairDlg::clickExportDHParam()
+{
+    int ret = 0;
+    BIN binP = {0,0};
+    BIN binG = {0,0};
+    BIN binParam = {0,0};
+
+    ExportDlg exportDlg;
+
+    if( mDH_PText->toPlainText().length() < 1 )
+    {
+        manApplet->warningBox( tr( "Parameter value is required" ), this );
+        mDH_PText->setFocus();
+        return;
+    }
+
+    JS_BIN_decodeHex( mDH_PText->toPlainText().toStdString().c_str(), &binP );
+    JS_BIN_decodeHex( mDH_GCombo->currentText().toStdString().c_str(), &binG );
+
+    ret = JS_PKI_encodeDHParam( &binP, &binG, &binParam );
+    if( ret != 0 )
+    {
+        manApplet->elog( QString( "fail to encode DH param: %1").arg( ret ));
+        goto end;
+    }
+
+    exportDlg.setDHParam( &binParam );
+    exportDlg.setName( "DH_param" );
+    exportDlg.exec();
+end :
+    JS_BIN_reset( &binP );
+    JS_BIN_reset( &binG );
+    JS_BIN_reset( &binParam );
 }
 
 void GenKeyPairDlg::clickClearDHParam()

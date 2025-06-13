@@ -16,6 +16,7 @@ enum {
     DataCRL,
     DataCSR,
     DataPriKeyCert,
+    DataDHParam,
 };
 
 enum {
@@ -34,6 +35,8 @@ enum {
     ExportCSR_DER,      // DER CSR (*.der)
     ExportCRL_PEM,      // PEM CRL (*.crl)
     ExportCRL_DER,      // DER CRL (*.der)
+    ExportDH_PEM,       // PEM DH Param (*.pem)
+    ExportDH_DER,       // DER DH Param (*.der)
 };
 
 class ExportDlg : public QDialog, public Ui::ExportDlg
@@ -52,6 +55,8 @@ public:
     void setCRL( const BIN *pCRL );
     void setCSR( const BIN *pCSR );
     void setPriKeyAndCert( const BIN *pPriKey, const BIN *pCert );
+    void setDHParam( const BIN *pParam );
+
     int getKeyType() { return key_type_; };
 
 private slots:
@@ -71,12 +76,14 @@ private:
     int exportPFX();
     int exportP8Enc();
     int exportP8Info();
+    int exportDHParam();
 
     BIN pri_key_;
     BIN pub_key_;
     BIN cert_;
     BIN csr_;
     BIN crl_;
+    BIN param_;
 
     int data_type_;
     int key_type_;

@@ -46,6 +46,10 @@ static const QString getFormatName( int nFormatType )
         return QObject::tr( "PEM CRL (*.crl)" );
     case ExportCRL_DER:
         return QObject::tr( "DER CRL (*.der)" );
+    case ExportDH_PEM:
+        return QObject::tr( "PEM DH Parameter (*.pem)" );
+    case ExportDH_DER:
+        return QObject::tr( "DER DH Parameter (*.der)" );
 
     default:
         break;
@@ -87,6 +91,10 @@ static const QString getFormatDesc( int nFormatType )
         return QObject::tr( "CRL PEM format file" );
     case ExportCRL_DER:
         return QObject::tr( "CRL DER format file" );
+    case ExportDH_PEM:
+        return QObject::tr( "DH Parameter PEM format file" );
+    case ExportDH_DER:
+        return QObject::tr( "DH Parameter DER format file" );
 
     default:
         break;
@@ -149,6 +157,7 @@ ExportDlg::ExportDlg(QWidget *parent) :
     memset( &cert_, 0x00, sizeof(BIN));
     memset( &csr_, 0x00, sizeof(BIN));
     memset( &crl_, 0x00, sizeof(BIN));
+    memset( &param_, 0x00, sizeof(BIN));
 
     connect( mFindFilenameBtn, SIGNAL(clicked()), this, SLOT(clickFindFilename()));
     connect( mViewBtn, SIGNAL(clicked()), this, SLOT(clickView()));
@@ -171,6 +180,7 @@ ExportDlg::~ExportDlg()
     JS_BIN_reset( &cert_ );
     JS_BIN_reset( &csr_ );
     JS_BIN_reset( &crl_ );
+    JS_BIN_reset( &param_ );
 }
 
 void ExportDlg::initialize()
@@ -252,6 +262,11 @@ void ExportDlg::clickOK()
     case ExportCRL_PEM:
     case ExportCRL_DER:
         ret = exportCRL();
+        break;
+
+    case ExportDH_PEM:
+    case ExportDH_DER:
+        ret = exportDHParam();
         break;
 
     default:
@@ -384,6 +399,19 @@ void ExportDlg::setCSR( const BIN *pCSR )
     mFormatCombo->addItem( getFormatName( ExportCSR_DER ), ExportCSR_DER);
     mFormatCombo->addItem( getFormatName( ExportPubPEM ), ExportPubPEM );
     mFormatCombo->addItem( getFormatName( ExportPubDER ), ExportPubDER);
+}
+
+void ExportDlg::setDHParam( const BIN *pParam )
+{
+    data_type_ = DataDHParam;
+    key_type_ = -1;
+
+    mAlgText->setText( "DH" );
+    JS_BIN_copy( &param_, pParam );
+    mTitleLabel->setText( tr( "DH Parameter Export" ));
+
+    mFormatCombo->addItem( getFormatName( ExportDH_PEM ), ExportDH_PEM );
+    mFormatCombo->addItem( getFormatName( ExportDH_DER ), ExportDH_DER );
 }
 
 void ExportDlg::setPriKeyAndCert( const BIN *pPriKey, const BIN *pCert )
@@ -705,4 +733,30 @@ end :
     return ret;
 }
 
+int ExportDlg::exportDHParam()
+{
+    int ret = -1;
+    int nExportType = -1;
+    QString strFilename = mFilenameText->text();
 
+    if( data_type_ != DataDHParam ) return -1;
+
+    nExportType = mFormatCombo->currentData().toInt();
+
+    if( nExportType == ExportDH_PEM )
+    {
+        ret = JS_BIN_writePEM( &param_, JS_PEM_TYPE_DH_PARAMETERS, strFilename.toLocal8Bit().toStdString().c_str() );
+    }
+    else if( nExportType == ExportDH_DER )
+    {
+        ret = JS_BIN_fileWrite( &param_, strFilename.toLocal8Bit().toStdString().c_str() );
+    }
+
+    if( ret > 0 )
+    {
+        manApplet->messageBox( tr( "DH Parameter export successfully" ), this );
+        ret = JSR_OK;
+    }
+
+    return ret;
+}
