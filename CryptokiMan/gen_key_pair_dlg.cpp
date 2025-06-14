@@ -1054,13 +1054,15 @@ void GenKeyPairDlg::clickGenDHParam()
 
     BIN binP = {0,0};
     BIN binG = {0,0};
+    BIN binQ = {0,0};
 
-    ret = JS_PKI_genDHParam( nLen, nG, &binP, &binG );
+    ret = JS_PKI_genDHParam( nLen, nG, &binP, &binG, &binQ );
 
     mDH_PText->setPlainText( getHexString( binP.pVal, binP.nLen ));
 
     JS_BIN_reset( &binP );
     JS_BIN_reset( &binG );
+    JS_BIN_reset( &binQ );
 }
 
 void GenKeyPairDlg::changeDH_P()
