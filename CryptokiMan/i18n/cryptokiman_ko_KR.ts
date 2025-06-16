@@ -4908,7 +4908,7 @@ Do you want to delete the file and continue?</source>
         <translation>로그인</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.ui" line="826"/>
+        <location filename="../gen_key_pair_dlg.ui" line="833"/>
         <source>Private Key</source>
         <translation>개인 키</translation>
     </message>
@@ -4921,8 +4921,8 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">복호화</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.ui" line="850"/>
-        <location filename="../gen_key_pair_dlg.ui" line="1111"/>
+        <location filename="../gen_key_pair_dlg.ui" line="857"/>
+        <location filename="../gen_key_pair_dlg.ui" line="1118"/>
         <source>Label</source>
         <translation>라벨</translation>
     </message>
@@ -4935,14 +4935,14 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">개인적</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.ui" line="837"/>
-        <location filename="../gen_key_pair_dlg.ui" line="1118"/>
+        <location filename="../gen_key_pair_dlg.ui" line="844"/>
+        <location filename="../gen_key_pair_dlg.ui" line="1125"/>
         <source>Subject</source>
         <translation>주체</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.ui" line="863"/>
-        <location filename="../gen_key_pair_dlg.ui" line="1141"/>
+        <location filename="../gen_key_pair_dlg.ui" line="870"/>
+        <location filename="../gen_key_pair_dlg.ui" line="1148"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
@@ -4967,12 +4967,12 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">토큰</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.ui" line="1084"/>
+        <location filename="../gen_key_pair_dlg.ui" line="1091"/>
         <source>Public Key</source>
         <translation>공개 키</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.ui" line="1098"/>
+        <location filename="../gen_key_pair_dlg.ui" line="1105"/>
         <source>Exponent</source>
         <translation>Exponent</translation>
     </message>
@@ -4999,8 +4999,8 @@ Do you want to delete the file and continue?</source>
         <translation>세션</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.ui" line="916"/>
-        <location filename="../gen_key_pair_dlg.ui" line="1174"/>
+        <location filename="../gen_key_pair_dlg.ui" line="923"/>
+        <location filename="../gen_key_pair_dlg.ui" line="1181"/>
         <source>Attributes</source>
         <translation>속성</translation>
     </message>
@@ -5018,14 +5018,14 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">키 쌍 생성 성공</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.ui" line="989"/>
-        <location filename="../gen_key_pair_dlg.ui" line="1189"/>
+        <location filename="../gen_key_pair_dlg.ui" line="996"/>
+        <location filename="../gen_key_pair_dlg.ui" line="1196"/>
         <source>StartDate</source>
         <translation>시작 일자</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.ui" line="982"/>
-        <location filename="../gen_key_pair_dlg.ui" line="1199"/>
+        <location filename="../gen_key_pair_dlg.ui" line="989"/>
+        <location filename="../gen_key_pair_dlg.ui" line="1206"/>
         <source>EndDate</source>
         <translation>종료 일자</translation>
     </message>
@@ -5035,17 +5035,17 @@ Do you want to delete the file and continue?</source>
         <translation>DH 파라미터</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.ui" line="788"/>
+        <location filename="../gen_key_pair_dlg.ui" line="718"/>
         <source>g</source>
         <translation>g</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.ui" line="731"/>
+        <location filename="../gen_key_pair_dlg.ui" line="732"/>
         <source>Gen DH Param</source>
         <translation>DH 파라미터 생성</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.ui" line="798"/>
+        <location filename="../gen_key_pair_dlg.ui" line="739"/>
         <source>p</source>
         <translation>p</translation>
     </message>
@@ -5076,7 +5076,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../gen_key_pair_dlg.ui" line="422"/>
-        <location filename="../gen_key_pair_dlg.ui" line="781"/>
+        <location filename="../gen_key_pair_dlg.ui" line="789"/>
         <source>Clear</source>
         <translation>지우기</translation>
     </message>
@@ -5086,29 +5086,34 @@ Do you want to delete the file and continue?</source>
         <translation>Generator(G)</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.ui" line="805"/>
+        <location filename="../gen_key_pair_dlg.ui" line="725"/>
         <source>Export</source>
         <translation>내보내기</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.ui" line="873"/>
-        <location filename="../gen_key_pair_dlg.ui" line="1148"/>
+        <location filename="../gen_key_pair_dlg.ui" line="812"/>
+        <source>Import</source>
+        <translation>가져오기</translation>
+    </message>
+    <message>
+        <location filename="../gen_key_pair_dlg.ui" line="880"/>
+        <location filename="../gen_key_pair_dlg.ui" line="1155"/>
         <source>Use SKI</source>
         <translation>SKI 사용</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.ui" line="900"/>
-        <location filename="../gen_key_pair_dlg.ui" line="1158"/>
+        <location filename="../gen_key_pair_dlg.ui" line="907"/>
+        <location filename="../gen_key_pair_dlg.ui" line="1165"/>
         <source>Same Label</source>
         <translation>동일 라벨</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.ui" line="1006"/>
+        <location filename="../gen_key_pair_dlg.ui" line="1013"/>
         <source>SignRecover</source>
         <translation>SignRecover</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.ui" line="1289"/>
+        <location filename="../gen_key_pair_dlg.ui" line="1296"/>
         <source>VerifyRecover</source>
         <translation>VerifyRecover</translation>
     </message>
@@ -5117,17 +5122,17 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">SKI 설정 실패(rv:%1)</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.ui" line="1229"/>
+        <location filename="../gen_key_pair_dlg.ui" line="1236"/>
         <source>Trusted</source>
         <translation>Trusted</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.ui" line="880"/>
+        <location filename="../gen_key_pair_dlg.ui" line="887"/>
         <source>PubKeyInfo</source>
         <translation>공개키 정보</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.ui" line="890"/>
+        <location filename="../gen_key_pair_dlg.ui" line="897"/>
         <source>Use SPKI</source>
         <translation>SPKI 사용</translation>
     </message>
@@ -5136,42 +5141,47 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">SKI SPKI 설정 실패 (rv: %1)</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.ui" line="1048"/>
-        <location filename="../gen_key_pair_dlg.ui" line="1303"/>
+        <location filename="../gen_key_pair_dlg.ui" line="1055"/>
+        <location filename="../gen_key_pair_dlg.ui" line="1310"/>
         <source>Copyable</source>
         <translation>Copyable</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.ui" line="1055"/>
-        <location filename="../gen_key_pair_dlg.ui" line="1296"/>
+        <location filename="../gen_key_pair_dlg.ui" line="1062"/>
+        <location filename="../gen_key_pair_dlg.ui" line="1303"/>
         <source>Destroyable</source>
         <translation>Destroyable</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.cpp" line="813"/>
+        <location filename="../gen_key_pair_dlg.cpp" line="814"/>
         <source>GenerateKeyPair execution failure [%1]</source>
         <translation>GenerateKeyPair 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.cpp" line="828"/>
+        <location filename="../gen_key_pair_dlg.cpp" line="829"/>
         <source>failure to set SKI_SPKI [%1]</source>
         <translation>SKI SPKI 설정 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.cpp" line="834"/>
+        <location filename="../gen_key_pair_dlg.cpp" line="835"/>
         <source>GenerateKeyPair execution successful</source>
         <translation>GenerateKeyPair 실행 성공</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.cpp" line="892"/>
-        <location filename="../gen_key_pair_dlg.cpp" line="898"/>
+        <location filename="../gen_key_pair_dlg.cpp" line="893"/>
+        <location filename="../gen_key_pair_dlg.cpp" line="899"/>
         <source>All labels are the same</source>
         <translation>모든 라벨이 같습니다</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.cpp" line="1108"/>
+        <location filename="../gen_key_pair_dlg.cpp" line="1111"/>
         <source>Parameter value is required</source>
         <translation>파라미터 값이 필요합니다</translation>
+    </message>
+    <message>
+        <location filename="../gen_key_pair_dlg.cpp" line="1156"/>
+        <source>fail to decode DH parameters: %1</source>
+        <translation>DH 파라미터 디코딩에 실패 하였습니다: %1</translation>
     </message>
 </context>
 <context>
@@ -9310,7 +9320,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../man_applet.cpp" line="445"/>
-        <location filename="../man_applet.cpp" line="500"/>
+        <location filename="../man_applet.cpp" line="505"/>
         <source>PrivateKey Files</source>
         <translation>개인키 파일들</translation>
     </message>
@@ -9341,7 +9351,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../man_applet.cpp" line="475"/>
-        <location filename="../man_applet.cpp" line="508"/>
+        <location filename="../man_applet.cpp" line="513"/>
         <source>PFX Files</source>
         <translation>PFX 파일들</translation>
     </message>
@@ -9366,29 +9376,34 @@ Do you want to delete the file and continue?</source>
         <translation>라이선스 파일들</translation>
     </message>
     <message>
-        <location filename="../man_applet.cpp" line="504"/>
+        <location filename="../man_applet.cpp" line="500"/>
+        <source>DH Parameter Files</source>
+        <translation>DH 파라미터 파일들</translation>
+    </message>
+    <message>
+        <location filename="../man_applet.cpp" line="509"/>
         <source>PKCS8 Files</source>
         <translation>PKCS7 파일들</translation>
     </message>
     <message>
-        <location filename="../man_applet.cpp" line="513"/>
+        <location filename="../man_applet.cpp" line="518"/>
         <source>All Files (*.*)</source>
         <translation>모든 파일들(*.*)</translation>
     </message>
     <message>
-        <location filename="../man_applet.cpp" line="605"/>
-        <location filename="../man_applet.cpp" line="630"/>
+        <location filename="../man_applet.cpp" line="614"/>
+        <location filename="../man_applet.cpp" line="639"/>
         <source>Open %1</source>
         <translation>%1 열기</translation>
     </message>
     <message>
-        <location filename="../man_applet.cpp" line="655"/>
-        <location filename="../man_applet.cpp" line="685"/>
+        <location filename="../man_applet.cpp" line="664"/>
+        <location filename="../man_applet.cpp" line="694"/>
         <source>Save %1</source>
         <translation>%1 저장</translation>
     </message>
     <message>
-        <location filename="../man_applet.cpp" line="706"/>
+        <location filename="../man_applet.cpp" line="715"/>
         <source>Open Directory</source>
         <translation>디렉토리 열기</translation>
     </message>
