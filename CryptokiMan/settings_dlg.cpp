@@ -127,9 +127,11 @@ void SettingsDlg::clickRestoreDefaults()
 
 void SettingsDlg::initFontFamily()
 {
+    /*
     QFontDatabase fontDB;
     QStringList fontList = fontDB.families();
     mFontFamilyCombo->addItems( fontList );
+    */
 }
 
 void SettingsDlg::initialize()
