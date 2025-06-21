@@ -62,7 +62,17 @@ void SettingsDlg::updateSettings()
 
     mgr->setFindMaxObjectsCount( mFindMaxObjectsCountText->text().toInt() );
     mgr->setUseDeviceMech( mUseDeviceMechCheck->isChecked() );
-    mgr->setFontFamily( mFontFamilyCombo->currentText() );
+
+    QString strFont = mFontFamilyCombo->currentText();
+    if( strFont == "Lantinghei TC" )
+    {
+        manApplet->warningBox( tr( "This font(%1) is not available" ).arg(strFont), this );
+    }
+    else
+    {
+        mgr->setFontFamily( mFontFamilyCombo->currentText());
+    }
+
     mgr->setHexAreaWidth( mHexAreaWidthCombo->currentText().toInt());
 
 #ifdef _AUTO_UPDATE
