@@ -1307,3 +1307,10 @@ bool isRSA_PSS( int nMech )
 
     return false;
 }
+
+const QString getMechHex( long uMech )
+{
+    QString strHex = QString( "%1" ).arg( uMech, 8, 16, QLatin1Char('0') ).toUpper();
+
+    return QString( "0x%1" ).arg( strHex );
+}

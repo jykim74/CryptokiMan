@@ -221,7 +221,7 @@ void EditAttributeDlg::attributeTypeChanged( int index )
 {
     QString strAttribute = mAttributeCombo->currentText();
     long uAttribute = JS_PKCS11_GetCKAType( strAttribute.toStdString().c_str() );
-    mAttributeText->setText(QString("0x%1").arg( uAttribute, 8, 16, QLatin1Char('0')).toUpper());
+    mAttributeText->setText(QString( getMechHex(uAttribute)));
 }
 
 void EditAttributeDlg::initialize()

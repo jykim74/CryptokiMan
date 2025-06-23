@@ -92,7 +92,7 @@ void FindObjectDlg::changeClass( int index )
 {
     QString strClass = mClassCombo->currentText();
     long uClass = JS_PKCS11_GetCKOType( strClass.toStdString().c_str() );
-    mClassText->setText( QString( "0x%1" ).arg( uClass, 8, 16, QLatin1Char('0')).toUpper());
+    mClassText->setText( getMechHex( uClass ) );
 
     mKeyTypeCombo->clear();
     mKeyTypeCombo->addItem( "" );

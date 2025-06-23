@@ -215,7 +215,7 @@ void WrapKeyDlg::wrappingMechChanged( int index )
     else
     {
         long uMech = JS_PKCS11_GetCKMType( strMech.toStdString().c_str() );
-        mWrappingMechText->setText( QString("0x%1").arg( uMech, 8, 16, QLatin1Char('0')).toUpper());
+        mWrappingMechText->setText( QString( getMechHex(uMech)) );
     }
 }
 

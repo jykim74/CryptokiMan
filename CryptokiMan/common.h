@@ -196,5 +196,6 @@ void setAES_GCMParam( const BIN *pIV, const BIN *pAAD, int nReqLen, CK_MECHANISM
 void setAES_CCMParam( const BIN *pIV, const BIN *pAAD, int nSrcLen, int nReqLen, CK_MECHANISM *pMech );
 
 bool isRSA_PSS( int nMech );
+const QString getMechHex( long uMech );
 
 #endif // COMMON_H

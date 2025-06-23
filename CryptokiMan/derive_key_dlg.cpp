@@ -657,7 +657,7 @@ void DeriveKeyDlg::changeMechanism( int index )
 {
     long nMech = JS_PKCS11_GetCKMType( mSrcMethodCombo->currentText().toStdString().c_str());
 
-    mSrcMethodText->setText( QString( "0x%1" ).arg( nMech, 8, 16, QLatin1Char('0')).toUpper());
+    mSrcMethodText->setText( QString( getMechHex(nMech)));
 
     if( nMech == CKM_ECDH1_DERIVE )
     {

@@ -578,7 +578,7 @@ void UnwrapKeyDlg::unwrapMechChanged(int index )
     else
     {
         long uType = JS_PKCS11_GetCKMType( strMech.toStdString().c_str() );
-        mUnwrapMechText->setText( QString("0x%1").arg( uType, 8, 16, QLatin1Char('0')).toUpper());
+        mUnwrapMechText->setText( QString( getMechHex(uType)));
     }
 }
 
