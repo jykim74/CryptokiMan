@@ -47,6 +47,7 @@ private slots:
     void clickEndDate();
 
     void changeModules( const QString& text );
+    void changeExponent( const QString& text );
 private:
     void initialize();
     void initAttributes();

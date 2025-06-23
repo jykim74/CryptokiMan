@@ -72,6 +72,9 @@ private slots:
     void clickExportDHParam();
     void clickImportDHParam();
     void clickClearDHParam();
+
+    void changePubExponent();
+
     void changeDSA_P();
     void changeDSA_G();
     void changeDSA_Q();

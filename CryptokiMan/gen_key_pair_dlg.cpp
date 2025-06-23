@@ -44,6 +44,8 @@ GenKeyPairDlg::GenKeyPairDlg(QWidget *parent) :
     connect( mImpoortDHParamBtn, SIGNAL(clicked()), this, SLOT(clickImportDHParam()));
     connect( mDHClearParamBtn, SIGNAL(clicked()), this, SLOT(clickClearDHParam()));
 
+    connect( mPubExponentText, SIGNAL(textChanged(QString)), this, SLOT(changePubExponent()));
+
     connect( mDSA_GText, SIGNAL(textChanged(const QString&)), this, SLOT(changeDSA_G()));
     connect( mDSA_PText, SIGNAL(textChanged(const QString&)), this, SLOT(changeDSA_P()));
     connect( mDSA_QText, SIGNAL(textChanged(const QString&)), this, SLOT(changeDSA_Q()));
@@ -846,14 +848,19 @@ void GenKeyPairDlg::mechChanged(int nIndex)
     int uMech = JS_PKCS11_GetCKMType( strMech.toStdString().c_str() );
 
     mMechText->setText( QString("0x%1").arg( uMech, 8, 16, QLatin1Char('0')).toUpper());
+
+    mPubExponentLabel->setEnabled(false);
     mPubExponentText->setEnabled(false);
+    mPubExponent10Text->setEnabled(false);
 
     if( strMech == "CKM_RSA_PKCS_KEY_PAIR_GEN" )
     {
         mOptionLabel->setText( QString("Key Length") );
         mOptionCombo->addItems( sRSAOptionList );
         mParamTab->setDisabled(true);
+        mPubExponentLabel->setEnabled(true);
         mPubExponentText->setEnabled(true);
+        mPubExponent10Text->setEnabled(true);
     }
     else if( strMech == "CKM_EC_KEY_PAIR_GEN" || strMech == "CKM_ECDSA_KEY_PAIR_GEN" )
     {
@@ -1169,6 +1176,18 @@ end :
 void GenKeyPairDlg::clickClearDHParam()
 {
     mDH_PText->clear();
+}
+
+void GenKeyPairDlg::changePubExponent()
+{
+    int nPubExt = 0;
+    BIN binPubExp = {0,0};
+
+    QString strPubExp = mPubExponentText->text();
+    getBINFromString( &binPubExp, DATA_HEX, strPubExp );
+    nPubExt = JS_BIN_long( &binPubExp );
+    mPubExponent10Text->setText( QString("%1").arg( nPubExt ));
+    JS_BIN_reset( &binPubExp );
 }
 
 void GenKeyPairDlg::changeDSA_P()

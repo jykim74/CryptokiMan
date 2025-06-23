@@ -26,6 +26,7 @@ CreateRSAPubKeyDlg::CreateRSAPubKeyDlg(QWidget *parent) :
     connectAttributes();
 
     connect( mModulesText, SIGNAL(textChanged(const QString&)), this, SLOT(changeModules(const QString&)));
+    connect( mExponentText, SIGNAL(textChanged(const QString)), this, SLOT(changeExponent(QString)));
 
     initialize();
     setDefaults();
@@ -538,6 +539,16 @@ void CreateRSAPubKeyDlg::changeModules( const QString& text )
 {
     QString strLen = getDataLenString( DATA_HEX, text );
     mModulesLenText->setText( QString("%1").arg(strLen));
+}
+
+void CreateRSAPubKeyDlg::changeExponent( const QString& text )
+{
+    int nExp = 0;
+    BIN binExp = {0,0};
+    getBINFromString( &binExp, DATA_HEX, text );
+    nExp = JS_BIN_long( &binExp );
+    mExponent10Text->setText( QString("%1").arg( nExp ) );
+    JS_BIN_reset( &binExp );
 }
 
 void CreateRSAPubKeyDlg::setDefaults()
