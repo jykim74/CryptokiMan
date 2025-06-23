@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>587</width>
-    <height>444</height>
+    <width>689</width>
+    <height>563</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="mFirstTab">
       <attribute name="title">
@@ -581,13 +581,13 @@
           <widget class="QLineEdit" name="mUnwrapMechText">
            <property name="minimumSize">
             <size>
-             <width>80</width>
+             <width>90</width>
              <height>0</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>80</width>
+             <width>90</width>
              <height>16777215</height>
             </size>
            </property>
@@ -799,13 +799,13 @@
           <widget class="QLineEdit" name="mClassText">
            <property name="minimumSize">
             <size>
-             <width>80</width>
+             <width>90</width>
              <height>0</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>80</width>
+             <width>90</width>
              <height>16777215</height>
             </size>
            </property>
@@ -848,13 +848,13 @@
           <widget class="QLineEdit" name="mTypeText">
            <property name="minimumSize">
             <size>
-             <width>80</width>
+             <width>90</width>
              <height>0</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>80</width>
+             <width>90</width>
              <height>16777215</height>
             </size>
            </property>

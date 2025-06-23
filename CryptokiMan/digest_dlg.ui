@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>532</width>
-    <height>544</height>
+    <height>657</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -316,13 +316,13 @@
       <widget class="QLineEdit" name="mMechText">
        <property name="minimumSize">
         <size>
-         <width>80</width>
+         <width>90</width>
          <height>0</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>80</width>
+         <width>90</width>
          <height>16777215</height>
         </size>
        </property>

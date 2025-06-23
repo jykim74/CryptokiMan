@@ -76,7 +76,7 @@ void DeriveKeyDlg::classChanged( int index )
     else
     {
         long uClass = JS_PKCS11_GetCKOType( strClass.toStdString().c_str() );
-        mClassText->setText( QString("0x%1").arg( uClass, 8, 16, QLatin1Char('0')).toUpper());
+        mClassText->setText( getMechHex(uClass) );
     }
 
     mTypeCombo->clear();
@@ -97,7 +97,7 @@ void DeriveKeyDlg::typeChanged( int index )
     else
     {
         long uType = JS_PKCS11_GetCKKType( strType.toStdString().c_str() );
-        mTypeText->setText(QString("0x%1").arg( uType, 8, 16, QLatin1Char('0')).toUpper());
+        mTypeText->setText( getMechHex(uType));
     }
 }
 

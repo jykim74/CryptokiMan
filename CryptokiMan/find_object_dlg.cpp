@@ -167,7 +167,7 @@ void FindObjectDlg::changeKeyType( int index )
     else
     {
         long uType = JS_PKCS11_GetCKKType( strKeyType.toStdString().c_str() );
-        mKeyTypeText->setText( QString( "0x%1" ).arg( uType, 8, 16, QLatin1Char('0')).toUpper());
+        mKeyTypeText->setText( getMechHex(uType));
     }
 }
 
