@@ -13,14 +13,18 @@
         <translation>현재 버전</translation>
     </message>
     <message>
-        <location filename="../about_dlg.ui" line="71"/>
         <source>Information</source>
-        <translation>정보</translation>
+        <translation type="vanished">정보</translation>
+    </message>
+    <message>
+        <location filename="../about_dlg.ui" line="71"/>
+        <source>Copyright</source>
+        <translation>저작권</translation>
     </message>
     <message>
         <location filename="../about_dlg.ui" line="115"/>
-        <source>Copyright</source>
-        <translation>저작권</translation>
+        <source>Open Source</source>
+        <translation>오픈 소스</translation>
     </message>
     <message>
         <location filename="../about_dlg.ui" line="174"/>
@@ -2513,7 +2517,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation>공개 키</translation>
     </message>
     <message>
-        <location filename="../create_rsa_pub_key_dlg.ui" line="482"/>
+        <location filename="../create_rsa_pub_key_dlg.ui" line="551"/>
         <source>Exponent</source>
         <translation>Exponent</translation>
     </message>
@@ -2523,12 +2527,12 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="../create_rsa_pub_key_dlg.ui" line="462"/>
+        <location filename="../create_rsa_pub_key_dlg.ui" line="518"/>
         <source>Modules</source>
         <translation>Modules</translation>
     </message>
     <message>
-        <location filename="../create_rsa_pub_key_dlg.ui" line="554"/>
+        <location filename="../create_rsa_pub_key_dlg.ui" line="626"/>
         <source>Attributes</source>
         <translation>속성</translation>
     </message>
@@ -2579,12 +2583,12 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation type="vanished">RSA 공개키 생성 성공</translation>
     </message>
     <message>
-        <location filename="../create_rsa_pub_key_dlg.ui" line="669"/>
+        <location filename="../create_rsa_pub_key_dlg.ui" line="741"/>
         <source>StartDate</source>
         <translation>시작 일자</translation>
     </message>
     <message>
-        <location filename="../create_rsa_pub_key_dlg.ui" line="662"/>
+        <location filename="../create_rsa_pub_key_dlg.ui" line="734"/>
         <source>EndDate</source>
         <translation>종료 일자</translation>
     </message>
@@ -2594,7 +2598,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation>SKI 사용</translation>
     </message>
     <message>
-        <location filename="../create_rsa_pub_key_dlg.ui" line="588"/>
+        <location filename="../create_rsa_pub_key_dlg.ui" line="660"/>
         <source>VerifyRecover</source>
         <translation>VerifyRecover</translation>
     </message>
@@ -2629,7 +2633,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation>주체</translation>
     </message>
     <message>
-        <location filename="../create_rsa_pub_key_dlg.ui" line="619"/>
+        <location filename="../create_rsa_pub_key_dlg.ui" line="691"/>
         <source>Trusted</source>
         <translation>Trusted</translation>
     </message>
@@ -2642,27 +2646,27 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation type="vanished">유효한 키 가져오기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../create_rsa_pub_key_dlg.ui" line="676"/>
+        <location filename="../create_rsa_pub_key_dlg.ui" line="748"/>
         <source>Destroyable</source>
         <translation>Destroyable</translation>
     </message>
     <message>
-        <location filename="../create_rsa_pub_key_dlg.ui" line="683"/>
+        <location filename="../create_rsa_pub_key_dlg.ui" line="755"/>
         <source>Copyable</source>
         <translation>Copyable</translation>
     </message>
     <message>
-        <location filename="../create_rsa_pub_key_dlg.cpp" line="374"/>
+        <location filename="../create_rsa_pub_key_dlg.cpp" line="375"/>
         <source>RSA public key creation failure [%1]</source>
         <translation>RSA 공개키 생성 실패(%1)</translation>
     </message>
     <message>
-        <location filename="../create_rsa_pub_key_dlg.cpp" line="378"/>
+        <location filename="../create_rsa_pub_key_dlg.cpp" line="379"/>
         <source>RSA public key creation successful [Handle: %1]</source>
         <translation>RSA 공개키 생성 성공[Handle:%1]</translation>
     </message>
     <message>
-        <location filename="../create_rsa_pub_key_dlg.cpp" line="463"/>
+        <location filename="../create_rsa_pub_key_dlg.cpp" line="464"/>
         <source>failed to get key value [%1]</source>
         <translation>키 값 가져오기 싪패 [%1]</translation>
     </message>
@@ -2740,12 +2744,12 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <location filename="../decrypt_dlg.ui" line="1032"/>
-        <location filename="../decrypt_dlg.ui" line="1742"/>
+        <location filename="../decrypt_dlg.ui" line="1748"/>
         <source>C</source>
         <translation>C</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1881"/>
+        <location filename="../decrypt_dlg.ui" line="1887"/>
         <source>Close</source>
         <translation>닫기</translation>
     </message>
@@ -2765,32 +2769,32 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation>대상</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1813"/>
-        <location filename="../decrypt_dlg.ui" line="1888"/>
+        <location filename="../decrypt_dlg.ui" line="1819"/>
+        <location filename="../decrypt_dlg.ui" line="1894"/>
         <source>Init</source>
         <translation>Init</translation>
     </message>
     <message>
         <location filename="../decrypt_dlg.ui" line="1056"/>
-        <location filename="../decrypt_dlg.ui" line="1861"/>
+        <location filename="../decrypt_dlg.ui" line="1867"/>
         <source>Update</source>
         <translation>Update</translation>
     </message>
     <message>
         <location filename="../decrypt_dlg.ui" line="1049"/>
-        <location filename="../decrypt_dlg.ui" line="1908"/>
+        <location filename="../decrypt_dlg.ui" line="1914"/>
         <source>Final</source>
         <translation>Final</translation>
     </message>
     <message>
         <location filename="../decrypt_dlg.ui" line="14"/>
-        <location filename="../decrypt_dlg.ui" line="1716"/>
-        <location filename="../decrypt_dlg.ui" line="1840"/>
+        <location filename="../decrypt_dlg.ui" line="1722"/>
+        <location filename="../decrypt_dlg.ui" line="1846"/>
         <source>Decrypt</source>
         <translation>복호화</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1901"/>
+        <location filename="../decrypt_dlg.ui" line="1907"/>
         <source>Status</source>
         <translation>상태</translation>
     </message>
@@ -2839,7 +2843,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <location filename="../decrypt_dlg.ui" line="1140"/>
-        <location filename="../decrypt_dlg.ui" line="1510"/>
+        <location filename="../decrypt_dlg.ui" line="1516"/>
         <source>Find</source>
         <translation>찾기</translation>
     </message>
@@ -2859,27 +2863,27 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation>전체 파일 크기</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1365"/>
+        <location filename="../decrypt_dlg.ui" line="1368"/>
         <source>Read File Size</source>
         <translation>읽은 파일 크기</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1447"/>
+        <location filename="../decrypt_dlg.ui" line="1453"/>
         <source>Run Status</source>
         <translation>실행 상태</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1461"/>
+        <location filename="../decrypt_dlg.ui" line="1467"/>
         <source>RunThread</source>
         <translation>쓰레드 실행</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1484"/>
+        <location filename="../decrypt_dlg.ui" line="1490"/>
         <source>Dst File Path</source>
         <translation>대상 파일 경로</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1533"/>
+        <location filename="../decrypt_dlg.ui" line="1539"/>
         <source>Dst Information</source>
         <translation>대상 파일 정보</translation>
     </message>
@@ -2888,7 +2892,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation type="vanished">출력 지우기</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1833"/>
+        <location filename="../decrypt_dlg.ui" line="1839"/>
         <source>Init Automatically</source>
         <translation>자동 초기화</translation>
     </message>
@@ -3394,27 +3398,27 @@ Do you want to delete the file and continue?</source>
         <translation>알고리즘</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.ui" line="1297"/>
-        <location filename="../digest_dlg.ui" line="1378"/>
+        <location filename="../digest_dlg.ui" line="1303"/>
+        <location filename="../digest_dlg.ui" line="1384"/>
         <source>Init</source>
         <translation>Init</translation>
     </message>
     <message>
         <location filename="../digest_dlg.ui" line="591"/>
-        <location filename="../digest_dlg.ui" line="1385"/>
+        <location filename="../digest_dlg.ui" line="1391"/>
         <source>Update</source>
         <translation>Update</translation>
     </message>
     <message>
         <location filename="../digest_dlg.ui" line="584"/>
-        <location filename="../digest_dlg.ui" line="1392"/>
+        <location filename="../digest_dlg.ui" line="1398"/>
         <source>Final</source>
         <translation>Final</translation>
     </message>
     <message>
         <location filename="../digest_dlg.ui" line="14"/>
-        <location filename="../digest_dlg.ui" line="1230"/>
-        <location filename="../digest_dlg.ui" line="1324"/>
+        <location filename="../digest_dlg.ui" line="1236"/>
+        <location filename="../digest_dlg.ui" line="1330"/>
         <source>Digest</source>
         <translation>Digest</translation>
     </message>
@@ -3423,7 +3427,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">슬롯 목록</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.ui" line="1371"/>
+        <location filename="../digest_dlg.ui" line="1377"/>
         <source>Close</source>
         <translation>닫기</translation>
     </message>
@@ -3457,17 +3461,17 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../digest_dlg.ui" line="567"/>
-        <location filename="../digest_dlg.ui" line="1243"/>
+        <location filename="../digest_dlg.ui" line="1249"/>
         <source>C</source>
         <translation>C</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.ui" line="1128"/>
+        <location filename="../digest_dlg.ui" line="1134"/>
         <source>Select</source>
         <translation>선택</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.ui" line="1364"/>
+        <location filename="../digest_dlg.ui" line="1370"/>
         <source>Status</source>
         <translation>상태</translation>
     </message>
@@ -3496,12 +3500,12 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">Digest 실패(%1)</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.ui" line="1121"/>
+        <location filename="../digest_dlg.ui" line="1127"/>
         <source>Secret Key</source>
         <translation>비밀 키</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.ui" line="1102"/>
+        <location filename="../digest_dlg.ui" line="1108"/>
         <source>DigestKey</source>
         <translation>DigestKey</translation>
     </message>
@@ -3550,22 +3554,22 @@ Do you want to delete the file and continue?</source>
         <translation>전체 파일 크기</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.ui" line="819"/>
+        <location filename="../digest_dlg.ui" line="822"/>
         <source>File Status</source>
         <translation>파일 상태</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.ui" line="826"/>
+        <location filename="../digest_dlg.ui" line="829"/>
         <source>Read File Size</source>
         <translation>읽은 파일 크기</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.ui" line="974"/>
+        <location filename="../digest_dlg.ui" line="980"/>
         <source>Run Status</source>
         <translation>실행 상태</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.ui" line="981"/>
+        <location filename="../digest_dlg.ui" line="987"/>
         <source>RunThread</source>
         <translation>쓰레드 실행</translation>
     </message>
@@ -3574,7 +3578,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">출력 지우기</translation>
     </message>
     <message>
-        <location filename="../digest_dlg.ui" line="1317"/>
+        <location filename="../digest_dlg.ui" line="1323"/>
         <source>Init automatically</source>
         <translation>자동 초기화</translation>
     </message>
@@ -4006,7 +4010,7 @@ Do you want to delete the file and continue?</source>
         <translation>입력</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1892"/>
+        <location filename="../encrypt_dlg.ui" line="1898"/>
         <source>Close</source>
         <translation>닫기</translation>
     </message>
@@ -4071,37 +4075,37 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../encrypt_dlg.ui" line="1021"/>
-        <location filename="../encrypt_dlg.ui" line="1740"/>
+        <location filename="../encrypt_dlg.ui" line="1746"/>
         <source>C</source>
         <translation>C</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1811"/>
-        <location filename="../encrypt_dlg.ui" line="1859"/>
+        <location filename="../encrypt_dlg.ui" line="1817"/>
+        <location filename="../encrypt_dlg.ui" line="1865"/>
         <source>Init</source>
         <translation>Init</translation>
     </message>
     <message>
         <location filename="../encrypt_dlg.ui" line="1045"/>
-        <location filename="../encrypt_dlg.ui" line="1899"/>
+        <location filename="../encrypt_dlg.ui" line="1905"/>
         <source>Update</source>
         <translation>Update</translation>
     </message>
     <message>
         <location filename="../encrypt_dlg.ui" line="1038"/>
-        <location filename="../encrypt_dlg.ui" line="1906"/>
+        <location filename="../encrypt_dlg.ui" line="1912"/>
         <source>Final</source>
         <translation>Final</translation>
     </message>
     <message>
         <location filename="../encrypt_dlg.ui" line="14"/>
-        <location filename="../encrypt_dlg.ui" line="1671"/>
-        <location filename="../encrypt_dlg.ui" line="1838"/>
+        <location filename="../encrypt_dlg.ui" line="1677"/>
+        <location filename="../encrypt_dlg.ui" line="1844"/>
         <source>Encrypt</source>
         <translation>암호화</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1885"/>
+        <location filename="../encrypt_dlg.ui" line="1891"/>
         <source>Status</source>
         <translation>상태</translation>
     </message>
@@ -4141,7 +4145,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../encrypt_dlg.ui" line="1129"/>
-        <location filename="../encrypt_dlg.ui" line="1499"/>
+        <location filename="../encrypt_dlg.ui" line="1505"/>
         <source>Find</source>
         <translation>찾기</translation>
     </message>
@@ -4156,32 +4160,32 @@ Do you want to delete the file and continue?</source>
         <translation>전체 파일 크기</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1347"/>
+        <location filename="../encrypt_dlg.ui" line="1350"/>
         <source>File Status</source>
         <translation>파일 상태</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1354"/>
+        <location filename="../encrypt_dlg.ui" line="1357"/>
         <source>Read File Size</source>
         <translation>읽은 파일 크기</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1436"/>
+        <location filename="../encrypt_dlg.ui" line="1442"/>
         <source>Run Status</source>
         <translation>실행 상태</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1450"/>
+        <location filename="../encrypt_dlg.ui" line="1456"/>
         <source>RunThread</source>
         <translation>쓰레드 실행</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1473"/>
+        <location filename="../encrypt_dlg.ui" line="1479"/>
         <source>Dst File Path</source>
         <translation>대상 파일 경로</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1522"/>
+        <location filename="../encrypt_dlg.ui" line="1528"/>
         <source>Dst Information</source>
         <translation>대상 파일 정보</translation>
     </message>
@@ -4190,7 +4194,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">출력 지우기</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1831"/>
+        <location filename="../encrypt_dlg.ui" line="1837"/>
         <source>Init Automatically</source>
         <translation>자동 초기화</translation>
     </message>
@@ -4922,7 +4926,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../gen_key_pair_dlg.ui" line="857"/>
-        <location filename="../gen_key_pair_dlg.ui" line="1118"/>
+        <location filename="../gen_key_pair_dlg.ui" line="1141"/>
         <source>Label</source>
         <translation>라벨</translation>
     </message>
@@ -4936,13 +4940,13 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../gen_key_pair_dlg.ui" line="844"/>
-        <location filename="../gen_key_pair_dlg.ui" line="1125"/>
+        <location filename="../gen_key_pair_dlg.ui" line="1148"/>
         <source>Subject</source>
         <translation>주체</translation>
     </message>
     <message>
         <location filename="../gen_key_pair_dlg.ui" line="870"/>
-        <location filename="../gen_key_pair_dlg.ui" line="1148"/>
+        <location filename="../gen_key_pair_dlg.ui" line="1102"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
@@ -4972,7 +4976,7 @@ Do you want to delete the file and continue?</source>
         <translation>공개 키</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.ui" line="1105"/>
+        <location filename="../gen_key_pair_dlg.ui" line="1224"/>
         <source>Exponent</source>
         <translation>Exponent</translation>
     </message>
@@ -5000,7 +5004,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../gen_key_pair_dlg.ui" line="923"/>
-        <location filename="../gen_key_pair_dlg.ui" line="1181"/>
+        <location filename="../gen_key_pair_dlg.ui" line="1253"/>
         <source>Attributes</source>
         <translation>속성</translation>
     </message>
@@ -5019,13 +5023,13 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../gen_key_pair_dlg.ui" line="996"/>
-        <location filename="../gen_key_pair_dlg.ui" line="1196"/>
+        <location filename="../gen_key_pair_dlg.ui" line="1268"/>
         <source>StartDate</source>
         <translation>시작 일자</translation>
     </message>
     <message>
         <location filename="../gen_key_pair_dlg.ui" line="989"/>
-        <location filename="../gen_key_pair_dlg.ui" line="1206"/>
+        <location filename="../gen_key_pair_dlg.ui" line="1278"/>
         <source>EndDate</source>
         <translation>종료 일자</translation>
     </message>
@@ -5097,13 +5101,13 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../gen_key_pair_dlg.ui" line="880"/>
-        <location filename="../gen_key_pair_dlg.ui" line="1155"/>
+        <location filename="../gen_key_pair_dlg.ui" line="1121"/>
         <source>Use SKI</source>
         <translation>SKI 사용</translation>
     </message>
     <message>
         <location filename="../gen_key_pair_dlg.ui" line="907"/>
-        <location filename="../gen_key_pair_dlg.ui" line="1165"/>
+        <location filename="../gen_key_pair_dlg.ui" line="1128"/>
         <source>Same Label</source>
         <translation>동일 라벨</translation>
     </message>
@@ -5113,7 +5117,7 @@ Do you want to delete the file and continue?</source>
         <translation>SignRecover</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.ui" line="1296"/>
+        <location filename="../gen_key_pair_dlg.ui" line="1368"/>
         <source>VerifyRecover</source>
         <translation>VerifyRecover</translation>
     </message>
@@ -5122,7 +5126,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">SKI 설정 실패(rv:%1)</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.ui" line="1236"/>
+        <location filename="../gen_key_pair_dlg.ui" line="1308"/>
         <source>Trusted</source>
         <translation>Trusted</translation>
     </message>
@@ -5142,44 +5146,44 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../gen_key_pair_dlg.ui" line="1055"/>
-        <location filename="../gen_key_pair_dlg.ui" line="1310"/>
+        <location filename="../gen_key_pair_dlg.ui" line="1382"/>
         <source>Copyable</source>
         <translation>Copyable</translation>
     </message>
     <message>
         <location filename="../gen_key_pair_dlg.ui" line="1062"/>
-        <location filename="../gen_key_pair_dlg.ui" line="1303"/>
+        <location filename="../gen_key_pair_dlg.ui" line="1375"/>
         <source>Destroyable</source>
         <translation>Destroyable</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.cpp" line="814"/>
+        <location filename="../gen_key_pair_dlg.cpp" line="816"/>
         <source>GenerateKeyPair execution failure [%1]</source>
         <translation>GenerateKeyPair 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.cpp" line="829"/>
+        <location filename="../gen_key_pair_dlg.cpp" line="831"/>
         <source>failure to set SKI_SPKI [%1]</source>
         <translation>SKI SPKI 설정 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.cpp" line="835"/>
+        <location filename="../gen_key_pair_dlg.cpp" line="837"/>
         <source>GenerateKeyPair execution successful</source>
         <translation>GenerateKeyPair 실행 성공</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.cpp" line="893"/>
-        <location filename="../gen_key_pair_dlg.cpp" line="899"/>
+        <location filename="../gen_key_pair_dlg.cpp" line="900"/>
+        <location filename="../gen_key_pair_dlg.cpp" line="906"/>
         <source>All labels are the same</source>
         <translation>모든 라벨이 같습니다</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.cpp" line="1111"/>
+        <location filename="../gen_key_pair_dlg.cpp" line="1118"/>
         <source>Parameter value is required</source>
         <translation>파라미터 값이 필요합니다</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.cpp" line="1156"/>
+        <location filename="../gen_key_pair_dlg.cpp" line="1163"/>
         <source>fail to decode DH parameters: %1</source>
         <translation>DH 파라미터 디코딩에 실패 하였습니다: %1</translation>
     </message>
@@ -9883,52 +9887,57 @@ Do you want to delete the file and continue?</source>
         <translation>개수</translation>
     </message>
     <message>
-        <location filename="../settings_dlg.ui" line="160"/>
+        <location filename="../settings_dlg.ui" line="163"/>
         <source>Advanced</source>
         <translation>고급</translation>
     </message>
     <message>
-        <location filename="../settings_dlg.ui" line="171"/>
+        <location filename="../settings_dlg.ui" line="174"/>
         <source>Language (need restart )</source>
         <translation>언어(재시동 필요함)</translation>
     </message>
     <message>
-        <location filename="../settings_dlg.ui" line="188"/>
+        <location filename="../settings_dlg.ui" line="191"/>
         <source>Characters</source>
         <translation>문자</translation>
     </message>
     <message>
-        <location filename="../settings_dlg.ui" line="195"/>
+        <location filename="../settings_dlg.ui" line="198"/>
         <source>Use fixed hex area</source>
         <translation>헥사 값 넓이 고정</translation>
     </message>
     <message>
-        <location filename="../settings_dlg.ui" line="346"/>
+        <location filename="../settings_dlg.ui" line="349"/>
         <source>OK</source>
         <translation>확인</translation>
     </message>
     <message>
-        <location filename="../settings_dlg.ui" line="353"/>
+        <location filename="../settings_dlg.ui" line="356"/>
         <source>Restore defaults</source>
         <translation>기본값 복원</translation>
     </message>
     <message>
-        <location filename="../settings_dlg.ui" line="360"/>
+        <location filename="../settings_dlg.ui" line="363"/>
         <source>Cancel</source>
         <translation>취소</translation>
     </message>
     <message>
-        <location filename="../settings_dlg.cpp" line="83"/>
+        <location filename="../settings_dlg.cpp" line="69"/>
+        <source>This font(%1) is not available</source>
+        <translation>이 폰트(%1)는 유효하지 않습니다</translation>
+    </message>
+    <message>
+        <location filename="../settings_dlg.cpp" line="93"/>
         <source>You have changed language. Restart to apply it?</source>
         <translation>언어가 바꼈습니다. 다시 시작 하겠습니까?</translation>
     </message>
     <message>
-        <location filename="../settings_dlg.cpp" line="102"/>
+        <location filename="../settings_dlg.cpp" line="112"/>
         <source>Are you sure you want to clear all the saved settings?</source>
         <translation>정말로 저장된 설정 값을 지우겠습니까?</translation>
     </message>
     <message>
-        <location filename="../settings_dlg.cpp" line="122"/>
+        <location filename="../settings_dlg.cpp" line="132"/>
         <source>Restored to default settings. Restart to apply it?</source>
         <translation>초기 설정 복원 되었습니다. 적용을 위해서 다시 시작 하겠습니까?</translation>
     </message>
@@ -9950,17 +9959,17 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">시작 시 로그탭 보이기</translation>
     </message>
     <message>
-        <location filename="../settings_dlg.ui" line="240"/>
+        <location filename="../settings_dlg.ui" line="243"/>
         <source>Log Level</source>
         <translation>로그 레벨</translation>
     </message>
     <message>
-        <location filename="../settings_dlg.ui" line="299"/>
+        <location filename="../settings_dlg.ui" line="302"/>
         <source>File Read Size</source>
         <translation>파일 읽기 크기</translation>
     </message>
     <message>
-        <location filename="../settings_dlg.ui" line="292"/>
+        <location filename="../settings_dlg.ui" line="295"/>
         <source>The size of the file to be read at one time</source>
         <translation>한번에 읽을 파일 블록 크기</translation>
     </message>
@@ -9975,7 +9984,7 @@ Do you want to delete the file and continue?</source>
         <translation>폰트 패밀리</translation>
     </message>
     <message>
-        <location filename="../settings_dlg.ui" line="137"/>
+        <location filename="../settings_dlg.ui" line="127"/>
         <source>Need to restart</source>
         <translation>재실행 필요함</translation>
     </message>
@@ -10002,7 +10011,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">슬롯 목록</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="1549"/>
+        <location filename="../sign_dlg.ui" line="1555"/>
         <source>Close</source>
         <translation>닫기</translation>
     </message>
@@ -10058,14 +10067,14 @@ Do you want to delete the file and continue?</source>
         <translation>파라미터</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="1468"/>
-        <location filename="../sign_dlg.ui" line="1556"/>
+        <location filename="../sign_dlg.ui" line="1474"/>
+        <location filename="../sign_dlg.ui" line="1562"/>
         <source>Init</source>
         <translation>Init</translation>
     </message>
     <message>
         <location filename="../sign_dlg.ui" line="873"/>
-        <location filename="../sign_dlg.ui" line="1516"/>
+        <location filename="../sign_dlg.ui" line="1522"/>
         <source>Update</source>
         <translation>Update</translation>
     </message>
@@ -10076,24 +10085,24 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../sign_dlg.ui" line="856"/>
-        <location filename="../sign_dlg.ui" line="1404"/>
+        <location filename="../sign_dlg.ui" line="1410"/>
         <source>C</source>
         <translation>C</translation>
     </message>
     <message>
         <location filename="../sign_dlg.ui" line="894"/>
-        <location filename="../sign_dlg.ui" line="1563"/>
+        <location filename="../sign_dlg.ui" line="1569"/>
         <source>Final</source>
         <translation>Final</translation>
     </message>
     <message>
         <location filename="../sign_dlg.ui" line="14"/>
-        <location filename="../sign_dlg.ui" line="1328"/>
+        <location filename="../sign_dlg.ui" line="1334"/>
         <source>Signature</source>
         <translation>서명</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="1542"/>
+        <location filename="../sign_dlg.ui" line="1548"/>
         <source>Status</source>
         <translation>상태</translation>
     </message>
@@ -10102,7 +10111,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">데이타를 입력하세요</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="1495"/>
+        <location filename="../sign_dlg.ui" line="1501"/>
         <source>Sign</source>
         <translation>서명</translation>
     </message>
@@ -10274,17 +10283,17 @@ Do you want to delete the file and continue?</source>
         <translation>전체 파일 크기</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="1188"/>
+        <location filename="../sign_dlg.ui" line="1191"/>
         <source>Read File Size</source>
         <translation>읽은 파일 크기</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="1270"/>
+        <location filename="../sign_dlg.ui" line="1276"/>
         <source>Run Status</source>
         <translation>실행 상태</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="1284"/>
+        <location filename="../sign_dlg.ui" line="1290"/>
         <source>RunThread</source>
         <translation>쓰레드 실행</translation>
     </message>
@@ -10293,7 +10302,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">출력 지우기</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="1488"/>
+        <location filename="../sign_dlg.ui" line="1494"/>
         <source>Init automatically</source>
         <translation>자동 초기화</translation>
     </message>
@@ -10629,26 +10638,26 @@ Do you want to delete the file and continue?</source>
 <context>
     <name>VerifyDlg</name>
     <message>
-        <location filename="../verify_dlg.ui" line="1417"/>
-        <location filename="../verify_dlg.ui" line="1465"/>
+        <location filename="../verify_dlg.ui" line="1423"/>
+        <location filename="../verify_dlg.ui" line="1471"/>
         <source>Init</source>
         <translation>Init</translation>
     </message>
     <message>
         <location filename="../verify_dlg.ui" line="862"/>
-        <location filename="../verify_dlg.ui" line="1492"/>
+        <location filename="../verify_dlg.ui" line="1498"/>
         <source>Update</source>
         <translation>Update</translation>
     </message>
     <message>
         <location filename="../verify_dlg.ui" line="883"/>
-        <location filename="../verify_dlg.ui" line="1512"/>
+        <location filename="../verify_dlg.ui" line="1518"/>
         <source>Final</source>
         <translation>Final</translation>
     </message>
     <message>
         <location filename="../verify_dlg.ui" line="14"/>
-        <location filename="../verify_dlg.ui" line="1444"/>
+        <location filename="../verify_dlg.ui" line="1450"/>
         <source>Verify</source>
         <translation>검증</translation>
     </message>
@@ -10689,12 +10698,12 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../verify_dlg.ui" line="845"/>
-        <location filename="../verify_dlg.ui" line="1393"/>
+        <location filename="../verify_dlg.ui" line="1399"/>
         <source>C</source>
         <translation>C</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="1485"/>
+        <location filename="../verify_dlg.ui" line="1491"/>
         <source>Close</source>
         <translation>닫기</translation>
     </message>
@@ -10714,7 +10723,7 @@ Do you want to delete the file and continue?</source>
         <translation>입력</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="1330"/>
+        <location filename="../verify_dlg.ui" line="1336"/>
         <source>Signature</source>
         <translation>서명</translation>
     </message>
@@ -10744,7 +10753,7 @@ Do you want to delete the file and continue?</source>
         <translation>로그인</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="1505"/>
+        <location filename="../verify_dlg.ui" line="1511"/>
         <source>Status</source>
         <translation>상태</translation>
     </message>
@@ -10840,22 +10849,22 @@ Do you want to delete the file and continue?</source>
         <translation>전체 파일 크기</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="1158"/>
+        <location filename="../verify_dlg.ui" line="1161"/>
         <source>Read File Size</source>
         <translation>읽은 파일 크기</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="1177"/>
+        <location filename="../verify_dlg.ui" line="1183"/>
         <source>File Status</source>
         <translation>파일 상태</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="1266"/>
+        <location filename="../verify_dlg.ui" line="1272"/>
         <source>Run Status</source>
         <translation>실행 상태</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="1273"/>
+        <location filename="../verify_dlg.ui" line="1279"/>
         <source>RunThread</source>
         <translation>쓰레드 실행</translation>
     </message>
@@ -10864,7 +10873,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">서명 지우기</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="1437"/>
+        <location filename="../verify_dlg.ui" line="1443"/>
         <source>Init Automatically</source>
         <translation>자동 초기화</translation>
     </message>
