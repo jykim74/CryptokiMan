@@ -381,6 +381,7 @@ void EditAttributeDlg::clickObjectView()
     }
 
     ObjectViewDlg objectView;
+    objectView.setSlotIndex( slot_index_ );
     objectView.setObject( hObj );
     objectView.exec();
 }
