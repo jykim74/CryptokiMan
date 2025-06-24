@@ -369,7 +369,8 @@ void HsmManDlg::loadCertList()
 
     CK_OBJECT_CLASS objClass = CKO_CERTIFICATE;
 
-    CK_OBJECT_HANDLE hObjects[100];
+    CK_ULONG uMaxObjCnt = manApplet->settingsMgr()->findMaxObjectsCount();
+    CK_OBJECT_HANDLE hObjects[uMaxObjCnt];
     CK_ULONG uObjCnt = 0;
 
     sTemplate[uCount].type = CKA_CLASS;
@@ -382,7 +383,7 @@ void HsmManDlg::loadCertList()
     rv = pP11->FindObjectsInit( slot_info_.getSessionHandle(), sTemplate, uCount );
     if( rv != CKR_OK ) goto end;
 
-    rv = pP11->FindObjects( slot_info_.getSessionHandle(), hObjects, 100, &uObjCnt );
+    rv = pP11->FindObjects( slot_info_.getSessionHandle(), hObjects, uMaxObjCnt, &uObjCnt );
     if( rv != CKR_OK ) goto end;
 
     rv = pP11->FindObjectsFinal( slot_info_.getSessionHandle() );
@@ -467,7 +468,8 @@ void HsmManDlg::loadPublicList()
 
     CK_KEY_TYPE keyType = -1;
 
-    CK_OBJECT_HANDLE hObjects[100];
+    CK_ULONG uMaxObjCnt = manApplet->settingsMgr()->findMaxObjectsCount();
+    CK_OBJECT_HANDLE hObjects[uMaxObjCnt];
     CK_ULONG uObjCnt = 0;
 
     sTemplate[uCount].type = CKA_CLASS;
@@ -492,7 +494,7 @@ void HsmManDlg::loadPublicList()
     rv = pP11->FindObjectsInit( slot_info_.getSessionHandle(), sTemplate, uCount );
     if( rv != CKR_OK ) goto end;
 
-    rv = pP11->FindObjects( slot_info_.getSessionHandle(), hObjects, 100, &uObjCnt );
+    rv = pP11->FindObjects( slot_info_.getSessionHandle(), hObjects, uMaxObjCnt, &uObjCnt );
     if( rv != CKR_OK ) goto end;
 
     rv = pP11->FindObjectsFinal( slot_info_.getSessionHandle() );
@@ -561,8 +563,8 @@ void HsmManDlg::loadPrivateList()
     long uCount = 0;
 
     CK_OBJECT_CLASS objClass = CKO_PRIVATE_KEY;
-
-    CK_OBJECT_HANDLE hObjects[100];
+    CK_ULONG uMaxObjCnt = manApplet->settingsMgr()->findMaxObjectsCount();
+    CK_OBJECT_HANDLE hObjects[uMaxObjCnt];
     CK_ULONG uObjCnt = 0;
 
     sTemplate[uCount].type = CKA_CLASS;
@@ -588,7 +590,7 @@ void HsmManDlg::loadPrivateList()
     rv = pP11->FindObjectsInit( slot_info_.getSessionHandle(), sTemplate, uCount );
     if( rv != CKR_OK ) goto end;
 
-    rv = pP11->FindObjects( slot_info_.getSessionHandle(), hObjects, 100, &uObjCnt );
+    rv = pP11->FindObjects( slot_info_.getSessionHandle(), hObjects, uMaxObjCnt, &uObjCnt );
     if( rv != CKR_OK ) goto end;
 
     rv = pP11->FindObjectsFinal( slot_info_.getSessionHandle() );
@@ -657,7 +659,8 @@ void HsmManDlg::loadSecretList()
     long uCount = 0;
 
     CK_OBJECT_CLASS objClass = CKO_SECRET_KEY;
-    CK_OBJECT_HANDLE hObjects[100];
+    CK_ULONG uMaxObjCnt = manApplet->settingsMgr()->findMaxObjectsCount();
+    CK_OBJECT_HANDLE hObjects[uMaxObjCnt];
     CK_ULONG uObjCnt = 0;
 
     sTemplate[uCount].type = CKA_CLASS;
@@ -683,7 +686,7 @@ void HsmManDlg::loadSecretList()
     rv = pP11->FindObjectsInit( slot_info_.getSessionHandle(), sTemplate, uCount );
     if( rv != CKR_OK ) goto end;
 
-    rv = pP11->FindObjects( slot_info_.getSessionHandle(), hObjects, 100, &uObjCnt );
+    rv = pP11->FindObjects( slot_info_.getSessionHandle(), hObjects, uMaxObjCnt, &uObjCnt );
     if( rv != CKR_OK ) goto end;
 
     rv = pP11->FindObjectsFinal( slot_info_.getSessionHandle() );

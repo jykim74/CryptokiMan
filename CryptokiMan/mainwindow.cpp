@@ -3550,7 +3550,8 @@ void MainWindow::showObjectsInfoList(int index)
     SlotInfo slotInfo = slot_infos.at(index);
 
     CK_ULONG uObjCnt = 0;
-    CK_OBJECT_HANDLE hObjects[100];
+    CK_ULONG uMaxObjCnt = manApplet->settingsMgr()->findMaxObjectsCount();
+    CK_OBJECT_HANDLE hObjects[uMaxObjCnt];
     CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     removeAllRightTable();
@@ -3574,7 +3575,7 @@ void MainWindow::showObjectsInfoList(int index)
     ret = manApplet->cryptokiAPI()->FindObjectsInit( hSession, NULL, 0 );
     if( ret != CKR_OK ) return;
 
-    ret = manApplet->cryptokiAPI()->FindObjects( hSession, hObjects, 100, &uObjCnt );
+    ret = manApplet->cryptokiAPI()->FindObjects( hSession, hObjects, uMaxObjCnt, &uObjCnt );
     if( ret != CKR_OK ) return;
 
     ret = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
@@ -3803,7 +3804,8 @@ void MainWindow::showCertificateInfoList( int index, long hObject )
     CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     CK_ULONG uObjCnt = 0;
-    CK_OBJECT_HANDLE hObjects[100];
+    CK_ULONG uMaxObjCnt = manApplet->settingsMgr()->findMaxObjectsCount();
+    CK_OBJECT_HANDLE hObjects[uMaxObjCnt];
     int rv = 0;
 
     removeAllRightTable();
@@ -3834,7 +3836,7 @@ void MainWindow::showCertificateInfoList( int index, long hObject )
         rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, 1 );
         if( rv != CKR_OK ) return;
 
-        rv = manApplet->cryptokiAPI()->FindObjects( hSession, hObjects, 100, &uObjCnt );
+        rv = manApplet->cryptokiAPI()->FindObjects( hSession, hObjects, uMaxObjCnt, &uObjCnt );
         if( rv != CKR_OK ) return;
 
         rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
@@ -3892,7 +3894,8 @@ void MainWindow::showPublicKeyInfoList( int index, long hObject )
 
     CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
     CK_ULONG uObjCnt = 0;
-    CK_OBJECT_HANDLE hObjects[100];
+    CK_ULONG uMaxObjCnt = manApplet->settingsMgr()->findMaxObjectsCount();
+    CK_OBJECT_HANDLE hObjects[uMaxObjCnt];
 
     int rv = 0;
 
@@ -3936,7 +3939,7 @@ void MainWindow::showPublicKeyInfoList( int index, long hObject )
         rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, uCount );
         if( rv != CKR_OK ) return;
 
-        rv = manApplet->cryptokiAPI()->FindObjects( hSession, hObjects, 100, &uObjCnt );
+        rv = manApplet->cryptokiAPI()->FindObjects( hSession, hObjects, uMaxObjCnt, &uObjCnt );
         if( rv != CKR_OK ) return;
 
         rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
@@ -3984,7 +3987,8 @@ void MainWindow::showPrivateKeyInfoList( int index, long hObject )
     CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     CK_ULONG uObjCnt = 0;
-    CK_OBJECT_HANDLE hObjects[100];
+    CK_ULONG uMaxObjCnt = manApplet->settingsMgr()->findMaxObjectsCount();
+    CK_OBJECT_HANDLE hObjects[uMaxObjCnt];
     int rv = 0;
 
 
@@ -4029,7 +4033,7 @@ void MainWindow::showPrivateKeyInfoList( int index, long hObject )
         rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, uCount );
         if( rv != CKR_OK ) return;
 
-        rv = manApplet->cryptokiAPI()->FindObjects( hSession, hObjects, 100, &uObjCnt );
+        rv = manApplet->cryptokiAPI()->FindObjects( hSession, hObjects, uMaxObjCnt, &uObjCnt );
         if( rv != CKR_OK ) return;
 
         rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
@@ -4076,7 +4080,8 @@ void MainWindow::showSecretKeyInfoList( int index, long hObject )
     CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     CK_ULONG uObjCnt = 0;
-    CK_OBJECT_HANDLE hObjects[100];
+    CK_ULONG uMaxObjCnt = manApplet->settingsMgr()->findMaxObjectsCount();
+    CK_OBJECT_HANDLE hObjects[uMaxObjCnt];
     int rv = 0;
 
     removeAllRightTable();
@@ -4105,7 +4110,7 @@ void MainWindow::showSecretKeyInfoList( int index, long hObject )
         rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, 1 );
         if( rv != CKR_OK ) return;
 
-        rv = manApplet->cryptokiAPI()->FindObjects( hSession, hObjects, 100, &uObjCnt );
+        rv = manApplet->cryptokiAPI()->FindObjects( hSession, hObjects, uMaxObjCnt, &uObjCnt );
         if( rv != CKR_OK ) return;
 
         rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
@@ -4152,7 +4157,8 @@ void MainWindow::showDataInfoList( int index, long hObject )
     CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
     CK_ULONG uObjCnt = 0;
-    CK_OBJECT_HANDLE hObjects[100];
+    CK_ULONG uMaxObjCnt = manApplet->settingsMgr()->findMaxObjectsCount();
+    CK_OBJECT_HANDLE hObjects[uMaxObjCnt];
     int rv = 0;
 
     removeAllRightTable();
@@ -4180,7 +4186,7 @@ void MainWindow::showDataInfoList( int index, long hObject )
         rv = manApplet->cryptokiAPI()->FindObjectsInit( hSession, sTemplate, 1 );
         if( rv != CKR_OK ) return;
 
-        rv = manApplet->cryptokiAPI()->FindObjects( hSession, hObjects, 100, &uObjCnt );
+        rv = manApplet->cryptokiAPI()->FindObjects( hSession, hObjects, uMaxObjCnt, &uObjCnt );
         if( rv != CKR_OK ) return;
 
         rv = manApplet->cryptokiAPI()->FindObjectsFinal( hSession );
