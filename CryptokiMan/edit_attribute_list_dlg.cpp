@@ -447,7 +447,9 @@ void EditAttributeListDlg::setDataAttributes()
     mObjectIDCheck->setEnabled( true );
 
     mClassCheck->setEnabled( true );
+
     mKeyTypeCheck->setEnabled( false );
+    mKeyTypeText->setEnabled( false );
 
     mTokenCheck->setEnabled(true);
     mPrivateCheck->setEnabled(true);
@@ -478,6 +480,7 @@ void EditAttributeListDlg::setCertAttributes()
 
     mClassCheck->setEnabled( true );
     mKeyTypeCheck->setEnabled( false );
+    mKeyTypeText->setEnabled( false );
 
     mTokenCheck->setEnabled(true);
     mPrivateCheck->setEnabled(true);
@@ -508,6 +511,7 @@ void EditAttributeListDlg::setSecretAttributes()
 
     mClassCheck->setEnabled( true );
     mKeyTypeCheck->setEnabled( true );
+    mKeyTypeText->setEnabled( true );
 
     mPrivateCheck->setEnabled(true);
     mSensitiveCheck->setEnabled(true);
@@ -537,6 +541,7 @@ void EditAttributeListDlg::setPublicAttributes()
 
     mClassCheck->setEnabled( true );
     mKeyTypeCheck->setEnabled( true );
+    mKeyTypeText->setEnabled( true );
 
     mPrivateCheck->setEnabled(true);
     mWrapCheck->setEnabled(true);
@@ -567,6 +572,7 @@ void EditAttributeListDlg::setPrivateAttributes()
 
     mClassCheck->setEnabled( true );
     mKeyTypeCheck->setEnabled( true );
+    mKeyTypeText->setEnabled( true );
 
     mPrivateCheck->setEnabled(true);
     mSensitiveCheck->setEnabled(true);

@@ -3,6 +3,8 @@
  *
  * All rights reserved.
  */
+#include <QValidator>
+
 #include "find_object_dlg.h"
 #include "man_applet.h"
 #include "mainwindow.h"
@@ -174,8 +176,12 @@ void FindObjectDlg::changeKeyType( int index )
 void FindObjectDlg::initUI()
 {
     int nMaxCnt = manApplet->settingsMgr()->findMaxObjectsCount();
+    QValidator *validator = new QIntValidator( 0, 999 );
+
     mClassCombo->addItems( kClassList );
-    mMaxText->setText( QString("%1").arg( nMaxCnt ));
+
+    mMaxCountText->setValidator( validator );
+    mMaxCountText->setText( QString("%1").arg( nMaxCnt ));
 
     sSymKeyTypeList = kSymKeyList;
     sAsymKeyTypeList = kAsymTypeList;
@@ -369,7 +375,7 @@ void FindObjectDlg::clickEndDate()
 void FindObjectDlg::clickFindObjects()
 {
     int rv = 0;
-    int nMaxCnt = manApplet->settingsMgr()->getFindMaxObjectsCount();
+    int nMaxCnt = mMaxCountText->text().toInt();
 
     CK_SESSION_HANDLE hSession = slot_info_.getSessionHandle();
 

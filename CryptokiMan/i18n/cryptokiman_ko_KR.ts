@@ -3819,157 +3819,157 @@ Do you want to delete the file and continue?</source>
         <translation>세션</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="341"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="348"/>
         <source>Class</source>
         <translation>클래스</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="380"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="387"/>
         <source>Key Type</source>
         <translation>키 타입</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="410"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="417"/>
         <source>Label</source>
         <translation>라벨</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="423"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="430"/>
         <source>Application</source>
         <translation>어플리케이션</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="433"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="440"/>
         <source>Object ID</source>
         <translation>객체 ID</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="440"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="447"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="643"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="650"/>
         <source>Attributes</source>
         <translation>속성</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="652"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="659"/>
         <source>Modifiable</source>
         <translation>Modifiable</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="659"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="666"/>
         <source>Trusted</source>
         <translation>Trusted</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="666"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="673"/>
         <source>StartDate</source>
         <translation>시작 일자</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="682"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="689"/>
         <source>Unwrap</source>
         <translation>Unwrap</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="692"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="699"/>
         <source>Token</source>
         <translation>Token</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="711"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="718"/>
         <source>Private</source>
         <translation>Private</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="718"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="725"/>
         <source>Sensitive</source>
         <translation>Sensitive</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="725"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="732"/>
         <source>Wrap</source>
         <translation>Wrap</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="735"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="742"/>
         <source>Encrypt</source>
         <translation>Encrypt</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="742"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="749"/>
         <source>Sign</source>
         <translation>Sign</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="749"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="756"/>
         <source>Extractable</source>
         <translation>Extractable</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="756"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="763"/>
         <source>Copyable</source>
         <translation>Copyable</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="763"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="770"/>
         <source>EndDate</source>
         <translation>종료 일자</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="770"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="777"/>
         <source>Decrypt</source>
         <translation>Decrypt</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="777"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="784"/>
         <source>Verify</source>
         <translation>Verify</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="784"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="791"/>
         <source>Derive</source>
         <translation>Derive</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="791"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="798"/>
         <source>Destroyable</source>
         <translation>Destroyable</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="846"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="853"/>
         <source>GetAttribute</source>
         <translation>GetAttribute</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="853"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="860"/>
         <source>Close</source>
         <translation>닫기</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="860"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="867"/>
         <source>SetAttribute</source>
         <translation>SetAttribute</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.cpp" line="757"/>
+        <location filename="../edit_attribute_list_dlg.cpp" line="763"/>
         <source>fail to get attribute values(%1)</source>
         <translation>속성 가져오기 실패(%1)</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.cpp" line="761"/>
+        <location filename="../edit_attribute_list_dlg.cpp" line="767"/>
         <source>Success to get attribute values</source>
         <translation>속성값 가져오기 성공</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.cpp" line="1224"/>
+        <location filename="../edit_attribute_list_dlg.cpp" line="1230"/>
         <source>SetAttributeValue execution failure [%1]</source>
         <translation>SetAttributeValue2 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.cpp" line="1228"/>
+        <location filename="../edit_attribute_list_dlg.cpp" line="1234"/>
         <source>SetAttributeValue execution successful</source>
         <translation>SetAttributeValue2 실행 성공</translation>
     </message>
@@ -4543,14 +4543,13 @@ Do you want to delete the file and continue?</source>
         <translation>슬롯 ID</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="432"/>
+        <location filename="../find_object_dlg.ui" line="435"/>
         <source>Key Type</source>
         <translation>키 타입</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="307"/>
         <source>Max</source>
-        <translation>최대</translation>
+        <translation type="vanished">최대</translation>
     </message>
     <message>
         <location filename="../find_object_dlg.ui" line="42"/>
@@ -4558,142 +4557,147 @@ Do you want to delete the file and continue?</source>
         <translation>슬롯 이름</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="352"/>
+        <location filename="../find_object_dlg.ui" line="307"/>
+        <source>Max Count</source>
+        <translation>최대 개수</translation>
+    </message>
+    <message>
+        <location filename="../find_object_dlg.ui" line="355"/>
         <source>Class</source>
         <translation>클래스</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="372"/>
+        <location filename="../find_object_dlg.ui" line="375"/>
         <source>Information</source>
         <translation>정보</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="459"/>
+        <location filename="../find_object_dlg.ui" line="462"/>
         <source>Subject</source>
         <translation>주체</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="475"/>
+        <location filename="../find_object_dlg.ui" line="478"/>
         <source>Label</source>
         <translation>라벨</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="485"/>
+        <location filename="../find_object_dlg.ui" line="488"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="498"/>
+        <location filename="../find_object_dlg.ui" line="501"/>
         <source>PubKeyInfo</source>
         <translation>공개키 정보</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="508"/>
+        <location filename="../find_object_dlg.ui" line="511"/>
         <source>Application</source>
         <translation>어플리케이션</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="515"/>
+        <location filename="../find_object_dlg.ui" line="518"/>
         <source>Object ID</source>
         <translation>객체 ID</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="528"/>
+        <location filename="../find_object_dlg.ui" line="531"/>
         <source>Boolean</source>
         <translation>Boolean</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="536"/>
+        <location filename="../find_object_dlg.ui" line="539"/>
         <source>Wrap</source>
         <translation>Wrap</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="543"/>
+        <location filename="../find_object_dlg.ui" line="546"/>
         <source>Encrypt</source>
         <translation>암호화</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="562"/>
+        <location filename="../find_object_dlg.ui" line="565"/>
         <source>EndDate</source>
         <translation>종료 일자</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="575"/>
+        <location filename="../find_object_dlg.ui" line="578"/>
         <source>Modifiable</source>
         <translation>Modifiable</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="582"/>
+        <location filename="../find_object_dlg.ui" line="585"/>
         <source>Unwrap</source>
         <translation>Unwrap</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="592"/>
+        <location filename="../find_object_dlg.ui" line="595"/>
         <source>StartDate</source>
         <translation>시작 일자</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="599"/>
+        <location filename="../find_object_dlg.ui" line="602"/>
         <source>Sensitive</source>
         <translation>Sensitive</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="612"/>
+        <location filename="../find_object_dlg.ui" line="615"/>
         <source>Extractable</source>
         <translation>Extractable</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="619"/>
+        <location filename="../find_object_dlg.ui" line="622"/>
         <source>Destroyable</source>
         <translation>Destroyable</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="626"/>
+        <location filename="../find_object_dlg.ui" line="629"/>
         <source>Verify</source>
         <translation>Verify</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="642"/>
+        <location filename="../find_object_dlg.ui" line="645"/>
         <source>Private</source>
         <translation>Private</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="649"/>
+        <location filename="../find_object_dlg.ui" line="652"/>
         <source>Copyable</source>
         <translation>Copyable</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="656"/>
+        <location filename="../find_object_dlg.ui" line="659"/>
         <source>Sign</source>
         <translation>Sign</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="663"/>
+        <location filename="../find_object_dlg.ui" line="666"/>
         <source>Trusted</source>
         <translation>Trusted</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="670"/>
+        <location filename="../find_object_dlg.ui" line="673"/>
         <source>Decrypt</source>
         <translation>Decrypt</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="680"/>
+        <location filename="../find_object_dlg.ui" line="683"/>
         <source>Derive</source>
         <translation>Derive</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="693"/>
+        <location filename="../find_object_dlg.ui" line="696"/>
         <source>Token</source>
         <translation>Token</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="721"/>
+        <location filename="../find_object_dlg.ui" line="744"/>
         <source>Close</source>
         <translation>닫기</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="741"/>
+        <location filename="../find_object_dlg.ui" line="737"/>
         <source>Find Objets</source>
         <translation>객체 찾기</translation>
     </message>
@@ -5372,33 +5376,33 @@ Do you want to delete the file and continue?</source>
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="748"/>
-        <location filename="../hsm_man_dlg.cpp" line="785"/>
-        <location filename="../hsm_man_dlg.cpp" line="815"/>
-        <location filename="../hsm_man_dlg.cpp" line="865"/>
-        <location filename="../hsm_man_dlg.cpp" line="931"/>
-        <location filename="../hsm_man_dlg.cpp" line="956"/>
-        <location filename="../hsm_man_dlg.cpp" line="986"/>
-        <location filename="../hsm_man_dlg.cpp" line="1025"/>
-        <location filename="../hsm_man_dlg.cpp" line="1052"/>
-        <location filename="../hsm_man_dlg.cpp" line="1080"/>
-        <location filename="../hsm_man_dlg.cpp" line="1105"/>
-        <location filename="../hsm_man_dlg.cpp" line="1135"/>
-        <location filename="../hsm_man_dlg.cpp" line="1173"/>
-        <location filename="../hsm_man_dlg.cpp" line="1200"/>
-        <location filename="../hsm_man_dlg.cpp" line="1227"/>
-        <location filename="../hsm_man_dlg.cpp" line="1251"/>
-        <location filename="../hsm_man_dlg.cpp" line="1281"/>
-        <location filename="../hsm_man_dlg.cpp" line="1308"/>
-        <location filename="../hsm_man_dlg.cpp" line="1335"/>
-        <location filename="../hsm_man_dlg.cpp" line="1362"/>
-        <location filename="../hsm_man_dlg.cpp" line="1413"/>
+        <location filename="../hsm_man_dlg.cpp" line="751"/>
+        <location filename="../hsm_man_dlg.cpp" line="788"/>
+        <location filename="../hsm_man_dlg.cpp" line="818"/>
+        <location filename="../hsm_man_dlg.cpp" line="868"/>
+        <location filename="../hsm_man_dlg.cpp" line="934"/>
+        <location filename="../hsm_man_dlg.cpp" line="959"/>
+        <location filename="../hsm_man_dlg.cpp" line="989"/>
+        <location filename="../hsm_man_dlg.cpp" line="1028"/>
+        <location filename="../hsm_man_dlg.cpp" line="1055"/>
+        <location filename="../hsm_man_dlg.cpp" line="1083"/>
+        <location filename="../hsm_man_dlg.cpp" line="1108"/>
+        <location filename="../hsm_man_dlg.cpp" line="1138"/>
+        <location filename="../hsm_man_dlg.cpp" line="1176"/>
+        <location filename="../hsm_man_dlg.cpp" line="1203"/>
+        <location filename="../hsm_man_dlg.cpp" line="1230"/>
+        <location filename="../hsm_man_dlg.cpp" line="1254"/>
+        <location filename="../hsm_man_dlg.cpp" line="1284"/>
+        <location filename="../hsm_man_dlg.cpp" line="1311"/>
+        <location filename="../hsm_man_dlg.cpp" line="1338"/>
+        <location filename="../hsm_man_dlg.cpp" line="1365"/>
+        <location filename="../hsm_man_dlg.cpp" line="1416"/>
         <source>There are no selected items</source>
         <translation>선택한 아이템이 없습니다</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="767"/>
-        <location filename="../hsm_man_dlg.cpp" line="834"/>
+        <location filename="../hsm_man_dlg.cpp" line="770"/>
+        <location filename="../hsm_man_dlg.cpp" line="837"/>
         <source>failed to get certificate: %1</source>
         <translation>인증서 정보 가져오기 실패: %1</translation>
     </message>
@@ -5407,73 +5411,73 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">인증서를 정말로 지우겠습니까?</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="797"/>
+        <location filename="../hsm_man_dlg.cpp" line="800"/>
         <source>Are you sure to delete the ceritificate?</source>
         <translation>인증서를 정말로 지우겠습니까?</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="803"/>
-        <location filename="../hsm_man_dlg.cpp" line="916"/>
+        <location filename="../hsm_man_dlg.cpp" line="806"/>
+        <location filename="../hsm_man_dlg.cpp" line="919"/>
         <source>The certificate is deleted</source>
         <translation>인증서가 삭제 되었습니다</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="843"/>
+        <location filename="../hsm_man_dlg.cpp" line="846"/>
         <source>Invalid certificate</source>
         <translation>유효하지 않는 인증서</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="880"/>
+        <location filename="../hsm_man_dlg.cpp" line="883"/>
         <source>Do you want to delete a certificate and key pair with the same CKA_ID?</source>
         <translation>인증서와 동일한 CKA_ID 를 가진 키 쌍 모두 지우겠습니까?</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="889"/>
+        <location filename="../hsm_man_dlg.cpp" line="892"/>
         <source>fail to get private handle: %1</source>
         <translation>개인키 핸들 가져오기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="896"/>
+        <location filename="../hsm_man_dlg.cpp" line="899"/>
         <source>fail to get public handle: %1</source>
         <translation>공개키 핸들 가져오기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1004"/>
+        <location filename="../hsm_man_dlg.cpp" line="1007"/>
         <source>failed to get public key: %1</source>
         <translation>공개키 가져오기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="968"/>
+        <location filename="../hsm_man_dlg.cpp" line="971"/>
         <source>Are you sure to delete the public key</source>
         <translation>공개키를 정말로 지우겠습니까?</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="974"/>
+        <location filename="../hsm_man_dlg.cpp" line="977"/>
         <source>The public key is deleted</source>
         <translation>공개키가 삭제 되었습니다</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1153"/>
+        <location filename="../hsm_man_dlg.cpp" line="1156"/>
         <source>failed to get private key: %1</source>
         <translation>개인키 가져오기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1117"/>
+        <location filename="../hsm_man_dlg.cpp" line="1120"/>
         <source>Are you sure to delete the private key</source>
         <translation>개인키를 정말로 지우겠습니까?</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1123"/>
+        <location filename="../hsm_man_dlg.cpp" line="1126"/>
         <source>The private key is deleted</source>
         <translation>개인키가 삭제 되었습니다</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1263"/>
+        <location filename="../hsm_man_dlg.cpp" line="1266"/>
         <source>Are you sure to delete the secret key</source>
         <translation>비밀키를 정말로 지우겠습니까?</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1269"/>
+        <location filename="../hsm_man_dlg.cpp" line="1272"/>
         <source>The secret key is deleted</source>
         <translation>비밀키가 삭제 되었습니다</translation>
     </message>
@@ -8130,70 +8134,70 @@ Do you want to delete the file and continue?</source>
         <translation>플래그</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3558"/>
+        <location filename="../mainwindow.cpp" line="3559"/>
         <source>Class</source>
         <translation>클래스</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3558"/>
+        <location filename="../mainwindow.cpp" line="3559"/>
         <source>Objet Size</source>
         <translation>객체 크기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3558"/>
-        <location filename="../mainwindow.cpp" line="3811"/>
-        <location filename="../mainwindow.cpp" line="3900"/>
-        <location filename="../mainwindow.cpp" line="3993"/>
-        <location filename="../mainwindow.cpp" line="4083"/>
-        <location filename="../mainwindow.cpp" line="4159"/>
-        <location filename="../mainwindow.cpp" line="4844"/>
-        <location filename="../mainwindow.cpp" line="4915"/>
-        <location filename="../mainwindow.cpp" line="4976"/>
-        <location filename="../mainwindow.cpp" line="5036"/>
-        <location filename="../mainwindow.cpp" line="5096"/>
+        <location filename="../mainwindow.cpp" line="3559"/>
+        <location filename="../mainwindow.cpp" line="3813"/>
+        <location filename="../mainwindow.cpp" line="3903"/>
+        <location filename="../mainwindow.cpp" line="3997"/>
+        <location filename="../mainwindow.cpp" line="4088"/>
+        <location filename="../mainwindow.cpp" line="4165"/>
+        <location filename="../mainwindow.cpp" line="4850"/>
+        <location filename="../mainwindow.cpp" line="4921"/>
+        <location filename="../mainwindow.cpp" line="4982"/>
+        <location filename="../mainwindow.cpp" line="5042"/>
+        <location filename="../mainwindow.cpp" line="5102"/>
         <source>Handle</source>
         <translation>핸들</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3811"/>
-        <location filename="../mainwindow.cpp" line="3900"/>
-        <location filename="../mainwindow.cpp" line="3993"/>
-        <location filename="../mainwindow.cpp" line="4083"/>
-        <location filename="../mainwindow.cpp" line="4159"/>
-        <location filename="../mainwindow.cpp" line="4844"/>
-        <location filename="../mainwindow.cpp" line="4915"/>
-        <location filename="../mainwindow.cpp" line="4976"/>
-        <location filename="../mainwindow.cpp" line="5036"/>
-        <location filename="../mainwindow.cpp" line="5096"/>
+        <location filename="../mainwindow.cpp" line="3813"/>
+        <location filename="../mainwindow.cpp" line="3903"/>
+        <location filename="../mainwindow.cpp" line="3997"/>
+        <location filename="../mainwindow.cpp" line="4088"/>
+        <location filename="../mainwindow.cpp" line="4165"/>
+        <location filename="../mainwindow.cpp" line="4850"/>
+        <location filename="../mainwindow.cpp" line="4921"/>
+        <location filename="../mainwindow.cpp" line="4982"/>
+        <location filename="../mainwindow.cpp" line="5042"/>
+        <location filename="../mainwindow.cpp" line="5102"/>
         <source>Label</source>
         <translation>라벨</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="3410"/>
-        <location filename="../mainwindow.cpp" line="3811"/>
-        <location filename="../mainwindow.cpp" line="3900"/>
-        <location filename="../mainwindow.cpp" line="3993"/>
-        <location filename="../mainwindow.cpp" line="4083"/>
-        <location filename="../mainwindow.cpp" line="4844"/>
-        <location filename="../mainwindow.cpp" line="4915"/>
-        <location filename="../mainwindow.cpp" line="4976"/>
-        <location filename="../mainwindow.cpp" line="5036"/>
+        <location filename="../mainwindow.cpp" line="3813"/>
+        <location filename="../mainwindow.cpp" line="3903"/>
+        <location filename="../mainwindow.cpp" line="3997"/>
+        <location filename="../mainwindow.cpp" line="4088"/>
+        <location filename="../mainwindow.cpp" line="4850"/>
+        <location filename="../mainwindow.cpp" line="4921"/>
+        <location filename="../mainwindow.cpp" line="4982"/>
+        <location filename="../mainwindow.cpp" line="5042"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3811"/>
-        <location filename="../mainwindow.cpp" line="4844"/>
+        <location filename="../mainwindow.cpp" line="3813"/>
+        <location filename="../mainwindow.cpp" line="4850"/>
         <source>Subject</source>
         <translation>주체</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3900"/>
-        <location filename="../mainwindow.cpp" line="3993"/>
-        <location filename="../mainwindow.cpp" line="4083"/>
-        <location filename="../mainwindow.cpp" line="4915"/>
-        <location filename="../mainwindow.cpp" line="4976"/>
-        <location filename="../mainwindow.cpp" line="5036"/>
+        <location filename="../mainwindow.cpp" line="3903"/>
+        <location filename="../mainwindow.cpp" line="3997"/>
+        <location filename="../mainwindow.cpp" line="4088"/>
+        <location filename="../mainwindow.cpp" line="4921"/>
+        <location filename="../mainwindow.cpp" line="4982"/>
+        <location filename="../mainwindow.cpp" line="5042"/>
         <source>KeyType</source>
         <translation>키 타입</translation>
     </message>
@@ -8342,14 +8346,14 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">라이선스가 변경 되었습니다.적용을 위해 다시 시작 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="4159"/>
-        <location filename="../mainwindow.cpp" line="5096"/>
+        <location filename="../mainwindow.cpp" line="4165"/>
+        <location filename="../mainwindow.cpp" line="5102"/>
         <source>Application</source>
         <translation>어플리케이션</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="4159"/>
-        <location filename="../mainwindow.cpp" line="5096"/>
+        <location filename="../mainwindow.cpp" line="4165"/>
+        <location filename="../mainwindow.cpp" line="5102"/>
         <source>ObejctID</source>
         <translation>객체 ID</translation>
     </message>
@@ -10406,7 +10410,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../unwrap_key_dlg.ui" line="479"/>
-        <location filename="../unwrap_key_dlg.ui" line="906"/>
+        <location filename="../unwrap_key_dlg.ui" line="909"/>
         <source>Label</source>
         <translation>라벨</translation>
     </message>
@@ -10445,12 +10449,12 @@ Do you want to delete the file and continue?</source>
         <translation>선택</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="655"/>
+        <location filename="../unwrap_key_dlg.ui" line="658"/>
         <source>Param</source>
         <translation>파라미터</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="734"/>
+        <location filename="../unwrap_key_dlg.ui" line="737"/>
         <source>Key</source>
         <translation>키</translation>
     </message>
@@ -10463,7 +10467,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">Unwrap</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="781"/>
+        <location filename="../unwrap_key_dlg.ui" line="784"/>
         <source>Class</source>
         <translation>클래스</translation>
     </message>
@@ -10473,12 +10477,12 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../unwrap_key_dlg.ui" line="563"/>
-        <location filename="../unwrap_key_dlg.ui" line="762"/>
+        <location filename="../unwrap_key_dlg.ui" line="765"/>
         <source>Type</source>
         <translation>타입</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="942"/>
+        <location filename="../unwrap_key_dlg.ui" line="945"/>
         <source>Attributes</source>
         <translation>속성</translation>
     </message>
@@ -10487,7 +10491,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">토큰</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="740"/>
+        <location filename="../unwrap_key_dlg.ui" line="743"/>
         <source>Key Properties</source>
         <translation>키 속성</translation>
     </message>
@@ -10525,7 +10529,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">추출가능한</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="913"/>
+        <location filename="../unwrap_key_dlg.ui" line="916"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
@@ -10546,17 +10550,17 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">Unwrap Key</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="1078"/>
+        <location filename="../unwrap_key_dlg.ui" line="1081"/>
         <source>StartDate</source>
         <translation>시작 일자</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="1114"/>
+        <location filename="../unwrap_key_dlg.ui" line="1117"/>
         <source>EndDate</source>
         <translation>종료 일자</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="990"/>
+        <location filename="../unwrap_key_dlg.ui" line="993"/>
         <source>Derive</source>
         <translation>유도</translation>
     </message>
@@ -10580,32 +10584,32 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">암호화된 키 값을 입력하세요</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="923"/>
+        <location filename="../unwrap_key_dlg.ui" line="926"/>
         <source>Use Random</source>
         <translation>랜덤 사용</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="1010"/>
+        <location filename="../unwrap_key_dlg.ui" line="1013"/>
         <source>SignRecover</source>
         <translation>SignRecover</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="1068"/>
+        <location filename="../unwrap_key_dlg.ui" line="1071"/>
         <source>VerifyRecover</source>
         <translation>VerifyRecover</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="1061"/>
+        <location filename="../unwrap_key_dlg.ui" line="1064"/>
         <source>Trusted</source>
         <translation>Trusted</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="1121"/>
+        <location filename="../unwrap_key_dlg.ui" line="1124"/>
         <source>Destroyable</source>
         <translation>Destroyable</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="1128"/>
+        <location filename="../unwrap_key_dlg.ui" line="1131"/>
         <source>Copyable</source>
         <translation>Copyable</translation>
     </message>
@@ -11009,18 +11013,18 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../wrap_key_dlg.ui" line="299"/>
-        <location filename="../wrap_key_dlg.ui" line="711"/>
+        <location filename="../wrap_key_dlg.ui" line="714"/>
         <source>Label</source>
         <translation>라벨</translation>
     </message>
     <message>
         <location filename="../wrap_key_dlg.ui" line="397"/>
-        <location filename="../wrap_key_dlg.ui" line="635"/>
+        <location filename="../wrap_key_dlg.ui" line="638"/>
         <source>Select</source>
         <translation>선택</translation>
     </message>
     <message>
-        <location filename="../wrap_key_dlg.ui" line="524"/>
+        <location filename="../wrap_key_dlg.ui" line="527"/>
         <source>Param</source>
         <translation>파라미터</translation>
     </message>
@@ -11035,7 +11039,7 @@ Do you want to delete the file and continue?</source>
         <translation>슬롯 이름</translation>
     </message>
     <message>
-        <location filename="../wrap_key_dlg.ui" line="608"/>
+        <location filename="../wrap_key_dlg.ui" line="611"/>
         <source>Wrapped Key</source>
         <translation>Wrapped Key</translation>
     </message>
@@ -11063,7 +11067,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../wrap_key_dlg.ui" line="306"/>
-        <location filename="../wrap_key_dlg.ui" line="642"/>
+        <location filename="../wrap_key_dlg.ui" line="645"/>
         <source>Object</source>
         <translation>대상</translation>
     </message>
@@ -11081,33 +11085,33 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">Wrap Key</translation>
     </message>
     <message>
-        <location filename="../wrap_key_dlg.ui" line="445"/>
-        <location filename="../wrap_key_dlg.ui" line="601"/>
+        <location filename="../wrap_key_dlg.ui" line="448"/>
+        <location filename="../wrap_key_dlg.ui" line="604"/>
         <source>Type</source>
         <translation>타입</translation>
     </message>
     <message>
-        <location filename="../wrap_key_dlg.ui" line="762"/>
+        <location filename="../wrap_key_dlg.ui" line="765"/>
         <source>Output</source>
         <translation>결과</translation>
     </message>
     <message>
-        <location filename="../wrap_key_dlg.ui" line="911"/>
+        <location filename="../wrap_key_dlg.ui" line="914"/>
         <source>Output Clear</source>
         <translation>출력 지우기</translation>
     </message>
     <message>
-        <location filename="../wrap_key_dlg.ui" line="918"/>
+        <location filename="../wrap_key_dlg.ui" line="921"/>
         <source>Save File</source>
         <translation>파일 저장</translation>
     </message>
     <message>
-        <location filename="../wrap_key_dlg.ui" line="925"/>
+        <location filename="../wrap_key_dlg.ui" line="928"/>
         <source>WrapKey</source>
         <translation>Wrap Key</translation>
     </message>
     <message>
-        <location filename="../wrap_key_dlg.ui" line="946"/>
+        <location filename="../wrap_key_dlg.ui" line="949"/>
         <source>Close</source>
         <translation>닫기</translation>
     </message>

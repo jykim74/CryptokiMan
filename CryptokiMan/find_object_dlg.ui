@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>645</width>
-    <height>545</height>
+    <width>552</width>
+    <height>440</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -304,7 +304,7 @@
      <item row="0" column="7">
       <widget class="QLabel" name="label_15">
        <property name="text">
-        <string>Max</string>
+        <string>Max Count</string>
        </property>
       </widget>
      </item>
@@ -312,7 +312,7 @@
       <widget class="QComboBox" name="mClassCombo"/>
      </item>
      <item row="0" column="8">
-      <widget class="QLineEdit" name="mMaxText">
+      <widget class="QLineEdit" name="mMaxCountText">
        <property name="minimumSize">
         <size>
          <width>40</width>
@@ -324,6 +324,9 @@
          <width>40</width>
          <height>16777215</height>
         </size>
+       </property>
+       <property name="maxLength">
+        <number>3</number>
        </property>
       </widget>
      </item>
@@ -715,14 +718,7 @@
    </item>
    <item>
     <layout class="QGridLayout" name="gridLayout_3">
-     <item row="0" column="3">
-      <widget class="QPushButton" name="mCloseBtn">
-       <property name="text">
-        <string>Close</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
+     <item row="0" column="0">
       <spacer name="horizontalSpacer_2">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -735,10 +731,17 @@
        </property>
       </spacer>
      </item>
-     <item row="0" column="2">
+     <item row="0" column="1">
       <widget class="QPushButton" name="mFindObjectsBtn">
        <property name="text">
         <string>Find Objets</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QPushButton" name="mCloseBtn">
+       <property name="text">
+        <string>Close</string>
        </property>
       </widget>
      </item>
@@ -752,7 +755,7 @@
   <tabstop>mLoginText</tabstop>
   <tabstop>mClassCombo</tabstop>
   <tabstop>mClassText</tabstop>
-  <tabstop>mMaxText</tabstop>
+  <tabstop>mMaxCountText</tabstop>
   <tabstop>tabWidget</tabstop>
   <tabstop>mLabelText</tabstop>
   <tabstop>mIDText</tabstop>
