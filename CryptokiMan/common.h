@@ -198,4 +198,6 @@ void setAES_CCMParam( const BIN *pIV, const BIN *pAAD, int nSrcLen, int nReqLen,
 bool isRSA_PSS( int nMech );
 const QString getMechHex( long uMech );
 
+void getOID( const QString strType, const QString strValue, BIN *pOID );
+
 #endif // COMMON_H

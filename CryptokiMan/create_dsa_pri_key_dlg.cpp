@@ -67,7 +67,13 @@ void CreateDSAPriKeyDlg::setSlotIndex(int index)
 
 void CreateDSAPriKeyDlg::initialize()
 {
-
+    mLabelText->setPlaceholderText( tr("String value" ));
+    mIDText->setPlaceholderText( tr("Hex value" ));
+    mPubKeyInfoText->setPlaceholderText( tr("Hex value" ));
+    mPText->setPlaceholderText( tr("Hex value" ));
+    mQText->setPlaceholderText( tr("Hex value" ));
+    mGText->setPlaceholderText( tr("Hex value" ));
+    mKeyValueText->setPlaceholderText( tr("Hex value" ));
 }
 
 void CreateDSAPriKeyDlg::initAttributes()
@@ -631,31 +637,11 @@ void CreateDSAPriKeyDlg::setDefaults()
 {
     mParamCombo->setCurrentText( "2048" );
 
-    mLabelText->setText( "DSA Private Label" );
-    mIDText->setText( "01020304" );
+//    mLabelText->setText( "DSA Private Label" );
+//    mIDText->setText( "01020304" );
 
     mUseSKICheck->setChecked(true);
     clickUseSKI();
-//    mUseSPKICheck->click();
-
-    /*
-    mPrivateCheck->setChecked(true);
-    mPrivateCombo->setEnabled(true);
-    mPrivateCombo->setCurrentIndex(1);
-
-
-    mSignCheck->setChecked(true);
-    mSignCombo->setEnabled(true);
-    mSignCombo->setCurrentIndex(1);
-
-    mDecryptCheck->setChecked(true);
-    mDecryptCombo->setEnabled(true);
-    mDecryptCombo->setCurrentIndex(1);
-
-    mTokenCheck->setChecked(true);
-    mTokenCombo->setEnabled(true);
-    mTokenCombo->setCurrentIndex(1);
-    */
 
     QDateTime nowTime;
     nowTime.setSecsSinceEpoch( time(NULL) );

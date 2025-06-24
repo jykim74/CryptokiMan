@@ -112,6 +112,7 @@ void FindObjectDlg::changeClass( int index )
     mApplicationText->setEnabled( false );
 
     mObjectIDLabel->setEnabled( false );
+    mObjectIDTypeCombo->setEnabled( false );
     mObjectIDText->setEnabled( false );
 
     if( uClass == CKO_DATA )
@@ -122,6 +123,7 @@ void FindObjectDlg::changeClass( int index )
         mApplicationText->setEnabled( true );
 
         mObjectIDLabel->setEnabled( true );
+        mObjectIDTypeCombo->setEnabled( true );
         mObjectIDText->setEnabled( true );
     }
     else if( uClass == CKO_CERTIFICATE )
@@ -188,6 +190,15 @@ void FindObjectDlg::initUI()
 
     mKeyTypeCombo->addItem( "" );
     mKeyTypeCombo->addItems( sSymKeyTypeList );
+
+    mObjectIDTypeCombo->addItems( kOIDTypeList );
+
+    mLabelText->setPlaceholderText( tr("String value" ));
+    mIDText->setPlaceholderText( tr("Hex value" ));
+    mSubjectText->setPlaceholderText( tr("Hex vallue" ));
+    mPubKeyInfoText->setPlaceholderText( tr("Hex value" ));
+    mApplicationText->setPlaceholderText( tr("String value" ));
+    mObjectIDText->setPlaceholderText( tr("Hex value" ));
 }
 
 void FindObjectDlg::initAttributes()
@@ -434,7 +445,11 @@ void FindObjectDlg::clickFindObjects()
 
         if( !strOID.isEmpty() )
         {
-            JS_BIN_decodeHex( strOID.toStdString().c_str(), &binObjectID );
+//            JS_BIN_decodeHex( strOID.toStdString().c_str(), &binObjectID );
+            QString strType = mObjectIDTypeCombo->currentText();
+            QString strValue = mObjectIDText->text();
+            getOID( strType, strValue, &binObjectID );
+
             sTemplate[uCount].type = CKA_OBJECT_ID;
             sTemplate[uCount].pValue = binObjectID.pVal;
             sTemplate[uCount].ulValueLen = binObjectID.nLen;

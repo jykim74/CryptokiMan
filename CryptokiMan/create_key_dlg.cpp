@@ -77,6 +77,9 @@ void CreateKeyDlg::initUI()
 {
     sSymTypeList = kSymKeyList;
     mKeyTypeCombo->addItems( sSymTypeList );
+
+    mLabelText->setPlaceholderText( tr("String value" ));
+    mIDText->setPlaceholderText( tr( "Hex value" ));
 }
 
 void CreateKeyDlg::initialize()
@@ -525,28 +528,10 @@ void CreateKeyDlg::changeKey()
 
 void CreateKeyDlg::setDefaults()
 {
-    mLabelText->setText( "Secret key label" );
+//    mLabelText->setText( "Secret key label" );
 
     mUseRandCheck->setChecked(true);
     clickUseRand();
-
-    /*
-    mPrivateCheck->setChecked(true);
-    mPrivateCombo->setEnabled(true);
-    mPrivateCombo->setCurrentIndex(1);
-
-    mEncryptCheck->setChecked(true);
-    mEncryptCombo->setEnabled(true);
-    mEncryptCombo->setCurrentIndex(1);
-
-    mDecryptCheck->setChecked(true);
-    mDecryptCombo->setEnabled(true);
-    mDecryptCombo->setCurrentIndex(1);
-
-    mTokenCheck->setChecked(true);
-    mTokenCombo->setEnabled(true);
-    mTokenCombo->setCurrentIndex(1);
-    */
 
     QDateTime nowTime;
     nowTime.setSecsSinceEpoch( time(NULL) );

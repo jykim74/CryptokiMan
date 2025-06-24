@@ -1314,3 +1314,41 @@ const QString getMechHex( long uMech )
 
     return QString( "0x%1" ).arg( strHex );
 }
+
+void getOID( const QString strType, const QString strValue, BIN *pOID )
+{
+    BIN binVal = {0,0};
+    char sOIDText[128];
+
+    memset( sOIDText, 0x00, sizeof(sOIDText));
+
+    if( strValue.length() <= 0 ) return;
+
+    if( strType == "Text" )
+    {
+        JS_PKI_getOIDFromString( strValue.toStdString().c_str(), pOID );
+    }
+    else if( strType == "Value Hex" )
+    {
+        JS_BIN_decodeHex( strValue.toStdString().c_str(), &binVal );
+        JS_PKI_getStringFromOIDValue( &binVal, sOIDText );
+        JS_PKI_getOIDFromString( sOIDText, pOID );
+        JS_BIN_reset( &binVal );
+    }
+    else if( strType == "ShortName" )
+    {
+        JS_PKI_getOIDFromSN( strValue.toStdString().c_str(), sOIDText );
+        JS_PKI_getOIDFromString( sOIDText, pOID );
+    }
+    else if( strType == "LongName" )
+    {
+        JS_PKI_getOIDFromLN( strValue.toStdString().c_str(), sOIDText );
+        JS_PKI_getOIDFromString( sOIDText, pOID );
+    }
+    else
+    {
+        JS_BIN_decodeHex( strValue.toStdString().c_str(), pOID );
+    }
+
+    JS_BIN_reset( &binVal );
+}

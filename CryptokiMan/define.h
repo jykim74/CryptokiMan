@@ -28,6 +28,8 @@ static QStringList kObjectTypeList = {
     kCertificate, kPublicKey, kPrivateKey, kSecretKey, kData
 };
 
+static QStringList kOIDTypeList = { "Text", "Value Hex", "ShortName", "LongName", "DER Hex" };
+
 enum {
     JS_FILE_TYPE_CERT,
     JS_FILE_TYPE_CRL,

@@ -118,10 +118,18 @@ void GenKeyPairDlg::initUI()
     mMechCombo->addItems( sMechGenKeyPairList );
 
     mOptionCombo->addItems( sRSAOptionList );
-//    mOptionCombo->setEditable( true );
 
     mDH_GCombo->addItems( sDH_GList );
     mParamTab->setDisabled(true);
+
+    mPubLabelText->setPlaceholderText( tr( "String value" ));
+    mPubIDText->setPlaceholderText( tr("Hex value" ));
+    mPubSubjectText->setPlaceholderText( tr("Hex value" ));
+    mPubExponentText->setPlaceholderText( tr("Hex value" ));
+
+    mPriLabelText->setPlaceholderText( tr( "String value" ));
+    mPriIDText->setPlaceholderText( tr("Hex value" ));
+    mPriSubjectText->setPlaceholderText( tr("Hex value" ));
 }
 
 void GenKeyPairDlg::initialize()
@@ -1215,49 +1223,11 @@ void GenKeyPairDlg::setDefaults()
 {
     mPubLabelText->setText( "Public Label" );
     mPubExponentText->setText( "010001" );
-    mPubIDText->setText( "01020304" );
-
-    mPriLabelText->setText( "Private Label" );
-    mPriIDText->setText( "01020304" );
 
     mPriUseSKICheck->setChecked(true);
     clickPriUseSKI();
     mPubUseSKICheck->setChecked(true);
     clickPubUseSKI();
-
-//    mPriUseSPKICheck->click();
-/*
-    mPubEncryptCheck->setChecked(true);
-    mPubEncryptCombo->setEnabled(true);
-    mPubEncryptCombo->setCurrentIndex(1);
-
-
-    mPubTokenCheck->setChecked(true);
-    mPubTokenCombo->setEnabled(true);
-    mPubTokenCombo->setCurrentIndex(1);
-
-    mPubVerifyCheck->setChecked(true);
-    mPubVerifyCombo->setEnabled(true);
-    mPubVerifyCombo->setCurrentIndex(1);
-
-
-    mPriPrivateCheck->setChecked(true);
-    mPriPrivateCombo->setEnabled(true);
-    mPriPrivateCombo->setCurrentIndex(1);
-
-
-    mPriSignCheck->setChecked(true);
-    mPriSignCombo->setEnabled(true);
-    mPriSignCombo->setCurrentIndex(1);
-
-    mPriDecryptCheck->setChecked(true);
-    mPriDecryptCombo->setEnabled(true);
-    mPriDecryptCombo->setCurrentIndex(1);
-
-    mPriTokenCheck->setChecked(true);
-    mPriTokenCombo->setEnabled(true);
-    mPriTokenCombo->setCurrentIndex(1);
-*/
 
     QDateTime nowTime;
     nowTime.setSecsSinceEpoch( time(NULL) );

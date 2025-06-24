@@ -74,6 +74,12 @@ void CreateECPriKeyDlg::initialize()
         strTitle = tr( "Create ECDSA private key" );
 
     setWindowTitle( strTitle );
+
+    mLabelText->setPlaceholderText( tr("String value" ));
+    mIDText->setPlaceholderText( tr( "Hex value" ));
+    mPubKeyInfoText->setPlaceholderText( tr("Hex value" ));
+    mECParamsText->setPlaceholderText( tr("Hex value" ));
+    mKeyValueText->setPlaceholderText( tr("Hex value" ));
 }
 
 void CreateECPriKeyDlg::initAttributes()
@@ -666,8 +672,8 @@ void CreateECPriKeyDlg::setDefaults()
 {
     mParamCombo->setCurrentText( "prime256v1" );
 
-    mLabelText->setText( "EC Private Label" );
-    mIDText->setText( "01020304" );
+//    mLabelText->setText( "EC Private Label" );
+//    mIDText->setText( "01020304" );
 
     mUseSKICheck->setChecked(true);
     clickUseSKI();

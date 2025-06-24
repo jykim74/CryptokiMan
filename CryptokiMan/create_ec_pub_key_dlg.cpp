@@ -77,6 +77,11 @@ void CreateECPubKeyDlg::initialize()
         strTitle = tr( "Create ECDSA public key" );
 
     setWindowTitle( strTitle );
+
+    mLabelText->setPlaceholderText( tr("String value" ));
+    mIDText->setPlaceholderText( tr("Hex value" ));
+    mECParamsText->setPlaceholderText( tr("Hex value" ));
+    mECPointsText->setPlaceholderText( tr("Hex value" ));
 }
 
 void CreateECPubKeyDlg::initAttributes()
@@ -671,26 +676,11 @@ void CreateECPubKeyDlg::setDefaults()
 {
     mParamCombo->setCurrentText( "prime256v1" );
 
-    mLabelText->setText( "EC Public Key Label" );
-    mIDText->setText( "01020304" );
+//    mLabelText->setText( "EC Public Key Label" );
+//    mIDText->setText( "01020304" );
 
     mUseSKICheck->setChecked(true);
     clickUseSKI();
-
-    /*
-    mEncryptCheck->setChecked(true);
-    mEncryptCombo->setEnabled(true);
-    mEncryptCombo->setCurrentIndex(1);
-
-
-    mTokenCheck->setChecked(true);
-    mTokenCombo->setEnabled(true);
-    mTokenCombo->setCurrentIndex(1);
-
-    mVerifyCheck->setChecked(true);
-    mVerifyCombo->setEnabled(true);
-    mVerifyCombo->setCurrentIndex(1);
-    */
 
     QDateTime nowTime;
     nowTime.setSecsSinceEpoch( time(NULL) );

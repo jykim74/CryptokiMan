@@ -95,6 +95,10 @@ void GenKeyDlg::initUI()
     }
 
     mMechCombo->addItems(sMechGenList);
+
+    mLabelText->setPlaceholderText( tr("String value" ));
+    mIDText->setPlaceholderText( tr("Hex value" ));
+    mParamText->setPlaceholderText( tr("Hex value" ));
 }
 
 void GenKeyDlg::initialize()
@@ -547,27 +551,8 @@ void GenKeyDlg::changeParam()
 
 void GenKeyDlg::setDefaults()
 {
-    mLabelText->setText( "Secret key Label" );
-
     mUseRandCheck->setChecked(true);
     clickUseRand();
-/*
-    mPrivateCheck->setChecked(true);
-    mPrivateCombo->setEnabled(true);
-    mPrivateCombo->setCurrentIndex(1);
-
-    mEncryptCheck->setChecked(true);
-    mEncryptCombo->setEnabled(true);
-    mEncryptCombo->setCurrentIndex(1);
-
-    mDecryptCheck->setChecked(true);
-    mDecryptCombo->setEnabled(true);
-    mDecryptCombo->setCurrentIndex(1);
-
-    mTokenCheck->setChecked(true);
-    mTokenCombo->setEnabled(true);
-    mTokenCombo->setCurrentIndex(1);
-*/
 
     mKeySizeText->setText( "16" );
 

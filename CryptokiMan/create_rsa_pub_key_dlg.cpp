@@ -67,7 +67,10 @@ void CreateRSAPubKeyDlg::setSlotIndex(int index)
 
 void CreateRSAPubKeyDlg::initialize()
 {
-
+    mLabelText->setPlaceholderText( tr("String value" ));
+    mIDText->setPlaceholderText( tr("Hex value" ));
+    mModulesText->setPlaceholderText( tr("Hex value" ));
+    mExponentText->setPlaceholderText( tr("Hex value" ));
 }
 
 void CreateRSAPubKeyDlg::initAttributes()
@@ -556,27 +559,12 @@ void CreateRSAPubKeyDlg::setDefaults()
     mParamCombo->setCurrentText( "2048" );
     mEText->setText( "65537" );
 
-    mLabelText->setText( "RSA Public Key Label" );
-    mExponentText->setText( "010001" );
-    mIDText->setText( "01020304" );
+//    mLabelText->setText( "RSA Public Key Label" );
+//    mExponentText->setText( "010001" );
+//    mIDText->setText( "01020304" );
 
     mUseSKICheck->setChecked(true);
     clickUseSKI();
-
-    /*
-    mEncryptCheck->setChecked(true);
-    mEncryptCombo->setEnabled(true);
-    mEncryptCombo->setCurrentIndex(1);
-
-
-    mTokenCheck->setChecked(true);
-    mTokenCombo->setEnabled(true);
-    mTokenCombo->setCurrentIndex(1);
-
-    mVerifyCheck->setChecked(true);
-    mVerifyCombo->setEnabled(true);
-    mVerifyCombo->setCurrentIndex(1);
-    */
 
     QDateTime nowTime;
     nowTime.setSecsSinceEpoch( time(NULL) );

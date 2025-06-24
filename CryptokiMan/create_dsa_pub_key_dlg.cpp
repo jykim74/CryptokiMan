@@ -70,7 +70,12 @@ void CreateDSAPubKeyDlg::setSlotIndex(int index)
 
 void CreateDSAPubKeyDlg::initialize()
 {
-
+    mLabelText->setPlaceholderText( tr("String value" ));
+    mIDText->setPlaceholderText( tr("Hex value" ));
+    mPText->setPlaceholderText( tr("Hex value" ));
+    mQText->setPlaceholderText( tr( "Hex value" ));
+    mGText->setPlaceholderText( tr("Hex value" ));
+    mPublicText->setPlaceholderText( tr("Hex value" ));
 }
 
 void CreateDSAPubKeyDlg::initAttributes()
@@ -596,8 +601,8 @@ void CreateDSAPubKeyDlg::setDefaults()
 {
     mParamCombo->setCurrentText( "2048" );
 
-    mLabelText->setText( "DSA Public Key Label" );
-    mIDText->setText( "01020304" );
+//    mLabelText->setText( "DSA Public Key Label" );
+//    mIDText->setText( "01020304" );
 
     mUseSKICheck->setChecked(true);
     clickUseSKI();

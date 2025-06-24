@@ -13,7 +13,6 @@
 
 static QStringList sFalseTrue = { "false", "true" };
 static QStringList sDataList = { "String", "Hex", "Base64" };
-static QStringList sOIDTypeList = { "Text", "Value Hex", "ShortName", "LongName", "DER Hex" };
 
 CreateDataDlg::CreateDataDlg(QWidget *parent) :
     QDialog(parent)
@@ -57,7 +56,9 @@ void CreateDataDlg::setSlotIndex(int index)
 
 void CreateDataDlg::initialize()
 {
-    mObjectIDTypeCombo->addItems( sOIDTypeList );
+    mObjectIDTypeCombo->addItems( kOIDTypeList );
+    mLabelText->setPlaceholderText( tr("String value" ));
+    mApplicationText->setPlaceholderText( tr("String value" ));
 }
 
 void CreateDataDlg::initAttributes()
@@ -154,7 +155,10 @@ void CreateDataDlg::accept()
     if( !strOID.isEmpty() )
     {
 //        JS_BIN_decodeHex( strOID.toStdString().c_str(), &binOID );
-        getOID( &binOID );
+        QString strType = mObjectIDTypeCombo->currentText();
+        QString strValue = mObjectIDText->text();
+        getOID( strType, strValue, &binOID );
+
         sTemplate[uCount].type = CKA_OBJECT_ID;
         sTemplate[uCount].pValue = binOID.pVal;
         sTemplate[uCount].ulValueLen = binOID.nLen;
@@ -269,56 +273,5 @@ void CreateDataDlg::changeData()
 
 void CreateDataDlg::setDefaults()
 {
-    mLabelText->setText( "Data label" );
-
-    /*
-    mPrivateCheck->setChecked(true);
-    mPrivateCombo->setEnabled(true);
-    mPrivateCombo->setCurrentIndex(1);
-
-    mTokenCheck->click();
-    mTokenCombo->setCurrentIndex(1);
-    */
-}
-
-void CreateDataDlg::getOID( BIN *pOID )
-{
-    // { "Text", "Value Hex", "ShortName", "LongName", "DER Hex" };
-    QString strType = mObjectIDTypeCombo->currentText();
-    QString strValue = mObjectIDText->text();
-
-    BIN binVal = {0,0};
-    char sOIDText[128];
-
-    memset( sOIDText, 0x00, sizeof(sOIDText));
-
-    if( strValue.length() <= 0 ) return;
-
-    if( strType == "Text" )
-    {
-        JS_PKI_getOIDFromString( strValue.toStdString().c_str(), pOID );
-    }
-    else if( strType == "Value Hex" )
-    {
-        JS_BIN_decodeHex( strValue.toStdString().c_str(), &binVal );
-        JS_PKI_getStringFromOIDValue( &binVal, sOIDText );
-        JS_PKI_getOIDFromString( sOIDText, pOID );
-        JS_BIN_reset( &binVal );
-    }
-    else if( strType == "ShortName" )
-    {
-        JS_PKI_getOIDFromSN( strValue.toStdString().c_str(), sOIDText );
-        JS_PKI_getOIDFromString( sOIDText, pOID );
-    }
-    else if( strType == "LongName" )
-    {
-        JS_PKI_getOIDFromLN( strValue.toStdString().c_str(), sOIDText );
-        JS_PKI_getOIDFromString( sOIDText, pOID );
-    }
-    else
-    {
-        JS_BIN_decodeHex( strValue.toStdString().c_str(), pOID );
-    }
-
-    JS_BIN_reset( &binVal );
+//    mLabelText->setText( "Data label" );
 }

@@ -74,7 +74,18 @@ void CreateRSAPriKeyDlg::setSlotIndex(int index)
 
 void CreateRSAPriKeyDlg::initialize()
 {
+    mLabelText->setPlaceholderText( tr("String value" ));
+    mIDText->setPlaceholderText( tr("Hex value" ));
+    mPubKeyInfoText->setPlaceholderText( tr("Hex value" ));
 
+    mModulesText->setPlaceholderText( tr("Hex value" ));
+    mPubExponentText->setPlaceholderText( tr("Hex value" ));
+    mPriExponentText->setPlaceholderText( tr("Hex value" ));
+    mPrime1Text->setPlaceholderText( tr("Hex value" ));
+    mPrime2Text->setPlaceholderText( tr("Hex value" ));
+    mExponent1Text->setPlaceholderText( tr("Hex value" ));
+    mExponent2Text->setPlaceholderText( tr("Hex value" ));
+    mCoefficientText->setPlaceholderText( tr("Hex value" ));
 }
 
 void CreateRSAPriKeyDlg::initAttributes()
@@ -712,31 +723,11 @@ void CreateRSAPriKeyDlg::setDefaults()
     mParamCombo->setCurrentText( "2048" );
     mEText->setText( "65537" );
 
-    mLabelText->setText( "RSA Private Label" );
-    mIDText->setText( "01020304" );
+//    mLabelText->setText( "RSA Private Label" );
+//    mIDText->setText( "01020304" );
 
     mUseSKICheck->setChecked(true);
     clickUseSKI();
-//    mUseSPKICheck->click();
-
-    /*
-    mPrivateCheck->setChecked(true);
-    mPrivateCombo->setEnabled(true);
-    mPrivateCombo->setCurrentIndex(1);
-
-
-    mSignCheck->setChecked(true);
-    mSignCombo->setEnabled(true);
-    mSignCombo->setCurrentIndex(1);
-
-    mDecryptCheck->setChecked(true);
-    mDecryptCombo->setEnabled(true);
-    mDecryptCombo->setCurrentIndex(1);
-
-    mTokenCheck->setChecked(true);
-    mTokenCombo->setEnabled(true);
-    mTokenCombo->setCurrentIndex(1);
-    */
 
     QDateTime nowTime;
     nowTime.setSecsSinceEpoch( time(NULL) );

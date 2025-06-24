@@ -43,7 +43,6 @@ private:
     void setAttributes();
     void connectAttributes();
     void setDefaults();
-    void getOID( BIN *pOID );
 
     SlotInfo slot_info_;
     int slot_index_ = -1;
