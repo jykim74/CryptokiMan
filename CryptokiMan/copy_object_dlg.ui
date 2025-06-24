@@ -289,6 +289,16 @@
    </item>
    <item>
     <layout class="QGridLayout" name="gridLayout_3">
+     <item row="0" column="0">
+      <widget class="QComboBox" name="mSrcTypeCombo">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
+      </widget>
+     </item>
      <item row="0" column="1">
       <widget class="QComboBox" name="mSrcLabelCombo">
        <property name="sizePolicy">
@@ -355,13 +365,10 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
-      <widget class="QComboBox" name="mSrcTypeCombo">
-       <property name="minimumSize">
-        <size>
-         <width>80</width>
-         <height>0</height>
-        </size>
+     <item row="0" column="3">
+      <widget class="QPushButton" name="mObjectViewBtn">
+       <property name="text">
+        <string>View</string>
        </property>
       </widget>
      </item>

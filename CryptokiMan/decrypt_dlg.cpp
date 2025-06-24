@@ -17,6 +17,7 @@
 #include "mech_mgr.h"
 #include "decrypt_thread.h"
 #include "hsm_man_dlg.h"
+#include "object_view_dlg.h"
 
 #include "js_error.h"
 
@@ -109,7 +110,7 @@ void DecryptDlg::initUI()
     connect( mFindDstFileBtn, SIGNAL(clicked()), this, SLOT(clickFindDstFile()));
 
     connect( mMechCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(mechChanged(int)));
-
+    connect( mObjectViewBtn, SIGNAL(clicked()), this, SLOT(clickObjectView()));
 
     initialize();
     keyTypeChanged(0);
@@ -285,6 +286,27 @@ void DecryptDlg::mechChanged( int index )
         mOAEPGroup->hide();
         mParamGroup->show();
     }
+}
+
+void DecryptDlg::clickObjectView()
+{
+    if( status_type_ == STATUS_INIT || status_type_ == STATUS_UPDATE )
+    {
+        manApplet->warnLog( tr( "Cannot be run in Init or Update state" ), this );
+        return;
+    }
+
+    QString strObject = mObjectText->text();
+    if( strObject.length() < 1 )
+    {
+        manApplet->warningBox( tr( "There is no object" ), this );
+        return;
+    }
+
+    ObjectViewDlg objectView;
+    objectView.setSlotIndex( slot_index_ );
+    objectView.setObject( strObject.toLong() );
+    objectView.exec();
 }
 
 void DecryptDlg::setSlotIndex(int index)

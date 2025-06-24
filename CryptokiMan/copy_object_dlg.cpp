@@ -10,6 +10,7 @@
 #include "cryptoki_api.h"
 #include "settings_mgr.h"
 #include "mech_mgr.h"
+#include "object_view_dlg.h"
 
 static QStringList sFalseTrue = { "false", "true" };
 
@@ -22,6 +23,7 @@ CopyObjectDlg::CopyObjectDlg(QWidget *parent) :
 
     initUI();
 
+    connect( mObjectViewBtn, SIGNAL(clicked()), this, SLOT(clickObjectView()));
     connect( mSrcTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changeSrcType(int)));
     connect( mSrcLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changeSrcLabel(int)));
 
@@ -138,6 +140,21 @@ void CopyObjectDlg::setDefaults()
     mTokenCombo->setEnabled(true);
     mTokenCombo->setCurrentIndex(1);
     */
+}
+
+void CopyObjectDlg::clickObjectView()
+{
+    long hObject = mSrcObjectText->text().toLong();
+    if( hObject <= 0 )
+    {
+        manApplet->warningBox( tr("There is no object" ), this );
+        return;
+    }
+
+    ObjectViewDlg objectView;
+    objectView.setSlotIndex(slot_index_);
+    objectView.setObject( hObject );
+    objectView.exec();
 }
 
 void CopyObjectDlg::accept()

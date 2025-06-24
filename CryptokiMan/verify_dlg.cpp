@@ -16,6 +16,7 @@
 #include "mech_mgr.h"
 #include "verify_thread.h"
 #include "hsm_man_dlg.h"
+#include "object_view_dlg.h"
 
 static QStringList sMechSignSymList;
 static QStringList sMechSignAsymList;
@@ -93,6 +94,7 @@ void VerifyDlg::initUI()
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(clickClose()));
 
     connect( mSelectBtn, SIGNAL(clicked()), this, SLOT(clickSelect()));
+    connect( mObjectViewBtn, SIGNAL(clicked()), this, SLOT(clickObjectView()));
 
     connect( mVerifyRecoverInitBtn, SIGNAL(clicked()), this, SLOT(clickVerifyRecoverInit()));
     connect( mVerifyRecoverBtn, SIGNAL(clicked()), this, SLOT(clickVerifyRecover()));
@@ -645,6 +647,27 @@ void VerifyDlg::clickSelect()
         mLabelText->setText( strLabel );
         mObjectText->setText( QString("%1").arg( hObj ));
     }
+}
+
+void VerifyDlg::clickObjectView()
+{
+    if( status_type_ == STATUS_INIT || status_type_ == STATUS_UPDATE )
+    {
+        manApplet->warnLog( tr( "Cannot be run in Init or Update state" ), this );
+        return;
+    }
+
+    QString strObject = mObjectText->text();
+    if( strObject.length() < 1 )
+    {
+        manApplet->warningBox( tr( "There is no object" ), this );
+        return;
+    }
+
+    ObjectViewDlg objectView;
+    objectView.setSlotIndex( slot_index_ );
+    objectView.setObject( strObject.toLong() );
+    objectView.exec();
 }
 
 void VerifyDlg::clickVerifyRecoverInit()

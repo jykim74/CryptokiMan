@@ -60,6 +60,7 @@ private slots:
     void changeInput();
 
     void clickSelect();
+    void clickObjectView();
 
 private:
     void initUI();

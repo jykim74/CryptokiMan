@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>524</width>
+    <width>560</width>
     <height>553</height>
    </rect>
   </property>
@@ -281,6 +281,54 @@
    </item>
    <item>
     <layout class="QGridLayout" name="gridLayout_3">
+     <item row="0" column="2">
+      <widget class="QLabel" name="label_8">
+       <property name="text">
+        <string>Object</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="4">
+      <widget class="QPushButton" name="mWrappingSelectBtn">
+       <property name="text">
+        <string>Select</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="mWrappingLabelText">
+       <property name="palette">
+        <palette>
+         <active>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </active>
+         <inactive>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </inactive>
+         <disabled/>
+        </palette>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
      <item row="0" column="0">
       <widget class="QLabel" name="label_7">
        <property name="minimumSize">
@@ -297,13 +345,6 @@
        </property>
        <property name="text">
         <string>Label</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="QLabel" name="label_8">
-       <property name="text">
-        <string>Object</string>
        </property>
       </widget>
      </item>
@@ -357,44 +398,10 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="mWrappingLabelText">
-       <property name="palette">
-        <palette>
-         <active>
-          <colorrole role="Base">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>221</red>
-             <green>221</green>
-             <blue>255</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </active>
-         <inactive>
-          <colorrole role="Base">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>221</red>
-             <green>221</green>
-             <blue>255</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </inactive>
-         <disabled/>
-        </palette>
-       </property>
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="4">
-      <widget class="QPushButton" name="mWrappingSelectBtn">
+     <item row="0" column="5">
+      <widget class="QPushButton" name="mWrappingViewBtn">
        <property name="text">
-        <string>Select</string>
+        <string>View</string>
        </property>
       </widget>
      </item>
@@ -632,20 +639,6 @@
    </item>
    <item>
     <layout class="QGridLayout" name="gridLayout_5">
-     <item row="0" column="4">
-      <widget class="QPushButton" name="mSelectBtn">
-       <property name="text">
-        <string>Select</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="QLabel" name="label_13">
-       <property name="text">
-        <string>Object</string>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="3">
       <widget class="QLineEdit" name="mObjectText">
        <property name="maximumSize">
@@ -696,22 +689,10 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_12">
-       <property name="minimumSize">
-        <size>
-         <width>60</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>60</width>
-         <height>16777215</height>
-        </size>
-       </property>
+     <item row="0" column="4">
+      <widget class="QPushButton" name="mSelectBtn">
        <property name="text">
-        <string>Label</string>
+        <string>Select</string>
        </property>
       </widget>
      </item>
@@ -746,6 +727,39 @@
        </property>
        <property name="readOnly">
         <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_12">
+       <property name="minimumSize">
+        <size>
+         <width>60</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>60</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Label</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QLabel" name="label_13">
+       <property name="text">
+        <string>Object</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="5">
+      <widget class="QPushButton" name="mViewBtn">
+       <property name="text">
+        <string>View</string>
        </property>
       </widget>
      </item>

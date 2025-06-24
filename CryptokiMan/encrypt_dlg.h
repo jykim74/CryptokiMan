@@ -42,6 +42,7 @@ private slots:
     void clickClose();
 
     void clickSelect();
+    void clickObjectView();
 
     void keyTypeChanged( int index );
 

@@ -14,6 +14,7 @@
 #include "settings_mgr.h"
 #include "mech_mgr.h"
 #include "hsm_man_dlg.h"
+#include "object_view_dlg.h"
 
 static QStringList sMechUnwrapSymList;
 static QStringList sMechUnwrapAsymList;
@@ -53,6 +54,7 @@ UnwrapKeyDlg::UnwrapKeyDlg(QWidget *parent) :
     connect( mInputText, SIGNAL(textChanged()), this, SLOT(changeInput()));
 
     connect( mSelectBtn, SIGNAL(clicked()), this, SLOT(clickSelect()));
+    connect( mObjectViewBtn, SIGNAL(clicked()), this, SLOT(clickObjectView()));
 
     initialize();
     setDefaults();
@@ -779,4 +781,19 @@ void UnwrapKeyDlg::clickSelect()
         mUnwrapLabelText->setText( strLabel );
         mUnwrapObjectText->setText( QString("%1").arg( hObj ));
     }
+}
+
+void UnwrapKeyDlg::clickObjectView()
+{
+    QString strObject = mUnwrapObjectText->text();
+    if( strObject.length() < 1 )
+    {
+        manApplet->warningBox( tr( "There is no object" ), this );
+        return;
+    }
+
+    ObjectViewDlg objectView;
+    objectView.setSlotIndex( slot_index_ );
+    objectView.setObject( strObject.toLong() );
+    objectView.exec();
 }

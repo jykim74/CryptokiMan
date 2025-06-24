@@ -68,6 +68,7 @@
 #include "make_csr_dlg.h"
 #include "hsm_man_dlg.h"
 #include "cavp_dlg.h"
+#include "object_view_dlg.h"
 
 const int kMaxRecentFiles = 10;
 
@@ -1454,6 +1455,34 @@ void MainWindow::copyTableObject()
     copyObjectDlg.exec();
 }
 
+void MainWindow::viewObject()
+{
+    ManTreeItem *pItem = currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "No slot selected" ), this );
+        return;
+    }
+
+    QModelIndex index = right_table_->currentIndex();
+    int row = index.row();
+
+    QTableWidgetItem* item0 = right_table_->item( row, 0 );
+    QTableWidgetItem* item1 = right_table_->item( row, 1 );
+
+    if( item0 == NULL || item1 == NULL )
+    {
+        manApplet->warningBox( tr( "No object selected" ), this );
+        return;
+    }
+
+    ObjectViewDlg objectView;
+    objectView.setSlotIndex( slot_index_ );
+    objectView.setObject( item1->text().toLong() );
+    objectView.exec();
+}
+
 void MainWindow::deleteObject()
 {
     ManTreeItem *pItem = currentTreeItem();
@@ -2765,6 +2794,7 @@ void MainWindow::showDataInfoDetail( QModelIndex index )
 void MainWindow::showRightMenu(QPoint point )
 {
     QMenu menu(this);
+    QAction *viewAct = NULL;
     QAction *delAct = NULL;
     QAction *editAttAct = NULL;
     QAction *editAttListAct = NULL;
@@ -2788,6 +2818,7 @@ void MainWindow::showRightMenu(QPoint point )
         || right_type_ == HM_ITEM_TYPE_SESSION )
         return;
 
+    viewAct = menu.addAction( tr( "View Object" ), this, &MainWindow::viewObject );
     editAttAct = menu.addAction( tr("Edit Attribute"), this, &MainWindow::editAttribute );
     editAttListAct = menu.addAction( tr("Edit AttributeList"), this, &MainWindow::editAttributeList );
     delAct = menu.addAction( tr( "Delete Object" ), this, &MainWindow::deleteObject );

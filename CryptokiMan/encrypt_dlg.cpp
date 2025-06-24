@@ -17,6 +17,7 @@
 #include "mech_mgr.h"
 #include "encrypt_thread.h"
 #include "hsm_man_dlg.h"
+#include "object_view_dlg.h"
 
 #include "js_error.h"
 
@@ -93,6 +94,7 @@ void EncryptDlg::initUI()
     connect( mEncryptBtn, SIGNAL(clicked()), this, SLOT(clickEncrypt()));
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(clickClose()));
     connect( mSelectBtn, SIGNAL(clicked()), this, SLOT(clickSelect()));
+    connect( mObjectViewBtn, SIGNAL(clicked()), this, SLOT(clickObjectView()));
 
     connect( mInputCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(inputChanged()));
     connect( mOAEPSourceText, SIGNAL(textChanged(QString)), this, SLOT(oaepSourceChanged()));
@@ -900,6 +902,27 @@ void EncryptDlg::clickSelect()
         mLabelText->setText( strLabel );
         mObjectText->setText( QString("%1").arg( hObj ));
     }
+}
+
+void EncryptDlg::clickObjectView()
+{
+    if( status_type_ == STATUS_INIT || status_type_ == STATUS_UPDATE )
+    {
+        manApplet->warnLog( tr( "Cannot be run in Init or Update state" ), this );
+        return;
+    }
+
+    QString strObject = mObjectText->text();
+    if( strObject.length() < 1 )
+    {
+        manApplet->warningBox( tr( "There is no object" ), this );
+        return;
+    }
+
+    ObjectViewDlg objectView;
+    objectView.setSlotIndex( slot_index_ );
+    objectView.setObject( strObject.toLong() );
+    objectView.exec();
 }
 
 void EncryptDlg::runFileEncryptThread()

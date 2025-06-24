@@ -11,6 +11,7 @@ ObjectViewDlg::ObjectViewDlg(QWidget *parent)
     initUI();
 
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(close()));
+    connect( mReloadBtn, SIGNAL(clicked()), this, SLOT(clickReload()));
 
     connect( mCommonTable, SIGNAL(clicked(QModelIndex)), this, SLOT(clickCommonField(QModelIndex)));
     connect( mPart1Table, SIGNAL(clicked(QModelIndex)), this, SLOT(clickPart1Field(QModelIndex)));
@@ -99,6 +100,26 @@ void ObjectViewDlg::initUI()
     mObjectToolBox->setItemText( 1, tr("NA"));
     mObjectToolBox->setItemText( 2, tr("NA"));
     mObjectToolBox->setItemText( 3, tr("NA"));
+}
+
+void ObjectViewDlg::clickReload()
+{
+    long hObject = mObjectText->text().toLong();
+
+    mCommonTable->setRowCount(0);
+    mPart1Table->setRowCount(0);
+    mPart2Table->setRowCount(0);
+    mPart3Table->setRowCount(0);
+
+    mObjectToolBox->setItemEnabled( 1, false );
+    mObjectToolBox->setItemEnabled( 2, false );
+    mObjectToolBox->setItemEnabled( 3, false );
+
+    mObjectToolBox->setItemText( 1, tr("NA"));
+    mObjectToolBox->setItemText( 2, tr("NA"));
+    mObjectToolBox->setItemText( 3, tr("NA"));
+
+    setObject( hObject );
 }
 
 void ObjectViewDlg::clickCommonField( QModelIndex index )
@@ -266,6 +287,7 @@ void ObjectViewDlg::setObject( long hObject )
     mObjectText->setText( QString("%1").arg( hObject ));
 
     long uClass = stringAttribute( ATTR_VAL_LONG, CKA_CLASS, hObject ).toLong();
+    mObjectLabel->setText( tr( "%1 Detail Information" ).arg( JS_PKCS11_GetCKOName(uClass)));
 
     for( int i = 0; i < kCommonAttList.size(); i++ )
     {

@@ -807,6 +807,40 @@
      <property name="topMargin">
       <number>0</number>
      </property>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="mLabelText">
+       <property name="palette">
+        <palette>
+         <active>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </active>
+         <inactive>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </inactive>
+         <disabled/>
+        </palette>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
      <item row="0" column="3">
       <widget class="QLineEdit" name="mObjectText">
        <property name="maximumSize">
@@ -857,6 +891,13 @@
        </property>
       </widget>
      </item>
+     <item row="0" column="4">
+      <widget class="QPushButton" name="mSelectBtn">
+       <property name="text">
+        <string>Select</string>
+       </property>
+      </widget>
+     </item>
      <item row="0" column="2">
       <widget class="QLabel" name="label_6">
        <property name="text">
@@ -883,44 +924,10 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="4">
-      <widget class="QPushButton" name="mSelectBtn">
+     <item row="0" column="5">
+      <widget class="QPushButton" name="mObjectViewBtn">
        <property name="text">
-        <string>Select</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="mLabelText">
-       <property name="palette">
-        <palette>
-         <active>
-          <colorrole role="Base">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>221</red>
-             <green>221</green>
-             <blue>255</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </active>
-         <inactive>
-          <colorrole role="Base">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>221</red>
-             <green>221</green>
-             <blue>255</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </inactive>
-         <disabled/>
-        </palette>
-       </property>
-       <property name="readOnly">
-        <bool>true</bool>
+        <string>View</string>
        </property>
       </widget>
      </item>

@@ -16,6 +16,7 @@
 #include "mech_mgr.h"
 #include "sign_thread.h"
 #include "hsm_man_dlg.h"
+#include "object_view_dlg.h"
 
 static QStringList sMechSignAsymList;
 static QStringList sMechSignSymList;
@@ -92,6 +93,7 @@ void SignDlg::initUI()
     connect( mSignBtn, SIGNAL(clicked()), this, SLOT(clickSign()));
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(clickClose()));
     connect( mSelectBtn, SIGNAL(clicked()), this, SLOT(clickSelect()));
+    connect( mObjectViewBtn, SIGNAL(clicked()), this, SLOT(clickObjectView()));
 
     connect( mSignRecoverInitBtn, SIGNAL(clicked()), this, SLOT(clickSignRecoverInit()));
     connect( mSignRecoverBtn, SIGNAL(clicked()), this, SLOT(clickSignRecover()));
@@ -650,6 +652,27 @@ void SignDlg::clickSelect()
         mLabelText->setText( strLabel );
         mObjectText->setText( QString("%1").arg( hObj ));
     }
+}
+
+void SignDlg::clickObjectView()
+{
+    if( status_type_ == STATUS_INIT || status_type_ == STATUS_UPDATE )
+    {
+        manApplet->warnLog( tr( "Cannot be run in Init or Update state" ), this );
+        return;
+    }
+
+    QString strObject = mObjectText->text();
+    if( strObject.length() < 1 )
+    {
+        manApplet->warningBox( tr( "There is no object" ), this );
+        return;
+    }
+
+    ObjectViewDlg objectView;
+    objectView.setSlotIndex( slot_index_ );
+    objectView.setObject( strObject.toLong() );
+    objectView.exec();
 }
 
 void SignDlg::clickSignRecoverInit()

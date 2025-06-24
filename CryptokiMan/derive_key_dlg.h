@@ -33,6 +33,7 @@ private slots:
     void typeChanged( int index );
 
     void clickSelectSrcKey();
+    void clickObjectView();
 
     void clickUseRand();
     void clickPrivate();

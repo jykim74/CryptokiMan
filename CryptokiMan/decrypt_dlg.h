@@ -32,6 +32,7 @@ public:
 
 private slots:
     void mechChanged( int index );
+    void clickObjectView();
 
     int clickInit();
     void clickUpdate();

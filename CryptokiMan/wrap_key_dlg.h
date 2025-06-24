@@ -38,6 +38,9 @@ private slots:
     void changeWrappingParam(const QString& text );
     void clickWrappingSelect();
     void clickSelect();
+
+    void clickWrappingView();
+    void clickView();
 private:
     void initialize();
     void initUI();

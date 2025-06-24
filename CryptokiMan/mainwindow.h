@@ -187,6 +187,7 @@ public slots:
     void copyObject();
     void findObject();
     void copyTableObject();
+    void viewObject();
     void deleteObject();
     void editObject();
     void editAttribute();

@@ -274,7 +274,7 @@
       </spacer>
      </item>
      <item row="0" column="0">
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="mObjectLabel">
        <property name="text">
         <string>Object Detail Information</string>
        </property>
@@ -300,6 +300,36 @@
          <width>60</width>
          <height>16777215</height>
         </size>
+       </property>
+       <property name="palette">
+        <palette>
+         <active>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </active>
+         <inactive>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </inactive>
+         <disabled/>
+        </palette>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -327,7 +357,7 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <property name="tabSpacing">
       <number>1</number>
@@ -341,6 +371,9 @@
         <height>160</height>
        </rect>
       </property>
+      <attribute name="icon">
+       <iconset theme="QIcon::ThemeIcon::DocumentNew"/>
+      </attribute>
       <attribute name="label">
        <string>Common</string>
       </attribute>
@@ -377,6 +410,14 @@
       </layout>
      </widget>
      <widget class="QWidget" name="mPart2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>460</width>
+        <height>160</height>
+       </rect>
+      </property>
       <attribute name="label">
        <string>Part2</string>
       </attribute>
@@ -391,6 +432,14 @@
       </layout>
      </widget>
      <widget class="QWidget" name="mPart3">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>460</width>
+        <height>160</height>
+       </rect>
+      </property>
       <attribute name="label">
        <string>Part3</string>
       </attribute>

@@ -40,6 +40,7 @@ private slots:
     void clickClose();
 
     void clickSelect();
+    void clickObjectView();
 
     void clickSignRecoverInit();
     void clickSignRecover();

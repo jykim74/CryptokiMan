@@ -30,6 +30,7 @@ public:
 
 private slots:
     virtual void accept();
+    void clickObjectView();
 
     void changeSrcType( int index );
     void changeSrcLabel( int index );

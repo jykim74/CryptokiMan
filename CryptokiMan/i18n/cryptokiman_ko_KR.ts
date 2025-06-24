@@ -1059,6 +1059,11 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation>소스 객체 정보</translation>
     </message>
     <message>
+        <location filename="../copy_object_dlg.ui" line="371"/>
+        <source>View</source>
+        <translation>보기</translation>
+    </message>
+    <message>
         <source>Target</source>
         <translation type="vanished">대상</translation>
     </message>
@@ -1079,7 +1084,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation type="vanished">랜덤 사용</translation>
     </message>
     <message>
-        <location filename="../copy_object_dlg.ui" line="380"/>
+        <location filename="../copy_object_dlg.ui" line="387"/>
         <source>Attributes</source>
         <translation>속성</translation>
     </message>
@@ -1108,7 +1113,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation type="vanished">종료 일자</translation>
     </message>
     <message>
-        <location filename="../copy_object_dlg.ui" line="419"/>
+        <location filename="../copy_object_dlg.ui" line="426"/>
         <source>Destroyable</source>
         <translation>Destroyable</translation>
     </message>
@@ -1125,17 +1130,22 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation type="vanished">CopyObject 성공(새로운 대상 핸들:%1)</translation>
     </message>
     <message>
-        <location filename="../copy_object_dlg.cpp" line="151"/>
+        <location filename="../copy_object_dlg.cpp" line="150"/>
+        <source>There is no object</source>
+        <translation>객체가 없습니다</translation>
+    </message>
+    <message>
+        <location filename="../copy_object_dlg.cpp" line="168"/>
         <source>There is no handler for the source.</source>
         <translation>소스에 대한 핸들러가 없습니다</translation>
     </message>
     <message>
-        <location filename="../copy_object_dlg.cpp" line="198"/>
+        <location filename="../copy_object_dlg.cpp" line="215"/>
         <source>CopyObject execution failed [%1]</source>
         <translation>CopyObject 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../copy_object_dlg.cpp" line="205"/>
+        <location filename="../copy_object_dlg.cpp" line="222"/>
         <source>CopyObject successful [New Object Handle: %1]</source>
         <translation>CopyObject 성공 [새로운 대상 핸들:%1]</translation>
     </message>
@@ -2688,7 +2698,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation>알고리즘</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="882"/>
+        <location filename="../decrypt_dlg.ui" line="923"/>
         <source>Label</source>
         <translation>라벨</translation>
     </message>
@@ -2738,18 +2748,23 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation>소스 길이</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="889"/>
+        <location filename="../decrypt_dlg.ui" line="897"/>
         <source>Select</source>
         <translation>선택</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1032"/>
-        <location filename="../decrypt_dlg.ui" line="1748"/>
+        <location filename="../decrypt_dlg.ui" line="930"/>
+        <source>View</source>
+        <translation>보기</translation>
+    </message>
+    <message>
+        <location filename="../decrypt_dlg.ui" line="1039"/>
+        <location filename="../decrypt_dlg.ui" line="1755"/>
         <source>C</source>
         <translation>C</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1887"/>
+        <location filename="../decrypt_dlg.ui" line="1894"/>
         <source>Close</source>
         <translation>닫기</translation>
     </message>
@@ -2759,42 +2774,42 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation>파라미터</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1006"/>
+        <location filename="../decrypt_dlg.ui" line="1013"/>
         <source>Input</source>
         <translation>입력</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="863"/>
+        <location filename="../decrypt_dlg.ui" line="904"/>
         <source>Object</source>
         <translation>대상</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1819"/>
-        <location filename="../decrypt_dlg.ui" line="1894"/>
+        <location filename="../decrypt_dlg.ui" line="1826"/>
+        <location filename="../decrypt_dlg.ui" line="1901"/>
         <source>Init</source>
         <translation>Init</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1056"/>
-        <location filename="../decrypt_dlg.ui" line="1867"/>
+        <location filename="../decrypt_dlg.ui" line="1063"/>
+        <location filename="../decrypt_dlg.ui" line="1874"/>
         <source>Update</source>
         <translation>Update</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1049"/>
-        <location filename="../decrypt_dlg.ui" line="1914"/>
+        <location filename="../decrypt_dlg.ui" line="1056"/>
+        <location filename="../decrypt_dlg.ui" line="1921"/>
         <source>Final</source>
         <translation>Final</translation>
     </message>
     <message>
         <location filename="../decrypt_dlg.ui" line="14"/>
-        <location filename="../decrypt_dlg.ui" line="1722"/>
-        <location filename="../decrypt_dlg.ui" line="1846"/>
+        <location filename="../decrypt_dlg.ui" line="1729"/>
+        <location filename="../decrypt_dlg.ui" line="1853"/>
         <source>Decrypt</source>
         <translation>복호화</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1907"/>
+        <location filename="../decrypt_dlg.ui" line="1914"/>
         <source>Status</source>
         <translation>상태</translation>
     </message>
@@ -2823,7 +2838,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation type="vanished">Decrypt 실패(%1)</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="936"/>
+        <location filename="../decrypt_dlg.ui" line="943"/>
         <source>Input Data</source>
         <translation>데이타 입력</translation>
     </message>
@@ -2832,58 +2847,58 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation type="vanished">입력 지움</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1079"/>
+        <location filename="../decrypt_dlg.ui" line="1086"/>
         <source>Input File</source>
         <translation>파일 입력</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1114"/>
+        <location filename="../decrypt_dlg.ui" line="1121"/>
         <source>Src File Path</source>
         <translation>소스 파일 경로</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1140"/>
-        <location filename="../decrypt_dlg.ui" line="1516"/>
+        <location filename="../decrypt_dlg.ui" line="1147"/>
+        <location filename="../decrypt_dlg.ui" line="1523"/>
         <source>Find</source>
         <translation>찾기</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1163"/>
+        <location filename="../decrypt_dlg.ui" line="1170"/>
         <source>File Information</source>
         <translation>소스 파일 정보</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1292"/>
+        <location filename="../decrypt_dlg.ui" line="1299"/>
         <source>File Status</source>
         <translation>파일 상태</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1299"/>
+        <location filename="../decrypt_dlg.ui" line="1306"/>
         <source>Total File Size</source>
         <translation>전체 파일 크기</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1368"/>
+        <location filename="../decrypt_dlg.ui" line="1375"/>
         <source>Read File Size</source>
         <translation>읽은 파일 크기</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1453"/>
+        <location filename="../decrypt_dlg.ui" line="1460"/>
         <source>Run Status</source>
         <translation>실행 상태</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1467"/>
+        <location filename="../decrypt_dlg.ui" line="1474"/>
         <source>RunThread</source>
         <translation>쓰레드 실행</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1490"/>
+        <location filename="../decrypt_dlg.ui" line="1497"/>
         <source>Dst File Path</source>
         <translation>대상 파일 경로</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1539"/>
+        <location filename="../decrypt_dlg.ui" line="1546"/>
         <source>Dst Information</source>
         <translation>대상 파일 정보</translation>
     </message>
@@ -2892,7 +2907,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation type="vanished">출력 지우기</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.ui" line="1839"/>
+        <location filename="../decrypt_dlg.ui" line="1846"/>
         <source>Init Automatically</source>
         <translation>자동 초기화</translation>
     </message>
@@ -2906,43 +2921,48 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">복호화 파일</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.cpp" line="117"/>
+        <location filename="../decrypt_dlg.cpp" line="118"/>
         <source>Select a key from HSM Man</source>
         <translation>HSM 관리에서 키를 선택 하세요</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.cpp" line="118"/>
+        <location filename="../decrypt_dlg.cpp" line="119"/>
         <source>Hex value</source>
         <translation>16진수 값</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.cpp" line="508"/>
+        <location filename="../decrypt_dlg.cpp" line="302"/>
+        <source>There is no object</source>
+        <translation>객체가 없습니다</translation>
+    </message>
+    <message>
+        <location filename="../decrypt_dlg.cpp" line="530"/>
         <source>Select your key</source>
         <translation>키를 선택하세요</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.cpp" line="526"/>
+        <location filename="../decrypt_dlg.cpp" line="548"/>
         <source>DecryptInit execution failure [%1]</source>
         <translation>DecryptInit 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.cpp" line="546"/>
+        <location filename="../decrypt_dlg.cpp" line="568"/>
         <source>Enter your data.</source>
         <translation>데이타를 입력하세요</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.cpp" line="569"/>
-        <location filename="../decrypt_dlg.cpp" line="806"/>
+        <location filename="../decrypt_dlg.cpp" line="591"/>
+        <location filename="../decrypt_dlg.cpp" line="828"/>
         <source>DecryptUpdate execution failure [%1]</source>
         <translation>DecryptUpdate 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.cpp" line="603"/>
+        <location filename="../decrypt_dlg.cpp" line="625"/>
         <source>DecryptFinal execution failure [%1]</source>
         <translation>DecryptFinal 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.cpp" line="636"/>
+        <location filename="../decrypt_dlg.cpp" line="658"/>
         <source>This feature requires a license.</source>
         <translation>이 기능은 라이센스가 필요합니다.</translation>
     </message>
@@ -2951,49 +2971,50 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">데이타를 입력하세요</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.cpp" line="682"/>
+        <location filename="../decrypt_dlg.cpp" line="704"/>
         <source>Decrypt execution failure [%1]</source>
         <translation>Decrypt 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.cpp" line="696"/>
+        <location filename="../decrypt_dlg.cpp" line="718"/>
         <source>Decrypt execution failure2 [%1]</source>
         <translation>Decrypt 실행 실패2 [%1]</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.cpp" line="749"/>
-        <location filename="../decrypt_dlg.cpp" line="961"/>
+        <location filename="../decrypt_dlg.cpp" line="771"/>
+        <location filename="../decrypt_dlg.cpp" line="983"/>
         <source>Find destination file</source>
         <translation>대상 파일을 찾으세요</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.cpp" line="756"/>
+        <location filename="../decrypt_dlg.cpp" line="778"/>
         <source>The destination file(%1) already exists.
 Do you want to delete the file and continue?</source>
         <translation>대상 파일(%1)이 이미 존재합니다. 삭제 후 계속 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.cpp" line="791"/>
+        <location filename="../decrypt_dlg.cpp" line="813"/>
         <source>fail to read file: %1</source>
         <translation>파일 읽기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.cpp" line="827"/>
+        <location filename="../decrypt_dlg.cpp" line="849"/>
         <source>fail to append file: %1</source>
         <translation>파일에 추가하기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.cpp" line="862"/>
+        <location filename="../decrypt_dlg.cpp" line="884"/>
         <source>File(%1) save was successful</source>
         <translation>파일(%1) 저장에 성공하였습니다</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.cpp" line="890"/>
+        <location filename="../decrypt_dlg.cpp" line="295"/>
+        <location filename="../decrypt_dlg.cpp" line="912"/>
         <source>Cannot be run in Init or Update state</source>
         <translation>Init 또는 Update 상태에서는 실행 할 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.cpp" line="935"/>
+        <location filename="../decrypt_dlg.cpp" line="957"/>
         <source>failed to initialize [%1]</source>
         <translation>초기화 실패 [%1]</translation>
     </message>
@@ -3002,13 +3023,13 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">Digest 초기화 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.cpp" line="731"/>
-        <location filename="../decrypt_dlg.cpp" line="953"/>
+        <location filename="../decrypt_dlg.cpp" line="753"/>
+        <location filename="../decrypt_dlg.cpp" line="975"/>
         <source>Find source file</source>
         <translation>소스 파일을 찾으세요</translation>
     </message>
     <message>
-        <location filename="../decrypt_dlg.cpp" line="968"/>
+        <location filename="../decrypt_dlg.cpp" line="990"/>
         <source>The target file[%1] is already exist.
 Do you want to delete the file and continue?</source>
         <translation>대상 파일(%1)이 이미 존재합니다. 삭제 후 계속 하시겠습니까?</translation>
@@ -3152,8 +3173,8 @@ Do you want to delete the file and continue?</source>
         <translation>로그인</translation>
     </message>
     <message>
-        <location filename="../derive_key_dlg.ui" line="382"/>
-        <location filename="../derive_key_dlg.ui" line="901"/>
+        <location filename="../derive_key_dlg.ui" line="360"/>
+        <location filename="../derive_key_dlg.ui" line="908"/>
         <source>Label</source>
         <translation>라벨</translation>
     </message>
@@ -3180,12 +3201,12 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">슬롯 상태</translation>
     </message>
     <message>
-        <location filename="../derive_key_dlg.ui" line="442"/>
+        <location filename="../derive_key_dlg.ui" line="449"/>
         <source>Method</source>
         <translation>방법</translation>
     </message>
     <message>
-        <location filename="../derive_key_dlg.ui" line="300"/>
+        <location filename="../derive_key_dlg.ui" line="341"/>
         <source>Object</source>
         <translation>대상</translation>
     </message>
@@ -3195,7 +3216,7 @@ Do you want to delete the file and continue?</source>
         <translation>소스 속성</translation>
     </message>
     <message>
-        <location filename="../derive_key_dlg.ui" line="719"/>
+        <location filename="../derive_key_dlg.ui" line="726"/>
         <source>Key</source>
         <translation>키</translation>
     </message>
@@ -3204,7 +3225,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">개인적</translation>
     </message>
     <message>
-        <location filename="../derive_key_dlg.ui" line="954"/>
+        <location filename="../derive_key_dlg.ui" line="961"/>
         <source>Attributes</source>
         <translation>속성</translation>
     </message>
@@ -3213,7 +3234,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">타입</translation>
     </message>
     <message>
-        <location filename="../derive_key_dlg.ui" line="725"/>
+        <location filename="../derive_key_dlg.ui" line="732"/>
         <source>Derived Key</source>
         <translation>유도 키</translation>
     </message>
@@ -3222,7 +3243,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">변경가능한</translation>
     </message>
     <message>
-        <location filename="../derive_key_dlg.ui" line="861"/>
+        <location filename="../derive_key_dlg.ui" line="868"/>
         <source>Class</source>
         <translation>클래스</translation>
     </message>
@@ -3268,12 +3289,12 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">추출가능한</translation>
     </message>
     <message>
-        <location filename="../derive_key_dlg.ui" line="931"/>
+        <location filename="../derive_key_dlg.ui" line="938"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="../derive_key_dlg.ui" line="885"/>
+        <location filename="../derive_key_dlg.ui" line="892"/>
         <source>KeySize</source>
         <translation>키 길이</translation>
     </message>
@@ -3286,17 +3307,17 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">키 유도에 성공(%1)</translation>
     </message>
     <message>
-        <location filename="../derive_key_dlg.ui" line="999"/>
+        <location filename="../derive_key_dlg.ui" line="1006"/>
         <source>StartDate</source>
         <translation>시작 일자</translation>
     </message>
     <message>
-        <location filename="../derive_key_dlg.ui" line="1020"/>
+        <location filename="../derive_key_dlg.ui" line="1027"/>
         <source>EndDate</source>
         <translation>종료 일자</translation>
     </message>
     <message>
-        <location filename="../derive_key_dlg.ui" line="989"/>
+        <location filename="../derive_key_dlg.ui" line="996"/>
         <source>Derive</source>
         <translation>유도</translation>
     </message>
@@ -3306,52 +3327,62 @@ Do you want to delete the file and continue?</source>
         <translation>슬롯 이름</translation>
     </message>
     <message>
-        <location filename="../derive_key_dlg.ui" line="363"/>
+        <location filename="../derive_key_dlg.ui" line="334"/>
         <source>Select</source>
         <translation>선택</translation>
     </message>
     <message>
-        <location filename="../derive_key_dlg.ui" line="511"/>
+        <location filename="../derive_key_dlg.ui" line="423"/>
+        <source>View</source>
+        <translation>보기</translation>
+    </message>
+    <message>
+        <location filename="../derive_key_dlg.ui" line="518"/>
         <source>Parameter Information</source>
         <translation>파라미터 정보</translation>
     </message>
     <message>
-        <location filename="../derive_key_dlg.ui" line="591"/>
+        <location filename="../derive_key_dlg.ui" line="598"/>
         <source>Param2 Label</source>
         <translation>파라미터2 레이블</translation>
     </message>
     <message>
-        <location filename="../derive_key_dlg.ui" line="654"/>
+        <location filename="../derive_key_dlg.ui" line="661"/>
         <source>Param Combo Label</source>
         <translation>파라미터 콤보 레이블</translation>
     </message>
     <message>
-        <location filename="../derive_key_dlg.ui" line="673"/>
+        <location filename="../derive_key_dlg.ui" line="680"/>
         <source>Param1 Label</source>
         <translation>파라미터1레이블</translation>
     </message>
     <message>
-        <location filename="../derive_key_dlg.cpp" line="175"/>
+        <location filename="../derive_key_dlg.cpp" line="144"/>
+        <source>There is no object</source>
+        <translation>객체가 없습니다</translation>
+    </message>
+    <message>
+        <location filename="../derive_key_dlg.cpp" line="192"/>
         <source>Select a key from HSM Man</source>
         <translation>HSM 관리에서 키를 선택 하세요</translation>
     </message>
     <message>
-        <location filename="../derive_key_dlg.cpp" line="215"/>
+        <location filename="../derive_key_dlg.cpp" line="232"/>
         <source>Select a key</source>
         <translation>키를 선택하세요</translation>
     </message>
     <message>
-        <location filename="../derive_key_dlg.cpp" line="441"/>
+        <location filename="../derive_key_dlg.cpp" line="458"/>
         <source>DeriveKey execution failure [%1]</source>
         <translation>DeriveKey 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../derive_key_dlg.cpp" line="448"/>
+        <location filename="../derive_key_dlg.cpp" line="465"/>
         <source>DeriveKey execution successful [Handle: %1]</source>
         <translation>DeriveKey 실행 성공[Handle:%1]</translation>
     </message>
     <message>
-        <location filename="../derive_key_dlg.cpp" line="695"/>
+        <location filename="../derive_key_dlg.cpp" line="712"/>
         <source>Parameter</source>
         <translation>파라미터</translation>
     </message>
@@ -3360,32 +3391,32 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">추출된 키 타입</translation>
     </message>
     <message>
-        <location filename="../derive_key_dlg.ui" line="938"/>
+        <location filename="../derive_key_dlg.ui" line="945"/>
         <source>Use Random</source>
         <translation>랜덤 사용</translation>
     </message>
     <message>
-        <location filename="../derive_key_dlg.ui" line="1093"/>
+        <location filename="../derive_key_dlg.ui" line="1100"/>
         <source>SignRecover</source>
         <translation>SignRecover</translation>
     </message>
     <message>
-        <location filename="../derive_key_dlg.ui" line="1107"/>
+        <location filename="../derive_key_dlg.ui" line="1114"/>
         <source>VerifyRecover</source>
         <translation>VerifyRecover</translation>
     </message>
     <message>
-        <location filename="../derive_key_dlg.ui" line="1123"/>
+        <location filename="../derive_key_dlg.ui" line="1130"/>
         <source>Trusted</source>
         <translation>Trusted</translation>
     </message>
     <message>
-        <location filename="../derive_key_dlg.ui" line="1133"/>
+        <location filename="../derive_key_dlg.ui" line="1140"/>
         <source>Destroyable</source>
         <translation>Destroyable</translation>
     </message>
     <message>
-        <location filename="../derive_key_dlg.ui" line="1140"/>
+        <location filename="../derive_key_dlg.ui" line="1147"/>
         <source>Copyable</source>
         <translation>Copyable</translation>
     </message>
@@ -3702,7 +3733,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">슬롯 상태</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_dlg.ui" line="394"/>
+        <location filename="../edit_attribute_dlg.ui" line="401"/>
         <source>Type</source>
         <translation>타입</translation>
     </message>
@@ -3722,17 +3753,22 @@ Do you want to delete the file and continue?</source>
         <translation>슬롯 이름</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_dlg.ui" line="560"/>
+        <location filename="../edit_attribute_dlg.ui" line="377"/>
+        <source>View</source>
+        <translation>보기</translation>
+    </message>
+    <message>
+        <location filename="../edit_attribute_dlg.ui" line="567"/>
         <source>Close</source>
         <translation>닫기</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_dlg.ui" line="553"/>
+        <location filename="../edit_attribute_dlg.ui" line="560"/>
         <source>Get Attribute</source>
         <translation>속성 얻기</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_dlg.ui" line="567"/>
+        <location filename="../edit_attribute_dlg.ui" line="574"/>
         <source>Set Attribute</source>
         <translation>속성 설정</translation>
     </message>
@@ -3757,30 +3793,35 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">속성 설정 성공</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_dlg.ui" line="407"/>
+        <location filename="../edit_attribute_dlg.ui" line="414"/>
         <source>Attribute Type</source>
         <translation>속성 타입</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_dlg.cpp" line="301"/>
-        <location filename="../edit_attribute_dlg.cpp" line="336"/>
+        <location filename="../edit_attribute_dlg.cpp" line="303"/>
+        <location filename="../edit_attribute_dlg.cpp" line="338"/>
         <source>Enter the handle value of the source</source>
         <translation>소스의 핸들값을 입력하세요</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_dlg.cpp" line="317"/>
+        <location filename="../edit_attribute_dlg.cpp" line="319"/>
         <source>GetAttributeValue2 execution failure [%1]</source>
         <translation>GetAttributeValue2 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_dlg.cpp" line="355"/>
+        <location filename="../edit_attribute_dlg.cpp" line="357"/>
         <source>SetAttributeValue2 execution failure [%1]</source>
         <translation>SetAttributeValue2 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_dlg.cpp" line="359"/>
+        <location filename="../edit_attribute_dlg.cpp" line="361"/>
         <source>SetAttributeValue2 execution successful</source>
         <translation>SetAttributeValue2 실행 성공</translation>
+    </message>
+    <message>
+        <location filename="../edit_attribute_dlg.cpp" line="379"/>
+        <source>There is no object</source>
+        <translation>객체가 없습니다</translation>
     </message>
 </context>
 <context>
@@ -3819,157 +3860,167 @@ Do you want to delete the file and continue?</source>
         <translation>세션</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="348"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="328"/>
+        <source>View</source>
+        <translation>보기</translation>
+    </message>
+    <message>
+        <location filename="../edit_attribute_list_dlg.ui" line="355"/>
         <source>Class</source>
         <translation>클래스</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="387"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="394"/>
         <source>Key Type</source>
         <translation>키 타입</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="417"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="424"/>
         <source>Label</source>
         <translation>라벨</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="430"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="437"/>
         <source>Application</source>
         <translation>어플리케이션</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="440"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="447"/>
         <source>Object ID</source>
         <translation>객체 ID</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="447"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="454"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="650"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="657"/>
         <source>Attributes</source>
         <translation>속성</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="659"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="666"/>
         <source>Modifiable</source>
         <translation>Modifiable</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="666"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="673"/>
         <source>Trusted</source>
         <translation>Trusted</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="673"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="680"/>
         <source>StartDate</source>
         <translation>시작 일자</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="689"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="696"/>
         <source>Unwrap</source>
         <translation>Unwrap</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="699"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="706"/>
         <source>Token</source>
         <translation>Token</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="718"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="725"/>
         <source>Private</source>
         <translation>Private</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="725"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="732"/>
         <source>Sensitive</source>
         <translation>Sensitive</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="732"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="739"/>
         <source>Wrap</source>
         <translation>Wrap</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="742"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="749"/>
         <source>Encrypt</source>
         <translation>Encrypt</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="749"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="756"/>
         <source>Sign</source>
         <translation>Sign</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="756"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="763"/>
         <source>Extractable</source>
         <translation>Extractable</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="763"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="770"/>
         <source>Copyable</source>
         <translation>Copyable</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="770"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="777"/>
         <source>EndDate</source>
         <translation>종료 일자</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="777"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="784"/>
         <source>Decrypt</source>
         <translation>Decrypt</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="784"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="791"/>
         <source>Verify</source>
         <translation>Verify</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="791"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="798"/>
         <source>Derive</source>
         <translation>Derive</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="798"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="805"/>
         <source>Destroyable</source>
         <translation>Destroyable</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="853"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="860"/>
         <source>GetAttribute</source>
         <translation>GetAttribute</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="860"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="867"/>
         <source>Close</source>
         <translation>닫기</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.ui" line="867"/>
+        <location filename="../edit_attribute_list_dlg.ui" line="874"/>
         <source>SetAttribute</source>
         <translation>SetAttribute</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.cpp" line="763"/>
+        <location filename="../edit_attribute_list_dlg.cpp" line="247"/>
+        <source>Theres is no object</source>
+        <translation>객체가 없습니다</translation>
+    </message>
+    <message>
+        <location filename="../edit_attribute_list_dlg.cpp" line="780"/>
         <source>fail to get attribute values(%1)</source>
         <translation>속성 가져오기 실패(%1)</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.cpp" line="767"/>
+        <location filename="../edit_attribute_list_dlg.cpp" line="784"/>
         <source>Success to get attribute values</source>
         <translation>속성값 가져오기 성공</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.cpp" line="1230"/>
+        <location filename="../edit_attribute_list_dlg.cpp" line="1247"/>
         <source>SetAttributeValue execution failure [%1]</source>
         <translation>SetAttributeValue2 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../edit_attribute_list_dlg.cpp" line="1234"/>
+        <location filename="../edit_attribute_list_dlg.cpp" line="1251"/>
         <source>SetAttributeValue execution successful</source>
         <translation>SetAttributeValue2 실행 성공</translation>
     </message>
@@ -3985,7 +4036,7 @@ Do you want to delete the file and continue?</source>
 <context>
     <name>EncryptDlg</name>
     <message>
-        <location filename="../encrypt_dlg.ui" line="875"/>
+        <location filename="../encrypt_dlg.ui" line="861"/>
         <source>Label</source>
         <translation>라벨</translation>
     </message>
@@ -4005,17 +4056,17 @@ Do you want to delete the file and continue?</source>
         <translation>키 타입</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1008"/>
+        <location filename="../encrypt_dlg.ui" line="1015"/>
         <source>Input</source>
         <translation>입력</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1898"/>
+        <location filename="../encrypt_dlg.ui" line="1905"/>
         <source>Close</source>
         <translation>닫기</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="856"/>
+        <location filename="../encrypt_dlg.ui" line="868"/>
         <source>Object</source>
         <translation>대상</translation>
     </message>
@@ -4069,43 +4120,48 @@ Do you want to delete the file and continue?</source>
         <translation>소스 길이</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="799"/>
+        <location filename="../encrypt_dlg.ui" line="875"/>
         <source>Select</source>
         <translation>선택</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1021"/>
-        <location filename="../encrypt_dlg.ui" line="1746"/>
+        <location filename="../encrypt_dlg.ui" line="916"/>
+        <source>View</source>
+        <translation>보기</translation>
+    </message>
+    <message>
+        <location filename="../encrypt_dlg.ui" line="1028"/>
+        <location filename="../encrypt_dlg.ui" line="1753"/>
         <source>C</source>
         <translation>C</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1817"/>
-        <location filename="../encrypt_dlg.ui" line="1865"/>
+        <location filename="../encrypt_dlg.ui" line="1824"/>
+        <location filename="../encrypt_dlg.ui" line="1872"/>
         <source>Init</source>
         <translation>Init</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1045"/>
-        <location filename="../encrypt_dlg.ui" line="1905"/>
+        <location filename="../encrypt_dlg.ui" line="1052"/>
+        <location filename="../encrypt_dlg.ui" line="1912"/>
         <source>Update</source>
         <translation>Update</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1038"/>
-        <location filename="../encrypt_dlg.ui" line="1912"/>
+        <location filename="../encrypt_dlg.ui" line="1045"/>
+        <location filename="../encrypt_dlg.ui" line="1919"/>
         <source>Final</source>
         <translation>Final</translation>
     </message>
     <message>
         <location filename="../encrypt_dlg.ui" line="14"/>
-        <location filename="../encrypt_dlg.ui" line="1677"/>
-        <location filename="../encrypt_dlg.ui" line="1844"/>
+        <location filename="../encrypt_dlg.ui" line="1684"/>
+        <location filename="../encrypt_dlg.ui" line="1851"/>
         <source>Encrypt</source>
         <translation>암호화</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1891"/>
+        <location filename="../encrypt_dlg.ui" line="1898"/>
         <source>Status</source>
         <translation>상태</translation>
     </message>
@@ -4130,7 +4186,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">Encrypt 실패(%1)</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="922"/>
+        <location filename="../encrypt_dlg.ui" line="929"/>
         <source>Input Data</source>
         <translation>데이타 입력</translation>
     </message>
@@ -4139,53 +4195,53 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">입력 지움</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1103"/>
+        <location filename="../encrypt_dlg.ui" line="1110"/>
         <source>Src File Path</source>
         <translation>소스 파일 경로</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1129"/>
-        <location filename="../encrypt_dlg.ui" line="1505"/>
+        <location filename="../encrypt_dlg.ui" line="1136"/>
+        <location filename="../encrypt_dlg.ui" line="1512"/>
         <source>Find</source>
         <translation>찾기</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1152"/>
+        <location filename="../encrypt_dlg.ui" line="1159"/>
         <source>File Information</source>
         <translation>소스 파일 정보</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1328"/>
+        <location filename="../encrypt_dlg.ui" line="1335"/>
         <source>Total File Size</source>
         <translation>전체 파일 크기</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1350"/>
+        <location filename="../encrypt_dlg.ui" line="1357"/>
         <source>File Status</source>
         <translation>파일 상태</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1357"/>
+        <location filename="../encrypt_dlg.ui" line="1364"/>
         <source>Read File Size</source>
         <translation>읽은 파일 크기</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1442"/>
+        <location filename="../encrypt_dlg.ui" line="1449"/>
         <source>Run Status</source>
         <translation>실행 상태</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1456"/>
+        <location filename="../encrypt_dlg.ui" line="1463"/>
         <source>RunThread</source>
         <translation>쓰레드 실행</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1479"/>
+        <location filename="../encrypt_dlg.ui" line="1486"/>
         <source>Dst File Path</source>
         <translation>대상 파일 경로</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1528"/>
+        <location filename="../encrypt_dlg.ui" line="1535"/>
         <source>Dst Information</source>
         <translation>대상 파일 정보</translation>
     </message>
@@ -4194,7 +4250,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">출력 지우기</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1837"/>
+        <location filename="../encrypt_dlg.ui" line="1844"/>
         <source>Init Automatically</source>
         <translation>자동 초기화</translation>
     </message>
@@ -4208,38 +4264,38 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">암호화 파일</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.cpp" line="115"/>
+        <location filename="../encrypt_dlg.cpp" line="117"/>
         <source>Select a key from HSM Man</source>
         <translation>HSM 관리에서 키를 선택 하세요</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.cpp" line="116"/>
+        <location filename="../encrypt_dlg.cpp" line="118"/>
         <source>Hex value</source>
         <translation>16진수 값</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.cpp" line="487"/>
+        <location filename="../encrypt_dlg.cpp" line="489"/>
         <source>Select your key</source>
         <translation>키를 선택하세요</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.cpp" line="503"/>
+        <location filename="../encrypt_dlg.cpp" line="505"/>
         <source>EncryptInit execution failure [%1]</source>
         <translation>EncryptInit 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.cpp" line="523"/>
+        <location filename="../encrypt_dlg.cpp" line="525"/>
         <source>Enter your data.</source>
         <translation>데이타를 입력하세요</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.cpp" line="550"/>
-        <location filename="../encrypt_dlg.cpp" line="787"/>
+        <location filename="../encrypt_dlg.cpp" line="552"/>
+        <location filename="../encrypt_dlg.cpp" line="789"/>
         <source>EncryptUpdate execution failure [%1]</source>
         <translation>EncryptUpdate 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.cpp" line="581"/>
+        <location filename="../encrypt_dlg.cpp" line="583"/>
         <source>EncryptFinal execution failure [%1]</source>
         <translation>EncryptFinal 실행 실패 [%1]</translation>
     </message>
@@ -4248,49 +4304,55 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">데이타를 입력하세요</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.cpp" line="665"/>
+        <location filename="../encrypt_dlg.cpp" line="667"/>
         <source>Encrypt execution failure [%1]</source>
         <translation>Encrypt 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.cpp" line="680"/>
+        <location filename="../encrypt_dlg.cpp" line="682"/>
         <source>Encrypt execution failure2 [%1]</source>
         <translation>Encrypt 실행 실패2 [%1]</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.cpp" line="731"/>
-        <location filename="../encrypt_dlg.cpp" line="940"/>
+        <location filename="../encrypt_dlg.cpp" line="733"/>
+        <location filename="../encrypt_dlg.cpp" line="963"/>
         <source>Find destination file</source>
         <translation>대상 파일을 찾으세요</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.cpp" line="738"/>
+        <location filename="../encrypt_dlg.cpp" line="740"/>
         <source>Destination file[%1] is already exist.
 Do you want to delete the file and continue?</source>
         <translation>대상 파일(%1)이 이미 존재합니다. 삭제 후 계속 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.cpp" line="772"/>
+        <location filename="../encrypt_dlg.cpp" line="774"/>
         <source>fail to read file: %1</source>
         <translation>파일 읽기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.cpp" line="808"/>
+        <location filename="../encrypt_dlg.cpp" line="810"/>
         <source>fail to append file: %1</source>
         <translation>파일에 추가하기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.cpp" line="841"/>
+        <location filename="../encrypt_dlg.cpp" line="843"/>
         <source>File(%1) save was successful</source>
         <translation>파일(%1) 저장에 성공하였습니다</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.cpp" line="869"/>
+        <location filename="../encrypt_dlg.cpp" line="871"/>
+        <location filename="../encrypt_dlg.cpp" line="911"/>
         <source>Cannot be run in Init or Update state</source>
         <translation>Init 또는 Update 상태에서는 실행 할 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.cpp" line="914"/>
+        <location filename="../encrypt_dlg.cpp" line="918"/>
+        <source>There is no object</source>
+        <translation>객체가 없습니다</translation>
+    </message>
+    <message>
+        <location filename="../encrypt_dlg.cpp" line="937"/>
         <source>failed to initialize [%1]</source>
         <translation>초기화 실패 [%1]</translation>
     </message>
@@ -4299,24 +4361,24 @@ Do you want to delete the file and continue?</source>
         <translation type="obsolete">Digest 초기화 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.cpp" line="713"/>
-        <location filename="../encrypt_dlg.cpp" line="932"/>
+        <location filename="../encrypt_dlg.cpp" line="715"/>
+        <location filename="../encrypt_dlg.cpp" line="955"/>
         <source>Find source file</source>
         <translation>소스 파일을 찾으세요</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.cpp" line="947"/>
+        <location filename="../encrypt_dlg.cpp" line="970"/>
         <source>The target file[%1] is already exist.
 Do you want to delete the file and continue?</source>
         <translation>대상 파일(%1)이 이미 존재합니다. 삭제 후 계속 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.ui" line="1068"/>
+        <location filename="../encrypt_dlg.ui" line="1075"/>
         <source>Input File</source>
         <translation>파일 입력</translation>
     </message>
     <message>
-        <location filename="../encrypt_dlg.cpp" line="614"/>
+        <location filename="../encrypt_dlg.cpp" line="616"/>
         <source>This feature requires a license.</source>
         <translation>이 기능은 라이센스가 필요합니다.</translation>
     </message>
@@ -6946,27 +7008,27 @@ Do you want to delete the file and continue?</source>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="190"/>
+        <location filename="../mainwindow.cpp" line="191"/>
         <source>Field</source>
         <translation>필드</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="190"/>
+        <location filename="../mainwindow.cpp" line="191"/>
         <source>Value</source>
         <translation>값</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="209"/>
+        <location filename="../mainwindow.cpp" line="210"/>
         <source>&amp;File</source>
         <translation>파일(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="210"/>
+        <location filename="../mainwindow.cpp" line="211"/>
         <source>File</source>
         <translation>파일</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="216"/>
+        <location filename="../mainwindow.cpp" line="217"/>
         <source>&amp;New</source>
         <translation>새로 불러오기(&amp;N)</translation>
     </message>
@@ -6975,7 +7037,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">새 파일 만들기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="224"/>
+        <location filename="../mainwindow.cpp" line="225"/>
         <source>&amp;Open...</source>
         <translation>열기(&amp;O)</translation>
     </message>
@@ -6984,40 +7046,40 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">존재 하는 파일 열기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="233"/>
+        <location filename="../mainwindow.cpp" line="234"/>
         <location filename="../mainwindows2.cpp" line="42"/>
         <source>Unload</source>
         <translation>내리기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="235"/>
+        <location filename="../mainwindow.cpp" line="236"/>
         <source>Unload cryptoki library</source>
         <translation>cryptoki 라이브러리 내리기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="241"/>
-        <location filename="../mainwindow.cpp" line="243"/>
+        <location filename="../mainwindow.cpp" line="242"/>
+        <location filename="../mainwindow.cpp" line="244"/>
         <location filename="../mainwindows2.cpp" line="49"/>
         <source>Show log tab</source>
         <translation>로그탭 보여주기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="268"/>
+        <location filename="../mainwindow.cpp" line="269"/>
         <source>&amp;Quit</source>
         <translation>끝내기(&amp;Q)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="270"/>
+        <location filename="../mainwindow.cpp" line="271"/>
         <source>Quit CryptokiMan</source>
         <translation>CryptokiMan 끝내기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="276"/>
+        <location filename="../mainwindow.cpp" line="277"/>
         <source>&amp;Module</source>
         <translation>모듈(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="277"/>
+        <location filename="../mainwindow.cpp" line="278"/>
         <source>Module</source>
         <translation>모듈</translation>
     </message>
@@ -7038,7 +7100,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PKCS11 finalize</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="300"/>
+        <location filename="../mainwindow.cpp" line="301"/>
         <location filename="../mainwindows2.cpp" line="70"/>
         <source>Open Session</source>
         <translation>Open Session</translation>
@@ -7048,7 +7110,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PKCS11 Open Session</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="308"/>
+        <location filename="../mainwindow.cpp" line="309"/>
         <location filename="../mainwindows2.cpp" line="77"/>
         <source>Close Session</source>
         <translation>Close Session</translation>
@@ -7058,7 +7120,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PKCS11 Close Session</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="316"/>
+        <location filename="../mainwindow.cpp" line="317"/>
         <location filename="../mainwindows2.cpp" line="84"/>
         <source>Close All Sessions</source>
         <translation>Close All Sessions</translation>
@@ -7068,7 +7130,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PKCS11 Close All Sessions</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="324"/>
+        <location filename="../mainwindow.cpp" line="325"/>
         <location filename="../mainwindows2.cpp" line="91"/>
         <source>Login</source>
         <translation>로그인</translation>
@@ -7078,24 +7140,24 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PKCS11 Loging</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="332"/>
+        <location filename="../mainwindow.cpp" line="333"/>
         <location filename="../mainwindows2.cpp" line="98"/>
         <source>Logout</source>
         <translation>로그 아웃</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="340"/>
+        <location filename="../mainwindow.cpp" line="341"/>
         <source>&amp;Objects</source>
         <translation>오브젝트(&amp;O)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="341"/>
-        <location filename="../mainwindow.cpp" line="985"/>
+        <location filename="../mainwindow.cpp" line="342"/>
+        <location filename="../mainwindow.cpp" line="986"/>
         <source>Objects</source>
         <translation>대상</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="348"/>
+        <location filename="../mainwindow.cpp" line="349"/>
         <location filename="../mainwindows2.cpp" line="105"/>
         <source>Generate Key Pair</source>
         <translation>키 쌍 생성</translation>
@@ -7105,7 +7167,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PKCS11 키 쌍 생성</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="356"/>
+        <location filename="../mainwindow.cpp" line="357"/>
         <location filename="../mainwindows2.cpp" line="112"/>
         <source>Generate Key</source>
         <translation>키 생성</translation>
@@ -7115,13 +7177,13 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PKCS11 키 생성</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="390"/>
+        <location filename="../mainwindow.cpp" line="391"/>
         <location filename="../mainwindows2.cpp" line="140"/>
         <source>Create ECDSA Public Key</source>
         <translation>ECDSA 공개키 생성</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="398"/>
+        <location filename="../mainwindow.cpp" line="399"/>
         <location filename="../mainwindows2.cpp" line="147"/>
         <source>Create ECDSA Private Key</source>
         <translation>ECDSA 개인키 생성</translation>
@@ -7132,7 +7194,7 @@ Do you want to delete the file and continue?</source>
         <translation>EDDSA 공개키 생성</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="409"/>
+        <location filename="../mainwindow.cpp" line="410"/>
         <source>PKCS11 Create EDDSA Public key</source>
         <translation>PKCS11 EDDSA 공개키 생성</translation>
     </message>
@@ -7142,18 +7204,18 @@ Do you want to delete the file and continue?</source>
         <translation>EDDSA 개인키 생성</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="417"/>
+        <location filename="../mainwindow.cpp" line="418"/>
         <source>PKCS11 Create EDDSA Private key</source>
         <translation>PKCS11 EDDSA 개인키 생성</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="461"/>
+        <location filename="../mainwindow.cpp" line="462"/>
         <location filename="../mainwindows2.cpp" line="203"/>
         <source>Edit Attribute List</source>
         <translation>속성 리스트 편집</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="464"/>
+        <location filename="../mainwindow.cpp" line="465"/>
         <source>PKCS11 Edit Attribute List</source>
         <translation>PKCS#11 속성 리스트 편집하기</translation>
     </message>
@@ -7166,18 +7228,18 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PKCS11 객체 찾기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="559"/>
+        <location filename="../mainwindow.cpp" line="560"/>
         <location filename="../mainwindows2.cpp" line="266"/>
         <source>HSM Manage</source>
         <translation>HSM 관리</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="562"/>
+        <location filename="../mainwindow.cpp" line="563"/>
         <source>HSM Management</source>
         <translation>HSM 관리</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="669"/>
+        <location filename="../mainwindow.cpp" line="670"/>
         <location filename="../mainwindows2.cpp" line="343"/>
         <source>Type Name</source>
         <translation>타입 이름</translation>
@@ -7187,8 +7249,8 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PKCS#11 타입 이름</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="677"/>
-        <location filename="../mainwindow.cpp" line="2816"/>
+        <location filename="../mainwindow.cpp" line="678"/>
+        <location filename="../mainwindow.cpp" line="2847"/>
         <location filename="../mainwindows2.cpp" line="350"/>
         <source>Make CSR</source>
         <translation>CSR 만들기</translation>
@@ -7198,23 +7260,23 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">인증서 요청서 만들기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="779"/>
+        <location filename="../mainwindow.cpp" line="780"/>
         <source>Ready</source>
         <translation>준비</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="811"/>
+        <location filename="../mainwindow.cpp" line="812"/>
         <source>CryptokiToken</source>
         <translation>CryptokiToken</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="365"/>
+        <location filename="../mainwindow.cpp" line="366"/>
         <location filename="../mainwindows2.cpp" line="119"/>
         <source>Create Data</source>
         <translation>데이타 생성</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="159"/>
+        <location filename="../mainwindow.cpp" line="160"/>
         <source>Log</source>
         <translation>로그</translation>
     </message>
@@ -7223,7 +7285,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PKCS11 데이타 생성</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="374"/>
+        <location filename="../mainwindow.cpp" line="375"/>
         <location filename="../mainwindows2.cpp" line="126"/>
         <source>Create RSA Public Key</source>
         <translation>RSA 공개키 생성</translation>
@@ -7233,7 +7295,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PKCS11 RSA 공개키 생성</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="382"/>
+        <location filename="../mainwindow.cpp" line="383"/>
         <location filename="../mainwindows2.cpp" line="133"/>
         <source>Create RSA Private Key</source>
         <translation>RSA 개인 키 생성</translation>
@@ -7259,7 +7321,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PKCS11 EC 개인 키 생성</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="438"/>
+        <location filename="../mainwindow.cpp" line="439"/>
         <location filename="../mainwindows2.cpp" line="182"/>
         <source>Create Key</source>
         <translation>키 만들기</translation>
@@ -7269,7 +7331,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PKCS11 키 생성</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2793"/>
+        <location filename="../mainwindow.cpp" line="2824"/>
         <source>Delete Object</source>
         <translation>대상 삭제</translation>
     </message>
@@ -7278,99 +7340,101 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PKCS11 대상 삭제</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="843"/>
+        <location filename="../mainwindow.cpp" line="844"/>
         <source>[%1] is not a valid library: %2</source>
         <translation>[%1] 은 유효한 라이브러리가 아닙니다: %2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="879"/>
-        <location filename="../mainwindow.cpp" line="1049"/>
+        <location filename="../mainwindow.cpp" line="880"/>
+        <location filename="../mainwindow.cpp" line="1050"/>
         <source>Cryptoki library not loaded</source>
         <translation>Cryptoki 라이브러리가 로드 되지 않았습니다.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="883"/>
+        <location filename="../mainwindow.cpp" line="884"/>
         <source>Are you sure to unload cryptokilibrary</source>
         <translation>정말로 Cryptoki 라이브러리를 내기겠습니까?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="889"/>
+        <location filename="../mainwindow.cpp" line="890"/>
         <source>Cryptoki library has been unloaded successfully</source>
         <translation>Cryptoki 라이브러리를 제거 하였습니다.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="906"/>
+        <location filename="../mainwindow.cpp" line="907"/>
         <source>Load the Cryptoki library first</source>
         <translation>Cryptoki 라이브러리를 먼저 로드 하세요</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1060"/>
+        <location filename="../mainwindow.cpp" line="1061"/>
         <source>Finalize execution successful</source>
         <translation>Finalize 실행 성공</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1086"/>
-        <location filename="../mainwindow.cpp" line="1118"/>
-        <location filename="../mainwindow.cpp" line="1145"/>
-        <location filename="../mainwindow.cpp" line="1175"/>
-        <location filename="../mainwindow.cpp" line="1200"/>
-        <location filename="../mainwindow.cpp" line="1225"/>
-        <location filename="../mainwindow.cpp" line="1240"/>
-        <location filename="../mainwindow.cpp" line="1255"/>
-        <location filename="../mainwindow.cpp" line="1270"/>
-        <location filename="../mainwindow.cpp" line="1285"/>
-        <location filename="../mainwindow.cpp" line="1300"/>
-        <location filename="../mainwindow.cpp" line="1315"/>
-        <location filename="../mainwindow.cpp" line="1330"/>
-        <location filename="../mainwindow.cpp" line="1345"/>
-        <location filename="../mainwindow.cpp" line="1360"/>
-        <location filename="../mainwindow.cpp" line="1375"/>
-        <location filename="../mainwindow.cpp" line="1390"/>
-        <location filename="../mainwindow.cpp" line="1405"/>
-        <location filename="../mainwindow.cpp" line="1420"/>
-        <location filename="../mainwindow.cpp" line="1435"/>
-        <location filename="../mainwindow.cpp" line="1463"/>
-        <location filename="../mainwindow.cpp" line="1494"/>
-        <location filename="../mainwindow.cpp" line="1516"/>
-        <location filename="../mainwindow.cpp" line="1549"/>
-        <location filename="../mainwindow.cpp" line="1582"/>
-        <location filename="../mainwindow.cpp" line="1604"/>
-        <location filename="../mainwindow.cpp" line="1621"/>
-        <location filename="../mainwindow.cpp" line="1636"/>
-        <location filename="../mainwindow.cpp" line="1654"/>
+        <location filename="../mainwindow.cpp" line="1087"/>
+        <location filename="../mainwindow.cpp" line="1119"/>
+        <location filename="../mainwindow.cpp" line="1146"/>
+        <location filename="../mainwindow.cpp" line="1176"/>
+        <location filename="../mainwindow.cpp" line="1201"/>
+        <location filename="../mainwindow.cpp" line="1226"/>
+        <location filename="../mainwindow.cpp" line="1241"/>
+        <location filename="../mainwindow.cpp" line="1256"/>
+        <location filename="../mainwindow.cpp" line="1271"/>
+        <location filename="../mainwindow.cpp" line="1286"/>
+        <location filename="../mainwindow.cpp" line="1301"/>
+        <location filename="../mainwindow.cpp" line="1316"/>
+        <location filename="../mainwindow.cpp" line="1331"/>
+        <location filename="../mainwindow.cpp" line="1346"/>
+        <location filename="../mainwindow.cpp" line="1361"/>
+        <location filename="../mainwindow.cpp" line="1376"/>
+        <location filename="../mainwindow.cpp" line="1391"/>
+        <location filename="../mainwindow.cpp" line="1406"/>
+        <location filename="../mainwindow.cpp" line="1421"/>
+        <location filename="../mainwindow.cpp" line="1436"/>
+        <location filename="../mainwindow.cpp" line="1464"/>
+        <location filename="../mainwindow.cpp" line="1492"/>
+        <location filename="../mainwindow.cpp" line="1523"/>
+        <location filename="../mainwindow.cpp" line="1545"/>
+        <location filename="../mainwindow.cpp" line="1578"/>
+        <location filename="../mainwindow.cpp" line="1611"/>
+        <location filename="../mainwindow.cpp" line="1633"/>
+        <location filename="../mainwindow.cpp" line="1650"/>
+        <location filename="../mainwindow.cpp" line="1665"/>
         <location filename="../mainwindow.cpp" line="1683"/>
-        <location filename="../mainwindow.cpp" line="1701"/>
-        <location filename="../mainwindow.cpp" line="1718"/>
-        <location filename="../mainwindow.cpp" line="1737"/>
-        <location filename="../mainwindow.cpp" line="1764"/>
-        <location filename="../mainwindow.cpp" line="1782"/>
-        <location filename="../mainwindow.cpp" line="1803"/>
-        <location filename="../mainwindow.cpp" line="1831"/>
-        <location filename="../mainwindow.cpp" line="1847"/>
-        <location filename="../mainwindow.cpp" line="1868"/>
-        <location filename="../mainwindow.cpp" line="1896"/>
-        <location filename="../mainwindow.cpp" line="2017"/>
-        <location filename="../mainwindow.cpp" line="2034"/>
-        <location filename="../mainwindow.cpp" line="2057"/>
-        <location filename="../mainwindow.cpp" line="2103"/>
-        <location filename="../mainwindow.cpp" line="2184"/>
-        <location filename="../mainwindow.cpp" line="2218"/>
-        <location filename="../mainwindow.cpp" line="2295"/>
-        <location filename="../mainwindow.cpp" line="2312"/>
-        <location filename="../mainwindow.cpp" line="2329"/>
-        <location filename="../mainwindow.cpp" line="2346"/>
-        <location filename="../mainwindow.cpp" line="2363"/>
-        <location filename="../mainwindow.cpp" line="2380"/>
-        <location filename="../mainwindow.cpp" line="2397"/>
-        <location filename="../mainwindow.cpp" line="2420"/>
-        <location filename="../mainwindow.cpp" line="2443"/>
+        <location filename="../mainwindow.cpp" line="1712"/>
+        <location filename="../mainwindow.cpp" line="1730"/>
+        <location filename="../mainwindow.cpp" line="1747"/>
+        <location filename="../mainwindow.cpp" line="1766"/>
+        <location filename="../mainwindow.cpp" line="1793"/>
+        <location filename="../mainwindow.cpp" line="1811"/>
+        <location filename="../mainwindow.cpp" line="1832"/>
+        <location filename="../mainwindow.cpp" line="1860"/>
+        <location filename="../mainwindow.cpp" line="1876"/>
+        <location filename="../mainwindow.cpp" line="1897"/>
+        <location filename="../mainwindow.cpp" line="1925"/>
+        <location filename="../mainwindow.cpp" line="2046"/>
+        <location filename="../mainwindow.cpp" line="2063"/>
+        <location filename="../mainwindow.cpp" line="2086"/>
+        <location filename="../mainwindow.cpp" line="2132"/>
+        <location filename="../mainwindow.cpp" line="2213"/>
+        <location filename="../mainwindow.cpp" line="2247"/>
+        <location filename="../mainwindow.cpp" line="2324"/>
+        <location filename="../mainwindow.cpp" line="2341"/>
+        <location filename="../mainwindow.cpp" line="2358"/>
+        <location filename="../mainwindow.cpp" line="2375"/>
+        <location filename="../mainwindow.cpp" line="2392"/>
+        <location filename="../mainwindow.cpp" line="2409"/>
+        <location filename="../mainwindow.cpp" line="2426"/>
+        <location filename="../mainwindow.cpp" line="2449"/>
+        <location filename="../mainwindow.cpp" line="2472"/>
         <source>No slot selected</source>
         <translation>선택한 슬롯이 없습니다</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1475"/>
-        <location filename="../mainwindow.cpp" line="1528"/>
-        <location filename="../mainwindow.cpp" line="1561"/>
+        <location filename="../mainwindow.cpp" line="1476"/>
+        <location filename="../mainwindow.cpp" line="1504"/>
+        <location filename="../mainwindow.cpp" line="1557"/>
+        <location filename="../mainwindow.cpp" line="1590"/>
         <source>No object selected</source>
         <translation>선택한 객체가 없습니다</translation>
     </message>
@@ -7379,7 +7443,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">라이선스가 변경 되었습니다.적용을 위해 다시 시작 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2791"/>
+        <location filename="../mainwindow.cpp" line="2822"/>
         <source>Edit Attribute</source>
         <translation>속성 편집</translation>
     </message>
@@ -7396,8 +7460,8 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">암호</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="518"/>
-        <location filename="../mainwindow.cpp" line="521"/>
+        <location filename="../mainwindow.cpp" line="519"/>
+        <location filename="../mainwindow.cpp" line="522"/>
         <location filename="../mainwindows2.cpp" line="231"/>
         <source>Digest</source>
         <translation>Digest</translation>
@@ -7407,8 +7471,8 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PKCS11 Digest</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="526"/>
-        <location filename="../mainwindow.cpp" line="529"/>
+        <location filename="../mainwindow.cpp" line="527"/>
+        <location filename="../mainwindow.cpp" line="530"/>
         <location filename="../mainwindows2.cpp" line="238"/>
         <source>Signature</source>
         <translation>서명</translation>
@@ -7418,10 +7482,10 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PKCS11 서명</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="535"/>
-        <location filename="../mainwindow.cpp" line="538"/>
-        <location filename="../mainwindow.cpp" line="2803"/>
-        <location filename="../mainwindow.cpp" line="2821"/>
+        <location filename="../mainwindow.cpp" line="536"/>
+        <location filename="../mainwindow.cpp" line="539"/>
+        <location filename="../mainwindow.cpp" line="2834"/>
+        <location filename="../mainwindow.cpp" line="2852"/>
         <location filename="../mainwindows2.cpp" line="245"/>
         <source>Verify</source>
         <translation>검증</translation>
@@ -7431,10 +7495,10 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PKCS11 검증</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="543"/>
-        <location filename="../mainwindow.cpp" line="546"/>
-        <location filename="../mainwindow.cpp" line="2804"/>
-        <location filename="../mainwindow.cpp" line="2822"/>
+        <location filename="../mainwindow.cpp" line="544"/>
+        <location filename="../mainwindow.cpp" line="547"/>
+        <location filename="../mainwindow.cpp" line="2835"/>
+        <location filename="../mainwindow.cpp" line="2853"/>
         <location filename="../mainwindows2.cpp" line="252"/>
         <source>Encrypt</source>
         <translation>암호화</translation>
@@ -7444,10 +7508,10 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PKCS11 암호화</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="551"/>
-        <location filename="../mainwindow.cpp" line="554"/>
-        <location filename="../mainwindow.cpp" line="2812"/>
-        <location filename="../mainwindow.cpp" line="2823"/>
+        <location filename="../mainwindow.cpp" line="552"/>
+        <location filename="../mainwindow.cpp" line="555"/>
+        <location filename="../mainwindow.cpp" line="2843"/>
+        <location filename="../mainwindow.cpp" line="2854"/>
         <location filename="../mainwindows2.cpp" line="259"/>
         <source>Decrypt</source>
         <translation>복호화</translation>
@@ -7457,18 +7521,18 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PKCS11 복호화</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="576"/>
+        <location filename="../mainwindow.cpp" line="577"/>
         <source>&amp;Import</source>
         <translation>가져오기(&amp;I)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="578"/>
+        <location filename="../mainwindow.cpp" line="579"/>
         <source>Import</source>
         <translation>가져오기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="583"/>
-        <location filename="../mainwindow.cpp" line="586"/>
+        <location filename="../mainwindow.cpp" line="584"/>
+        <location filename="../mainwindow.cpp" line="587"/>
         <location filename="../mainwindows2.cpp" line="273"/>
         <source>Import certificate</source>
         <translation>인증서 가져오기</translation>
@@ -7478,8 +7542,8 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PCS11 인증서 가져오기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="591"/>
-        <location filename="../mainwindow.cpp" line="594"/>
+        <location filename="../mainwindow.cpp" line="592"/>
+        <location filename="../mainwindow.cpp" line="595"/>
         <location filename="../mainwindows2.cpp" line="280"/>
         <source>Import PFX</source>
         <translation>PFX 가져오기</translation>
@@ -7489,7 +7553,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PKCS11 PFX 가져오기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="599"/>
+        <location filename="../mainwindow.cpp" line="600"/>
         <location filename="../mainwindows2.cpp" line="287"/>
         <source>Import Private Key</source>
         <translation>개인키 가져오기</translation>
@@ -7499,17 +7563,17 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PKCS11 개인키 가져오기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="606"/>
+        <location filename="../mainwindow.cpp" line="607"/>
         <source>&amp;Tools</source>
         <translation>도구(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="607"/>
+        <location filename="../mainwindow.cpp" line="608"/>
         <source>Tools</source>
         <translation>도구</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="613"/>
+        <location filename="../mainwindow.cpp" line="614"/>
         <source>Initialize Token</source>
         <translation>토큰 초기화</translation>
     </message>
@@ -7518,7 +7582,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PKCS11 토큰 초기화</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="510"/>
+        <location filename="../mainwindow.cpp" line="511"/>
         <location filename="../mainwindows2.cpp" line="224"/>
         <source>Random</source>
         <translation>랜덤</translation>
@@ -7528,8 +7592,8 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PKCS11 랜덤</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="629"/>
-        <location filename="../mainwindow.cpp" line="632"/>
+        <location filename="../mainwindow.cpp" line="630"/>
+        <location filename="../mainwindow.cpp" line="633"/>
         <location filename="../mainwindows2.cpp" line="308"/>
         <source>Set PIN</source>
         <translation>Set PIN</translation>
@@ -7539,8 +7603,8 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PKCS11 Set PIN</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="637"/>
-        <location filename="../mainwindow.cpp" line="640"/>
+        <location filename="../mainwindow.cpp" line="638"/>
+        <location filename="../mainwindow.cpp" line="641"/>
         <location filename="../mainwindows2.cpp" line="315"/>
         <source>Init PIN</source>
         <translation>Init PIN</translation>
@@ -7550,7 +7614,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PKCS11 Init PIN</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="645"/>
+        <location filename="../mainwindow.cpp" line="646"/>
         <location filename="../mainwindows2.cpp" line="322"/>
         <source>Wrap Key</source>
         <translation>Wrap Key</translation>
@@ -7560,7 +7624,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PKCS11 WrapKey</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="653"/>
+        <location filename="../mainwindow.cpp" line="654"/>
         <location filename="../mainwindows2.cpp" line="329"/>
         <source>Unwrap Key</source>
         <translation>Unwrap Key</translation>
@@ -7570,7 +7634,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PKCS11 Unwrap Key</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="661"/>
+        <location filename="../mainwindow.cpp" line="662"/>
         <location filename="../mainwindows2.cpp" line="336"/>
         <source>Derive Key</source>
         <translation>Derive Key</translation>
@@ -7580,12 +7644,12 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PKCS11 derive key</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="715"/>
+        <location filename="../mainwindow.cpp" line="716"/>
         <source>&amp;Help</source>
         <translation>도움말(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="716"/>
+        <location filename="../mainwindow.cpp" line="717"/>
         <source>Help</source>
         <translation>도움말</translation>
     </message>
@@ -7711,8 +7775,8 @@ Do you want to delete the file and continue?</source>
         <translation>토큰 초기화</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="621"/>
-        <location filename="../mainwindow.cpp" line="624"/>
+        <location filename="../mainwindow.cpp" line="622"/>
+        <location filename="../mainwindow.cpp" line="625"/>
         <location filename="../mainwindows2.cpp" line="301"/>
         <source>Operation State</source>
         <translation>운영 상태</translation>
@@ -7746,8 +7810,8 @@ Do you want to delete the file and continue?</source>
         <translation>툴바 보기가 변경 되었습니다.적용을 위해 다시 시작 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="769"/>
-        <location filename="../mainwindow.cpp" line="772"/>
+        <location filename="../mainwindow.cpp" line="770"/>
+        <location filename="../mainwindow.cpp" line="773"/>
         <location filename="../mainwindows2.cpp" line="385"/>
         <source>About CryptokiMan</source>
         <translation>CryptokiMan 에 대해서</translation>
@@ -7766,7 +7830,7 @@ Do you want to delete the file and continue?</source>
         <translation>설정</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="744"/>
+        <location filename="../mainwindow.cpp" line="745"/>
         <source>Settings CryptokiMan</source>
         <translation>CryptokiMan 설정</translation>
     </message>
@@ -7780,12 +7844,12 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">cryptoki 파일 열기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="831"/>
+        <location filename="../mainwindow.cpp" line="832"/>
         <source>Cryptoki library has already loaded</source>
         <translation>Cryptoki 라이브러리가 이미 불러왔습니다</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="258"/>
+        <location filename="../mainwindow.cpp" line="259"/>
         <source>Recent Files</source>
         <translation>최근 파일들</translation>
     </message>
@@ -7794,7 +7858,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PKCS11 로그아웃</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="742"/>
+        <location filename="../mainwindow.cpp" line="743"/>
         <source>&amp;Settings</source>
         <translation>설정(&amp;S)</translation>
     </message>
@@ -7811,8 +7875,8 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">슬롯이 없습니다</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="454"/>
-        <location filename="../mainwindow.cpp" line="457"/>
+        <location filename="../mainwindow.cpp" line="455"/>
+        <location filename="../mainwindow.cpp" line="458"/>
         <location filename="../mainwindows2.cpp" line="196"/>
         <source>Edit Object</source>
         <translation>대상 편집</translation>
@@ -7822,223 +7886,223 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PKCS11 대상 편집</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2797"/>
+        <location filename="../mainwindow.cpp" line="2828"/>
         <source>View Certificate</source>
         <translation>인증서 보기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2811"/>
-        <location filename="../mainwindow.cpp" line="2820"/>
+        <location filename="../mainwindow.cpp" line="2842"/>
+        <location filename="../mainwindow.cpp" line="2851"/>
         <source>Sign</source>
         <translation>서명</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="158"/>
+        <location filename="../mainwindow.cpp" line="159"/>
         <source>information</source>
         <translation>정보</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="218"/>
+        <location filename="../mainwindow.cpp" line="219"/>
         <source>Open new window</source>
         <translation>새로운 창 열기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="226"/>
+        <location filename="../mainwindow.cpp" line="227"/>
         <source>Open cryptoki library</source>
         <translation>Cryptoki 라이브러리 열기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="283"/>
+        <location filename="../mainwindow.cpp" line="284"/>
         <location filename="../mainwindows2.cpp" line="56"/>
         <source>Initialize</source>
         <translation>Initialize</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="286"/>
+        <location filename="../mainwindow.cpp" line="287"/>
         <source>PKCS11 C_Initialize</source>
         <translation>PKCS11 C_Initialize</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="291"/>
+        <location filename="../mainwindow.cpp" line="292"/>
         <location filename="../mainwindows2.cpp" line="63"/>
         <source>Finalize</source>
         <translation>Finalize</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="294"/>
+        <location filename="../mainwindow.cpp" line="295"/>
         <source>PKCS11 C_Finalize</source>
         <translation>PKCS11 C_Finalize</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="303"/>
+        <location filename="../mainwindow.cpp" line="304"/>
         <source>PKCS11 C_OpenSession</source>
         <translation>PKCS11 C_OpenSession</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="311"/>
+        <location filename="../mainwindow.cpp" line="312"/>
         <source>PKCS11 C_CloseSession</source>
         <translation>PKCS11 C_CloseSession</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="319"/>
+        <location filename="../mainwindow.cpp" line="320"/>
         <source>PKCS11 C_CloseAllSessions</source>
         <translation>PKCS11 C_CloseAllSessions</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="327"/>
+        <location filename="../mainwindow.cpp" line="328"/>
         <source>PKCS11 C_Login</source>
         <translation>PKCS11 C_Login</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="335"/>
+        <location filename="../mainwindow.cpp" line="336"/>
         <source>PKCS11 C_Logout</source>
         <translation>PKCS11 C_Logout</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="351"/>
+        <location filename="../mainwindow.cpp" line="352"/>
         <source>PKCS11 C_GenerateKeyPair</source>
         <translation>PKCS11 C_GenerateKeyPair</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="359"/>
+        <location filename="../mainwindow.cpp" line="360"/>
         <source>PKCS11 C_GenerateKey</source>
         <translation>PKCS11 C_GenerateKey</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="368"/>
+        <location filename="../mainwindow.cpp" line="369"/>
         <source>PKCS11 C_CreateObject</source>
         <translation>PKCS11 C_CreateObject</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="377"/>
+        <location filename="../mainwindow.cpp" line="378"/>
         <source>Creating an RSA public key</source>
         <translation>RSA 공개키 만들기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="385"/>
+        <location filename="../mainwindow.cpp" line="386"/>
         <source>Creating an RSA private key</source>
         <translation>RSA 개인키 만들기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="393"/>
+        <location filename="../mainwindow.cpp" line="394"/>
         <source>Creating an EC public key</source>
         <translation>EC 공개키 만들기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="401"/>
+        <location filename="../mainwindow.cpp" line="402"/>
         <source>Creating an EC private key</source>
         <translation>EC 개인키 만들기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="406"/>
+        <location filename="../mainwindow.cpp" line="407"/>
         <source>Creating an EDDSA public key</source>
         <translation>EDDSA 공개키 만들기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="414"/>
+        <location filename="../mainwindow.cpp" line="415"/>
         <source>Creating an EDDSA private key</source>
         <translation>EDDSA 공개키 만등기 창</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="422"/>
+        <location filename="../mainwindow.cpp" line="423"/>
         <source>Creating an DSA public key</source>
         <translation>DSA 공개키 만들기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="430"/>
+        <location filename="../mainwindow.cpp" line="431"/>
         <source>Creating an DSA private key</source>
         <translation>DSA 개인키 만들기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="441"/>
+        <location filename="../mainwindow.cpp" line="442"/>
         <source>PKCS11 C_CreateKey</source>
         <translation>PKCS11 C_CreateKey</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="446"/>
+        <location filename="../mainwindow.cpp" line="447"/>
         <source>Destroy Object</source>
         <translation>대상 삭제</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="449"/>
+        <location filename="../mainwindow.cpp" line="450"/>
         <source>PKCS11 C_DestroyObject</source>
         <translation>PKCS11 C_DestroyObject</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="472"/>
+        <location filename="../mainwindow.cpp" line="473"/>
         <source>PKCS11 C_CopyObject</source>
         <translation>PKCS11 C_CopyObject</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="477"/>
-        <location filename="../mainwindow.cpp" line="480"/>
+        <location filename="../mainwindow.cpp" line="478"/>
+        <location filename="../mainwindow.cpp" line="481"/>
         <location filename="../mainwindows2.cpp" line="217"/>
         <source>Find Objects</source>
         <translation>객체 찾기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="503"/>
+        <location filename="../mainwindow.cpp" line="504"/>
         <source>&amp;Cryptography</source>
         <translation>암호학(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="504"/>
+        <location filename="../mainwindow.cpp" line="505"/>
         <source>Cryptography</source>
         <translation>암호학</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="513"/>
+        <location filename="../mainwindow.cpp" line="514"/>
         <source>PKCS11 C_GenerateRandom</source>
         <translation>PKCS11 C_GenerateRandom</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="602"/>
+        <location filename="../mainwindow.cpp" line="603"/>
         <source>Import private key</source>
         <translation>개인키 가져오기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="616"/>
+        <location filename="../mainwindow.cpp" line="617"/>
         <source>Initialize token</source>
         <translation>토큰 초기화</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="648"/>
+        <location filename="../mainwindow.cpp" line="649"/>
         <source>Wrap key</source>
         <translation>Wrap key</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="656"/>
+        <location filename="../mainwindow.cpp" line="657"/>
         <source>Unwrap key</source>
         <translation>Unwrap key</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="664"/>
+        <location filename="../mainwindow.cpp" line="665"/>
         <source>Derive key</source>
         <translation>유도 키</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="672"/>
+        <location filename="../mainwindow.cpp" line="673"/>
         <source>Type name information</source>
         <translation>타입 이름 정보</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="680"/>
+        <location filename="../mainwindow.cpp" line="681"/>
         <source>Generate CSR</source>
         <translation>CSR 생성하기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="685"/>
+        <location filename="../mainwindow.cpp" line="686"/>
         <location filename="../mainwindows2.cpp" line="357"/>
         <source>CAVP</source>
         <translation>CAVP</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="688"/>
+        <location filename="../mainwindow.cpp" line="689"/>
         <source>Cryptography Algorithm Valication Program</source>
         <translation>Cryptography Algorithm Valication Program</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="724"/>
+        <location filename="../mainwindow.cpp" line="725"/>
         <source>&amp;Clear Log</source>
         <translation>로그 지우기(&amp;C)</translation>
     </message>
@@ -8051,153 +8115,158 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">로그</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="973"/>
-        <location filename="../mainwindow.cpp" line="3410"/>
+        <location filename="../mainwindow.cpp" line="974"/>
+        <location filename="../mainwindow.cpp" line="3441"/>
         <source>Mechanism</source>
         <translation>알고리즘</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1053"/>
+        <location filename="../mainwindow.cpp" line="1054"/>
         <source>Are you sure to finalize?</source>
         <translation>정말로 끝내겠습니까?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1927"/>
+        <location filename="../mainwindow.cpp" line="1956"/>
         <source>failed to get certificate: %1</source>
         <translation>인증서 정보 가져오기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1960"/>
-        <location filename="../mainwindow.cpp" line="2121"/>
+        <location filename="../mainwindow.cpp" line="1989"/>
+        <location filename="../mainwindow.cpp" line="2150"/>
         <source>failed to get private key: %1</source>
         <translation>개인키 가져오기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1996"/>
-        <location filename="../mainwindow.cpp" line="2076"/>
+        <location filename="../mainwindow.cpp" line="2025"/>
+        <location filename="../mainwindow.cpp" line="2105"/>
         <source>failed to get public key: %1</source>
         <translation>공개키 가져오기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2153"/>
+        <location filename="../mainwindow.cpp" line="2182"/>
         <source>fail to get certficate</source>
         <translation>인증서 가져오기 실패</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2164"/>
+        <location filename="../mainwindow.cpp" line="2193"/>
         <source>Invalid certificate</source>
         <translation>유효하지 않는 인증서</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2792"/>
+        <location filename="../mainwindow.cpp" line="2821"/>
+        <source>View Object</source>
+        <translation>객체 보기</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="2823"/>
         <source>Edit AttributeList</source>
         <translation>속성 리스트 편집</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2799"/>
+        <location filename="../mainwindow.cpp" line="2830"/>
         <source>Export Certficate</source>
         <translation>인증서 내보내기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2806"/>
+        <location filename="../mainwindow.cpp" line="2837"/>
         <source>Export PublicKey</source>
         <translation>공개키 내보내기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2807"/>
+        <location filename="../mainwindow.cpp" line="2838"/>
         <source>View PublicKey</source>
         <translation>공개키 보기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2814"/>
+        <location filename="../mainwindow.cpp" line="2845"/>
         <source>Export PrivateKey</source>
         <translation>개인키 내보내기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2815"/>
+        <location filename="../mainwindow.cpp" line="2846"/>
         <source>View PrivateKey</source>
         <translation>개인키 보기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3410"/>
+        <location filename="../mainwindow.cpp" line="3441"/>
         <source>MinSize</source>
         <translation>최소 크기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3410"/>
+        <location filename="../mainwindow.cpp" line="3441"/>
         <source>MaxSize</source>
         <translation>최대 크기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3410"/>
+        <location filename="../mainwindow.cpp" line="3441"/>
         <source>Flags</source>
         <translation>플래그</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3559"/>
+        <location filename="../mainwindow.cpp" line="3590"/>
         <source>Class</source>
         <translation>클래스</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3559"/>
+        <location filename="../mainwindow.cpp" line="3590"/>
         <source>Objet Size</source>
         <translation>객체 크기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3559"/>
-        <location filename="../mainwindow.cpp" line="3813"/>
-        <location filename="../mainwindow.cpp" line="3903"/>
-        <location filename="../mainwindow.cpp" line="3997"/>
-        <location filename="../mainwindow.cpp" line="4088"/>
-        <location filename="../mainwindow.cpp" line="4165"/>
-        <location filename="../mainwindow.cpp" line="4850"/>
-        <location filename="../mainwindow.cpp" line="4921"/>
-        <location filename="../mainwindow.cpp" line="4982"/>
-        <location filename="../mainwindow.cpp" line="5042"/>
-        <location filename="../mainwindow.cpp" line="5102"/>
+        <location filename="../mainwindow.cpp" line="3590"/>
+        <location filename="../mainwindow.cpp" line="3844"/>
+        <location filename="../mainwindow.cpp" line="3934"/>
+        <location filename="../mainwindow.cpp" line="4028"/>
+        <location filename="../mainwindow.cpp" line="4119"/>
+        <location filename="../mainwindow.cpp" line="4196"/>
+        <location filename="../mainwindow.cpp" line="4881"/>
+        <location filename="../mainwindow.cpp" line="4952"/>
+        <location filename="../mainwindow.cpp" line="5013"/>
+        <location filename="../mainwindow.cpp" line="5073"/>
+        <location filename="../mainwindow.cpp" line="5133"/>
         <source>Handle</source>
         <translation>핸들</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3813"/>
-        <location filename="../mainwindow.cpp" line="3903"/>
-        <location filename="../mainwindow.cpp" line="3997"/>
-        <location filename="../mainwindow.cpp" line="4088"/>
-        <location filename="../mainwindow.cpp" line="4165"/>
-        <location filename="../mainwindow.cpp" line="4850"/>
-        <location filename="../mainwindow.cpp" line="4921"/>
-        <location filename="../mainwindow.cpp" line="4982"/>
-        <location filename="../mainwindow.cpp" line="5042"/>
-        <location filename="../mainwindow.cpp" line="5102"/>
+        <location filename="../mainwindow.cpp" line="3844"/>
+        <location filename="../mainwindow.cpp" line="3934"/>
+        <location filename="../mainwindow.cpp" line="4028"/>
+        <location filename="../mainwindow.cpp" line="4119"/>
+        <location filename="../mainwindow.cpp" line="4196"/>
+        <location filename="../mainwindow.cpp" line="4881"/>
+        <location filename="../mainwindow.cpp" line="4952"/>
+        <location filename="../mainwindow.cpp" line="5013"/>
+        <location filename="../mainwindow.cpp" line="5073"/>
+        <location filename="../mainwindow.cpp" line="5133"/>
         <source>Label</source>
         <translation>라벨</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3410"/>
-        <location filename="../mainwindow.cpp" line="3813"/>
-        <location filename="../mainwindow.cpp" line="3903"/>
-        <location filename="../mainwindow.cpp" line="3997"/>
-        <location filename="../mainwindow.cpp" line="4088"/>
-        <location filename="../mainwindow.cpp" line="4850"/>
-        <location filename="../mainwindow.cpp" line="4921"/>
-        <location filename="../mainwindow.cpp" line="4982"/>
-        <location filename="../mainwindow.cpp" line="5042"/>
+        <location filename="../mainwindow.cpp" line="3441"/>
+        <location filename="../mainwindow.cpp" line="3844"/>
+        <location filename="../mainwindow.cpp" line="3934"/>
+        <location filename="../mainwindow.cpp" line="4028"/>
+        <location filename="../mainwindow.cpp" line="4119"/>
+        <location filename="../mainwindow.cpp" line="4881"/>
+        <location filename="../mainwindow.cpp" line="4952"/>
+        <location filename="../mainwindow.cpp" line="5013"/>
+        <location filename="../mainwindow.cpp" line="5073"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3813"/>
-        <location filename="../mainwindow.cpp" line="4850"/>
+        <location filename="../mainwindow.cpp" line="3844"/>
+        <location filename="../mainwindow.cpp" line="4881"/>
         <source>Subject</source>
         <translation>주체</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3903"/>
-        <location filename="../mainwindow.cpp" line="3997"/>
-        <location filename="../mainwindow.cpp" line="4088"/>
-        <location filename="../mainwindow.cpp" line="4921"/>
-        <location filename="../mainwindow.cpp" line="4982"/>
-        <location filename="../mainwindow.cpp" line="5042"/>
+        <location filename="../mainwindow.cpp" line="3934"/>
+        <location filename="../mainwindow.cpp" line="4028"/>
+        <location filename="../mainwindow.cpp" line="4119"/>
+        <location filename="../mainwindow.cpp" line="4952"/>
+        <location filename="../mainwindow.cpp" line="5013"/>
+        <location filename="../mainwindow.cpp" line="5073"/>
         <source>KeyType</source>
         <translation>키 타입</translation>
     </message>
@@ -8222,37 +8291,37 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">Cryptoki Library 를 먼저 로드하세요</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="966"/>
+        <location filename="../mainwindow.cpp" line="967"/>
         <source>Token</source>
         <translation>토큰</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="979"/>
+        <location filename="../mainwindow.cpp" line="980"/>
         <source>Session</source>
         <translation>세션</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="991"/>
+        <location filename="../mainwindow.cpp" line="992"/>
         <source>Certificate</source>
         <translation>인증서</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="997"/>
+        <location filename="../mainwindow.cpp" line="998"/>
         <source>PublicKey</source>
         <translation>공개키</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1003"/>
+        <location filename="../mainwindow.cpp" line="1004"/>
         <source>PrivateKey</source>
         <translation>개인키</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1009"/>
+        <location filename="../mainwindow.cpp" line="1010"/>
         <source>SecretKey</source>
         <translation>대칭키</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1015"/>
+        <location filename="../mainwindow.cpp" line="1016"/>
         <source>Data</source>
         <translation>데이타</translation>
     </message>
@@ -8277,7 +8346,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">암호화</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="180"/>
+        <location filename="../mainwindow.cpp" line="181"/>
         <source>Information And Log Window</source>
         <translation>정보 및 로그 창</translation>
     </message>
@@ -8295,7 +8364,7 @@ Do you want to delete the file and continue?</source>
         <translation>DSA 공개키 생성</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="425"/>
+        <location filename="../mainwindow.cpp" line="426"/>
         <source>PKCS11 Create DSA Public key</source>
         <translation>PKCS11 DSA 공개키 생성</translation>
     </message>
@@ -8305,39 +8374,39 @@ Do you want to delete the file and continue?</source>
         <translation>DSA 개인키 생성</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="433"/>
+        <location filename="../mainwindow.cpp" line="434"/>
         <source>PKCS11 Create DSA Private key</source>
         <translation>PKCS11 DSA 개인키 생성</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="726"/>
+        <location filename="../mainwindow.cpp" line="727"/>
         <source>Clear log</source>
         <translation>로그 지우기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="736"/>
+        <location filename="../mainwindow.cpp" line="737"/>
         <source>Halt log</source>
         <translation>로그 중지</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="757"/>
-        <location filename="../mainwindow.cpp" line="760"/>
+        <location filename="../mainwindow.cpp" line="758"/>
+        <location filename="../mainwindow.cpp" line="761"/>
         <source>Bug or Issue Report</source>
         <translation>버그 또는 이슈 보고</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="763"/>
+        <location filename="../mainwindow.cpp" line="764"/>
         <source>Q and A</source>
         <translation>질문하기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="766"/>
+        <location filename="../mainwindow.cpp" line="767"/>
         <source>Question and Answer</source>
         <translation>질문과 응답하기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="749"/>
-        <location filename="../mainwindow.cpp" line="752"/>
+        <location filename="../mainwindow.cpp" line="750"/>
+        <location filename="../mainwindow.cpp" line="753"/>
         <source>License Information</source>
         <translation>라이선스 정보</translation>
     </message>
@@ -8346,24 +8415,24 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">라이선스가 변경 되었습니다.적용을 위해 다시 시작 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="4165"/>
-        <location filename="../mainwindow.cpp" line="5102"/>
+        <location filename="../mainwindow.cpp" line="4196"/>
+        <location filename="../mainwindow.cpp" line="5133"/>
         <source>Application</source>
         <translation>어플리케이션</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="4165"/>
-        <location filename="../mainwindow.cpp" line="5102"/>
+        <location filename="../mainwindow.cpp" line="4196"/>
+        <location filename="../mainwindow.cpp" line="5133"/>
         <source>ObejctID</source>
         <translation>객체 ID</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="469"/>
-        <location filename="../mainwindow.cpp" line="2798"/>
-        <location filename="../mainwindow.cpp" line="2805"/>
-        <location filename="../mainwindow.cpp" line="2813"/>
-        <location filename="../mainwindow.cpp" line="2824"/>
-        <location filename="../mainwindow.cpp" line="2828"/>
+        <location filename="../mainwindow.cpp" line="470"/>
+        <location filename="../mainwindow.cpp" line="2829"/>
+        <location filename="../mainwindow.cpp" line="2836"/>
+        <location filename="../mainwindow.cpp" line="2844"/>
+        <location filename="../mainwindow.cpp" line="2855"/>
+        <location filename="../mainwindow.cpp" line="2859"/>
         <location filename="../mainwindows2.cpp" line="210"/>
         <source>Copy Object</source>
         <translation>객체 복사</translation>
@@ -8373,7 +8442,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PKCS11 객체 복사</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="732"/>
+        <location filename="../mainwindow.cpp" line="733"/>
         <source>&amp;Log Halt</source>
         <translation>로그 중지(&amp;L)</translation>
     </message>
@@ -8852,6 +8921,212 @@ Do you want to delete the file and continue?</source>
         <location filename="../new_passwd_dlg.cpp" line="50"/>
         <source>Password and Confirm are different</source>
         <translation>패스워드와 확인 값이 다릅니다</translation>
+    </message>
+</context>
+<context>
+    <name>ObjectViewDlg</name>
+    <message>
+        <location filename="../object_view_dlg.ui" line="14"/>
+        <location filename="../object_view_dlg.ui" line="279"/>
+        <source>Object Detail Information</source>
+        <translation>객체 상세 정보</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.ui" line="31"/>
+        <source>Slot name</source>
+        <translation>슬롯 이름</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.ui" line="79"/>
+        <source>Session</source>
+        <translation>세션</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.ui" line="138"/>
+        <source>SlotID</source>
+        <translation>슬롯 ID</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.ui" line="191"/>
+        <source>Login</source>
+        <translation>로그인</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.ui" line="259"/>
+        <source>Handle</source>
+        <translation>핸들</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.ui" line="286"/>
+        <source>Reload</source>
+        <translation>다시 읽기</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.ui" line="378"/>
+        <source>Common</source>
+        <translation>일반</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.ui" line="400"/>
+        <source>Part1</source>
+        <translation>파트1</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.ui" line="422"/>
+        <source>Part2</source>
+        <translation>파트2</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.ui" line="444"/>
+        <source>Part3</source>
+        <translation>파트3</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.ui" line="517"/>
+        <source>Close</source>
+        <translation>닫기</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.cpp" line="57"/>
+        <source>Field</source>
+        <translation>필드</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.cpp" line="57"/>
+        <source>Value</source>
+        <translation>값</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.cpp" line="58"/>
+        <source>All</source>
+        <translation>전체</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.cpp" line="58"/>
+        <source>Version1 Only</source>
+        <translation>버전1 필드만</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.cpp" line="58"/>
+        <source>Extension Only</source>
+        <translation>확장 필드만</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.cpp" line="58"/>
+        <source>Critical Extension Only</source>
+        <translation>중요 확장 필드만</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.cpp" line="58"/>
+        <source>Attribute Only</source>
+        <translation>속성만</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.cpp" line="100"/>
+        <location filename="../object_view_dlg.cpp" line="101"/>
+        <location filename="../object_view_dlg.cpp" line="102"/>
+        <location filename="../object_view_dlg.cpp" line="118"/>
+        <location filename="../object_view_dlg.cpp" line="119"/>
+        <location filename="../object_view_dlg.cpp" line="120"/>
+        <source>NA</source>
+        <translation>NA</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.cpp" line="290"/>
+        <source>%1 Detail Information</source>
+        <translation>%1 상세 정보</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.cpp" line="341"/>
+        <source>Certificate Common</source>
+        <translation>인증서 일반</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.cpp" line="363"/>
+        <source>X509 Certificate</source>
+        <translation>X509 인증서</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.cpp" line="393"/>
+        <location filename="../object_view_dlg.cpp" line="588"/>
+        <location filename="../object_view_dlg.cpp" line="780"/>
+        <source>Key Common</source>
+        <translation>키 일반</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.cpp" line="415"/>
+        <source>Public Key</source>
+        <translation>공개 키</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.cpp" line="441"/>
+        <source>RSA Public Key</source>
+        <translation>RSA 공개키</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.cpp" line="470"/>
+        <source>ECDSA Public Key</source>
+        <translation>ECDSA 공개키</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.cpp" line="499"/>
+        <source>DSA Public Key</source>
+        <translation>DSA 공개키</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.cpp" line="525"/>
+        <source>DH Public Key</source>
+        <translation>DH 공개키</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.cpp" line="551"/>
+        <source>EC_EDWARDS Public Key</source>
+        <translation>EC_EDWARDS 공개키</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.cpp" line="610"/>
+        <source>Private Key</source>
+        <translation>개인 키</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.cpp" line="636"/>
+        <source>RSA Private Key</source>
+        <translation>RSA 개인키</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.cpp" line="662"/>
+        <source>ECDSA Private Key</source>
+        <translation>ECDSA 개인키</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.cpp" line="691"/>
+        <source>DSA Private Key</source>
+        <translation>DSA 개인키</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.cpp" line="717"/>
+        <source>DH Private Key</source>
+        <translation>DH 개인키</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.cpp" line="743"/>
+        <source>EC_EDWARDS Private Key</source>
+        <translation>EC_EDWARDS 개인키</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.cpp" line="802"/>
+        <source>Secret Key</source>
+        <translation>비밀 키</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.cpp" line="824"/>
+        <source>Secret Key Value</source>
+        <translation>비밀키 값</translation>
+    </message>
+    <message>
+        <location filename="../object_view_dlg.cpp" line="854"/>
+        <source>Data</source>
+        <translation>데이타</translation>
     </message>
 </context>
 <context>
@@ -9996,7 +10271,7 @@ Do you want to delete the file and continue?</source>
 <context>
     <name>SignDlg</name>
     <message>
-        <location filename="../sign_dlg.ui" line="830"/>
+        <location filename="../sign_dlg.ui" line="837"/>
         <source>Input</source>
         <translation>입력</translation>
     </message>
@@ -10015,12 +10290,12 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">슬롯 목록</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="1555"/>
+        <location filename="../sign_dlg.ui" line="1562"/>
         <source>Close</source>
         <translation>닫기</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="616"/>
+        <location filename="../sign_dlg.ui" line="676"/>
         <source>Object</source>
         <translation>대상</translation>
     </message>
@@ -10060,7 +10335,7 @@ Do you want to delete the file and continue?</source>
         <translation>해시</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="635"/>
+        <location filename="../sign_dlg.ui" line="669"/>
         <source>Label</source>
         <translation>라벨</translation>
     </message>
@@ -10071,42 +10346,47 @@ Do you want to delete the file and continue?</source>
         <translation>파라미터</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="1474"/>
-        <location filename="../sign_dlg.ui" line="1562"/>
+        <location filename="../sign_dlg.ui" line="1481"/>
+        <location filename="../sign_dlg.ui" line="1569"/>
         <source>Init</source>
         <translation>Init</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="873"/>
-        <location filename="../sign_dlg.ui" line="1522"/>
+        <location filename="../sign_dlg.ui" line="880"/>
+        <location filename="../sign_dlg.ui" line="1529"/>
         <source>Update</source>
         <translation>Update</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="642"/>
+        <location filename="../sign_dlg.ui" line="616"/>
         <source>Select</source>
         <translation>선택</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="856"/>
-        <location filename="../sign_dlg.ui" line="1410"/>
+        <location filename="../sign_dlg.ui" line="733"/>
+        <source>View</source>
+        <translation>보기</translation>
+    </message>
+    <message>
+        <location filename="../sign_dlg.ui" line="863"/>
+        <location filename="../sign_dlg.ui" line="1417"/>
         <source>C</source>
         <translation>C</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="894"/>
-        <location filename="../sign_dlg.ui" line="1569"/>
+        <location filename="../sign_dlg.ui" line="901"/>
+        <location filename="../sign_dlg.ui" line="1576"/>
         <source>Final</source>
         <translation>Final</translation>
     </message>
     <message>
         <location filename="../sign_dlg.ui" line="14"/>
-        <location filename="../sign_dlg.ui" line="1334"/>
+        <location filename="../sign_dlg.ui" line="1341"/>
         <source>Signature</source>
         <translation>서명</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="1548"/>
+        <location filename="../sign_dlg.ui" line="1555"/>
         <source>Status</source>
         <translation>상태</translation>
     </message>
@@ -10115,80 +10395,86 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">데이타를 입력하세요</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="1501"/>
+        <location filename="../sign_dlg.ui" line="1508"/>
         <source>Sign</source>
         <translation>서명</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.cpp" line="113"/>
+        <location filename="../sign_dlg.cpp" line="115"/>
         <source>Select a key from HSM Man</source>
         <translation>HSM 관리에서 키를 선택 하세요</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.cpp" line="114"/>
+        <location filename="../sign_dlg.cpp" line="116"/>
         <source>Hex value</source>
         <translation>16진수 값</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.cpp" line="345"/>
+        <location filename="../sign_dlg.cpp" line="347"/>
         <source>Select your key</source>
         <translation>키를 선택하세요</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.cpp" line="358"/>
+        <location filename="../sign_dlg.cpp" line="360"/>
         <source>fail to run SignInit(%1)</source>
         <translation>SignInit 실패(%1)</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.cpp" line="378"/>
-        <location filename="../sign_dlg.cpp" line="463"/>
-        <location filename="../sign_dlg.cpp" line="695"/>
+        <location filename="../sign_dlg.cpp" line="380"/>
+        <location filename="../sign_dlg.cpp" line="465"/>
+        <location filename="../sign_dlg.cpp" line="718"/>
         <source>Please enter your data.</source>
         <translation>데이타를 입력하세요</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.cpp" line="397"/>
-        <location filename="../sign_dlg.cpp" line="578"/>
+        <location filename="../sign_dlg.cpp" line="399"/>
+        <location filename="../sign_dlg.cpp" line="580"/>
         <source>SignUpdate execution failure [%1]</source>
         <translation>SignUpdate 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.cpp" line="420"/>
+        <location filename="../sign_dlg.cpp" line="422"/>
         <source>SignFinal execution failure [%1]</source>
         <translation>SignFinal 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.cpp" line="495"/>
+        <location filename="../sign_dlg.cpp" line="497"/>
         <source>Sign execution failure [%1]</source>
         <translation>Sign 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.cpp" line="548"/>
+        <location filename="../sign_dlg.cpp" line="550"/>
         <source>failed to initialize sign [%1]</source>
         <translation>서명 초기화 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.cpp" line="570"/>
+        <location filename="../sign_dlg.cpp" line="572"/>
         <source>fail to read file: %1</source>
         <translation>파일 읽기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.cpp" line="624"/>
+        <location filename="../sign_dlg.cpp" line="626"/>
+        <location filename="../sign_dlg.cpp" line="661"/>
         <source>Cannot be run in Init or Update state</source>
         <translation>Init 또는 Update 상태에서는 실행 할 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.cpp" line="679"/>
+        <location filename="../sign_dlg.cpp" line="668"/>
+        <source>There is no object</source>
+        <translation>객체가 없습니다</translation>
+    </message>
+    <message>
+        <location filename="../sign_dlg.cpp" line="702"/>
         <source>SignRecoverInit execution failure [%1]</source>
         <translation>SignRecoverInit 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.cpp" line="716"/>
+        <location filename="../sign_dlg.cpp" line="739"/>
         <source>SignRecover execution failure [%1]</source>
         <translation>SignRecover 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.cpp" line="775"/>
+        <location filename="../sign_dlg.cpp" line="798"/>
         <source>failed to initialize [%1]</source>
         <translation>초기화 실패 [%1]</translation>
     </message>
@@ -10197,8 +10483,8 @@ Do you want to delete the file and continue?</source>
         <translation type="obsolete">Digest 초기화 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.cpp" line="527"/>
-        <location filename="../sign_dlg.cpp" line="793"/>
+        <location filename="../sign_dlg.cpp" line="529"/>
+        <location filename="../sign_dlg.cpp" line="816"/>
         <source>Find source file</source>
         <translation>소스 파일을 찾으세요</translation>
     </message>
@@ -10215,27 +10501,27 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">Sign 실패(%1)</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="750"/>
+        <location filename="../sign_dlg.ui" line="757"/>
         <source>Hex</source>
         <translation>헥사</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="817"/>
+        <location filename="../sign_dlg.ui" line="824"/>
         <source>Base64</source>
         <translation>베이스64</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="807"/>
+        <location filename="../sign_dlg.ui" line="814"/>
         <source>String</source>
         <translation>문자열</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="880"/>
+        <location filename="../sign_dlg.ui" line="887"/>
         <source>SignRecoverInit</source>
         <translation>SignRecoverInit</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="887"/>
+        <location filename="../sign_dlg.ui" line="894"/>
         <source>SignRecover</source>
         <translation>SignRecover</translation>
     </message>
@@ -10248,7 +10534,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">SignRecover 실행 실패 (%1)</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="739"/>
+        <location filename="../sign_dlg.ui" line="746"/>
         <source>Input Data</source>
         <translation>데이타 입력</translation>
     </message>
@@ -10257,47 +10543,47 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">입력 지움</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="917"/>
+        <location filename="../sign_dlg.ui" line="924"/>
         <source>Input File</source>
         <translation>파일 입력</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="944"/>
+        <location filename="../sign_dlg.ui" line="951"/>
         <source>Src File Path</source>
         <translation>소스 파일 경로</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="963"/>
+        <location filename="../sign_dlg.ui" line="970"/>
         <source>Find</source>
         <translation>찾기</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="1033"/>
+        <location filename="../sign_dlg.ui" line="1040"/>
         <source>File Information</source>
         <translation>소스 파일 정보</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="1115"/>
+        <location filename="../sign_dlg.ui" line="1122"/>
         <source>File Status</source>
         <translation>파일 상태</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="1181"/>
+        <location filename="../sign_dlg.ui" line="1188"/>
         <source>Total File Size</source>
         <translation>전체 파일 크기</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="1191"/>
+        <location filename="../sign_dlg.ui" line="1198"/>
         <source>Read File Size</source>
         <translation>읽은 파일 크기</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="1276"/>
+        <location filename="../sign_dlg.ui" line="1283"/>
         <source>Run Status</source>
         <translation>실행 상태</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="1290"/>
+        <location filename="../sign_dlg.ui" line="1297"/>
         <source>RunThread</source>
         <translation>쓰레드 실행</translation>
     </message>
@@ -10306,7 +10592,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">출력 지우기</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.ui" line="1494"/>
+        <location filename="../sign_dlg.ui" line="1501"/>
         <source>Init automatically</source>
         <translation>자동 초기화</translation>
     </message>
@@ -10315,7 +10601,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">서명 초기화 실패:%1</translation>
     </message>
     <message>
-        <location filename="../sign_dlg.cpp" line="442"/>
+        <location filename="../sign_dlg.cpp" line="444"/>
         <source>This feature requires a license.</source>
         <translation>이 기능은 라이센스가 필요합니다.</translation>
     </message>
@@ -10391,7 +10677,7 @@ Do you want to delete the file and continue?</source>
         <translation>일반</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="576"/>
+        <location filename="../unwrap_key_dlg.ui" line="583"/>
         <source>Mechanism</source>
         <translation>알고리즘</translation>
     </message>
@@ -10409,8 +10695,8 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">슬롯 목록</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="479"/>
-        <location filename="../unwrap_key_dlg.ui" line="909"/>
+        <location filename="../unwrap_key_dlg.ui" line="443"/>
+        <location filename="../unwrap_key_dlg.ui" line="916"/>
         <source>Label</source>
         <translation>라벨</translation>
     </message>
@@ -10439,22 +10725,27 @@ Do you want to delete the file and continue?</source>
         <translation>Unwrap 키 속성</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="486"/>
+        <location filename="../unwrap_key_dlg.ui" line="417"/>
         <source>Object</source>
         <translation>대상</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="493"/>
+        <location filename="../unwrap_key_dlg.ui" line="424"/>
         <source>Select</source>
         <translation>선택</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="658"/>
+        <location filename="../unwrap_key_dlg.ui" line="534"/>
+        <source>View</source>
+        <translation>보기</translation>
+    </message>
+    <message>
+        <location filename="../unwrap_key_dlg.ui" line="665"/>
         <source>Param</source>
         <translation>파라미터</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="737"/>
+        <location filename="../unwrap_key_dlg.ui" line="744"/>
         <source>Key</source>
         <translation>키</translation>
     </message>
@@ -10467,7 +10758,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">Unwrap</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="784"/>
+        <location filename="../unwrap_key_dlg.ui" line="791"/>
         <source>Class</source>
         <translation>클래스</translation>
     </message>
@@ -10476,13 +10767,13 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">변경가능한</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="563"/>
-        <location filename="../unwrap_key_dlg.ui" line="765"/>
+        <location filename="../unwrap_key_dlg.ui" line="570"/>
+        <location filename="../unwrap_key_dlg.ui" line="772"/>
         <source>Type</source>
         <translation>타입</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="945"/>
+        <location filename="../unwrap_key_dlg.ui" line="952"/>
         <source>Attributes</source>
         <translation>속성</translation>
     </message>
@@ -10491,7 +10782,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">토큰</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="743"/>
+        <location filename="../unwrap_key_dlg.ui" line="750"/>
         <source>Key Properties</source>
         <translation>키 속성</translation>
     </message>
@@ -10529,7 +10820,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">추출가능한</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="916"/>
+        <location filename="../unwrap_key_dlg.ui" line="923"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
@@ -10550,17 +10841,17 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">Unwrap Key</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="1081"/>
+        <location filename="../unwrap_key_dlg.ui" line="1088"/>
         <source>StartDate</source>
         <translation>시작 일자</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="1117"/>
+        <location filename="../unwrap_key_dlg.ui" line="1124"/>
         <source>EndDate</source>
         <translation>종료 일자</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="993"/>
+        <location filename="../unwrap_key_dlg.ui" line="1000"/>
         <source>Derive</source>
         <translation>유도</translation>
     </message>
@@ -10584,84 +10875,89 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">암호화된 키 값을 입력하세요</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="926"/>
+        <location filename="../unwrap_key_dlg.ui" line="933"/>
         <source>Use Random</source>
         <translation>랜덤 사용</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="1013"/>
+        <location filename="../unwrap_key_dlg.ui" line="1020"/>
         <source>SignRecover</source>
         <translation>SignRecover</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="1071"/>
+        <location filename="../unwrap_key_dlg.ui" line="1078"/>
         <source>VerifyRecover</source>
         <translation>VerifyRecover</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="1064"/>
+        <location filename="../unwrap_key_dlg.ui" line="1071"/>
         <source>Trusted</source>
         <translation>Trusted</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="1124"/>
+        <location filename="../unwrap_key_dlg.ui" line="1131"/>
         <source>Destroyable</source>
         <translation>Destroyable</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.ui" line="1131"/>
+        <location filename="../unwrap_key_dlg.ui" line="1138"/>
         <source>Copyable</source>
         <translation>Copyable</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.cpp" line="108"/>
+        <location filename="../unwrap_key_dlg.cpp" line="110"/>
         <source>Select a key from HSM Man</source>
         <translation>HSM 관리에서 키를 선택 하세요</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.cpp" line="279"/>
+        <location filename="../unwrap_key_dlg.cpp" line="281"/>
         <source>Enter wraped key value</source>
         <translation>암호화된 키 값을 입력하세요</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.cpp" line="306"/>
+        <location filename="../unwrap_key_dlg.cpp" line="308"/>
         <source>Select unwrap key</source>
         <translation>복호화 키를 선택하세요</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.cpp" line="545"/>
+        <location filename="../unwrap_key_dlg.cpp" line="547"/>
         <source>UnwrapKey execution failure [%1]</source>
         <translation>UnwrapKey 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.cpp" line="551"/>
+        <location filename="../unwrap_key_dlg.cpp" line="553"/>
         <source>UnwrapKey execution successful [Object Handle: %1]</source>
         <translation>UnwrapKey 실행 성공[Object Handle:%1]</translation>
+    </message>
+    <message>
+        <location filename="../unwrap_key_dlg.cpp" line="791"/>
+        <source>There is no object</source>
+        <translation>객체가 없습니다</translation>
     </message>
 </context>
 <context>
     <name>VerifyDlg</name>
     <message>
-        <location filename="../verify_dlg.ui" line="1423"/>
-        <location filename="../verify_dlg.ui" line="1471"/>
+        <location filename="../verify_dlg.ui" line="1430"/>
+        <location filename="../verify_dlg.ui" line="1478"/>
         <source>Init</source>
         <translation>Init</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="862"/>
-        <location filename="../verify_dlg.ui" line="1498"/>
+        <location filename="../verify_dlg.ui" line="869"/>
+        <location filename="../verify_dlg.ui" line="1505"/>
         <source>Update</source>
         <translation>Update</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="883"/>
-        <location filename="../verify_dlg.ui" line="1518"/>
+        <location filename="../verify_dlg.ui" line="890"/>
+        <location filename="../verify_dlg.ui" line="1525"/>
         <source>Final</source>
         <translation>Final</translation>
     </message>
     <message>
         <location filename="../verify_dlg.ui" line="14"/>
-        <location filename="../verify_dlg.ui" line="1450"/>
+        <location filename="../verify_dlg.ui" line="1457"/>
         <source>Verify</source>
         <translation>검증</translation>
     </message>
@@ -10691,23 +10987,23 @@ Do you want to delete the file and continue?</source>
         <translation>해시</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="617"/>
+        <location filename="../verify_dlg.ui" line="624"/>
         <source>Label</source>
         <translation>라벨</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="681"/>
+        <location filename="../verify_dlg.ui" line="605"/>
         <source>Select</source>
         <translation>선택</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="845"/>
-        <location filename="../verify_dlg.ui" line="1399"/>
+        <location filename="../verify_dlg.ui" line="852"/>
+        <location filename="../verify_dlg.ui" line="1406"/>
         <source>C</source>
         <translation>C</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="1491"/>
+        <location filename="../verify_dlg.ui" line="1498"/>
         <source>Close</source>
         <translation>닫기</translation>
     </message>
@@ -10722,17 +11018,17 @@ Do you want to delete the file and continue?</source>
         <translation>키 타입</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="812"/>
+        <location filename="../verify_dlg.ui" line="819"/>
         <source>Input</source>
         <translation>입력</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="1336"/>
+        <location filename="../verify_dlg.ui" line="1343"/>
         <source>Signature</source>
         <translation>서명</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="624"/>
+        <location filename="../verify_dlg.ui" line="681"/>
         <source>Object</source>
         <translation>대상</translation>
     </message>
@@ -10757,7 +11053,12 @@ Do you want to delete the file and continue?</source>
         <translation>로그인</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="1511"/>
+        <location filename="../verify_dlg.ui" line="722"/>
+        <source>View</source>
+        <translation>보기</translation>
+    </message>
+    <message>
+        <location filename="../verify_dlg.ui" line="1518"/>
         <source>Status</source>
         <translation>상태</translation>
     </message>
@@ -10790,27 +11091,27 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">슬롯 상태</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="819"/>
+        <location filename="../verify_dlg.ui" line="826"/>
         <source>Base64</source>
         <translation>베이스64</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="739"/>
+        <location filename="../verify_dlg.ui" line="746"/>
         <source>Hex</source>
         <translation>헥사</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="746"/>
+        <location filename="../verify_dlg.ui" line="753"/>
         <source>String</source>
         <translation>문자열</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="876"/>
+        <location filename="../verify_dlg.ui" line="883"/>
         <source>VerifyRecoverInit</source>
         <translation>VerifyRecoverInit</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="869"/>
+        <location filename="../verify_dlg.ui" line="876"/>
         <source>VerifyRecover</source>
         <translation>VerifyRecover</translation>
     </message>
@@ -10819,7 +11120,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">VerifyRecoverInit 실행 실패(%1)</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="728"/>
+        <location filename="../verify_dlg.ui" line="735"/>
         <source>Input Data</source>
         <translation>데이타 입력</translation>
     </message>
@@ -10828,47 +11129,47 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">입력 지움</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="906"/>
+        <location filename="../verify_dlg.ui" line="913"/>
         <source>Input File</source>
         <translation>파일 입력</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="926"/>
+        <location filename="../verify_dlg.ui" line="933"/>
         <source>Src File Path</source>
         <translation>소스 파일 경로</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="952"/>
+        <location filename="../verify_dlg.ui" line="959"/>
         <source>Find</source>
         <translation>찾기</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="1022"/>
+        <location filename="../verify_dlg.ui" line="1029"/>
         <source>File Information</source>
         <translation>소스 파일 정보</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="1151"/>
+        <location filename="../verify_dlg.ui" line="1158"/>
         <source>Total File Size</source>
         <translation>전체 파일 크기</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="1161"/>
+        <location filename="../verify_dlg.ui" line="1168"/>
         <source>Read File Size</source>
         <translation>읽은 파일 크기</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="1183"/>
+        <location filename="../verify_dlg.ui" line="1190"/>
         <source>File Status</source>
         <translation>파일 상태</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="1272"/>
+        <location filename="../verify_dlg.ui" line="1279"/>
         <source>Run Status</source>
         <translation>실행 상태</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="1279"/>
+        <location filename="../verify_dlg.ui" line="1286"/>
         <source>RunThread</source>
         <translation>쓰레드 실행</translation>
     </message>
@@ -10877,7 +11178,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">서명 지우기</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.ui" line="1443"/>
+        <location filename="../verify_dlg.ui" line="1450"/>
         <source>Init Automatically</source>
         <translation>자동 초기화</translation>
     </message>
@@ -10890,34 +11191,34 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">검증 초기화 실패:%1</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.cpp" line="116"/>
+        <location filename="../verify_dlg.cpp" line="118"/>
         <source>Select a key from HSM Man</source>
         <translation>HSM 관리에서 키를 선택 하세요</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.cpp" line="117"/>
+        <location filename="../verify_dlg.cpp" line="119"/>
         <source>Hex value</source>
         <translation>16진수 값</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.cpp" line="312"/>
+        <location filename="../verify_dlg.cpp" line="314"/>
         <source>Select your key</source>
         <translation>키를 선택하세요</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.cpp" line="350"/>
+        <location filename="../verify_dlg.cpp" line="352"/>
         <source>VerifyInit execution failure [%1]</source>
         <translation>VerifyInit 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.cpp" line="366"/>
-        <location filename="../verify_dlg.cpp" line="453"/>
+        <location filename="../verify_dlg.cpp" line="368"/>
+        <location filename="../verify_dlg.cpp" line="455"/>
         <source>Please enter your data.</source>
         <translation>데이타를 입력하세요</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.cpp" line="384"/>
-        <location filename="../verify_dlg.cpp" line="573"/>
+        <location filename="../verify_dlg.cpp" line="386"/>
+        <location filename="../verify_dlg.cpp" line="575"/>
         <source>VerifyUpdate execution failure [%1]</source>
         <translation>VerifyUpdate 실행 실패 [%1]</translation>
     </message>
@@ -10926,53 +11227,59 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">서명값을 입력하세요</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.cpp" line="414"/>
-        <location filename="../verify_dlg.cpp" line="490"/>
-        <location filename="../verify_dlg.cpp" line="698"/>
+        <location filename="../verify_dlg.cpp" line="416"/>
+        <location filename="../verify_dlg.cpp" line="492"/>
+        <location filename="../verify_dlg.cpp" line="721"/>
         <source>Signature value is incorrect [%1]</source>
         <translation>서명값이 맞지 않습니다 [%1]</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.cpp" line="419"/>
-        <location filename="../verify_dlg.cpp" line="495"/>
-        <location filename="../verify_dlg.cpp" line="704"/>
+        <location filename="../verify_dlg.cpp" line="421"/>
+        <location filename="../verify_dlg.cpp" line="497"/>
+        <location filename="../verify_dlg.cpp" line="727"/>
         <source>Signature value is correct</source>
         <translation>서명값이 맞습니다</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.cpp" line="433"/>
+        <location filename="../verify_dlg.cpp" line="435"/>
         <source>This feature requires a license.</source>
         <translation>이 기능은 라이센스가 필요합니다.</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.cpp" line="461"/>
-        <location filename="../verify_dlg.cpp" line="534"/>
-        <location filename="../verify_dlg.cpp" line="687"/>
+        <location filename="../verify_dlg.cpp" line="463"/>
+        <location filename="../verify_dlg.cpp" line="536"/>
+        <location filename="../verify_dlg.cpp" line="710"/>
         <source>Please enter signature.</source>
         <translation>서명값을 입력하세요</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.cpp" line="543"/>
+        <location filename="../verify_dlg.cpp" line="545"/>
         <source>failed to initialize verify:%1</source>
         <translation>검증 초기화 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.cpp" line="565"/>
+        <location filename="../verify_dlg.cpp" line="567"/>
         <source>fail to read file: %1</source>
         <translation>파일 읽기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.cpp" line="619"/>
+        <location filename="../verify_dlg.cpp" line="621"/>
+        <location filename="../verify_dlg.cpp" line="656"/>
         <source>Cannot be run in Init or Update state</source>
         <translation>Init 또는 Update 상태에서는 실행 할 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.cpp" line="672"/>
+        <location filename="../verify_dlg.cpp" line="663"/>
+        <source>There is no object</source>
+        <translation>객체가 없습니다</translation>
+    </message>
+    <message>
+        <location filename="../verify_dlg.cpp" line="695"/>
         <source>VerifyRecoverInit execution failure [%1]</source>
         <translation>VerifyRecoverInit 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.cpp" line="753"/>
+        <location filename="../verify_dlg.cpp" line="776"/>
         <source>failed to initialize [%1]</source>
         <translation>초기화 실패 [%1]</translation>
     </message>
@@ -10981,8 +11288,8 @@ Do you want to delete the file and continue?</source>
         <translation type="obsolete">Digest 초기화 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../verify_dlg.cpp" line="515"/>
-        <location filename="../verify_dlg.cpp" line="771"/>
+        <location filename="../verify_dlg.cpp" line="517"/>
+        <location filename="../verify_dlg.cpp" line="794"/>
         <source>Find source file</source>
         <translation>소스 파일을 찾으세요</translation>
     </message>
@@ -11012,19 +11319,19 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">슬롯 상태</translation>
     </message>
     <message>
-        <location filename="../wrap_key_dlg.ui" line="299"/>
-        <location filename="../wrap_key_dlg.ui" line="714"/>
+        <location filename="../wrap_key_dlg.ui" line="347"/>
+        <location filename="../wrap_key_dlg.ui" line="748"/>
         <source>Label</source>
         <translation>라벨</translation>
     </message>
     <message>
-        <location filename="../wrap_key_dlg.ui" line="397"/>
-        <location filename="../wrap_key_dlg.ui" line="638"/>
+        <location filename="../wrap_key_dlg.ui" line="294"/>
+        <location filename="../wrap_key_dlg.ui" line="695"/>
         <source>Select</source>
         <translation>선택</translation>
     </message>
     <message>
-        <location filename="../wrap_key_dlg.ui" line="527"/>
+        <location filename="../wrap_key_dlg.ui" line="534"/>
         <source>Param</source>
         <translation>파라미터</translation>
     </message>
@@ -11039,7 +11346,13 @@ Do you want to delete the file and continue?</source>
         <translation>슬롯 이름</translation>
     </message>
     <message>
-        <location filename="../wrap_key_dlg.ui" line="611"/>
+        <location filename="../wrap_key_dlg.ui" line="404"/>
+        <location filename="../wrap_key_dlg.ui" line="762"/>
+        <source>View</source>
+        <translation>보기</translation>
+    </message>
+    <message>
+        <location filename="../wrap_key_dlg.ui" line="618"/>
         <source>Wrapped Key</source>
         <translation>Wrapped Key</translation>
     </message>
@@ -11048,7 +11361,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">슬롯 목록</translation>
     </message>
     <message>
-        <location filename="../wrap_key_dlg.ui" line="420"/>
+        <location filename="../wrap_key_dlg.ui" line="427"/>
         <source>Mechanism</source>
         <translation>알고리즘</translation>
     </message>
@@ -11066,8 +11379,8 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">찾기</translation>
     </message>
     <message>
-        <location filename="../wrap_key_dlg.ui" line="306"/>
-        <location filename="../wrap_key_dlg.ui" line="645"/>
+        <location filename="../wrap_key_dlg.ui" line="287"/>
+        <location filename="../wrap_key_dlg.ui" line="755"/>
         <source>Object</source>
         <translation>대상</translation>
     </message>
@@ -11085,33 +11398,33 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">Wrap Key</translation>
     </message>
     <message>
-        <location filename="../wrap_key_dlg.ui" line="448"/>
-        <location filename="../wrap_key_dlg.ui" line="604"/>
+        <location filename="../wrap_key_dlg.ui" line="455"/>
+        <location filename="../wrap_key_dlg.ui" line="611"/>
         <source>Type</source>
         <translation>타입</translation>
     </message>
     <message>
-        <location filename="../wrap_key_dlg.ui" line="765"/>
+        <location filename="../wrap_key_dlg.ui" line="779"/>
         <source>Output</source>
         <translation>결과</translation>
     </message>
     <message>
-        <location filename="../wrap_key_dlg.ui" line="914"/>
+        <location filename="../wrap_key_dlg.ui" line="928"/>
         <source>Output Clear</source>
         <translation>출력 지우기</translation>
     </message>
     <message>
-        <location filename="../wrap_key_dlg.ui" line="921"/>
+        <location filename="../wrap_key_dlg.ui" line="935"/>
         <source>Save File</source>
         <translation>파일 저장</translation>
     </message>
     <message>
-        <location filename="../wrap_key_dlg.ui" line="928"/>
+        <location filename="../wrap_key_dlg.ui" line="942"/>
         <source>WrapKey</source>
         <translation>Wrap Key</translation>
     </message>
     <message>
-        <location filename="../wrap_key_dlg.ui" line="949"/>
+        <location filename="../wrap_key_dlg.ui" line="963"/>
         <source>Close</source>
         <translation>닫기</translation>
     </message>
@@ -11120,31 +11433,37 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">결과 데이타가 없습니다</translation>
     </message>
     <message>
-        <location filename="../wrap_key_dlg.cpp" line="60"/>
-        <location filename="../wrap_key_dlg.cpp" line="61"/>
+        <location filename="../wrap_key_dlg.cpp" line="64"/>
+        <location filename="../wrap_key_dlg.cpp" line="65"/>
         <source>Select a key from HSM Man</source>
         <translation>HSM 관리에서 키를 선택 하세요</translation>
     </message>
     <message>
-        <location filename="../wrap_key_dlg.cpp" line="126"/>
+        <location filename="../wrap_key_dlg.cpp" line="130"/>
         <source>Select a wrapping object</source>
         <translation>암호화하는 객체를 선택하세요</translation>
     </message>
     <message>
-        <location filename="../wrap_key_dlg.cpp" line="136"/>
+        <location filename="../wrap_key_dlg.cpp" line="140"/>
         <source>Select object</source>
         <translation>객체를 선택하세요</translation>
     </message>
     <message>
-        <location filename="../wrap_key_dlg.cpp" line="158"/>
-        <location filename="../wrap_key_dlg.cpp" line="172"/>
+        <location filename="../wrap_key_dlg.cpp" line="162"/>
+        <location filename="../wrap_key_dlg.cpp" line="176"/>
         <source>WrapKey execution failure [%1]</source>
         <translation>WrapKey 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../wrap_key_dlg.cpp" line="230"/>
+        <location filename="../wrap_key_dlg.cpp" line="234"/>
         <source>No result data</source>
         <translation>결과 데이타가 없음</translation>
+    </message>
+    <message>
+        <location filename="../wrap_key_dlg.cpp" line="337"/>
+        <location filename="../wrap_key_dlg.cpp" line="352"/>
+        <source>There is no object</source>
+        <translation>객체가 없습니다</translation>
     </message>
 </context>
 </TS>

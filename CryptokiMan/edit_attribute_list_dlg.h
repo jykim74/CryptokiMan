@@ -44,6 +44,7 @@ private slots:
     void clickID();
     void clickApplication();
     void clickObjectID();
+    void clickObjectView();
 
     void clickClass();
     void clickKeyType();

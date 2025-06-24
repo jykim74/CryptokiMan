@@ -599,6 +599,13 @@
      <property name="topMargin">
       <number>0</number>
      </property>
+     <item row="0" column="4">
+      <widget class="QPushButton" name="mSelectBtn">
+       <property name="text">
+        <string>Select</string>
+       </property>
+      </widget>
+     </item>
      <item row="0" column="0">
       <widget class="QLabel" name="label_6">
        <property name="minimumSize">
@@ -615,13 +622,6 @@
        </property>
        <property name="text">
         <string>Label</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="QLabel" name="label_7">
-       <property name="text">
-        <string>Object</string>
        </property>
       </widget>
      </item>
@@ -675,10 +675,10 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="4">
-      <widget class="QPushButton" name="mSelectBtn">
+     <item row="0" column="2">
+      <widget class="QLabel" name="label_7">
        <property name="text">
-        <string>Select</string>
+        <string>Object</string>
        </property>
       </widget>
      </item>
@@ -713,6 +713,13 @@
        </property>
        <property name="readOnly">
         <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="5">
+      <widget class="QPushButton" name="mObjectViewBtn">
+       <property name="text">
+        <string>View</string>
        </property>
       </widget>
      </item>

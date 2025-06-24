@@ -25,6 +25,8 @@ public:
     void setObject( long hObject );
 
 private slots:
+    void clickReload();
+
     void clickCommonField( QModelIndex index );
     void clickPart1Field( QModelIndex index );
     void clickPart2Field( QModelIndex index );

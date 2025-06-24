@@ -11,6 +11,7 @@
 #include "settings_mgr.h"
 
 #include "edit_attribute_list_dlg.h"
+#include "object_view_dlg.h"
 
 static QStringList sFalseTrue = { "false", "true" };
 
@@ -29,6 +30,7 @@ EditAttributeListDlg::EditAttributeListDlg(QWidget *parent) :
 
     connect( mObjectTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(objectTypeChanged(int)));
     connect( mLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(labelChanged(int)));
+    connect( mObjectViewBtn, SIGNAL(clicked()), this, SLOT(clickObjectView()));
 
     connect( mLabelText, SIGNAL(textChanged(QString)), this, SLOT(changeLabel(QString)));
     connect( mIDText, SIGNAL(textChanged(QString)), this, SLOT(changeID(QString)));
@@ -235,6 +237,21 @@ void EditAttributeListDlg::clickApplication()
 void EditAttributeListDlg::clickObjectID()
 {
     mObjectIDText->setEnabled( mObjectIDCheck->isChecked() );
+}
+
+void EditAttributeListDlg::clickObjectView()
+{
+    long hObject = mObjectText->text().toLong();
+    if( hObject <= 0 )
+    {
+        manApplet->warningBox( tr("Theres is no object" ), this );
+        return;
+    }
+
+    ObjectViewDlg objectView;
+    objectView.setSlotIndex( slot_index_ );
+    objectView.setObject( hObject );
+    objectView.exec();
 }
 
 void EditAttributeListDlg::clickClass()

@@ -12,6 +12,7 @@
 #include "settings_mgr.h"
 #include "mech_mgr.h"
 #include "hsm_man_dlg.h"
+#include "object_view_dlg.h"
 
 static QStringList sFalseTrue = { "false", "true" };
 static QStringList sParamList = { "CKD_NULL", "CKD_SHA1_KDF", "CKD_SHA224_KDF", "CKD_SHA256_KDF", "CKD_SHA348_KDF", "CKD_SHA512_KDF" };
@@ -48,6 +49,7 @@ DeriveKeyDlg::DeriveKeyDlg(QWidget *parent) :
     connect( mParam1Text, SIGNAL(textChanged(const QString&)), this, SLOT(changeParam1(const QString&)));
     connect( mParam2Text, SIGNAL(textChanged(const QString&)), this, SLOT(changeParam2(const QString&)));
     connect( mSelectSrcBtn, SIGNAL(clicked()), this, SLOT(clickSelectSrcKey()));
+    connect( mObjectViewBtn, SIGNAL(clicked()), this, SLOT(clickObjectView()));
 
     initialize();
     setDefaults();
@@ -132,6 +134,21 @@ void DeriveKeyDlg::clickSelectSrcKey()
         mSrcLabelText->setText( strLabel );
         mSrcObjectText->setText( QString("%1").arg( hObj ));
     }
+}
+
+void DeriveKeyDlg::clickObjectView()
+{
+    QString strObject = mSrcObjectText->text();
+    if( strObject.length() < 1 )
+    {
+        manApplet->warningBox( tr( "There is no object" ), this );
+        return;
+    }
+
+    ObjectViewDlg objectView;
+    objectView.setSlotIndex( slot_index_ );
+    objectView.setObject( strObject.toLong() );
+    objectView.exec();
 }
 
 void DeriveKeyDlg::setSlotIndex(int index)

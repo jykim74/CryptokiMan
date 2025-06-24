@@ -14,6 +14,7 @@
 #include "settings_mgr.h"
 #include "mech_mgr.h"
 #include "hsm_man_dlg.h"
+#include "object_view_dlg.h"
 
 static QStringList sMechWrapSymList;
 static QStringList sMechWrapAsymList;
@@ -56,6 +57,9 @@ void WrapKeyDlg::initUI()
 
     connect( mSelectBtn, SIGNAL(clicked()), this, SLOT(clickSelect()));
     connect( mWrappingSelectBtn, SIGNAL(clicked()), this, SLOT(clickWrappingSelect()));
+
+    connect( mWrappingViewBtn, SIGNAL(clicked()), this, SLOT(clickWrappingView()));
+    connect( mViewBtn, SIGNAL(clicked()), this, SLOT(clickView()));
 
     mWrappingLabelText->setPlaceholderText( tr( "Select a key from HSM Man" ));
     mLabelText->setPlaceholderText( tr( "Select a key from HSM Man" ));
@@ -323,4 +327,34 @@ void WrapKeyDlg::clickSelect()
         mLabelText->setText( strLabel );
         mObjectText->setText( QString("%1").arg( hObj ));
     }
+}
+
+void WrapKeyDlg::clickWrappingView()
+{
+    QString strObject = mWrappingObjectText->text();
+    if( strObject.length() < 1 )
+    {
+        manApplet->warningBox( tr( "There is no object" ), this );
+        return;
+    }
+
+    ObjectViewDlg objectView;
+    objectView.setSlotIndex( slot_index_ );
+    objectView.setObject( strObject.toLong() );
+    objectView.exec();
+}
+
+void WrapKeyDlg::clickView()
+{
+    QString strObject = mObjectText->text();
+    if( strObject.length() < 1 )
+    {
+        manApplet->warningBox( tr( "There is no object" ), this );
+        return;
+    }
+
+    ObjectViewDlg objectView;
+    objectView.setSlotIndex( slot_index_ );
+    objectView.setObject( strObject.toLong() );
+    objectView.exec();
 }
