@@ -10,6 +10,7 @@
 #include "js_pkcs11.h"
 #include "cryptoki_api.h"
 #include "settings_mgr.h"
+#include "object_view_dlg.h"
 
 const QStringList kTypeList = { "String", "Hex", "Base64" };
 
@@ -27,6 +28,7 @@ EditAttributeDlg::EditAttributeDlg(QWidget *parent) :
     connect( mObjectTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(objectTypeChanged(int)));
     connect( mLabelCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(labelChanged(int)));
     connect( mAttributeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(attributeTypeChanged(int)));
+    connect( mObjectViewBtn, SIGNAL(clicked()), this, SLOT(clickObjectView()));
 
     connect( mCloseBtn, SIGNAL(clicked(bool)), this, SLOT(clickClose()));
     connect( mGetAttrBtn, SIGNAL(clicked(bool)), this, SLOT(clickGetAttribute()));
@@ -366,4 +368,19 @@ void EditAttributeDlg::changeValue()
 
     QString strLen = getDataLenString( mValueTypeCombo->currentText(), strValue );
     mValueLenText->setText( QString( "%1" ).arg(strLen) );
+}
+
+void EditAttributeDlg::clickObjectView()
+{
+    long hObj = mObjectText->text().toLong();
+
+    if( hObj <= 0 )
+    {
+        manApplet->warningBox( tr( "There is no object" ), this );
+        return;
+    }
+
+    ObjectViewDlg objectView;
+    objectView.setObject( hObj );
+    objectView.exec();
 }

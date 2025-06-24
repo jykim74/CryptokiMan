@@ -43,6 +43,7 @@ private slots:
     void clickSetAttribute();
 
     void changeValue();
+    void clickObjectView();
 
 private:
     void initialize();

@@ -244,6 +244,7 @@ add_executable(${PROJECT_NAME}
     secret_info_dlg.h secret_info_dlg.cpp secret_info_dlg.ui
     cavp_dlg.h cavp_dlg.cpp cavp_dlg.ui
     cavp_dlg2.cpp
+    object_view_dlg.h object_view_dlg.cpp object_view_dlg.ui
 )
 
 target_link_options( ${PROJECT_NAME} PRIVATE -mwindows -MD )
