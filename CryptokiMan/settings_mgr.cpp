@@ -33,6 +33,7 @@ void SettingsMgr::initialize()
     getUseDeviceMech();
     getFindMaxObjectsCount();
     getHexAreaWidth();
+    getDisplayValid();
 
     getViewValue( VIEW_FILE );
     getViewValue( VIEW_MODULE );
@@ -426,4 +427,25 @@ time_t SettingsMgr::getRunTime()
     sets.endGroup();
 
     return tRun;
+}
+
+void SettingsMgr::setDisplayValid( bool bVal )
+{
+    QSettings sets;
+    sets.beginGroup( kBehaviorGroup );
+    sets.setValue( kDisplayValid, bVal );
+    sets.endGroup();
+
+    display_valid_ = bVal;
+}
+
+bool SettingsMgr::getDisplayValid()
+{
+    QSettings sets;
+
+    sets.beginGroup( kBehaviorGroup );
+    display_valid_ = sets.value( kDisplayValid, false ).toBool();
+    sets.endGroup();
+
+    return display_valid_;
 }

@@ -62,6 +62,7 @@ void SettingsDlg::updateSettings()
 
     mgr->setFindMaxObjectsCount( mFindMaxObjectsCountText->text().toInt() );
     mgr->setUseDeviceMech( mUseDeviceMechCheck->isChecked() );
+    mgr->setDisplayValid( mDisplayValidCheck->isChecked() );
 
     QString strFont = mFontFamilyCombo->currentText();
     if( strFont == "Lantinghei TC" )
@@ -190,6 +191,7 @@ void SettingsDlg::initialize()
 
     mUseDeviceMechCheck->setChecked( mgr->getUseDeviceMech() );
     mFontFamilyCombo->setCurrentText( mgr->getFontFamily() );
+    mDisplayValidCheck->setChecked( mgr->getDisplayValid() );
 
     mLangCombo->setCurrentIndex(I18NHelper::getInstance()->preferredLanguage());
     tabWidget->setCurrentIndex(0);

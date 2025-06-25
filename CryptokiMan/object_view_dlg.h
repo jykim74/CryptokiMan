@@ -35,7 +35,7 @@ private slots:
 private:
     void initialize();
     void initUI();
-    QString stringAttribute( int nValType, CK_ATTRIBUTE_TYPE uAttribute, CK_OBJECT_HANDLE hObj, int *pnLen = NULL );
+    QString stringAttribute( int nValType, CK_ATTRIBUTE_TYPE uAttribute, CK_OBJECT_HANDLE hObj, int *pnRet );
 
     void setCertificate( long hObject );
     void setPublicKey( long hObject );

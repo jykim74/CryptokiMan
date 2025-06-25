@@ -371,6 +371,7 @@ void PriKeyInfoDlg::setRSAKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey
     BIN binVal = {0,0};
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+    bool bVal = manApplet->settingsMgr()->displayValid();
 
     ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_PUBLIC_EXPONENT, &binVal );
     if( ret == CKR_OK )
@@ -380,7 +381,8 @@ void PriKeyInfoDlg::setRSAKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey
     }
     else
     {
-        mRSA_EText->setText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+        if( bVal == false )
+            mRSA_EText->setText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
     }
 
     ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_MODULUS, &binVal );
@@ -391,7 +393,8 @@ void PriKeyInfoDlg::setRSAKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey
     }
     else
     {
-        mRSA_NText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+        if( bVal == false )
+            mRSA_NText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
     }
 
     if( bPri == true )
@@ -404,7 +407,8 @@ void PriKeyInfoDlg::setRSAKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey
         }
         else
         {
-            mRSA_DText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+            if( bVal == false )
+                mRSA_DText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
         }
 
         ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_PRIME_1, &binVal );
@@ -415,7 +419,8 @@ void PriKeyInfoDlg::setRSAKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey
         }
         else
         {
-            mRSA_PText->setText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+            if( bVal == false )
+                mRSA_PText->setText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
         }
 
         ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_PRIME_2, &binVal );
@@ -426,7 +431,8 @@ void PriKeyInfoDlg::setRSAKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey
         }
         else
         {
-            mRSA_QText->setText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+            if( bVal == false )
+                mRSA_QText->setText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
         }
 
         ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_EXPONENT_1, &binVal );
@@ -437,7 +443,8 @@ void PriKeyInfoDlg::setRSAKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey
         }
         else
         {
-            mRSA_DMP1Text->setText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+            if( bVal == false )
+                mRSA_DMP1Text->setText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
         }
 
         ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_EXPONENT_2, &binVal );
@@ -448,7 +455,8 @@ void PriKeyInfoDlg::setRSAKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey
         }
         else
         {
-            mRSA_DMQ1Text->setText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+            if( bVal == false )
+                mRSA_DMQ1Text->setText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
         }
 
         ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_COEFFICIENT, &binVal );
@@ -459,7 +467,8 @@ void PriKeyInfoDlg::setRSAKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey
         }
         else
         {
-            mRSA_IQMPText->setText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+            if( bVal == false )
+                mRSA_IQMPText->setText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
         }
     }
 
@@ -472,6 +481,7 @@ void PriKeyInfoDlg::setECCKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey
     BIN binVal = {0,0};
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+    bool bVal = manApplet->settingsMgr()->displayValid();
 
     char sTextOID[1024];
 
@@ -486,7 +496,8 @@ void PriKeyInfoDlg::setECCKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey
     }
     else
     {
-        mECC_CurveOIDText->setText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+        if( bVal == false )
+            mECC_CurveOIDText->setText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
     }
 
     if( bPri == false )
@@ -502,8 +513,11 @@ void PriKeyInfoDlg::setECCKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey
         }
         else
         {
-            mECC_PubXText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
-            mECC_PubYText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+            if( bVal == false )
+            {
+                mECC_PubXText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+                mECC_PubYText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+            }
         }
     }
     else
@@ -516,7 +530,8 @@ void PriKeyInfoDlg::setECCKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey
         }
         else
         {
-            mECC_PrivateText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+            if( bVal == false )
+                mECC_PrivateText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
         }
     }
 
@@ -529,6 +544,7 @@ void PriKeyInfoDlg::setDSAKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey
     BIN binVal = {0,0};
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+    bool bVal = manApplet->settingsMgr()->displayValid();
 
     ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_PRIME, &binVal );
     if( ret == CKR_OK )
@@ -538,7 +554,8 @@ void PriKeyInfoDlg::setDSAKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey
     }
     else
     {
-        mDSA_PText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+        if( bVal == false )
+            mDSA_PText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
     }
 
     ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_SUBPRIME, &binVal );
@@ -549,7 +566,8 @@ void PriKeyInfoDlg::setDSAKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey
     }
     else
     {
-        mDSA_QText->setText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+        if( bVal == false )
+            mDSA_QText->setText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
     }
 
     ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_BASE, &binVal );
@@ -560,7 +578,8 @@ void PriKeyInfoDlg::setDSAKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey
     }
     else
     {
-        mDSA_GText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+        if( bVal == false )
+            mDSA_GText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
     }
 
     if( bPri == true )
@@ -573,7 +592,8 @@ void PriKeyInfoDlg::setDSAKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey
         }
         else
         {
-            mDSA_PrivateText->setText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+            if( bVal == false )
+                mDSA_PrivateText->setText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
         }
     }
     else
@@ -586,7 +606,8 @@ void PriKeyInfoDlg::setDSAKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey
         }
         else
         {
-            mDSA_PublicText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+            if( bVal == false )
+                mDSA_PublicText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
         }
     }
 
@@ -600,6 +621,7 @@ void PriKeyInfoDlg::setEdDSAKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hK
     QString strName;
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
+    bool bVal = manApplet->settingsMgr()->displayValid();
 
     ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_EC_PARAMS, &binVal );
     if( ret == CKR_OK )
@@ -622,7 +644,8 @@ void PriKeyInfoDlg::setEdDSAKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hK
         }
         else
         {
-            mEdDSA_RawPublicText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+            if( bVal == false )
+                mEdDSA_RawPublicText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
         }
     }
     else
@@ -640,7 +663,8 @@ void PriKeyInfoDlg::setEdDSAKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hK
         }
         else
         {
-            mEdDSA_RawPrivateText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+            if( bVal == false )
+                mEdDSA_RawPrivateText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
         }
     }
 

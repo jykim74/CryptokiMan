@@ -30,6 +30,7 @@ const char *kViewImport = "viewImport";
 const char *kViewTool = "viewTool";
 const char *kViewHelp = "viewHelp";
 const char *kRunTime = "runTime";
+const char *kDisplayValid = "displayValid";
 }
 
 class SettingsMgr : public QObject
@@ -86,6 +87,10 @@ public:
     void setRunTime( time_t tRun );
     time_t getRunTime();
 
+    void setDisplayValid( bool bVal );
+    bool getDisplayValid();
+    bool displayValid() { return display_valid_; };
+
 private:
     void initialize();
 
@@ -94,6 +99,7 @@ private:
     bool use_device_mech_;
     int find_max_objects_count_;
     int hex_area_width_;
+    bool display_valid_;
 
     int view_file_;
     int view_module_;

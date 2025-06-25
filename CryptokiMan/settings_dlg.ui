@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>527</width>
-    <height>344</height>
+    <width>537</width>
+    <height>366</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -142,6 +142,13 @@
           </widget>
          </item>
         </layout>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="mDisplayValidCheck">
+         <property name="text">
+          <string>Display object valid values</string>
+         </property>
+        </widget>
        </item>
        <item>
         <spacer name="verticalSpacer">

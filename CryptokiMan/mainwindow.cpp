@@ -2612,6 +2612,7 @@ void MainWindow::showObjectsInfoDetail( QModelIndex index )
 
 void MainWindow::showCertificateInfoDetail( QModelIndex index )
 {
+    int ret = -1;
     int row = index.row();
     long uObj = -1;
     BIN binDN = {0,0};
@@ -2620,7 +2621,7 @@ void MainWindow::showCertificateInfoDetail( QModelIndex index )
     QTableWidgetItem *item1 = right_table_->item( row, 1 );
     uObj = item1->text().toLong();
 
-    QString strSubject = (stringAttribute( ATTR_VAL_HEX, CKA_SUBJECT, uObj ) );
+    QString strSubject = (stringAttribute( ATTR_VAL_HEX, CKA_SUBJECT, uObj, &ret ) );
     JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binDN );
     JS_PKI_getTextDN( &binDN, &pDN );
 
@@ -2642,6 +2643,7 @@ void MainWindow::showCertificateInfoDetail( QModelIndex index )
 
 void MainWindow::showPublicKeyInfoDetail( QModelIndex index )
 {
+    int ret = -1;
     int row = index.row();
     long uObj = -1;
     BIN binDN = {0,0};
@@ -2651,13 +2653,13 @@ void MainWindow::showPublicKeyInfoDetail( QModelIndex index )
     uObj = item1->text().toLong();
     QString strKeyType;
 
-    QString strSubject = (stringAttribute( ATTR_VAL_HEX, CKA_SUBJECT, uObj ) );
+    QString strSubject = (stringAttribute( ATTR_VAL_HEX, CKA_SUBJECT, uObj, &ret ) );
     JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binDN );
     JS_PKI_getTextDN( &binDN, &pDN );
 
     info_text_->clear();
 
-    strKeyType = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, uObj );
+    strKeyType = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, uObj, &ret );
 
     infoLine();
     info( QString( "== PublicKey [ %1 ] Information\n").arg( strKeyType) );
@@ -2696,6 +2698,7 @@ void MainWindow::showPublicKeyInfoDetail( QModelIndex index )
 
 void MainWindow::showPrivateKeyInfoDetail( QModelIndex index )
 {
+    int ret = -1;
     int row = index.row();
     long uObj = -1;
     BIN binDN = {0,0};
@@ -2705,11 +2708,11 @@ void MainWindow::showPrivateKeyInfoDetail( QModelIndex index )
     uObj = item1->text().toLong();
     QString strKeyType;
 
-    QString strSubject = (stringAttribute( ATTR_VAL_HEX, CKA_SUBJECT, uObj ) );
+    QString strSubject = (stringAttribute( ATTR_VAL_HEX, CKA_SUBJECT, uObj, &ret ) );
     JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binDN );
     JS_PKI_getTextDN( &binDN, &pDN );
 
-    strKeyType = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, uObj );
+    strKeyType = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, uObj, &ret );
 
     info_text_->clear();
 
@@ -2750,12 +2753,13 @@ void MainWindow::showPrivateKeyInfoDetail( QModelIndex index )
 
 void MainWindow::showSecretKeyInfoDetail( QModelIndex index )
 {
+    int ret = -1;
     int row = index.row();
     long uObj = -1;
 
     QTableWidgetItem *item1 = right_table_->item( row, 1 );
     uObj = item1->text().toLong();
-    QString strKeyType = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, uObj );
+    QString strKeyType = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, uObj, &ret );
 
     info_text_->clear();
 
@@ -3739,7 +3743,7 @@ void MainWindow::showAttribute( int nValType, CK_ATTRIBUTE_TYPE uAttribute, CK_O
     if( pStr ) JS_free( pStr );
 }
 
-QString MainWindow::stringAttribute( int nValType, CK_ATTRIBUTE_TYPE uAttribute, CK_OBJECT_HANDLE hObj, int* pnLen )
+QString MainWindow::stringAttribute( int nValType, CK_ATTRIBUTE_TYPE uAttribute, CK_OBJECT_HANDLE hObj, int *pnRet )
 {
     int ret = 0;
 
@@ -3753,10 +3757,10 @@ QString MainWindow::stringAttribute( int nValType, CK_ATTRIBUTE_TYPE uAttribute,
 
     ret = manApplet->cryptokiAPI()->GetAttributeValue2( hSession, hObj, uAttribute, &binVal );
 
+    *pnRet = ret;
+
     if( ret == CKR_OK )
     {
-        if( pnLen ) *pnLen = binVal.nLen;
-
         if( nValType == ATTR_VAL_BOOL )
         {
             strMsg = getBool( &binVal );
@@ -3818,7 +3822,6 @@ QString MainWindow::stringAttribute( int nValType, CK_ATTRIBUTE_TYPE uAttribute,
     else
     {
         strMsg = QString( "[ERR] %1[%2]" ).arg( JS_PKCS11_GetErrorMsg(ret)).arg(ret);
-        if( pnLen ) *pnLen = -1;
     }
 
     JS_BIN_reset( &binVal );
@@ -3838,6 +3841,8 @@ void MainWindow::showCertificateInfoList( int index, long hObject )
     CK_ULONG uMaxObjCnt = manApplet->settingsMgr()->findMaxObjectsCount();
     CK_OBJECT_HANDLE hObjects[uMaxObjCnt];
     int rv = 0;
+
+    bool bVal = manApplet->settingsMgr()->displayValid();
 
     removeAllRightTable();
 
@@ -3880,6 +3885,7 @@ void MainWindow::showCertificateInfoList( int index, long hObject )
     }
 
     int row = 0;
+    int ret = -1;
 
     for( int i=0; i < uObjCnt; i++ )
     {
@@ -3890,28 +3896,37 @@ void MainWindow::showCertificateInfoList( int index, long hObject )
         right_table_->insertRow( row );
         right_table_->setRowHeight( row, 10 );
 
-        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_LABEL, hObjects[i] );
+        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_LABEL, hObjects[i], &ret );
 
-        QTableWidgetItem *item = new QTableWidgetItem( strMsg );
-        item->setIcon( QIcon(":/images/cert.png"));
-        right_table_->setItem( row, 0, item );
+        if( bVal == false || ret == CKR_OK )
+        {
+            QTableWidgetItem *item = new QTableWidgetItem( strMsg );
+            item->setIcon( QIcon(":/images/cert.png"));
+            right_table_->setItem( row, 0, item );
+        }
 
         strMsg = QString("%1").arg( hObjects[i] );
         right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
 
-        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_ID, hObjects[i] );
-        right_table_->setItem( row, 2, new QTableWidgetItem(strMsg) );
+        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_ID, hObjects[i], &ret );
 
-        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_SUBJECT, hObjects[i] );
-        JS_BIN_decodeHex( strMsg.toStdString().c_str(), &binName );
-        JS_PKI_getTextDN( &binName, &pDN );
-        if( pDN )
+        if( bVal == false || ret == CKR_OK )
+            right_table_->setItem( row, 2, new QTableWidgetItem(strMsg) );
+
+        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_SUBJECT, hObjects[i], &ret );
+
+        if( bVal == false || ret == CKR_OK )
         {
-            strMsg = pDN;
-            JS_free( pDN );
+            JS_BIN_decodeHex( strMsg.toStdString().c_str(), &binName );
+            JS_PKI_getTextDN( &binName, &pDN );
+            if( pDN )
+            {
+                strMsg = pDN;
+                JS_free( pDN );
+            }
+            JS_BIN_reset( &binName );
+            right_table_->setItem( row, 3, new QTableWidgetItem(strMsg) );
         }
-        JS_BIN_reset( &binName );
-        right_table_->setItem( row, 3, new QTableWidgetItem(strMsg) );
 
         row++;
     }
@@ -3922,6 +3937,7 @@ void MainWindow::showPublicKeyInfoList( int index, long hObject )
     QList<SlotInfo>& slot_infos = manApplet->mainWindow()->getSlotInfos();
 
     SlotInfo slotInfo = slot_infos.at(index);
+    bool bVal = manApplet->settingsMgr()->displayValid();
 
     CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
     CK_ULONG uObjCnt = 0;
@@ -3984,27 +4000,34 @@ void MainWindow::showPublicKeyInfoList( int index, long hObject )
 
     QString strMsg = "";
     int row = 0;
-
+    int ret = -1;
 
     for( int i=0; i < uObjCnt; i++ )
     {
         right_table_->insertRow( row );
         right_table_->setRowHeight( row, 10 );
 
-        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_LABEL, hObjects[i] );
+        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_LABEL, hObjects[i], &ret );
 
-        QTableWidgetItem *item = new QTableWidgetItem( strMsg );
-        item->setIcon( QIcon(":/images/pubkey.png"));
-        right_table_->setItem( row, 0, item );
+        if( bVal == false || ret == CKR_OK )
+        {
+            QTableWidgetItem *item = new QTableWidgetItem( strMsg );
+            item->setIcon( QIcon(":/images/pubkey.png"));
+            right_table_->setItem( row, 0, item );
+        }
 
         strMsg = QString("%1").arg( hObjects[i] );
         right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
 
-        strMsg = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, hObjects[i] );
-        right_table_->setItem( row, 2, new QTableWidgetItem( strMsg ));
+        strMsg = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, hObjects[i], &ret );
 
-        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_ID, hObjects[i] );
-        right_table_->setItem( row, 3, new QTableWidgetItem( strMsg ));
+        if( bVal == false || ret == CKR_OK )
+            right_table_->setItem( row, 2, new QTableWidgetItem( strMsg ));
+
+        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_ID, hObjects[i], &ret );
+
+        if( bVal == false || ret == CKR_OK )
+            right_table_->setItem( row, 3, new QTableWidgetItem( strMsg ));
 
         row++;
     }
@@ -4022,6 +4045,7 @@ void MainWindow::showPrivateKeyInfoList( int index, long hObject )
     CK_OBJECT_HANDLE hObjects[uMaxObjCnt];
     int rv = 0;
 
+    bool bVal = manApplet->settingsMgr()->displayValid();
 
     removeAllRightTable();
 
@@ -4078,26 +4102,32 @@ void MainWindow::showPrivateKeyInfoList( int index, long hObject )
 
     QString strMsg = "";
     int row = 0;
+    int ret = -1;
 
     for( int i=0; i < uObjCnt; i++ )
     {
         right_table_->insertRow( row );
         right_table_->setRowHeight( row, 10 );
 
-        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_LABEL, hObjects[i] );
+        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_LABEL, hObjects[i], &ret );
 
-        QTableWidgetItem *item = new QTableWidgetItem( strMsg );
-        item->setIcon( QIcon(":/images/prikey.png"));
-        right_table_->setItem( row, 0, item );
+        if( bVal == false || ret == CKR_OK )
+        {
+            QTableWidgetItem *item = new QTableWidgetItem( strMsg );
+            item->setIcon( QIcon(":/images/prikey.png"));
+            right_table_->setItem( row, 0, item );
+        }
 
         strMsg = QString("%1").arg( hObjects[i] );
         right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
 
-        strMsg = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, hObjects[i] );
-        right_table_->setItem( row, 2, new QTableWidgetItem( strMsg ));
+        strMsg = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, hObjects[i], &ret );
+        if( bVal == false || ret == CKR_OK )
+            right_table_->setItem( row, 2, new QTableWidgetItem( strMsg ));
 
-        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_ID, hObjects[i] );
-        right_table_->setItem( row, 3, new QTableWidgetItem( strMsg ));
+        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_ID, hObjects[i], &ret );
+        if( bVal == false || ret == CKR_OK )
+            right_table_->setItem( row, 3, new QTableWidgetItem( strMsg ));
 
         row++;
     }
@@ -4114,6 +4144,7 @@ void MainWindow::showSecretKeyInfoList( int index, long hObject )
     CK_ULONG uMaxObjCnt = manApplet->settingsMgr()->findMaxObjectsCount();
     CK_OBJECT_HANDLE hObjects[uMaxObjCnt];
     int rv = 0;
+    bool bVal = manApplet->settingsMgr()->displayValid();
 
     removeAllRightTable();
     QStringList headerList = { tr("Label"), tr("Handle"), tr("KeyType"), tr( "ID") };
@@ -4154,6 +4185,7 @@ void MainWindow::showSecretKeyInfoList( int index, long hObject )
     }
 
     int row = 0;
+    int ret = -1;
     QString strMsg = "";
 
     for( int i=0; i < uObjCnt; i++ )
@@ -4161,20 +4193,25 @@ void MainWindow::showSecretKeyInfoList( int index, long hObject )
         right_table_->insertRow( row );
         right_table_->setRowHeight( row, 10 );
 
-        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_LABEL, hObjects[i] );
+        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_LABEL, hObjects[i], &ret );
 
-        QTableWidgetItem *item = new QTableWidgetItem( strMsg );
-        item->setIcon( QIcon(":/images/key.png"));
-        right_table_->setItem( row, 0, item );
+        if( bVal == false || ret == CKR_OK )
+        {
+            QTableWidgetItem *item = new QTableWidgetItem( strMsg );
+            item->setIcon( QIcon(":/images/key.png"));
+            right_table_->setItem( row, 0, item );
+        }
 
         strMsg = QString("%1").arg( hObjects[i] );
         right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
 
-        strMsg = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, hObjects[i] );
-        right_table_->setItem( row, 2, new QTableWidgetItem( strMsg ));
+        strMsg = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, hObjects[i], &ret );
+        if( bVal == false || ret == CKR_OK )
+            right_table_->setItem( row, 2, new QTableWidgetItem( strMsg ));
 
-        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_ID, hObjects[i] );
-        right_table_->setItem( row, 3, new QTableWidgetItem( strMsg ));
+        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_ID, hObjects[i], &ret );
+        if( bVal == false || ret == CKR_OK )
+            right_table_->setItem( row, 3, new QTableWidgetItem( strMsg ));
 
         row++;
     }
@@ -4191,6 +4228,7 @@ void MainWindow::showDataInfoList( int index, long hObject )
     CK_ULONG uMaxObjCnt = manApplet->settingsMgr()->findMaxObjectsCount();
     CK_OBJECT_HANDLE hObjects[uMaxObjCnt];
     int rv = 0;
+    bool bVal = manApplet->settingsMgr()->displayValid();
 
     removeAllRightTable();
     QStringList headerList = { tr("Label"), tr("Handle"), tr( "ObejctID" ), tr( "Application") };
@@ -4230,6 +4268,7 @@ void MainWindow::showDataInfoList( int index, long hObject )
     }
 
     int row = 0;
+    int ret = -1;
     QString strMsg = "";
 
     for( int i=0; i < uObjCnt; i++ )
@@ -4242,24 +4281,32 @@ void MainWindow::showDataInfoList( int index, long hObject )
         right_table_->insertRow( row );
         right_table_->setRowHeight( row, 10 );
 
-        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_LABEL, hObjects[i] );
+        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_LABEL, hObjects[i], &ret );
 
-        QTableWidgetItem *item = new QTableWidgetItem( strMsg );
-        item->setIcon( QIcon(":/images/data_add.png"));
-        right_table_->setItem( row, 0, item );
+        if( bVal == false || ret == CKR_OK )
+        {
+            QTableWidgetItem *item = new QTableWidgetItem( strMsg );
+            item->setIcon( QIcon(":/images/data_add.png"));
+            right_table_->setItem( row, 0, item );
+        }
 
         strMsg = QString("%1").arg( hObjects[i] );
         right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
 
-        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_OBJECT_ID, hObjects[i] );
-        JS_BIN_decodeHex( strMsg.toStdString().c_str(), &binOID );
-        JS_PKI_getStringFromOID( &binOID, sOID );
-        JS_BIN_reset( &binOID );
+        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_OBJECT_ID, hObjects[i], &ret );
 
-        right_table_->setItem( row, 2, new QTableWidgetItem(sOID) );
+        if( bVal == false || ret == CKR_OK )
+        {
+            JS_BIN_decodeHex( strMsg.toStdString().c_str(), &binOID );
+            JS_PKI_getStringFromOID( &binOID, sOID );
+            JS_BIN_reset( &binOID );
 
-        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_APPLICATION, hObjects[i] );
-        right_table_->setItem( row, 3, new QTableWidgetItem(strMsg) );
+            right_table_->setItem( row, 2, new QTableWidgetItem(sOID) );
+        }
+
+        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_APPLICATION, hObjects[i], &ret );
+        if( bVal == false || ret == CKR_OK )
+            right_table_->setItem( row, 3, new QTableWidgetItem(strMsg) );
 
         row++;
     }
@@ -4294,22 +4341,21 @@ void MainWindow::showInfoCommon( CK_OBJECT_HANDLE hObj )
     CK_ATTRIBUTE_TYPE uAttrType = -1;
     QString strValue;
     int nWidth = manApplet->settingsMgr()->hexAreaWidth();
+    int ret = -1;
+    bool bVal = manApplet->settingsMgr()->displayValid();
 
     for( int i = 0; i < kCommonAttList.size(); i++ )
     {
-        int nLen = -1;
         strName = kCommonAttList.at(i);
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
 
-        strValue = stringAttribute( nType, uAttrType, hObj, &nLen );
+        strValue = stringAttribute( nType, uAttrType, hObj, &ret );
 
-        if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
-            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
-        else
-        {
+        if( ret == CKR_OK )
             info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
-        }
+        else if( bVal == false && ret != CKR_OK )
+            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
     }
 
     infoLine2();
@@ -4326,6 +4372,8 @@ void MainWindow::showInfoData( CK_OBJECT_HANDLE hObj )
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
     int nWidth = manApplet->settingsMgr()->hexAreaWidth();
+    int ret = -1;
+    bool bVal = manApplet->settingsMgr()->displayValid();
 
     for( int i = 0; i < kDataAttList.size(); i++ )
     {
@@ -4333,13 +4381,9 @@ void MainWindow::showInfoData( CK_OBJECT_HANDLE hObj )
 
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
-        strValue = stringAttribute( nType, uAttrType, hObj);
+        strValue = stringAttribute( nType, uAttrType, hObj, &ret);
 
-        if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
-        {
-            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
-        }
-        else
+        if( ret == CKR_OK )
         {
             if( uAttrType == CKA_OBJECT_ID )
             {
@@ -4369,6 +4413,8 @@ void MainWindow::showInfoData( CK_OBJECT_HANDLE hObj )
                 }
             }
         }
+        else if( bVal == false && ret != CKR_OK )
+            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
     }
 
     infoLine2();
@@ -4384,6 +4430,8 @@ void MainWindow::showInfoCertCommon( CK_OBJECT_HANDLE hObj )
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
     int nWidth = manApplet->settingsMgr()->hexAreaWidth();
+    int ret = -1;
+    bool bVal = manApplet->settingsMgr()->displayValid();
 
     for( int i = 0; i < kCommonCertAttList.size(); i++ )
     {
@@ -4391,12 +4439,9 @@ void MainWindow::showInfoCertCommon( CK_OBJECT_HANDLE hObj )
 
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
-        strValue = stringAttribute( nType, uAttrType, hObj);
+        strValue = stringAttribute( nType, uAttrType, hObj, &ret);
 
-
-        if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
-            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
-        else
+        if( ret == CKR_OK )
         {
             if( uAttrType == CKA_VALUE && nWidth > 0 )
             {
@@ -4408,6 +4453,8 @@ void MainWindow::showInfoCertCommon( CK_OBJECT_HANDLE hObj )
                 info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
             }
         }
+        else if( bVal == false && ret != CKR_OK )
+            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
     }
 
     infoLine2();
@@ -4424,6 +4471,8 @@ void MainWindow::showInfoX509Cert( CK_OBJECT_HANDLE hObj )
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
     int nWidth = manApplet->settingsMgr()->hexAreaWidth();
+    int ret = -1;
+    bool bVal = manApplet->settingsMgr()->displayValid();
 
     for( int i = 0; i < kX509CertAttList.size(); i++ )
     {
@@ -4431,13 +4480,9 @@ void MainWindow::showInfoX509Cert( CK_OBJECT_HANDLE hObj )
 
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
-        strValue = stringAttribute( nType, uAttrType, hObj );
+        strValue = stringAttribute( nType, uAttrType, hObj, &ret );
 
-        if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
-        {
-            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
-        }
-        else
+        if( ret == CKR_OK )
         {
             if( uAttrType == CKA_SUBJECT )
             {
@@ -4475,6 +4520,8 @@ void MainWindow::showInfoX509Cert( CK_OBJECT_HANDLE hObj )
                 }
             }
         }
+        else if( bVal == false && ret != CKR_OK )
+            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
     }
 
     infoLine2();
@@ -4491,6 +4538,8 @@ void MainWindow::showInfoKeyCommon( CK_OBJECT_HANDLE hObj )
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
     int nWidth = manApplet->settingsMgr()->hexAreaWidth();
+    int ret = -1;
+    bool bVal = manApplet->settingsMgr()->displayValid();
 
     for( int i = 0; i < kCommonKeyAttList.size(); i++ )
     {
@@ -4498,14 +4547,14 @@ void MainWindow::showInfoKeyCommon( CK_OBJECT_HANDLE hObj )
 
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
-        strValue = stringAttribute( nType, uAttrType, hObj);
+        strValue = stringAttribute( nType, uAttrType, hObj, &ret);
 
-        if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
-            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
-        else
+        if( ret == CKR_OK )
         {
             info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
         }
+        else if( bVal == false && ret != CKR_OK )
+            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
     }
 
     infoLine2();
@@ -4522,6 +4571,8 @@ void MainWindow::showInfoPublicKey( CK_OBJECT_HANDLE hObj )
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
     int nWidth = manApplet->settingsMgr()->hexAreaWidth();
+    int ret = -1;
+    bool bVal = manApplet->settingsMgr()->displayValid();
 
     for( int i = 0; i < kPubKeyAttList.size(); i++ )
     {
@@ -4529,13 +4580,9 @@ void MainWindow::showInfoPublicKey( CK_OBJECT_HANDLE hObj )
 
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
-        strValue = stringAttribute( nType, uAttrType, hObj );
+        strValue = stringAttribute( nType, uAttrType, hObj, &ret );
 
-        if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
-        {
-            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
-        }
-        else
+        if( ret == CKR_OK )
         {
             if( uAttrType == CKA_SUBJECT )
             {
@@ -4573,6 +4620,8 @@ void MainWindow::showInfoPublicKey( CK_OBJECT_HANDLE hObj )
                 }
             }
         }
+        else if( bVal == false && ret != CKR_OK )
+            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
     }
 
     infoLine2();
@@ -4589,6 +4638,8 @@ void MainWindow::showInfoPrivateKey( CK_OBJECT_HANDLE hObj )
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
     int nWidth = manApplet->settingsMgr()->hexAreaWidth();
+    int ret = -1;
+    bool bVal = manApplet->settingsMgr()->displayValid();
 
     for( int i = 0; i < kPriKeyAttList.size(); i++ )
     {
@@ -4596,13 +4647,9 @@ void MainWindow::showInfoPrivateKey( CK_OBJECT_HANDLE hObj )
 
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
-        strValue = stringAttribute( nType, uAttrType, hObj );
+        strValue = stringAttribute( nType, uAttrType, hObj, &ret );
 
-        if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
-        {
-            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
-        }
-        else
+        if( ret == CKR_OK )
         {
             if( uAttrType == CKA_SUBJECT )
             {
@@ -4640,6 +4687,8 @@ void MainWindow::showInfoPrivateKey( CK_OBJECT_HANDLE hObj )
                 }
             }
         }
+        else if( bVal == false && ret != CKR_OK )
+            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
     }
 
     infoLine2();
@@ -4656,6 +4705,8 @@ void MainWindow::showInfoSecretKey( CK_OBJECT_HANDLE hObj )
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
     int nWidth = manApplet->settingsMgr()->hexAreaWidth();
+    int ret = -1;
+    bool bVal = manApplet->settingsMgr()->displayValid();
 
     for( int i = 0; i < kSecretKeyAttList.size(); i++ )
     {
@@ -4663,11 +4714,9 @@ void MainWindow::showInfoSecretKey( CK_OBJECT_HANDLE hObj )
 
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
-        strValue = stringAttribute( nType, uAttrType, hObj);
+        strValue = stringAttribute( nType, uAttrType, hObj, &ret );
 
-        if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
-            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
-        else
+        if( ret == CKR_OK )
         {
             if( uAttrType == CKA_VALUE && nWidth > 0  )
             {
@@ -4679,7 +4728,8 @@ void MainWindow::showInfoSecretKey( CK_OBJECT_HANDLE hObj )
                 info( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ));
             }
         }
-
+        else if( bVal == false && ret != CKR_OK )
+            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
     }
 
     infoLine2();
@@ -4697,6 +4747,8 @@ void MainWindow::showInfoRSAValue( CK_OBJECT_HANDLE hObj, bool bPub )
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
     int nWidth = manApplet->settingsMgr()->hexAreaWidth();
+    int ret = -1;
+    bool bVal = manApplet->settingsMgr()->displayValid();
 
     for( int i = 0; i < kRSAKeyAttList.size(); i++ )
     {
@@ -4711,16 +4763,15 @@ void MainWindow::showInfoRSAValue( CK_OBJECT_HANDLE hObj, bool bPub )
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
 
-        strValue = stringAttribute( nType, uAttrType, hObj);
-        if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
-        {
-            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
-        }
-        else
+        strValue = stringAttribute( nType, uAttrType, hObj, &ret );
+
+        if( ret == CKR_OK )
         {
             strValue = getHexStringArea( strValue, nWidth );
             info( QString( "%1 : \n%2\n" ).arg( strName, kNameWidth ).arg( strValue ));
         }
+        else if( bVal == false && ret != CKR_OK )
+            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
     }
 
     infoLine2();
@@ -4737,6 +4788,8 @@ void MainWindow::showInfoDSAValue( CK_OBJECT_HANDLE hObj, bool bPub )
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
     int nWidth = manApplet->settingsMgr()->hexAreaWidth();
+    int ret = -1;
+    bool bVal = manApplet->settingsMgr()->displayValid();
 
     for( int i = 0; i < kDSAKeyAttList.size(); i++ )
     {
@@ -4744,15 +4797,15 @@ void MainWindow::showInfoDSAValue( CK_OBJECT_HANDLE hObj, bool bPub )
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
 
-        strValue = stringAttribute( nType, uAttrType, hObj);
-        if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
-            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
-        else
+        strValue = stringAttribute( nType, uAttrType, hObj, &ret );
+
+        if( ret == CKR_OK )
         {
             strValue = getHexStringArea( strValue, nWidth );
             info( QString( "%1 : \n%2\n" ).arg( strName, kNameWidth ).arg( strValue ));
         }
-
+        else if( bVal == false && ret != CKR_OK )
+            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
     }
 
     infoLine2();
@@ -4769,6 +4822,8 @@ void MainWindow::showInfoECCValue( CK_OBJECT_HANDLE hObj, bool bPub )
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
     int nWidth = manApplet->settingsMgr()->hexAreaWidth();
+    int ret = -1;
+    bool bVal = manApplet->settingsMgr()->displayValid();
 
     for( int i = 0; i < kECCKeyAttList.size(); i++ )
     {
@@ -4785,14 +4840,15 @@ void MainWindow::showInfoECCValue( CK_OBJECT_HANDLE hObj, bool bPub )
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
 
-        strValue = stringAttribute( nType, uAttrType, hObj);
-        if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
-            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
-        else
+        strValue = stringAttribute( nType, uAttrType, hObj, &ret );
+
+        if( ret == CKR_OK )
         {
             strValue = getHexStringArea( strValue, nWidth );
             info( QString( "%1 : \n%2\n" ).arg( strName, kNameWidth ).arg( strValue ));
         }
+        else if( bVal == false && ret != CKR_OK )
+            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
      }
 
     infoLine2();
@@ -4809,6 +4865,8 @@ void MainWindow::showInfoDHValue( CK_OBJECT_HANDLE hObj, bool bPub )
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
     int nWidth = manApplet->settingsMgr()->hexAreaWidth();
+    int ret = -1;
+    bool bVal = manApplet->settingsMgr()->displayValid();
 
     for( int i = 0; i < kDHKeyAttList.size(); i++ )
     {
@@ -4816,14 +4874,15 @@ void MainWindow::showInfoDHValue( CK_OBJECT_HANDLE hObj, bool bPub )
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
 
-        strValue = stringAttribute( nType, uAttrType, hObj);
-        if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
-            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
-        else
+        strValue = stringAttribute( nType, uAttrType, hObj, &ret );
+
+        if( ret == CKR_OK )
         {
             strValue = getHexStringArea( strValue, nWidth );
             info( QString( "%1 : \n%2\n" ).arg( strName, kNameWidth ).arg( strValue ));
         }
+        else if( bVal == false && ret != CKR_OK )
+            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
     }
 
     infoLine2();
@@ -4840,6 +4899,8 @@ void MainWindow::showInfoSecretValue( CK_OBJECT_HANDLE hObj)
     int nType = -1;
     CK_ATTRIBUTE_TYPE uAttrType = -1;
     int nWidth = manApplet->settingsMgr()->hexAreaWidth();
+    int ret = -1;
+    bool bVal = manApplet->settingsMgr()->displayValid();
 
     for( int i = 0; i < kSecretValueAttList.size(); i++ )
     {
@@ -4847,10 +4908,9 @@ void MainWindow::showInfoSecretValue( CK_OBJECT_HANDLE hObj)
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
 
-        strValue = stringAttribute( nType, uAttrType, hObj);
-        if( strValue.contains( "[ERR]", Qt::CaseSensitive ) )
-            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
-        else
+        strValue = stringAttribute( nType, uAttrType, hObj, &ret );
+
+        if( ret == CKR_OK )
         {
             if( uAttrType == CKA_VALUE )
             {
@@ -4863,6 +4923,8 @@ void MainWindow::showInfoSecretValue( CK_OBJECT_HANDLE hObj)
                 info( QString( "%1 : \n%2\n" ).arg( strName, kNameWidth ).arg( strValue ));
             }
         }
+        else if( bVal == false && ret != CKR_OK )
+            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
     }
 
     infoLine2();
@@ -4873,6 +4935,7 @@ void MainWindow::certificateInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[nMaxCnt];
     int rv = 0;
+    bool bVal = manApplet->settingsMgr()->displayValid();
 
     setRightType( HM_ITEM_TYPE_CERTIFICATE );
 
@@ -4903,6 +4966,7 @@ void MainWindow::certificateInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *
     if( rv != CKR_OK ) return;
 
     int row = 0;
+    int ret = -1;
 
     for( int i=0; i < uObjCnt; i++ )
     {
@@ -4913,28 +4977,36 @@ void MainWindow::certificateInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *
         right_table_->insertRow( row );
         right_table_->setRowHeight( row, 10 );
 
-        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_LABEL, hObjects[i] );
+        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_LABEL, hObjects[i], &ret );
 
-        QTableWidgetItem *item = new QTableWidgetItem( strMsg );
-        item->setIcon( QIcon(":/images/cert.png"));
-        right_table_->setItem( row, 0, item );
+        if( bVal == false || ret == CKR_OK )
+        {
+            QTableWidgetItem *item = new QTableWidgetItem( strMsg );
+            item->setIcon( QIcon(":/images/cert.png"));
+            right_table_->setItem( row, 0, item );
+        }
 
         strMsg = QString("%1").arg( hObjects[i] );
         right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
 
-        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_ID, hObjects[i] );
-        right_table_->setItem( row, 2, new QTableWidgetItem(strMsg) );
+        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_ID, hObjects[i], &ret );
+        if( bVal == false || ret == CKR_OK )
+            right_table_->setItem( row, 2, new QTableWidgetItem(strMsg) );
 
-        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_SUBJECT, hObjects[i] );
-        JS_BIN_decodeHex( strMsg.toStdString().c_str(), &binName );
-        JS_PKI_getTextDN( &binName, &pDN );
-        if( pDN )
+        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_SUBJECT, hObjects[i], &ret );
+
+        if( bVal == false || ret == CKR_OK )
         {
-            strMsg = pDN;
-            JS_free( pDN );
+            JS_BIN_decodeHex( strMsg.toStdString().c_str(), &binName );
+            JS_PKI_getTextDN( &binName, &pDN );
+            if( pDN )
+            {
+                strMsg = pDN;
+                JS_free( pDN );
+            }
+            JS_BIN_reset( &binName );
+            right_table_->setItem( row, 3, new QTableWidgetItem(strMsg) );
         }
-        JS_BIN_reset( &binName );
-        right_table_->setItem( row, 3, new QTableWidgetItem(strMsg) );
 
         row++;
     }
@@ -4945,6 +5017,7 @@ void MainWindow::publicKeyInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *pA
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[nMaxCnt];
     int rv = 0;
+    bool bVal = manApplet->settingsMgr()->displayValid();
 
     setRightType( HM_ITEM_TYPE_PUBLICKEY );
 
@@ -4975,27 +5048,32 @@ void MainWindow::publicKeyInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *pA
 
     QString strMsg = "";
     int row = 0;
-
+    int ret = -1;
 
     for( int i=0; i < uObjCnt; i++ )
     {
         right_table_->insertRow( row );
         right_table_->setRowHeight( row, 10 );
 
-        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_LABEL, hObjects[i] );
+        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_LABEL, hObjects[i], &ret );
 
-        QTableWidgetItem *item = new QTableWidgetItem( strMsg );
-        item->setIcon( QIcon(":/images/pubkey.png"));
-        right_table_->setItem( row, 0, item );
+        if( bVal == false || ret == CKR_OK )
+        {
+            QTableWidgetItem *item = new QTableWidgetItem( strMsg );
+            item->setIcon( QIcon(":/images/pubkey.png"));
+            right_table_->setItem( row, 0, item );
+        }
 
         strMsg = QString("%1").arg( hObjects[i] );
         right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
 
-        strMsg = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, hObjects[i] );
-        right_table_->setItem( row, 2, new QTableWidgetItem( strMsg ));
+        strMsg = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, hObjects[i], &ret );
+        if( bVal == false || ret == CKR_OK )
+            right_table_->setItem( row, 2, new QTableWidgetItem( strMsg ));
 
-        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_ID, hObjects[i] );
-        right_table_->setItem( row, 3, new QTableWidgetItem( strMsg ));
+        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_ID, hObjects[i], &ret );
+        if( bVal == false || ret == CKR_OK )
+            right_table_->setItem( row, 3, new QTableWidgetItem( strMsg ));
 
         row++;
     }
@@ -5006,6 +5084,7 @@ void MainWindow::privateKeyInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *p
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[nMaxCnt];
     int rv = 0;
+    bool bVal = manApplet->settingsMgr()->displayValid();
 
     setRightType( HM_ITEM_TYPE_PRIVATEKEY );
     removeAllRightTable();
@@ -5036,26 +5115,32 @@ void MainWindow::privateKeyInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *p
 
     QString strMsg = "";
     int row = 0;
+    int ret = -1;
 
     for( int i=0; i < uObjCnt; i++ )
     {
         right_table_->insertRow( row );
         right_table_->setRowHeight( row, 10 );
 
-        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_LABEL, hObjects[i] );
+        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_LABEL, hObjects[i], &ret );
 
-        QTableWidgetItem *item = new QTableWidgetItem( strMsg );
-        item->setIcon( QIcon(":/images/prikey.png"));
-        right_table_->setItem( row, 0, item );
+        if( bVal == false || ret == CKR_OK )
+        {
+            QTableWidgetItem *item = new QTableWidgetItem( strMsg );
+            item->setIcon( QIcon(":/images/prikey.png"));
+            right_table_->setItem( row, 0, item );
+        }
 
         strMsg = QString("%1").arg( hObjects[i] );
         right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
 
-        strMsg = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, hObjects[i] );
-        right_table_->setItem( row, 2, new QTableWidgetItem( strMsg ));
+        strMsg = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, hObjects[i], &ret );
+        if( bVal == false || ret == CKR_OK )
+            right_table_->setItem( row, 2, new QTableWidgetItem( strMsg ));
 
-        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_ID, hObjects[i] );
-        right_table_->setItem( row, 3, new QTableWidgetItem( strMsg ));
+        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_ID, hObjects[i], &ret );
+        if( bVal == false || ret == CKR_OK )
+            right_table_->setItem( row, 3, new QTableWidgetItem( strMsg ));
 
         row++;
     }
@@ -5066,6 +5151,7 @@ void MainWindow::secretKeyInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *pA
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[nMaxCnt];
     int rv = 0;
+    bool bVal = manApplet->settingsMgr()->displayValid();
 
     setRightType( HM_ITEM_TYPE_SECRETKEY );
 
@@ -5095,6 +5181,7 @@ void MainWindow::secretKeyInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *pA
     if( rv != CKR_OK ) return;
 
     int row = 0;
+    int ret = -1;
     QString strMsg = "";
 
     for( int i=0; i < uObjCnt; i++ )
@@ -5102,20 +5189,25 @@ void MainWindow::secretKeyInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *pA
         right_table_->insertRow( row );
         right_table_->setRowHeight( row, 10 );
 
-        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_LABEL, hObjects[i] );
+        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_LABEL, hObjects[i], &ret );
 
-        QTableWidgetItem *item = new QTableWidgetItem( strMsg );
-        item->setIcon( QIcon(":/images/key.png"));
-        right_table_->setItem( row, 0, item );
+        if( bVal == false || ret == CKR_OK )
+        {
+            QTableWidgetItem *item = new QTableWidgetItem( strMsg );
+            item->setIcon( QIcon(":/images/key.png"));
+            right_table_->setItem( row, 0, item );
+        }
 
         strMsg = QString("%1").arg( hObjects[i] );
         right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
 
-        strMsg = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, hObjects[i] );
-        right_table_->setItem( row, 2, new QTableWidgetItem( strMsg ));
+        strMsg = stringAttribute( ATTR_VAL_KEY_NAME, CKA_KEY_TYPE, hObjects[i], &ret );
+        if( bVal == false || ret == CKR_OK )
+            right_table_->setItem( row, 2, new QTableWidgetItem( strMsg ));
 
-        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_ID, hObjects[i] );
-        right_table_->setItem( row, 3, new QTableWidgetItem( strMsg ));
+        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_ID, hObjects[i], &ret );
+        if( bVal == false || ret == CKR_OK )
+            right_table_->setItem( row, 3, new QTableWidgetItem( strMsg ));
 
         row++;
     }
@@ -5126,6 +5218,7 @@ void MainWindow::dataInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *pAttrLi
     CK_ULONG uObjCnt = 0;
     CK_OBJECT_HANDLE hObjects[nMaxCnt];
     int rv = 0;
+    bool bVal = manApplet->settingsMgr()->displayValid();
 
     setRightType( HM_ITEM_TYPE_DATA );
 
@@ -5153,6 +5246,7 @@ void MainWindow::dataInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *pAttrLi
     if( rv != CKR_OK ) return;
 
     int row = 0;
+    int ret = -1;
     QString strMsg = "";
 
     for( int i=0; i < uObjCnt; i++ )
@@ -5165,24 +5259,32 @@ void MainWindow::dataInfoList( long hSession, int nMaxCnt, CK_ATTRIBUTE *pAttrLi
         right_table_->insertRow( row );
         right_table_->setRowHeight( row, 10 );
 
-        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_LABEL, hObjects[i] );
+        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_LABEL, hObjects[i], &ret );
 
-        QTableWidgetItem *item = new QTableWidgetItem( strMsg );
-        item->setIcon( QIcon(":/images/data_add.png"));
-        right_table_->setItem( row, 0, item );
+        if( bVal == false || ret == CKR_OK )
+        {
+            QTableWidgetItem *item = new QTableWidgetItem( strMsg );
+            item->setIcon( QIcon(":/images/data_add.png"));
+            right_table_->setItem( row, 0, item );
+        }
 
         strMsg = QString("%1").arg( hObjects[i] );
         right_table_->setItem( row, 1, new QTableWidgetItem(strMsg) );
 
-        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_OBJECT_ID, hObjects[i] );
-        JS_BIN_decodeHex( strMsg.toStdString().c_str(), &binOID );
-        JS_PKI_getStringFromOID( &binOID, sOID );
-        JS_BIN_reset( &binOID );
+        strMsg = stringAttribute( ATTR_VAL_HEX, CKA_OBJECT_ID, hObjects[i], &ret );
 
-        right_table_->setItem( row, 2, new QTableWidgetItem(sOID) );
+        if( bVal == false || ret == CKR_OK )
+        {
+            JS_BIN_decodeHex( strMsg.toStdString().c_str(), &binOID );
+            JS_PKI_getStringFromOID( &binOID, sOID );
+            JS_BIN_reset( &binOID );
 
-        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_APPLICATION, hObjects[i] );
-        right_table_->setItem( row, 3, new QTableWidgetItem(strMsg) );
+            right_table_->setItem( row, 2, new QTableWidgetItem(sOID) );
+        }
+
+        strMsg = stringAttribute( ATTR_VAL_STRING, CKA_APPLICATION, hObjects[i], &ret );
+        if( bVal == false || ret == CKR_OK )
+            right_table_->setItem( row, 3, new QTableWidgetItem(strMsg) );
 
         row++;
     }

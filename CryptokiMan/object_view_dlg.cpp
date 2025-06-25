@@ -3,6 +3,7 @@
 #include "man_applet.h"
 #include "common.h"
 #include "cryptoki_api.h"
+#include "settings_mgr.h"
 
 ObjectViewDlg::ObjectViewDlg(QWidget *parent)
     : QDialog(parent)
@@ -191,7 +192,7 @@ void ObjectViewDlg::clickPart3Field( QModelIndex index )
     mDetailText->setPlainText( strDetail );
 }
 
-QString ObjectViewDlg::stringAttribute( int nValType, CK_ATTRIBUTE_TYPE uAttribute, CK_OBJECT_HANDLE hObj, int* pnLen )
+QString ObjectViewDlg::stringAttribute( int nValType, CK_ATTRIBUTE_TYPE uAttribute, CK_OBJECT_HANDLE hObj, int *pnRet )
 {
     int ret = 0;
 
@@ -203,10 +204,10 @@ QString ObjectViewDlg::stringAttribute( int nValType, CK_ATTRIBUTE_TYPE uAttribu
 
     ret = manApplet->cryptokiAPI()->GetAttributeValue2( hSession, hObj, uAttribute, &binVal );
 
+    *pnRet = ret;
+
     if( ret == CKR_OK )
     {
-        if( pnLen ) *pnLen = binVal.nLen;
-
         if( nValType == ATTR_VAL_BOOL )
         {
             strMsg = getBool( &binVal );
@@ -268,7 +269,6 @@ QString ObjectViewDlg::stringAttribute( int nValType, CK_ATTRIBUTE_TYPE uAttribu
     else
     {
         strMsg = QString( "[ERR] %1[%2]" ).arg( JS_PKCS11_GetErrorMsg(ret)).arg(ret);
-        if( pnLen ) *pnLen = -1;
     }
 
     JS_BIN_reset( &binVal );
@@ -279,33 +279,39 @@ QString ObjectViewDlg::stringAttribute( int nValType, CK_ATTRIBUTE_TYPE uAttribu
 
 void ObjectViewDlg::setObject( long hObject )
 {
+    int ret = 0;
     CK_ATTRIBUTE_TYPE uAttType = -1;
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
     if( pAPI == NULL ) return;
 
+    bool bVal = manApplet->settingsMgr()->displayValid();
+
     mObjectText->setText( QString("%1").arg( hObject ));
 
-    long uClass = stringAttribute( ATTR_VAL_LONG, CKA_CLASS, hObject ).toLong();
+    long uClass = stringAttribute( ATTR_VAL_LONG, CKA_CLASS, hObject, &ret ).toLong();
     mObjectLabel->setText( tr( "%1 Detail Information" ).arg( JS_PKCS11_GetCKOName(uClass)));
 
     for( int i = 0; i < kCommonAttList.size(); i++ )
     {
-        int nLen = -1;
         int nType = -1;
+
         QString strName = kCommonAttList.at(i);
         uAttType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
 
         nType = CryptokiAPI::getAttrType( uAttType );
-        QString strValue = stringAttribute( nType, uAttType, hObject, &nLen );
+        QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
+
+        if( bVal == true && ret != CKR_OK ) continue;
 
         QTableWidgetItem* item0 = new QTableWidgetItem( strName );
         QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
 
-        mCommonTable->insertRow(i);
-        mCommonTable->setRowHeight( i, 10 );
-        mCommonTable->setItem( i, 0, item0 );
-        mCommonTable->setItem( i, 1, item1 );
+        int nRow = mCommonTable->rowCount();
+        mCommonTable->insertRow( nRow );
+        mCommonTable->setRowHeight( nRow, 10 );
+        mCommonTable->setItem( nRow, 0, item0 );
+        mCommonTable->setItem( nRow, 1, item1 );
     }
 
     if( uClass == CKO_CERTIFICATE )
@@ -337,10 +343,13 @@ void ObjectViewDlg::setObject( long hObject )
 
 void ObjectViewDlg::setCertificate( long hObject )
 {
+    int ret = -1;
     CK_ATTRIBUTE_TYPE uAttType = -1;
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
     if( pAPI == NULL ) return;
+
+    bool bVal = manApplet->settingsMgr()->displayValid();
 
     mObjectToolBox->setItemEnabled( 1, true );
     mObjectToolBox->setItemText( 1, tr("Certificate Common") );
@@ -348,21 +357,23 @@ void ObjectViewDlg::setCertificate( long hObject )
 
     for( int i = 0; i < kCommonCertAttList.size(); i++ )
     {
-        int nLen = -1;
         int nType = -1;
         QString strName = kCommonCertAttList.at(i);
         uAttType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
 
         nType = CryptokiAPI::getAttrType( uAttType );
-        QString strValue = stringAttribute( nType, uAttType, hObject, &nLen );
+        QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
+
+        if( bVal == true && ret != CKR_OK ) continue;
 
         QTableWidgetItem* item0 = new QTableWidgetItem( strName );
         QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
 
-        mPart1Table->insertRow(i);
-        mPart1Table->setRowHeight( i, 10 );
-        mPart1Table->setItem( i, 0, item0 );
-        mPart1Table->setItem( i, 1, item1 );
+        int nRow = mPart1Table->rowCount();
+        mPart1Table->insertRow( nRow );
+        mPart1Table->setRowHeight( nRow, 10 );
+        mPart1Table->setItem( nRow, 0, item0 );
+        mPart1Table->setItem( nRow, 1, item1 );
     }
 
     mObjectToolBox->setItemEnabled( 2, true );
@@ -371,17 +382,19 @@ void ObjectViewDlg::setCertificate( long hObject )
 
     for( int i = 0; i < kX509CertAttList.size(); i++ )
     {
-        int nLen = -1;
         int nType = -1;
         QString strName = kX509CertAttList.at(i);
         uAttType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
 
         nType = CryptokiAPI::getAttrType( uAttType );
-        QString strValue = stringAttribute( nType, uAttType, hObject, &nLen );
+        QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
+
+        if( bVal == true && ret != CKR_OK ) continue;
 
         QTableWidgetItem* item0 = new QTableWidgetItem( strName );
         QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
 
+        int nRow = mPart2Table->rowCount();
         mPart2Table->insertRow(i);
         mPart2Table->setRowHeight( i, 10 );
         mPart2Table->setItem( i, 0, item0 );
@@ -391,10 +404,13 @@ void ObjectViewDlg::setCertificate( long hObject )
 
 void ObjectViewDlg::setPublicKey( long hObject )
 {
+    int ret = -1;
     CK_ATTRIBUTE_TYPE uAttType = -1;
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
     if( pAPI == NULL ) return;
+
+    bool bVal = manApplet->settingsMgr()->displayValid();
 
     mObjectToolBox->setItemEnabled( 1, true );
     mObjectToolBox->setItemText( 1, tr("Key Common") );
@@ -402,21 +418,23 @@ void ObjectViewDlg::setPublicKey( long hObject )
 
     for( int i = 0; i < kCommonKeyAttList.size(); i++ )
     {
-        int nLen = -1;
         int nType = -1;
         QString strName = kCommonKeyAttList.at(i);
         uAttType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
 
         nType = CryptokiAPI::getAttrType( uAttType );
-        QString strValue = stringAttribute( nType, uAttType, hObject, &nLen );
+        QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
+
+        if( bVal == true && ret != CKR_OK ) continue;
 
         QTableWidgetItem* item0 = new QTableWidgetItem( strName );
         QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
 
-        mPart1Table->insertRow(i);
-        mPart1Table->setRowHeight( i, 10 );
-        mPart1Table->setItem( i, 0, item0 );
-        mPart1Table->setItem( i, 1, item1 );
+        int nRow = mPart1Table->rowCount();
+        mPart1Table->insertRow( nRow );
+        mPart1Table->setRowHeight( nRow, 10 );
+        mPart1Table->setItem( nRow, 0, item0 );
+        mPart1Table->setItem( nRow, 1, item1 );
     }
 
     mObjectToolBox->setItemEnabled( 2, true );
@@ -425,24 +443,26 @@ void ObjectViewDlg::setPublicKey( long hObject )
 
     for( int i = 0; i < kPubKeyAttList.size(); i++ )
     {
-        int nLen = -1;
         int nType = -1;
         QString strName = kPubKeyAttList.at(i);
         uAttType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
 
         nType = CryptokiAPI::getAttrType( uAttType );
-        QString strValue = stringAttribute( nType, uAttType, hObject, &nLen );
+        QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
+
+        if( bVal == true && ret != CKR_OK ) continue;
 
         QTableWidgetItem* item0 = new QTableWidgetItem( strName );
         QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
 
-        mPart2Table->insertRow(i);
-        mPart2Table->setRowHeight( i, 10 );
-        mPart2Table->setItem( i, 0, item0 );
-        mPart2Table->setItem( i, 1, item1 );
+        int nRow = mPart2Table->rowCount();
+        mPart2Table->insertRow( nRow );
+        mPart2Table->setRowHeight( nRow, 10 );
+        mPart2Table->setItem( nRow, 0, item0 );
+        mPart2Table->setItem( nRow, 1, item1 );
     }
 
-    long uKeyType = stringAttribute( ATTR_VAL_LONG, CKA_KEY_TYPE, hObject ).toLong();
+    long uKeyType = stringAttribute( ATTR_VAL_LONG, CKA_KEY_TYPE, hObject, &ret ).toLong();
     mObjectToolBox->setItemEnabled( 3, true );
     mObjectToolBox->setItemIcon( 3, QIcon( ":/images/pubkey.png" ));
 
@@ -452,7 +472,6 @@ void ObjectViewDlg::setPublicKey( long hObject )
 
         for( int i = 0; i < kRSAKeyAttList.size(); i++ )
         {
-            int nLen = -1;
             int nType = -1;
             QString strName = kRSAKeyAttList.at(i);
             int row = 0;
@@ -463,7 +482,9 @@ void ObjectViewDlg::setPublicKey( long hObject )
             uAttType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
 
             nType = CryptokiAPI::getAttrType( uAttType );
-            QString strValue = stringAttribute( nType, uAttType, hObject, &nLen );
+            QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
+
+            if( bVal == true && ret != CKR_OK ) continue;
 
             QTableWidgetItem* item0 = new QTableWidgetItem( strName );
             QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
@@ -481,7 +502,6 @@ void ObjectViewDlg::setPublicKey( long hObject )
 
         for( int i = 0; i < kECCKeyAttList.size(); i++ )
         {
-            int nLen = -1;
             int nType = -1;
             QString strName = kECCKeyAttList.at(i);
             int row = 0;
@@ -492,7 +512,9 @@ void ObjectViewDlg::setPublicKey( long hObject )
             uAttType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
 
             nType = CryptokiAPI::getAttrType( uAttType );
-            QString strValue = stringAttribute( nType, uAttType, hObject, &nLen );
+            QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
+
+            if( bVal == true && ret == CKR_OK ) continue;
 
             QTableWidgetItem* item0 = new QTableWidgetItem( strName );
             QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
@@ -510,7 +532,6 @@ void ObjectViewDlg::setPublicKey( long hObject )
 
         for( int i = 0; i < kDSAKeyAttList.size(); i++ )
         {
-            int nLen = -1;
             int nType = -1;
             QString strName = kDSAKeyAttList.at(i);
             int row = 0;
@@ -518,7 +539,9 @@ void ObjectViewDlg::setPublicKey( long hObject )
             uAttType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
 
             nType = CryptokiAPI::getAttrType( uAttType );
-            QString strValue = stringAttribute( nType, uAttType, hObject, &nLen );
+            QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
+
+            if( bVal == true && ret == CKR_OK ) continue;
 
             QTableWidgetItem* item0 = new QTableWidgetItem( strName );
             QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
@@ -536,7 +559,6 @@ void ObjectViewDlg::setPublicKey( long hObject )
 
         for( int i = 0; i < kDHKeyAttList.size(); i++ )
         {
-            int nLen = -1;
             int nType = -1;
             QString strName = kDHKeyAttList.at(i);
             int row = 0;
@@ -544,7 +566,9 @@ void ObjectViewDlg::setPublicKey( long hObject )
             uAttType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
 
             nType = CryptokiAPI::getAttrType( uAttType );
-            QString strValue = stringAttribute( nType, uAttType, hObject, &nLen );
+            QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
+
+            if( bVal == true && ret == CKR_OK ) continue;
 
             QTableWidgetItem* item0 = new QTableWidgetItem( strName );
             QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
@@ -562,7 +586,6 @@ void ObjectViewDlg::setPublicKey( long hObject )
 
         for( int i = 0; i < kECCKeyAttList.size(); i++ )
         {
-            int nLen = -1;
             int nType = -1;
             QString strName = kECCKeyAttList.at(i);
             int row = 0;
@@ -573,7 +596,9 @@ void ObjectViewDlg::setPublicKey( long hObject )
             uAttType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
 
             nType = CryptokiAPI::getAttrType( uAttType );
-            QString strValue = stringAttribute( nType, uAttType, hObject, &nLen );
+            QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
+
+            if( bVal == true && ret == CKR_OK ) continue;
 
             QTableWidgetItem* item0 = new QTableWidgetItem( strName );
             QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
@@ -589,10 +614,13 @@ void ObjectViewDlg::setPublicKey( long hObject )
 
 void ObjectViewDlg::setPrivateKey( long hObject )
 {
+    int ret = -1;
     CK_ATTRIBUTE_TYPE uAttType = -1;
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
     if( pAPI == NULL ) return;
+
+    bool bVal = manApplet->settingsMgr()->displayValid();
 
     mObjectToolBox->setItemEnabled( 1, true );
     mObjectToolBox->setItemText( 1, tr("Key Common") );
@@ -600,21 +628,23 @@ void ObjectViewDlg::setPrivateKey( long hObject )
 
     for( int i = 0; i < kCommonKeyAttList.size(); i++ )
     {
-        int nLen = -1;
         int nType = -1;
         QString strName = kCommonKeyAttList.at(i);
         uAttType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
 
         nType = CryptokiAPI::getAttrType( uAttType );
-        QString strValue = stringAttribute( nType, uAttType, hObject, &nLen );
+        QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
+
+        if( bVal == true && ret == CKR_OK ) continue;
 
         QTableWidgetItem* item0 = new QTableWidgetItem( strName );
         QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
 
-        mPart1Table->insertRow(i);
-        mPart1Table->setRowHeight( i, 10 );
-        mPart1Table->setItem( i, 0, item0 );
-        mPart1Table->setItem( i, 1, item1 );
+        int nRow = mPart1Table->rowCount();
+        mPart1Table->insertRow( nRow );
+        mPart1Table->setRowHeight( nRow, 10 );
+        mPart1Table->setItem( nRow, 0, item0 );
+        mPart1Table->setItem( nRow, 1, item1 );
     }
 
     mObjectToolBox->setItemEnabled( 2, true );
@@ -623,24 +653,26 @@ void ObjectViewDlg::setPrivateKey( long hObject )
 
     for( int i = 0; i < kPriKeyAttList.size(); i++ )
     {
-        int nLen = -1;
         int nType = -1;
         QString strName = kPriKeyAttList.at(i);
         uAttType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
 
         nType = CryptokiAPI::getAttrType( uAttType );
-        QString strValue = stringAttribute( nType, uAttType, hObject, &nLen );
+        QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
+
+        if( bVal == true && ret == CKR_OK ) continue;
 
         QTableWidgetItem* item0 = new QTableWidgetItem( strName );
         QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
 
-        mPart2Table->insertRow(i);
-        mPart2Table->setRowHeight( i, 10 );
-        mPart2Table->setItem( i, 0, item0 );
-        mPart2Table->setItem( i, 1, item1 );
+        int nRow = mPart2Table->rowCount();
+        mPart2Table->insertRow( nRow );
+        mPart2Table->setRowHeight( nRow, 10 );
+        mPart2Table->setItem( nRow, 0, item0 );
+        mPart2Table->setItem( nRow, 1, item1 );
     }
 
-    long uKeyType = stringAttribute( ATTR_VAL_LONG, CKA_KEY_TYPE, hObject ).toLong();
+    long uKeyType = stringAttribute( ATTR_VAL_LONG, CKA_KEY_TYPE, hObject, &ret ).toLong();
     mObjectToolBox->setItemEnabled( 3, true );
     mObjectToolBox->setItemIcon( 3, QIcon( ":/images/prikey.png" ));
 
@@ -650,7 +682,6 @@ void ObjectViewDlg::setPrivateKey( long hObject )
 
         for( int i = 0; i < kRSAKeyAttList.size(); i++ )
         {
-            int nLen = -1;
             int nType = -1;
             QString strName = kRSAKeyAttList.at(i);
             int row = 0;
@@ -658,7 +689,9 @@ void ObjectViewDlg::setPrivateKey( long hObject )
             uAttType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
 
             nType = CryptokiAPI::getAttrType( uAttType );
-            QString strValue = stringAttribute( nType, uAttType, hObject, &nLen );
+            QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
+
+            if( bVal == true && ret == CKR_OK ) continue;
 
             QTableWidgetItem* item0 = new QTableWidgetItem( strName );
             QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
@@ -676,7 +709,6 @@ void ObjectViewDlg::setPrivateKey( long hObject )
 
         for( int i = 0; i < kECCKeyAttList.size(); i++ )
         {
-            int nLen = -1;
             int nType = -1;
             QString strName = kECCKeyAttList.at(i);
             int row = 0;
@@ -687,7 +719,9 @@ void ObjectViewDlg::setPrivateKey( long hObject )
             uAttType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
 
             nType = CryptokiAPI::getAttrType( uAttType );
-            QString strValue = stringAttribute( nType, uAttType, hObject, &nLen );
+            QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
+
+            if( bVal == true && ret == CKR_OK ) continue;
 
             QTableWidgetItem* item0 = new QTableWidgetItem( strName );
             QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
@@ -705,7 +739,6 @@ void ObjectViewDlg::setPrivateKey( long hObject )
 
         for( int i = 0; i < kDSAKeyAttList.size(); i++ )
         {
-            int nLen = -1;
             int nType = -1;
             QString strName = kDSAKeyAttList.at(i);
             int row = 0;
@@ -713,7 +746,9 @@ void ObjectViewDlg::setPrivateKey( long hObject )
             uAttType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
 
             nType = CryptokiAPI::getAttrType( uAttType );
-            QString strValue = stringAttribute( nType, uAttType, hObject, &nLen );
+            QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
+
+            if( bVal == true && ret == CKR_OK ) continue;
 
             QTableWidgetItem* item0 = new QTableWidgetItem( strName );
             QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
@@ -731,7 +766,6 @@ void ObjectViewDlg::setPrivateKey( long hObject )
 
         for( int i = 0; i < kDHKeyAttList.size(); i++ )
         {
-            int nLen = -1;
             int nType = -1;
             QString strName = kDHKeyAttList.at(i);
             int row = 0;
@@ -739,7 +773,9 @@ void ObjectViewDlg::setPrivateKey( long hObject )
             uAttType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
 
             nType = CryptokiAPI::getAttrType( uAttType );
-            QString strValue = stringAttribute( nType, uAttType, hObject, &nLen );
+            QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
+
+            if( bVal == true && ret == CKR_OK ) continue;
 
             QTableWidgetItem* item0 = new QTableWidgetItem( strName );
             QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
@@ -757,7 +793,6 @@ void ObjectViewDlg::setPrivateKey( long hObject )
 
         for( int i = 0; i < kECCKeyAttList.size(); i++ )
         {
-            int nLen = -1;
             int nType = -1;
             QString strName = kECCKeyAttList.at(i);
             int row = 0;
@@ -768,7 +803,9 @@ void ObjectViewDlg::setPrivateKey( long hObject )
             uAttType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
 
             nType = CryptokiAPI::getAttrType( uAttType );
-            QString strValue = stringAttribute( nType, uAttType, hObject, &nLen );
+            QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
+
+            if( bVal == true && ret == CKR_OK ) continue;
 
             QTableWidgetItem* item0 = new QTableWidgetItem( strName );
             QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
@@ -784,10 +821,13 @@ void ObjectViewDlg::setPrivateKey( long hObject )
 
 void ObjectViewDlg::setSecretKey( long hObject )
 {
+    int ret = -1;
     CK_ATTRIBUTE_TYPE uAttType = -1;
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
     if( pAPI == NULL ) return;
+
+    bool bVal = manApplet->settingsMgr()->displayValid();
 
     mObjectToolBox->setItemEnabled( 1, true );
     mObjectToolBox->setItemText( 1, tr("Key Common") );
@@ -795,21 +835,23 @@ void ObjectViewDlg::setSecretKey( long hObject )
 
     for( int i = 0; i < kCommonKeyAttList.size(); i++ )
     {
-        int nLen = -1;
         int nType = -1;
         QString strName = kCommonKeyAttList.at(i);
         uAttType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
 
         nType = CryptokiAPI::getAttrType( uAttType );
-        QString strValue = stringAttribute( nType, uAttType, hObject, &nLen );
+        QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
+
+        if( bVal == true && ret == CKR_OK ) continue;
 
         QTableWidgetItem* item0 = new QTableWidgetItem( strName );
         QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
 
-        mPart1Table->insertRow(i);
-        mPart1Table->setRowHeight( i, 10 );
-        mPart1Table->setItem( i, 0, item0 );
-        mPart1Table->setItem( i, 1, item1 );
+        int nRow = mPart1Table->rowCount();
+        mPart1Table->insertRow( nRow );
+        mPart1Table->setRowHeight( nRow, 10 );
+        mPart1Table->setItem( nRow, 0, item0 );
+        mPart1Table->setItem( nRow, 1, item1 );
     }
 
     mObjectToolBox->setItemEnabled( 2, true );
@@ -818,21 +860,23 @@ void ObjectViewDlg::setSecretKey( long hObject )
 
     for( int i = 0; i < kSecretKeyAttList.size(); i++ )
     {
-        int nLen = -1;
         int nType = -1;
         QString strName = kSecretKeyAttList.at(i);
         uAttType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
 
         nType = CryptokiAPI::getAttrType( uAttType );
-        QString strValue = stringAttribute( nType, uAttType, hObject, &nLen );
+        QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
+
+        if( bVal == true && ret == CKR_OK ) continue;
 
         QTableWidgetItem* item0 = new QTableWidgetItem( strName );
         QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
 
-        mPart2Table->insertRow(i);
-        mPart2Table->setRowHeight( i, 10 );
-        mPart2Table->setItem( i, 0, item0 );
-        mPart2Table->setItem( i, 1, item1 );
+        int nRow = mPart2Table->rowCount();
+        mPart2Table->insertRow( nRow );
+        mPart2Table->setRowHeight( nRow, 10 );
+        mPart2Table->setItem( nRow, 0, item0 );
+        mPart2Table->setItem( nRow, 1, item1 );
     }
 
     mObjectToolBox->setItemEnabled( 3, true );
@@ -841,30 +885,35 @@ void ObjectViewDlg::setSecretKey( long hObject )
 
     for( int i = 0; i < kSecretValueAttList.size(); i++ )
     {
-        int nLen = -1;
         int nType = -1;
         QString strName = kSecretValueAttList.at(i);
         uAttType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
 
         nType = CryptokiAPI::getAttrType( uAttType );
-        QString strValue = stringAttribute( nType, uAttType, hObject, &nLen );
+        QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
+
+        if( bVal == true && ret == CKR_OK ) continue;
 
         QTableWidgetItem* item0 = new QTableWidgetItem( strName );
         QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
 
-        mPart3Table->insertRow(i);
-        mPart3Table->setRowHeight( i, 10 );
-        mPart3Table->setItem( i, 0, item0 );
-        mPart3Table->setItem( i, 1, item1 );
+        int nRow = mPart3Table->rowCount();
+        mPart3Table->insertRow( nRow );
+        mPart3Table->setRowHeight( nRow, 10 );
+        mPart3Table->setItem( nRow, 0, item0 );
+        mPart3Table->setItem( nRow, 1, item1 );
     }
 }
 
 void ObjectViewDlg::setData( long hObject )
 {
+    int ret = -1;
     CK_ATTRIBUTE_TYPE uAttType = -1;
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
     if( pAPI == NULL ) return;
+
+    bool bVal = manApplet->settingsMgr()->displayValid();
 
     mObjectToolBox->setItemEnabled( 1, true );
     mObjectToolBox->setItemText( 1, tr("Data") );
@@ -872,21 +921,23 @@ void ObjectViewDlg::setData( long hObject )
 
     for( int i = 0; i < kDataAttList.size(); i++ )
     {
-        int nLen = -1;
         int nType = -1;
         QString strName = kDataAttList.at(i);
         uAttType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
 
         nType = CryptokiAPI::getAttrType( uAttType );
-        QString strValue = stringAttribute( nType, uAttType, hObject, &nLen );
+        QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
+
+        if( bVal == true && ret == CKR_OK ) continue;
 
         QTableWidgetItem* item0 = new QTableWidgetItem( strName );
         QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
 
-        mPart1Table->insertRow(i);
-        mPart1Table->setRowHeight( i, 10 );
-        mPart1Table->setItem( i, 0, item0 );
-        mPart1Table->setItem( i, 1, item1 );
+        int nRow = mPart1Table->rowCount();
+        mPart1Table->insertRow( nRow );
+        mPart1Table->setRowHeight( nRow, 10 );
+        mPart1Table->setItem( nRow, 0, item0 );
+        mPart1Table->setItem( nRow, 1, item1 );
     }
 
 }
