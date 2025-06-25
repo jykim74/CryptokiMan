@@ -310,22 +310,27 @@ void ObjectViewDlg::setObject( long hObject )
 
     if( uClass == CKO_CERTIFICATE )
     {
+        mObjectToolBox->setItemIcon( 0, QIcon( ":/images/cert.png" ));
         setCertificate( hObject );
     }
     else if( uClass == CKO_PRIVATE_KEY )
     {
+        mObjectToolBox->setItemIcon( 0, QIcon( ":/images/prikey.png" ));
         setPrivateKey( hObject );
     }
     else if( uClass == CKO_PUBLIC_KEY )
     {
+        mObjectToolBox->setItemIcon( 0, QIcon( ":/images/pubkey.png" ));
         setPublicKey( hObject );
     }
     else if( uClass == CKO_SECRET_KEY )
     {
+        mObjectToolBox->setItemIcon( 0, QIcon( ":/images/key.png" ));
         setSecretKey( hObject );
     }
     else if( uClass == CKO_DATA )
     {
+        mObjectToolBox->setItemIcon( 0, QIcon( ":/images/data_add.png" ));
         setData( hObject );
     }
 }
@@ -339,6 +344,7 @@ void ObjectViewDlg::setCertificate( long hObject )
 
     mObjectToolBox->setItemEnabled( 1, true );
     mObjectToolBox->setItemText( 1, tr("Certificate Common") );
+    mObjectToolBox->setItemIcon( 1, QIcon( ":/images/cert.png" ));
 
     for( int i = 0; i < kCommonCertAttList.size(); i++ )
     {
@@ -361,6 +367,7 @@ void ObjectViewDlg::setCertificate( long hObject )
 
     mObjectToolBox->setItemEnabled( 2, true );
     mObjectToolBox->setItemText( 2, tr("X509 Certificate") );
+    mObjectToolBox->setItemIcon( 2, QIcon( ":/images/cert.png" ));
 
     for( int i = 0; i < kX509CertAttList.size(); i++ )
     {
@@ -391,6 +398,7 @@ void ObjectViewDlg::setPublicKey( long hObject )
 
     mObjectToolBox->setItemEnabled( 1, true );
     mObjectToolBox->setItemText( 1, tr("Key Common") );
+    mObjectToolBox->setItemIcon( 1, QIcon( ":/images/pubkey.png" ));
 
     for( int i = 0; i < kCommonKeyAttList.size(); i++ )
     {
@@ -413,6 +421,7 @@ void ObjectViewDlg::setPublicKey( long hObject )
 
     mObjectToolBox->setItemEnabled( 2, true );
     mObjectToolBox->setItemText( 2, tr("Public Key") );
+    mObjectToolBox->setItemIcon( 2, QIcon( ":/images/pubkey.png" ));
 
     for( int i = 0; i < kPubKeyAttList.size(); i++ )
     {
@@ -435,6 +444,7 @@ void ObjectViewDlg::setPublicKey( long hObject )
 
     long uKeyType = stringAttribute( ATTR_VAL_LONG, CKA_KEY_TYPE, hObject ).toLong();
     mObjectToolBox->setItemEnabled( 3, true );
+    mObjectToolBox->setItemIcon( 3, QIcon( ":/images/pubkey.png" ));
 
     if( uKeyType == CKK_RSA )
     {
@@ -586,6 +596,7 @@ void ObjectViewDlg::setPrivateKey( long hObject )
 
     mObjectToolBox->setItemEnabled( 1, true );
     mObjectToolBox->setItemText( 1, tr("Key Common") );
+    mObjectToolBox->setItemIcon( 1, QIcon( ":/images/prikey.png" ));
 
     for( int i = 0; i < kCommonKeyAttList.size(); i++ )
     {
@@ -608,6 +619,7 @@ void ObjectViewDlg::setPrivateKey( long hObject )
 
     mObjectToolBox->setItemEnabled( 2, true );
     mObjectToolBox->setItemText( 2, tr("Private Key") );
+    mObjectToolBox->setItemIcon( 2, QIcon( ":/images/prikey.png" ));
 
     for( int i = 0; i < kPriKeyAttList.size(); i++ )
     {
@@ -630,6 +642,7 @@ void ObjectViewDlg::setPrivateKey( long hObject )
 
     long uKeyType = stringAttribute( ATTR_VAL_LONG, CKA_KEY_TYPE, hObject ).toLong();
     mObjectToolBox->setItemEnabled( 3, true );
+    mObjectToolBox->setItemIcon( 3, QIcon( ":/images/prikey.png" ));
 
     if( uKeyType == CKK_RSA )
     {
@@ -778,6 +791,7 @@ void ObjectViewDlg::setSecretKey( long hObject )
 
     mObjectToolBox->setItemEnabled( 1, true );
     mObjectToolBox->setItemText( 1, tr("Key Common") );
+    mObjectToolBox->setItemIcon( 1, QIcon( ":/images/key.png" ));
 
     for( int i = 0; i < kCommonKeyAttList.size(); i++ )
     {
@@ -800,6 +814,7 @@ void ObjectViewDlg::setSecretKey( long hObject )
 
     mObjectToolBox->setItemEnabled( 2, true );
     mObjectToolBox->setItemText( 2, tr("Secret Key") );
+    mObjectToolBox->setItemIcon( 2, QIcon( ":/images/key.png" ));
 
     for( int i = 0; i < kSecretKeyAttList.size(); i++ )
     {
@@ -822,6 +837,7 @@ void ObjectViewDlg::setSecretKey( long hObject )
 
     mObjectToolBox->setItemEnabled( 3, true );
     mObjectToolBox->setItemText( 3, tr("Secret Key Value") );
+    mObjectToolBox->setItemIcon( 3, QIcon( ":/images/key.png" ));
 
     for( int i = 0; i < kSecretValueAttList.size(); i++ )
     {
@@ -852,6 +868,7 @@ void ObjectViewDlg::setData( long hObject )
 
     mObjectToolBox->setItemEnabled( 1, true );
     mObjectToolBox->setItemText( 1, tr("Data") );
+    mObjectToolBox->setItemIcon( 1, QIcon( ":/images/data_add.png" ));
 
     for( int i = 0; i < kDataAttList.size(); i++ )
     {
