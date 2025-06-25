@@ -59,6 +59,9 @@ void ImportCertDlg::initialize()
     clickSubjectInCertCheck();
 
     mCertPathText->setPlaceholderText(tr("Find a certificate"));
+    mLabelText->setPlaceholderText( tr("String value" ));
+    mIDText->setPlaceholderText( tr( "Hex value" ));
+    mPubKeyInfoText->setPlaceholderText( tr( "Hex value" ));
 }
 
 void ImportCertDlg::initAttributes()
@@ -394,14 +397,8 @@ void ImportCertDlg::setDefaults()
     clickUseSKI();
 //    mUseSPKICheck->click();
 
-    mLabelText->setText( "certificate label" );
-    mIDText->setText( "01020304" );
-
-    /*
-    mTokenCheck->setChecked(true);
-    mTokenCombo->setEnabled(true);
-    mTokenCombo->setCurrentIndex(1);
-    */
+//    mLabelText->setText( "certificate label" );
+//    mIDText->setText( "01020304" );
 
     QDateTime nowTime;
     nowTime.setSecsSinceEpoch( time(NULL) );

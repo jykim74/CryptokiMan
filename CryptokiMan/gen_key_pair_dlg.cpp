@@ -130,6 +130,7 @@ void GenKeyPairDlg::initUI()
     mPriLabelText->setPlaceholderText( tr( "String value" ));
     mPriIDText->setPlaceholderText( tr("Hex value" ));
     mPriSubjectText->setPlaceholderText( tr("Hex value" ));
+    mPriPubKeyInfoText->setPlaceholderText( tr("Hex value" ));
 }
 
 void GenKeyPairDlg::initialize()

@@ -190,6 +190,10 @@ void DeriveKeyDlg::initUI()
     mTypeCombo->addItems( sSecKeyTypeList );
 
     mSrcLabelText->setPlaceholderText( tr( "Select a key from HSM Man" ));
+    mLabelText->setPlaceholderText( tr( "String value" ));
+    mIDText->setPlaceholderText( tr("Hex value" ));
+    mParam1Text->setPlaceholderText( tr("Hex value" ));
+    mParam2Text->setPlaceholderText( tr("Hex value" ));
 }
 
 void DeriveKeyDlg::initialize()
@@ -914,24 +918,6 @@ void DeriveKeyDlg::setDefaults()
 {
     mUseRandCheck->setChecked(true);
     clickUseRand();
-
-    /*
-    mPrivateCheck->setChecked(true);
-    mPrivateCombo->setEnabled(true);
-    mPrivateCombo->setCurrentIndex(1);
-
-    mEncryptCheck->setChecked(true);
-    mEncryptCombo->setEnabled(true);
-    mEncryptCombo->setCurrentIndex(1);
-
-    mDecryptCheck->setChecked(true);
-    mDecryptCombo->setEnabled(true);
-    mDecryptCombo->setCurrentIndex(1);
-
-    mTokenCheck->setChecked(true);
-    mTokenCombo->setEnabled(true);
-    mTokenCombo->setCurrentIndex(1);
-    */
 
     QDateTime nowTime;
     nowTime.setSecsSinceEpoch( time(NULL) );

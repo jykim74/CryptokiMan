@@ -195,7 +195,7 @@ void FindObjectDlg::initUI()
 
     mLabelText->setPlaceholderText( tr("String value" ));
     mIDText->setPlaceholderText( tr("Hex value" ));
-    mSubjectText->setPlaceholderText( tr("Hex vallue" ));
+    mSubjectText->setPlaceholderText( tr("Hex value" ));
     mPubKeyInfoText->setPlaceholderText( tr("Hex value" ));
     mApplicationText->setPlaceholderText( tr("String value" ));
     mObjectIDText->setPlaceholderText( tr("Hex value" ));

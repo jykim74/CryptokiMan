@@ -1324,17 +1324,32 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation>Destroyable</translation>
     </message>
     <message>
-        <location filename="../create_dsa_pri_key_dlg.cpp" line="441"/>
+        <location filename="../create_dsa_pri_key_dlg.cpp" line="70"/>
+        <source>String value</source>
+        <translation>문자 값</translation>
+    </message>
+    <message>
+        <location filename="../create_dsa_pri_key_dlg.cpp" line="71"/>
+        <location filename="../create_dsa_pri_key_dlg.cpp" line="72"/>
+        <location filename="../create_dsa_pri_key_dlg.cpp" line="73"/>
+        <location filename="../create_dsa_pri_key_dlg.cpp" line="74"/>
+        <location filename="../create_dsa_pri_key_dlg.cpp" line="75"/>
+        <location filename="../create_dsa_pri_key_dlg.cpp" line="76"/>
+        <source>Hex value</source>
+        <translation>16진수 값</translation>
+    </message>
+    <message>
+        <location filename="../create_dsa_pri_key_dlg.cpp" line="447"/>
         <source>DSA private key creation failure [%1]</source>
         <translation>DSA 개인키 생성 실패(%1)</translation>
     </message>
     <message>
-        <location filename="../create_dsa_pri_key_dlg.cpp" line="445"/>
+        <location filename="../create_dsa_pri_key_dlg.cpp" line="451"/>
         <source>DSA private key creation successful [Handle: %1]</source>
         <translation>DSA 개인키 생성 성공[Handle:%1]</translation>
     </message>
     <message>
-        <location filename="../create_dsa_pri_key_dlg.cpp" line="518"/>
+        <location filename="../create_dsa_pri_key_dlg.cpp" line="524"/>
         <source>failed to get key value [%1]</source>
         <translation>유효한 키 가져오기 실패: [%1]</translation>
     </message>
@@ -1508,17 +1523,31 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation>Destroyable</translation>
     </message>
     <message>
-        <location filename="../create_dsa_pub_key_dlg.cpp" line="403"/>
+        <location filename="../create_dsa_pub_key_dlg.cpp" line="73"/>
+        <source>String value</source>
+        <translation>문자 값</translation>
+    </message>
+    <message>
+        <location filename="../create_dsa_pub_key_dlg.cpp" line="74"/>
+        <location filename="../create_dsa_pub_key_dlg.cpp" line="75"/>
+        <location filename="../create_dsa_pub_key_dlg.cpp" line="76"/>
+        <location filename="../create_dsa_pub_key_dlg.cpp" line="77"/>
+        <location filename="../create_dsa_pub_key_dlg.cpp" line="78"/>
+        <source>Hex value</source>
+        <translation>16진수 값</translation>
+    </message>
+    <message>
+        <location filename="../create_dsa_pub_key_dlg.cpp" line="408"/>
         <source>DSA public key creation failure [%1]</source>
         <translation>DSA 공개키 생성 실패(%1)</translation>
     </message>
     <message>
-        <location filename="../create_dsa_pub_key_dlg.cpp" line="407"/>
+        <location filename="../create_dsa_pub_key_dlg.cpp" line="412"/>
         <source>DSA public key creation successful [Handle: %1]</source>
         <translation>DSA 공개키 생성 성공[Handle:%1]</translation>
     </message>
     <message>
-        <location filename="../create_dsa_pub_key_dlg.cpp" line="499"/>
+        <location filename="../create_dsa_pub_key_dlg.cpp" line="504"/>
         <source>fail to get key value [%1]</source>
         <translation>유효한 키 가져오기 실패: [%1]</translation>
     </message>
@@ -1588,12 +1617,18 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation type="vanished">데이타 생성 실패(%1)</translation>
     </message>
     <message>
-        <location filename="../create_data_dlg.cpp" line="228"/>
+        <location filename="../create_data_dlg.cpp" line="60"/>
+        <location filename="../create_data_dlg.cpp" line="61"/>
+        <source>String value</source>
+        <translation>문자 값</translation>
+    </message>
+    <message>
+        <location filename="../create_data_dlg.cpp" line="232"/>
         <source>failed to create data [%1]</source>
         <translation>데이타 생성 실패(%1)</translation>
     </message>
     <message>
-        <location filename="../create_data_dlg.cpp" line="232"/>
+        <location filename="../create_data_dlg.cpp" line="236"/>
         <source>Success to create data</source>
         <translation>데이타 생성 성공</translation>
     </message>
@@ -1838,17 +1873,30 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation>EDDSA 개인키 생성</translation>
     </message>
     <message>
-        <location filename="../create_ec_pri_key_dlg.cpp" line="424"/>
+        <location filename="../create_ec_pri_key_dlg.cpp" line="78"/>
+        <source>String value</source>
+        <translation>문자 값</translation>
+    </message>
+    <message>
+        <location filename="../create_ec_pri_key_dlg.cpp" line="79"/>
+        <location filename="../create_ec_pri_key_dlg.cpp" line="80"/>
+        <location filename="../create_ec_pri_key_dlg.cpp" line="81"/>
+        <location filename="../create_ec_pri_key_dlg.cpp" line="82"/>
+        <source>Hex value</source>
+        <translation>16진수 값</translation>
+    </message>
+    <message>
+        <location filename="../create_ec_pri_key_dlg.cpp" line="430"/>
         <source>EC private key creation failure [%1]</source>
         <translation>EC 개인키 생성 실패(%1)</translation>
     </message>
     <message>
-        <location filename="../create_ec_pri_key_dlg.cpp" line="428"/>
+        <location filename="../create_ec_pri_key_dlg.cpp" line="434"/>
         <source>EC private key creation successful [Handle: %1]</source>
         <translation>ECC 개인키 생성 성공[Handle:%1]</translation>
     </message>
     <message>
-        <location filename="../create_ec_pri_key_dlg.cpp" line="563"/>
+        <location filename="../create_ec_pri_key_dlg.cpp" line="569"/>
         <source>failed to get key value [%1]</source>
         <translation>유효한 키 가져오기 실패: [%1]</translation>
     </message>
@@ -2050,17 +2098,29 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation>ECDSA 공개키 생성</translation>
     </message>
     <message>
-        <location filename="../create_ec_pub_key_dlg.cpp" line="392"/>
+        <location filename="../create_ec_pub_key_dlg.cpp" line="81"/>
+        <source>String value</source>
+        <translation>문자 값</translation>
+    </message>
+    <message>
+        <location filename="../create_ec_pub_key_dlg.cpp" line="82"/>
+        <location filename="../create_ec_pub_key_dlg.cpp" line="83"/>
+        <location filename="../create_ec_pub_key_dlg.cpp" line="84"/>
+        <source>Hex value</source>
+        <translation>16진수 값</translation>
+    </message>
+    <message>
+        <location filename="../create_ec_pub_key_dlg.cpp" line="397"/>
         <source>EC public key creation failure [%1]</source>
         <translation>EC 공개키 생성 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../create_ec_pub_key_dlg.cpp" line="396"/>
+        <location filename="../create_ec_pub_key_dlg.cpp" line="401"/>
         <source>EC public key creation successful [Handle: %1]</source>
         <translation>ECC 공개키 생성 성공[Handle:%1]</translation>
     </message>
     <message>
-        <location filename="../create_ec_pub_key_dlg.cpp" line="590"/>
+        <location filename="../create_ec_pub_key_dlg.cpp" line="595"/>
         <source>failed to get key value [%1]</source>
         <translation></translation>
     </message>
@@ -2233,17 +2293,27 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation>Destroyable</translation>
     </message>
     <message>
-        <location filename="../create_key_dlg.cpp" line="210"/>
+        <location filename="../create_key_dlg.cpp" line="81"/>
+        <source>String value</source>
+        <translation>문자 값</translation>
+    </message>
+    <message>
+        <location filename="../create_key_dlg.cpp" line="82"/>
+        <source>Hex value</source>
+        <translation>16진수 값</translation>
+    </message>
+    <message>
+        <location filename="../create_key_dlg.cpp" line="213"/>
         <source>Enter a key</source>
         <translation>키 를 입력하세요</translation>
     </message>
     <message>
-        <location filename="../create_key_dlg.cpp" line="418"/>
+        <location filename="../create_key_dlg.cpp" line="421"/>
         <source>Secret key creation failure [%1]</source>
         <translation>비밀키 생성 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../create_key_dlg.cpp" line="422"/>
+        <location filename="../create_key_dlg.cpp" line="425"/>
         <source>Secret key creation successful</source>
         <translation>비밀키 생성 성공</translation>
     </message>
@@ -2471,17 +2541,36 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation>Destroyable</translation>
     </message>
     <message>
-        <location filename="../create_rsa_pri_key_dlg.cpp" line="491"/>
+        <location filename="../create_rsa_pri_key_dlg.cpp" line="77"/>
+        <source>String value</source>
+        <translation>문자 값</translation>
+    </message>
+    <message>
+        <location filename="../create_rsa_pri_key_dlg.cpp" line="78"/>
+        <location filename="../create_rsa_pri_key_dlg.cpp" line="79"/>
+        <location filename="../create_rsa_pri_key_dlg.cpp" line="81"/>
+        <location filename="../create_rsa_pri_key_dlg.cpp" line="82"/>
+        <location filename="../create_rsa_pri_key_dlg.cpp" line="83"/>
+        <location filename="../create_rsa_pri_key_dlg.cpp" line="84"/>
+        <location filename="../create_rsa_pri_key_dlg.cpp" line="85"/>
+        <location filename="../create_rsa_pri_key_dlg.cpp" line="86"/>
+        <location filename="../create_rsa_pri_key_dlg.cpp" line="87"/>
+        <location filename="../create_rsa_pri_key_dlg.cpp" line="88"/>
+        <source>Hex value</source>
+        <translation>16진수 값</translation>
+    </message>
+    <message>
+        <location filename="../create_rsa_pri_key_dlg.cpp" line="502"/>
         <source>RSA private key creation failure [%1]</source>
         <translation>RSA 개인키 생성 실패(%1)</translation>
     </message>
     <message>
-        <location filename="../create_rsa_pri_key_dlg.cpp" line="495"/>
+        <location filename="../create_rsa_pri_key_dlg.cpp" line="506"/>
         <source>RSA private key creation successful [Handle: %1]</source>
         <translation>RSA 개인키 생성 성공[Handle:%1]</translation>
     </message>
     <message>
-        <location filename="../create_rsa_pri_key_dlg.cpp" line="577"/>
+        <location filename="../create_rsa_pri_key_dlg.cpp" line="588"/>
         <source>failed to get key value [%1]</source>
         <translation>키 값 가져오기 싪패 [%1]</translation>
     </message>
@@ -2666,17 +2755,29 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation>Copyable</translation>
     </message>
     <message>
-        <location filename="../create_rsa_pub_key_dlg.cpp" line="375"/>
+        <location filename="../create_rsa_pub_key_dlg.cpp" line="70"/>
+        <source>String value</source>
+        <translation>문자 값</translation>
+    </message>
+    <message>
+        <location filename="../create_rsa_pub_key_dlg.cpp" line="71"/>
+        <location filename="../create_rsa_pub_key_dlg.cpp" line="72"/>
+        <location filename="../create_rsa_pub_key_dlg.cpp" line="73"/>
+        <source>Hex value</source>
+        <translation>16진수 값</translation>
+    </message>
+    <message>
+        <location filename="../create_rsa_pub_key_dlg.cpp" line="378"/>
         <source>RSA public key creation failure [%1]</source>
         <translation>RSA 공개키 생성 실패(%1)</translation>
     </message>
     <message>
-        <location filename="../create_rsa_pub_key_dlg.cpp" line="379"/>
+        <location filename="../create_rsa_pub_key_dlg.cpp" line="382"/>
         <source>RSA public key creation successful [Handle: %1]</source>
         <translation>RSA 공개키 생성 성공[Handle:%1]</translation>
     </message>
     <message>
-        <location filename="../create_rsa_pub_key_dlg.cpp" line="464"/>
+        <location filename="../create_rsa_pub_key_dlg.cpp" line="467"/>
         <source>failed to get key value [%1]</source>
         <translation>키 값 가져오기 싪패 [%1]</translation>
     </message>
@@ -3367,22 +3468,34 @@ Do you want to delete the file and continue?</source>
         <translation>HSM 관리에서 키를 선택 하세요</translation>
     </message>
     <message>
-        <location filename="../derive_key_dlg.cpp" line="232"/>
+        <location filename="../derive_key_dlg.cpp" line="193"/>
+        <source>String value</source>
+        <translation>문자 값</translation>
+    </message>
+    <message>
+        <location filename="../derive_key_dlg.cpp" line="194"/>
+        <location filename="../derive_key_dlg.cpp" line="195"/>
+        <location filename="../derive_key_dlg.cpp" line="196"/>
+        <source>Hex value</source>
+        <translation>16진수 값</translation>
+    </message>
+    <message>
+        <location filename="../derive_key_dlg.cpp" line="236"/>
         <source>Select a key</source>
         <translation>키를 선택하세요</translation>
     </message>
     <message>
-        <location filename="../derive_key_dlg.cpp" line="458"/>
+        <location filename="../derive_key_dlg.cpp" line="462"/>
         <source>DeriveKey execution failure [%1]</source>
         <translation>DeriveKey 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../derive_key_dlg.cpp" line="465"/>
+        <location filename="../derive_key_dlg.cpp" line="469"/>
         <source>DeriveKey execution successful [Handle: %1]</source>
         <translation>DeriveKey 실행 성공[Handle:%1]</translation>
     </message>
     <message>
-        <location filename="../derive_key_dlg.cpp" line="712"/>
+        <location filename="../derive_key_dlg.cpp" line="716"/>
         <source>Parameter</source>
         <translation>파라미터</translation>
     </message>
@@ -4659,109 +4772,123 @@ Do you want to delete the file and continue?</source>
         <translation>어플리케이션</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="518"/>
+        <location filename="../find_object_dlg.ui" line="531"/>
         <source>Object ID</source>
         <translation>객체 ID</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="531"/>
+        <location filename="../find_object_dlg.ui" line="547"/>
         <source>Boolean</source>
         <translation>Boolean</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="539"/>
+        <location filename="../find_object_dlg.ui" line="555"/>
         <source>Wrap</source>
         <translation>Wrap</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="546"/>
+        <location filename="../find_object_dlg.ui" line="562"/>
         <source>Encrypt</source>
         <translation>암호화</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="565"/>
+        <location filename="../find_object_dlg.ui" line="581"/>
         <source>EndDate</source>
         <translation>종료 일자</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="578"/>
+        <location filename="../find_object_dlg.ui" line="594"/>
         <source>Modifiable</source>
         <translation>Modifiable</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="585"/>
+        <location filename="../find_object_dlg.ui" line="601"/>
         <source>Unwrap</source>
         <translation>Unwrap</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="595"/>
+        <location filename="../find_object_dlg.ui" line="611"/>
         <source>StartDate</source>
         <translation>시작 일자</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="602"/>
+        <location filename="../find_object_dlg.ui" line="618"/>
         <source>Sensitive</source>
         <translation>Sensitive</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="615"/>
+        <location filename="../find_object_dlg.ui" line="631"/>
         <source>Extractable</source>
         <translation>Extractable</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="622"/>
+        <location filename="../find_object_dlg.ui" line="638"/>
         <source>Destroyable</source>
         <translation>Destroyable</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="629"/>
+        <location filename="../find_object_dlg.ui" line="645"/>
         <source>Verify</source>
         <translation>Verify</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="645"/>
+        <location filename="../find_object_dlg.ui" line="661"/>
         <source>Private</source>
         <translation>Private</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="652"/>
+        <location filename="../find_object_dlg.ui" line="668"/>
         <source>Copyable</source>
         <translation>Copyable</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="659"/>
+        <location filename="../find_object_dlg.ui" line="675"/>
         <source>Sign</source>
         <translation>Sign</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="666"/>
+        <location filename="../find_object_dlg.ui" line="682"/>
         <source>Trusted</source>
         <translation>Trusted</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="673"/>
+        <location filename="../find_object_dlg.ui" line="689"/>
         <source>Decrypt</source>
         <translation>Decrypt</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="683"/>
+        <location filename="../find_object_dlg.ui" line="699"/>
         <source>Derive</source>
         <translation>Derive</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="696"/>
+        <location filename="../find_object_dlg.ui" line="712"/>
         <source>Token</source>
         <translation>Token</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="744"/>
+        <location filename="../find_object_dlg.ui" line="760"/>
         <source>Close</source>
         <translation>닫기</translation>
     </message>
     <message>
-        <location filename="../find_object_dlg.ui" line="737"/>
+        <location filename="../find_object_dlg.ui" line="753"/>
         <source>Find Objets</source>
         <translation>객체 찾기</translation>
+    </message>
+    <message>
+        <location filename="../find_object_dlg.cpp" line="196"/>
+        <location filename="../find_object_dlg.cpp" line="200"/>
+        <source>String value</source>
+        <translation>문자 값</translation>
+    </message>
+    <message>
+        <location filename="../find_object_dlg.cpp" line="197"/>
+        <location filename="../find_object_dlg.cpp" line="198"/>
+        <location filename="../find_object_dlg.cpp" line="199"/>
+        <location filename="../find_object_dlg.cpp" line="201"/>
+        <source>Hex value</source>
+        <translation>16진수 값</translation>
     </message>
 </context>
 <context>
@@ -4932,12 +5059,23 @@ Do you want to delete the file and continue?</source>
         <translation>Destroyable</translation>
     </message>
     <message>
-        <location filename="../gen_key_dlg.cpp" line="440"/>
+        <location filename="../gen_key_dlg.cpp" line="99"/>
+        <source>String value</source>
+        <translation>문자 값</translation>
+    </message>
+    <message>
+        <location filename="../gen_key_dlg.cpp" line="100"/>
+        <location filename="../gen_key_dlg.cpp" line="101"/>
+        <source>Hex value</source>
+        <translation>16진수 값</translation>
+    </message>
+    <message>
+        <location filename="../gen_key_dlg.cpp" line="444"/>
         <source>GenerateKey execution failure [%1]</source>
         <translation>GenerateKey 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../gen_key_dlg.cpp" line="444"/>
+        <location filename="../gen_key_dlg.cpp" line="448"/>
         <source>GenerateKey execution successful</source>
         <translation>GenerateKey 실행 성공</translation>
     </message>
@@ -5223,33 +5361,49 @@ Do you want to delete the file and continue?</source>
         <translation>Destroyable</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.cpp" line="816"/>
+        <location filename="../gen_key_pair_dlg.cpp" line="125"/>
+        <location filename="../gen_key_pair_dlg.cpp" line="130"/>
+        <source>String value</source>
+        <translation>문자 값</translation>
+    </message>
+    <message>
+        <location filename="../gen_key_pair_dlg.cpp" line="126"/>
+        <location filename="../gen_key_pair_dlg.cpp" line="127"/>
+        <location filename="../gen_key_pair_dlg.cpp" line="128"/>
+        <location filename="../gen_key_pair_dlg.cpp" line="131"/>
+        <location filename="../gen_key_pair_dlg.cpp" line="132"/>
+        <location filename="../gen_key_pair_dlg.cpp" line="133"/>
+        <source>Hex value</source>
+        <translation>16진수 값</translation>
+    </message>
+    <message>
+        <location filename="../gen_key_pair_dlg.cpp" line="825"/>
         <source>GenerateKeyPair execution failure [%1]</source>
         <translation>GenerateKeyPair 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.cpp" line="831"/>
+        <location filename="../gen_key_pair_dlg.cpp" line="840"/>
         <source>failure to set SKI_SPKI [%1]</source>
         <translation>SKI SPKI 설정 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.cpp" line="837"/>
+        <location filename="../gen_key_pair_dlg.cpp" line="846"/>
         <source>GenerateKeyPair execution successful</source>
         <translation>GenerateKeyPair 실행 성공</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.cpp" line="900"/>
-        <location filename="../gen_key_pair_dlg.cpp" line="906"/>
+        <location filename="../gen_key_pair_dlg.cpp" line="909"/>
+        <location filename="../gen_key_pair_dlg.cpp" line="915"/>
         <source>All labels are the same</source>
         <translation>모든 라벨이 같습니다</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.cpp" line="1118"/>
+        <location filename="../gen_key_pair_dlg.cpp" line="1127"/>
         <source>Parameter value is required</source>
         <translation>파라미터 값이 필요합니다</translation>
     </message>
     <message>
-        <location filename="../gen_key_pair_dlg.cpp" line="1163"/>
+        <location filename="../gen_key_pair_dlg.cpp" line="1172"/>
         <source>fail to decode DH parameters: %1</source>
         <translation>DH 파라미터 디코딩에 실패 하였습니다: %1</translation>
     </message>
@@ -5696,22 +5850,33 @@ Do you want to delete the file and continue?</source>
         <translation>인증서를 찾으세요</translation>
     </message>
     <message>
-        <location filename="../import_cert_dlg.cpp" line="133"/>
+        <location filename="../import_cert_dlg.cpp" line="62"/>
+        <source>String value</source>
+        <translation>문자 값</translation>
+    </message>
+    <message>
+        <location filename="../import_cert_dlg.cpp" line="63"/>
+        <location filename="../import_cert_dlg.cpp" line="64"/>
+        <source>Hex value</source>
+        <translation>16진수 값</translation>
+    </message>
+    <message>
+        <location filename="../import_cert_dlg.cpp" line="136"/>
         <source>Select a certificate file.</source>
         <translation>인증서를 선택 하세요</translation>
     </message>
     <message>
-        <location filename="../import_cert_dlg.cpp" line="141"/>
+        <location filename="../import_cert_dlg.cpp" line="144"/>
         <source>failed to read certificate [%1]</source>
         <translation>인증서 읽기 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../import_cert_dlg.cpp" line="309"/>
+        <location filename="../import_cert_dlg.cpp" line="312"/>
         <source>CreateObject execution failure [%1]</source>
         <translation>CreateObject 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../import_cert_dlg.cpp" line="313"/>
+        <location filename="../import_cert_dlg.cpp" line="316"/>
         <source>CreationObject execution successful</source>
         <translation>CreateObject 실행 성공</translation>
     </message>
@@ -5885,17 +6050,17 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">인증서 생성 실패(%1)</translation>
     </message>
     <message>
-        <location filename="../import_pfx_dlg.cpp" line="289"/>
+        <location filename="../import_pfx_dlg.cpp" line="300"/>
         <source>Select a pfx file</source>
         <translation>pfx 파일을 선택하세요</translation>
     </message>
     <message>
-        <location filename="../import_pfx_dlg.cpp" line="299"/>
+        <location filename="../import_pfx_dlg.cpp" line="310"/>
         <source>Enter a password</source>
         <translation>암호를 입력하세요</translation>
     </message>
     <message>
-        <location filename="../import_pfx_dlg.cpp" line="322"/>
+        <location filename="../import_pfx_dlg.cpp" line="333"/>
         <source>failed to decode PFX</source>
         <translation>PFX 파일 디코딩 실패</translation>
     </message>
@@ -5909,34 +6074,50 @@ Do you want to delete the file and continue?</source>
         <translation>PFX 를 찾으세요</translation>
     </message>
     <message>
-        <location filename="../import_pfx_dlg.cpp" line="416"/>
+        <location filename="../import_pfx_dlg.cpp" line="78"/>
+        <location filename="../import_pfx_dlg.cpp" line="82"/>
+        <location filename="../import_pfx_dlg.cpp" line="86"/>
+        <source>String value</source>
+        <translation>문자 값</translation>
+    </message>
+    <message>
+        <location filename="../import_pfx_dlg.cpp" line="79"/>
+        <location filename="../import_pfx_dlg.cpp" line="80"/>
+        <location filename="../import_pfx_dlg.cpp" line="83"/>
+        <location filename="../import_pfx_dlg.cpp" line="84"/>
+        <location filename="../import_pfx_dlg.cpp" line="87"/>
+        <source>Hex value</source>
+        <translation>16진수 값</translation>
+    </message>
+    <message>
+        <location filename="../import_pfx_dlg.cpp" line="427"/>
         <source>PFX import successful</source>
         <translation>PFX 가져오기 성공</translation>
     </message>
     <message>
-        <location filename="../import_pfx_dlg.cpp" line="422"/>
+        <location filename="../import_pfx_dlg.cpp" line="433"/>
         <source>PFX import failed [%1]</source>
         <translation>PFX 가져오기 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../import_pfx_dlg.cpp" line="433"/>
-        <location filename="../import_pfx_dlg.cpp" line="442"/>
-        <location filename="../import_pfx_dlg.cpp" line="451"/>
+        <location filename="../import_pfx_dlg.cpp" line="444"/>
+        <location filename="../import_pfx_dlg.cpp" line="453"/>
+        <location filename="../import_pfx_dlg.cpp" line="462"/>
         <source>All labels are the same</source>
         <translation>모든 라벨이 같습니다</translation>
     </message>
     <message>
-        <location filename="../import_pfx_dlg.cpp" line="1108"/>
-        <location filename="../import_pfx_dlg.cpp" line="1657"/>
-        <location filename="../import_pfx_dlg.cpp" line="1894"/>
-        <location filename="../import_pfx_dlg.cpp" line="2153"/>
-        <location filename="../import_pfx_dlg.cpp" line="2650"/>
-        <location filename="../import_pfx_dlg.cpp" line="2927"/>
+        <location filename="../import_pfx_dlg.cpp" line="1119"/>
+        <location filename="../import_pfx_dlg.cpp" line="1668"/>
+        <location filename="../import_pfx_dlg.cpp" line="1905"/>
+        <location filename="../import_pfx_dlg.cpp" line="2164"/>
+        <location filename="../import_pfx_dlg.cpp" line="2661"/>
+        <location filename="../import_pfx_dlg.cpp" line="2938"/>
         <source>CreateObject execution failure [%1]</source>
         <translation>CreateObject 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../import_pfx_dlg.cpp" line="1328"/>
+        <location filename="../import_pfx_dlg.cpp" line="1339"/>
         <source>fail to create RSA public key(%1)</source>
         <translation>RSA 공개키 생성 실패(%1)</translation>
     </message>
@@ -6325,22 +6506,35 @@ Do you want to delete the file and continue?</source>
         <translation>개인키를 찾으세요</translation>
     </message>
     <message>
-        <location filename="../import_pri_key_dlg.cpp" line="246"/>
+        <location filename="../import_pri_key_dlg.cpp" line="77"/>
+        <location filename="../import_pri_key_dlg.cpp" line="79"/>
+        <source>String value</source>
+        <translation>문자 값</translation>
+    </message>
+    <message>
+        <location filename="../import_pri_key_dlg.cpp" line="78"/>
+        <location filename="../import_pri_key_dlg.cpp" line="80"/>
+        <location filename="../import_pri_key_dlg.cpp" line="81"/>
+        <source>Hex value</source>
+        <translation>16진수 값</translation>
+    </message>
+    <message>
+        <location filename="../import_pri_key_dlg.cpp" line="252"/>
         <source>find a private key</source>
         <translation>개인키를 찾으세요</translation>
     </message>
     <message>
-        <location filename="../import_pri_key_dlg.cpp" line="254"/>
+        <location filename="../import_pri_key_dlg.cpp" line="260"/>
         <source>failed to read private key: %1</source>
         <translation>개인키 읽기 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../import_pri_key_dlg.cpp" line="264"/>
+        <location filename="../import_pri_key_dlg.cpp" line="270"/>
         <source>Enter a password</source>
         <translation>암호를 입력하세요</translation>
     </message>
     <message>
-        <location filename="../import_pri_key_dlg.cpp" line="273"/>
+        <location filename="../import_pri_key_dlg.cpp" line="279"/>
         <source>failed to decrypt private key [%1]</source>
         <translation>개인키 복호화에 실패하였습니다 [%1]</translation>
     </message>
@@ -6349,28 +6543,28 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">라이선스가 없으면 RSA 알고리즘만 지원 합니다</translation>
     </message>
     <message>
-        <location filename="../import_pri_key_dlg.cpp" line="395"/>
+        <location filename="../import_pri_key_dlg.cpp" line="401"/>
         <source>failed to get key information.</source>
         <translation>키 정보 가져오기 실패</translation>
     </message>
     <message>
-        <location filename="../import_pri_key_dlg.cpp" line="399"/>
+        <location filename="../import_pri_key_dlg.cpp" line="405"/>
         <source>Private key import successful</source>
         <translation>개인키 가져오기 성공</translation>
     </message>
     <message>
-        <location filename="../import_pri_key_dlg.cpp" line="420"/>
         <location filename="../import_pri_key_dlg.cpp" line="426"/>
+        <location filename="../import_pri_key_dlg.cpp" line="432"/>
         <source>All labels are the same</source>
         <translation>모든 라벨이 같습니다</translation>
     </message>
     <message>
-        <location filename="../import_pri_key_dlg.cpp" line="1038"/>
-        <location filename="../import_pri_key_dlg.cpp" line="1357"/>
-        <location filename="../import_pri_key_dlg.cpp" line="1584"/>
-        <location filename="../import_pri_key_dlg.cpp" line="1832"/>
-        <location filename="../import_pri_key_dlg.cpp" line="2291"/>
-        <location filename="../import_pri_key_dlg.cpp" line="2558"/>
+        <location filename="../import_pri_key_dlg.cpp" line="1044"/>
+        <location filename="../import_pri_key_dlg.cpp" line="1363"/>
+        <location filename="../import_pri_key_dlg.cpp" line="1590"/>
+        <location filename="../import_pri_key_dlg.cpp" line="1838"/>
+        <location filename="../import_pri_key_dlg.cpp" line="2297"/>
+        <location filename="../import_pri_key_dlg.cpp" line="2564"/>
         <source>CreateObject execution failure [%1]</source>
         <translation>CreateObject 실행 실패 [%1]</translation>
     </message>
@@ -7976,32 +8170,32 @@ Do you want to delete the file and continue?</source>
     <message>
         <location filename="../mainwindow.cpp" line="378"/>
         <source>Creating an RSA public key</source>
-        <translation>RSA 공개키 만들기</translation>
+        <translation>RSA 공개키 생성</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="386"/>
         <source>Creating an RSA private key</source>
-        <translation>RSA 개인키 만들기</translation>
+        <translation>RSA 개인키 생성</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="394"/>
         <source>Creating an EC public key</source>
-        <translation>EC 공개키 만들기</translation>
+        <translation>EC 공개키 생성</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="402"/>
         <source>Creating an EC private key</source>
-        <translation>EC 개인키 만들기</translation>
+        <translation>EC 개인키 생성</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="407"/>
         <source>Creating an EDDSA public key</source>
-        <translation>EDDSA 공개키 만들기</translation>
+        <translation>EDDSA 공개키 생성</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="415"/>
         <source>Creating an EDDSA private key</source>
-        <translation>EDDSA 공개키 만등기 창</translation>
+        <translation>EDDSA 공개키 생성</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="423"/>
@@ -10910,27 +11104,38 @@ Do you want to delete the file and continue?</source>
         <translation>HSM 관리에서 키를 선택 하세요</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.cpp" line="281"/>
+        <location filename="../unwrap_key_dlg.cpp" line="111"/>
+        <source>String value</source>
+        <translation>문자 값</translation>
+    </message>
+    <message>
+        <location filename="../unwrap_key_dlg.cpp" line="112"/>
+        <location filename="../unwrap_key_dlg.cpp" line="113"/>
+        <source>Hex value</source>
+        <translation>16진수 값</translation>
+    </message>
+    <message>
+        <location filename="../unwrap_key_dlg.cpp" line="266"/>
         <source>Enter wraped key value</source>
         <translation>암호화된 키 값을 입력하세요</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.cpp" line="308"/>
+        <location filename="../unwrap_key_dlg.cpp" line="293"/>
         <source>Select unwrap key</source>
         <translation>복호화 키를 선택하세요</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.cpp" line="547"/>
+        <location filename="../unwrap_key_dlg.cpp" line="532"/>
         <source>UnwrapKey execution failure [%1]</source>
         <translation>UnwrapKey 실행 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.cpp" line="553"/>
+        <location filename="../unwrap_key_dlg.cpp" line="538"/>
         <source>UnwrapKey execution successful [Object Handle: %1]</source>
         <translation>UnwrapKey 실행 성공[Object Handle:%1]</translation>
     </message>
     <message>
-        <location filename="../unwrap_key_dlg.cpp" line="791"/>
+        <location filename="../unwrap_key_dlg.cpp" line="776"/>
         <source>There is no object</source>
         <translation>객체가 없습니다</translation>
     </message>

@@ -74,6 +74,17 @@ void ImportPFXDlg::setSlotIndex(int index)
 void ImportPFXDlg::initialize()
 {
     mPFXPathText->setPlaceholderText( tr( "Find a PFX" ));
+
+    mCertLabelText->setPlaceholderText( tr( "String value" ));
+    mCertIDText->setPlaceholderText( tr("Hex value" ));
+    mCertPubKeyInfoText->setPlaceholderText( tr( "Hex value" ));
+
+    mPriLabelText->setPlaceholderText( tr( "String value" ));
+    mPriIDText->setPlaceholderText( tr( "Hex value" ));
+    mPriPubKeyInfoText->setPlaceholderText( tr( "Hex value" ));
+
+    mPubLabelText->setPlaceholderText( tr( "String value" ));
+    mPubIDText->setPlaceholderText( tr("Hex value" ));
 }
 
 void ImportPFXDlg::initAttributes()
@@ -2954,54 +2965,17 @@ void ImportPFXDlg::setDefaults()
     mPubUseSKICheck->setChecked(true);
     clickPubUseSKI();
 
+    /*
     mCertLabelText->setText( "Certificate Label" );
     mCertIDText->setText( strDefaultID );
-
-    /*
-    mCertTokenCheck->setChecked(true);
-    mCertTokenCombo->setEnabled(true);
-    mCertTokenCombo->setCurrentIndex(1);
-    */
 
     mPubLabelText->setText( "Public Label" );
     mPubIDText->setText( strDefaultID );
 
-    /*
-    mPubEncryptCheck->setChecked(true);
-    mPubEncryptCombo->setEnabled(true);
-    mPubEncryptCombo->setCurrentIndex(1);
-
-
-    mPubTokenCheck->setChecked(true);
-    mPubTokenCombo->setEnabled(true);
-    mPubTokenCombo->setCurrentIndex(1);
-
-    mPubVerifyCheck->setChecked(true);
-    mPubVerifyCombo->setEnabled(true);
-    mPubVerifyCombo->setCurrentIndex(1);
-    */
-
     mPriLabelText->setText( "Private Label" );
     mPriIDText->setText( strDefaultID );
-
-    /*
-    mPriPrivateCheck->setChecked(true);
-    mPriPrivateCombo->setEnabled(true);
-    mPriPrivateCombo->setCurrentIndex(1);
-
-
-    mPriSignCheck->setChecked(true);
-    mPriSignCombo->setEnabled(true);
-    mPriSignCombo->setCurrentIndex(1);
-
-    mPriDecryptCheck->setChecked(true);
-    mPriDecryptCombo->setEnabled(true);
-    mPriDecryptCombo->setCurrentIndex(1);
-
-    mPriTokenCheck->setChecked(true);
-    mPriTokenCombo->setEnabled(true);
-    mPriTokenCombo->setCurrentIndex(1);
     */
+
 
     QDateTime nowTime;
     nowTime.setSecsSinceEpoch( time(NULL) );

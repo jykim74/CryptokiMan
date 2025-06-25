@@ -73,6 +73,12 @@ void ImportPriKeyDlg::initialize()
     checkEncPriKey();
 
     mPathText->setPlaceholderText( tr( "Find a private key" ));
+
+    mPubLabelText->setPlaceholderText( tr("String value" ));
+    mPubIDText->setPlaceholderText( tr( "Hex value" ));
+    mPriLabelText->setPlaceholderText( tr( "String value" ));
+    mPriIDText->setPlaceholderText( tr("Hex value" ));
+    mPriPubKeyInfoText->setPlaceholderText( tr("Hex value" ));
 }
 
 void ImportPriKeyDlg::initAttributes()
@@ -2575,43 +2581,14 @@ void ImportPriKeyDlg::setDefaults()
     mPubUseSKICheck->setChecked(true);
     clickPubUseSKI();
 
+    /*
     mPubLabelText->setText( "Public Label" );
     mPubIDText->setText( strDefaultID );
 
     mPriLabelText->setText( "Private Label" );
     mPriIDText->setText( strDefaultID );
-
-    /*
-    mPubEncryptCheck->setChecked(true);
-    mPubEncryptCombo->setEnabled(true);
-    mPubEncryptCombo->setCurrentIndex(1);
-
-    mPubTokenCheck->setChecked(true);
-    mPubTokenCombo->setEnabled(true);
-    mPubTokenCombo->setCurrentIndex(1);
-
-    mPubVerifyCheck->setChecked(true);
-    mPubVerifyCombo->setEnabled(true);
-    mPubVerifyCombo->setCurrentIndex(1);
-
-
-    mPriPrivateCheck->setChecked(true);
-    mPriPrivateCombo->setEnabled(true);
-    mPriPrivateCombo->setCurrentIndex(1);
-
-
-    mPriSignCheck->setChecked(true);
-    mPriSignCombo->setEnabled(true);
-    mPriSignCombo->setCurrentIndex(1);
-
-    mPriDecryptCheck->setChecked(true);
-    mPriDecryptCombo->setEnabled(true);
-    mPriDecryptCombo->setCurrentIndex(1);
-
-    mPriTokenCheck->setChecked(true);
-    mPriTokenCombo->setEnabled(true);
-    mPriTokenCombo->setCurrentIndex(1);
     */
+
 
     QDateTime nowTime;
     nowTime.setSecsSinceEpoch( time(NULL) );
