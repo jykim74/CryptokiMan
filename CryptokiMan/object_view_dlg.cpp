@@ -55,6 +55,8 @@ void ObjectViewDlg::initialize()
 
 void ObjectViewDlg::initUI()
 {
+    int nWidth = (width() * 3)/10;
+
     QStringList sBaseLabels = { tr("Field"), tr("Value") };
     QStringList sFieldTypes = { tr("All"), tr("Version1 Only"), tr("Extension Only"), tr("Critical Extension Only"), tr("Attribute Only") };
 
@@ -66,6 +68,7 @@ void ObjectViewDlg::initUI()
     mCommonTable->horizontalHeader()->setStyleSheet( kTableStyle );
     mCommonTable->setSelectionBehavior(QAbstractItemView::SelectRows);
     mCommonTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    mCommonTable->setColumnWidth( 0, nWidth );
 
     mPart1Table->clear();
     mPart1Table->horizontalHeader()->setStretchLastSection(true);
@@ -75,6 +78,7 @@ void ObjectViewDlg::initUI()
     mPart1Table->horizontalHeader()->setStyleSheet( kTableStyle );
     mPart1Table->setSelectionBehavior(QAbstractItemView::SelectRows);
     mPart1Table->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    mPart1Table->setColumnWidth( 0, nWidth );
 
     mPart2Table->clear();
     mPart2Table->horizontalHeader()->setStretchLastSection(true);
@@ -84,6 +88,7 @@ void ObjectViewDlg::initUI()
     mPart2Table->horizontalHeader()->setStyleSheet( kTableStyle );
     mPart2Table->setSelectionBehavior(QAbstractItemView::SelectRows);
     mPart2Table->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    mPart2Table->setColumnWidth( 0, nWidth );
 
     mPart3Table->clear();
     mPart3Table->horizontalHeader()->setStretchLastSection(true);
@@ -93,6 +98,7 @@ void ObjectViewDlg::initUI()
     mPart3Table->horizontalHeader()->setStyleSheet( kTableStyle );
     mPart3Table->setSelectionBehavior(QAbstractItemView::SelectRows);
     mPart3Table->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    mPart3Table->setColumnWidth( 0, nWidth );
 
     mObjectToolBox->setItemEnabled( 1, false );
     mObjectToolBox->setItemEnabled( 2, false );
@@ -514,7 +520,7 @@ void ObjectViewDlg::setPublicKey( long hObject )
             nType = CryptokiAPI::getAttrType( uAttType );
             QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
 
-            if( bVal == true && ret == CKR_OK ) continue;
+            if( bVal == true && ret != CKR_OK ) continue;
 
             QTableWidgetItem* item0 = new QTableWidgetItem( strName );
             QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
@@ -541,7 +547,7 @@ void ObjectViewDlg::setPublicKey( long hObject )
             nType = CryptokiAPI::getAttrType( uAttType );
             QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
 
-            if( bVal == true && ret == CKR_OK ) continue;
+            if( bVal == true && ret != CKR_OK ) continue;
 
             QTableWidgetItem* item0 = new QTableWidgetItem( strName );
             QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
@@ -568,7 +574,7 @@ void ObjectViewDlg::setPublicKey( long hObject )
             nType = CryptokiAPI::getAttrType( uAttType );
             QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
 
-            if( bVal == true && ret == CKR_OK ) continue;
+            if( bVal == true && ret != CKR_OK ) continue;
 
             QTableWidgetItem* item0 = new QTableWidgetItem( strName );
             QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
@@ -598,7 +604,7 @@ void ObjectViewDlg::setPublicKey( long hObject )
             nType = CryptokiAPI::getAttrType( uAttType );
             QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
 
-            if( bVal == true && ret == CKR_OK ) continue;
+            if( bVal == true && ret != CKR_OK ) continue;
 
             QTableWidgetItem* item0 = new QTableWidgetItem( strName );
             QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
@@ -635,7 +641,7 @@ void ObjectViewDlg::setPrivateKey( long hObject )
         nType = CryptokiAPI::getAttrType( uAttType );
         QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
 
-        if( bVal == true && ret == CKR_OK ) continue;
+        if( bVal == true && ret != CKR_OK ) continue;
 
         QTableWidgetItem* item0 = new QTableWidgetItem( strName );
         QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
@@ -660,7 +666,7 @@ void ObjectViewDlg::setPrivateKey( long hObject )
         nType = CryptokiAPI::getAttrType( uAttType );
         QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
 
-        if( bVal == true && ret == CKR_OK ) continue;
+        if( bVal == true && ret != CKR_OK ) continue;
 
         QTableWidgetItem* item0 = new QTableWidgetItem( strName );
         QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
@@ -691,7 +697,7 @@ void ObjectViewDlg::setPrivateKey( long hObject )
             nType = CryptokiAPI::getAttrType( uAttType );
             QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
 
-            if( bVal == true && ret == CKR_OK ) continue;
+            if( bVal == true && ret != CKR_OK ) continue;
 
             QTableWidgetItem* item0 = new QTableWidgetItem( strName );
             QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
@@ -721,7 +727,7 @@ void ObjectViewDlg::setPrivateKey( long hObject )
             nType = CryptokiAPI::getAttrType( uAttType );
             QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
 
-            if( bVal == true && ret == CKR_OK ) continue;
+            if( bVal == true && ret != CKR_OK ) continue;
 
             QTableWidgetItem* item0 = new QTableWidgetItem( strName );
             QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
@@ -748,7 +754,7 @@ void ObjectViewDlg::setPrivateKey( long hObject )
             nType = CryptokiAPI::getAttrType( uAttType );
             QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
 
-            if( bVal == true && ret == CKR_OK ) continue;
+            if( bVal == true && ret != CKR_OK ) continue;
 
             QTableWidgetItem* item0 = new QTableWidgetItem( strName );
             QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
@@ -775,7 +781,7 @@ void ObjectViewDlg::setPrivateKey( long hObject )
             nType = CryptokiAPI::getAttrType( uAttType );
             QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
 
-            if( bVal == true && ret == CKR_OK ) continue;
+            if( bVal == true && ret != CKR_OK ) continue;
 
             QTableWidgetItem* item0 = new QTableWidgetItem( strName );
             QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
@@ -805,7 +811,7 @@ void ObjectViewDlg::setPrivateKey( long hObject )
             nType = CryptokiAPI::getAttrType( uAttType );
             QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
 
-            if( bVal == true && ret == CKR_OK ) continue;
+            if( bVal == true && ret != CKR_OK ) continue;
 
             QTableWidgetItem* item0 = new QTableWidgetItem( strName );
             QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
@@ -842,7 +848,7 @@ void ObjectViewDlg::setSecretKey( long hObject )
         nType = CryptokiAPI::getAttrType( uAttType );
         QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
 
-        if( bVal == true && ret == CKR_OK ) continue;
+        if( bVal == true && ret != CKR_OK ) continue;
 
         QTableWidgetItem* item0 = new QTableWidgetItem( strName );
         QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
@@ -867,7 +873,7 @@ void ObjectViewDlg::setSecretKey( long hObject )
         nType = CryptokiAPI::getAttrType( uAttType );
         QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
 
-        if( bVal == true && ret == CKR_OK ) continue;
+        if( bVal == true && ret != CKR_OK ) continue;
 
         QTableWidgetItem* item0 = new QTableWidgetItem( strName );
         QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
@@ -892,7 +898,7 @@ void ObjectViewDlg::setSecretKey( long hObject )
         nType = CryptokiAPI::getAttrType( uAttType );
         QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
 
-        if( bVal == true && ret == CKR_OK ) continue;
+        if( bVal == true && ret != CKR_OK ) continue;
 
         QTableWidgetItem* item0 = new QTableWidgetItem( strName );
         QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
@@ -928,7 +934,7 @@ void ObjectViewDlg::setData( long hObject )
         nType = CryptokiAPI::getAttrType( uAttType );
         QString strValue = stringAttribute( nType, uAttType, hObject, &ret );
 
-        if( bVal == true && ret == CKR_OK ) continue;
+        if( bVal == true && ret != CKR_OK ) continue;
 
         QTableWidgetItem* item0 = new QTableWidgetItem( strName );
         QTableWidgetItem* item1 = new QTableWidgetItem( strValue );
