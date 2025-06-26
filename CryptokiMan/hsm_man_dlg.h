@@ -65,23 +65,27 @@ private slots:
     void loadPrivateList();
     void loadSecretList();
 
+    void clickCertObjectView();
     void clickCertView();
     void clickCertDelete();
     void clickCertExport();
     void clickCertDeleteKeyPair();
 
+    void clickPublicObjectView();
     void clickPublicView();
     void clickPublicDelete();
     void clickPublicExport();
     void clickPublicVerify();
     void clickPublicEncrypt();
 
+    void clickPrivateObjectView();
     void clickPrivateView();
     void clickPrivateDelete();
     void clickPrivateExport();
     void clickPrivateSign();
     void clickPrivateDecrypt();
 
+    void clickSecretObjectView();
     void clickSecretView();
     void clickSecretDelete();
     void clickSecretEncrypt();

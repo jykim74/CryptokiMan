@@ -18,6 +18,7 @@
 #include "verify_dlg.h"
 #include "encrypt_dlg.h"
 #include "decrypt_dlg.h"
+#include "object_view_dlg.h"
 
 const QStringList kUsageList = { "Any", "Sign", "Verify", "Encrypt", "Decrypt", "Wrap", "Unwrap", "Derive" };
 
@@ -40,23 +41,27 @@ HsmManDlg::HsmManDlg(QWidget *parent) :
     connect( mPrivateTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(loadPrivateList()));
     connect( mSecretTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(loadSecretList()));
 
+    connect( mCertObjectViewBtn, SIGNAL(clicked()), this, SLOT(clickCertObjectView()));
     connect( mCertViewBtn, SIGNAL(clicked()), this, SLOT(clickCertView()));
     connect( mCertDeleteBtn, SIGNAL(clicked()), this, SLOT(clickCertDelete()));
     connect( mCertExportBtn, SIGNAL(clicked()), this, SLOT(clickCertExport()));
     connect( mCertDeleteKeyPairBtn, SIGNAL(clicked()), this, SLOT(clickCertDeleteKeyPair()));
 
+    connect( mPublicObjectViewBtn, SIGNAL(clicked()), this, SLOT(clickPublicObjectView()));
     connect( mPublicViewBtn, SIGNAL(clicked()), this, SLOT(clickPublicView()));
     connect( mPublicDeleteBtn, SIGNAL(clicked()), this, SLOT(clickPublicDelete()));
     connect( mPublicExportBtn, SIGNAL(clicked()), this, SLOT(clickPublicExport()));
     connect( mPublicVerifyBtn, SIGNAL(clicked()), this, SLOT(clickPublicVerify()));
     connect( mPublicEncryptBtn, SIGNAL(clicked()), this, SLOT(clickPublicEncrypt()));
 
+    connect( mPrivateObjectViewBtn, SIGNAL(clicked()), this, SLOT(clickPrivateObjectView()));
     connect( mPrivateViewBtn, SIGNAL(clicked()), this, SLOT(clickPrivateView()));
     connect( mPrivateDeleteBtn, SIGNAL(clicked()), this, SLOT(clickPrivateDelete()));
     connect( mPrivateExportBtn, SIGNAL(clicked()), this, SLOT(clickPrivateExport()));
     connect( mPrivateSignBtn, SIGNAL(clicked()), this, SLOT(clickPrivateSign()));
     connect( mPrivateDecryptBtn, SIGNAL(clicked()), this, SLOT(clickPrivateDecrypt()));
 
+    connect( mSecretObjectViewBtn, SIGNAL(clicked()), this, SLOT(clickSecretObjectView()));
     connect( mSecretViewBtn, SIGNAL(clicked()), this, SLOT(clickSecretView()));
     connect( mSecretDeleteBtn, SIGNAL(clicked()), this, SLOT(clickSecretDelete()));
     connect( mSecretEncryptBtn, SIGNAL(clicked()), this, SLOT(clickSecretEncrypt()));
@@ -740,6 +745,29 @@ end :
     return;
 }
 
+void HsmManDlg::clickCertObjectView()
+{
+    QModelIndex idx = mCertTable->currentIndex();
+    QTableWidgetItem *item = mCertTable->item( idx.row(), 0 );
+
+    if( item == NULL )
+    {
+        manApplet->warningBox( tr( "There are no selected items"), this );
+        return;
+    }
+
+    QString strData = item->data(Qt::UserRole).toString();
+    QStringList listData = strData.split(":");
+    if( listData.size() < 2 ) return;
+
+    QString strType = listData.at(0);
+    long hObj = listData.at(1).toLong();
+
+    ObjectViewDlg objectView;
+    objectView.setSlotIndex( slot_index_ );
+    objectView.setObject( hObj );
+    objectView.exec();
+}
 
 void HsmManDlg::clickCertView()
 {
@@ -924,6 +952,30 @@ end :
     JS_BIN_reset( &binID );
 }
 
+void HsmManDlg::clickPublicObjectView()
+{
+    QModelIndex idx = mPublicTable->currentIndex();
+    QTableWidgetItem *item = mPublicTable->item( idx.row(), 0 );
+
+    if( item == NULL )
+    {
+        manApplet->warningBox( tr( "There are no selected items"), this );
+        return;
+    }
+
+    QString strData = item->data(Qt::UserRole).toString();
+    QStringList listData = strData.split(":");
+    if( listData.size() < 2 ) return;
+
+    QString strType = listData.at(0);
+    long hObj = listData.at(1).toLong();
+
+    ObjectViewDlg objectView;
+    objectView.setSlotIndex( slot_index_ );
+    objectView.setObject( hObj );
+    objectView.exec();
+}
+
 void HsmManDlg::clickPublicView()
 {
     QModelIndex idx = mPublicTable->currentIndex();
@@ -1072,6 +1124,29 @@ void HsmManDlg::clickPublicEncrypt()
     encDlg.exec();
 }
 
+void HsmManDlg::clickPrivateObjectView()
+{
+    QModelIndex idx = mPrivateTable->currentIndex();
+    QTableWidgetItem *item = mPrivateTable->item( idx.row(), 0 );
+
+    if( item == NULL )
+    {
+        manApplet->warningBox( tr( "There are no selected items"), this );
+        return;
+    }
+
+    QString strData = item->data(Qt::UserRole).toString();
+    QStringList listData = strData.split(":");
+    if( listData.size() < 2 ) return;
+
+    QString strType = listData.at(0);
+    long hObj = listData.at(1).toLong();
+
+    ObjectViewDlg objectView;
+    objectView.setSlotIndex( slot_index_ );
+    objectView.setObject( hObj );
+    objectView.exec();
+}
 
 void HsmManDlg::clickPrivateView()
 {
@@ -1218,6 +1293,30 @@ void HsmManDlg::clickPrivateDecrypt()
     decDlg.mObjectText->setText( QString("%1").arg( hObj));
     decDlg.mLabelText->setText( manApplet->cryptokiAPI()->getLabel( slot_info_.getSessionHandle(), hObj ));
     decDlg.exec();
+}
+
+void HsmManDlg::clickSecretObjectView()
+{
+    QModelIndex idx = mSecretTable->currentIndex();
+    QTableWidgetItem *item = mSecretTable->item( idx.row(), 0 );
+
+    if( item == NULL )
+    {
+        manApplet->warningBox( tr( "There are no selected items"), this );
+        return;
+    }
+
+    QString strData = item->data(Qt::UserRole).toString();
+    QStringList listData = strData.split(":");
+    if( listData.size() < 2 ) return;
+
+    QString strType = listData.at(0);
+    long hObj = listData.at(1).toLong();
+
+    ObjectViewDlg objectView;
+    objectView.setSlotIndex( slot_index_ );
+    objectView.setObject( hObj );
+    objectView.exec();
 }
 
 void HsmManDlg::clickSecretView()

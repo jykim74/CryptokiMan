@@ -5459,17 +5459,17 @@ Do you want to delete the file and continue?</source>
         <translation>키 쌍 확인</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="390"/>
-        <location filename="../hsm_man_dlg.ui" line="474"/>
-        <location filename="../hsm_man_dlg.ui" line="601"/>
-        <location filename="../hsm_man_dlg.ui" line="719"/>
+        <location filename="../hsm_man_dlg.ui" line="397"/>
+        <location filename="../hsm_man_dlg.ui" line="488"/>
+        <location filename="../hsm_man_dlg.ui" line="622"/>
+        <location filename="../hsm_man_dlg.ui" line="761"/>
         <source>Delete</source>
         <translation>삭제</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="370"/>
-        <location filename="../hsm_man_dlg.ui" line="481"/>
-        <location filename="../hsm_man_dlg.ui" line="594"/>
+        <location filename="../hsm_man_dlg.ui" line="377"/>
+        <location filename="../hsm_man_dlg.ui" line="495"/>
+        <location filename="../hsm_man_dlg.ui" line="615"/>
         <source>Export</source>
         <translation>내보내기</translation>
     </message>
@@ -5484,141 +5484,153 @@ Do you want to delete the file and continue?</source>
         <translation>슬롯 이름</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="363"/>
-        <location filename="../hsm_man_dlg.ui" line="467"/>
-        <location filename="../hsm_man_dlg.ui" line="615"/>
-        <location filename="../hsm_man_dlg.ui" line="712"/>
+        <location filename="../hsm_man_dlg.ui" line="340"/>
+        <location filename="../hsm_man_dlg.ui" line="451"/>
+        <location filename="../hsm_man_dlg.ui" line="572"/>
+        <location filename="../hsm_man_dlg.ui" line="690"/>
+        <source>Object View</source>
+        <translation>객체 보기</translation>
+    </message>
+    <message>
+        <location filename="../hsm_man_dlg.ui" line="370"/>
+        <location filename="../hsm_man_dlg.ui" line="481"/>
+        <location filename="../hsm_man_dlg.ui" line="636"/>
+        <location filename="../hsm_man_dlg.ui" line="768"/>
         <source>View</source>
         <translation>보기</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="397"/>
+        <location filename="../hsm_man_dlg.ui" line="404"/>
         <source>Delete certificate and key pair</source>
         <translation>인증서 키쌍 삭제</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="410"/>
+        <location filename="../hsm_man_dlg.ui" line="417"/>
         <source>Public Key</source>
         <translation>공개 키</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="424"/>
+        <location filename="../hsm_man_dlg.ui" line="428"/>
         <source>Public Key List</source>
         <translation>공개키 목록</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="501"/>
-        <location filename="../hsm_man_dlg.ui" line="740"/>
+        <location filename="../hsm_man_dlg.ui" line="515"/>
+        <location filename="../hsm_man_dlg.ui" line="733"/>
         <source>Verify</source>
         <translation>검증</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="508"/>
-        <location filename="../hsm_man_dlg.ui" line="733"/>
+        <location filename="../hsm_man_dlg.ui" line="522"/>
+        <location filename="../hsm_man_dlg.ui" line="747"/>
         <source>Encrypt</source>
         <translation>암호화</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="521"/>
+        <location filename="../hsm_man_dlg.ui" line="535"/>
         <source>Private Key</source>
         <translation>개인 키</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="538"/>
+        <location filename="../hsm_man_dlg.ui" line="562"/>
         <source>Private Key List</source>
         <translation>개인키 목록</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="608"/>
-        <location filename="../hsm_man_dlg.ui" line="726"/>
+        <location filename="../hsm_man_dlg.ui" line="629"/>
+        <location filename="../hsm_man_dlg.ui" line="740"/>
         <source>Sign</source>
         <translation>서명</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="622"/>
-        <location filename="../hsm_man_dlg.ui" line="705"/>
+        <location filename="../hsm_man_dlg.ui" line="643"/>
+        <location filename="../hsm_man_dlg.ui" line="754"/>
         <source>Decrypt</source>
         <translation>복호화</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="635"/>
+        <location filename="../hsm_man_dlg.ui" line="656"/>
         <source>Secret Key</source>
         <translation>비밀 키</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="646"/>
+        <location filename="../hsm_man_dlg.ui" line="670"/>
         <source>Secret Key List</source>
         <translation>비밀키 목록</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="771"/>
+        <location filename="../hsm_man_dlg.ui" line="799"/>
         <source>OK</source>
         <translation>확인</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="778"/>
+        <location filename="../hsm_man_dlg.ui" line="806"/>
         <source>Close</source>
         <translation>닫기</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="258"/>
+        <location filename="../hsm_man_dlg.cpp" line="263"/>
         <source>Label</source>
         <translation>라벨</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="258"/>
-        <location filename="../hsm_man_dlg.cpp" line="271"/>
+        <location filename="../hsm_man_dlg.cpp" line="263"/>
+        <location filename="../hsm_man_dlg.cpp" line="276"/>
         <source>Handle</source>
         <translation>핸들</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="258"/>
+        <location filename="../hsm_man_dlg.cpp" line="263"/>
         <source>Subject DN</source>
         <translation>주체자 이름</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="271"/>
+        <location filename="../hsm_man_dlg.cpp" line="276"/>
         <source>Name</source>
         <translation>이름</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="271"/>
+        <location filename="../hsm_man_dlg.cpp" line="276"/>
         <source>Algorithm</source>
         <translation>알고리즘</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="271"/>
+        <location filename="../hsm_man_dlg.cpp" line="276"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="751"/>
-        <location filename="../hsm_man_dlg.cpp" line="788"/>
-        <location filename="../hsm_man_dlg.cpp" line="818"/>
-        <location filename="../hsm_man_dlg.cpp" line="868"/>
-        <location filename="../hsm_man_dlg.cpp" line="934"/>
-        <location filename="../hsm_man_dlg.cpp" line="959"/>
-        <location filename="../hsm_man_dlg.cpp" line="989"/>
-        <location filename="../hsm_man_dlg.cpp" line="1028"/>
-        <location filename="../hsm_man_dlg.cpp" line="1055"/>
-        <location filename="../hsm_man_dlg.cpp" line="1083"/>
-        <location filename="../hsm_man_dlg.cpp" line="1108"/>
-        <location filename="../hsm_man_dlg.cpp" line="1138"/>
-        <location filename="../hsm_man_dlg.cpp" line="1176"/>
-        <location filename="../hsm_man_dlg.cpp" line="1203"/>
-        <location filename="../hsm_man_dlg.cpp" line="1230"/>
-        <location filename="../hsm_man_dlg.cpp" line="1254"/>
-        <location filename="../hsm_man_dlg.cpp" line="1284"/>
-        <location filename="../hsm_man_dlg.cpp" line="1311"/>
-        <location filename="../hsm_man_dlg.cpp" line="1338"/>
-        <location filename="../hsm_man_dlg.cpp" line="1365"/>
-        <location filename="../hsm_man_dlg.cpp" line="1416"/>
+        <location filename="../hsm_man_dlg.cpp" line="755"/>
+        <location filename="../hsm_man_dlg.cpp" line="779"/>
+        <location filename="../hsm_man_dlg.cpp" line="816"/>
+        <location filename="../hsm_man_dlg.cpp" line="846"/>
+        <location filename="../hsm_man_dlg.cpp" line="896"/>
+        <location filename="../hsm_man_dlg.cpp" line="962"/>
+        <location filename="../hsm_man_dlg.cpp" line="986"/>
+        <location filename="../hsm_man_dlg.cpp" line="1011"/>
+        <location filename="../hsm_man_dlg.cpp" line="1041"/>
+        <location filename="../hsm_man_dlg.cpp" line="1080"/>
+        <location filename="../hsm_man_dlg.cpp" line="1107"/>
+        <location filename="../hsm_man_dlg.cpp" line="1134"/>
+        <location filename="../hsm_man_dlg.cpp" line="1158"/>
+        <location filename="../hsm_man_dlg.cpp" line="1183"/>
+        <location filename="../hsm_man_dlg.cpp" line="1213"/>
+        <location filename="../hsm_man_dlg.cpp" line="1251"/>
+        <location filename="../hsm_man_dlg.cpp" line="1278"/>
+        <location filename="../hsm_man_dlg.cpp" line="1305"/>
+        <location filename="../hsm_man_dlg.cpp" line="1329"/>
+        <location filename="../hsm_man_dlg.cpp" line="1353"/>
+        <location filename="../hsm_man_dlg.cpp" line="1383"/>
+        <location filename="../hsm_man_dlg.cpp" line="1410"/>
+        <location filename="../hsm_man_dlg.cpp" line="1437"/>
+        <location filename="../hsm_man_dlg.cpp" line="1464"/>
+        <location filename="../hsm_man_dlg.cpp" line="1515"/>
         <source>There are no selected items</source>
         <translation>선택한 아이템이 없습니다</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="770"/>
-        <location filename="../hsm_man_dlg.cpp" line="837"/>
+        <location filename="../hsm_man_dlg.cpp" line="798"/>
+        <location filename="../hsm_man_dlg.cpp" line="865"/>
         <source>failed to get certificate: %1</source>
         <translation>인증서 정보 가져오기 실패: %1</translation>
     </message>
@@ -5627,73 +5639,73 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">인증서를 정말로 지우겠습니까?</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="800"/>
+        <location filename="../hsm_man_dlg.cpp" line="828"/>
         <source>Are you sure to delete the ceritificate?</source>
         <translation>인증서를 정말로 지우겠습니까?</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="806"/>
-        <location filename="../hsm_man_dlg.cpp" line="919"/>
+        <location filename="../hsm_man_dlg.cpp" line="834"/>
+        <location filename="../hsm_man_dlg.cpp" line="947"/>
         <source>The certificate is deleted</source>
         <translation>인증서가 삭제 되었습니다</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="846"/>
+        <location filename="../hsm_man_dlg.cpp" line="874"/>
         <source>Invalid certificate</source>
         <translation>유효하지 않는 인증서</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="883"/>
+        <location filename="../hsm_man_dlg.cpp" line="911"/>
         <source>Do you want to delete a certificate and key pair with the same CKA_ID?</source>
         <translation>인증서와 동일한 CKA_ID 를 가진 키 쌍 모두 지우겠습니까?</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="892"/>
+        <location filename="../hsm_man_dlg.cpp" line="920"/>
         <source>fail to get private handle: %1</source>
         <translation>개인키 핸들 가져오기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="899"/>
+        <location filename="../hsm_man_dlg.cpp" line="927"/>
         <source>fail to get public handle: %1</source>
         <translation>공개키 핸들 가져오기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1007"/>
+        <location filename="../hsm_man_dlg.cpp" line="1059"/>
         <source>failed to get public key: %1</source>
         <translation>공개키 가져오기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="971"/>
+        <location filename="../hsm_man_dlg.cpp" line="1023"/>
         <source>Are you sure to delete the public key</source>
         <translation>공개키를 정말로 지우겠습니까?</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="977"/>
+        <location filename="../hsm_man_dlg.cpp" line="1029"/>
         <source>The public key is deleted</source>
         <translation>공개키가 삭제 되었습니다</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1156"/>
+        <location filename="../hsm_man_dlg.cpp" line="1231"/>
         <source>failed to get private key: %1</source>
         <translation>개인키 가져오기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1120"/>
+        <location filename="../hsm_man_dlg.cpp" line="1195"/>
         <source>Are you sure to delete the private key</source>
         <translation>개인키를 정말로 지우겠습니까?</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1126"/>
+        <location filename="../hsm_man_dlg.cpp" line="1201"/>
         <source>The private key is deleted</source>
         <translation>개인키가 삭제 되었습니다</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1266"/>
+        <location filename="../hsm_man_dlg.cpp" line="1365"/>
         <source>Are you sure to delete the secret key</source>
         <translation>비밀키를 정말로 지우겠습니까?</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1272"/>
+        <location filename="../hsm_man_dlg.cpp" line="1371"/>
         <source>The secret key is deleted</source>
         <translation>비밀키가 삭제 되었습니다</translation>
     </message>
@@ -9121,7 +9133,7 @@ Do you want to delete the file and continue?</source>
     <name>ObjectViewDlg</name>
     <message>
         <location filename="../object_view_dlg.ui" line="14"/>
-        <location filename="../object_view_dlg.ui" line="279"/>
+        <location filename="../object_view_dlg.ui" line="332"/>
         <source>Object Detail Information</source>
         <translation>객체 상세 정보</translation>
     </message>
@@ -9146,37 +9158,37 @@ Do you want to delete the file and continue?</source>
         <translation>로그인</translation>
     </message>
     <message>
-        <location filename="../object_view_dlg.ui" line="259"/>
+        <location filename="../object_view_dlg.ui" line="325"/>
         <source>Handle</source>
         <translation>핸들</translation>
     </message>
     <message>
-        <location filename="../object_view_dlg.ui" line="286"/>
+        <location filename="../object_view_dlg.ui" line="259"/>
         <source>Reload</source>
         <translation>다시 읽기</translation>
     </message>
     <message>
-        <location filename="../object_view_dlg.ui" line="378"/>
+        <location filename="../object_view_dlg.ui" line="410"/>
         <source>Common</source>
         <translation>일반</translation>
     </message>
     <message>
-        <location filename="../object_view_dlg.ui" line="400"/>
+        <location filename="../object_view_dlg.ui" line="432"/>
         <source>Part1</source>
         <translation>파트1</translation>
     </message>
     <message>
-        <location filename="../object_view_dlg.ui" line="422"/>
+        <location filename="../object_view_dlg.ui" line="454"/>
         <source>Part2</source>
         <translation>파트2</translation>
     </message>
     <message>
-        <location filename="../object_view_dlg.ui" line="444"/>
+        <location filename="../object_view_dlg.ui" line="476"/>
         <source>Part3</source>
         <translation>파트3</translation>
     </message>
     <message>
-        <location filename="../object_view_dlg.ui" line="517"/>
+        <location filename="../object_view_dlg.ui" line="549"/>
         <source>Close</source>
         <translation>닫기</translation>
     </message>
@@ -9231,94 +9243,94 @@ Do you want to delete the file and continue?</source>
         <translation>%1 상세 정보</translation>
     </message>
     <message>
-        <location filename="../object_view_dlg.cpp" line="361"/>
+        <location filename="../object_view_dlg.cpp" line="366"/>
         <source>Certificate Common</source>
         <translation>인증서 일반</translation>
     </message>
     <message>
-        <location filename="../object_view_dlg.cpp" line="386"/>
+        <location filename="../object_view_dlg.cpp" line="391"/>
         <source>X509 Certificate</source>
         <translation>X509 인증서</translation>
     </message>
     <message>
-        <location filename="../object_view_dlg.cpp" line="422"/>
-        <location filename="../object_view_dlg.cpp" line="632"/>
-        <location filename="../object_view_dlg.cpp" line="839"/>
+        <location filename="../object_view_dlg.cpp" line="427"/>
+        <location filename="../object_view_dlg.cpp" line="637"/>
+        <location filename="../object_view_dlg.cpp" line="844"/>
         <source>Key Common</source>
         <translation>키 일반</translation>
     </message>
     <message>
-        <location filename="../object_view_dlg.cpp" line="447"/>
+        <location filename="../object_view_dlg.cpp" line="452"/>
         <source>Public Key</source>
         <translation>공개 키</translation>
     </message>
     <message>
-        <location filename="../object_view_dlg.cpp" line="477"/>
+        <location filename="../object_view_dlg.cpp" line="482"/>
         <source>RSA Public Key</source>
         <translation>RSA 공개키</translation>
     </message>
     <message>
-        <location filename="../object_view_dlg.cpp" line="507"/>
+        <location filename="../object_view_dlg.cpp" line="512"/>
         <source>ECDSA Public Key</source>
         <translation>ECDSA 공개키</translation>
     </message>
     <message>
-        <location filename="../object_view_dlg.cpp" line="537"/>
+        <location filename="../object_view_dlg.cpp" line="542"/>
         <source>DSA Public Key</source>
         <translation>DSA 공개키</translation>
     </message>
     <message>
-        <location filename="../object_view_dlg.cpp" line="564"/>
+        <location filename="../object_view_dlg.cpp" line="569"/>
         <source>DH Public Key</source>
         <translation>DH 공개키</translation>
     </message>
     <message>
-        <location filename="../object_view_dlg.cpp" line="591"/>
+        <location filename="../object_view_dlg.cpp" line="596"/>
         <source>EC_EDWARDS Public Key</source>
         <translation>EC_EDWARDS 공개키</translation>
     </message>
     <message>
-        <location filename="../object_view_dlg.cpp" line="657"/>
+        <location filename="../object_view_dlg.cpp" line="662"/>
         <source>Private Key</source>
         <translation>개인 키</translation>
     </message>
     <message>
-        <location filename="../object_view_dlg.cpp" line="687"/>
+        <location filename="../object_view_dlg.cpp" line="692"/>
         <source>RSA Private Key</source>
         <translation>RSA 개인키</translation>
     </message>
     <message>
-        <location filename="../object_view_dlg.cpp" line="714"/>
+        <location filename="../object_view_dlg.cpp" line="719"/>
         <source>ECDSA Private Key</source>
         <translation>ECDSA 개인키</translation>
     </message>
     <message>
-        <location filename="../object_view_dlg.cpp" line="744"/>
+        <location filename="../object_view_dlg.cpp" line="749"/>
         <source>DSA Private Key</source>
         <translation>DSA 개인키</translation>
     </message>
     <message>
-        <location filename="../object_view_dlg.cpp" line="771"/>
+        <location filename="../object_view_dlg.cpp" line="776"/>
         <source>DH Private Key</source>
         <translation>DH 개인키</translation>
     </message>
     <message>
-        <location filename="../object_view_dlg.cpp" line="798"/>
+        <location filename="../object_view_dlg.cpp" line="803"/>
         <source>EC_EDWARDS Private Key</source>
         <translation>EC_EDWARDS 개인키</translation>
     </message>
     <message>
-        <location filename="../object_view_dlg.cpp" line="864"/>
+        <location filename="../object_view_dlg.cpp" line="869"/>
         <source>Secret Key</source>
         <translation>비밀 키</translation>
     </message>
     <message>
-        <location filename="../object_view_dlg.cpp" line="889"/>
+        <location filename="../object_view_dlg.cpp" line="894"/>
         <source>Secret Key Value</source>
         <translation>비밀키 값</translation>
     </message>
     <message>
-        <location filename="../object_view_dlg.cpp" line="925"/>
+        <location filename="../object_view_dlg.cpp" line="930"/>
         <source>Data</source>
         <translation>데이타</translation>
     </message>
@@ -10415,7 +10427,7 @@ Do you want to delete the file and continue?</source>
         <translation>정말로 저장된 설정 값을 지우겠습니까?</translation>
     </message>
     <message>
-        <location filename="../settings_dlg.cpp" line="133"/>
+        <location filename="../settings_dlg.cpp" line="134"/>
         <source>Restored to default settings. Restart to apply it?</source>
         <translation>초기 설정 복원 되었습니다. 적용을 위해서 다시 시작 하겠습니까?</translation>
     </message>

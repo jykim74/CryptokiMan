@@ -314,7 +314,7 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="2">
+         <item row="0" column="3">
           <widget class="QCheckBox" name="mCertKeyPairCheck">
            <property name="text">
             <string>Check KeyPair</string>
@@ -333,6 +333,13 @@
             </size>
            </property>
           </spacer>
+         </item>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="mCertObjectViewBtn">
+           <property name="text">
+            <string>Object View</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -415,15 +422,15 @@
          <property name="topMargin">
           <number>0</number>
          </property>
-         <item row="0" column="2">
-          <widget class="QComboBox" name="mPublicTypeCombo"/>
-         </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label_8">
            <property name="text">
             <string>Public Key List</string>
            </property>
           </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QComboBox" name="mPublicTypeCombo"/>
          </item>
          <item row="0" column="1">
           <spacer name="horizontalSpacer_5">
@@ -437,6 +444,13 @@
             </size>
            </property>
           </spacer>
+         </item>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="mPublicObjectViewBtn">
+           <property name="text">
+            <string>Object View</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -529,16 +543,6 @@
          <property name="rightMargin">
           <number>0</number>
          </property>
-         <item row="0" column="2">
-          <widget class="QComboBox" name="mPrivateTypeCombo"/>
-         </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_7">
-           <property name="text">
-            <string>Private Key List</string>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="1">
           <spacer name="horizontalSpacer_4">
            <property name="orientation">
@@ -551,6 +555,23 @@
             </size>
            </property>
           </spacer>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_7">
+           <property name="text">
+            <string>Private Key List</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QComboBox" name="mPrivateTypeCombo"/>
+         </item>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="mPrivateObjectViewBtn">
+           <property name="text">
+            <string>Object View</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -640,15 +661,15 @@
          <property name="topMargin">
           <number>0</number>
          </property>
+         <item row="0" column="3">
+          <widget class="QComboBox" name="mSecretTypeCombo"/>
+         </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label_6">
            <property name="text">
             <string>Secret Key List</string>
            </property>
           </widget>
-         </item>
-         <item row="0" column="2">
-          <widget class="QComboBox" name="mSecretTypeCombo"/>
          </item>
          <item row="0" column="1">
           <spacer name="horizontalSpacer_3">
@@ -662,6 +683,13 @@
             </size>
            </property>
           </spacer>
+         </item>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="mSecretObjectViewBtn">
+           <property name="text">
+            <string>Object View</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -699,24 +727,10 @@
               </property>
              </spacer>
             </item>
-            <item row="0" column="5">
-             <widget class="QPushButton" name="mSecretDecryptBtn">
+            <item row="0" column="7">
+             <widget class="QPushButton" name="mSecretVerifyBtn">
               <property name="text">
-               <string>Decrypt</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QPushButton" name="mSecretViewBtn">
-              <property name="text">
-               <string>View</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="2">
-             <widget class="QPushButton" name="mSecretDeleteBtn">
-              <property name="text">
-               <string>Delete</string>
+               <string>Verify</string>
               </property>
              </widget>
             </item>
@@ -734,10 +748,24 @@
               </property>
              </widget>
             </item>
-            <item row="0" column="7">
-             <widget class="QPushButton" name="mSecretVerifyBtn">
+            <item row="0" column="5">
+             <widget class="QPushButton" name="mSecretDecryptBtn">
               <property name="text">
-               <string>Verify</string>
+               <string>Decrypt</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QPushButton" name="mSecretDeleteBtn">
+              <property name="text">
+               <string>Delete</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QPushButton" name="mSecretViewBtn">
+              <property name="text">
+               <string>View</string>
               </property>
              </widget>
             </item>
