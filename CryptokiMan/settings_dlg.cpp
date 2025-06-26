@@ -129,6 +129,7 @@ void SettingsDlg::clickRestoreDefaults()
     mgr->removeSet( kBehaviorGroup, kFontFamily );
     mgr->removeSet( kBehaviorGroup, kFindMaxObjectsCount );
     mgr->removeSet( kBehaviorGroup, kHexAreaWidth );
+    mgr->removeSet( kBehaviorGroup, kDisplayValid );
 
     if( manApplet->yesOrNoBox(tr("Restored to default settings. Restart to apply it?"), this, true))
         manApplet->restartApp();
@@ -170,6 +171,8 @@ void SettingsDlg::initialize()
         mgr->setUseLogTab(false);
         mFileReadSizeGroup->setEnabled(false);
         mLogLevelGroup->setEnabled(false);
+        mDisplayValidCheck->setEnabled(false);
+        mgr->setDisplayValid(false);
     }
 
 #ifdef _AUTO_UPDATE

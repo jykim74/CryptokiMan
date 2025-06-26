@@ -323,26 +323,31 @@ void ObjectViewDlg::setObject( long hObject )
     if( uClass == CKO_CERTIFICATE )
     {
         mObjectToolBox->setItemIcon( 0, QIcon( ":/images/cert.png" ));
+        mObjectBtn->setIcon( QIcon(":/images/cert.png") );
         setCertificate( hObject );
     }
     else if( uClass == CKO_PRIVATE_KEY )
     {
         mObjectToolBox->setItemIcon( 0, QIcon( ":/images/prikey.png" ));
+        mObjectBtn->setIcon( QIcon(":/images/prikey.png") );
         setPrivateKey( hObject );
     }
     else if( uClass == CKO_PUBLIC_KEY )
     {
         mObjectToolBox->setItemIcon( 0, QIcon( ":/images/pubkey.png" ));
+        mObjectBtn->setIcon( QIcon(":/images/pubkey.png") );
         setPublicKey( hObject );
     }
     else if( uClass == CKO_SECRET_KEY )
     {
         mObjectToolBox->setItemIcon( 0, QIcon( ":/images/key.png" ));
+        mObjectBtn->setIcon( QIcon(":/images/key.png") );
         setSecretKey( hObject );
     }
     else if( uClass == CKO_DATA )
     {
         mObjectToolBox->setItemIcon( 0, QIcon( ":/images/data_add.png" ));
+        mObjectBtn->setIcon( QIcon(":/images/data_add.png") );
         setData( hObject );
     }
 }
