@@ -199,5 +199,6 @@ bool isRSA_PSS( int nMech );
 const QString getMechHex( long uMech );
 
 void getOID( const QString strType, const QString strValue, BIN *pOID );
-
+int writePriKeyPEM( const BIN *pPriKey, const QString strPath );
+int writePubKeyPEM( const BIN *pPubKey, const QString strPath );
 #endif // COMMON_H
