@@ -71,6 +71,10 @@ private:
     void setMechanism( void *pMech );
     void freeMechanism( void *pMech );
 
+    void setParamCombo( const QString strLabel, bool bEnable = false );
+    void setParam1( const QString strLabel, bool bEnable = false );
+    void setParam2( const QString strLabel, bool bEnable = false );
+
     SlotInfo slot_info_;
     int slot_index_ = -1;
 };

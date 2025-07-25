@@ -677,47 +677,30 @@ void DeriveKeyDlg::clickEndDate()
 void DeriveKeyDlg::changeMechanism( int index )
 {
     long nMech = JS_PKCS11_GetCKMType( mSrcMethodCombo->currentText().toStdString().c_str());
-
     mSrcMethodText->setText( QString( getMechHex(nMech)));
+
+    setParamCombo( "", false );
+    setParam1( "", false );
+    setParam2( "", false );
 
     if( nMech == CKM_ECDH1_DERIVE )
     {
-        mParamComboLabel->setEnabled(true);
-        mParamComboLabel->setText( "EC_KDF_T" );
-        mParamCombo->setEnabled(true);
-
-        mParam1Label->setText( "Public Data" );
-
-        mParam2Label->setText( "Shared Data" );
-        mParam2Label->setEnabled(true);
-        mParam2Text->setEnabled( true );
-        mParam2LenText->setEnabled( true );
+        setParamCombo( "EC_KDF_T", true );
+        setParam1( "Public Data", true );
+        setParam2( "Shared Data", true );
     }
     else if( nMech == CKM_DES_CBC_ENCRYPT_DATA
              || nMech == CKM_DES3_CBC_ENCRYPT_DATA
              || nMech == CKM_AES_CBC_ENCRYPT_DATA
              || nMech == CKM_CONCATENATE_BASE_AND_DATA
              || nMech == CKM_CONCATENATE_DATA_AND_BASE )
-    {
-        mParamCombo->setEnabled(false);
-        mParamComboLabel->setEnabled(false);
-
-        mParam1Label->setText( "IV" );
-
-        mParam2Label->setText( "Data Params" );
-        mParam2Label->setEnabled(true);
-        mParam2Text->setEnabled( true );
-        mParam2LenText->setEnabled( true );
+    {   
+        setParam1( "IV", true );
+        setParam2( tr("Data Param"), true );
     }
     else
     {
-        mParamCombo->setEnabled(false);
-        mParamComboLabel->setEnabled(false);
-        mParam1Label->setText( tr("Parameter") );
-
-        mParam2Label->setEnabled(false);
-        mParam2Text->setEnabled(false);
-        mParam2LenText->setEnabled(false);
+        setParam1( tr("Parameter"), true );
     }
 }
 
@@ -924,4 +907,25 @@ void DeriveKeyDlg::setDefaults()
 
     mStartDateEdit->setDate( nowTime.date() );
     mEndDateEdit->setDate( nowTime.date() );
+}
+
+void DeriveKeyDlg::setParamCombo( const QString strLabel, bool bEnable )
+{
+    mParamComboLabel->setText( strLabel );
+    mParamComboLabel->setEnabled( bEnable );
+    mParamCombo->setEnabled( bEnable );
+}
+
+void DeriveKeyDlg::setParam1( const QString strLabel, bool bEnable )
+{
+    mParam1Label->setText( strLabel );
+    mParam1Label->setEnabled( bEnable );
+    mParam1Text->setEnabled( bEnable );
+}
+
+void DeriveKeyDlg::setParam2( const QString strLabel, bool bEnable )
+{
+    mParam2Label->setText( strLabel );
+    mParam2Label->setEnabled( bEnable );
+    mParam2Text->setEnabled( bEnable );
 }

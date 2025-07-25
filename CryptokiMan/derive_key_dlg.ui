@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>679</width>
-    <height>567</height>
+    <height>446</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -595,7 +595,7 @@
             <item row="2" column="0">
              <widget class="QLabel" name="mParam2Label">
               <property name="text">
-               <string>Param2 Label</string>
+               <string>Param2</string>
               </property>
              </widget>
             </item>
@@ -658,7 +658,7 @@
             <item row="0" column="0">
              <widget class="QLabel" name="mParamComboLabel">
               <property name="text">
-               <string>Param Combo Label</string>
+               <string>Parameter Type</string>
               </property>
              </widget>
             </item>
@@ -677,14 +677,21 @@
                </size>
               </property>
               <property name="text">
-               <string>Param1 Label</string>
+               <string>Param1</string>
               </property>
              </widget>
             </item>
             <item row="0" column="1" colspan="2">
              <layout class="QGridLayout" name="gridLayout_11">
               <item row="0" column="0">
-               <widget class="QComboBox" name="mParamCombo"/>
+               <widget class="QComboBox" name="mParamCombo">
+                <property name="minimumSize">
+                 <size>
+                  <width>80</width>
+                  <height>0</height>
+                 </size>
+                </property>
+               </widget>
               </item>
               <item row="0" column="1">
                <spacer name="horizontalSpacer_2">

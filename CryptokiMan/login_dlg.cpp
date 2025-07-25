@@ -105,7 +105,5 @@ void LoginDlg::clickLogin()
     else {
         manApplet->warnLog( tr( "Login failure [%1:%2]").arg( JS_PKCS11_GetErrorMsg(rv)).arg(rv), this );
         mPinText->clear();
-
-        QDialog::reject();
     }
 }
