@@ -946,7 +946,6 @@ void HsmManDlg::clickCertExport()
     long hObj = listData.at(1).toLong();
     QString strID = listData.at(2);
 
-    JCertInfo sCertInfo;
     ExportDlg exportDlg;
     BIN binCert = {0,0};
 
@@ -957,23 +956,12 @@ void HsmManDlg::clickCertExport()
         goto end;
     }
 
-    memset( &sCertInfo, 0x00, sizeof(sCertInfo));
-
-    ret = JS_PKI_getCertInfo( &binCert, &sCertInfo, NULL );
-    if( ret != 0 )
-    {
-        manApplet->warningBox( tr( "Invalid certificate" ), this );
-        JS_BIN_reset( &binCert );
-        return;
-    }
-
-    exportDlg.setName( sCertInfo.pSubjectName );
+    exportDlg.setName( QString( "Certificate_%1" ).arg( hObj) );
     exportDlg.setCert( &binCert );
     exportDlg.exec();
 
 end :
     JS_BIN_reset( &binCert );
-    JS_PKI_resetCertInfo( &sCertInfo );
 }
 
 void HsmManDlg::clickCertDeleteKeyPair()

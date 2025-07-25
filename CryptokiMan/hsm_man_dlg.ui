@@ -707,6 +707,9 @@
        </item>
        <item>
         <widget class="QTableWidget" name="mSecretTable">
+         <property name="contextMenuPolicy">
+          <enum>Qt::CustomContextMenu</enum>
+         </property>
          <attribute name="horizontalHeaderHighlightSections">
           <bool>false</bool>
          </attribute>

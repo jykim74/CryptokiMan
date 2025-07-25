@@ -33,6 +33,7 @@ RandDlg::~RandDlg()
 void RandDlg::initUI()
 {
     mSeedCombo->addItems( sSeedList );
+    mLengthText->setText( "16" );
 
     connect( mSetSeedBtn, SIGNAL(clicked()), this, SLOT(clickSeed()));
     connect( mGenRandBtn, SIGNAL(clicked()), this, SLOT(clickGenRand()));

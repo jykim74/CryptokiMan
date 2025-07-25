@@ -61,7 +61,7 @@
       <widget class="QLabel" name="label_12">
        <property name="minimumSize">
         <size>
-         <width>100</width>
+         <width>80</width>
          <height>0</height>
         </size>
        </property>
@@ -72,6 +72,12 @@
      </item>
      <item row="0" column="1">
       <widget class="QLineEdit" name="mSlotNameText">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="palette">
         <palette>
          <active>
@@ -206,7 +212,7 @@
       <widget class="QLabel" name="label_13">
        <property name="minimumSize">
         <size>
-         <width>100</width>
+         <width>80</width>
          <height>0</height>
         </size>
        </property>
@@ -273,9 +279,6 @@
    </item>
    <item>
     <layout class="QGridLayout" name="gridLayout_3">
-     <item row="1" column="1">
-      <widget class="QComboBox" name="mPubLabelCombo"/>
-     </item>
      <item row="1" column="0">
       <widget class="QLabel" name="label_11">
        <property name="text">
@@ -283,61 +286,11 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_10">
-       <property name="minimumSize">
-        <size>
-         <width>100</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Private Key</string>
-       </property>
-      </widget>
+     <item row="1" column="1">
+      <widget class="QComboBox" name="mPubLabelCombo"/>
      </item>
      <item row="0" column="2">
       <widget class="QLineEdit" name="mPriObjectText">
-       <property name="maximumSize">
-        <size>
-         <width>60</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="palette">
-        <palette>
-         <active>
-          <colorrole role="Base">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>221</red>
-             <green>221</green>
-             <blue>255</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </active>
-         <inactive>
-          <colorrole role="Base">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>221</red>
-             <green>221</green>
-             <blue>255</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </inactive>
-         <disabled/>
-        </palette>
-       </property>
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="2">
-      <widget class="QLineEdit" name="mPubObjectText">
        <property name="maximumSize">
         <size>
          <width>60</width>
@@ -383,6 +336,73 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QLineEdit" name="mPubObjectText">
+       <property name="maximumSize">
+        <size>
+         <width>60</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="palette">
+        <palette>
+         <active>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </active>
+         <inactive>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </inactive>
+         <disabled/>
+        </palette>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_10">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Private Key</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QPushButton" name="mPriViewBtn">
+       <property name="text">
+        <string>View</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="3">
+      <widget class="QPushButton" name="mPubViewBtn">
+       <property name="text">
+        <string>View</string>
        </property>
       </widget>
      </item>
@@ -592,19 +612,24 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>mSlotNameText</tabstop>
   <tabstop>mSlotIDText</tabstop>
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
   <tabstop>mPriLabelCombo</tabstop>
   <tabstop>mPriObjectText</tabstop>
+  <tabstop>mPriViewBtn</tabstop>
   <tabstop>mPubLabelCombo</tabstop>
   <tabstop>mPubObjectText</tabstop>
+  <tabstop>mPubViewBtn</tabstop>
   <tabstop>mEMAILADDRESSText</tabstop>
+  <tabstop>mCNText</tabstop>
   <tabstop>mOText</tabstop>
   <tabstop>mOUText</tabstop>
   <tabstop>mLText</tabstop>
   <tabstop>mSTText</tabstop>
   <tabstop>mCText</tabstop>
+  <tabstop>mDNText</tabstop>
   <tabstop>mSignHashCombo</tabstop>
   <tabstop>mClearBtn</tabstop>
   <tabstop>mOKBtn</tabstop>

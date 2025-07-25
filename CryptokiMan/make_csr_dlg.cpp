@@ -17,6 +17,7 @@
 #include "mech_mgr.h"
 #include "p11_work.h"
 #include "js_error.h"
+#include "object_view_dlg.h"
 
 static QStringList kHashList = {
     "MD5",
@@ -42,6 +43,9 @@ MakeCSRDlg::MakeCSRDlg(QWidget *parent) :
     connect( mCancelBtn, SIGNAL(clicked()), this, SLOT(close()));
     connect( mOKBtn, SIGNAL(clicked()), this, SLOT(clickOK()));
     connect( mClearBtn, SIGNAL(clicked()), this, SLOT(clickClear()));
+
+    connect( mPriViewBtn, SIGNAL(clicked()), this, SLOT(viewPriObject()));
+    connect( mPubViewBtn, SIGNAL(clicked()), this, SLOT(viewPubObject()));
 
     connect( mEMAILADDRESSText, SIGNAL(textChanged(QString)), this, SLOT(changeDN()));
     connect( mCNText, SIGNAL(textChanged(QString)), this, SLOT(changeDN()));
@@ -114,6 +118,8 @@ void MakeCSRDlg::initialize()
 
     mSignHashCombo->addItems( kHashList );
     mSignHashCombo->setCurrentText( "SHA256" );
+
+    mCNText->setFocus();
 }
 
 const QString MakeCSRDlg::getCSRHex()
@@ -193,6 +199,38 @@ void MakeCSRDlg::changeDN()
 {
     QString strDN = getDN();
     mDNText->setText( strDN );
+}
+
+void MakeCSRDlg::viewPriObject()
+{
+    long hObj = mPriObjectText->text().toLong();
+
+    if( hObj <= 0 )
+    {
+        manApplet->warningBox( tr( "There is no object" ), this );
+        return;
+    }
+
+    ObjectViewDlg objectView;
+    objectView.setSlotIndex( slot_index_ );
+    objectView.setObject( hObj );
+    objectView.exec();
+}
+
+void MakeCSRDlg::viewPubObject()
+{
+    long hObj = mPubObjectText->text().toLong();
+
+    if( hObj <= 0 )
+    {
+        manApplet->warningBox( tr( "There is no object" ), this );
+        return;
+    }
+
+    ObjectViewDlg objectView;
+    objectView.setSlotIndex( slot_index_ );
+    objectView.setObject( hObj );
+    objectView.exec();
 }
 
 void MakeCSRDlg::changePriLabel( int index )

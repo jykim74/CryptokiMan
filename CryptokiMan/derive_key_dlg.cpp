@@ -921,6 +921,7 @@ void DeriveKeyDlg::setParam1( const QString strLabel, bool bEnable )
     mParam1Label->setText( strLabel );
     mParam1Label->setEnabled( bEnable );
     mParam1Text->setEnabled( bEnable );
+    mParam1LenText->setEnabled( bEnable );
 }
 
 void DeriveKeyDlg::setParam2( const QString strLabel, bool bEnable )
@@ -928,4 +929,5 @@ void DeriveKeyDlg::setParam2( const QString strLabel, bool bEnable )
     mParam2Label->setText( strLabel );
     mParam2Label->setEnabled( bEnable );
     mParam2Text->setEnabled( bEnable );
+    mParam2LenText->setEnabled( bEnable );
 }

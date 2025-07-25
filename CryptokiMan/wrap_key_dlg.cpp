@@ -45,6 +45,8 @@ WrapKeyDlg::~WrapKeyDlg()
 
 void WrapKeyDlg::initUI()
 {
+    mWrappingParamText->setPlaceholderText( tr("Hex value" ));
+
     connect( mWrappingTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(wrappingTypeChanged(int)));
     connect( mTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(typeChanged(int)));
     connect( mWrappingMechCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(wrappingMechChanged(int)));

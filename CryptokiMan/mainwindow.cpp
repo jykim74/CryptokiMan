@@ -2095,6 +2095,8 @@ void MainWindow::exportPubKey()
     QTableWidgetItem* item0 = right_table_->item( row, 0 );
     QTableWidgetItem* item1 = right_table_->item( row, 1 );
 
+    if( item0 == NULL || item1 == NULL ) return;
+
     ExportDlg exportDlg;
     QString strName;
     int type = getDataType( right_type_ );
@@ -2141,6 +2143,8 @@ void MainWindow::exportPriKey()
     QTableWidgetItem* item0 = right_table_->item( row, 0 );
     QTableWidgetItem* item1 = right_table_->item( row, 1 );
 
+    if( item0 == NULL || item1 == NULL ) return;
+
     ExportDlg exportDlg;
     int type = getDataType( right_type_ );
 
@@ -2176,32 +2180,23 @@ void MainWindow::exportCert()
     QTableWidgetItem* item0 = right_table_->item( row, 0 );
     QTableWidgetItem* item1 = right_table_->item( row, 1 );
 
-    ret = manApplet->cryptokiAPI()->GetAttributeValue2( hSession, item1->text().toLong(), CKA_VALUE, &binVal );
+    if( item0 == NULL || item1 == NULL ) return;
+
+    long hObj = item1->text().toLong();
+
+    ret = manApplet->cryptokiAPI()->GetAttributeValue2( hSession, hObj, CKA_VALUE, &binVal );
     if( ret != CKR_OK )
     {
         manApplet->warningBox( tr( "fail to get certficate" ), this );
         return;
     }
 
-    JCertInfo sCertInfo;
-
-    memset( &sCertInfo, 0x00, sizeof(sCertInfo));
-
-    ret = JS_PKI_getCertInfo( &binVal, &sCertInfo, NULL );
-    if( ret != 0 )
-    {
-        manApplet->warningBox( tr( "Invalid certificate" ), this );
-        JS_BIN_reset( &binVal );
-        return;
-    }
-
     ExportDlg exportDlg;
-    exportDlg.setName( sCertInfo.pSubjectName );
+    exportDlg.setName( QString( "Certificate_%1" ).arg( hObj) );
     exportDlg.setCert( &binVal );
     exportDlg.exec();
 
     JS_BIN_reset( &binVal );
-    JS_PKI_resetCertInfo( &sCertInfo );
 }
 
 void MainWindow::makeCSR()

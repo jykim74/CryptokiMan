@@ -33,6 +33,9 @@ private slots:
     void clickClear();
     void changeDN();
 
+    void viewPriObject();
+    void viewPubObject();
+
     void changePriLabel( int index );
     void changePubLabel( int index );
 

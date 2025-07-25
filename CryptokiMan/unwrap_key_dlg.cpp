@@ -111,6 +111,7 @@ void UnwrapKeyDlg::initUI()
     mLabelText->setPlaceholderText( tr("String value" ));
     mIDText->setPlaceholderText( tr("Hex value" ));
     mInputText->setPlaceholderText( tr("Hex value" ));
+    mUnwrapParamText->setPlaceholderText( tr("Hex value" ));
 }
 
 void UnwrapKeyDlg::initAttributes()
