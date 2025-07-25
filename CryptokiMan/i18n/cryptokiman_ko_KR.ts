@@ -47,47 +47,47 @@
         <translation>%1 [Unlicensed 버전 %2]</translation>
     </message>
     <message>
-        <location filename="../about_dlg.cpp" line="84"/>
+        <location filename="../about_dlg.cpp" line="88"/>
         <source>This program is a freeware tool created using open source.If you do not use this for commercial purposes, you can use it freely </source>
         <translation>본 프로그램은 오픈소스를 이용하여 제작된 프리웨어 도구입니다. 상업적인 목적으로 사용하지 않으시면 자유롭게 사용하셔도 됩니다.</translation>
     </message>
     <message>
-        <location filename="../about_dlg.cpp" line="92"/>
+        <location filename="../about_dlg.cpp" line="96"/>
         <source>All rights reserved.</source>
         <translation>All rights reserved.</translation>
     </message>
     <message>
-        <location filename="../about_dlg.cpp" line="95"/>
+        <location filename="../about_dlg.cpp" line="99"/>
         <source> Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:</source>
         <translation>다음 조건이 충족되는 경우 수정 여부에 관계없이 소스 및 바이너리 형식으로 재배포 및 사용이 허용됩니다 :</translation>
     </message>
     <message>
-        <location filename="../about_dlg.cpp" line="98"/>
+        <location filename="../about_dlg.cpp" line="102"/>
         <source> - Redistributions of source code must retain the above copyright notice,this list of conditions and the following disclaimer.</source>
         <translation>- 소스 코드를 재배포할 경우 위의 저작권 고지, 이 조건 목록 및 다음 면책 조항을 유지해야 합니다.</translation>
     </message>
     <message>
-        <location filename="../about_dlg.cpp" line="101"/>
+        <location filename="../about_dlg.cpp" line="105"/>
         <source> - Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</source>
         <translation>- 바이너리 형식으로 재배포하는 경우 배포와 함께 제공되는 문서 및/또는 기타 자료에 위의 저작권 고지, 이 조건 목록 및 다음 면책 조항을 재현해야 합니다.</translation>
     </message>
     <message>
-        <location filename="../about_dlg.cpp" line="104"/>
+        <location filename="../about_dlg.cpp" line="108"/>
         <source> - Neither the name of the author nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.</source>
         <translation>- 구체적인 사전 서면 승인 없이는 작성자의 이름이나 기여자의 이름을 이 소프트웨어에서 파생된 제품을 보증하거나 홍보하는 데 사용할 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../about_dlg.cpp" line="108"/>
+        <location filename="../about_dlg.cpp" line="112"/>
         <source>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS  FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE  COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)  HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,  STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</source>
         <translation>이 소프트웨어는 저작권 보유자 및 기여자에 의해 &quot;있는 그대로&quot; 제공되며, 상품성 및 특정 목적에의 적합성에 대한 묵시적인 보증을 포함하되 이에 국한되지 않는 모든 명시적 또는 묵시적 보증은 부인됩니다. 어떠한 경우에도 저작권 소유자나 기여자는 직접적, 간접적, 부수적, 특별, 예시적 또는 결과적 손해(대체 상품이나 서비스의 조달, 사용, 데이터 또는 이익의 손실을 포함하되 이에 국한되지 않음)에 대해 책임을 지지 않습니다. 또는 사업 중단), 계약상, 엄격 책임, 또는 이 소프트웨어의 사용으로 인해 발생하는 불법 행위(과실 또는 기타 포함) 등의 책임 이론에 따라, 그러한 손해의 가능성이 통보된 경우에도 마찬가지입니다.</translation>
     </message>
     <message>
-        <location filename="../about_dlg.cpp" line="122"/>
+        <location filename="../about_dlg.cpp" line="126"/>
         <source>This program links to software with different licenses from: </source>
         <translation>이 프로그램은 다음과 다른 라이센스를 가진 소프트웨어에 연결됩니다.</translation>
     </message>
     <message>
-        <location filename="../about_dlg.cpp" line="148"/>
+        <location filename="../about_dlg.cpp" line="152"/>
         <source>Third party software that may be contained in this application.</source>
         <translation>이 애플리케이션에 포함될 수 있는 타사 소프트웨어.</translation>
     </message>
@@ -4627,57 +4627,57 @@ Do you want to delete the file and continue?</source>
         <translation>유효하지 않는 서비스: %1</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="492"/>
+        <location filename="../export_dlg.cpp" line="493"/>
         <source>Public Key export successfully</source>
         <translation>공개키 내보내기 성공하였습니다.</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="525"/>
+        <location filename="../export_dlg.cpp" line="527"/>
         <source>Private Key export successfully</source>
         <translation>개인키 내보내기 성공하였습니다.</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="556"/>
+        <location filename="../export_dlg.cpp" line="558"/>
         <source>Certificate export successfully</source>
         <translation>인증서 내보내기 성공하였습니다.</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="584"/>
+        <location filename="../export_dlg.cpp" line="586"/>
         <source>CRL export successfully</source>
         <translation>CRL 내보내기 성공하였습니다.</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="612"/>
+        <location filename="../export_dlg.cpp" line="614"/>
         <source>CSR export successfully</source>
         <translation>CSR 내보내기 성공하였습니다.</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="641"/>
+        <location filename="../export_dlg.cpp" line="643"/>
         <source>fail to encrypt PFX: %1</source>
         <translation>PFX 암호화 실패: %1</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="648"/>
+        <location filename="../export_dlg.cpp" line="650"/>
         <source>PFX export successfully</source>
         <translation>PFX 내보내기 성공하였습니다.</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="680"/>
+        <location filename="../export_dlg.cpp" line="682"/>
         <source>fail to encrypt private key: %1</source>
         <translation>개인키 암호화 실패: %1</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="691"/>
+        <location filename="../export_dlg.cpp" line="693"/>
         <source>Encrypted privateKey export successfully</source>
         <translation>암호화 개인키 내보내기 성공하였습니다.</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="727"/>
+        <location filename="../export_dlg.cpp" line="729"/>
         <source>PKCS8 Info export successfully</source>
         <translation>PKCS8 개인키 정보 내보내기 성공하였습니다.</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="757"/>
+        <location filename="../export_dlg.cpp" line="759"/>
         <source>DH Parameter export successfully</source>
         <translation>DH 파라미터 내보내기 성공하였습니다.</translation>
     </message>
@@ -5444,32 +5444,39 @@ Do you want to delete the file and continue?</source>
         <translation>세션</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="302"/>
+        <location filename="../hsm_man_dlg.ui" line="305"/>
         <source>Certificate</source>
         <translation>인증서</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="313"/>
+        <location filename="../hsm_man_dlg.ui" line="316"/>
         <source>Certificate List</source>
         <translation>인증서 목록</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="320"/>
+        <location filename="../hsm_man_dlg.ui" line="323"/>
         <source>Check KeyPair</source>
         <translation>키 쌍 확인</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="397"/>
-        <location filename="../hsm_man_dlg.ui" line="488"/>
-        <location filename="../hsm_man_dlg.ui" line="622"/>
-        <location filename="../hsm_man_dlg.ui" line="761"/>
+        <location filename="../hsm_man_dlg.ui" line="403"/>
+        <location filename="../hsm_man_dlg.ui" line="497"/>
+        <location filename="../hsm_man_dlg.ui" line="634"/>
+        <location filename="../hsm_man_dlg.ui" line="773"/>
+        <location filename="../hsm_man_dlg.cpp" line="234"/>
+        <location filename="../hsm_man_dlg.cpp" line="256"/>
+        <location filename="../hsm_man_dlg.cpp" line="278"/>
+        <location filename="../hsm_man_dlg.cpp" line="300"/>
         <source>Delete</source>
         <translation>삭제</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="377"/>
-        <location filename="../hsm_man_dlg.ui" line="495"/>
-        <location filename="../hsm_man_dlg.ui" line="615"/>
+        <location filename="../hsm_man_dlg.ui" line="383"/>
+        <location filename="../hsm_man_dlg.ui" line="504"/>
+        <location filename="../hsm_man_dlg.ui" line="627"/>
+        <location filename="../hsm_man_dlg.cpp" line="235"/>
+        <location filename="../hsm_man_dlg.cpp" line="257"/>
+        <location filename="../hsm_man_dlg.cpp" line="279"/>
         <source>Export</source>
         <translation>내보내기</translation>
     </message>
@@ -5484,153 +5491,161 @@ Do you want to delete the file and continue?</source>
         <translation>슬롯 이름</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="340"/>
-        <location filename="../hsm_man_dlg.ui" line="451"/>
-        <location filename="../hsm_man_dlg.ui" line="572"/>
-        <location filename="../hsm_man_dlg.ui" line="690"/>
+        <location filename="../hsm_man_dlg.ui" line="343"/>
+        <location filename="../hsm_man_dlg.ui" line="457"/>
+        <location filename="../hsm_man_dlg.ui" line="581"/>
+        <location filename="../hsm_man_dlg.ui" line="702"/>
+        <location filename="../hsm_man_dlg.cpp" line="236"/>
+        <location filename="../hsm_man_dlg.cpp" line="258"/>
+        <location filename="../hsm_man_dlg.cpp" line="280"/>
+        <location filename="../hsm_man_dlg.cpp" line="301"/>
         <source>Object View</source>
         <translation>객체 보기</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="370"/>
-        <location filename="../hsm_man_dlg.ui" line="481"/>
-        <location filename="../hsm_man_dlg.ui" line="636"/>
-        <location filename="../hsm_man_dlg.ui" line="768"/>
+        <location filename="../hsm_man_dlg.ui" line="376"/>
+        <location filename="../hsm_man_dlg.ui" line="490"/>
+        <location filename="../hsm_man_dlg.ui" line="648"/>
+        <location filename="../hsm_man_dlg.ui" line="780"/>
+        <location filename="../hsm_man_dlg.cpp" line="233"/>
+        <location filename="../hsm_man_dlg.cpp" line="255"/>
+        <location filename="../hsm_man_dlg.cpp" line="277"/>
+        <location filename="../hsm_man_dlg.cpp" line="299"/>
         <source>View</source>
         <translation>보기</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="404"/>
+        <location filename="../hsm_man_dlg.ui" line="410"/>
         <source>Delete certificate and key pair</source>
         <translation>인증서 키쌍 삭제</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="417"/>
+        <location filename="../hsm_man_dlg.ui" line="423"/>
         <source>Public Key</source>
         <translation>공개 키</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="428"/>
+        <location filename="../hsm_man_dlg.ui" line="434"/>
         <source>Public Key List</source>
         <translation>공개키 목록</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="515"/>
-        <location filename="../hsm_man_dlg.ui" line="733"/>
+        <location filename="../hsm_man_dlg.ui" line="524"/>
+        <location filename="../hsm_man_dlg.ui" line="745"/>
         <source>Verify</source>
         <translation>검증</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="522"/>
-        <location filename="../hsm_man_dlg.ui" line="747"/>
+        <location filename="../hsm_man_dlg.ui" line="531"/>
+        <location filename="../hsm_man_dlg.ui" line="759"/>
         <source>Encrypt</source>
         <translation>암호화</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="535"/>
+        <location filename="../hsm_man_dlg.ui" line="544"/>
         <source>Private Key</source>
         <translation>개인 키</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="562"/>
+        <location filename="../hsm_man_dlg.ui" line="571"/>
         <source>Private Key List</source>
         <translation>개인키 목록</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="629"/>
-        <location filename="../hsm_man_dlg.ui" line="740"/>
+        <location filename="../hsm_man_dlg.ui" line="641"/>
+        <location filename="../hsm_man_dlg.ui" line="752"/>
         <source>Sign</source>
         <translation>서명</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="643"/>
-        <location filename="../hsm_man_dlg.ui" line="754"/>
+        <location filename="../hsm_man_dlg.ui" line="655"/>
+        <location filename="../hsm_man_dlg.ui" line="766"/>
         <source>Decrypt</source>
         <translation>복호화</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="656"/>
+        <location filename="../hsm_man_dlg.ui" line="668"/>
         <source>Secret Key</source>
         <translation>비밀 키</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="670"/>
+        <location filename="../hsm_man_dlg.ui" line="682"/>
         <source>Secret Key List</source>
         <translation>비밀키 목록</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="799"/>
+        <location filename="../hsm_man_dlg.ui" line="811"/>
         <source>OK</source>
         <translation>확인</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.ui" line="806"/>
+        <location filename="../hsm_man_dlg.ui" line="818"/>
         <source>Close</source>
         <translation>닫기</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="263"/>
+        <location filename="../hsm_man_dlg.cpp" line="354"/>
         <source>Label</source>
         <translation>라벨</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="263"/>
-        <location filename="../hsm_man_dlg.cpp" line="276"/>
+        <location filename="../hsm_man_dlg.cpp" line="354"/>
+        <location filename="../hsm_man_dlg.cpp" line="367"/>
         <source>Handle</source>
         <translation>핸들</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="263"/>
+        <location filename="../hsm_man_dlg.cpp" line="354"/>
         <source>Subject DN</source>
         <translation>주체자 이름</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="276"/>
+        <location filename="../hsm_man_dlg.cpp" line="367"/>
         <source>Name</source>
         <translation>이름</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="276"/>
+        <location filename="../hsm_man_dlg.cpp" line="367"/>
         <source>Algorithm</source>
         <translation>알고리즘</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="276"/>
+        <location filename="../hsm_man_dlg.cpp" line="367"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="755"/>
-        <location filename="../hsm_man_dlg.cpp" line="779"/>
-        <location filename="../hsm_man_dlg.cpp" line="816"/>
         <location filename="../hsm_man_dlg.cpp" line="846"/>
-        <location filename="../hsm_man_dlg.cpp" line="896"/>
-        <location filename="../hsm_man_dlg.cpp" line="962"/>
-        <location filename="../hsm_man_dlg.cpp" line="986"/>
-        <location filename="../hsm_man_dlg.cpp" line="1011"/>
-        <location filename="../hsm_man_dlg.cpp" line="1041"/>
-        <location filename="../hsm_man_dlg.cpp" line="1080"/>
-        <location filename="../hsm_man_dlg.cpp" line="1107"/>
-        <location filename="../hsm_man_dlg.cpp" line="1134"/>
-        <location filename="../hsm_man_dlg.cpp" line="1158"/>
-        <location filename="../hsm_man_dlg.cpp" line="1183"/>
-        <location filename="../hsm_man_dlg.cpp" line="1213"/>
-        <location filename="../hsm_man_dlg.cpp" line="1251"/>
-        <location filename="../hsm_man_dlg.cpp" line="1278"/>
-        <location filename="../hsm_man_dlg.cpp" line="1305"/>
-        <location filename="../hsm_man_dlg.cpp" line="1329"/>
-        <location filename="../hsm_man_dlg.cpp" line="1353"/>
-        <location filename="../hsm_man_dlg.cpp" line="1383"/>
-        <location filename="../hsm_man_dlg.cpp" line="1410"/>
-        <location filename="../hsm_man_dlg.cpp" line="1437"/>
-        <location filename="../hsm_man_dlg.cpp" line="1464"/>
-        <location filename="../hsm_man_dlg.cpp" line="1515"/>
+        <location filename="../hsm_man_dlg.cpp" line="870"/>
+        <location filename="../hsm_man_dlg.cpp" line="907"/>
+        <location filename="../hsm_man_dlg.cpp" line="937"/>
+        <location filename="../hsm_man_dlg.cpp" line="987"/>
+        <location filename="../hsm_man_dlg.cpp" line="1053"/>
+        <location filename="../hsm_man_dlg.cpp" line="1077"/>
+        <location filename="../hsm_man_dlg.cpp" line="1102"/>
+        <location filename="../hsm_man_dlg.cpp" line="1132"/>
+        <location filename="../hsm_man_dlg.cpp" line="1171"/>
+        <location filename="../hsm_man_dlg.cpp" line="1198"/>
+        <location filename="../hsm_man_dlg.cpp" line="1225"/>
+        <location filename="../hsm_man_dlg.cpp" line="1249"/>
+        <location filename="../hsm_man_dlg.cpp" line="1274"/>
+        <location filename="../hsm_man_dlg.cpp" line="1304"/>
+        <location filename="../hsm_man_dlg.cpp" line="1342"/>
+        <location filename="../hsm_man_dlg.cpp" line="1369"/>
+        <location filename="../hsm_man_dlg.cpp" line="1396"/>
+        <location filename="../hsm_man_dlg.cpp" line="1420"/>
+        <location filename="../hsm_man_dlg.cpp" line="1444"/>
+        <location filename="../hsm_man_dlg.cpp" line="1474"/>
+        <location filename="../hsm_man_dlg.cpp" line="1501"/>
+        <location filename="../hsm_man_dlg.cpp" line="1528"/>
+        <location filename="../hsm_man_dlg.cpp" line="1555"/>
+        <location filename="../hsm_man_dlg.cpp" line="1606"/>
         <source>There are no selected items</source>
         <translation>선택한 아이템이 없습니다</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="798"/>
-        <location filename="../hsm_man_dlg.cpp" line="865"/>
+        <location filename="../hsm_man_dlg.cpp" line="889"/>
+        <location filename="../hsm_man_dlg.cpp" line="956"/>
         <source>failed to get certificate: %1</source>
         <translation>인증서 정보 가져오기 실패: %1</translation>
     </message>
@@ -5639,73 +5654,73 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">인증서를 정말로 지우겠습니까?</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="828"/>
+        <location filename="../hsm_man_dlg.cpp" line="919"/>
         <source>Are you sure to delete the ceritificate?</source>
         <translation>인증서를 정말로 지우겠습니까?</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="834"/>
-        <location filename="../hsm_man_dlg.cpp" line="947"/>
+        <location filename="../hsm_man_dlg.cpp" line="925"/>
+        <location filename="../hsm_man_dlg.cpp" line="1038"/>
         <source>The certificate is deleted</source>
         <translation>인증서가 삭제 되었습니다</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="874"/>
+        <location filename="../hsm_man_dlg.cpp" line="965"/>
         <source>Invalid certificate</source>
         <translation>유효하지 않는 인증서</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="911"/>
+        <location filename="../hsm_man_dlg.cpp" line="1002"/>
         <source>Do you want to delete a certificate and key pair with the same CKA_ID?</source>
         <translation>인증서와 동일한 CKA_ID 를 가진 키 쌍 모두 지우겠습니까?</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="920"/>
+        <location filename="../hsm_man_dlg.cpp" line="1011"/>
         <source>fail to get private handle: %1</source>
         <translation>개인키 핸들 가져오기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="927"/>
+        <location filename="../hsm_man_dlg.cpp" line="1018"/>
         <source>fail to get public handle: %1</source>
         <translation>공개키 핸들 가져오기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1059"/>
+        <location filename="../hsm_man_dlg.cpp" line="1150"/>
         <source>failed to get public key: %1</source>
         <translation>공개키 가져오기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1023"/>
+        <location filename="../hsm_man_dlg.cpp" line="1114"/>
         <source>Are you sure to delete the public key</source>
         <translation>공개키를 정말로 지우겠습니까?</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1029"/>
+        <location filename="../hsm_man_dlg.cpp" line="1120"/>
         <source>The public key is deleted</source>
         <translation>공개키가 삭제 되었습니다</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1231"/>
+        <location filename="../hsm_man_dlg.cpp" line="1322"/>
         <source>failed to get private key: %1</source>
         <translation>개인키 가져오기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1195"/>
+        <location filename="../hsm_man_dlg.cpp" line="1286"/>
         <source>Are you sure to delete the private key</source>
         <translation>개인키를 정말로 지우겠습니까?</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1201"/>
+        <location filename="../hsm_man_dlg.cpp" line="1292"/>
         <source>The private key is deleted</source>
         <translation>개인키가 삭제 되었습니다</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1365"/>
+        <location filename="../hsm_man_dlg.cpp" line="1456"/>
         <source>Are you sure to delete the secret key</source>
         <translation>비밀키를 정말로 지우겠습니까?</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1371"/>
+        <location filename="../hsm_man_dlg.cpp" line="1462"/>
         <source>The secret key is deleted</source>
         <translation>비밀키가 삭제 되었습니다</translation>
     </message>

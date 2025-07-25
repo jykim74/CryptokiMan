@@ -1,4 +1,5 @@
 #include <QStringList>
+#include <QMenu>
 
 #include "hsm_man_dlg.h"
 #include "common.h"
@@ -34,6 +35,10 @@ HsmManDlg::HsmManDlg(QWidget *parent) :
     connect( mOKBtn, SIGNAL(clicked()), this, SLOT(clickOK()));
     connect( mUsageCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changeUsage()));
 
+    connect( mCertTable, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT( slotCertTableMenuRequested(QPoint)));
+    connect( mPublicTable, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT( slotPubKeyTableMenuRequested(QPoint)));
+    connect( mPrivateTable, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT( slotPriKeyTableMenuRequested(QPoint)));
+    connect( mSecretTable, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT( slotSecretTableMenuRequested(QPoint)));
 
     connect( mTabWidget, SIGNAL(currentChanged(int)), this, SLOT(changeTab(int)));
     connect( mCertKeyPairCheck, SIGNAL(clicked()), this, SLOT(loadCertList()));
@@ -93,7 +98,7 @@ HsmManDlg::HsmManDlg(QWidget *parent) :
 #endif
 
 
-    mTabWidget->setCurrentIndex(0);
+
     mOKBtn->setDefault(true);
     mOKBtn->hide();
 
@@ -221,6 +226,91 @@ void HsmManDlg::closeEvent(QCloseEvent *event )
 
 }
 
+void HsmManDlg::slotCertTableMenuRequested( QPoint pos )
+{
+    QMenu *menu = new QMenu(this);
+
+    QAction *viewAct = new QAction( tr( "View" ), this );
+    QAction *deleteAct = new QAction( tr( "Delete" ), this );
+    QAction *exportAct = new QAction( tr("Export"), this );
+    QAction *objectViewAct = new QAction( tr("Object View"), this );
+
+    connect( viewAct, SIGNAL(triggered()), this, SLOT(clickCertView()));
+    connect( deleteAct, SIGNAL(triggered()), this, SLOT(clickCertDelete()));
+    connect( exportAct, SIGNAL(triggered()), this, SLOT(clickCertExport()));
+    connect( objectViewAct, SIGNAL(triggered()), this, SLOT(clickCertObjectView()));
+
+    menu->addAction( viewAct );
+    menu->addAction( deleteAct );
+    menu->addAction( exportAct );
+    menu->addAction( objectViewAct );
+
+    menu->popup( mCertTable->viewport()->mapToGlobal(pos));
+}
+
+void HsmManDlg::slotPubKeyTableMenuRequested( QPoint pos )
+{
+    QMenu *menu = new QMenu(this);
+
+    QAction *viewAct = new QAction( tr( "View" ), this );
+    QAction *deleteAct = new QAction( tr( "Delete" ), this );
+    QAction *exportAct = new QAction( tr("Export"), this );
+    QAction *objectViewAct = new QAction( tr("Object View"), this );
+
+    connect( viewAct, SIGNAL(triggered()), this, SLOT(clickPublicView()));
+    connect( deleteAct, SIGNAL(triggered()), this, SLOT(clickPublicDelete()));
+    connect( exportAct, SIGNAL(triggered()), this, SLOT(clickPublicExport()));
+    connect( objectViewAct, SIGNAL(triggered()), this, SLOT(clickPublicObjectView()));
+
+    menu->addAction( viewAct );
+    menu->addAction( deleteAct );
+    menu->addAction( exportAct );
+    menu->addAction( objectViewAct );
+
+    menu->popup( mPublicTable->viewport()->mapToGlobal(pos));
+}
+
+void HsmManDlg::slotPriKeyTableMenuRequested( QPoint pos )
+{
+    QMenu *menu = new QMenu(this);
+
+    QAction *viewAct = new QAction( tr( "View" ), this );
+    QAction *deleteAct = new QAction( tr( "Delete" ), this );
+    QAction *exportAct = new QAction( tr("Export"), this );
+    QAction *objectViewAct = new QAction( tr("Object View"), this );
+
+    connect( viewAct, SIGNAL(triggered()), this, SLOT(clickPrivateView()));
+    connect( deleteAct, SIGNAL(triggered()), this, SLOT(clickPrivateDelete()));
+    connect( exportAct, SIGNAL(triggered()), this, SLOT(clickPrivateExport()));
+    connect( objectViewAct, SIGNAL(triggered()), this, SLOT(clickPrivateObjectView()));
+
+    menu->addAction( viewAct );
+    menu->addAction( deleteAct );
+    menu->addAction( exportAct );
+    menu->addAction( objectViewAct );
+
+    menu->popup( mPrivateTable->viewport()->mapToGlobal(pos));
+}
+
+void HsmManDlg::slotSecretTableMenuRequested( QPoint pos )
+{
+    QMenu *menu = new QMenu(this);
+
+    QAction *viewAct = new QAction( tr( "View" ), this );
+    QAction *deleteAct = new QAction( tr( "Delete" ), this );
+    QAction *objectViewAct = new QAction( tr("Object View"), this );
+
+    connect( viewAct, SIGNAL(triggered()), this, SLOT(clickSecretView()));
+    connect( deleteAct, SIGNAL(triggered()), this, SLOT(clickSecretDelete()));
+    connect( objectViewAct, SIGNAL(triggered()), this, SLOT(clickSecretObjectView()));
+
+    menu->addAction( viewAct );
+    menu->addAction( deleteAct );
+    menu->addAction( objectViewAct );
+
+    menu->popup( mSecretTable->viewport()->mapToGlobal(pos));
+}
+
 void HsmManDlg::changeTab( int index )
 {
     mUsageCombo->setEnabled(true);
@@ -259,6 +349,7 @@ void HsmManDlg::initUI()
 #endif
 
     mUsageCombo->addItems( kUsageList );
+    mTabWidget->setCurrentIndex(0);
 
     QStringList sCertLabels = { tr("Label"), tr("Handle"), tr("Subject DN") };
 
