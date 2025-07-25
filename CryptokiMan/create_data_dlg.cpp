@@ -102,6 +102,7 @@ void CreateDataDlg::connectAttributes()
     connect( mDestroyableCheck, SIGNAL(clicked()), this, SLOT(clickDestroyable()));
 
     connect( mTokenCheck, SIGNAL(clicked()), this, SLOT(clickToken()));
+    connect( mObjectIDTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changeObjectID()));
 }
 
 void CreateDataDlg::accept()
@@ -269,6 +270,18 @@ void CreateDataDlg::changeData()
     QString strData = mDataText->toPlainText();
     QString strLen = getDataLenString( mDataCombo->currentText(), strData );
     mDataLenText->setText( QString("%1").arg(strLen));
+}
+
+void CreateDataDlg::changeObjectID()
+{
+    QString strType = mObjectIDTypeCombo->currentText();
+
+    if( strType.toUpper() == "DER HEX" )
+        mObjectIDText->setPlaceholderText( tr( "OID DER encoded value" ));
+    else if( strType.toUpper() == "VALUE HEX" )
+        mObjectIDText->setPlaceholderText( tr("OID value hex") );
+    else
+        mObjectIDText->setPlaceholderText( "1.2.3.4" );
 }
 
 void CreateDataDlg::setDefaults()

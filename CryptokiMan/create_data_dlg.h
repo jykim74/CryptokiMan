@@ -36,6 +36,7 @@ private slots:
     void clickToken();
 
     void changeData();
+    void changeObjectID();
 
 private:
     void initialize();

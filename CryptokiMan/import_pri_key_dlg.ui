@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="mFirstTab">
       <attribute name="title">
@@ -295,9 +295,9 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QCheckBox" name="mPubImportCheck">
+          <widget class="QCheckBox" name="mSavePubKeyCheck">
            <property name="text">
-            <string>Public Key Import</string>
+            <string>Save public key from private key</string>
            </property>
           </widget>
          </item>
@@ -517,21 +517,11 @@
            </property>
           </widget>
          </item>
-         <item row="3" column="5">
-          <widget class="QDateEdit" name="mPriEndDateEdit"/>
-         </item>
          <item row="1" column="3">
           <widget class="QComboBox" name="mPriModifiableCombo"/>
          </item>
          <item row="2" column="1">
           <widget class="QComboBox" name="mPriDeriveCombo"/>
-         </item>
-         <item row="3" column="2">
-          <widget class="QCheckBox" name="mPriStartDateCheck">
-           <property name="text">
-            <string>StartDate</string>
-           </property>
-          </widget>
          </item>
          <item row="0" column="3">
           <widget class="QComboBox" name="mPriDecryptCombo"/>
@@ -583,20 +573,10 @@
            </property>
           </widget>
          </item>
-         <item row="3" column="3">
-          <widget class="QDateEdit" name="mPriStartDateEdit"/>
-         </item>
          <item row="0" column="2">
           <widget class="QCheckBox" name="mPriDecryptCheck">
            <property name="text">
             <string notr="true">Decrypt</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="4">
-          <widget class="QCheckBox" name="mPriEndDateCheck">
-           <property name="text">
-            <string>EndDate</string>
            </property>
           </widget>
          </item>
@@ -621,25 +601,45 @@
            </property>
           </widget>
          </item>
-         <item row="4" column="0">
+         <item row="3" column="4">
           <widget class="QCheckBox" name="mPriCopyableCheck">
            <property name="text">
             <string>Copyable</string>
            </property>
           </widget>
          </item>
-         <item row="4" column="2">
+         <item row="3" column="5">
+          <widget class="QComboBox" name="mPriCopyableCombo"/>
+         </item>
+         <item row="4" column="0">
+          <widget class="QCheckBox" name="mPriStartDateCheck">
+           <property name="text">
+            <string>StartDate</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QDateEdit" name="mPriStartDateEdit"/>
+         </item>
+         <item row="3" column="2">
           <widget class="QCheckBox" name="mPriDestroyableCheck">
            <property name="text">
             <string>Destroyable</string>
            </property>
           </widget>
          </item>
-         <item row="4" column="1">
-          <widget class="QComboBox" name="mPriCopyableCombo"/>
+         <item row="3" column="3">
+          <widget class="QComboBox" name="mPriDestroyableCombo"/>
+         </item>
+         <item row="4" column="2">
+          <widget class="QCheckBox" name="mPriEndDateCheck">
+           <property name="text">
+            <string>EndDate</string>
+           </property>
+          </widget>
          </item>
          <item row="4" column="3">
-          <widget class="QComboBox" name="mPriDestroyableCombo"/>
+          <widget class="QDateEdit" name="mPriEndDateEdit"/>
          </item>
         </layout>
        </item>
@@ -752,9 +752,6 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="5">
-          <widget class="QDateEdit" name="mPubStartDateEdit"/>
-         </item>
          <item row="1" column="1">
           <widget class="QComboBox" name="mPubVerifyCombo"/>
          </item>
@@ -762,13 +759,6 @@
           <widget class="QCheckBox" name="mPubTokenCheck">
            <property name="text">
             <string notr="true">Token</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QCheckBox" name="mPubEndDateCheck">
-           <property name="text">
-            <string>EndDate</string>
            </property>
           </widget>
          </item>
@@ -806,9 +796,6 @@
            </property>
           </widget>
          </item>
-         <item row="3" column="1">
-          <widget class="QDateEdit" name="mPubEndDateEdit"/>
-         </item>
          <item row="0" column="1">
           <widget class="QComboBox" name="mPubPrivateCombo"/>
          </item>
@@ -822,13 +809,6 @@
           <widget class="QCheckBox" name="mPubVerifyRecoverCheck">
            <property name="text">
             <string>VerifyRecover</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="4">
-          <widget class="QCheckBox" name="mPubStartDateCheck">
-           <property name="text">
-            <string>StartDate</string>
            </property>
           </widget>
          </item>
@@ -852,25 +832,45 @@
            </property>
           </widget>
          </item>
-         <item row="4" column="0">
+         <item row="3" column="0">
           <widget class="QCheckBox" name="mPubDestroyableCheck">
            <property name="text">
             <string>Destroyable</string>
            </property>
           </widget>
          </item>
-         <item row="3" column="4">
+         <item row="3" column="1">
+          <widget class="QComboBox" name="mPubDestroyableCombo"/>
+         </item>
+         <item row="2" column="4">
           <widget class="QCheckBox" name="mPubCopyableCheck">
            <property name="text">
             <string>Copyable</string>
            </property>
           </widget>
          </item>
-         <item row="4" column="1">
-          <widget class="QComboBox" name="mPubDestroyableCombo"/>
+         <item row="2" column="5">
+          <widget class="QComboBox" name="mPubCopyableCombo"/>
+         </item>
+         <item row="3" column="4">
+          <widget class="QCheckBox" name="mPubStartDateCheck">
+           <property name="text">
+            <string>StartDate</string>
+           </property>
+          </widget>
          </item>
          <item row="3" column="5">
-          <widget class="QComboBox" name="mPubCopyableCombo"/>
+          <widget class="QDateEdit" name="mPubStartDateEdit"/>
+         </item>
+         <item row="4" column="0">
+          <widget class="QCheckBox" name="mPubEndDateCheck">
+           <property name="text">
+            <string>EndDate</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QDateEdit" name="mPubEndDateEdit"/>
          </item>
         </layout>
        </item>
@@ -908,7 +908,7 @@
   <tabstop>mSlotIDText</tabstop>
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
-  <tabstop>mPubImportCheck</tabstop>
+  <tabstop>mSavePubKeyCheck</tabstop>
   <tabstop>mEncPriKeyCheck</tabstop>
   <tabstop>mPathText</tabstop>
   <tabstop>mFindBtn</tabstop>
@@ -941,14 +941,6 @@
   <tabstop>mPriTokenCombo</tabstop>
   <tabstop>mPriSignRecoverCheck</tabstop>
   <tabstop>mPriSignRecoverCombo</tabstop>
-  <tabstop>mPriStartDateCheck</tabstop>
-  <tabstop>mPriStartDateEdit</tabstop>
-  <tabstop>mPriEndDateCheck</tabstop>
-  <tabstop>mPriEndDateEdit</tabstop>
-  <tabstop>mPriCopyableCheck</tabstop>
-  <tabstop>mPriCopyableCombo</tabstop>
-  <tabstop>mPriDestroyableCheck</tabstop>
-  <tabstop>mPriDestroyableCombo</tabstop>
   <tabstop>mPubLabelText</tabstop>
   <tabstop>mPubSameLabelBtn</tabstop>
   <tabstop>mPubSubjectText</tabstop>
@@ -971,16 +963,8 @@
   <tabstop>mPubTokenCombo</tabstop>
   <tabstop>mPubVerifyRecoverCheck</tabstop>
   <tabstop>mPubVerifyRecoverCombo</tabstop>
-  <tabstop>mPubStartDateCheck</tabstop>
-  <tabstop>mPubStartDateEdit</tabstop>
-  <tabstop>mPubEndDateCheck</tabstop>
-  <tabstop>mPubEndDateEdit</tabstop>
   <tabstop>mPubTrustedCheck</tabstop>
   <tabstop>mPubTrustedCombo</tabstop>
-  <tabstop>mPubCopyableCheck</tabstop>
-  <tabstop>mPubCopyableCombo</tabstop>
-  <tabstop>mPubDestroyableCheck</tabstop>
-  <tabstop>mPubDestroyableCombo</tabstop>
  </tabstops>
  <resources/>
  <connections>

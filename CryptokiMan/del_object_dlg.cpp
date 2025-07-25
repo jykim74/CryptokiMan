@@ -12,6 +12,7 @@
 #include "man_tree_item.h"
 #include "cryptoki_api.h"
 #include "settings_mgr.h"
+#include "object_view_dlg.h"
 
 DelObjectDlg::DelObjectDlg(QWidget *parent) :
     QDialog(parent)
@@ -29,6 +30,7 @@ DelObjectDlg::DelObjectDlg(QWidget *parent) :
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(close()));
     connect( mDeleteBtn, SIGNAL(clicked()), this, SLOT(deleteObj()));
     connect( mDeleteAllBtn, SIGNAL(clicked()), this, SLOT(deleteAllObj()));
+    connect( mViewBtn, SIGNAL(clicked()), this, SLOT(viewObj()));
 
     mDeleteBtn->setDefault(true);
 
@@ -225,6 +227,21 @@ void DelObjectDlg::deleteAllObj()
         QDialog::reject();
 }
 
+void DelObjectDlg::viewObj()
+{
+    long hObj = mObjectText->text().toLong();
+
+    if( hObj <= 0 )
+    {
+        manApplet->warningBox( tr( "There is no object" ), this );
+        return;
+    }
+
+    ObjectViewDlg objectView;
+    objectView.setSlotIndex( slot_index_ );
+    objectView.setObject( hObj );
+    objectView.exec();
+}
 
 void DelObjectDlg::labelChanged( int index )
 {

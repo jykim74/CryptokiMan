@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>645</width>
-    <height>485</height>
+    <height>386</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="mFirstTab">
       <attribute name="title">
@@ -290,9 +290,92 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_11">
-         <property name="text">
-          <string>Key Information</string>
+        <layout class="QGridLayout" name="gridLayout_4">
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_11">
+           <property name="text">
+            <string>Key Information</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QComboBox" name="mKeyTypeCombo">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QLineEdit" name="mKeyTypeText">
+           <property name="minimumSize">
+            <size>
+             <width>90</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>90</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="palette">
+            <palette>
+             <active>
+              <colorrole role="Base">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>221</red>
+                 <green>221</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </active>
+             <inactive>
+              <colorrole role="Base">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>221</red>
+                 <green>221</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </inactive>
+             <disabled/>
+            </palette>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="Line" name="line">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>
@@ -303,16 +386,6 @@
          </property>
          <item row="0" column="3">
           <widget class="QComboBox" name="mKeyCombo"/>
-         </item>
-         <item row="0" column="1">
-          <widget class="QComboBox" name="mKeyTypeCombo">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-          </widget>
          </item>
          <item row="0" column="5">
           <widget class="QLineEdit" name="mKeyLenText">
@@ -393,52 +466,6 @@
            </property>
            <property name="text">
             <string>Key</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <widget class="QLineEdit" name="mKeyTypeText">
-           <property name="minimumSize">
-            <size>
-             <width>90</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>90</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="palette">
-            <palette>
-             <active>
-              <colorrole role="Base">
-               <brush brushstyle="SolidPattern">
-                <color alpha="255">
-                 <red>221</red>
-                 <green>221</green>
-                 <blue>255</blue>
-                </color>
-               </brush>
-              </colorrole>
-             </active>
-             <inactive>
-              <colorrole role="Base">
-               <brush brushstyle="SolidPattern">
-                <color alpha="255">
-                 <red>221</red>
-                 <green>221</green>
-                 <blue>255</blue>
-                </color>
-               </brush>
-              </colorrole>
-             </inactive>
-             <disabled/>
-            </palette>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -600,16 +627,6 @@
            </property>
           </widget>
          </item>
-         <item row="4" column="2">
-          <widget class="QCheckBox" name="mEndDateCheck">
-           <property name="text">
-            <string>EndDate</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="3">
-          <widget class="QDateEdit" name="mEndDateEdit"/>
-         </item>
          <item row="0" column="2">
           <widget class="QCheckBox" name="mSensitiveCheck">
            <property name="text">
@@ -671,16 +688,6 @@
          <item row="1" column="5">
           <widget class="QComboBox" name="mDecryptCombo"/>
          </item>
-         <item row="4" column="1">
-          <widget class="QDateEdit" name="mStartDateEdit"/>
-         </item>
-         <item row="4" column="0">
-          <widget class="QCheckBox" name="mStartDateCheck">
-           <property name="text">
-            <string>StartDate</string>
-           </property>
-          </widget>
-         </item>
          <item row="1" column="4">
           <widget class="QCheckBox" name="mDecryptCheck">
            <property name="text">
@@ -688,25 +695,45 @@
            </property>
           </widget>
          </item>
-         <item row="5" column="0">
-          <widget class="QCheckBox" name="mCopyableCheck">
-           <property name="text">
-            <string>Copyable</string>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="2">
+         <item row="4" column="0">
           <widget class="QCheckBox" name="mDestroyableCheck">
            <property name="text">
             <string>Destroyable</string>
            </property>
           </widget>
          </item>
-         <item row="5" column="1">
-          <widget class="QComboBox" name="mCopyableCombo"/>
+         <item row="4" column="1">
+          <widget class="QComboBox" name="mDestroyableCombo"/>
+         </item>
+         <item row="5" column="2">
+          <widget class="QCheckBox" name="mEndDateCheck">
+           <property name="text">
+            <string>EndDate</string>
+           </property>
+          </widget>
          </item>
          <item row="5" column="3">
-          <widget class="QComboBox" name="mDestroyableCombo"/>
+          <widget class="QDateEdit" name="mEndDateEdit"/>
+         </item>
+         <item row="4" column="2">
+          <widget class="QCheckBox" name="mCopyableCheck">
+           <property name="text">
+            <string>Copyable</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="3">
+          <widget class="QComboBox" name="mCopyableCombo"/>
+         </item>
+         <item row="5" column="0">
+          <widget class="QCheckBox" name="mStartDateCheck">
+           <property name="text">
+            <string>StartDate</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="1">
+          <widget class="QDateEdit" name="mStartDateEdit"/>
          </item>
         </layout>
        </item>
@@ -744,8 +771,6 @@
   <tabstop>mSlotIDText</tabstop>
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
-  <tabstop>mKeyTypeCombo</tabstop>
-  <tabstop>mKeyTypeText</tabstop>
   <tabstop>mKeyCombo</tabstop>
   <tabstop>mKeyLenText</tabstop>
   <tabstop>mKeyText</tabstop>
@@ -776,16 +801,8 @@
   <tabstop>mExtractableCombo</tabstop>
   <tabstop>mDeriveCheck</tabstop>
   <tabstop>mDeriveCombo</tabstop>
-  <tabstop>mStartDateCheck</tabstop>
-  <tabstop>mStartDateEdit</tabstop>
-  <tabstop>mEndDateCheck</tabstop>
-  <tabstop>mEndDateEdit</tabstop>
   <tabstop>mTrustedCheck</tabstop>
   <tabstop>mTrustedCombo</tabstop>
-  <tabstop>mCopyableCheck</tabstop>
-  <tabstop>mCopyableCombo</tabstop>
-  <tabstop>mDestroyableCheck</tabstop>
-  <tabstop>mDestroyableCombo</tabstop>
  </tabstops>
  <resources/>
  <connections>

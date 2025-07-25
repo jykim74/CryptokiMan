@@ -69,7 +69,7 @@ void ImportPriKeyDlg::setSlotIndex(int index)
 
 void ImportPriKeyDlg::initialize()
 {
-    checkPubImport();
+    checkSavePubKey();
     checkEncPriKey();
 
     mPathText->setPlaceholderText( tr( "Find a private key" ));
@@ -201,7 +201,7 @@ void ImportPriKeyDlg::connectAttributes()
     connect( mPubSameLabelBtn, SIGNAL(clicked()), this, SLOT(clickPubSameLabel()));
     connect( mPriSameLabelBtn, SIGNAL(clicked()), this, SLOT(clickPriSameLabel()));
 
-    connect( mPubImportCheck, SIGNAL(clicked()), this, SLOT(checkPubImport()));
+    connect( mSavePubKeyCheck, SIGNAL(clicked()), this, SLOT(checkSavePubKey()));
     connect( mEncPriKeyCheck, SIGNAL(clicked()), this, SLOT(checkEncPriKey()));
 
     connect( mPriUseSKICheck, SIGNAL(clicked()), this, SLOT(clickPriUseSKI()));
@@ -341,7 +341,7 @@ void ImportPriKeyDlg::accept()
             rv = createRSAPrivateKey( &rsaKeyVal );
             if( rv != 0 ) goto end;
 
-            if( mPubImportCheck->isChecked() )
+            if( mSavePubKeyCheck->isChecked() )
                 rv = createRSAPublicKey( &rsaKeyVal );
         }
     }
@@ -353,7 +353,7 @@ void ImportPriKeyDlg::accept()
             rv = createECPrivateKey( &ecKeyVal );
             if( rv != 0 ) goto end;
 
-            if( mPubImportCheck->isChecked() )
+            if( mSavePubKeyCheck->isChecked() )
                 rv = createECPublicKey( &ecKeyVal );
         }
     }
@@ -365,7 +365,7 @@ void ImportPriKeyDlg::accept()
             rv = createEDPrivateKey( &rawKeyVal );
             if( rv != 0 ) goto end;
 
-            if( mPubImportCheck->isChecked() )
+            if( mSavePubKeyCheck->isChecked() )
                 rv = createEDPublicKey( &rawKeyVal );
         }
     }
@@ -377,7 +377,7 @@ void ImportPriKeyDlg::accept()
             rv = createDSAPrivateKey( &dsaKeyVal );
             if( rv != 0 ) goto end;
 
-            if( mPubImportCheck->isChecked() )
+            if( mSavePubKeyCheck->isChecked() )
                 rv = createDSAPublicKey( &dsaKeyVal );
         }
     }
@@ -433,9 +433,9 @@ void ImportPriKeyDlg::clickPubSameLabel()
 }
 
 
-void ImportPriKeyDlg::checkPubImport()
+void ImportPriKeyDlg::checkSavePubKey()
 {
-    bool bVal = mPubImportCheck->isChecked();
+    bool bVal = mSavePubKeyCheck->isChecked();
 
     tabWidget->setTabEnabled( 2, bVal );
 }

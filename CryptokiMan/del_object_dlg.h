@@ -33,9 +33,11 @@ private slots:
 
     void deleteObj();
     void deleteAllObj();
+    void viewObj();
 
     void labelChanged( int index );
     void objectTypeChanged( int type );
+
 
 private:
     void initialize();

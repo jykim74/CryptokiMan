@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="mFirstTab">
       <attribute name="title">
@@ -1001,9 +1001,6 @@
            </property>
           </widget>
          </item>
-         <item row="4" column="5">
-          <widget class="QDateEdit" name="mStartDateEdit"/>
-         </item>
          <item row="3" column="4">
           <widget class="QCheckBox" name="mExtractableCheck">
            <property name="text">
@@ -1082,21 +1079,11 @@
          <item row="5" column="3">
           <widget class="QComboBox" name="mTrustedCombo"/>
          </item>
-         <item row="4" column="4">
-          <widget class="QCheckBox" name="mStartDateCheck">
-           <property name="text">
-            <string>StartDate</string>
-           </property>
-          </widget>
-         </item>
          <item row="1" column="3">
           <widget class="QComboBox" name="mEncryptCombo"/>
          </item>
          <item row="2" column="3">
           <widget class="QComboBox" name="mSignCombo"/>
-         </item>
-         <item row="5" column="1">
-          <widget class="QDateEdit" name="mEndDateEdit"/>
          </item>
          <item row="1" column="2">
           <widget class="QCheckBox" name="mEncryptCheck">
@@ -1118,32 +1105,45 @@
            </property>
           </widget>
          </item>
-         <item row="5" column="0">
-          <widget class="QCheckBox" name="mEndDateCheck">
-           <property name="text">
-            <string>EndDate</string>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="0">
+         <item row="4" column="4">
           <widget class="QCheckBox" name="mDestroyableCheck">
            <property name="text">
             <string>Destroyable</string>
            </property>
           </widget>
          </item>
-         <item row="5" column="4">
+         <item row="4" column="5">
+          <widget class="QComboBox" name="mDestroyableCombo"/>
+         </item>
+         <item row="6" column="0">
+          <widget class="QCheckBox" name="mEndDateCheck">
+           <property name="text">
+            <string>EndDate</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="1">
+          <widget class="QDateEdit" name="mEndDateEdit"/>
+         </item>
+         <item row="5" column="0">
           <widget class="QCheckBox" name="mCopyableCheck">
            <property name="text">
             <string>Copyable</string>
            </property>
           </widget>
          </item>
-         <item row="5" column="5">
+         <item row="5" column="1">
           <widget class="QComboBox" name="mCopyableCombo"/>
          </item>
-         <item row="6" column="1">
-          <widget class="QComboBox" name="mDestroyableCombo"/>
+         <item row="5" column="4">
+          <widget class="QCheckBox" name="mStartDateCheck">
+           <property name="text">
+            <string>StartDate</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="5">
+          <widget class="QDateEdit" name="mStartDateEdit"/>
          </item>
         </layout>
        </item>
@@ -1226,16 +1226,8 @@
   <tabstop>mSignRecoverCombo</tabstop>
   <tabstop>mVerifyRecoverCheck</tabstop>
   <tabstop>mVerifyRecoverCombo</tabstop>
-  <tabstop>mStartDateCheck</tabstop>
-  <tabstop>mStartDateEdit</tabstop>
-  <tabstop>mEndDateCheck</tabstop>
-  <tabstop>mEndDateEdit</tabstop>
   <tabstop>mTrustedCheck</tabstop>
   <tabstop>mTrustedCombo</tabstop>
-  <tabstop>mCopyableCheck</tabstop>
-  <tabstop>mCopyableCombo</tabstop>
-  <tabstop>mDestroyableCheck</tabstop>
-  <tabstop>mDestroyableCombo</tabstop>
  </tabstops>
  <resources/>
  <connections>

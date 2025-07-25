@@ -23,7 +23,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="mFirstTab">
       <attribute name="title">
@@ -977,20 +977,6 @@
            </property>
           </widget>
          </item>
-         <item row="3" column="4">
-          <widget class="QCheckBox" name="mPriEndDateCheck">
-           <property name="text">
-            <string>EndDate</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="2">
-          <widget class="QCheckBox" name="mPriStartDateCheck">
-           <property name="text">
-            <string>StartDate</string>
-           </property>
-          </widget>
-         </item>
          <item row="2" column="1">
           <widget class="QComboBox" name="mPriDeriveCombo"/>
          </item>
@@ -1027,12 +1013,6 @@
          <item row="2" column="3">
           <widget class="QComboBox" name="mPriExtractableCombo"/>
          </item>
-         <item row="3" column="3">
-          <widget class="QDateEdit" name="mPriStartDateEdit"/>
-         </item>
-         <item row="3" column="5">
-          <widget class="QDateEdit" name="mPriEndDateEdit"/>
-         </item>
          <item row="0" column="5">
           <widget class="QComboBox" name="mPriSignCombo"/>
          </item>
@@ -1043,25 +1023,45 @@
            </property>
           </widget>
          </item>
-         <item row="4" column="0">
+         <item row="3" column="2">
           <widget class="QCheckBox" name="mPriCopyableCheck">
            <property name="text">
             <string>Copyable</string>
            </property>
           </widget>
          </item>
-         <item row="4" column="2">
+         <item row="3" column="3">
+          <widget class="QComboBox" name="mPriCopyableCombo"/>
+         </item>
+         <item row="3" column="4">
           <widget class="QCheckBox" name="mPriDestroyableCheck">
            <property name="text">
             <string>Destroyable</string>
            </property>
           </widget>
          </item>
-         <item row="4" column="1">
-          <widget class="QComboBox" name="mPriCopyableCombo"/>
+         <item row="3" column="5">
+          <widget class="QComboBox" name="mPriDestroyableCombo"/>
          </item>
          <item row="4" column="3">
-          <widget class="QComboBox" name="mPriDestroyableCombo"/>
+          <widget class="QDateEdit" name="mPriEndDateEdit"/>
+         </item>
+         <item row="4" column="2">
+          <widget class="QCheckBox" name="mPriEndDateCheck">
+           <property name="text">
+            <string>EndDate</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QCheckBox" name="mPriStartDateCheck">
+           <property name="text">
+            <string>StartDate</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QDateEdit" name="mPriStartDateEdit"/>
          </item>
         </layout>
        </item>
@@ -1256,22 +1256,8 @@
          <item row="1" column="1">
           <widget class="QComboBox" name="mPubVerifyCombo"/>
          </item>
-         <item row="2" column="4">
-          <widget class="QCheckBox" name="mPubStartDateCheck">
-           <property name="text">
-            <string>StartDate</string>
-           </property>
-          </widget>
-         </item>
          <item row="2" column="1">
           <widget class="QComboBox" name="mPubTokenCombo"/>
-         </item>
-         <item row="3" column="0">
-          <widget class="QCheckBox" name="mPubEndDateCheck">
-           <property name="text">
-            <string>EndDate</string>
-           </property>
-          </widget>
          </item>
          <item row="0" column="3">
           <widget class="QComboBox" name="mPubEncryptCombo"/>
@@ -1302,9 +1288,6 @@
             <string>Trusted</string>
            </property>
           </widget>
-         </item>
-         <item row="2" column="5">
-          <widget class="QDateEdit" name="mPubStartDateEdit"/>
          </item>
          <item row="1" column="2">
           <widget class="QCheckBox" name="mPubDeriveCheck">
@@ -1350,9 +1333,6 @@
            </property>
           </widget>
          </item>
-         <item row="3" column="1">
-          <widget class="QDateEdit" name="mPubEndDateEdit"/>
-         </item>
          <item row="2" column="3">
           <widget class="QComboBox" name="mPubVerifyRecoverCombo"/>
          </item>
@@ -1363,25 +1343,45 @@
            </property>
           </widget>
          </item>
-         <item row="4" column="0">
+         <item row="2" column="4">
           <widget class="QCheckBox" name="mPubDestroyableCheck">
            <property name="text">
             <string>Destroyable</string>
            </property>
           </widget>
          </item>
-         <item row="3" column="4">
+         <item row="2" column="5">
+          <widget class="QComboBox" name="mPubDestroyableCombo"/>
+         </item>
+         <item row="4" column="0">
+          <widget class="QCheckBox" name="mPubEndDateCheck">
+           <property name="text">
+            <string>EndDate</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QDateEdit" name="mPubEndDateEdit"/>
+         </item>
+         <item row="3" column="0">
           <widget class="QCheckBox" name="mPubCopyableCheck">
            <property name="text">
             <string>Copyable</string>
            </property>
           </widget>
          </item>
-         <item row="4" column="1">
-          <widget class="QComboBox" name="mPubDestroyableCombo"/>
+         <item row="3" column="1">
+          <widget class="QComboBox" name="mPubCopyableCombo"/>
+         </item>
+         <item row="3" column="4">
+          <widget class="QCheckBox" name="mPubStartDateCheck">
+           <property name="text">
+            <string>StartDate</string>
+           </property>
+          </widget>
          </item>
          <item row="3" column="5">
-          <widget class="QComboBox" name="mPubCopyableCombo"/>
+          <widget class="QDateEdit" name="mPubStartDateEdit"/>
          </item>
         </layout>
        </item>
@@ -1464,14 +1464,6 @@
   <tabstop>mPriTokenCombo</tabstop>
   <tabstop>mPriSignRecoverCheck</tabstop>
   <tabstop>mPriSignRecoverCombo</tabstop>
-  <tabstop>mPriStartDateCheck</tabstop>
-  <tabstop>mPriStartDateEdit</tabstop>
-  <tabstop>mPriEndDateCheck</tabstop>
-  <tabstop>mPriEndDateEdit</tabstop>
-  <tabstop>mPriCopyableCheck</tabstop>
-  <tabstop>mPriCopyableCombo</tabstop>
-  <tabstop>mPriDestroyableCheck</tabstop>
-  <tabstop>mPriDestroyableCombo</tabstop>
   <tabstop>mPubLabelText</tabstop>
   <tabstop>mPubSameLabelBtn</tabstop>
   <tabstop>mPubSubjectText</tabstop>
@@ -1494,16 +1486,8 @@
   <tabstop>mPubTokenCombo</tabstop>
   <tabstop>mPubVerifyRecoverCheck</tabstop>
   <tabstop>mPubVerifyRecoverCombo</tabstop>
-  <tabstop>mPubStartDateCheck</tabstop>
-  <tabstop>mPubStartDateEdit</tabstop>
-  <tabstop>mPubEndDateCheck</tabstop>
-  <tabstop>mPubEndDateEdit</tabstop>
   <tabstop>mPubTrustedCheck</tabstop>
   <tabstop>mPubTrustedCombo</tabstop>
-  <tabstop>mPubCopyableCheck</tabstop>
-  <tabstop>mPubCopyableCombo</tabstop>
-  <tabstop>mPubDestroyableCheck</tabstop>
-  <tabstop>mPubDestroyableCombo</tabstop>
  </tabstops>
  <resources/>
  <connections>

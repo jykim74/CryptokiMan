@@ -21,8 +21,6 @@ public:
     explicit AboutDlg(QWidget *parent = nullptr);
     ~AboutDlg();
 
-
-
 #ifdef _AUTO_UPDATE
 private slots:
     void checkUpdate();

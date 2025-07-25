@@ -35,7 +35,7 @@ private slots:
     void clickPriSameLabel();
     void clickPubSameLabel();
 
-    void checkPubImport();
+    void checkSavePubKey();
     void checkEncPriKey();
 
     void clickPriUseSKI();
