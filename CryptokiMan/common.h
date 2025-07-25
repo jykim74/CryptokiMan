@@ -29,6 +29,9 @@ static CK_BBOOL kTrue = CK_TRUE;
 static CK_BBOOL kFalse = CK_FALSE;
 static int kNameWidth = -30;
 
+const QString kEnvMiscGroup = "Misc";
+const QString kEnvTempGroup = "Temp";
+
 enum {
     DATA_STRING,
     DATA_HEX,

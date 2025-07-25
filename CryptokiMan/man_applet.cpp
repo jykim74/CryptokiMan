@@ -309,7 +309,7 @@ QString ManApplet::getLibPath()
     QString strPath;
     QSettings settings;
 
-    settings.beginGroup( "mainwindow" );
+    settings.beginGroup( kEnvTempGroup );
     strPath = settings.value( "libPath", "" ).toString();
     settings.endGroup();
 
@@ -319,7 +319,7 @@ QString ManApplet::getLibPath()
 void ManApplet::setLibPath( const QString strPath )
 {
     QSettings settings;
-    settings.beginGroup( "mainwindow" );
+    settings.beginGroup( kEnvTempGroup );
     settings.setValue( "libPath", strPath );
     settings.endGroup();
 }
