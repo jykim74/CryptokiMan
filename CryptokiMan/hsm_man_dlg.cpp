@@ -357,7 +357,9 @@ void HsmManDlg::initUI()
     mCertTable->setColumnCount( sCertLabels.size() );
     mCertTable->setHorizontalHeaderLabels( sCertLabels );
     mCertTable->verticalHeader()->setVisible(false);
+    mCertTable->setStyleSheet( kSelectStyle );
     mCertTable->horizontalHeader()->setStyleSheet( kTableStyle );
+    mCertTable->setSelectionMode(QAbstractItemView::SingleSelection);
     mCertTable->setSelectionBehavior(QAbstractItemView::SelectRows);
     mCertTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
     mCertTable->setColumnWidth( 0, nWidth * 5/10 );
@@ -370,7 +372,9 @@ void HsmManDlg::initUI()
     mPublicTable->setColumnCount( sTableLabels.size() );
     mPublicTable->setHorizontalHeaderLabels( sTableLabels );
     mPublicTable->verticalHeader()->setVisible(false);
+    mPublicTable->setStyleSheet( kSelectStyle );
     mPublicTable->horizontalHeader()->setStyleSheet( kTableStyle );
+    mPublicTable->setSelectionMode(QAbstractItemView::SingleSelection);
     mPublicTable->setSelectionBehavior(QAbstractItemView::SelectRows);
     mPublicTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
     mPublicTable->setColumnWidth( 0, nWidth * 5/10 );
@@ -381,7 +385,9 @@ void HsmManDlg::initUI()
     mPrivateTable->setColumnCount( sTableLabels.size() );
     mPrivateTable->setHorizontalHeaderLabels( sTableLabels );
     mPrivateTable->verticalHeader()->setVisible(false);
+    mPrivateTable->setStyleSheet( kSelectStyle );
     mPrivateTable->horizontalHeader()->setStyleSheet( kTableStyle );
+    mPrivateTable->setSelectionMode(QAbstractItemView::SingleSelection);
     mPrivateTable->setSelectionBehavior(QAbstractItemView::SelectRows);
     mPrivateTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
     mPrivateTable->setColumnWidth( 0, nWidth * 5/10 );
@@ -392,7 +398,9 @@ void HsmManDlg::initUI()
     mSecretTable->setColumnCount( sTableLabels.size() );
     mSecretTable->setHorizontalHeaderLabels( sTableLabels );
     mSecretTable->verticalHeader()->setVisible(false);
+    mSecretTable->setStyleSheet( kSelectStyle );
     mSecretTable->horizontalHeader()->setStyleSheet( kTableStyle );
+    mSecretTable->setSelectionMode(QAbstractItemView::SingleSelection);
     mSecretTable->setSelectionBehavior(QAbstractItemView::SelectRows);
     mSecretTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
     mSecretTable->setColumnWidth( 0, nWidth * 5/10 );

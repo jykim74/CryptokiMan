@@ -32,6 +32,12 @@ static int kNameWidth = -30;
 const QString kEnvMiscGroup = "Misc";
 const QString kEnvTempGroup = "Temp";
 
+static QString kSelectStyle =
+    "QTableWidget::item:selected { "
+    "background-color: #9370db; "
+    "color: white; "
+    "} ";
+
 enum {
     DATA_STRING,
     DATA_HEX,

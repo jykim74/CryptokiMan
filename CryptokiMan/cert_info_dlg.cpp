@@ -319,6 +319,7 @@ void CertInfoDlg::initUI()
     mFieldTable->setHorizontalHeaderLabels( sBaseLabels );
     mFieldTable->verticalHeader()->setVisible(false);
     mFieldTable->horizontalHeader()->setStyleSheet( kTableStyle );
+    mFieldTable->setSelectionMode(QAbstractItemView::SingleSelection);
     mFieldTable->setSelectionBehavior(QAbstractItemView::SelectRows);
     mFieldTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
