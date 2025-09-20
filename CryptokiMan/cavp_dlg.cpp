@@ -241,9 +241,9 @@ static QString _getECCurveName( const QString strACVPCurve )
 static int _getEdDSAType( const QString strACVPCurve )
 {
     if( strACVPCurve == "ED-25519" )
-        return JS_PKI_KEY_TYPE_ED25519;
+        return JS_EDDSA_PARAM_25519;
     else if( strACVPCurve == "ED-448" )
-        return JS_PKI_KEY_TYPE_ED448;
+        return JS_EDDSA_PARAM_448;
 
     return -1;
 }

@@ -371,7 +371,7 @@ void ImportPFXDlg::accept()
             if( rv != 0 ) goto end;
         }
     }
-    else if( key_type == JS_PKI_KEY_TYPE_ECC )
+    else if( key_type == JS_PKI_KEY_TYPE_ECDSA )
     {
         rv = JS_PKI_getECKeyVal( &binPri, &ecKeyVal );
         if( rv == 0 )
@@ -395,9 +395,9 @@ void ImportPFXDlg::accept()
             if( rv != 0 ) goto end;
         }
     }
-    else if( key_type == JS_PKI_KEY_TYPE_ED25519 || key_type == JS_PKI_KEY_TYPE_ED448 )
+    else if( key_type == JS_PKI_KEY_TYPE_EDDSA )
     {
-        rv = JS_PKI_getRawKeyVal( key_type, &binPri, &rawKeyVal );
+        rv = JS_PKI_getRawKeyVal( &binPri, &rawKeyVal );
         if( rv == 0 )
         {
             rv = createEDPrivateKey( &rawKeyVal );
@@ -2250,7 +2250,7 @@ int ImportPFXDlg::createEDPublicKey( JRawKeyVal *pRawKeyVal )
         uCount++;
     }
 
-    if( strcasecmp( pRawKeyVal->pName, "ED25519" ) == 0 )
+    if( strcasecmp( pRawKeyVal->pParam, JS_EDDSA_PARAM_NAME_25519 ) == 0 )
     {
         sTemplate[uCount].type = CKA_EC_PARAMS;
         sTemplate[uCount].pValue = kCurveNameX25519;
@@ -2396,7 +2396,7 @@ int ImportPFXDlg::createEDPrivateKey( JRawKeyVal *pRawKeyVal )
         uCount++;
     }
 
-    if( strcasecmp( pRawKeyVal->pName, "ED25519" ) == 0 )
+    if( strcasecmp( pRawKeyVal->pParam, JS_EDDSA_PARAM_NAME_25519 ) == 0 )
     {
         sTemplate[uCount].type = CKA_EC_PARAMS;
         sTemplate[uCount].pValue = kCurveNameX25519;

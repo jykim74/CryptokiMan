@@ -1371,7 +1371,7 @@ int writePriKeyPEM( const BIN *pPriKey, const QString strPath )
         nFileType = JS_PEM_TYPE_RSA_PRIVATE_KEY;
         break;
 
-    case JS_PKI_KEY_TYPE_ECC:
+    case JS_PKI_KEY_TYPE_ECDSA:
     case JS_PKI_KEY_TYPE_SM2:
         nFileType = JS_PEM_TYPE_EC_PRIVATE_KEY;
         break;
@@ -1402,7 +1402,7 @@ int writePubKeyPEM( const BIN *pPubKey, const QString strPath )
         nFileType = JS_PEM_TYPE_RSA_PUBLIC_KEY;
         break;
 
-    case JS_PKI_KEY_TYPE_ECC:
+    case JS_PKI_KEY_TYPE_ECDSA:
     case JS_PKI_KEY_TYPE_SM2:
         nFileType = JS_PEM_TYPE_EC_PUBLIC_KEY;
         break;

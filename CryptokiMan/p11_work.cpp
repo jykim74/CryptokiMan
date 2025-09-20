@@ -130,7 +130,8 @@ int getEDPublicKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pPubKey
     BIN binParam = {0,0};
     BIN binPub = {0,0};
 
-    int nKeyType = JS_PKI_KEY_TYPE_ED25519;
+    int nKeyType = JS_PKI_KEY_TYPE_EDDSA;
+    int nParam = -1;
 
     ret = pAPI->GetAttributeValue2( hSession, hObject, CKA_EC_POINT, &binPoint );
     if( ret != CKR_OK ) goto end;
@@ -139,15 +140,15 @@ int getEDPublicKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pPubKey
     if( ret != CKR_OK ) goto end;
 
     if( binPoint.pVal[1] == 32 )
-        nKeyType = JS_PKI_KEY_TYPE_ED25519;
+        nParam = JS_EDDSA_PARAM_25519;
     else
-        nKeyType = JS_PKI_KEY_TYPE_ED448;
+        nParam = JS_EDDSA_PARAM_448;
 /*
     if( binPoint.nLen != ( 32 + 2 ) )
         nKeyType = JS_PKI_KEY_TYPE_ED448;
 */
     JS_BIN_set( &binPub, &binPoint.pVal[2], binPoint.nLen - 2 );
-    ret = JS_PKI_encodeRawPublicKeyValue( nKeyType, &binPub, pPubKey );
+    ret = JS_PKI_encodeRawPublicKeyValue( nKeyType, nParam, &binPub, pPubKey );
 
 end :
     JS_BIN_reset( &binPoint );
@@ -333,9 +334,9 @@ int getEDPrivateKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pPriKe
     BIN binPoint = {0,0};
 
     JRawKeyVal sRawKey;
-    QString strName = "ED25519";
+    QString strParam = JS_EDDSA_PARAM_NAME_25519;
 
-    int nKeyType = JS_PKI_KEY_TYPE_ED25519;
+    int nKeyType = JS_PKI_KEY_TYPE_EDDSA;
 
     memset( &sRawKey, 0x00, sizeof(sRawKey));
 
@@ -351,12 +352,13 @@ int getEDPrivateKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pPriKe
 
 
     if( binValue.nLen != 32 )
-        strName = "ED448";
+        strParam = JS_EDDSA_PARAM_NAME_448;
 
     JS_PKI_setRawKeyVal( &sRawKey,
+                        JS_PKI_KEY_NAME_EDDSA,
+                        strParam.toStdString().c_str(),
                         ( binPoint.nLen > 0 ) ? getHexString( &binPoint ).toStdString().c_str() : NULL,
-                        getHexString( &binValue ).toStdString().c_str(),
-                        strName.toStdString().c_str() );
+                        getHexString( &binValue ).toStdString().c_str() );
 
     ret = JS_PKI_encodeRawPrivateKey( &sRawKey, pPriKey );
 

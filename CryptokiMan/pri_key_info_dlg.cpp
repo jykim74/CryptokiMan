@@ -144,7 +144,7 @@ bool PriKeyInfoDlg::isChanged()
 
         JS_PKI_resetRSAKeyVal( &sRSAKey );
     }
-    else if( key_type_ == JS_PKI_KEY_TYPE_ECC || key_type_ == JS_PKI_KEY_TYPE_SM2 )
+    else if( key_type_ == JS_PKI_KEY_TYPE_ECDSA || key_type_ == JS_PKI_KEY_TYPE_SM2 )
     {
         JECKeyVal sECKey;
         memset( &sECKey, 0x00, sizeof(sECKey));
@@ -222,15 +222,15 @@ bool PriKeyInfoDlg::isChanged()
 
         JS_PKI_resetDSAKeyVal( &sDSAKey );
     }
-    else if( key_type_ == JS_PKI_KEY_TYPE_ED25519 || key_type_ == JS_PKI_KEY_TYPE_ED448 )
+    else if( key_type_ == JS_PKI_KEY_TYPE_EDDSA )
     {
         JRawKeyVal sRawKey;
         memset( &sRawKey, 0x00, sizeof(sRawKey));
 
         if( pri_key_.nLen > 0 )
-            JS_PKI_getRawKeyVal( key_type_, &pri_key_, &sRawKey );
+            JS_PKI_getRawKeyVal( &pri_key_, &sRawKey );
         else
-            JS_PKI_getRawKeyValFromPub( key_type_, &pub_key_, &sRawKey );
+            JS_PKI_getRawKeyValFromPub( &pub_key_, &sRawKey );
 
         if( mEdDSA_RawPublicText->toPlainText().simplified().toUpper() != QString("%1").arg( sRawKey.pPub ) )
         {
@@ -351,13 +351,13 @@ void PriKeyInfoDlg::setEdDSAKey( int nKeyType, const BIN *pKey, bool bPri )
     memset( &sRawKeyVal, 0x00, sizeof(sRawKeyVal));
 
     if( bPri == true )
-        ret = JS_PKI_getRawKeyVal( nKeyType, pKey, &sRawKeyVal );
+        ret = JS_PKI_getRawKeyVal( pKey, &sRawKeyVal );
     else
-        ret = JS_PKI_getRawKeyValFromPub( nKeyType, pKey, &sRawKeyVal );
+        ret = JS_PKI_getRawKeyValFromPub( pKey, &sRawKeyVal );
 
     if( ret == 0 )
     {
-        mEdDSA_NameText->setText( sRawKeyVal.pName );
+        mEdDSA_NameText->setText( sRawKeyVal.pAlg );
         mEdDSA_RawPublicText->setPlainText( sRawKeyVal.pPub );
         mEdDSA_RawPrivateText->setPlainText( sRawKeyVal.pPri );
     }
@@ -894,7 +894,7 @@ void PriKeyInfoDlg::setModeUI( bool bVal )
             mRSA_IQMPText->setReadOnly(!bVal);
         }
     }
-    else if( key_type_ == JS_PKI_KEY_TYPE_ECC || key_type_ == JS_PKI_KEY_TYPE_SM2 )
+    else if( key_type_ == JS_PKI_KEY_TYPE_ECDSA || key_type_ == JS_PKI_KEY_TYPE_SM2 )
     {
         mECC_PubXText->setStyleSheet( strStyle );
         mECC_PubXText->setReadOnly( !bVal );
@@ -924,7 +924,7 @@ void PriKeyInfoDlg::setModeUI( bool bVal )
             mDSA_PrivateText->setReadOnly( !bVal );
         }
     }
-    else if( key_type_ == JS_PKI_KEY_TYPE_ED25519 || key_type_ == JS_PKI_KEY_TYPE_ED448 )
+    else if( key_type_ == JS_PKI_KEY_TYPE_EDDSA )
     {
         mEdDSA_RawPublicText->setStyleSheet( strStyle );
         mEdDSA_RawPublicText->setReadOnly( !bVal );
@@ -967,7 +967,7 @@ void PriKeyInfoDlg::setPrivateKey( const BIN *pPriKey )
         mKeyTab->setTabEnabled(0, true);
         setRSAKey( pPriKey );
     }
-    else if( key_type_ == JS_PKI_KEY_TYPE_ECC || key_type_ == JS_PKI_KEY_TYPE_SM2 )
+    else if( key_type_ == JS_PKI_KEY_TYPE_ECDSA || key_type_ == JS_PKI_KEY_TYPE_SM2 )
     {
         mKeyTab->setCurrentIndex(1);
         mKeyTab->setTabEnabled(1, true);
@@ -979,7 +979,7 @@ void PriKeyInfoDlg::setPrivateKey( const BIN *pPriKey )
         mKeyTab->setTabEnabled(2, true);
         setDSAKey( pPriKey );
     }
-    else if( key_type_ == JS_PKI_KEY_TYPE_ED25519 || key_type_ == JS_PKI_KEY_TYPE_ED448 )
+    else if( key_type_ == JS_PKI_KEY_TYPE_EDDSA )
     {
         mKeyTab->setCurrentIndex( 3 );
         mKeyTab->setTabEnabled(3, true);
@@ -1019,7 +1019,7 @@ void PriKeyInfoDlg::setPublicKey( const BIN *pPubKey )
         mKeyTab->setTabEnabled(0, true);
         setRSAKey( pPubKey, false );
     }
-    else if( key_type_ == JS_PKI_KEY_TYPE_ECC || key_type_ == JS_PKI_KEY_TYPE_SM2 )
+    else if( key_type_ == JS_PKI_KEY_TYPE_ECDSA || key_type_ == JS_PKI_KEY_TYPE_SM2 )
     {
         mKeyTab->setCurrentIndex(1);
         mKeyTab->setTabEnabled(1, true);
@@ -1031,7 +1031,7 @@ void PriKeyInfoDlg::setPublicKey( const BIN *pPubKey )
         mKeyTab->setTabEnabled(2, true);
         setDSAKey( pPubKey, false );
     }
-    else if( key_type_ == JS_PKI_KEY_TYPE_ED25519 || key_type_ == JS_PKI_KEY_TYPE_ED448  )
+    else if( key_type_ == JS_PKI_KEY_TYPE_EDDSA  )
     {
         mKeyTab->setCurrentIndex( 3 );
         mKeyTab->setTabEnabled(3, true);

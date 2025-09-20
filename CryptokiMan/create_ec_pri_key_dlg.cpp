@@ -458,12 +458,12 @@ void CreateECPriKeyDlg::clickGenKey()
 
         if( strParam == "ED25519" )
         {
-            nKeyType = JS_PKI_KEY_TYPE_ED25519;
+            nKeyType = JS_EDDSA_PARAM_25519;
             strECParam = getHexString( kCurveNameX25519, sizeof(kCurveNameX25519));
         }
         else
         {
-            nKeyType = JS_PKI_KEY_TYPE_ED448;
+            nKeyType = JS_EDDSA_PARAM_448;
             strECParam = getHexString( kCurveNameX448, sizeof(kCurveNameX448));
         }
 
@@ -499,6 +499,7 @@ void CreateECPriKeyDlg::clickFindKey()
 {
     int ret = 0;
     int nKeyType = -1;
+    int nParam = -1;
     BIN binPri = {0,0};
     BIN binOID = {0,0};
     JECKeyVal  sECKey;
@@ -518,11 +519,11 @@ void CreateECPriKeyDlg::clickFindKey()
         goto end;
     }
 
-    nKeyType = JS_PKI_getPriKeyType( &binPri );
+    JS_PKI_getPriKeyAlgParam( &binPri, &nKeyType, &nParam );
 
     if( is_ed_ == true )
     {
-        if( nKeyType != JS_PKI_KEY_TYPE_ED25519 && nKeyType != JS_PKI_KEY_TYPE_ED448 )
+        if( nKeyType != JS_PKI_KEY_TYPE_EDDSA )
         {
             manApplet->elog( QString( "invalid private key type (%1)").arg( nKeyType ));
             goto end;
@@ -530,7 +531,7 @@ void CreateECPriKeyDlg::clickFindKey()
 
         QString strECParam;
 
-        if( nKeyType == JS_PKI_KEY_TYPE_ED25519 )
+        if( nParam == JS_EDDSA_PARAM_25519 )
         {
             strECParam = getHexString( kCurveNameX25519, sizeof(kCurveNameX25519));
         }
@@ -539,7 +540,7 @@ void CreateECPriKeyDlg::clickFindKey()
             strECParam = getHexString( kCurveNameX448, sizeof(kCurveNameX448));
         }
 
-        ret = JS_PKI_getRawKeyVal( nKeyType, &binPri, &sRawKey );
+        ret = JS_PKI_getRawKeyVal( &binPri, &sRawKey );
         if( ret != 0 ) goto end;
 
         mKeyValueText->setText( sRawKey.pPri );
@@ -547,7 +548,7 @@ void CreateECPriKeyDlg::clickFindKey()
     }
     else
     {
-        if( nKeyType != JS_PKI_KEY_TYPE_ECC )
+        if( nKeyType != JS_PKI_KEY_TYPE_ECDSA )
         {
             manApplet->elog( QString( "invalid private key type (%1)").arg( nKeyType ));
             goto end;
@@ -720,7 +721,7 @@ int CreateECPriKeyDlg::getSKI_SPKI( BIN *pSKI, BIN *pSPKI )
         goto end;
     }
 
-    ret = JS_PKI_getPubKeyFromPri( JS_PKI_KEY_TYPE_ECC, &binPri, &binPub );
+    ret = JS_PKI_getPubKeyFromPri( JS_PKI_KEY_TYPE_ECDSA, &binPri, &binPub );
     if( ret != 0 )
     {
         manApplet->elog( QString( "failed to get public key from private key [%1]").arg(ret));

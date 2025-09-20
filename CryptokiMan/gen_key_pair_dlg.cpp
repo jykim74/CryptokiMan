@@ -1402,7 +1402,7 @@ int GenKeyPairDlg::setSKI_SPKI( long hSession, int nKeyType, long hPri, long hPu
         JS_BIN_set( &binXY, &binVal.pVal[2], binVal.nLen - 2);
 
         JS_BIN_encodeHex( &binXY, &pPubHex );
-        JS_PKI_setRawKeyVal( &sRawKey, pPubHex, NULL, strOption.toStdString().c_str() );
+        JS_PKI_setRawKeyVal( &sRawKey, JS_PKI_KEY_NAME_EDDSA, strOption.toStdString().c_str(), pPubHex, NULL );
         rv = JS_PKI_encodeRawPublicKey( &sRawKey, &binPub );
 
         JS_PKI_resetRawKeyVal( &sRawKey );

@@ -426,12 +426,12 @@ void CreateECPubKeyDlg::clickGenKey()
 
         if( strParam == "ED25519" )
         {
-            nKeyType = JS_PKI_KEY_TYPE_ED25519;
+            nKeyType = JS_EDDSA_PARAM_25519;
             strECParam = getHexString( kCurveNameX25519, sizeof(kCurveNameX25519));
         }
         else
         {
-            nKeyType = JS_PKI_KEY_TYPE_ED448;
+            nKeyType = JS_EDDSA_PARAM_448;
             strECParam = getHexString( kCurveNameX448, sizeof(kCurveNameX448));
         }
 
@@ -482,6 +482,7 @@ void CreateECPubKeyDlg::clickFindKey()
 {
     int ret = 0;
     int nKeyType = -1;
+    int nParam = -1;
     BIN binKey = {0,0};
     BIN binOID = {0,0};
     JECKeyVal sECKey;
@@ -503,14 +504,14 @@ void CreateECPubKeyDlg::clickFindKey()
         goto end;
     }
 
-    nKeyType = JS_PKI_getPriKeyType( &binKey );
+    JS_PKI_getPriKeyAlgParam( &binKey, &nKeyType, &nParam );
 
     if( is_ed_ == true )
     {
         if( nKeyType < 0 )
         {
             nKeyType = JS_PKI_getPubKeyType( &binKey );
-            if( nKeyType != JS_PKI_KEY_TYPE_ED25519 && nKeyType != JS_PKI_KEY_TYPE_ED448 )
+            if( nKeyType != JS_PKI_KEY_TYPE_EDDSA )
             {
                 manApplet->elog( QString( "invalid public key type (%1)").arg( nKeyType ));
                 goto end;
@@ -519,21 +520,21 @@ void CreateECPubKeyDlg::clickFindKey()
             ret = JS_PKI_getECKeyValFromPub( &binKey, &sECKey );
             if( ret != 0 ) goto end;
         }
-        else if( nKeyType != JS_PKI_KEY_TYPE_ED25519 && nKeyType != JS_PKI_KEY_TYPE_ED448 )
+        else if( nKeyType != JS_PKI_KEY_TYPE_EDDSA )
         {
             manApplet->elog( QString( "invalid private key type (%1)").arg( nKeyType ));
             goto end;
         }
         else
         {
-            ret = JS_PKI_getRawKeyVal( nKeyType, &binKey, &sRawKey );
+            ret = JS_PKI_getRawKeyVal( &binKey, &sRawKey );
             if( ret != 0 ) goto end;
         }
 
         QString strECParam;
         QString strECPoint;
 
-        if( nKeyType == JS_PKI_KEY_TYPE_ED25519 )
+        if( nParam == JS_EDDSA_PARAM_25519 )
         {
 
             strECParam = getHexString( kCurveNameX25519, sizeof(kCurveNameX25519));
@@ -555,7 +556,7 @@ void CreateECPubKeyDlg::clickFindKey()
         if( nKeyType < 0 )
         {
             nKeyType = JS_PKI_getPubKeyType( &binKey );
-            if( nKeyType != JS_PKI_KEY_TYPE_ECC )
+            if( nKeyType != JS_PKI_KEY_TYPE_ECDSA )
             {
                 manApplet->elog( QString( "invalid public key type (%1)").arg( nKeyType ));
                 goto end;
@@ -564,7 +565,7 @@ void CreateECPubKeyDlg::clickFindKey()
             ret = JS_PKI_getECKeyValFromPub( &binKey, &sECKey );
             if( ret != 0 ) goto end;
         }
-        else if( nKeyType != JS_PKI_KEY_TYPE_ECC )
+        else if( nKeyType != JS_PKI_KEY_TYPE_ECDSA )
         {
             manApplet->elog( QString( "invalid private key type (%1)").arg( nKeyType ));
             goto end;
