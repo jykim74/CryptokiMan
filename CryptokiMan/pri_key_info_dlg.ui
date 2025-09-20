@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>606</width>
-    <height>599</height>
+    <height>605</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -64,7 +64,7 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="tabRSA">
       <attribute name="title">
@@ -2081,22 +2081,10 @@
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
         <layout class="QGridLayout" name="gridLayout_5">
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_19">
-           <property name="minimumSize">
-            <size>
-             <width>90</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>90</width>
-             <height>16777215</height>
-            </size>
-           </property>
+         <item row="0" column="4">
+          <widget class="QLabel" name="label">
            <property name="text">
-            <string>Name</string>
+            <string>Param</string>
            </property>
           </widget>
          </item>
@@ -2143,6 +2131,72 @@
             <bool>true</bool>
            </property>
           </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_19">
+           <property name="minimumSize">
+            <size>
+             <width>90</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>90</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Name</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="5">
+          <widget class="QLineEdit" name="mEdDSA_ParamText">
+           <property name="palette">
+            <palette>
+             <active>
+              <colorrole role="Base">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>221</red>
+                 <green>221</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </active>
+             <inactive>
+              <colorrole role="Base">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>221</red>
+                 <green>221</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </inactive>
+             <disabled/>
+            </palette>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <spacer name="horizontalSpacer_13">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </item>
