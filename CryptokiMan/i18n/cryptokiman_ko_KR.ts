@@ -592,148 +592,148 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation type="vanished">내보내기 파일</translation>
     </message>
     <message>
-        <location filename="../csr_info_dlg.cpp" line="101"/>
+        <location filename="../csr_info_dlg.cpp" line="102"/>
         <source>The CSR was saved in PEM format.</source>
         <translation>CSR 파일이 PEM 형식으로 저장 하였습니다</translation>
     </message>
     <message>
-        <location filename="../csr_info_dlg.cpp" line="117"/>
+        <location filename="../csr_info_dlg.cpp" line="118"/>
         <source>Select a CSR</source>
         <translation>CSR 을 선택하세요</translation>
     </message>
     <message>
-        <location filename="../csr_info_dlg.cpp" line="126"/>
+        <location filename="../csr_info_dlg.cpp" line="127"/>
         <source>failed to get CSR information</source>
         <translation>CSR 정보 가져오기 실패</translation>
     </message>
     <message>
-        <location filename="../csr_info_dlg.cpp" line="132"/>
+        <location filename="../csr_info_dlg.cpp" line="133"/>
         <source>Version</source>
         <translation>버전</translation>
     </message>
     <message>
-        <location filename="../csr_info_dlg.cpp" line="142"/>
+        <location filename="../csr_info_dlg.cpp" line="143"/>
         <source>SubjectName</source>
         <translation>주체자 이름</translation>
     </message>
     <message>
-        <location filename="../csr_info_dlg.cpp" line="149"/>
+        <location filename="../csr_info_dlg.cpp" line="150"/>
         <source>Verify</source>
         <translation>검증</translation>
     </message>
     <message>
-        <location filename="../csr_info_dlg.cpp" line="179"/>
-        <location filename="../csr_info_dlg.cpp" line="312"/>
+        <location filename="../csr_info_dlg.cpp" line="180"/>
+        <location filename="../csr_info_dlg.cpp" line="313"/>
         <source>PublicKey</source>
         <translation>공개키</translation>
     </message>
     <message>
-        <location filename="../csr_info_dlg.cpp" line="195"/>
+        <location filename="../csr_info_dlg.cpp" line="196"/>
         <source>SigAlgorithm</source>
         <translation>서명 알고리즘</translation>
     </message>
     <message>
-        <location filename="../csr_info_dlg.cpp" line="204"/>
+        <location filename="../csr_info_dlg.cpp" line="205"/>
         <source>Signature</source>
         <translation>서명</translation>
     </message>
     <message>
-        <location filename="../csr_info_dlg.cpp" line="213"/>
+        <location filename="../csr_info_dlg.cpp" line="214"/>
         <source>Challenge</source>
         <translation>챌린지</translation>
     </message>
     <message>
-        <location filename="../csr_info_dlg.cpp" line="222"/>
+        <location filename="../csr_info_dlg.cpp" line="223"/>
         <source>UnstructuredName</source>
         <translation>구조화 안된 이름</translation>
     </message>
     <message>
-        <location filename="../csr_info_dlg.cpp" line="266"/>
+        <location filename="../csr_info_dlg.cpp" line="267"/>
         <source>authorityInfoAccess</source>
         <translation>기관 정보 액세스</translation>
     </message>
     <message>
-        <location filename="../csr_info_dlg.cpp" line="268"/>
+        <location filename="../csr_info_dlg.cpp" line="269"/>
         <source>authorityKeyIdentifier</source>
         <translation>기관 키 식별자</translation>
     </message>
     <message>
-        <location filename="../csr_info_dlg.cpp" line="270"/>
+        <location filename="../csr_info_dlg.cpp" line="271"/>
         <source>basicConstraints</source>
         <translation>기본 제한</translation>
     </message>
     <message>
-        <location filename="../csr_info_dlg.cpp" line="272"/>
+        <location filename="../csr_info_dlg.cpp" line="273"/>
         <source>crlDistributionPoints</source>
         <translation>CRL 배포 지점</translation>
     </message>
     <message>
-        <location filename="../csr_info_dlg.cpp" line="274"/>
+        <location filename="../csr_info_dlg.cpp" line="275"/>
         <source>extendedKeyUsage</source>
         <translation>확장된 키 사용</translation>
     </message>
     <message>
-        <location filename="../csr_info_dlg.cpp" line="276"/>
+        <location filename="../csr_info_dlg.cpp" line="277"/>
         <source>issuerAltName</source>
         <translation>발급자 대체 이름</translation>
     </message>
     <message>
-        <location filename="../csr_info_dlg.cpp" line="278"/>
+        <location filename="../csr_info_dlg.cpp" line="279"/>
         <source>keyUsage</source>
         <translation>키 용도</translation>
     </message>
     <message>
-        <location filename="../csr_info_dlg.cpp" line="280"/>
+        <location filename="../csr_info_dlg.cpp" line="281"/>
         <source>nameConstraints</source>
         <translation>이름 제한</translation>
     </message>
     <message>
-        <location filename="../csr_info_dlg.cpp" line="282"/>
+        <location filename="../csr_info_dlg.cpp" line="283"/>
         <source>certificatePolicies</source>
         <translation>인증서 정책</translation>
     </message>
     <message>
-        <location filename="../csr_info_dlg.cpp" line="284"/>
+        <location filename="../csr_info_dlg.cpp" line="285"/>
         <source>policyConstraints</source>
         <translation>정책 제약 조건</translation>
     </message>
     <message>
-        <location filename="../csr_info_dlg.cpp" line="286"/>
+        <location filename="../csr_info_dlg.cpp" line="287"/>
         <source>policyMappings</source>
         <translation>정책 매핑</translation>
     </message>
     <message>
-        <location filename="../csr_info_dlg.cpp" line="288"/>
+        <location filename="../csr_info_dlg.cpp" line="289"/>
         <source>subjectKeyIdentifier</source>
         <translation>주체 키 식별자</translation>
     </message>
     <message>
-        <location filename="../csr_info_dlg.cpp" line="290"/>
+        <location filename="../csr_info_dlg.cpp" line="291"/>
         <source>subjectAltName</source>
         <translation>주체 대체 이름</translation>
     </message>
     <message>
-        <location filename="../csr_info_dlg.cpp" line="292"/>
+        <location filename="../csr_info_dlg.cpp" line="293"/>
         <source>crlNumber</source>
         <translation>CRL 번호</translation>
     </message>
     <message>
-        <location filename="../csr_info_dlg.cpp" line="294"/>
+        <location filename="../csr_info_dlg.cpp" line="295"/>
         <source>issuingDistributionPoint</source>
         <translation>발급 배포 지점</translation>
     </message>
     <message>
-        <location filename="../csr_info_dlg.cpp" line="296"/>
+        <location filename="../csr_info_dlg.cpp" line="297"/>
         <source>CRLReason</source>
         <translation>폐기 사유</translation>
     </message>
     <message>
-        <location filename="../csr_info_dlg.cpp" line="333"/>
+        <location filename="../csr_info_dlg.cpp" line="334"/>
         <source>CSR verification successful</source>
         <translation>CSR 검증 성공</translation>
     </message>
     <message>
-        <location filename="../csr_info_dlg.cpp" line="335"/>
+        <location filename="../csr_info_dlg.cpp" line="336"/>
         <source>CSR verification failed [%1]</source>
         <translation>CSR 검증 실패: [%1]</translation>
     </message>
@@ -886,7 +886,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
     </message>
     <message>
         <location filename="../cert_info_dlg.cpp" line="216"/>
-        <location filename="../cert_info_dlg.cpp" line="339"/>
+        <location filename="../cert_info_dlg.cpp" line="340"/>
         <source>PublicKey</source>
         <translation>공개키</translation>
     </message>
@@ -1906,7 +1906,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation>ECC 개인키 생성 성공[Handle:%1]</translation>
     </message>
     <message>
-        <location filename="../create_ec_pri_key_dlg.cpp" line="569"/>
+        <location filename="../create_ec_pri_key_dlg.cpp" line="570"/>
         <source>failed to get key value [%1]</source>
         <translation>유효한 키 가져오기 실패: [%1]</translation>
     </message>
@@ -2130,7 +2130,7 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation>ECC 공개키 생성 성공[Handle:%1]</translation>
     </message>
     <message>
-        <location filename="../create_ec_pub_key_dlg.cpp" line="595"/>
+        <location filename="../create_ec_pub_key_dlg.cpp" line="596"/>
         <source>failed to get key value [%1]</source>
         <translation></translation>
     </message>
@@ -5627,7 +5627,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../hsm_man_dlg.cpp" line="354"/>
-        <location filename="../hsm_man_dlg.cpp" line="367"/>
+        <location filename="../hsm_man_dlg.cpp" line="369"/>
         <source>Handle</source>
         <translation>핸들</translation>
     </message>
@@ -5637,52 +5637,52 @@ Do you want to delete the file and continue?</source>
         <translation>주체자 이름</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="367"/>
+        <location filename="../hsm_man_dlg.cpp" line="369"/>
         <source>Name</source>
         <translation>이름</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="367"/>
+        <location filename="../hsm_man_dlg.cpp" line="369"/>
         <source>Algorithm</source>
         <translation>알고리즘</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="367"/>
+        <location filename="../hsm_man_dlg.cpp" line="369"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="846"/>
-        <location filename="../hsm_man_dlg.cpp" line="870"/>
-        <location filename="../hsm_man_dlg.cpp" line="907"/>
-        <location filename="../hsm_man_dlg.cpp" line="937"/>
-        <location filename="../hsm_man_dlg.cpp" line="975"/>
-        <location filename="../hsm_man_dlg.cpp" line="1041"/>
-        <location filename="../hsm_man_dlg.cpp" line="1065"/>
-        <location filename="../hsm_man_dlg.cpp" line="1090"/>
-        <location filename="../hsm_man_dlg.cpp" line="1120"/>
-        <location filename="../hsm_man_dlg.cpp" line="1159"/>
-        <location filename="../hsm_man_dlg.cpp" line="1186"/>
-        <location filename="../hsm_man_dlg.cpp" line="1213"/>
-        <location filename="../hsm_man_dlg.cpp" line="1237"/>
-        <location filename="../hsm_man_dlg.cpp" line="1262"/>
-        <location filename="../hsm_man_dlg.cpp" line="1292"/>
-        <location filename="../hsm_man_dlg.cpp" line="1330"/>
-        <location filename="../hsm_man_dlg.cpp" line="1357"/>
-        <location filename="../hsm_man_dlg.cpp" line="1384"/>
-        <location filename="../hsm_man_dlg.cpp" line="1408"/>
-        <location filename="../hsm_man_dlg.cpp" line="1432"/>
-        <location filename="../hsm_man_dlg.cpp" line="1462"/>
-        <location filename="../hsm_man_dlg.cpp" line="1489"/>
-        <location filename="../hsm_man_dlg.cpp" line="1516"/>
-        <location filename="../hsm_man_dlg.cpp" line="1543"/>
-        <location filename="../hsm_man_dlg.cpp" line="1594"/>
+        <location filename="../hsm_man_dlg.cpp" line="854"/>
+        <location filename="../hsm_man_dlg.cpp" line="878"/>
+        <location filename="../hsm_man_dlg.cpp" line="915"/>
+        <location filename="../hsm_man_dlg.cpp" line="945"/>
+        <location filename="../hsm_man_dlg.cpp" line="983"/>
+        <location filename="../hsm_man_dlg.cpp" line="1049"/>
+        <location filename="../hsm_man_dlg.cpp" line="1073"/>
+        <location filename="../hsm_man_dlg.cpp" line="1098"/>
+        <location filename="../hsm_man_dlg.cpp" line="1128"/>
+        <location filename="../hsm_man_dlg.cpp" line="1167"/>
+        <location filename="../hsm_man_dlg.cpp" line="1194"/>
+        <location filename="../hsm_man_dlg.cpp" line="1221"/>
+        <location filename="../hsm_man_dlg.cpp" line="1245"/>
+        <location filename="../hsm_man_dlg.cpp" line="1270"/>
+        <location filename="../hsm_man_dlg.cpp" line="1300"/>
+        <location filename="../hsm_man_dlg.cpp" line="1338"/>
+        <location filename="../hsm_man_dlg.cpp" line="1365"/>
+        <location filename="../hsm_man_dlg.cpp" line="1392"/>
+        <location filename="../hsm_man_dlg.cpp" line="1416"/>
+        <location filename="../hsm_man_dlg.cpp" line="1440"/>
+        <location filename="../hsm_man_dlg.cpp" line="1470"/>
+        <location filename="../hsm_man_dlg.cpp" line="1497"/>
+        <location filename="../hsm_man_dlg.cpp" line="1524"/>
+        <location filename="../hsm_man_dlg.cpp" line="1551"/>
+        <location filename="../hsm_man_dlg.cpp" line="1602"/>
         <source>There are no selected items</source>
         <translation>선택한 아이템이 없습니다</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="889"/>
-        <location filename="../hsm_man_dlg.cpp" line="955"/>
+        <location filename="../hsm_man_dlg.cpp" line="897"/>
+        <location filename="../hsm_man_dlg.cpp" line="963"/>
         <source>failed to get certificate: %1</source>
         <translation>인증서 정보 가져오기 실패: %1</translation>
     </message>
@@ -5691,13 +5691,13 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">인증서를 정말로 지우겠습니까?</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="919"/>
+        <location filename="../hsm_man_dlg.cpp" line="927"/>
         <source>Are you sure to delete the ceritificate?</source>
         <translation>인증서를 정말로 지우겠습니까?</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="925"/>
-        <location filename="../hsm_man_dlg.cpp" line="1026"/>
+        <location filename="../hsm_man_dlg.cpp" line="933"/>
+        <location filename="../hsm_man_dlg.cpp" line="1034"/>
         <source>The certificate is deleted</source>
         <translation>인증서가 삭제 되었습니다</translation>
     </message>
@@ -5706,57 +5706,57 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">유효하지 않는 인증서</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="990"/>
+        <location filename="../hsm_man_dlg.cpp" line="998"/>
         <source>Do you want to delete a certificate and key pair with the same CKA_ID?</source>
         <translation>인증서와 동일한 CKA_ID 를 가진 키 쌍 모두 지우겠습니까?</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="999"/>
+        <location filename="../hsm_man_dlg.cpp" line="1007"/>
         <source>fail to get private handle: %1</source>
         <translation>개인키 핸들 가져오기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1006"/>
+        <location filename="../hsm_man_dlg.cpp" line="1014"/>
         <source>fail to get public handle: %1</source>
         <translation>공개키 핸들 가져오기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1138"/>
+        <location filename="../hsm_man_dlg.cpp" line="1146"/>
         <source>failed to get public key: %1</source>
         <translation>공개키 가져오기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1102"/>
+        <location filename="../hsm_man_dlg.cpp" line="1110"/>
         <source>Are you sure to delete the public key</source>
         <translation>공개키를 정말로 지우겠습니까?</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1108"/>
+        <location filename="../hsm_man_dlg.cpp" line="1116"/>
         <source>The public key is deleted</source>
         <translation>공개키가 삭제 되었습니다</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1310"/>
+        <location filename="../hsm_man_dlg.cpp" line="1318"/>
         <source>failed to get private key: %1</source>
         <translation>개인키 가져오기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1274"/>
+        <location filename="../hsm_man_dlg.cpp" line="1282"/>
         <source>Are you sure to delete the private key</source>
         <translation>개인키를 정말로 지우겠습니까?</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1280"/>
+        <location filename="../hsm_man_dlg.cpp" line="1288"/>
         <source>The private key is deleted</source>
         <translation>개인키가 삭제 되었습니다</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1444"/>
+        <location filename="../hsm_man_dlg.cpp" line="1452"/>
         <source>Are you sure to delete the secret key</source>
         <translation>비밀키를 정말로 지우겠습니까?</translation>
     </message>
     <message>
-        <location filename="../hsm_man_dlg.cpp" line="1450"/>
+        <location filename="../hsm_man_dlg.cpp" line="1458"/>
         <source>The secret key is deleted</source>
         <translation>비밀키가 삭제 되었습니다</translation>
     </message>
@@ -9639,8 +9639,8 @@ Do you want to delete the file and continue?</source>
     <name>PriKeyInfoDlg</name>
     <message>
         <location filename="../pri_key_info_dlg.ui" line="14"/>
-        <location filename="../pri_key_info_dlg.cpp" line="945"/>
-        <location filename="../pri_key_info_dlg.cpp" line="1056"/>
+        <location filename="../pri_key_info_dlg.cpp" line="947"/>
+        <location filename="../pri_key_info_dlg.cpp" line="1058"/>
         <source>View Private Key</source>
         <translation>개인키 보기</translation>
     </message>
@@ -9685,115 +9685,120 @@ Do you want to delete the file and continue?</source>
         <translation>Coefficient(IQMP)</translation>
     </message>
     <message>
-        <location filename="../pri_key_info_dlg.ui" line="725"/>
+        <location filename="../pri_key_info_dlg.ui" line="732"/>
         <source>Modules(N)</source>
         <translation>Modules(N)</translation>
     </message>
     <message>
-        <location filename="../pri_key_info_dlg.ui" line="905"/>
+        <location filename="../pri_key_info_dlg.ui" line="919"/>
         <source>PrivateExponent(D)</source>
         <translation>PrivateExponent(D)</translation>
     </message>
     <message>
-        <location filename="../pri_key_info_dlg.ui" line="972"/>
+        <location filename="../pri_key_info_dlg.ui" line="986"/>
         <source>ECC</source>
         <translation>ECC</translation>
     </message>
     <message>
-        <location filename="../pri_key_info_dlg.ui" line="992"/>
+        <location filename="../pri_key_info_dlg.ui" line="1006"/>
         <source>Curve OID</source>
         <translation>커브 OID</translation>
     </message>
     <message>
-        <location filename="../pri_key_info_dlg.ui" line="1099"/>
-        <location filename="../pri_key_info_dlg.ui" line="1540"/>
+        <location filename="../pri_key_info_dlg.ui" line="1120"/>
+        <location filename="../pri_key_info_dlg.ui" line="1575"/>
         <source>PrivateKey</source>
         <translation>개인키</translation>
     </message>
     <message>
-        <location filename="../pri_key_info_dlg.ui" line="1226"/>
+        <location filename="../pri_key_info_dlg.ui" line="1254"/>
         <source>PubX</source>
         <translation>PubX</translation>
     </message>
     <message>
-        <location filename="../pri_key_info_dlg.ui" line="1353"/>
+        <location filename="../pri_key_info_dlg.ui" line="1388"/>
         <source>PubY</source>
         <translation>PubY</translation>
     </message>
     <message>
-        <location filename="../pri_key_info_dlg.ui" line="1476"/>
+        <location filename="../pri_key_info_dlg.ui" line="1511"/>
         <source>DSA</source>
         <translation>DSA</translation>
     </message>
     <message>
-        <location filename="../pri_key_info_dlg.ui" line="1691"/>
+        <location filename="../pri_key_info_dlg.ui" line="1726"/>
         <source>Subprime (Q)</source>
         <translation>Subprime (Q)</translation>
     </message>
     <message>
-        <location filename="../pri_key_info_dlg.ui" line="1761"/>
+        <location filename="../pri_key_info_dlg.ui" line="1803"/>
         <source>Generator (G)</source>
         <translation>Generator (G)</translation>
     </message>
     <message>
-        <location filename="../pri_key_info_dlg.ui" line="1832"/>
+        <location filename="../pri_key_info_dlg.ui" line="1881"/>
         <source>Prime (P)</source>
         <translation>Prime (P)</translation>
     </message>
     <message>
-        <location filename="../pri_key_info_dlg.ui" line="1956"/>
+        <location filename="../pri_key_info_dlg.ui" line="2012"/>
         <source>PublicKey</source>
         <translation>공개키</translation>
     </message>
     <message>
-        <location filename="../pri_key_info_dlg.ui" line="2079"/>
+        <location filename="../pri_key_info_dlg.ui" line="2135"/>
         <source>EdDSA</source>
         <translation>EdDSA</translation>
     </message>
     <message>
-        <location filename="../pri_key_info_dlg.ui" line="2099"/>
+        <location filename="../pri_key_info_dlg.ui" line="2143"/>
+        <source>Param</source>
+        <translation>파라미터</translation>
+    </message>
+    <message>
+        <location filename="../pri_key_info_dlg.ui" line="2206"/>
         <source>Name</source>
         <translation>이름</translation>
     </message>
     <message>
-        <location filename="../pri_key_info_dlg.ui" line="2210"/>
+        <location filename="../pri_key_info_dlg.ui" line="2327"/>
         <source>Raw PrivateKey</source>
         <translation>로 개인키</translation>
     </message>
     <message>
-        <location filename="../pri_key_info_dlg.ui" line="2337"/>
+        <location filename="../pri_key_info_dlg.ui" line="2461"/>
         <source>Raw PublicKey</source>
         <translation>로 공개키</translation>
     </message>
     <message>
-        <location filename="../pri_key_info_dlg.ui" line="2419"/>
+        <location filename="../pri_key_info_dlg.ui" line="2543"/>
         <source>Check PublicKey</source>
         <translation>공개키 체크</translation>
     </message>
     <message>
-        <location filename="../pri_key_info_dlg.ui" line="2426"/>
+        <location filename="../pri_key_info_dlg.ui" line="2550"/>
         <source>Close</source>
         <translation>닫기</translation>
     </message>
     <message>
-        <location filename="../pri_key_info_dlg.cpp" line="857"/>
+        <location filename="../pri_key_info_dlg.cpp" line="859"/>
         <source>PublicKey is valid</source>
         <translation>공개키가 유효합니다</translation>
     </message>
     <message>
-        <location filename="../pri_key_info_dlg.cpp" line="859"/>
+        <location filename="../pri_key_info_dlg.cpp" line="861"/>
         <source>PublicKey is invalid</source>
         <translation>공개키가 유효 하지 않습니다</translation>
     </message>
     <message>
-        <location filename="../pri_key_info_dlg.cpp" line="990"/>
-        <location filename="../pri_key_info_dlg.cpp" line="1102"/>
+        <location filename="../pri_key_info_dlg.cpp" line="992"/>
+        <location filename="../pri_key_info_dlg.cpp" line="1104"/>
         <source>Private key algorithm(%1) not supported</source>
         <translation>(%1) 개인키 알고리즘은 지원 하지 않습니다</translation>
     </message>
     <message>
-        <location filename="../pri_key_info_dlg.cpp" line="998"/>
-        <location filename="../pri_key_info_dlg.cpp" line="1118"/>
+        <location filename="../pri_key_info_dlg.cpp" line="1000"/>
+        <location filename="../pri_key_info_dlg.cpp" line="1120"/>
         <source>View Public Key</source>
         <translation>공개키 보기</translation>
     </message>
@@ -9802,8 +9807,8 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">공개키 정보</translation>
     </message>
     <message>
-        <location filename="../pri_key_info_dlg.cpp" line="1042"/>
-        <location filename="../pri_key_info_dlg.cpp" line="1162"/>
+        <location filename="../pri_key_info_dlg.cpp" line="1044"/>
+        <location filename="../pri_key_info_dlg.cpp" line="1164"/>
         <source>Public key algorithm(%1) not supported</source>
         <translation>(%1) 공개키 알고리즘은 지원 하지 않습니다</translation>
     </message>

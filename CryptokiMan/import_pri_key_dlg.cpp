@@ -322,7 +322,7 @@ void ImportPriKeyDlg::accept()
 
     nKeyType = JS_PKI_getPriKeyType( &binPri );
 
-    rv = JS_PKI_getPubKeyFromPri( nKeyType, &binPri, &binPub );
+    rv = JS_PKI_getPubKeyFromPri( &binPri, &binPub );
     if( rv != 0 )
     {
         goto end;

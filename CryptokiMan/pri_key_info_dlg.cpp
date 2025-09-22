@@ -834,7 +834,7 @@ void PriKeyInfoDlg::clickCheckPubKey()
         BIN binPub = {0,0};
         if( pri_key_.nLen > 0 )
         {
-            JS_PKI_getPubKeyFromPriKey( key_type_, &pri_key_, &binPub );
+            JS_PKI_getPubKeyFromPriKey( &pri_key_, &binPub );
         }
         else
         {
