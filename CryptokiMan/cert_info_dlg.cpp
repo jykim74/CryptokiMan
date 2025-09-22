@@ -113,6 +113,7 @@ void CertInfoDlg::getFields()
     BIN binCert = {0,0};
     BIN binFinger = {0,0};
     BIN binPub = {0,0};
+    BIN binKID = {0,0};
 
     JCertInfo  sCertInfo;
     JExtensionInfoList *pExtInfoList = NULL;
@@ -143,7 +144,11 @@ void CertInfoDlg::getFields()
         return;
     }
 
+    JS_PKI_getPubKeyFromCert( &binCert, &binPub );
+    JS_PKI_getKeyIdentifier( &binPub, &binKID );
     JS_PKI_genHash( "SHA1", &binCert, &binFinger );
+
+    mKIDText->setText( getHexString( &binKID ));
 
     if( nType == FIELD_ALL || nType == FIELD_VERSION1_ONLY )
     {
@@ -195,7 +200,7 @@ void CertInfoDlg::getFields()
             QString strAlg;
             QString strParam;
 
-            JS_BIN_decodeHex( sCertInfo.pPublicKey, &binPub );
+//            JS_BIN_decodeHex( sCertInfo.pPublicKey, &binPub );
             JS_PKI_getPubKeyInfo( &binPub, &nKeyType, &nOption );
 
             strAlg = JS_PKI_getKeyAlgName( nKeyType );
@@ -299,6 +304,7 @@ void CertInfoDlg::getFields()
     JS_BIN_reset( &binCert );
     JS_BIN_reset( &binFinger );
     JS_BIN_reset( &binPub );
+    JS_BIN_reset( &binKID );
 
     JS_PKI_resetCertInfo( &sCertInfo );
     if( pExtInfoList ) JS_PKI_resetExtensionInfoList( &pExtInfoList );

@@ -943,6 +943,8 @@ void PriKeyInfoDlg::setModeUI( bool bVal )
 void PriKeyInfoDlg::setPrivateKey( const BIN *pPriKey )
 {
     clearAll();
+    BIN binPub = {0,0};
+    BIN binKID = {0,0};
 
     QString strTitle = tr( "View Private Key" );
 
@@ -962,6 +964,11 @@ void PriKeyInfoDlg::setPrivateKey( const BIN *pPriKey )
 
     key_type_ = JS_PKI_getPriKeyType( pPriKey );
     if( key_type_ < 0 ) return;
+
+    JS_PKI_getPubKeyFromPriKey( pPriKey, &binPub );
+    JS_PKI_getKeyIdentifier( &binPub, &binKID );
+
+    mKIDText->setText( getHexString(&binKID));
 
     if( key_type_ == JS_PKI_KEY_TYPE_RSA )
     {
@@ -991,11 +998,15 @@ void PriKeyInfoDlg::setPrivateKey( const BIN *pPriKey )
     {
         manApplet->warningBox( tr("Private key algorithm(%1) not supported").arg( key_type_ ), this);
     }
+
+    JS_BIN_reset( &binPub );
+    JS_BIN_reset( &binKID );
 }
 
 void PriKeyInfoDlg::setPublicKey( const BIN *pPubKey )
 {
     clearAll();
+    BIN binKID = {0,0};
 
     QString strTitle = tr( "View Public Key" );
 
@@ -1014,6 +1025,9 @@ void PriKeyInfoDlg::setPublicKey( const BIN *pPubKey )
         return;
 
     key_type_ = JS_PKI_getPubKeyType( pPubKey );
+
+    JS_PKI_getKeyIdentifier( pPubKey, &binKID );
+    mKIDText->setText( getHexString( &binKID) );
 
     if( key_type_ == JS_PKI_KEY_TYPE_RSA )
     {
@@ -1044,6 +1058,7 @@ void PriKeyInfoDlg::setPublicKey( const BIN *pPubKey )
         manApplet->warningBox( tr("Public key algorithm(%1) not supported").arg( key_type_ ), this);
     }
 
+    JS_BIN_reset( &binKID );
 }
 
 void PriKeyInfoDlg::setPrivateKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey )
@@ -1054,6 +1069,8 @@ void PriKeyInfoDlg::setPrivateKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE 
     int ret = 0;
     BIN binVal = {0,0};
     long uKeyType = 0;
+    BIN binPub = {0,0};
+    BIN binKID = {0,0};
 
     QString strTitle = tr( "View Private Key" );
 
@@ -1067,6 +1084,13 @@ void PriKeyInfoDlg::setPrivateKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE 
     session_ = hSession;
     pri_handle_ = hKey;
     pub_handle_ = 0;
+
+    ret = getPublicKey( manApplet->cryptokiAPI(), hSession, hKey, &binPub );
+    if( ret == 0 )
+    {
+        JS_PKI_getKeyIdentifier( &binPub, &binKID );
+        mKIDText->setText( getHexString( &binKID ));
+    }
 
     ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_KEY_TYPE, &binVal );
     if( ret != 0 ) goto end;
@@ -1106,6 +1130,8 @@ void PriKeyInfoDlg::setPrivateKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE 
 
 end :
     JS_BIN_reset( &binVal );
+    JS_BIN_reset( &binPub );
+    JS_BIN_reset( &binKID );
 }
 
 void PriKeyInfoDlg::setPublicKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey )
@@ -1116,6 +1142,8 @@ void PriKeyInfoDlg::setPublicKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE h
     int ret = 0;
     BIN binVal = {0,0};
     long uKeyType = 0;
+    BIN binPub = {0,0};
+    BIN binKID = {0,0};
 
     QString strTitle = tr( "View Public Key" );
 
@@ -1129,6 +1157,13 @@ void PriKeyInfoDlg::setPublicKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE h
     session_ = hSession;
     pub_handle_ = hKey;
     pri_handle_ = -1;
+
+    ret = getPublicKey( manApplet->cryptokiAPI(), hSession, hKey, &binPub );
+    if( ret == 0 )
+    {
+        JS_PKI_getKeyIdentifier( &binPub, &binKID );
+        mKIDText->setText( getHexString( &binKID ));
+    }
 
     ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_KEY_TYPE, &binVal );
     if( ret != 0 ) goto end;
@@ -1166,6 +1201,8 @@ void PriKeyInfoDlg::setPublicKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE h
 
 end :
     JS_BIN_reset( &binVal );
+    JS_BIN_reset( &binPub );
+    JS_BIN_reset( &binKID );
 }
 
 void PriKeyInfoDlg::readPrivateKey( BIN *pPriKey )

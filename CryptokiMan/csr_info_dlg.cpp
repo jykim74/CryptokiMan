@@ -112,6 +112,7 @@ void CSRInfoDlg::initialize()
     int i = 0;
 
     BIN binPub = {0,0};
+    BIN binKID = {0,0};
 
     if( req_bin_.nLen < 0 )
     {
@@ -127,6 +128,11 @@ void CSRInfoDlg::initialize()
         manApplet->warningBox( tr("failed to get CSR information"), this );
         goto end;
     }
+
+    JS_PKI_getPubKeyFromCSR( &req_bin_, &binPub );
+    JS_PKI_getKeyIdentifier( &binPub, &binKID );
+
+    mKIDText->setText( getHexString(&binKID));
 
     mFieldTable->insertRow(i);
     mFieldTable->setRowHeight(i,10);
@@ -159,7 +165,7 @@ void CSRInfoDlg::initialize()
         QString strAlg;
         QString strParam;
 
-        JS_BIN_decodeHex( req_info_.pPublicKey, &binPub );
+//        JS_BIN_decodeHex( req_info_.pPublicKey, &binPub );
         JS_PKI_getPubKeyInfo( &binPub, &nKeyType, &nOption );
 
         strAlg = JS_PKI_getKeyAlgName( nKeyType );
@@ -257,6 +263,7 @@ void CSRInfoDlg::initialize()
 
 end :
     JS_BIN_reset( &binPub );
+    JS_BIN_reset( &binKID );
 }
 
 QTableWidgetItem* CSRInfoDlg::getExtNameItem( const QString strSN )
