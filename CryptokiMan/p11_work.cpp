@@ -148,7 +148,7 @@ int getEDPublicKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pPubKey
         nKeyType = JS_PKI_KEY_TYPE_ED448;
 */
     JS_BIN_set( &binPub, &binPoint.pVal[2], binPoint.nLen - 2 );
-    ret = JS_PKI_encodeRawPublicKeyValue( nKeyType, nParam, &binPub, pPubKey );
+    ret = JS_PKI_encodeRawPublicKeyValue( nParam, &binPub, pPubKey );
 
 end :
     JS_BIN_reset( &binPoint );
