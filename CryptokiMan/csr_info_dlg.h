@@ -34,6 +34,7 @@ private slots:
 
     void clickSave();
     void clickVerifyCSR();
+    void clickViewPubKey();
 
 private:
     void initUI();

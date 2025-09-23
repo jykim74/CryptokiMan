@@ -8,6 +8,8 @@
 
 #include <QStringList>
 #include <QWidget>
+#include <QLineEdit>
+
 #include "js_pkcs11.h"
 #include "js_pki_ext.h"
 #include "define.h"
@@ -210,4 +212,6 @@ const QString getMechHex( long uMech );
 void getOID( const QString strType, const QString strValue, BIN *pOID );
 int writePriKeyPEM( const BIN *pPriKey, const QString strPath );
 int writePubKeyPEM( const BIN *pPubKey, const QString strPath );
+
+void setFixedLineText( QLineEdit *pEdit, const QString strText );
 #endif // COMMON_H

@@ -13,6 +13,7 @@
 #include "js_pki_x509.h"
 #include "js_pki_ext.h"
 #include "js_pki_tools.h"
+#include "pri_key_info_dlg.h"
 
 CSRInfoDlg::CSRInfoDlg(QWidget *parent) :
     QDialog(parent)
@@ -29,6 +30,7 @@ CSRInfoDlg::CSRInfoDlg(QWidget *parent) :
 
     connect( mSaveBtn, SIGNAL(clicked()), this, SLOT(clickSave()));
     connect( mVerifyCSRBtn, SIGNAL(clicked()), this, SLOT(clickVerifyCSR()));
+    connect( mViewPubKeyBtn, SIGNAL(clicked()), this, SLOT(clickViewPubKey()));
 
     mCloseBtn->setDefault(true);
 
@@ -132,7 +134,8 @@ void CSRInfoDlg::initialize()
     JS_PKI_getPubKeyFromCSR( &req_bin_, &binPub );
     JS_PKI_getKeyIdentifier( &binPub, &binKID );
 
-    mKIDText->setText( getHexString(&binKID));
+//    mKIDText->setText( getHexString(&binKID));
+    setFixedLineText( mKIDText, getHexString( &binKID ));
 
     mFieldTable->insertRow(i);
     mFieldTable->setRowHeight(i,10);
@@ -341,4 +344,20 @@ void CSRInfoDlg::clickVerifyCSR()
         manApplet->messageBox( tr( "CSR verification successful" ), this );
     else
         manApplet->messageBox( tr( "CSR verification failed [%1]" ).arg(ret), this );
+}
+
+void CSRInfoDlg::clickViewPubKey()
+{
+    BIN binPub = {0,0};
+
+    JS_PKI_getPubKeyFromCSR( &req_bin_, &binPub );
+
+    if( binPub.nLen > 0 )
+    {
+        PriKeyInfoDlg priKeyInfo;
+        priKeyInfo.setPublicKey( &binPub );
+        priKeyInfo.exec();
+    }
+
+    JS_BIN_reset( &binPub );
 }

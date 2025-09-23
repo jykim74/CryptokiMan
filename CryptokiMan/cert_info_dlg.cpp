@@ -11,6 +11,7 @@
 #include "js_pki_tools.h"
 #include "js_util.h"
 #include "common.h"
+#include "pri_key_info_dlg.h"
 
 enum {
     FIELD_ALL = 0,
@@ -61,14 +62,6 @@ QTableWidgetItem* CertInfoDlg::getExtNameItem( const QString strSN )
         item = new QTableWidgetItem( strSN );
 
     return item;
-
-#if defined(Q_OS_MAC)
-    layout()->setSpacing(5);
-    mInfoTab->layout()->setSpacing(5);
-    mInfoTab->layout()->setMargin(5);
-#endif
-
-    resize(minimumSizeHint().width(), minimumSizeHint().height());
 }
 
 
@@ -79,8 +72,10 @@ CertInfoDlg::CertInfoDlg(QWidget *parent) :
 
     initUI();
     cert_val_ = "";
-    tabWidget->setCurrentIndex(0);
 
+    connect( mViewPubKeyBtn, SIGNAL(clicked()), this, SLOT(clickViewPubKey()));
+
+    tabWidget->setCurrentIndex(0);
     mCloseBtn->setDefault(true);
 
 #if defined(Q_OS_MAC)
@@ -88,6 +83,8 @@ CertInfoDlg::CertInfoDlg(QWidget *parent) :
     mInfoTab->layout()->setSpacing(5);
     mInfoTab->layout()->setMargin(5);
 #endif
+
+    resize(minimumSizeHint().width(), minimumSizeHint().height());
 }
 
 CertInfoDlg::~CertInfoDlg()
@@ -148,7 +145,8 @@ void CertInfoDlg::getFields()
     JS_PKI_getKeyIdentifier( &binPub, &binKID );
     JS_PKI_genHash( "SHA1", &binCert, &binFinger );
 
-    mKIDText->setText( getHexString( &binKID ));
+//    mKIDText->setText( getHexString( &binKID ));
+    setFixedLineText( mKIDText, getHexString( &binKID ));
 
     if( nType == FIELD_ALL || nType == FIELD_VERSION1_ONLY )
     {
@@ -354,6 +352,25 @@ void CertInfoDlg::clickField(QModelIndex index)
     }
 }
 
+void CertInfoDlg::clickViewPubKey()
+{
+    BIN binCert = {0,0};
+    BIN binPub = {0,0};
+
+    JS_BIN_decodeHex( cert_val_.toStdString().c_str(), &binCert );
+
+    JS_PKI_getPubKeyFromCert( &binCert, &binPub );
+
+    if( binPub.nLen > 0 )
+    {
+        PriKeyInfoDlg priKeyInfo;
+        priKeyInfo.setPublicKey( &binPub );
+        priKeyInfo.exec();
+    }
+
+    JS_BIN_reset( &binCert );
+    JS_BIN_reset( &binPub );
+}
 
 void CertInfoDlg::clearTable()
 {

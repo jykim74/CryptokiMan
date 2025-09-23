@@ -968,7 +968,8 @@ void PriKeyInfoDlg::setPrivateKey( const BIN *pPriKey )
     JS_PKI_getPubKeyFromPriKey( pPriKey, &binPub );
     JS_PKI_getKeyIdentifier( &binPub, &binKID );
 
-    mKIDText->setText( getHexString(&binKID));
+//    mKIDText->setText( getHexString(&binKID));
+    setFixedLineText( mKIDText, getHexString( &binKID ));
 
     if( key_type_ == JS_PKI_KEY_TYPE_RSA )
     {
@@ -1027,7 +1028,8 @@ void PriKeyInfoDlg::setPublicKey( const BIN *pPubKey )
     key_type_ = JS_PKI_getPubKeyType( pPubKey );
 
     JS_PKI_getKeyIdentifier( pPubKey, &binKID );
-    mKIDText->setText( getHexString( &binKID) );
+//    mKIDText->setText( getHexString( &binKID) );
+    setFixedLineText( mKIDText, getHexString( &binKID ));
 
     if( key_type_ == JS_PKI_KEY_TYPE_RSA )
     {
@@ -1089,7 +1091,8 @@ void PriKeyInfoDlg::setPrivateKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE 
     if( ret == 0 )
     {
         JS_PKI_getKeyIdentifier( &binPub, &binKID );
-        mKIDText->setText( getHexString( &binKID ));
+//        mKIDText->setText( getHexString( &binKID ));
+        setFixedLineText( mKIDText, getHexString( &binKID ));
     }
 
     ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_KEY_TYPE, &binVal );
@@ -1162,7 +1165,8 @@ void PriKeyInfoDlg::setPublicKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE h
     if( ret == 0 )
     {
         JS_PKI_getKeyIdentifier( &binPub, &binKID );
-        mKIDText->setText( getHexString( &binKID ));
+//        mKIDText->setText( getHexString( &binKID ));
+        setFixedLineText( mKIDText, getHexString( &binKID ));
     }
 
     ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_KEY_TYPE, &binVal );

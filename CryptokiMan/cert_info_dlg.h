@@ -30,6 +30,7 @@ private slots:
     void showEvent(QShowEvent *event);
     void clickField( QModelIndex index );
     void changeFieldType( int index );
+    void clickViewPubKey();
 
 private:
     QString cert_val_;
