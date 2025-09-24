@@ -10,7 +10,7 @@
 #include "slot_info.h"
 #include "ui_import_pfx_dlg.h"
 #include "js_pki.h"
-#include "js_pki_eddsa.h"
+#include "js_pki_raw.h"
 #include "pkcs11.h"
 
 namespace Ui {

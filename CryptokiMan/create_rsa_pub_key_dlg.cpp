@@ -10,7 +10,7 @@
 #include "common.h"
 #include "cryptoki_api.h"
 #include "js_pki.h"
-#include "js_pki_eddsa.h"
+#include "js_pki_raw.h"
 #include "js_pki_key.h"
 #include "js_pki_tools.h"
 
