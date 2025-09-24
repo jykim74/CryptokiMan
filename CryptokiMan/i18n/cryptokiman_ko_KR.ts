@@ -776,22 +776,22 @@ Copyright (C) 2019 ~ 2020 JongYeob Kim
         <translation>정보</translation>
     </message>
     <message>
-        <location filename="../cert_info_dlg.ui" line="189"/>
+        <location filename="../cert_info_dlg.ui" line="195"/>
         <source>Field List</source>
         <translation>필드 목록</translation>
     </message>
     <message>
-        <location filename="../cert_info_dlg.ui" line="243"/>
+        <location filename="../cert_info_dlg.ui" line="249"/>
         <source>View PubKey</source>
         <translation>공개키 보기</translation>
     </message>
     <message>
-        <location filename="../cert_info_dlg.ui" line="177"/>
+        <location filename="../cert_info_dlg.ui" line="183"/>
         <source>Detail Value</source>
         <translation>상세 값</translation>
     </message>
     <message>
-        <location filename="../cert_info_dlg.ui" line="236"/>
+        <location filename="../cert_info_dlg.ui" line="242"/>
         <source>Close</source>
         <translation>닫기</translation>
     </message>
@@ -6912,7 +6912,7 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../lcn_info_dlg.ui" line="315"/>
-        <location filename="../lcn_info_dlg.cpp" line="519"/>
+        <location filename="../lcn_info_dlg.cpp" line="523"/>
         <source>Get</source>
         <translation>가져오기</translation>
     </message>
@@ -6955,22 +6955,22 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">라이선스가 유효하지 않습니다</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="351"/>
+        <location filename="../lcn_info_dlg.cpp" line="355"/>
         <source>Please enter a email</source>
         <translation>이메일을 입력하세요</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="358"/>
+        <location filename="../lcn_info_dlg.cpp" line="362"/>
         <source>Please enter a license key</source>
         <translation>라이센스 키를 입력하세요</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="366"/>
+        <location filename="../lcn_info_dlg.cpp" line="370"/>
         <source>failed to get license %1 : %2</source>
         <translation>라이선스 가져오기 실패 %1 : %2</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="455"/>
+        <location filename="../lcn_info_dlg.cpp" line="459"/>
         <source>failed to renew license %1 : %2</source>
         <translation>라이선스 갱신 실패 %1 : %2</translation>
     </message>
@@ -6994,34 +6994,34 @@ Do you want to delete the file and continue?</source>
         <translation>[라이선스 없음]</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="378"/>
+        <location filename="../lcn_info_dlg.cpp" line="382"/>
         <source>failed to parse license [%1]</source>
         <translation>라이선스 파싱 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="387"/>
+        <location filename="../lcn_info_dlg.cpp" line="391"/>
         <source>license is not valid [%1]</source>
         <translation>라이선스가 유효하지 않습니다 [%1]</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="401"/>
-        <location filename="../lcn_info_dlg.cpp" line="466"/>
+        <location filename="../lcn_info_dlg.cpp" line="405"/>
+        <location filename="../lcn_info_dlg.cpp" line="470"/>
         <source>Your current license has a longer usage period.</source>
         <translation>현재 라이선스가 더 긴 기간의 라이선스입니다</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="420"/>
-        <location filename="../lcn_info_dlg.cpp" line="489"/>
+        <location filename="../lcn_info_dlg.cpp" line="424"/>
+        <location filename="../lcn_info_dlg.cpp" line="493"/>
         <source>You have changed license. Restart to apply it?</source>
         <translation>라이선스가 변경 되었습니다.적용을 위해 다시 시작 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="443"/>
+        <location filename="../lcn_info_dlg.cpp" line="447"/>
         <source>There is currently no license</source>
         <translation>현재 라이선스가 없습니다</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="515"/>
+        <location filename="../lcn_info_dlg.cpp" line="519"/>
         <source>Find</source>
         <translation>찾기</translation>
     </message>
@@ -7030,17 +7030,17 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">라이선스 갱신 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="479"/>
+        <location filename="../lcn_info_dlg.cpp" line="483"/>
         <source>License is invalid : %1</source>
         <translation>라이선스가 유효하지 않습니다: %1</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="498"/>
+        <location filename="../lcn_info_dlg.cpp" line="502"/>
         <source>Are you sure you want to remove invalid license information?</source>
         <translation>유효하지 않는 라이선스 정보를 제거 하겠습니까?</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="505"/>
+        <location filename="../lcn_info_dlg.cpp" line="509"/>
         <source>Remove invalid license settings</source>
         <translation>유효하지 않는 라이선스 설정 제거</translation>
     </message>
@@ -7087,8 +7087,8 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">라이선스가 발급 되지 않았습니다.</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="252"/>
-        <location filename="../lcn_info_dlg.cpp" line="345"/>
+        <location filename="../lcn_info_dlg.cpp" line="256"/>
+        <location filename="../lcn_info_dlg.cpp" line="349"/>
         <source>This service is not yet supported.</source>
         <translation>아직 지원하지 않는 서비스 입니다</translation>
     </message>
