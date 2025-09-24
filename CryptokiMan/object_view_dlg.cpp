@@ -66,6 +66,7 @@ void ObjectViewDlg::initUI()
     mCommonTable->setHorizontalHeaderLabels( sBaseLabels );
     mCommonTable->verticalHeader()->setVisible(false);
     mCommonTable->horizontalHeader()->setStyleSheet( kTableStyle );
+    mCommonTable->setSelectionMode(QAbstractItemView::SingleSelection);
     mCommonTable->setSelectionBehavior(QAbstractItemView::SelectRows);
     mCommonTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
     mCommonTable->setColumnWidth( 0, nWidth );
@@ -76,6 +77,7 @@ void ObjectViewDlg::initUI()
     mPart1Table->setHorizontalHeaderLabels( sBaseLabels );
     mPart1Table->verticalHeader()->setVisible(false);
     mPart1Table->horizontalHeader()->setStyleSheet( kTableStyle );
+    mPart1Table->setSelectionMode(QAbstractItemView::SingleSelection);
     mPart1Table->setSelectionBehavior(QAbstractItemView::SelectRows);
     mPart1Table->setEditTriggers(QAbstractItemView::NoEditTriggers);
     mPart1Table->setColumnWidth( 0, nWidth );
@@ -86,6 +88,7 @@ void ObjectViewDlg::initUI()
     mPart2Table->setHorizontalHeaderLabels( sBaseLabels );
     mPart2Table->verticalHeader()->setVisible(false);
     mPart2Table->horizontalHeader()->setStyleSheet( kTableStyle );
+    mPart2Table->setSelectionMode(QAbstractItemView::SingleSelection);
     mPart2Table->setSelectionBehavior(QAbstractItemView::SelectRows);
     mPart2Table->setEditTriggers(QAbstractItemView::NoEditTriggers);
     mPart2Table->setColumnWidth( 0, nWidth );
@@ -96,6 +99,7 @@ void ObjectViewDlg::initUI()
     mPart3Table->setHorizontalHeaderLabels( sBaseLabels );
     mPart3Table->verticalHeader()->setVisible(false);
     mPart3Table->horizontalHeader()->setStyleSheet( kTableStyle );
+    mPart3Table->setSelectionMode(QAbstractItemView::SingleSelection);
     mPart3Table->setSelectionBehavior(QAbstractItemView::SelectRows);
     mPart3Table->setEditTriggers(QAbstractItemView::NoEditTriggers);
     mPart3Table->setColumnWidth( 0, nWidth );

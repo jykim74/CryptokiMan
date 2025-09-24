@@ -16,6 +16,11 @@ SecretInfoDlg::SecretInfoDlg(QWidget *parent) :
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(close()));
     connect( mKeyText, SIGNAL(textChanged(QString)), this, SLOT(changeKey()));
     connect( mIDText, SIGNAL(textChanged(QString)), this, SLOT(changeID()));
+
+#if defined(Q_OS_MAC)
+    layout()->setSpacing(5);
+#endif
+    resize(minimumSizeHint().width(), minimumSizeHint().height());
 }
 
 SecretInfoDlg::~SecretInfoDlg()
