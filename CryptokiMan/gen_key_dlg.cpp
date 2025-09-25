@@ -13,9 +13,8 @@
 #include "mech_mgr.h"
 
 static QStringList sMechGenList;
-
 static QStringList sFalseTrue = { "false", "true" };
-static QStringList sParamList = { "String", "Hex", "Base64" };
+
 
 GenKeyDlg::GenKeyDlg(QWidget *parent) :
     QDialog(parent)
@@ -108,7 +107,7 @@ void GenKeyDlg::initialize()
 
 void GenKeyDlg::initAttributes()
 {
-    mParamCombo->addItems(sParamList);
+    mParamCombo->addItems( kDataTypeList );
 
     mPrivateCombo->addItems(sFalseTrue);
     mPrivateCombo->setCurrentIndex(1);

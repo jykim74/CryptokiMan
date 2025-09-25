@@ -60,16 +60,16 @@ void SecretInfoDlg::initialize()
     rv = pP11->GetAttributeValue2( session_, handle_, CKA_VALUE, &binVal );
     if( rv == CKR_OK )
     {
-        mKeyTypeCombo->addItem( "Hex" );
+        mKeyTypeCombo->addItem( kDataHex );
         strVal = getHexString( &binVal );
     }
     else
     {
-        mKeyTypeCombo->addItem( "String" );
+        mKeyTypeCombo->addItem( kDataString );
         strVal = QString( "%1[0x%2]" ).arg( JS_PKCS11_GetErrorMsg( rv )).arg(rv,0,16);
     }
 
-    mIDTypeCombo->addItem( "Hex" );
+    mIDTypeCombo->addItem( kDataHex );
 
     mLabelText->setText( pLabel );
     mHandleText->setText( QString("%1").arg( handle_ ));

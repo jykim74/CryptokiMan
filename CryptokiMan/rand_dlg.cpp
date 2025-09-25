@@ -10,8 +10,6 @@
 #include "cryptoki_api.h"
 #include "common.h"
 
-static QStringList sSeedList = { "String", "Hex", "Base64" };
-
 RandDlg::RandDlg(QWidget *parent) :
     QDialog(parent)
 {
@@ -32,7 +30,7 @@ RandDlg::~RandDlg()
 
 void RandDlg::initUI()
 {
-    mSeedCombo->addItems( sSeedList );
+    mSeedCombo->addItems( kDataTypeList );
     mLengthText->setText( "16" );
 
     connect( mSetSeedBtn, SIGNAL(clicked()), this, SLOT(clickSeed()));

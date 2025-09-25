@@ -12,7 +12,6 @@
 #include "js_pki_tools.h"
 
 static QStringList sFalseTrue = { "false", "true" };
-static QStringList sDataList = { "String", "Hex", "Base64" };
 
 CreateDataDlg::CreateDataDlg(QWidget *parent) :
     QDialog(parent)
@@ -63,7 +62,7 @@ void CreateDataDlg::initialize()
 
 void CreateDataDlg::initAttributes()
 {
-    mDataCombo->addItems(sDataList);
+    mDataCombo->addItems( kDataTypeList );
 
     mPrivateCombo->addItems(sFalseTrue);
     mPrivateCombo->setCurrentIndex(1);

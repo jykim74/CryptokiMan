@@ -19,9 +19,6 @@
 
 static QStringList sMechDigestList;
 
-static QStringList sInputList = {
-    "String", "Hex", "Base64"
-};
 
 DigestDlg::DigestDlg(QWidget *parent) :
     QDialog(parent)
@@ -68,7 +65,7 @@ void DigestDlg::initUI()
         sMechDigestList = kMechDigestList;
     }
 
-    mInputCombo->addItems( sInputList );
+    mInputCombo->addItems( kDataTypeList );
     mMechCombo->addItems( sMechDigestList );
 
     connect( mParamText, SIGNAL(textChanged(const QString)), this, SLOT(changeParam(const QString)));

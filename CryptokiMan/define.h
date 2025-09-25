@@ -214,9 +214,8 @@ static QStringList kAsymTypeList = {
     "CKK_RSA", "CKK_DSA", "CKK_ECDSA", "CKK_EC_EDWARDS"
 };
 
-static QStringList kDataTypeList = { "String", "Hex", "Base64" };
-static QStringList kDNTypeList = { "Text", "DER" };
 
+static QStringList kDNTypeList = { "Text", "DER" };
 static QStringList kMGFList = { "CKG_MGF1_SHA1", "CKG_MGF1_SHA224", "CKG_MGF1_SHA256", "CKG_MGF1_SHA384", "CKG_MGF1_SHA512" };
 
 #endif // DEFINE_H

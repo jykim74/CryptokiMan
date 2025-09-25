@@ -12,8 +12,6 @@
 #include "settings_mgr.h"
 #include "object_view_dlg.h"
 
-const QStringList kTypeList = { "String", "Hex", "Base64" };
-
 
 EditAttributeDlg::EditAttributeDlg(QWidget *parent) :
     QDialog(parent)
@@ -228,8 +226,8 @@ void EditAttributeDlg::attributeTypeChanged( int index )
 
 void EditAttributeDlg::initialize()
 {
-    mValueTypeCombo->addItems( kTypeList );
-    mValueTypeCombo->setCurrentText( "Hex" );
+    mValueTypeCombo->addItems( kDataTypeList );
+    mValueTypeCombo->setCurrentText( kDataHex );
 
     attributeTypeChanged(0);
 }

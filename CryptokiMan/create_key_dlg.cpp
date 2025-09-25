@@ -15,7 +15,6 @@
 
 static QStringList sSymTypeList;
 static QStringList sFalseTrue = { "false", "true" };
-static QStringList sKeyList = { "String", "Hex", "Base64" };
 
 
 CreateKeyDlg::CreateKeyDlg(QWidget *parent) :
@@ -89,7 +88,7 @@ void CreateKeyDlg::initialize()
 
 void CreateKeyDlg::initAttributes()
 {
-    mKeyCombo->addItems(sKeyList);
+    mKeyCombo->addItems( kDataTypeList );
 
     mPrivateCombo->addItems(sFalseTrue);
     mPrivateCombo->setCurrentIndex(1);

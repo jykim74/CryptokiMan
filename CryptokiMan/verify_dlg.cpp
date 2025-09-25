@@ -78,6 +78,7 @@ void VerifyDlg::initUI()
         sMechSignAsymList = kMechSignAsymList;
     }
 
+    mInputTypeCombo->addItems( kDataTypeList );
     mKeyTypeCombo->addItems(sKeyList);
     mMechCombo->addItems( sMechSignAsymList );
     mPSSHashAlgCombo->addItems( kMechSHAList );
@@ -99,9 +100,7 @@ void VerifyDlg::initUI()
     connect( mVerifyRecoverInitBtn, SIGNAL(clicked()), this, SLOT(clickVerifyRecoverInit()));
     connect( mVerifyRecoverBtn, SIGNAL(clicked()), this, SLOT(clickVerifyRecover()));
 
-    connect( mInputHexRadio, SIGNAL(clicked()), this, SLOT(changeInput()));
-    connect( mInputStringRadio, SIGNAL(clicked()), this, SLOT(changeInput()));
-    connect( mInputBase64Radio, SIGNAL(clicked()), this, SLOT(changeInput()));
+    connect( mInputTypeCombo, SIGNAL(clicked()), this, SLOT(changeInput()));
 
     connect( mInputText, SIGNAL(textChanged()), this, SLOT(changeInput()));
     connect( mSignText, SIGNAL(textChanged()), this, SLOT(changeSign()));
@@ -274,15 +273,9 @@ void VerifyDlg::mechChanged( int index )
 }
 
 void VerifyDlg::changeInput()
-{
-    int nType = DATA_STRING;
-
-    if( mInputHexRadio->isChecked() )
-        nType = DATA_HEX;
-    else if( mInputBase64Radio->isChecked() )
-        nType = DATA_BASE64;
-
-    QString strLen = getDataLenString( nType, mInputText->toPlainText() );
+{    
+    QString strType = mInputTypeCombo->currentText();
+    QString strLen = getDataLenString( strType, mInputText->toPlainText() );
 
     mInputLenText->setText( QString("%1").arg( strLen ));
 }
@@ -370,13 +363,9 @@ void VerifyDlg::clickUpdate()
     }
 
     BIN binInput = {0,0};
+    QString strType = mInputTypeCombo->currentText();
 
-    if( mInputStringRadio->isChecked() )
-        JS_BIN_set( &binInput, (unsigned char *)strInput.toStdString().c_str(), strInput.length() );
-    else if( mInputHexRadio->isChecked() )
-        JS_BIN_decodeHex( strInput.toStdString().c_str(), &binInput );
-    else if( mInputBase64Radio->isChecked() )
-        JS_BIN_decodeBase64( strInput.toStdString().c_str(), &binInput );
+    getBINFromString( &binInput, strType, strInput );
 
     rv = manApplet->cryptokiAPI()->VerifyUpdate( slot_info_.getSessionHandle(), binInput.pVal, binInput.nLen );
 
@@ -472,13 +461,9 @@ void VerifyDlg::runDataVerify()
     }
 
     BIN binInput = {0,0};
+    QString strType = mInputTypeCombo->currentText();
 
-    if( mInputStringRadio->isChecked() )
-        JS_BIN_set( &binInput, (unsigned char *)strInput.toStdString().c_str(), strInput.length() );
-    else if( mInputHexRadio->isChecked() )
-        JS_BIN_decodeHex( strInput.toStdString().c_str(), &binInput );
-    else if( mInputBase64Radio->isChecked() )
-        JS_BIN_decodeBase64( strInput.toStdString().c_str(), &binInput );
+    getBINFromString( &binInput, strType, strInput );
 
     BIN binSign = {0,0};
     JS_BIN_decodeHex( strSign.toStdString().c_str(), &binSign );
@@ -722,7 +707,7 @@ void VerifyDlg::clickVerifyRecover()
     }
     else
     {
-        mInputHexRadio->setChecked(true);
+        mInputTypeCombo->setCurrentText( kDataHex );
         mInputText->setPlainText( getHexString( sData, ulDataLen ));
         manApplet->messageBox( tr( "Signature value is correct" ), this );
     }

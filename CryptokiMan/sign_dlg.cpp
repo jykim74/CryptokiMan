@@ -78,6 +78,7 @@ void SignDlg::initUI()
         sMechSignAsymList = kMechSignAsymList;
     }
 
+    mInputTypeCombo->addItems( kDataTypeList );
     mKeyTypeCombo->addItems(sKeyList);
     mMechCombo->addItems( sMechSignAsymList );
     mPSSHashAlgCombo->addItems( kMechSHAList );
@@ -98,9 +99,7 @@ void SignDlg::initUI()
     connect( mSignRecoverInitBtn, SIGNAL(clicked()), this, SLOT(clickSignRecoverInit()));
     connect( mSignRecoverBtn, SIGNAL(clicked()), this, SLOT(clickSignRecover()));
 
-    connect( mInputHexRadio, SIGNAL(clicked()), this, SLOT(changeInput()));
-    connect( mInputStringRadio, SIGNAL(clicked()), this, SLOT(changeInput()));
-    connect( mInputBase64Radio, SIGNAL(clicked()), this, SLOT(changeInput()));
+    connect( mInputTypeCombo, SIGNAL(clicked()), this, SLOT(changeInput()));
 
     connect( mInputText, SIGNAL(textChanged()), this, SLOT(changeInput()));
     connect( mOutputText, SIGNAL(textChanged()), this, SLOT(changeOutput()));
@@ -273,15 +272,9 @@ void SignDlg::mechChanged( int index )
 }
 
 void SignDlg::changeInput()
-{
-    int nType = DATA_STRING;
-
-    if( mInputHexRadio->isChecked() )
-        nType = DATA_HEX;
-    else if( mInputBase64Radio->isChecked() )
-        nType = DATA_BASE64;
-
-    QString strLen = getDataLenString( nType, mInputText->toPlainText() );
+{   
+    QString strType = mInputTypeCombo->currentText();
+    QString strLen = getDataLenString( strType, mInputText->toPlainText() );
 
     mInputLenText->setText( QString("%1").arg( strLen ));
 }
@@ -371,7 +364,6 @@ int SignDlg::clickInit()
 void SignDlg::clickUpdate()
 {
     int rv = -1;
-    int nDataType = DATA_HEX;
 
     QString strInput = mInputText->toPlainText();
 
@@ -382,15 +374,9 @@ void SignDlg::clickUpdate()
     }
 
     BIN binInput = {0,0};
+    QString strType = mInputTypeCombo->currentText();
 
-    if( mInputStringRadio->isChecked() )
-        nDataType = DATA_STRING;
-    else if( mInputHexRadio->isChecked() )
-        nDataType = DATA_HEX;
-    else if( mInputBase64Radio->isChecked() )
-        nDataType = DATA_BASE64;
-
-    getBINFromString( &binInput, nDataType, strInput );
+    getBINFromString( &binInput, strType, strInput );
 
     rv = manApplet->cryptokiAPI()->SignUpdate( slot_info_.getSessionHandle(), binInput.pVal, binInput.nLen );
     if( rv != CKR_OK )
@@ -457,7 +443,6 @@ void SignDlg::runDataSign()
 {
     int rv = -1;
 
-    int nDataType = -1;
     QString strInput = mInputText->toPlainText();
 
     if( strInput.isEmpty() )
@@ -474,15 +459,9 @@ void SignDlg::runDataSign()
     }
 
     BIN binInput = {0,0};
+    QString strType = mInputTypeCombo->currentText();
 
-    if( mInputStringRadio->isChecked() )
-        nDataType = DATA_STRING;
-    else if( mInputHexRadio->isChecked() )
-        nDataType = DATA_HEX;
-    else if( mInputBase64Radio->isChecked() )
-        nDataType = DATA_BASE64;
-
-    getBINFromString( &binInput, nDataType, strInput );
+    getBINFromString( &binInput, strType, strInput );
 
     unsigned char sSign[1024];
     long uSignLen = 1024;
@@ -720,13 +699,9 @@ void SignDlg::clickSignRecover()
     }
 
     BIN binInput = {0,0};
+    QString strType = mInputTypeCombo->currentText();
 
-    if( mInputStringRadio->isChecked() )
-        JS_BIN_set( &binInput, (unsigned char *)strInput.toStdString().c_str(), strInput.length());
-    else if( mInputHexRadio->isChecked() )
-        JS_BIN_decodeHex( strInput.toStdString().c_str(), &binInput );
-    else if( mInputBase64Radio->isChecked() )
-        JS_BIN_decodeBase64( strInput.toStdString().c_str(), &binInput );
+    getBINFromString( &binInput, strType, strInput );
 
     unsigned char sSign[1024];
     long uSignLen = 1024;
