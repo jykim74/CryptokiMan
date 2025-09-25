@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>624</width>
-    <height>939</height>
+    <height>757</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1011,6 +1011,12 @@
          </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label_4">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="text">
             <string>Input</string>
            </property>

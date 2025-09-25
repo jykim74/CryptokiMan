@@ -192,9 +192,10 @@ void MainWindow::baseTableHeader()
 
     right_table_->horizontalHeader()->setStretchLastSection(true);
     QString style = "QHeaderView::section {background-color:#404040;color:#FFFFFF;}";
+    right_table_->setStyleSheet( kSelectStyle );
     right_table_->horizontalHeader()->setStyleSheet( style );
 
-    right_table_->setColumnCount(2);
+    right_table_->setColumnCount(labels.size());
     right_table_->setColumnWidth(0, 180);
     right_table_->setHorizontalHeaderLabels( labels );
     right_table_->verticalHeader()->setVisible(false);
