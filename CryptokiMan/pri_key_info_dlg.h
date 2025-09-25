@@ -56,8 +56,8 @@ private slots:
     void changeDSA_Public();
     void changeDSA_Private( const QString& text );
 
-    void changeEdDSA_RawPublic();
-    void changeEdDSA_RawPrivate();
+    void changeRawPublic();
+    void changeRawPrivate();
 
     void clearAll();
     void clickCheckPubKey();
@@ -70,14 +70,36 @@ private:
     void setRSAKey( const BIN *pKey, bool bPri = true );
     void setECCKey( const BIN *pKey, bool bPri = true );
     void setDSAKey( const BIN *pKey, bool bPri = true );
-    void setEdDSAKey( int nKeyType, const BIN *pKey, bool bPri = true );
+    void setRawKey( int nKeyType, const BIN *pKey, bool bPri = true );
 
     void setRSAKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey, bool bPri = true );
     void setECCKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey, bool bPri = true );
     void setDSAKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey, bool bPri = true );
-    void setEdDSAKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey, bool bPri = true );
+    void setRawKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey, bool bPri = true );
 
     void setModeUI( bool bVal );
+
+    void setEnableRSA_N( bool bVal );
+    void setEnableRSA_E( bool bVal );
+    void setEnableRSA_D( bool bVal );
+    void setEnableRSA_P( bool bVal );
+    void setEnableRSA_Q( bool bVal );
+    void setEnableRSA_DMP1( bool bVal );
+    void setEnableRSA_DMQ1( bool bVal );
+    void setEnableRSA_IQMP( bool bVal );
+
+    void setEnableECC_Private( bool bVal );
+    void setEnableECC_PubX( bool bVal );
+    void setEnableECC_PubY( bool bVal );
+
+    void setEnableDSA_P( bool bVal );
+    void setEnableDSA_Q( bool bVal );
+    void setEnableDSA_G( bool bVal );
+    void setEnableDSA_Private( bool bVal );
+    void setEnableDSA_Public( bool bVal );
+
+    void setEnableRawPublic( bool bVal );
+    void setEnableRawPrivate( bool bVal );
 
     BIN pri_key_;
     BIN pub_key_;

@@ -40,6 +40,9 @@ static QString kSelectStyle =
     "color: white; "
     "} ";
 
+const QString kReadOnlyStyle = "background-color:#ddddff";
+const QString kDisableStyle = "background-color:#cccccc";
+
 enum {
     DATA_HEX,
     DATA_STRING,
