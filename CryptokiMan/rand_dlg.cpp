@@ -30,6 +30,7 @@ RandDlg::~RandDlg()
 
 void RandDlg::initUI()
 {
+    mOutputText->setPlaceholderText( tr( "Hex value" ));
     mSeedCombo->addItems( kDataTypeList );
     mLengthText->setText( "16" );
 

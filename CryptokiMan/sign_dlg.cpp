@@ -84,6 +84,8 @@ void SignDlg::initUI()
     mPSSHashAlgCombo->addItems( kMechSHAList );
     mPSSMgfCombo->addItems( kMGFList );
 
+    mOutputText->setPlaceholderText( tr( "Hex value" ));
+
     connect( mKeyTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(keyTypeChanged(int)));
     connect( mParamText, SIGNAL(textChanged(const QString)), this, SLOT(changeParam(const QString)));
     connect( mMechCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(mechChanged(int)));
@@ -99,7 +101,7 @@ void SignDlg::initUI()
     connect( mSignRecoverInitBtn, SIGNAL(clicked()), this, SLOT(clickSignRecoverInit()));
     connect( mSignRecoverBtn, SIGNAL(clicked()), this, SLOT(clickSignRecover()));
 
-    connect( mInputTypeCombo, SIGNAL(clicked()), this, SLOT(changeInput()));
+    connect( mInputTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changeInput()));
 
     connect( mInputText, SIGNAL(textChanged()), this, SLOT(changeInput()));
     connect( mOutputText, SIGNAL(textChanged()), this, SLOT(changeOutput()));

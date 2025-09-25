@@ -84,6 +84,8 @@ void VerifyDlg::initUI()
     mPSSHashAlgCombo->addItems( kMechSHAList );
     mPSSMgfCombo->addItems( kMGFList );
 
+    mSignText->setPlaceholderText( tr( "Hex value" ) );
+
     connect( mKeyTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(keyTypeChanged(int)));
     connect( mParamText, SIGNAL(textChanged(const QString)), this, SLOT(changeParam(const QString)));
     connect( mMechCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(mechChanged(int)));
@@ -100,12 +102,12 @@ void VerifyDlg::initUI()
     connect( mVerifyRecoverInitBtn, SIGNAL(clicked()), this, SLOT(clickVerifyRecoverInit()));
     connect( mVerifyRecoverBtn, SIGNAL(clicked()), this, SLOT(clickVerifyRecover()));
 
-    connect( mInputTypeCombo, SIGNAL(clicked()), this, SLOT(changeInput()));
+    connect( mInputTypeCombo, SIGNAL( currentIndexChanged(int)), this, SLOT(changeInput()));
 
     connect( mInputText, SIGNAL(textChanged()), this, SLOT(changeInput()));
     connect( mSignText, SIGNAL(textChanged()), this, SLOT(changeSign()));
 
-    connect( mInputClearBtn, SIGNAL(clicked()), this, SLOT(clickInputClear()));
+    connect( mInputClearBtn, SIGNAL( clicked() ), this, SLOT(clickInputClear()));
     connect( mSignClearBtn, SIGNAL(clicked()), this, SLOT(clickSignClear()));
     connect( mFindSrcFileBtn, SIGNAL(clicked()), this, SLOT(clickFindSrcFile()));
 

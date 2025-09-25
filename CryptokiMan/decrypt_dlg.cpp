@@ -81,6 +81,8 @@ void DecryptDlg::initUI()
         sMechEncAsymList = kMechEncAsymList;
     }
 
+    mInputText->setPlaceholderText( tr("Hex value" ));
+
     mKeyTypeCombo->addItems(sKeyList);
     mMechCombo->addItems( sMechEncSymList );
     mOutputCombo->addItems( kDataTypeList );

@@ -24,6 +24,7 @@ public:
 
 private slots:
     void clickClear();
+    void changeType();
     void clickSearch();
 
 private:

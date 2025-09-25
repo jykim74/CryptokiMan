@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>664</width>
-    <height>477</height>
+    <height>392</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,7 +23,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="mFirstTab">
       <attribute name="title">
@@ -304,7 +304,7 @@
           <widget class="QComboBox" name="mOptionCombo">
            <property name="minimumSize">
             <size>
-             <width>120</width>
+             <width>100</width>
              <height>0</height>
             </size>
            </property>

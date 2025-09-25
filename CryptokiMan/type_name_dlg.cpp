@@ -53,6 +53,8 @@ int TypeNameDlg::getType( const QString strInput )
 void TypeNameDlg::initialize()
 {
     mTypeCombo->addItems( kTypeList );
+    changeType();
+
     QRegExp regExp("^[0-9a-fA-FxX]*$" );
     QRegExpValidator* regVal = new QRegExpValidator( regExp );
     mSearchText->setValidator( regVal );
@@ -64,6 +66,22 @@ void TypeNameDlg::clickClear()
     mDecimalText->clear();
     mHexText->clear();
     mNameText->clear();
+}
+
+void TypeNameDlg::changeType()
+{
+    QString strType = mTypeCombo->currentText();
+
+    if( strType == "KeyType" )
+        mSearchText->setPlaceholderText( "CKK value" );
+    else if( strType == "ErrorCode" )
+        mSearchText->setPlaceholderText( "CKR value" );
+    else if( strType == "Object" )
+        mSearchText->setPlaceholderText( "CKO value" );
+    else if( strType == "Attribute" )
+        mSearchText->setPlaceholderText( "CKA value" );
+    else if( strType == "Mechanism" )
+        mSearchText->setPlaceholderText( "CKM value" );
 }
 
 void TypeNameDlg::clickSearch()
@@ -82,6 +100,8 @@ void TypeNameDlg::clickSearch()
         mHexText->clear();
         mNameText->clear();
         mSearchText->setFocus();
+
+        changeType();
         return;
     }
 

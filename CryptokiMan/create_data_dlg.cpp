@@ -280,7 +280,7 @@ void CreateDataDlg::changeObjectID()
     else if( strType.toUpper() == "VALUE HEX" )
         mObjectIDText->setPlaceholderText( tr("OID value hex") );
     else
-        mObjectIDText->setPlaceholderText( "1.2.3.4" );
+        mObjectIDText->setPlaceholderText( tr( "Object identifier" ) );
 }
 
 void CreateDataDlg::setDefaults()
