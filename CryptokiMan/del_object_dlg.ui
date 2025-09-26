@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>440</width>
-    <height>180</height>
+    <height>182</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -457,12 +457,14 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>mSlotNameText</tabstop>
   <tabstop>mSlotIDText</tabstop>
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
   <tabstop>mObjectTypeCombo</tabstop>
   <tabstop>mLabelCombo</tabstop>
   <tabstop>mObjectText</tabstop>
+  <tabstop>mViewBtn</tabstop>
   <tabstop>mDeleteBtn</tabstop>
   <tabstop>mDeleteAllBtn</tabstop>
   <tabstop>mCloseBtn</tabstop>

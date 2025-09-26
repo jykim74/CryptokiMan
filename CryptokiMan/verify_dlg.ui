@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>624</width>
-    <height>804</height>
+    <height>616</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -728,7 +728,7 @@
    <item>
     <widget class="QTabWidget" name="mInputTab">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="mDataTab">
       <attribute name="title">
@@ -1510,14 +1510,24 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>mSlotNameText</tabstop>
   <tabstop>mSlotIDText</tabstop>
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
   <tabstop>mKeyTypeCombo</tabstop>
   <tabstop>mMechCombo</tabstop>
   <tabstop>mMechText</tabstop>
+  <tabstop>mParamText</tabstop>
+  <tabstop>mParamLenText</tabstop>
+  <tabstop>mPSSHashAlgCombo</tabstop>
+  <tabstop>mPSSMgfCombo</tabstop>
+  <tabstop>mPSSLenText</tabstop>
+  <tabstop>mLabelText</tabstop>
   <tabstop>mObjectText</tabstop>
+  <tabstop>mSelectBtn</tabstop>
+  <tabstop>mObjectViewBtn</tabstop>
   <tabstop>mInputTab</tabstop>
+  <tabstop>mInputTypeCombo</tabstop>
   <tabstop>mInputClearBtn</tabstop>
   <tabstop>mInputLenText</tabstop>
   <tabstop>mInputText</tabstop>

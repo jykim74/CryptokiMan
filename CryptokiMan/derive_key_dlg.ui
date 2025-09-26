@@ -1194,10 +1194,14 @@
  </widget>
  <tabstops>
   <tabstop>tabWidget</tabstop>
+  <tabstop>mSlotNameText</tabstop>
   <tabstop>mSlotIDText</tabstop>
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
+  <tabstop>mSrcLabelText</tabstop>
   <tabstop>mSrcObjectText</tabstop>
+  <tabstop>mSelectSrcBtn</tabstop>
+  <tabstop>mObjectViewBtn</tabstop>
   <tabstop>mSrcMethodCombo</tabstop>
   <tabstop>mSrcMethodText</tabstop>
   <tabstop>mParamCombo</tabstop>
@@ -1241,8 +1245,16 @@
   <tabstop>mSignRecoverCombo</tabstop>
   <tabstop>mVerifyRecoverCheck</tabstop>
   <tabstop>mVerifyRecoverCombo</tabstop>
+  <tabstop>mDestroyableCheck</tabstop>
+  <tabstop>mDestroyableCombo</tabstop>
+  <tabstop>mCopyableCheck</tabstop>
+  <tabstop>mCopyableCombo</tabstop>
   <tabstop>mTrustedCheck</tabstop>
   <tabstop>mTrustedCombo</tabstop>
+  <tabstop>mStartDateCheck</tabstop>
+  <tabstop>mStartDateEdit</tabstop>
+  <tabstop>mEndDateCheck</tabstop>
+  <tabstop>mEndDateEdit</tabstop>
  </tabstops>
  <resources/>
  <connections>

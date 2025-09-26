@@ -490,8 +490,10 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>mSlotNameText</tabstop>
   <tabstop>mSlotIDText</tabstop>
   <tabstop>mSessionText</tabstop>
+  <tabstop>mLoginText</tabstop>
   <tabstop>mGetFunctionStatusBtn</tabstop>
   <tabstop>mCancelFunctionBtn</tabstop>
   <tabstop>mOperationStateLenText</tabstop>

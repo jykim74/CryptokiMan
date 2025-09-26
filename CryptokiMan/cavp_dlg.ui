@@ -283,7 +283,7 @@
    <item>
     <widget class="QTabWidget" name="mTabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="mTabMCT">
       <attribute name="title">
@@ -2401,6 +2401,104 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>mSlotNameText</tabstop>
+  <tabstop>mSlotIDText</tabstop>
+  <tabstop>mSessionText</tabstop>
+  <tabstop>mLoginText</tabstop>
+  <tabstop>mRspPathText</tabstop>
+  <tabstop>mFindRspBtn</tabstop>
+  <tabstop>mTabWidget</tabstop>
+  <tabstop>mMCT_SymAlgCombo</tabstop>
+  <tabstop>mMCT_SymModeCombo</tabstop>
+  <tabstop>mMCT_SymDirectionCombo</tabstop>
+  <tabstop>mMCT_SymCountText</tabstop>
+  <tabstop>mMCT_SymKeyText</tabstop>
+  <tabstop>mMCT_SymKeyLenText</tabstop>
+  <tabstop>mMCT_SymIVText</tabstop>
+  <tabstop>mMCT_SymIVLenText</tabstop>
+  <tabstop>mMCT_SymPTText</tabstop>
+  <tabstop>mMCT_SymPTLenText</tabstop>
+  <tabstop>mMCT_SymCTText</tabstop>
+  <tabstop>mMCT_SymCTLenText</tabstop>
+  <tabstop>mMCT_SymLastKeyText</tabstop>
+  <tabstop>mMCT_SymLastKeyLenText</tabstop>
+  <tabstop>mMCT_SymLastIVText</tabstop>
+  <tabstop>mMCT_SymLastIVLenText</tabstop>
+  <tabstop>mMCT_SymLastPTText</tabstop>
+  <tabstop>mMCT_SymLastPTLenText</tabstop>
+  <tabstop>mMCT_SymLastCTText</tabstop>
+  <tabstop>mMCT_SymLastCTLenText</tabstop>
+  <tabstop>mMCT_SymClearBtn</tabstop>
+  <tabstop>mMCT_SymRunBtn</tabstop>
+  <tabstop>mMCT_HashAlgCombo</tabstop>
+  <tabstop>mMCT_HashMctVersionCombo</tabstop>
+  <tabstop>mMCT_HashCountText</tabstop>
+  <tabstop>mMCT_HashSeedText</tabstop>
+  <tabstop>mMCT_HashSeedLenText</tabstop>
+  <tabstop>mMCT_HashFirstMDText</tabstop>
+  <tabstop>mMCT_HashFirstMDLenText</tabstop>
+  <tabstop>mMCT_HashLastMDText</tabstop>
+  <tabstop>mMCT_HashLastMDLenText</tabstop>
+  <tabstop>mMCT_HashClearBtn</tabstop>
+  <tabstop>mSymAlgCombo</tabstop>
+  <tabstop>mSymModeCombo</tabstop>
+  <tabstop>mSymTypeCombo</tabstop>
+  <tabstop>mSymReqPathText</tabstop>
+  <tabstop>mSymFindBtn</tabstop>
+  <tabstop>mSymRunBtn</tabstop>
+  <tabstop>mAEAlgCombo</tabstop>
+  <tabstop>mAEModeCombo</tabstop>
+  <tabstop>mAETypeCombo</tabstop>
+  <tabstop>mAEReqPathText</tabstop>
+  <tabstop>mAEFindBtn</tabstop>
+  <tabstop>mAERunBtn</tabstop>
+  <tabstop>mHashAlgCombo</tabstop>
+  <tabstop>mHashTypeCombo</tabstop>
+  <tabstop>mHashReqPathText</tabstop>
+  <tabstop>mHashFindBtn</tabstop>
+  <tabstop>mHashRunBtn</tabstop>
+  <tabstop>mMACHashCombo</tabstop>
+  <tabstop>mMACReqPathText</tabstop>
+  <tabstop>mMACFindBtn</tabstop>
+  <tabstop>mMACRunBtn</tabstop>
+  <tabstop>mECCAlgCombo</tabstop>
+  <tabstop>mECCParamCombo</tabstop>
+  <tabstop>mECCHashCombo</tabstop>
+  <tabstop>mECCTypeCombo</tabstop>
+  <tabstop>mECCReqPathText</tabstop>
+  <tabstop>mECCFindBtn</tabstop>
+  <tabstop>mECCRunBtn</tabstop>
+  <tabstop>mRSAAlgCombo</tabstop>
+  <tabstop>mRSA_EText</tabstop>
+  <tabstop>mRSAHashCombo</tabstop>
+  <tabstop>mRSATypeCombo</tabstop>
+  <tabstop>mRSA_DETPriKeyPathText</tabstop>
+  <tabstop>mRSA_DETPriKeyFindBtn</tabstop>
+  <tabstop>mRSAReqPathText</tabstop>
+  <tabstop>mRSAFindBtn</tabstop>
+  <tabstop>mRSARunBtn</tabstop>
+  <tabstop>mACVP_ReqPathText</tabstop>
+  <tabstop>mACVP_FindReqPathBtn</tabstop>
+  <tabstop>mACVP_SkipLDTCheck</tabstop>
+  <tabstop>mACVP_SetTGIDCheck</tabstop>
+  <tabstop>mACVP_SetTGIDText</tabstop>
+  <tabstop>mACVP_SetTCIDCheck</tabstop>
+  <tabstop>mACVP_SetTCIDText</tabstop>
+  <tabstop>mACVP_ClearBtn</tabstop>
+  <tabstop>mACVP_RunBtn</tabstop>
+  <tabstop>mACVP_LDTHashCombo</tabstop>
+  <tabstop>mACVP_LDTFullLengthBitsText</tabstop>
+  <tabstop>mACVP_LDTContentText</tabstop>
+  <tabstop>mACVP_LDTContentLenText</tabstop>
+  <tabstop>mACVP_LDT_MDText</tabstop>
+  <tabstop>mACVP_LDT_MDLenText</tabstop>
+  <tabstop>mACVP_LDTStatusText</tabstop>
+  <tabstop>mACVP_LDTClearBtn</tabstop>
+  <tabstop>mACVP_LDTRunBtn</tabstop>
+  <tabstop>mCloseBtn</tabstop>
+  <tabstop>mMCT_HashRunBtn</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

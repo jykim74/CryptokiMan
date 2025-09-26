@@ -291,6 +291,7 @@
   <tabstop>mFindFilenameBtn</tabstop>
   <tabstop>mFormatCombo</tabstop>
   <tabstop>mFormatInfoText</tabstop>
+  <tabstop>mViewBtn</tabstop>
   <tabstop>mOKBtn</tabstop>
   <tabstop>mCloseBtn</tabstop>
  </tabstops>

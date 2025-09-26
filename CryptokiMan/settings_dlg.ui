@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -394,8 +394,15 @@
   <tabstop>mUseLogTabCheck</tabstop>
   <tabstop>mUseDeviceMechCheck</tabstop>
   <tabstop>mFindMaxObjectsCountText</tabstop>
+  <tabstop>mFontFamilyCombo</tabstop>
+  <tabstop>mDisplayValidCheck</tabstop>
   <tabstop>mLangCombo</tabstop>
   <tabstop>mHexAreaWidthCombo</tabstop>
+  <tabstop>mLogLevelCombo</tabstop>
+  <tabstop>mFileReadSizeText</tabstop>
+  <tabstop>mRestoreDefaultsBtn</tabstop>
+  <tabstop>mOKBtn</tabstop>
+  <tabstop>mCancelBtn</tabstop>
  </tabstops>
  <resources/>
  <connections/>

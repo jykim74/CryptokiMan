@@ -872,6 +872,7 @@
  </widget>
  <tabstops>
   <tabstop>tabWidget</tabstop>
+  <tabstop>mSlotNameText</tabstop>
   <tabstop>mSlotIDText</tabstop>
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
@@ -907,8 +908,16 @@
   <tabstop>mTokenCombo</tabstop>
   <tabstop>mVerifyRecoverCheck</tabstop>
   <tabstop>mVerifyRecoverCombo</tabstop>
-  <tabstop>mTrustedCheck</tabstop>
+  <tabstop>mCopyableCheck</tabstop>
+  <tabstop>mCopyableCombo</tabstop>
+  <tabstop>mDestroyableCheck</tabstop>
+  <tabstop>mDestroyableCombo</tabstop>
   <tabstop>mTrustedCombo</tabstop>
+  <tabstop>mTrustedCheck</tabstop>
+  <tabstop>mStartDateCheck</tabstop>
+  <tabstop>mStartDateEdit</tabstop>
+  <tabstop>mEndDateCheck</tabstop>
+  <tabstop>mEndDateEdit</tabstop>
  </tabstops>
  <resources/>
  <connections>

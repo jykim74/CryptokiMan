@@ -182,6 +182,7 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>mSlotNameText</tabstop>
   <tabstop>mSerialCheck</tabstop>
   <tabstop>mRWCheck</tabstop>
   <tabstop>mWaitForSlotEventBtn</tabstop>

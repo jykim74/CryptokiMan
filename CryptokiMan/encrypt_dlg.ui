@@ -1931,18 +1931,28 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>mSlotNameText</tabstop>
   <tabstop>mSlotIDText</tabstop>
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
   <tabstop>mKeyTypeCombo</tabstop>
   <tabstop>mMechCombo</tabstop>
   <tabstop>mMechText</tabstop>
+  <tabstop>mParamText</tabstop>
+  <tabstop>mParamLenText</tabstop>
+  <tabstop>mOAEPHashAlgCombo</tabstop>
+  <tabstop>mOAEPMgfCombo</tabstop>
+  <tabstop>mOAEPSourceText</tabstop>
+  <tabstop>mOAEPSourceLenText</tabstop>
   <tabstop>mSrcLengthText</tabstop>
   <tabstop>mReqTagLenText</tabstop>
   <tabstop>mAADTypeCombo</tabstop>
   <tabstop>mAADText</tabstop>
   <tabstop>mAADLenText</tabstop>
+  <tabstop>mLabelText</tabstop>
   <tabstop>mObjectText</tabstop>
+  <tabstop>mSelectBtn</tabstop>
+  <tabstop>mObjectViewBtn</tabstop>
   <tabstop>mInputTab</tabstop>
   <tabstop>mInputCombo</tabstop>
   <tabstop>mInputClearBtn</tabstop>

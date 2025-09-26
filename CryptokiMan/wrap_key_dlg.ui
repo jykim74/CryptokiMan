@@ -766,6 +766,13 @@
     </layout>
    </item>
    <item>
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
     <layout class="QGridLayout" name="gridLayout_6">
      <item row="0" column="0">
       <widget class="QLabel" name="label_14">
@@ -982,16 +989,24 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>mSlotNameText</tabstop>
   <tabstop>mSlotIDText</tabstop>
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
+  <tabstop>mWrappingLabelText</tabstop>
   <tabstop>mWrappingObjectText</tabstop>
+  <tabstop>mWrappingSelectBtn</tabstop>
+  <tabstop>mWrappingViewBtn</tabstop>
   <tabstop>mWrappingTypeCombo</tabstop>
   <tabstop>mWrappingMechCombo</tabstop>
   <tabstop>mWrappingMechText</tabstop>
   <tabstop>mWrappingParamText</tabstop>
   <tabstop>mWrappingParamLenText</tabstop>
+  <tabstop>mTypeCombo</tabstop>
+  <tabstop>mLabelText</tabstop>
   <tabstop>mObjectText</tabstop>
+  <tabstop>mSelectBtn</tabstop>
+  <tabstop>mViewBtn</tabstop>
   <tabstop>mOutputLenText</tabstop>
   <tabstop>mOutputText</tabstop>
   <tabstop>mOutputClearBtn</tabstop>

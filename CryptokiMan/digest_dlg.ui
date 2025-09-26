@@ -1404,6 +1404,7 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>mSlotNameText</tabstop>
   <tabstop>mSlotIDText</tabstop>
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
@@ -1425,7 +1426,9 @@
   <tabstop>mFileTotalSizeText</tabstop>
   <tabstop>mFileReadSizeText</tabstop>
   <tabstop>mRunThreadCheck</tabstop>
+  <tabstop>mKeyLabelText</tabstop>
   <tabstop>mKeyObjectText</tabstop>
+  <tabstop>mSelectBtn</tabstop>
   <tabstop>mDigestKeyBtn</tabstop>
   <tabstop>mOutputClearBtn</tabstop>
   <tabstop>mOutputLenText</tabstop>

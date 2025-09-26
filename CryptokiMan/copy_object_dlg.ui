@@ -465,12 +465,14 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>mSlotNameText</tabstop>
   <tabstop>mSlotIDText</tabstop>
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
   <tabstop>mSrcTypeCombo</tabstop>
   <tabstop>mSrcLabelCombo</tabstop>
   <tabstop>mSrcObjectText</tabstop>
+  <tabstop>mObjectViewBtn</tabstop>
   <tabstop>mPrivateCheck</tabstop>
   <tabstop>mPrivateCombo</tabstop>
   <tabstop>mTokenCheck</tabstop>

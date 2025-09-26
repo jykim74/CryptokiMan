@@ -255,10 +255,12 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>mKIDText</tabstop>
   <tabstop>tabWidget</tabstop>
   <tabstop>mFieldTypeCombo</tabstop>
   <tabstop>mFieldTable</tabstop>
   <tabstop>mDetailText</tabstop>
+  <tabstop>mViewPubKeyBtn</tabstop>
   <tabstop>mCloseBtn</tabstop>
  </tabstops>
  <resources/>

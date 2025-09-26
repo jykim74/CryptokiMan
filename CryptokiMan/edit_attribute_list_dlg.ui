@@ -893,12 +893,14 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>mSlotNameText</tabstop>
   <tabstop>mSlotIDText</tabstop>
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
   <tabstop>mObjectTypeCombo</tabstop>
   <tabstop>mLabelCombo</tabstop>
   <tabstop>mObjectText</tabstop>
+  <tabstop>mObjectViewBtn</tabstop>
   <tabstop>mClassCheck</tabstop>
   <tabstop>mClassText</tabstop>
   <tabstop>mKeyTypeCheck</tabstop>
