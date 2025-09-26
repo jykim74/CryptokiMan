@@ -2441,6 +2441,7 @@
   <tabstop>mMCT_HashLastMDText</tabstop>
   <tabstop>mMCT_HashLastMDLenText</tabstop>
   <tabstop>mMCT_HashClearBtn</tabstop>
+  <tabstop>mMCT_HashRunBtn</tabstop>
   <tabstop>mSymAlgCombo</tabstop>
   <tabstop>mSymModeCombo</tabstop>
   <tabstop>mSymTypeCombo</tabstop>
@@ -2497,7 +2498,6 @@
   <tabstop>mACVP_LDTClearBtn</tabstop>
   <tabstop>mACVP_LDTRunBtn</tabstop>
   <tabstop>mCloseBtn</tabstop>
-  <tabstop>mMCT_HashRunBtn</tabstop>
  </tabstops>
  <resources/>
  <connections/>
