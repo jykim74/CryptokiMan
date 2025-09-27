@@ -211,15 +211,8 @@ void CertInfoDlg::getFields()
             JS_PKI_getPubKeyInfo( &binPub, &nKeyType, &nOption );
 
             strAlg = JS_PKI_getKeyAlgName( nKeyType );
+            strParam = JS_PKI_getKeyParamName( nKeyType, nOption );
 
-            if( nKeyType == JS_PKI_KEY_TYPE_ECDSA )
-            {
-                strParam = JS_PKI_getSNFromNid( nOption );
-            }
-            else if( nKeyType == JS_PKI_KEY_TYPE_RSA || nKeyType == JS_PKI_KEY_TYPE_DSA )
-            {
-                strParam = QString( "%1" ).arg( nOption );
-            }
 
             QTableWidgetItem *item = NULL;
 
