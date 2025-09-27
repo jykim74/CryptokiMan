@@ -17,9 +17,6 @@
 #include "export_dlg.h"
 
 static QStringList sMechGenKeyPairList;
-static QStringList sRSAOptionList = { "1024", "2048", "3072", "4096" };
-static QStringList sDHOptionList = { "1024", "2048", "3072", "4096" };
-static QStringList sEDDSAOptionList = { "ED25519", "ED448" };
 static QStringList sDH_GList = { "02", "05" };
 
 
@@ -117,7 +114,7 @@ void GenKeyPairDlg::initUI()
 
     mMechCombo->addItems( sMechGenKeyPairList );
 
-    mOptionCombo->addItems( sRSAOptionList );
+    mOptionCombo->addItems( kRSAOptionList );
 
     mDH_GCombo->addItems( sDH_GList );
     mParamTab->setDisabled(true);
@@ -384,7 +381,7 @@ void GenKeyPairDlg::accept()
 
     if( strMech == "CKM_RSA_PKCS_KEY_PAIR_GEN" )
     {
-        uModulusBits = sRSAOptionList.at(nSelOption).toInt();
+        uModulusBits = kRSAOptionList.at(nSelOption).toInt();
         sPubTemplate[uPubCount].type = CKA_MODULUS_BITS;
         sPubTemplate[uPubCount].pValue = &uModulusBits;
         sPubTemplate[uPubCount].ulValueLen = sizeof( uModulusBits );
@@ -404,7 +401,7 @@ void GenKeyPairDlg::accept()
     else if( strMech == "CKM_EC_KEY_PAIR_GEN" || strMech == "CKM_ECDSA_KEY_PAIR_GEN" )
     {
         char sPararmHex[256];
-        const char *pCurveName = kECCOptionList.at(nSelOption).toStdString().c_str();
+        const char *pCurveName = kECDSAOptionList.at(nSelOption).toStdString().c_str();
         memset( sPararmHex, 0x00, sizeof(sPararmHex));
 
         // 아래 함수 시 실행이 안되지? 파악 해야 함
@@ -865,7 +862,7 @@ void GenKeyPairDlg::mechChanged(int nIndex)
     if( strMech == "CKM_RSA_PKCS_KEY_PAIR_GEN" )
     {
         mOptionLabel->setText( QString("Key Length") );
-        mOptionCombo->addItems( sRSAOptionList );
+        mOptionCombo->addItems( kRSAOptionList );
         mParamTab->setDisabled(true);
         mPubExponentLabel->setEnabled(true);
         mPubExponentText->setEnabled(true);
@@ -874,13 +871,13 @@ void GenKeyPairDlg::mechChanged(int nIndex)
     else if( strMech == "CKM_EC_KEY_PAIR_GEN" || strMech == "CKM_ECDSA_KEY_PAIR_GEN" )
     {
         mOptionLabel->setText( QString("NamedCurve"));
-        mOptionCombo->addItems( kECCOptionList );
+        mOptionCombo->addItems( kECDSAOptionList );
         mParamTab->setDisabled(true);
     }
     else if( strMech == "CKM_DH_PKCS_KEY_PAIR_GEN" )
     {
         mOptionLabel->setText( QString("Key Length") );
-        mOptionCombo->addItems( sDHOptionList );
+        mOptionCombo->addItems( kDHOptionList );
         mParamTab->setDisabled(false);
         mParamTab->setCurrentIndex(1);
         mParamTab->setTabEnabled(0, false);
@@ -889,7 +886,7 @@ void GenKeyPairDlg::mechChanged(int nIndex)
     else if( strMech == "CKM_DSA_KEY_PAIR_GEN" )
     {
         mOptionLabel->setText( QString("Key Length") );
-        mOptionCombo->addItems( sRSAOptionList );
+        mOptionCombo->addItems( kDSAOptionList );
         mParamTab->setDisabled(false);
         mParamTab->setCurrentIndex(0);
         mParamTab->setTabEnabled(0, true);
@@ -898,7 +895,7 @@ void GenKeyPairDlg::mechChanged(int nIndex)
     else if( strMech == "CKM_EC_EDWARDS_KEY_PAIR_GEN" )
     {
         mOptionLabel->setText( QString("NamedCurve"));
-        mOptionCombo->addItems( sEDDSAOptionList );
+        mOptionCombo->addItems( kEdDSAOptionList );
         mParamTab->setDisabled(true);
     }
 }

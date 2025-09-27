@@ -87,9 +87,9 @@ void CreateECPubKeyDlg::initialize()
 void CreateECPubKeyDlg::initAttributes()
 {
     if( is_ed_ == true )
-        mParamCombo->addItems( kEDDSAOptionList );
+        mParamCombo->addItems( kEdDSAOptionList );
     else
-        mParamCombo->addItems( kECCOptionList );
+        mParamCombo->addItems( kECDSAOptionList );
 
     mSubjectTypeCombo->addItems(kDNTypeList);
 

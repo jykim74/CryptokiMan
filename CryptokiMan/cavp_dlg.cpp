@@ -446,7 +446,7 @@ void CAVPDlg::initUI()
     mMACHashCombo->addItems( kHashAlgList );
 
     mECCAlgCombo->addItems( kECCAlgList );
-    mECCParamCombo->addItems( kECCOptionList );
+    mECCParamCombo->addItems( kECDSAOptionList );
     mECCHashCombo->addItems( kHashAlgList );
     mECCTypeCombo->clear();
     mECCTypeCombo->addItems( kECCTypeECDSA );
