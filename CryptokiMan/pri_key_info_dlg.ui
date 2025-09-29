@@ -2577,7 +2577,14 @@
      <property name="topMargin">
       <number>0</number>
      </property>
-     <item row="0" column="5">
+     <item row="0" column="1">
+      <widget class="QPushButton" name="mCheckPubKeyBtn">
+       <property name="text">
+        <string>Check PublicKey</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="6">
       <widget class="QPushButton" name="mCloseBtn">
        <property name="text">
         <string>Close</string>
@@ -2585,6 +2592,13 @@
       </widget>
      </item>
      <item row="0" column="2">
+      <widget class="QLabel" name="mInfoLabel">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
       <spacer name="horizontalSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -2598,16 +2612,9 @@
       </spacer>
      </item>
      <item row="0" column="0">
-      <widget class="QPushButton" name="mCheckPubKeyBtn">
+      <widget class="QPushButton" name="mExportBtn">
        <property name="text">
-        <string>Check PublicKey</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLabel" name="mInfoLabel">
-       <property name="text">
-        <string/>
+        <string>Export</string>
        </property>
       </widget>
      </item>

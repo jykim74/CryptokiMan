@@ -12,6 +12,7 @@
 #include "js_util.h"
 #include "common.h"
 #include "pri_key_info_dlg.h"
+#include "export_dlg.h"
 
 enum {
     FIELD_ALL = 0,
@@ -74,6 +75,7 @@ CertInfoDlg::CertInfoDlg(QWidget *parent) :
     cert_val_ = "";
 
     connect( mViewPubKeyBtn, SIGNAL(clicked()), this, SLOT(clickViewPubKey()));
+    connect( mExportBtn, SIGNAL(clicked()), this, SLOT(clickExport()));
 
     tabWidget->setCurrentIndex(0);
     mCloseBtn->setDefault(true);
@@ -363,6 +365,19 @@ void CertInfoDlg::clickViewPubKey()
 
     JS_BIN_reset( &binCert );
     JS_BIN_reset( &binPub );
+}
+
+void CertInfoDlg::clickExport()
+{
+    BIN binCert = {0,0};
+    JS_BIN_decodeHex( cert_val_.toStdString().c_str(), &binCert );
+
+    ExportDlg exportDlg;
+    exportDlg.setName( QString("%1_cert" ).arg( mKIDText->text()) );
+    exportDlg.setCert( &binCert );
+    exportDlg.exec();
+
+    JS_BIN_reset( &binCert );
 }
 
 void CertInfoDlg::clearTable()

@@ -20,6 +20,7 @@
 #include "common.h"
 #include "cryptoki_api.h"
 #include "p11_work.h"
+#include "export_dlg.h"
 
 
 PriKeyInfoDlg::PriKeyInfoDlg(QWidget *parent) :
@@ -58,6 +59,7 @@ PriKeyInfoDlg::PriKeyInfoDlg(QWidget *parent) :
     connect( mRawPublicText, SIGNAL(textChanged()), this, SLOT(changeRawPublic()));
     connect( mRawPrivateText, SIGNAL(textChanged()), this, SLOT(changeRawPrivate()));
     connect( mCheckPubKeyBtn, SIGNAL(clicked()), this, SLOT(clickCheckPubKey()));
+    connect( mExportBtn, SIGNAL(clicked()), this, SLOT(clickExport()));
 
     initialize();
     mCloseBtn->setDefault(true);
@@ -931,8 +933,23 @@ void PriKeyInfoDlg::clickCheckPubKey()
         manApplet->warningBox( tr( "PublicKey is invalid" ), this );
 }
 
+void PriKeyInfoDlg::clickExport()
+{
+    ExportDlg exportDlg;
 
-
+    if( pri_key_.nLen > 0 )
+    {
+        exportDlg.setName( QString("%1_private").arg( mKIDText->text()));
+        exportDlg.setPrivateKey( &pri_key_ );
+        exportDlg.exec();
+    }
+    else if( pub_key_.nLen > 0 )
+    {
+        exportDlg.setName( QString( "%1_public").arg( mKIDText->text()));
+        exportDlg.setPublicKey( &pub_key_ );
+        exportDlg.exec();
+    }
+}
 
 void PriKeyInfoDlg::setModeUI( bool bVal )
 {
@@ -1172,6 +1189,8 @@ void PriKeyInfoDlg::setPrivateKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE 
 
     mCheckPubKeyBtn->setEnabled( false );
 
+    getPrivateKey( manApplet->cryptokiAPI(), hSession, hKey, &pri_key_ );
+
     memcpy( &uKeyType, binVal.pVal, binVal.nLen );
 
     if( uKeyType == CKK_RSA )
@@ -1204,6 +1223,8 @@ void PriKeyInfoDlg::setPrivateKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE 
         manApplet->warningBox( tr("Private key algorithm(%1) not supported").arg( uKeyType ), this);
     }
 
+    if( pri_key_.nLen <= 0 ) mExportBtn->setEnabled( false );
+
 end :
     JS_BIN_reset( &binVal );
     JS_BIN_reset( &binPub );
@@ -1218,7 +1239,7 @@ void PriKeyInfoDlg::setPublicKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE h
     int ret = 0;
     BIN binVal = {0,0};
     long uKeyType = 0;
-    BIN binPub = {0,0};
+
     BIN binKID = {0,0};
 
     QString strTitle = tr( "View Public Key" );
@@ -1234,10 +1255,10 @@ void PriKeyInfoDlg::setPublicKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE h
     pub_handle_ = hKey;
     pri_handle_ = -1;
 
-    ret = getPublicKey( manApplet->cryptokiAPI(), hSession, hKey, &binPub );
+    ret = getPublicKey( manApplet->cryptokiAPI(), hSession, hKey, &pub_key_ );
     if( ret == 0 )
     {
-        JS_PKI_getKeyIdentifier( &binPub, &binKID );
+        JS_PKI_getKeyIdentifier( &pub_key_, &binKID );
 //        mKIDText->setText( getHexString( &binKID ));
         setFixedLineText( mKIDText, getHexString( &binKID ));
     }
@@ -1277,9 +1298,10 @@ void PriKeyInfoDlg::setPublicKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE h
         manApplet->warningBox( tr("Public key algorithm(%1) not supported").arg( uKeyType ), this);
     }
 
+    if( pub_key_.nLen <= 0 ) mExportBtn->setEnabled( false );
+
 end :
     JS_BIN_reset( &binVal );
-    JS_BIN_reset( &binPub );
     JS_BIN_reset( &binKID );
 }
 

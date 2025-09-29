@@ -31,6 +31,7 @@ private slots:
     void clickField( QModelIndex index );
     void changeFieldType( int index );
     void clickViewPubKey();
+    void clickExport();
 
 private:
     QString cert_val_;

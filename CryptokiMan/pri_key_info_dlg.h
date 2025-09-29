@@ -61,7 +61,7 @@ private slots:
 
     void clearAll();
     void clickCheckPubKey();
-
+    void clickExport();
 
 private:
     void initialize();
