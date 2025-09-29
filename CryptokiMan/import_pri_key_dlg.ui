@@ -905,6 +905,7 @@
  </widget>
  <tabstops>
   <tabstop>tabWidget</tabstop>
+  <tabstop>mSlotNameText</tabstop>
   <tabstop>mSlotIDText</tabstop>
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
@@ -941,6 +942,14 @@
   <tabstop>mPriTokenCombo</tabstop>
   <tabstop>mPriSignRecoverCheck</tabstop>
   <tabstop>mPriSignRecoverCombo</tabstop>
+  <tabstop>mPriDestroyableCheck</tabstop>
+  <tabstop>mPriDestroyableCombo</tabstop>
+  <tabstop>mPriCopyableCheck</tabstop>
+  <tabstop>mPriCopyableCombo</tabstop>
+  <tabstop>mPriStartDateCheck</tabstop>
+  <tabstop>mPriStartDateEdit</tabstop>
+  <tabstop>mPriEndDateCheck</tabstop>
+  <tabstop>mPriEndDateEdit</tabstop>
   <tabstop>mPubLabelText</tabstop>
   <tabstop>mPubSameLabelBtn</tabstop>
   <tabstop>mPubSubjectText</tabstop>
@@ -963,8 +972,16 @@
   <tabstop>mPubTokenCombo</tabstop>
   <tabstop>mPubVerifyRecoverCheck</tabstop>
   <tabstop>mPubVerifyRecoverCombo</tabstop>
+  <tabstop>mPubCopyableCheck</tabstop>
+  <tabstop>mPubCopyableCombo</tabstop>
+  <tabstop>mPubDestroyableCheck</tabstop>
+  <tabstop>mPubDestroyableCombo</tabstop>
   <tabstop>mPubTrustedCheck</tabstop>
   <tabstop>mPubTrustedCombo</tabstop>
+  <tabstop>mPubStartDateCheck</tabstop>
+  <tabstop>mPubStartDateEdit</tabstop>
+  <tabstop>mPubEndDateCheck</tabstop>
+  <tabstop>mPubEndDateEdit</tabstop>
  </tabstops>
  <resources/>
  <connections>

@@ -827,29 +827,44 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>mUsageCombo</tabstop>
+  <tabstop>mSlotNameText</tabstop>
   <tabstop>mSlotIDText</tabstop>
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
   <tabstop>mTabWidget</tabstop>
+  <tabstop>mCertObjectViewBtn</tabstop>
   <tabstop>mCertKeyPairCheck</tabstop>
   <tabstop>mCertTable</tabstop>
   <tabstop>mCertViewBtn</tabstop>
   <tabstop>mCertDeleteBtn</tabstop>
   <tabstop>mCertExportBtn</tabstop>
+  <tabstop>mCertDeleteKeyPairBtn</tabstop>
+  <tabstop>mPublicObjectViewBtn</tabstop>
   <tabstop>mPublicTypeCombo</tabstop>
   <tabstop>mPublicTable</tabstop>
   <tabstop>mPublicViewBtn</tabstop>
   <tabstop>mPublicDeleteBtn</tabstop>
+  <tabstop>mPublicVerifyBtn</tabstop>
+  <tabstop>mPublicEncryptBtn</tabstop>
   <tabstop>mPublicExportBtn</tabstop>
+  <tabstop>mPrivateObjectViewBtn</tabstop>
   <tabstop>mPrivateTypeCombo</tabstop>
   <tabstop>mPrivateTable</tabstop>
   <tabstop>mPrivateViewBtn</tabstop>
   <tabstop>mPrivateDeleteBtn</tabstop>
+  <tabstop>mPrivateSignBtn</tabstop>
+  <tabstop>mPrivateDecryptBtn</tabstop>
   <tabstop>mPrivateExportBtn</tabstop>
+  <tabstop>mSecretObjectViewBtn</tabstop>
   <tabstop>mSecretTypeCombo</tabstop>
   <tabstop>mSecretTable</tabstop>
   <tabstop>mSecretViewBtn</tabstop>
   <tabstop>mSecretDeleteBtn</tabstop>
+  <tabstop>mSecretEncryptBtn</tabstop>
+  <tabstop>mSecretDecryptBtn</tabstop>
+  <tabstop>mSecretSignBtn</tabstop>
+  <tabstop>mSecretVerifyBtn</tabstop>
   <tabstop>mOKBtn</tabstop>
   <tabstop>mCloseBtn</tabstop>
  </tabstops>

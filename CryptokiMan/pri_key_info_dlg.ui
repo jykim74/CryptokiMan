@@ -2665,6 +2665,7 @@
   <tabstop>mRawPrivateText</tabstop>
   <tabstop>mRawPublicLenText</tabstop>
   <tabstop>mRawPublicText</tabstop>
+  <tabstop>mExportBtn</tabstop>
   <tabstop>mCheckPubKeyBtn</tabstop>
   <tabstop>mCloseBtn</tabstop>
  </tabstops>

@@ -267,6 +267,7 @@
   <tabstop>mFieldTypeCombo</tabstop>
   <tabstop>mFieldTable</tabstop>
   <tabstop>mDetailText</tabstop>
+  <tabstop>mExportBtn</tabstop>
   <tabstop>mViewPubKeyBtn</tabstop>
   <tabstop>mCloseBtn</tabstop>
  </tabstops>

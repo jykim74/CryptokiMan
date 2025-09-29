@@ -23,7 +23,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="mFirstTab">
       <attribute name="title">
@@ -404,7 +404,7 @@
        <item>
         <widget class="QTabWidget" name="mParamTab">
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="mDSATab">
           <attribute name="title">
@@ -1429,6 +1429,7 @@
  </widget>
  <tabstops>
   <tabstop>tabWidget</tabstop>
+  <tabstop>mSlotNameText</tabstop>
   <tabstop>mSlotIDText</tabstop>
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
@@ -1445,6 +1446,8 @@
   <tabstop>mDSA_GText</tabstop>
   <tabstop>mDSA_GLenText</tabstop>
   <tabstop>mGenDHParamBtn</tabstop>
+  <tabstop>mImpoortDHParamBtn</tabstop>
+  <tabstop>mExportDHParamBtn</tabstop>
   <tabstop>mDHClearParamBtn</tabstop>
   <tabstop>mDH_GCombo</tabstop>
   <tabstop>mDH_PLenText</tabstop>
@@ -1477,12 +1480,22 @@
   <tabstop>mPriTokenCombo</tabstop>
   <tabstop>mPriSignRecoverCheck</tabstop>
   <tabstop>mPriSignRecoverCombo</tabstop>
+  <tabstop>mPriCopyableCheck</tabstop>
+  <tabstop>mPriCopyableCombo</tabstop>
+  <tabstop>mPriDestroyableCheck</tabstop>
+  <tabstop>mPriDestroyableCombo</tabstop>
+  <tabstop>mPriStartDateCheck</tabstop>
+  <tabstop>mPriStartDateEdit</tabstop>
+  <tabstop>mPriEndDateCheck</tabstop>
+  <tabstop>mPriEndDateEdit</tabstop>
   <tabstop>mPubLabelText</tabstop>
   <tabstop>mPubSameLabelBtn</tabstop>
   <tabstop>mPubSubjectText</tabstop>
   <tabstop>mPubSubjectTypeCombo</tabstop>
   <tabstop>mPubIDText</tabstop>
   <tabstop>mPubUseSKICheck</tabstop>
+  <tabstop>mPubExponentText</tabstop>
+  <tabstop>mPubExponent10Text</tabstop>
   <tabstop>mPubPrivateCheck</tabstop>
   <tabstop>mPubPrivateCombo</tabstop>
   <tabstop>mPubEncryptCheck</tabstop>
@@ -1499,8 +1512,16 @@
   <tabstop>mPubTokenCombo</tabstop>
   <tabstop>mPubVerifyRecoverCheck</tabstop>
   <tabstop>mPubVerifyRecoverCombo</tabstop>
+  <tabstop>mPubDestroyableCheck</tabstop>
+  <tabstop>mPubDestroyableCombo</tabstop>
+  <tabstop>mPubCopyableCheck</tabstop>
+  <tabstop>mPubCopyableCombo</tabstop>
   <tabstop>mPubTrustedCheck</tabstop>
   <tabstop>mPubTrustedCombo</tabstop>
+  <tabstop>mPubStartDateCheck</tabstop>
+  <tabstop>mPubStartDateEdit</tabstop>
+  <tabstop>mPubEndDateCheck</tabstop>
+  <tabstop>mPubEndDateEdit</tabstop>
  </tabstops>
  <resources/>
  <connections>
