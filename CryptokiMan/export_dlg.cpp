@@ -152,12 +152,8 @@ ExportDlg::ExportDlg(QWidget *parent) :
     data_type_ = -1;
     key_type_ = -1;
 
-    memset( &pri_key_, 0x00, sizeof(BIN));
-    memset( &pub_key_, 0x00, sizeof(BIN));
-    memset( &cert_, 0x00, sizeof(BIN));
-    memset( &csr_, 0x00, sizeof(BIN));
-    memset( &crl_, 0x00, sizeof(BIN));
-    memset( &param_, 0x00, sizeof(BIN));
+    memset( &data_, 0x00, sizeof(BIN));
+    memset( &data2_, 0x00, sizeof(BIN));
 
     connect( mFindFilenameBtn, SIGNAL(clicked()), this, SLOT(clickFindFilename()));
     connect( mViewBtn, SIGNAL(clicked()), this, SLOT(clickView()));
@@ -175,12 +171,8 @@ ExportDlg::ExportDlg(QWidget *parent) :
 
 ExportDlg::~ExportDlg()
 {
-    JS_BIN_reset( &pri_key_ );
-    JS_BIN_reset( &pub_key_ );
-    JS_BIN_reset( &cert_ );
-    JS_BIN_reset( &csr_ );
-    JS_BIN_reset( &crl_ );
-    JS_BIN_reset( &param_ );
+    JS_BIN_reset( &data_ );
+    JS_BIN_reset( &data2_ );
 }
 
 void ExportDlg::initialize()
@@ -299,25 +291,25 @@ void ExportDlg::clickView()
     if( data_type_ == DataPriKey )
     {
         PriKeyInfoDlg priKeyInfo;
-        priKeyInfo.setPrivateKey( &pri_key_ );
+        priKeyInfo.setPrivateKey( &data_ );
         priKeyInfo.exec();
     }
     else if( data_type_ == DataPubKey )
     {
         PriKeyInfoDlg priKeyInfo;
-        priKeyInfo.setPublicKey( &pub_key_ );
+        priKeyInfo.setPublicKey( &data_ );
         priKeyInfo.exec();
     }
     else if( data_type_ == DataCert )
     {
         CertInfoDlg certInfo;
-        certInfo.setCertVal( getHexString( &cert_ ));
+        certInfo.setCertVal( getHexString( &data_ ));
         certInfo.exec();
     }
     else if( data_type_ == DataCSR )
     {
         CSRInfoDlg csrInfo;
-        csrInfo.setReqBIN( &csr_ );
+        csrInfo.setReqBIN( &data_ );
         csrInfo.exec();
     }
     else
@@ -329,8 +321,8 @@ void ExportDlg::clickView()
 void ExportDlg::setPrivateKey( const BIN *pPriKey )
 {
     data_type_ = DataPriKey;
-    JS_BIN_copy( &pri_key_, pPriKey );
-    key_type_ = JS_PKI_getPriKeyType( &pri_key_ );
+    JS_BIN_copy( &data_, pPriKey );
+    key_type_ = JS_PKI_getPriKeyType( &data_ );
     mAlgText->setText( JS_PKI_getKeyAlgName( key_type_ ));
 
     mTitleLabel->setText( tr( "Private Key Export" ));
@@ -348,8 +340,8 @@ void ExportDlg::setPrivateKey( const BIN *pPriKey )
 void ExportDlg::setPublicKey( const BIN *pPubKey )
 {
     data_type_ = DataPubKey;
-    JS_BIN_copy( &pub_key_, pPubKey );
-    key_type_ = JS_PKI_getPubKeyType( &pub_key_ );
+    JS_BIN_copy( &data_, pPubKey );
+    key_type_ = JS_PKI_getPubKeyType( &data_ );
     mAlgText->setText( JS_PKI_getKeyAlgName( key_type_ ));
 
     mTitleLabel->setText( tr( "Public Key Export" ));
@@ -361,8 +353,8 @@ void ExportDlg::setPublicKey( const BIN *pPubKey )
 void ExportDlg::setCert( const BIN *pCert )
 {
     data_type_ = DataCert;
-    JS_BIN_copy( &cert_, pCert );
-    key_type_ = JS_PKI_getCertKeyType( &cert_ );
+    JS_BIN_copy( &data_, pCert );
+    key_type_ = JS_PKI_getCertKeyType( &data_ );
     mAlgText->setText( JS_PKI_getKeyAlgName( key_type_ ));
 
     mTitleLabel->setText( tr( "Certificate Export" ));
@@ -376,7 +368,7 @@ void ExportDlg::setCert( const BIN *pCert )
 void ExportDlg::setCRL( const BIN *pCRL )
 {
     data_type_ = DataCRL;
-    JS_BIN_copy( &crl_, pCRL );
+    JS_BIN_copy( &data_, pCRL );
     key_type_ = -1;
     mAlgText->setText( "CRL" );
 
@@ -389,7 +381,7 @@ void ExportDlg::setCRL( const BIN *pCRL )
 void ExportDlg::setCSR( const BIN *pCSR )
 {
     data_type_ = DataCSR;
-    JS_BIN_copy( &csr_, pCSR );
+    JS_BIN_copy( &data_, pCSR );
     key_type_ = JS_PKI_getCSRKeyType( pCSR );
     mAlgText->setText( JS_PKI_getKeyAlgName( key_type_ ));
 
@@ -407,7 +399,7 @@ void ExportDlg::setDHParam( const BIN *pParam )
     key_type_ = -1;
 
     mAlgText->setText( "DH" );
-    JS_BIN_copy( &param_, pParam );
+    JS_BIN_copy( &data_, pParam );
     mTitleLabel->setText( tr( "DH Parameter Export" ));
 
     mFormatCombo->addItem( getFormatName( ExportDH_PEM ), ExportDH_PEM );
@@ -417,12 +409,12 @@ void ExportDlg::setDHParam( const BIN *pParam )
 void ExportDlg::setPriKeyAndCert( const BIN *pPriKey, const BIN *pCert )
 {
     data_type_ = DataPriKeyCert;
-    JS_BIN_copy( &pri_key_, pPriKey );
-    JS_BIN_copy( &cert_, pCert );
+    JS_BIN_copy( &data_, pPriKey );
+    JS_BIN_copy( &data2_, pCert );
 
     mTitleLabel->setText( tr( "Certificate and Private Key Export" ));
 
-    key_type_ = JS_PKI_getCertKeyType( &cert_ );
+    key_type_ = JS_PKI_getPriKeyType( &data_ );
     mAlgText->setText( JS_PKI_getKeyAlgName( key_type_ ));
 
     mFormatCombo->addItem( getFormatName( ExportPFX ), ExportPFX );
@@ -455,19 +447,23 @@ int ExportDlg::exportPublic()
 
     if( data_type_ == DataPriKey )
     {
-        JS_PKI_getPubKeyFromPri( &pri_key_, &binPub );
+        JS_PKI_getPubKeyFromPri( &data_, &binPub );
     }
     else if( data_type_ == DataPubKey )
     {
-        JS_BIN_copy( &binPub, &pub_key_ );
+        JS_BIN_copy( &binPub, &data_ );
     }
     else if( data_type_ == DataCSR )
     {
-        JS_PKI_getPubKeyFromCSR( &csr_, &binPub );
+        JS_PKI_getPubKeyFromCSR( &data_, &binPub );
     }
-    else if( data_type_ == DataCert || data_type_ == DataPriKeyCert )
+    else if( data_type_ == DataCert )
     {
-        JS_PKI_getPubKeyFromCert( &cert_, &binPub );
+        JS_PKI_getPubKeyFromCert( &data_, &binPub );
+    }
+    else if( data_type_ == DataPriKeyCert )
+    {
+        JS_PKI_getPubKeyFromCert( &data2_, &binPub );
     }
     else
     {
@@ -515,11 +511,11 @@ int ExportDlg::exportPrivate()
     if( nExportType == ExportPriPEM )
     {
 //        ret = JS_BIN_writePEM( &pri_key_, JS_PEM_TYPE_PRIVATE_KEY, strFilename.toLocal8Bit().toStdString().c_str() );
-        ret = writePriKeyPEM( &pri_key_, strFilename );
+        ret = writePriKeyPEM( &data_, strFilename );
     }
     else if( nExportType == ExportPriDER )
     {
-        ret = JS_BIN_fileWrite( &pri_key_, strFilename.toLocal8Bit().toStdString().c_str() );
+        ret = JS_BIN_fileWrite( &data_, strFilename.toLocal8Bit().toStdString().c_str() );
     }
 
     if( ret > 0 )
@@ -546,11 +542,17 @@ int ExportDlg::exportCert()
 
     if( nExportType == ExportCertPEM )
     {
-        ret = JS_BIN_writePEM( &cert_, JS_PEM_TYPE_CERTIFICATE, strFilename.toLocal8Bit().toStdString().c_str() );
+        if( data_type_ == DataPriKeyCert )
+            ret = JS_BIN_writePEM( &data2_, JS_PEM_TYPE_CERTIFICATE, strFilename.toLocal8Bit().toStdString().c_str() );
+        else
+            ret = JS_BIN_writePEM( &data_, JS_PEM_TYPE_CERTIFICATE, strFilename.toLocal8Bit().toStdString().c_str() );
     }
     else if( nExportType == ExportCertDER )
     {
-        ret = JS_BIN_fileWrite( &cert_, strFilename.toLocal8Bit().toStdString().c_str() );
+        if( data_type_ == DataPriKeyCert )
+            ret = JS_BIN_fileWrite( &data2_, strFilename.toLocal8Bit().toStdString().c_str() );
+        else
+            ret = JS_BIN_fileWrite( &data_, strFilename.toLocal8Bit().toStdString().c_str() );
     }
 
     if( ret > 0 )
@@ -574,11 +576,11 @@ int ExportDlg::exportCRL()
 
     if( nExportType == ExportCRL_PEM )
     {
-        ret = JS_BIN_writePEM( &crl_, JS_PEM_TYPE_CERTIFICATE, strFilename.toLocal8Bit().toStdString().c_str() );
+        ret = JS_BIN_writePEM( &data_, JS_PEM_TYPE_CERTIFICATE, strFilename.toLocal8Bit().toStdString().c_str() );
     }
     else if( nExportType == ExportCRL_DER )
     {
-        ret = JS_BIN_fileWrite( &crl_, strFilename.toLocal8Bit().toStdString().c_str() );
+        ret = JS_BIN_fileWrite( &data_, strFilename.toLocal8Bit().toStdString().c_str() );
     }
 
     if( ret > 0 )
@@ -602,11 +604,11 @@ int ExportDlg::exportCSR()
 
     if( nExportType == ExportCSR_PEM )
     {
-        ret = JS_BIN_writePEM( &csr_, JS_PEM_TYPE_CSR, strFilename.toLocal8Bit().toStdString().c_str() );
+        ret = JS_BIN_writePEM( &data_, JS_PEM_TYPE_CSR, strFilename.toLocal8Bit().toStdString().c_str() );
     }
     else if( nExportType == ExportCSR_DER )
     {
-        ret = JS_BIN_fileWrite( &csr_, strFilename.toLocal8Bit().toStdString().c_str() );
+        ret = JS_BIN_fileWrite( &data_, strFilename.toLocal8Bit().toStdString().c_str() );
     }
 
     if( ret > 0 )
@@ -637,7 +639,7 @@ int ExportDlg::exportPFX()
 
     strPass = newPass.mPasswdText->text();
 
-    ret = JS_PKI_encodePFX( &binPFX, strPass.toStdString().c_str(), -1, &pri_key_, &cert_ );
+    ret = JS_PKI_encodePFX( &binPFX, strPass.toStdString().c_str(), -1, &data_, &data2_ );
     if( ret != 0 )
     {
         manApplet->warningBox( tr( "fail to encrypt PFX: %1").arg(ret), this);
@@ -676,7 +678,7 @@ int ExportDlg::exportP8Enc()
 
     strPass = newPass.mPasswdText->text();
 
-    ret = JS_PKI_encryptPrivateKey( -1, strPass.toStdString().c_str(), &pri_key_, NULL, &binEncPri );
+    ret = JS_PKI_encryptPrivateKey( -1, strPass.toStdString().c_str(), &data_, NULL, &binEncPri );
     if( ret != 0 )
     {
         manApplet->warningBox( tr( "fail to encrypt private key: %1").arg(ret), this);
@@ -709,7 +711,7 @@ int ExportDlg::exportP8Info()
     if( data_type_ != DataPriKey && data_type_ != DataPriKeyCert )
         return -1;
 
-    ret = JS_PKI_encodePrivateKeyInfo( &pri_key_, &binP8 );
+    ret = JS_PKI_encodePrivateKeyInfo( &data_, &binP8 );
     if( ret != 0 )
     {
         goto end;
@@ -747,11 +749,11 @@ int ExportDlg::exportDHParam()
 
     if( nExportType == ExportDH_PEM )
     {
-        ret = JS_BIN_writePEM( &param_, JS_PEM_TYPE_DH_PARAMETERS, strFilename.toLocal8Bit().toStdString().c_str() );
+        ret = JS_BIN_writePEM( &data_, JS_PEM_TYPE_DH_PARAMETERS, strFilename.toLocal8Bit().toStdString().c_str() );
     }
     else if( nExportType == ExportDH_DER )
     {
-        ret = JS_BIN_fileWrite( &param_, strFilename.toLocal8Bit().toStdString().c_str() );
+        ret = JS_BIN_fileWrite( &data_, strFilename.toLocal8Bit().toStdString().c_str() );
     }
 
     if( ret > 0 )

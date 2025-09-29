@@ -78,12 +78,8 @@ private:
     int exportP8Info();
     int exportDHParam();
 
-    BIN pri_key_;
-    BIN pub_key_;
-    BIN cert_;
-    BIN csr_;
-    BIN crl_;
-    BIN param_;
+    BIN data_;
+    BIN data2_;
 
     int data_type_;
     int key_type_;
