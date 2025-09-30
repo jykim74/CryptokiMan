@@ -29,6 +29,8 @@ DigestDlg::DigestDlg(QWidget *parent) :
 
     initUI();
     initialize();
+
+    mInputText->setFocus();
     mDigestBtn->setDefault(true);
 
 #if defined(Q_OS_MAC)

@@ -34,7 +34,9 @@ EncryptDlg::EncryptDlg(QWidget *parent) :
 
     setupUi(this);
     initUI();
+
     mEncryptBtn->setDefault(true);
+    mInputText->setFocus();
 
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);

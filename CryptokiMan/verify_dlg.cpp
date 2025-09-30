@@ -35,6 +35,10 @@ VerifyDlg::VerifyDlg(QWidget *parent) :
     setupUi(this);
 
     initUI();
+
+    mInputText->setFocus();
+    mVerifyBtn->setDefault(true);
+
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);
     mDataTab->layout()->setSpacing(5);

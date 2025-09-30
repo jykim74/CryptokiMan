@@ -33,6 +33,7 @@ private slots:
     void changeOperationState();
 
 private:
+    void initUI();
     void initialize();
 
     SlotInfo slot_info_;

@@ -134,7 +134,7 @@ static QStringList kWrapType = {
 };
 
 static QStringList kMechDigestList = {
-    "CKM_MD5", "CKM_SHA_1", "CKM_SHA224", "CKM_SHA256", "CKM_SHA384", "CKM_SHA512"
+    "CKM_SHA_1", "CKM_SHA224", "CKM_SHA256", "CKM_SHA384", "CKM_SHA512", "CKM_MD5"
 };
 
 static QStringList kMechSHAList = {
@@ -161,8 +161,8 @@ static QStringList kMechSignAsymList = {
 };
 
 static QStringList kMechSignSymList = {
-    "CKM_MD5_HMAC", "CKM_SHA_1_HMAC", "CKM_SHA256_HMAC", "CKM_SHA384_HMAC", "CKM_SHA512_HMAC",
-    "CKM_AES_MAC", "CKM_AES_GMAC", "CKM_AES_CMAC"
+    "CKM_SHA_1_HMAC", "CKM_SHA256_HMAC", "CKM_SHA384_HMAC", "CKM_SHA512_HMAC",
+    "CKM_AES_MAC", "CKM_AES_GMAC", "CKM_AES_CMAC", "CKM_MD5_HMAC"
 };
 
 static QStringList kMechWrapSymList = {
@@ -183,20 +183,20 @@ static QStringList kMechDeriveList = {
 };
 
 static QStringList kMechGenKeyPairList = {
-  "CKM_RSA_PKCS_KEY_PAIR_GEN", "CKM_ECDSA_KEY_PAIR_GEN", "CKM_DSA_KEY_PAIR_GEN", "CKM_DH_PKCS_KEY_PAIR_GEN",
-    "CKM_EC_EDWARDS_KEY_PAIR_GEN"
+    "CKM_RSA_PKCS_KEY_PAIR_GEN", "CKM_ECDSA_KEY_PAIR_GEN", "CKM_DSA_KEY_PAIR_GEN",
+    "CKM_DH_PKCS_KEY_PAIR_GEN", "CKM_EC_EDWARDS_KEY_PAIR_GEN"
 };
 
 static QStringList kMechGenList = {
-    "CKM_AES_KEY_GEN", "CKM_DES_KEY_GEN", "CKM_DES3_KEY_GEN", "CKM_GENERIC_SECRET_KEY_GEN"
+    "CKM_AES_KEY_GEN", "CKM_GENERIC_SECRET_KEY_GEN", "CKM_DES_KEY_GEN", "CKM_DES3_KEY_GEN"
 };
 
 static QStringList kSymKeyList = {
-    "CKK_DES", "CKK_DES3", "CKK_AES", "CKK_GENERIC_SECRET"
+    "CKK_AES", "CKK_GENERIC_SECRET", "CKK_DES", "CKK_DES3"
 };
 
 static QStringList kAsymTypeList = {
-    "CKK_RSA", "CKK_DSA", "CKK_ECDSA", "CKK_EC_EDWARDS"
+    "CKK_RSA", "CKK_ECDSA", "CKK_DSA", "CKK_EC_EDWARDS"
 };
 
 

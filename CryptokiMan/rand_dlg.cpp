@@ -45,6 +45,9 @@ void RandDlg::initUI()
     connect( mSeedCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changeSeed()));
 
     initialize();
+
+    mCloseBtn->setDefault(true);
+    mSeedText->setFocus();
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);
 #endif

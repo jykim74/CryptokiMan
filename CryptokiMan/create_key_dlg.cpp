@@ -32,6 +32,7 @@ CreateKeyDlg::CreateKeyDlg(QWidget *parent) :
     initialize();
     setDefaults();
     tabWidget->setCurrentIndex(0);
+    mKeyText->setFocus();
 
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);

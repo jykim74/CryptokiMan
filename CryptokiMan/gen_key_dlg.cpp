@@ -35,6 +35,7 @@ GenKeyDlg::GenKeyDlg(QWidget *parent) :
 
     tabWidget->setCurrentIndex(0);
 
+
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);
 

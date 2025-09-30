@@ -1187,7 +1187,7 @@ void PriKeyInfoDlg::setPrivateKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE 
     ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_KEY_TYPE, &binVal );
     if( ret != 0 ) goto end;
 
-    mCheckPubKeyBtn->setEnabled( false );
+//    mCheckPubKeyBtn->setEnabled( false );
 
     getPrivateKey( manApplet->cryptokiAPI(), hSession, hKey, &pri_key_ );
 

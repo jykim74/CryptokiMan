@@ -94,5 +94,5 @@ void OpenSessionDlg::clickWaitForSlotEvent()
 
     rv = manApplet->cryptokiAPI()->WaitForSlotEvent( uFlags, &uSlotID, NULL );
 
-    manApplet->messageBox( QString( "WaitForSlotEvent Ret: %1 [%2]").arg( JS_PKCS11_GetErrorMsg(rv) ).arg(rv), this );
+    manApplet->messageBox( QString( "WaitForSlotEvent Ret: %1").arg(P11ERR(rv)), this );
 }

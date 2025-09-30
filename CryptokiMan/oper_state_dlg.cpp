@@ -15,6 +15,7 @@ OperStateDlg::OperStateDlg(QWidget *parent) :
     QDialog(parent)
 {
     setupUi(this);
+    initUI();
 
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(close()));
     connect( mGetFunctionStatusBtn, SIGNAL(clicked()), this, SLOT(clickGetFunctionStatus()));
@@ -35,6 +36,13 @@ OperStateDlg::OperStateDlg(QWidget *parent) :
 OperStateDlg::~OperStateDlg()
 {
 
+}
+
+void OperStateDlg::initUI()
+{
+    mOperationStateText->setPlaceholderText( tr("Hex value") );
+    mEncKeyText->setPlaceholderText( tr("Hex value"));
+    mAuthKeyText->setPlaceholderText( tr("Hex value") );
 }
 
 void OperStateDlg::initialize()
@@ -66,7 +74,7 @@ void OperStateDlg::clickGetFunctionStatus()
     ret = manApplet->cryptokiAPI()->GetFunctionStatus( hSession );
     if( ret != CKR_OK )
     {
-        manApplet->warningBox( tr( "GetFunctionStatus execution failure [%1]").arg(ret), this);
+        manApplet->warningBox( QString( "GetFunctionStatus: %1").arg(P11ERR(ret)), this);
         return;
     }
     else
@@ -84,7 +92,7 @@ void OperStateDlg::clickCancelFunction()
     ret = manApplet->cryptokiAPI()->CancelFunction( hSession );
     if( ret != CKR_OK )
     {
-        manApplet->warningBox( tr( "CancelFunction execution failure [%1]").arg(ret), this);
+        manApplet->warningBox( QString( "CancelFunction: %1").arg(P11ERR(ret)), this);
         return;
     }
     else
@@ -109,7 +117,7 @@ void OperStateDlg::clickGetOperationState()
     if( ret != CKR_OK )
     {
         mOperationStateText->clear();
-        manApplet->warningBox( tr( "GetOperationState execution failure [%1]").arg(ret), this);
+        manApplet->warningBox( QString( "GetOperationState: %1").arg(P11ERR(ret)), this);
         return;
     }
 
@@ -142,7 +150,7 @@ void OperStateDlg::clickSetOperationState()
     if( ret != CKR_OK )
     {
         mOperationStateText->clear();
-        manApplet->warningBox( tr( "SetOperationState execution failure [%1]").arg(ret), this);
+        manApplet->warningBox( QString( "SetOperationState: %1").arg(P11ERR(ret)), this);
     }
     else
     {

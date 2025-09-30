@@ -17,6 +17,8 @@ InitPinDlg::InitPinDlg(QWidget *parent) :
 
     initialize();
 
+    mPinText->setFocus();
+
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);
 #endif

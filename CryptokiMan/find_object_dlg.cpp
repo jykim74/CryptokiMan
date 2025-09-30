@@ -38,8 +38,10 @@ FindObjectDlg::FindObjectDlg(QWidget *parent) :
 
     initialize();
     setDefaults();
+
     tabWidget->setCurrentIndex(0);
     mFindObjectsBtn->setDefault(true);
+    mLabelText->setFocus();
 
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);
