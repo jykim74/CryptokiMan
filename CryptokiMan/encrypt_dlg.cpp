@@ -704,7 +704,7 @@ void EncryptDlg::runFileEncrypt()
 
     int nRead = 0;
     int nPartSize = manApplet->settingsMgr()->fileReadSize();
-    int nReadSize = 0;
+    qint64 nReadSize = 0;
     int nLeft = 0;
     int nOffset = 0;
     int nPercent = 0;
@@ -818,7 +818,7 @@ void EncryptDlg::runFileEncrypt()
         }
 
         nReadSize += nRead;
-        nPercent = ( nReadSize * 100 ) / fileSize;
+        nPercent = int( ( nReadSize * 100 ) / fileSize );
 
         mFileReadSizeText->setText( QString("%1").arg( nReadSize ));
         mEncProgBar->setValue( nPercent );
@@ -1005,17 +1005,27 @@ void EncryptDlg::onTaskFinished()
 
     clickFinal();
 
+    QString strDstFile = mDstFileText->text();
+    QFileInfo fileInfo;
+    fileInfo.setFile( strDstFile );
+    qint64 fileSize = fileInfo.size();
+    QDateTime cTime = fileInfo.lastModified();
+
+    QString strInfo = QString("LastModified Time: %1").arg( cTime.toString( "yyyy-MM-dd HH:mm:ss" ));
+    mDstFileSizeText->setText( QString("%1").arg( fileSize ));
+    mDstFileInfoText->setText( strInfo );
+
     thread_->quit();
     thread_->wait();
     thread_->deleteLater();
     thread_ = nullptr;
 }
 
-void EncryptDlg::onTaskUpdate( int nUpdate )
+void EncryptDlg::onTaskUpdate( qint64 nUpdate )
 {
     manApplet->log( QString("Update: %1").arg( nUpdate ));
-    int nFileSize = mFileTotalSizeText->text().toInt();
-    int nPercent = (nUpdate * 100) / nFileSize;
+    qint64 nFileSize = mFileTotalSizeText->text().toLongLong();
+    int nPercent = int( (nUpdate * 100) / nFileSize );
     update_cnt_++;
     setStatusUpdate( CKR_OK, update_cnt_ );
     status_type_ = STATUS_UPDATE;

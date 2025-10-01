@@ -439,7 +439,7 @@ void DigestDlg::runFileDigest()
     int ret = -1;
     int nRead = 0;
     int nPartSize = manApplet->settingsMgr()->fileReadSize();
-    int nReadSize = 0;
+    qint64 nReadSize = 0;
     int nLeft = 0;
     int nOffset = 0;
     int nPercent = 0;
@@ -508,7 +508,7 @@ void DigestDlg::runFileDigest()
         status_type_ = STATUS_UPDATE;
         update_cnt_++;
         nReadSize += nRead;
-        nPercent = ( nReadSize * 100 ) / fileSize;
+        nPercent = int( ( nReadSize * 100 ) / fileSize );
 
         mFileReadSizeText->setText( QString("%1").arg( nReadSize ));
         mHashProgBar->setValue( nPercent );
@@ -655,11 +655,11 @@ void DigestDlg::onTaskFinished()
     thread_ = nullptr;
 }
 
-void DigestDlg::onTaskUpdate( int nUpdate )
+void DigestDlg::onTaskUpdate( qint64 nUpdate )
 {
     manApplet->log( QString("Update: %1").arg( nUpdate ));
-    int nFileSize = mFileTotalSizeText->text().toInt();
-    int nPercent = (nUpdate * 100) / nFileSize;
+    qint64 nFileSize = mFileTotalSizeText->text().toLongLong();
+    int nPercent = int( (nUpdate * 100) / nFileSize );
     update_cnt_++;
     status_type_ = STATUS_UPDATE;
     setStatusUpdate( CKR_OK, update_cnt_ );

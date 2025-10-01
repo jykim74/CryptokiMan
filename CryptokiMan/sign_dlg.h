@@ -59,7 +59,7 @@ private slots:
     void runFileSignThread();
     void startTask();
     void onTaskFinished();
-    void onTaskUpdate( int nUpdate );
+    void onTaskUpdate( qint64 nUpdate );
 
 private:
     void initialize();

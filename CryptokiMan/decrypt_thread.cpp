@@ -38,7 +38,7 @@ void DecryptThread::run()
 
     int nRead = 0;
     int nPartSize = manApplet->settingsMgr()->fileReadSize();
-    int nReadSize = 0;
+    qint64 nReadSize = 0;
     int nLeft = 0;
     int nOffset = 0;
 
