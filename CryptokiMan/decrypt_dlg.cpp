@@ -92,6 +92,8 @@ void DecryptDlg::initUI()
     mOAEPHashAlgCombo->addItems( kMechSHAList );
     mOAEPMgfCombo->addItems( kMGFList );
 
+    mRunThreadCheck->setChecked(true);
+
     connect( mKeyTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(keyTypeChanged(int)));
 
     connect( mInitBtn, SIGNAL(clicked()), this, SLOT(clickInit()));

@@ -89,6 +89,8 @@ void EncryptDlg::initUI()
     mOAEPMgfCombo->addItems( kMGFList );
     mOutputText->setPlaceholderText( tr( "Hex value" ) );
 
+    mRunThreadCheck->setChecked(true);
+
     connect( mKeyTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(keyTypeChanged(int)));
 
     connect( mInitBtn, SIGNAL(clicked()), this, SLOT(clickInit()));

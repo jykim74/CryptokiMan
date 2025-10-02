@@ -85,6 +85,8 @@ void SignDlg::initUI()
     mPSSHashAlgCombo->addItems( kMechSHAList );
     mPSSMgfCombo->addItems( kMGFList );
 
+    mRunThreadCheck->setChecked(true);
+
     mOutputText->setPlaceholderText( tr( "Hex value" ));
 
     connect( mKeyTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(keyTypeChanged(int)));

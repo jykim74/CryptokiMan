@@ -88,6 +88,8 @@ void VerifyDlg::initUI()
     mPSSHashAlgCombo->addItems( kMechSHAList );
     mPSSMgfCombo->addItems( kMGFList );
 
+    mRunThreadCheck->setChecked(true);
+
     mSignText->setPlaceholderText( tr( "Hex value" ) );
 
     connect( mKeyTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(keyTypeChanged(int)));

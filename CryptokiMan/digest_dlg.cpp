@@ -69,6 +69,7 @@ void DigestDlg::initUI()
 
     mInputCombo->addItems( kDataTypeList );
     mMechCombo->addItems( sMechDigestList );
+    mRunThreadCheck->setChecked(true);
 
     connect( mParamText, SIGNAL(textChanged(const QString)), this, SLOT(changeParam(const QString)));
     connect( mMechCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changeMech(int)));
