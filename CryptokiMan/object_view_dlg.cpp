@@ -23,6 +23,15 @@ ObjectViewDlg::ObjectViewDlg(QWidget *parent)
 
 #if defined(Q_OS_MAC)
     layout()->setSpacing(5);
+
+    mCommonTab->layout()->setSpacing(5);
+    mCommonTab->layout()->setMargin(5);
+    mPart1Tab->layout()->setSpacing(5);
+    mPart1Tab->layout()->setMargin(5);
+    mPart2Tab->layout()->setSpacing(5);
+    mPart2Tab->layout()->setMargin(5);
+    mPart3Tab->layout()->setSpacing(5);
+    mPart3Tab->layout()->setMargin(5);
 #endif
     resize(minimumSizeHint().width(), minimumSizeHint().height());
 }
