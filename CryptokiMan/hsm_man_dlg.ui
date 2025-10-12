@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>518</width>
-    <height>478</height>
+    <width>524</width>
+    <height>521</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -368,6 +368,21 @@
           <string/>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_6">
+          <property name="spacing">
+           <number>6</number>
+          </property>
+          <property name="leftMargin">
+           <number>6</number>
+          </property>
+          <property name="topMargin">
+           <number>6</number>
+          </property>
+          <property name="rightMargin">
+           <number>6</number>
+          </property>
+          <property name="bottomMargin">
+           <number>6</number>
+          </property>
           <item>
            <layout class="QGridLayout" name="gridLayout_2">
             <item row="0" column="0">
@@ -482,6 +497,21 @@
           <string/>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_7">
+          <property name="spacing">
+           <number>6</number>
+          </property>
+          <property name="leftMargin">
+           <number>6</number>
+          </property>
+          <property name="topMargin">
+           <number>6</number>
+          </property>
+          <property name="rightMargin">
+           <number>6</number>
+          </property>
+          <property name="bottomMargin">
+           <number>6</number>
+          </property>
           <item>
            <layout class="QGridLayout" name="gridLayout_3">
             <item row="0" column="0">
@@ -606,6 +636,21 @@
           <string/>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_8">
+          <property name="spacing">
+           <number>6</number>
+          </property>
+          <property name="leftMargin">
+           <number>6</number>
+          </property>
+          <property name="topMargin">
+           <number>6</number>
+          </property>
+          <property name="rightMargin">
+           <number>6</number>
+          </property>
+          <property name="bottomMargin">
+           <number>6</number>
+          </property>
           <item>
            <layout class="QGridLayout" name="gridLayout_4">
             <item row="0" column="2">
@@ -727,6 +772,21 @@
           <string/>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_9">
+          <property name="spacing">
+           <number>6</number>
+          </property>
+          <property name="leftMargin">
+           <number>6</number>
+          </property>
+          <property name="topMargin">
+           <number>6</number>
+          </property>
+          <property name="rightMargin">
+           <number>6</number>
+          </property>
+          <property name="bottomMargin">
+           <number>6</number>
+          </property>
           <item>
            <layout class="QGridLayout" name="gridLayout_5">
             <item row="0" column="3">
@@ -794,7 +854,28 @@
     </widget>
    </item>
    <item>
+    <widget class="Line" name="line_3">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
     <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="2">
+      <widget class="QPushButton" name="mCloseBtn">
+       <property name="text">
+        <string>Close</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QPushButton" name="mOKBtn">
+       <property name="text">
+        <string>OK</string>
+       </property>
+      </widget>
+     </item>
      <item row="0" column="0">
       <spacer name="horizontalSpacer">
        <property name="orientation">
@@ -807,20 +888,6 @@
         </size>
        </property>
       </spacer>
-     </item>
-     <item row="0" column="1">
-      <widget class="QPushButton" name="mOKBtn">
-       <property name="text">
-        <string>OK</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="QPushButton" name="mCloseBtn">
-       <property name="text">
-        <string>Close</string>
-       </property>
-      </widget>
      </item>
     </layout>
    </item>

@@ -2555,6 +2555,10 @@ void MainWindow::rightTableDblClick()
     {
         viewPriKey();
     }
+    else if( right_type_ == HM_ITEM_TYPE_DATA || right_type_ == HM_ITEM_TYPE_SECRETKEY )
+    {
+        viewObject();
+    }
 }
 
 void MainWindow::showMechaismInfoDetail( QModelIndex index )

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>418</width>
-    <height>331</height>
+    <width>424</width>
+    <height>374</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -406,6 +406,13 @@
      </property>
      <property name="readOnly">
       <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="Line" name="line_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </item>

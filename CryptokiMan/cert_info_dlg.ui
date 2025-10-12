@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>570</width>
-    <height>504</height>
+    <height>519</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -108,7 +108,7 @@
        <string>Information</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="4" column="0">
+       <item row="5" column="0">
         <widget class="QPlainTextEdit" name="mDetailText">
          <property name="minimumSize">
           <size>
@@ -164,26 +164,6 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
-        <widget class="QTableWidget" name="mFieldTable">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>160</height>
-          </size>
-         </property>
-         <attribute name="horizontalHeaderHighlightSections">
-          <bool>false</bool>
-         </attribute>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Detail Value</string>
-         </property>
-        </widget>
-       </item>
        <item row="0" column="0">
         <layout class="QGridLayout" name="gridLayout_3">
          <property name="topMargin">
@@ -214,8 +194,42 @@
          </item>
         </layout>
        </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Detail Value</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QTableWidget" name="mFieldTable">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>160</height>
+          </size>
+         </property>
+         <attribute name="horizontalHeaderHighlightSections">
+          <bool>false</bool>
+         </attribute>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="Line" name="line_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="Line" name="line_3">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
     </widget>
    </item>
    <item>

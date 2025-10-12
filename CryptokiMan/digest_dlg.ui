@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>532</width>
-    <height>657</height>
+    <height>685</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -452,7 +452,7 @@
    <item>
     <widget class="QTabWidget" name="mInputTab">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="mDataTab">
       <attribute name="title">
@@ -572,6 +572,13 @@
        </item>
        <item>
         <widget class="QPlainTextEdit" name="mInputText"/>
+       </item>
+       <item>
+        <widget class="Line" name="line_6">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
        </item>
        <item>
         <layout class="QGridLayout" name="gridLayout_3">
@@ -1005,6 +1012,13 @@
        </item>
       </layout>
      </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
     </widget>
    </item>
    <item>

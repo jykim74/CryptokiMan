@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>624</width>
-    <height>621</height>
+    <height>829</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -606,6 +606,13 @@
     </widget>
    </item>
    <item>
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
     <layout class="QGridLayout" name="gridLayout_3">
      <property name="topMargin">
       <number>0</number>
@@ -735,6 +742,13 @@
       </widget>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="Line" name="line_3">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QTabWidget" name="mInputTab">
@@ -1446,6 +1460,13 @@
      </property>
      <property name="readOnly">
       <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="Line" name="line_6">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </item>

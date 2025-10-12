@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>582</width>
-    <height>534</height>
+    <width>619</width>
+    <height>666</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -409,6 +409,13 @@
       </spacer>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="Line" name="line_5">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
    </item>
    <item>
     <layout class="QGridLayout" name="gridLayout_4">

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>422</width>
-    <height>128</height>
+    <width>425</width>
+    <height>151</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -70,33 +70,20 @@
      <property name="topMargin">
       <number>0</number>
      </property>
-     <item row="0" column="3">
-      <widget class="QCheckBox" name="mRWCheck">
+     <item row="0" column="2">
+      <widget class="QCheckBox" name="mSerialCheck">
        <property name="text">
-        <string>CKF_RW_SESSION</string>
+        <string>CKF_SERIAL_SESSION</string>
        </property>
        <property name="checked">
         <bool>true</bool>
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="minimumSize">
-        <size>
-         <width>80</width>
-         <height>0</height>
-        </size>
-       </property>
+     <item row="0" column="4">
+      <widget class="QCheckBox" name="mRWCheck">
        <property name="text">
-        <string>Flags</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="QCheckBox" name="mSerialCheck">
-       <property name="text">
-        <string>CKF_SERIAL_SESSION</string>
+        <string>CKF_RW_SESSION</string>
        </property>
        <property name="checked">
         <bool>true</bool>
@@ -115,6 +102,26 @@
         </size>
        </property>
       </spacer>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Flags</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="Line" name="line">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

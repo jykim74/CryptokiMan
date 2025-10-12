@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>664</width>
-    <height>392</height>
+    <height>501</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,7 +23,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="mFirstTab">
       <attribute name="title">
@@ -404,7 +404,7 @@
        <item>
         <widget class="QTabWidget" name="mParamTab">
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="mDSATab">
           <attribute name="title">
@@ -444,6 +444,13 @@
               </spacer>
              </item>
             </layout>
+           </item>
+           <item>
+            <widget class="Line" name="line_5">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
            </item>
            <item>
             <layout class="QGridLayout" name="gridLayout_13">
@@ -1413,6 +1420,13 @@
        </item>
       </layout>
      </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="Line" name="line_6">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
     </widget>
    </item>
    <item>

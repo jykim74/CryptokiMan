@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>560</width>
-    <height>553</height>
+    <height>598</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -406,6 +406,13 @@
       </widget>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="Line" name="line_5">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
    </item>
    <item>
     <layout class="QGridLayout" name="gridLayout_7">
@@ -908,6 +915,13 @@
      </property>
      <property name="readOnly">
       <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="Line" name="line_6">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </item>
