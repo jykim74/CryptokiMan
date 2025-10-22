@@ -87,5 +87,6 @@
         <file>images/csr.png</file>
         <file>images/hsm_man.png</file>
         <file>images/cavp.png</file>
+        <file>images/loading.gif</file>
     </qresource>
 </RCC>

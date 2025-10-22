@@ -15,6 +15,7 @@
 #include "mech_mgr.h"
 #include "settings_mgr.h"
 #include "export_dlg.h"
+#include "thread_work_dlg.h"
 
 static QStringList sMechGenKeyPairList;
 static QStringList sDH_GList = { "02", "05" };
@@ -1064,7 +1065,7 @@ void GenKeyPairDlg::clickGenDHParam()
     int ret = 0;
     int nG = mDH_GCombo->currentText().toInt();
     int nLen = mOptionCombo->currentText().toInt();
-
+#if 0
     BIN binP = {0,0};
     BIN binG = {0,0};
     BIN binQ = {0,0};
@@ -1076,6 +1077,12 @@ void GenKeyPairDlg::clickGenDHParam()
     JS_BIN_reset( &binP );
     JS_BIN_reset( &binG );
     JS_BIN_reset( &binQ );
+#else
+    ThreadWorkDlg thWork;
+    thWork.runWork( nLen, nG );
+    thWork.exec();
+    mDH_PText->setPlainText( thWork.getP() );
+#endif
 }
 
 void GenKeyPairDlg::changeDH_P()

@@ -85,6 +85,7 @@ set(PROJECT_SRC
     unwrap_key_dlg.cpp
     verify_dlg.cpp
     wrap_key_dlg.cpp
+    thread_work_dlg.cpp
     ${platform_specific_sources}
 )
 
@@ -143,6 +144,7 @@ set( PROJECT_HEADER
     unwrap_key_dlg.h
     verify_dlg.h
     wrap_key_dlg.h
+    thread_work_dlg.h
     ${platform_specific_headers}
 )
 
@@ -185,6 +187,7 @@ set( PROJECT_FORM
     unwrap_key_dlg.ui
     verify_dlg.ui
     wrap_key_dlg.ui
+    thread_work_dlg.ui
 )
 
 
