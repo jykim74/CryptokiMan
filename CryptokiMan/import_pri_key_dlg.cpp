@@ -4,6 +4,9 @@
  * All rights reserved.
  */
 #include <QFileDialog>
+#include <QDragEnterEvent>
+#include <QDropEvent>
+#include <QMimeData>
 
 #include "import_pri_key_dlg.h"
 #include "man_applet.h"
@@ -22,6 +25,7 @@ ImportPriKeyDlg::ImportPriKeyDlg(QWidget *parent) :
     memset( &spki_, 0x00, sizeof(spki_));
 
     setupUi(this);
+    setAcceptDrops( true );
 
     initAttributes();
     setAttributes();
@@ -49,6 +53,29 @@ ImportPriKeyDlg::~ImportPriKeyDlg()
 {
     JS_BIN_reset( &ski_ );
     JS_BIN_reset( &spki_ );
+}
+
+void ImportPriKeyDlg::dragEnterEvent(QDragEnterEvent *event)
+{
+    if (event->mimeData()->hasUrls() || event->mimeData()->hasText()) {
+        event->acceptProposedAction();  // 드랍 허용
+    }
+}
+
+void ImportPriKeyDlg::dropEvent(QDropEvent *event)
+{
+    if (event->mimeData()->hasUrls()) {
+        QList<QUrl> urls = event->mimeData()->urls();
+
+        for (const QUrl &url : urls)
+        {
+            manApplet->log( QString( "url: %1").arg( url.toLocalFile() ));
+            mPathText->setText( url.toLocalFile() );
+            break;
+        }
+    } else if (event->mimeData()->hasText()) {
+
+    }
 }
 
 void ImportPriKeyDlg::setSlotIndex(int index)

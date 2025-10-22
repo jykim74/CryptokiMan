@@ -29,6 +29,9 @@ public:
     int getSlotIndex() { return slot_index_; };
 
 private slots:
+    void dragEnterEvent(QDragEnterEvent *event);
+    void dropEvent(QDropEvent *event);
+
     virtual void accept();
 
     void clickPriSameLabel();

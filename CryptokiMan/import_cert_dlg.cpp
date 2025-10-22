@@ -4,6 +4,9 @@
  * All rights reserved.
  */
 #include <QFileDialog>
+#include <QDragEnterEvent>
+#include <QDropEvent>
+#include <QMimeData>
 
 #include "import_cert_dlg.h"
 #include "man_applet.h"
@@ -19,6 +22,7 @@ ImportCertDlg::ImportCertDlg(QWidget *parent) :
     QDialog(parent)
 {
     setupUi(this);
+    setAcceptDrops(true);
 
     initAttributes();
     setAttributes();
@@ -38,6 +42,29 @@ ImportCertDlg::ImportCertDlg(QWidget *parent) :
 ImportCertDlg::~ImportCertDlg()
 {
 
+}
+
+void ImportCertDlg::dragEnterEvent(QDragEnterEvent *event)
+{
+    if (event->mimeData()->hasUrls() || event->mimeData()->hasText()) {
+        event->acceptProposedAction();  // 드랍 허용
+    }
+}
+
+void ImportCertDlg::dropEvent(QDropEvent *event)
+{
+    if (event->mimeData()->hasUrls()) {
+        QList<QUrl> urls = event->mimeData()->urls();
+
+        for (const QUrl &url : urls)
+        {
+            manApplet->log( QString( "url: %1").arg( url.toLocalFile() ));
+            mCertPathText->setText( url.toLocalFile() );
+            break;
+        }
+    } else if (event->mimeData()->hasText()) {
+
+    }
 }
 
 void ImportCertDlg::setSlotIndex(int index)

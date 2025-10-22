@@ -4,6 +4,9 @@
  * All rights reserved.
  */
 #include <QFileDialog>
+#include <QDragEnterEvent>
+#include <QDropEvent>
+#include <QMimeData>
 
 #include "import_pfx_dlg.h"
 #include "man_applet.h"
@@ -23,6 +26,7 @@ ImportPFXDlg::ImportPFXDlg(QWidget *parent) :
     memset( &spki_, 0x00, sizeof(BIN));
 
     setupUi(this);
+    setAcceptDrops( true );
 
     initAttributes();
     setAttributes();
@@ -53,6 +57,29 @@ ImportPFXDlg::~ImportPFXDlg()
     JS_BIN_reset( &der_dn_ );
     JS_BIN_reset( &ski_ );
     JS_BIN_reset( &spki_ );
+}
+
+void ImportPFXDlg::dragEnterEvent(QDragEnterEvent *event)
+{
+    if (event->mimeData()->hasUrls() || event->mimeData()->hasText()) {
+        event->acceptProposedAction();  // 드랍 허용
+    }
+}
+
+void ImportPFXDlg::dropEvent(QDropEvent *event)
+{
+    if (event->mimeData()->hasUrls()) {
+        QList<QUrl> urls = event->mimeData()->urls();
+
+        for (const QUrl &url : urls)
+        {
+            manApplet->log( QString( "url: %1").arg( url.toLocalFile() ));
+            mPFXPathText->setText( url.toLocalFile() );
+            break;
+        }
+    } else if (event->mimeData()->hasText()) {
+
+    }
 }
 
 void ImportPFXDlg::setSlotIndex(int index)
