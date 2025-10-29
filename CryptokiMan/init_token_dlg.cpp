@@ -85,7 +85,12 @@ void InitTokenDlg::accept()
         return;
     }
 
-    getBINFromString( &binPIN, DATA_STRING, mPinText->text() );
+    rv = getBINFromString( &binPIN, DATA_STRING, mPinText->text() );
+    if( rv < 0 )
+    {
+        manApplet->formatWarn( rv, this );
+        return;
+    }
 
     rv = manApplet->cryptokiAPI()->InitToken(
                 slot_info_.getSlotID(),

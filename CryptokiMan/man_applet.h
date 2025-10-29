@@ -70,6 +70,7 @@ public:
 
     void messageLog( const QString strLog, QWidget *parent );
     void warnLog( const QString strLog, QWidget *parent );
+    void formatWarn( int rv, QWidget *parent );
 
     QString curFilePath( const QString strPath = "" );
     QString curPath( const QString strPath = "" );

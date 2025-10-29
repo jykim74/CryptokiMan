@@ -381,7 +381,12 @@ void SignDlg::clickUpdate()
     BIN binInput = {0,0};
     QString strType = mInputTypeCombo->currentText();
 
-    getBINFromString( &binInput, strType, strInput );
+    rv = getBINFromString( &binInput, strType, strInput );
+    if( rv < 0 )
+    {
+        manApplet->formatWarn( rv, this );
+        return;
+    }
 
     rv = manApplet->cryptokiAPI()->SignUpdate( slot_info_.getSessionHandle(), binInput.pVal, binInput.nLen );
     if( rv != CKR_OK )
@@ -466,7 +471,12 @@ void SignDlg::runDataSign()
     BIN binInput = {0,0};
     QString strType = mInputTypeCombo->currentText();
 
-    getBINFromString( &binInput, strType, strInput );
+    rv = getBINFromString( &binInput, strType, strInput );
+    if( rv < 0 )
+    {
+        manApplet->formatWarn( rv, this );
+        return;
+    }
 
     unsigned char sSign[1024];
     long uSignLen = 1024;
@@ -706,7 +716,12 @@ void SignDlg::clickSignRecover()
     BIN binInput = {0,0};
     QString strType = mInputTypeCombo->currentText();
 
-    getBINFromString( &binInput, strType, strInput );
+    rv = getBINFromString( &binInput, strType, strInput );
+    if( rv < 0 )
+    {
+        manApplet->formatWarn( rv, this );
+        return;
+    }
 
     unsigned char sSign[1024];
     long uSignLen = 1024;

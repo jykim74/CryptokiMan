@@ -1193,13 +1193,18 @@ void GenKeyPairDlg::clickClearDHParam()
 
 void GenKeyPairDlg::changePubExponent()
 {
+    int rv = -1;
     int nPubExt = 0;
     BIN binPubExp = {0,0};
 
     QString strPubExp = mPubExponentText->text();
-    getBINFromString( &binPubExp, DATA_HEX, strPubExp );
+    rv = getBINFromString( &binPubExp, DATA_HEX, strPubExp );
+    FORMAT_WARN_GO(rv);
+
     nPubExt = JS_BIN_long( &binPubExp );
     mPubExponent10Text->setText( QString("%1").arg( nPubExt ));
+
+end :
     JS_BIN_reset( &binPubExp );
 }
 

@@ -82,8 +82,13 @@ void InitPinDlg::accept()
         return;
     }
 
-    BIN binPin = {0,0};    
-    getBINFromString( &binPin, DATA_STRING, strPin );
+    BIN binPin = {0,0};
+    rv = getBINFromString( &binPin, DATA_STRING, strPin );
+    if( rv < 0 )
+    {
+        manApplet->formatWarn( rv, this );
+        return;
+    }
 
     rv = manApplet->cryptokiAPI()->InitPIN( hSession, binPin.pVal, binPin.nLen );
 

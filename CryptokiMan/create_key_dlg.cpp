@@ -263,7 +263,12 @@ void CreateKeyDlg::accept()
 
     BIN binKey = {0,0};
 
-    getBINFromString( &binKey, mKeyCombo->currentText(), strKey );
+    rv = getBINFromString( &binKey, mKeyCombo->currentText(), strKey );
+    if( rv < 0 )
+    {
+        manApplet->formatWarn( rv, this );
+        return;
+    }
 
     sTemplate[uCount].type = CKA_VALUE;
     sTemplate[uCount].pValue = binKey.pVal;

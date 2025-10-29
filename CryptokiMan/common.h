@@ -27,6 +27,18 @@
 #define     HM_ITEM_TYPE_SECRETKEY          9
 #define     HM_ITEM_TYPE_DATA               10
 
+#define FORMAT_WARN_GO(x) if( x < 0 ) \
+{ \
+        manApplet->formatWarn( x, this ); \
+        goto end; \
+}
+
+#define FORMAT_WARN_RET(x) if( x < 0 ) \
+{ \
+        manApplet->formatWarn( x, this ); \
+        return x; \
+}
+
 const QStringList kRSAOptionList = { "1024", "2048", "3072", "4096", "8192" };
 
 const QStringList kECDSAOptionList = { "prime256v1",
@@ -216,8 +228,8 @@ const QString getDataLenString( int nType, const QString strData );
 const QString getDataLenString( const QString strType, const QString strData );
 
 
-void getBINFromString( BIN *pBin, const QString& strType, const QString& strString );
-void getBINFromString( BIN *pBin, int nType, const QString& strString );
+int getBINFromString( BIN *pBin, const QString& strType, const QString& strString );
+int getBINFromString( BIN *pBin, int nType, const QString& strString );
 QString getStringFromBIN( const BIN *pBin, const QString& strType, bool bSeenOnly = false );
 QString getStringFromBIN( const BIN *pBin, int nType, bool bSeenOnly = false );
 

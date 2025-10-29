@@ -548,9 +548,13 @@ void CreateRSAPubKeyDlg::changeExponent( const QString text )
 {
     int nExp = 0;
     BIN binExp = {0,0};
-    getBINFromString( &binExp, DATA_HEX, text );
+    int rv = getBINFromString( &binExp, DATA_HEX, text );
+    FORMAT_WARN_GO( rv );
+
     nExp = JS_BIN_long( &binExp );
     mExponent10Text->setText( QString("%1").arg( nExp ) );
+
+end :
     JS_BIN_reset( &binExp );
 }
 

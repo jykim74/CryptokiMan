@@ -407,7 +407,12 @@ void DigestDlg::runDataDigest()
 
     BIN binInput = {0,0};
 
-    getBINFromString( &binInput, mInputCombo->currentText(), strInput );
+    rv = getBINFromString( &binInput, mInputCombo->currentText(), strInput );
+    if( rv < 0 )
+    {
+        manApplet->formatWarn( rv, this );
+        return;
+    }
 
     unsigned char sDigest[512];
     CK_ULONG uDigestLen = 64;

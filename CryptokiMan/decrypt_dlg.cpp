@@ -132,6 +132,7 @@ void DecryptDlg::initUI()
 
 void DecryptDlg::setMechanism( void *pMech )
 {
+    int rv = -1;
     if( pMech == NULL ) return;
     CK_MECHANISM_PTR pPtr = (CK_MECHANISM *)pMech;
     long nMech = JS_PKCS11_GetCKMType( mMechCombo->currentText().toStdString().c_str());
@@ -147,7 +148,12 @@ void DecryptDlg::setMechanism( void *pMech )
         QString strAAD = mAADText->text();
 
         JS_BIN_decodeHex( strIV.toStdString().c_str(), &binIV );
-        getBINFromString( &binAAD, mAADTypeCombo->currentText(), strAAD );
+        rv = getBINFromString( &binAAD, mAADTypeCombo->currentText(), strAAD );
+        if( rv < 0 )
+        {
+            manApplet->formatWarn( rv, this );
+            return;
+        }
 
         CK_GCM_PARAMS_PTR gcmParam;
         gcmParam = (CK_GCM_PARAMS *)JS_calloc( 1, sizeof(CK_GCM_PARAMS));
@@ -174,7 +180,12 @@ void DecryptDlg::setMechanism( void *pMech )
         QString strAAD = mAADText->text();
 
         JS_BIN_decodeHex( strIV.toStdString().c_str(), &binIV );
-        getBINFromString( &binAAD, mAADTypeCombo->currentText(), strAAD );
+        rv = getBINFromString( &binAAD, mAADTypeCombo->currentText(), strAAD );
+        if( rv < 0 )
+        {
+            manApplet->formatWarn( rv, this );
+            return;
+        }
 
         CK_CCM_PARAMS_PTR ccmParam;
         ccmParam->ulDataLen = nSrcLen;
@@ -196,7 +207,12 @@ void DecryptDlg::setMechanism( void *pMech )
         QString strSrc = mOAEPSourceText->text();
 
         pOAEPParam = (CK_RSA_PKCS_OAEP_PARAMS *)JS_calloc( 1, sizeof(CK_RSA_PKCS_OAEP_PARAMS));
-        getBINFromString( &binSrc, DATA_HEX, strSrc.toStdString().c_str() );
+        rv = getBINFromString( &binSrc, DATA_HEX, strSrc.toStdString().c_str() );
+        if( rv < 0 )
+        {
+            manApplet->formatWarn( rv, this );
+            return;
+        }
 
         pOAEPParam->hashAlg = JS_PKCS11_GetCKMType( strHashAlg.toStdString().c_str() );
         pOAEPParam->mgf = JS_PKCS11_GetCKGType( strMgf.toStdString().c_str() );
@@ -578,7 +594,12 @@ void DecryptDlg::clickUpdate()
 
     BIN binInput = {0,0};
 
-    getBINFromString( &binInput, DATA_HEX, strInput );
+    rv = getBINFromString( &binInput, DATA_HEX, strInput );
+    if( rv < 0 )
+    {
+        manApplet->formatWarn( rv, this );
+        return;
+    }
 
     unsigned char *pDecPart = NULL;
     long uDecPartLen = binInput.nLen;
@@ -696,7 +717,12 @@ void DecryptDlg::runDataDecrypt()
 
     BIN binInput = {0,0};
 
-    getBINFromString( &binInput, DATA_HEX, strInput );
+    rv = getBINFromString( &binInput, DATA_HEX, strInput );
+    if( rv < 0 )
+    {
+        manApplet->formatWarn( rv, this );
+        return;
+    }
 
     unsigned char *pDecData = NULL;
     long uDecDataLen = 0;

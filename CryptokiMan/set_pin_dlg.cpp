@@ -85,8 +85,19 @@ void SetPinDlg::accept()
     BIN binOldPin = {0,0};
     BIN binNewPin = { 0,0 };
 
-    getBINFromString( &binOldPin, DATA_STRING, strOldPin );
-    getBINFromString( &binNewPin, DATA_STRING, strNewPin );
+    rv = getBINFromString( &binOldPin, DATA_STRING, strOldPin );
+    if( rv < 0 )
+    {
+        manApplet->formatWarn( rv, this );
+        return;
+    }
+
+    rv = getBINFromString( &binNewPin, DATA_STRING, strNewPin );
+    if( rv < 0 )
+    {
+        manApplet->formatWarn( rv, this );
+        return;
+    }
 
     rv = manApplet->cryptokiAPI()->SetPIN( hSession, binOldPin.pVal, binOldPin.nLen, binNewPin.pVal, binNewPin.nLen );
 

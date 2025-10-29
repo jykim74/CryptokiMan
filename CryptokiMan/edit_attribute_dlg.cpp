@@ -346,7 +346,12 @@ void EditAttributeDlg::clickSetAttribute()
     BIN binVal = {0,0};
     QString strValue = mValueText->toPlainText();
 
-    getBINFromString( &binVal, mValueTypeCombo->currentText(), strValue );
+    rv = getBINFromString( &binVal, mValueTypeCombo->currentText(), strValue );
+    if( rv < 0 )
+    {
+        manApplet->formatWarn( rv, this );
+        return;
+    }
 
     rv = manApplet->cryptokiAPI()->SetAttributeValue2( slot_info_.getSessionHandle(), hObject, attrType, &binVal );
 

@@ -373,7 +373,12 @@ void VerifyDlg::clickUpdate()
     BIN binInput = {0,0};
     QString strType = mInputTypeCombo->currentText();
 
-    getBINFromString( &binInput, strType, strInput );
+    rv = getBINFromString( &binInput, strType, strInput );
+    if( rv < 0 )
+    {
+        manApplet->formatWarn( rv, this );
+        return;
+    }
 
     rv = manApplet->cryptokiAPI()->VerifyUpdate( slot_info_.getSessionHandle(), binInput.pVal, binInput.nLen );
 
@@ -471,7 +476,12 @@ void VerifyDlg::runDataVerify()
     BIN binInput = {0,0};
     QString strType = mInputTypeCombo->currentText();
 
-    getBINFromString( &binInput, strType, strInput );
+    rv = getBINFromString( &binInput, strType, strInput );
+    if( rv < 0 )
+    {
+        manApplet->formatWarn( rv, this );
+        return;
+    }
 
     BIN binSign = {0,0};
     JS_BIN_decodeHex( strSign.toStdString().c_str(), &binSign );

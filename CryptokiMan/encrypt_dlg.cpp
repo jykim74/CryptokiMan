@@ -130,6 +130,7 @@ void EncryptDlg::initUI()
 
 void EncryptDlg::setMechanism( void *pMech )
 {
+    int rv = -1;
     if( pMech == NULL ) return;
     CK_MECHANISM_PTR pPtr = (CK_MECHANISM *)pMech;
     long nMech = JS_PKCS11_GetCKMType( mMechCombo->currentText().toStdString().c_str());
@@ -146,7 +147,12 @@ void EncryptDlg::setMechanism( void *pMech )
         QString strAAD = mAADText->text();
 
         JS_BIN_decodeHex( strIV.toStdString().c_str(), &binIV );
-        getBINFromString( &binAAD, mAADTypeCombo->currentText(), strAAD );
+        rv = getBINFromString( &binAAD, mAADTypeCombo->currentText(), strAAD );
+        if( rv < 0 )
+        {
+            manApplet->formatWarn( rv, this );
+            return;
+        }
 
         setAES_GCMParam( &binIV, &binAAD, nReqLen, pPtr );
     }
@@ -162,7 +168,12 @@ void EncryptDlg::setMechanism( void *pMech )
         QString strAAD = mAADText->text();
 
         JS_BIN_decodeHex( strIV.toStdString().c_str(), &binIV );
-        getBINFromString( &binAAD, mAADTypeCombo->currentText(), strAAD );
+        rv = getBINFromString( &binAAD, mAADTypeCombo->currentText(), strAAD );
+        if( rv < 0 )
+        {
+            manApplet->formatWarn( rv, this );
+            return;
+        }
 
         setAES_CCMParam( &binIV, &binAAD, nSrcLen, nReqLen, pPtr );
     }
@@ -175,7 +186,12 @@ void EncryptDlg::setMechanism( void *pMech )
         QString strSrc = mOAEPSourceText->text();
 
         pOAEPParam = (CK_RSA_PKCS_OAEP_PARAMS *)JS_calloc( 1, sizeof(CK_RSA_PKCS_OAEP_PARAMS));
-        getBINFromString( &binSrc, DATA_HEX, strSrc.toStdString().c_str() );
+        rv = getBINFromString( &binSrc, DATA_HEX, strSrc.toStdString().c_str() );
+        if( rv < 0 )
+        {
+            manApplet->formatWarn( rv, this );
+            return;
+        }
 
         pOAEPParam->hashAlg = JS_PKCS11_GetCKMType( strHashAlg.toStdString().c_str() );
         pOAEPParam->mgf = JS_PKCS11_GetCKGType( strMgf.toStdString().c_str() );

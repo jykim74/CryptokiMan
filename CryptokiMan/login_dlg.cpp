@@ -88,7 +88,12 @@ void LoginDlg::clickLogin()
     else
         nType = CKU_USER;
 
-    getBINFromString( &binPIN, DATA_STRING, mPinText->text() );
+    rv = getBINFromString( &binPIN, DATA_STRING, mPinText->text() );
+    if( rv < 0 )
+    {
+        manApplet->formatWarn( rv, this );
+        return;
+    }
 
     rv = manApplet->cryptokiAPI()->Login( hSession, nType, binPIN.pVal, binPIN.nLen );
 
