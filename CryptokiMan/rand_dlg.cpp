@@ -129,12 +129,13 @@ void RandDlg::clickSeed()
     }
 
     BIN binSeed = {0,0};
-    if( mSeedCombo->currentIndex() == 0 )
-        JS_BIN_set( &binSeed, (unsigned char *)strSeed.toStdString().c_str(), strSeed.length() );
-    else if( mSeedCombo->currentIndex() == 1 )
-        JS_BIN_decodeHex( strSeed.toStdString().c_str(), &binSeed );
-    else if( mSeedCombo->currentIndex() == 2 )
-        JS_BIN_decodeBase64( strSeed.toStdString().c_str(), &binSeed );
+
+    rv = getBINFromString( &binSeed, mSeedCombo->currentText(), strSeed );
+    if( rv < 0 )
+    {
+        manApplet->formatWarn( rv, this );
+        return;
+    }
 
     rv = manApplet->cryptokiAPI()->SeedRandom( hSession, binSeed.pVal, binSeed.nLen );
 

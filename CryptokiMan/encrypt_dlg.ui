@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>624</width>
-    <height>989</height>
+    <height>785</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -471,13 +471,6 @@
     </widget>
    </item>
    <item>
-    <widget class="Line" name="line_7">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="QGroupBox" name="mOAEPGroup">
      <property name="minimumSize">
       <size>
@@ -635,7 +628,7 @@
     </widget>
    </item>
    <item>
-    <widget class="Line" name="line_6">
+    <widget class="Line" name="line_7">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
@@ -962,7 +955,7 @@
    <item>
     <widget class="QTabWidget" name="mInputTab">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="mDataTab">
       <attribute name="title">

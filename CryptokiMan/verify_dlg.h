@@ -61,6 +61,7 @@ private slots:
     void onTaskFinished();
     void onTaskUpdate( qint64 nUpdate );
 private:
+    void initUI();
     void initialize();
 
     void clearStatusLabel();
@@ -68,8 +69,6 @@ private:
     void setStatusUpdate( int rv, int count );
     void setStatusFinal( int rv );
     void setStatusVerify( int rv );
-
-    void initUI();
 
     SlotInfo slot_info_;
     int slot_index_ = -1;

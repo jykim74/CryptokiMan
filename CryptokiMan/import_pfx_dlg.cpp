@@ -103,15 +103,18 @@ void ImportPFXDlg::initialize()
     mPFXPathText->setPlaceholderText( tr( "Find a PFX" ));
 
     mCertLabelText->setPlaceholderText( tr( "String value" ));
-    mCertIDText->setPlaceholderText( tr("Hex value" ));
-    mCertPubKeyInfoText->setPlaceholderText( tr( "Hex value" ));
+    setLineEditHexOnly(mCertIDText, tr("Hex value" ));
+    setLineEditHexOnly(mCertPubKeyInfoText, tr( "Hex value" ));
+    mCertSubjectText->setPlaceholderText( tr("DN value") );
 
     mPriLabelText->setPlaceholderText( tr( "String value" ));
-    mPriIDText->setPlaceholderText( tr( "Hex value" ));
-    mPriPubKeyInfoText->setPlaceholderText( tr( "Hex value" ));
+    setLineEditHexOnly( mPriIDText, tr( "Hex value" ));
+    setLineEditHexOnly( mPriPubKeyInfoText, tr( "Hex value" ));
+    mPriSubjectText->setPlaceholderText( tr("DN value") );
 
     mPubLabelText->setPlaceholderText( tr( "String value" ));
-    mPubIDText->setPlaceholderText( tr("Hex value" ));
+    setLineEditHexOnly( mPubIDText, tr("Hex value" ));
+    mPubSubjectText->setPlaceholderText( tr("DN value") );
 }
 
 void ImportPFXDlg::initAttributes()

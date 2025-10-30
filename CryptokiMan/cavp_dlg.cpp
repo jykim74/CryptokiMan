@@ -430,8 +430,6 @@ void CAVPDlg::initUI()
 
     mACVP_LDTHashCombo->addItems( kMechDigestList );
 
-
-
     mSymAlgCombo->addItems( kSymAlgList );
     mSymModeCombo->addItems( kSymModeList );
     mSymTypeCombo->addItems( kSymTypeList );
@@ -460,7 +458,37 @@ void CAVPDlg::initUI()
     checkACVPSetTcId();
     checkACVPSetTgId();
 
+    mRspPathText->setPlaceholderText( tr("Result storage directory") );
     mRspPathText->setText( gettingRspPath() );
+
+    QString strHex = tr("Hex value" );
+
+    setLineEditHexOnly( mMCT_SymKeyText, strHex );
+    setLineEditHexOnly( mMCT_SymIVText, strHex );
+    setLineEditHexOnly( mMCT_SymPTText, strHex );
+    setLineEditHexOnly( mMCT_SymCTText, strHex );
+    setLineEditHexOnly( mMCT_SymLastKeyText, strHex );
+    setLineEditHexOnly( mMCT_SymLastIVText, strHex );
+    setLineEditHexOnly( mMCT_SymLastPTText, strHex );
+    setLineEditHexOnly( mMCT_SymLastCTText, strHex );
+
+    setLineEditHexOnly( mMCT_HashSeedText, strHex );
+    setLineEditHexOnly( mMCT_HashFirstMDText, strHex );
+    setLineEditHexOnly( mMCT_HashLastMDText, strHex );
+
+    mSymReqPathText->setPlaceholderText( tr("Find a file") );
+    mAEReqPathText->setPlaceholderText( tr("Find a file") );
+    mHashReqPathText->setPlaceholderText( tr("Find a file"));
+    mMACReqPathText->setPlaceholderText( tr("Find a file"));
+    mECCReqPathText->setPlaceholderText( tr("Find a file"));
+    mRSAReqPathText->setPlaceholderText( tr("Find a file"));
+    mRSA_DETPriKeyPathText->setPlaceholderText( tr("Find a private key file"));
+
+    mACVP_ReqPathText->setPlaceholderText( tr("Find a JSON file"));
+
+    setLineEditHexOnly( mACVP_LDTContentText, strHex );
+    setLineEditHexOnly( mACVP_LDT_MDText, strHex );
+    mACVP_LDTFullLengthBitsText->setPlaceholderText( tr("Decimal value" ));
 
     mTabWidget->setCurrentIndex(0);
 }

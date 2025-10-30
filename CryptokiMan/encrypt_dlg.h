@@ -64,6 +64,7 @@ private slots:
     void onTaskUpdate( qint64 nUpdate );
 
 private:
+    void initUI();
     void initialize();
     void clearStatusLabel();
     void setStatusInit( int rv );
@@ -71,7 +72,6 @@ private:
     void setStatusFinal( int rv );
     void setStatusEncrypt( int rv );
 
-    void initUI();
     void setMechanism( void *pMech );
     void freeMechanism( void *pMech );
 

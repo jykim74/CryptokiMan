@@ -196,11 +196,11 @@ void FindObjectDlg::initUI()
     mObjectIDTypeCombo->addItems( kOIDTypeList );
 
     mLabelText->setPlaceholderText( tr("String value" ));
-    mIDText->setPlaceholderText( tr("Hex value" ));
-    mSubjectText->setPlaceholderText( tr("Hex value" ));
-    mPubKeyInfoText->setPlaceholderText( tr("Hex value" ));
+    setLineEditHexOnly( mIDText, tr("Hex value" ));
+    setLineEditHexOnly( mSubjectText, tr("Hex value" ));
+    setLineEditHexOnly( mPubKeyInfoText, tr("Hex value" ));
     mApplicationText->setPlaceholderText( tr("String value" ));
-    mObjectIDText->setPlaceholderText( tr("Hex value" ));
+    mObjectIDText->setPlaceholderText( tr("OID value" ));
 }
 
 void FindObjectDlg::initAttributes()

@@ -56,7 +56,12 @@ EditAttributeListDlg::~EditAttributeListDlg()
 
 void EditAttributeListDlg::initialize()
 {
+    setLineEditHexOnly( mClassText, tr("Hex value"));
 
+    mLabelText->setPlaceholderText( tr("String value" ) );
+    setLineEditHexOnly( mIDText, tr("Hex value"));
+    mApplicationText->setPlaceholderText( tr("String value" ));
+    setLineEditHexOnly( mObjectIDText, tr("Hex value"));
 }
 
 void EditAttributeListDlg::setSlotIndex( int index )

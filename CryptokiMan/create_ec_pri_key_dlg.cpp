@@ -76,10 +76,12 @@ void CreateECPriKeyDlg::initialize()
     setWindowTitle( strTitle );
 
     mLabelText->setPlaceholderText( tr("String value" ));
-    mIDText->setPlaceholderText( tr( "Hex value" ));
-    mPubKeyInfoText->setPlaceholderText( tr("Hex value" ));
-    mECParamsText->setPlaceholderText( tr("Hex value" ));
-    mKeyValueText->setPlaceholderText( tr("Hex value" ));
+    mSubjectText->setPlaceholderText( tr("DN value"));
+
+    setLineEditHexOnly( mIDText, tr( "Hex value" ));
+    setLineEditHexOnly( mPubKeyInfoText, tr("Hex value" ));
+    setLineEditHexOnly( mECParamsText, tr("Hex value" ));
+    setLineEditHexOnly( mKeyValueText, tr("Hex value" ));
 }
 
 void CreateECPriKeyDlg::initAttributes()

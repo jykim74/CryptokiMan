@@ -191,9 +191,9 @@ void DeriveKeyDlg::initUI()
 
     mSrcLabelText->setPlaceholderText( tr( "Select a key from HSM Man" ));
     mLabelText->setPlaceholderText( tr( "String value" ));
-    mIDText->setPlaceholderText( tr("Hex value" ));
-    mParam1Text->setPlaceholderText( tr("Hex value" ));
-    mParam2Text->setPlaceholderText( tr("Hex value" ));
+    setLineEditHexOnly( mIDText, tr("Hex value" ));
+    setLineEditHexOnly( mParam1Text, tr("Hex value" ));
+    setLineEditHexOnly( mParam2Text, tr("Hex value" ));
 }
 
 void DeriveKeyDlg::initialize()

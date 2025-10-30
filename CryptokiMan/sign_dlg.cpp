@@ -87,6 +87,7 @@ void SignDlg::initUI()
 
     mRunThreadCheck->setChecked(true);
 
+    setLineEditHexOnly( mParamText, tr("Hex value" ));
     mOutputText->setPlaceholderText( tr( "Hex value" ));
 
     connect( mKeyTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(keyTypeChanged(int)));

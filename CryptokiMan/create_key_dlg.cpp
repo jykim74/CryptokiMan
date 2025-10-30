@@ -79,7 +79,7 @@ void CreateKeyDlg::initUI()
     mKeyTypeCombo->addItems( sSymTypeList );
 
     mLabelText->setPlaceholderText( tr("String value" ));
-    mIDText->setPlaceholderText( tr( "Hex value" ));
+    setLineEditHexOnly( mIDText, tr( "Hex value" ));
 }
 
 void CreateKeyDlg::initialize()
@@ -228,6 +228,15 @@ void CreateKeyDlg::accept()
     sTemplate[uCount].ulValueLen = sizeof(keyType);
     uCount++;
 
+    BIN binKey = {0,0};
+
+    rv = getBINFromString( &binKey, mKeyCombo->currentText(), strKey );
+    if( rv < 0 )
+    {
+        manApplet->formatWarn( rv, this );
+        return;
+    }
+
     BIN binLabel = {0,0};
     QString strLabel = mLabelText->text();
 
@@ -260,15 +269,6 @@ void CreateKeyDlg::accept()
         uCount++;
     }
 
-
-    BIN binKey = {0,0};
-
-    rv = getBINFromString( &binKey, mKeyCombo->currentText(), strKey );
-    if( rv < 0 )
-    {
-        manApplet->formatWarn( rv, this );
-        return;
-    }
 
     sTemplate[uCount].type = CKA_VALUE;
     sTemplate[uCount].pValue = binKey.pVal;

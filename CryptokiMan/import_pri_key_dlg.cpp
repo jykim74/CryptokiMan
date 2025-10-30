@@ -101,11 +101,14 @@ void ImportPriKeyDlg::initialize()
 
     mPathText->setPlaceholderText( tr( "Find a private key" ));
 
-    mPubLabelText->setPlaceholderText( tr("String value" ));
-    mPubIDText->setPlaceholderText( tr( "Hex value" ));
     mPriLabelText->setPlaceholderText( tr( "String value" ));
-    mPriIDText->setPlaceholderText( tr("Hex value" ));
-    mPriPubKeyInfoText->setPlaceholderText( tr("Hex value" ));
+    mPriSubjectText->setPlaceholderText( tr( "DN value") );
+    setLineEditHexOnly( mPriIDText, tr("Hex value" ));
+    setLineEditHexOnly( mPriPubKeyInfoText, tr("Hex value" ));
+
+    mPubLabelText->setPlaceholderText( tr("String value" ));
+    mPubSubjectText->setPlaceholderText( tr("DN value") );
+    setLineEditHexOnly( mPubIDText, tr( "Hex value" ));
 }
 
 void ImportPriKeyDlg::initAttributes()

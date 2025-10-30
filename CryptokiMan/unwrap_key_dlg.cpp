@@ -107,9 +107,11 @@ void UnwrapKeyDlg::initUI()
     mTypeCombo->addItems(sSymTypeList);
     mUnwrapTypeCombo->addItems( kWrapType );
 
+    setLineEditHexOnly( mUnwrapParamText, tr("Hex value") );
+
     mUnwrapLabelText->setPlaceholderText( tr( "Select a key from HSM Man" ));
     mLabelText->setPlaceholderText( tr("String value" ));
-    mIDText->setPlaceholderText( tr("Hex value" ));
+    setLineEditHexOnly( mIDText, tr("Hex value" ));
     mInputText->setPlaceholderText( tr("Hex value" ));
     mUnwrapParamText->setPlaceholderText( tr("Hex value" ));
 }

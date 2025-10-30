@@ -71,11 +71,13 @@ void CreateDSAPubKeyDlg::setSlotIndex(int index)
 void CreateDSAPubKeyDlg::initialize()
 {
     mLabelText->setPlaceholderText( tr("String value" ));
-    mIDText->setPlaceholderText( tr("Hex value" ));
-    mPText->setPlaceholderText( tr("Hex value" ));
-    mQText->setPlaceholderText( tr( "Hex value" ));
-    mGText->setPlaceholderText( tr("Hex value" ));
-    mPublicText->setPlaceholderText( tr("Hex value" ));
+    mSubjectText->setPlaceholderText( tr( "DN value" ));
+
+    setLineEditHexOnly( mIDText, tr("Hex value" ));
+    setLineEditHexOnly( mPText, tr("Hex value" ));
+    setLineEditHexOnly( mQText, tr( "Hex value" ));
+    setLineEditHexOnly( mGText, tr("Hex value" ));
+    setLineEditHexOnly( mPublicText, tr("Hex value" ));
 }
 
 void CreateDSAPubKeyDlg::initAttributes()

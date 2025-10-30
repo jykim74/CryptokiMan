@@ -90,8 +90,10 @@ void ImportCertDlg::initialize()
 
     mCertPathText->setPlaceholderText(tr("Find a certificate"));
     mLabelText->setPlaceholderText( tr("String value" ));
-    mIDText->setPlaceholderText( tr( "Hex value" ));
-    mPubKeyInfoText->setPlaceholderText( tr( "Hex value" ));
+    mSubjectText->setPlaceholderText( tr("DN value") );
+
+    setLineEditHexOnly( mIDText, tr( "Hex value" ));
+    setLineEditHexOnly( mPubKeyInfoText, tr( "Hex value" ));
 }
 
 void ImportCertDlg::initAttributes()

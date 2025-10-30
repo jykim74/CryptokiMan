@@ -90,6 +90,8 @@ void EncryptDlg::initUI()
     mOutputText->setPlaceholderText( tr( "Hex value" ) );
 
     mRunThreadCheck->setChecked(true);
+    setLineEditHexOnly( mParamText, tr("Hex value") );
+    setLineEditHexOnly( mOAEPSourceText, tr("Hex value" ));
 
     connect( mKeyTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(keyTypeChanged(int)));
 

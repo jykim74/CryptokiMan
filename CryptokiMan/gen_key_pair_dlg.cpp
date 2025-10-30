@@ -120,15 +120,22 @@ void GenKeyPairDlg::initUI()
     mDH_GCombo->addItems( sDH_GList );
     mParamTab->setDisabled(true);
 
+    QString strHex = tr( "Hex value" );
+    mDH_PText->setPlaceholderText( strHex );
+
+    setLineEditHexOnly( mDSA_QText, strHex );
+    setLineEditHexOnly( mDSA_PText, strHex );
+    setLineEditHexOnly( mDSA_GText, strHex );
+
     mPubLabelText->setPlaceholderText( tr( "String value" ));
-    mPubIDText->setPlaceholderText( tr("Hex value" ));
-    mPubSubjectText->setPlaceholderText( tr("Hex value" ));
-    mPubExponentText->setPlaceholderText( tr("Hex value" ));
+    setLineEditHexOnly( mPubIDText, strHex );
+    mPubSubjectText->setPlaceholderText( tr("DN value"));
+    setLineEditHexOnly( mPubExponentText, strHex );
 
     mPriLabelText->setPlaceholderText( tr( "String value" ));
     mPriIDText->setPlaceholderText( tr("Hex value" ));
-    mPriSubjectText->setPlaceholderText( tr("Hex value" ));
-    mPriPubKeyInfoText->setPlaceholderText( tr("Hex value" ));
+    mPriSubjectText->setPlaceholderText( tr("DN value" ));
+    setLineEditHexOnly( mPriPubKeyInfoText, strHex );
 }
 
 void GenKeyPairDlg::initialize()

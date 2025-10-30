@@ -74,18 +74,21 @@ void CreateRSAPriKeyDlg::setSlotIndex(int index)
 
 void CreateRSAPriKeyDlg::initialize()
 {
-    mLabelText->setPlaceholderText( tr("String value" ));
-    mIDText->setPlaceholderText( tr("Hex value" ));
-    mPubKeyInfoText->setPlaceholderText( tr("Hex value" ));
+    QString strHex = tr("Hex value" );
 
-    mModulesText->setPlaceholderText( tr("Hex value" ));
-    mPubExponentText->setPlaceholderText( tr("Hex value" ));
-    mPriExponentText->setPlaceholderText( tr("Hex value" ));
-    mPrime1Text->setPlaceholderText( tr("Hex value" ));
-    mPrime2Text->setPlaceholderText( tr("Hex value" ));
-    mExponent1Text->setPlaceholderText( tr("Hex value" ));
-    mExponent2Text->setPlaceholderText( tr("Hex value" ));
-    mCoefficientText->setPlaceholderText( tr("Hex value" ));
+    mLabelText->setPlaceholderText( tr("String value" ));
+    mSubjectText->setPlaceholderText( tr("DN value" ));
+    setLineEditHexOnly( mIDText, strHex );
+    setLineEditHexOnly( mPubKeyInfoText, strHex );
+
+    setLineEditHexOnly( mModulesText, strHex );
+    setLineEditHexOnly( mPubExponentText, strHex );
+    setLineEditHexOnly( mPriExponentText, strHex );
+    setLineEditHexOnly( mPrime1Text, strHex );
+    setLineEditHexOnly( mPrime2Text, strHex );
+    setLineEditHexOnly( mExponent1Text, strHex );
+    setLineEditHexOnly( mExponent2Text, strHex );
+    setLineEditHexOnly( mCoefficientText, strHex );
 }
 
 void CreateRSAPriKeyDlg::initAttributes()

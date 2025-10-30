@@ -41,8 +41,8 @@ OperStateDlg::~OperStateDlg()
 void OperStateDlg::initUI()
 {
     mOperationStateText->setPlaceholderText( tr("Hex value") );
-    mEncKeyText->setPlaceholderText( tr("Hex value"));
-    mAuthKeyText->setPlaceholderText( tr("Hex value") );
+    setLineEditHexOnly( mEncKeyText, tr("Hex value"));
+    setLineEditHexOnly( mAuthKeyText, tr("Hex value") );
 }
 
 void OperStateDlg::initialize()
@@ -143,7 +143,12 @@ void OperStateDlg::clickSetOperationState()
         return;
     }
 
-    JS_BIN_decodeHex( strOperState.toStdString().c_str(), &binOperState );
+    ret = getBINFromString( &binOperState, DATA_HEX, strOperState );
+    if( ret < 0 )
+    {
+        manApplet->formatWarn( ret, this );
+        return;
+    }
 
     ret = manApplet->cryptokiAPI()->SetOperationState( hSession, binOperState.pVal, binOperState.nLen, hEncKey, hAuthKey );
 

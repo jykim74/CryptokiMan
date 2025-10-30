@@ -168,12 +168,15 @@ void CreateDataDlg::accept()
     BIN binData = {0,0};
     QString strData = mDataText->toPlainText();
 
-    if( mDataCombo->currentIndex() == 0 )
-        JS_BIN_set( &binData, (unsigned char *)strData.toStdString().c_str(), strData.length() );
-    else if( mDataCombo->currentIndex() == 1 )
-        JS_BIN_decodeHex( strData.toStdString().c_str(), &binData );
-    else if( mDataCombo->currentIndex() == 2 )
-        JS_BIN_decodeBase64( strData.toStdString().c_str(), &binData );
+    rv = getBINFromString( &binData, mDataCombo->currentText(), strData );
+    if( rv < 0 )
+    {
+        JS_BIN_reset( &binOID );
+        JS_BIN_reset( &binApplication );
+        JS_BIN_reset( &binLabel );
+        manApplet->formatWarn( rv, this );
+        return;
+    }
 
     sTemplate[uCount].type = CKA_VALUE;
     sTemplate[uCount].pValue = binData.pVal;

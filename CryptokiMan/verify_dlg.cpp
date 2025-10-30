@@ -90,6 +90,7 @@ void VerifyDlg::initUI()
 
     mRunThreadCheck->setChecked(true);
 
+    setLineEditHexOnly( mParamText, tr("Hex value" ));
     mSignText->setPlaceholderText( tr( "Hex value" ) );
 
     connect( mKeyTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(keyTypeChanged(int)));
@@ -399,15 +400,20 @@ void VerifyDlg::clickFinal()
     int rv = -1;
 
     QString strSign = mSignText->toPlainText();
-/*
     if( strSign.isEmpty() )
     {
-        manApplet->warningBox( tr( "Enter signature."), this );
+        manApplet->warningBox( tr( "Enter signature"), this );
+        mSignText->setFocus();
         return;
     }
-*/
+
     BIN binSign = {0,0};
-    JS_BIN_decodeHex( strSign.toStdString().c_str(), &binSign );
+    rv = getBINFromString( &binSign, DATA_HEX, strSign );
+    if( rv < 0 )
+    {
+        manApplet->formatWarn( rv, this );
+        return;
+    }
 
     rv = manApplet->cryptokiAPI()->VerifyFinal( slot_info_.getSessionHandle(), binSign.pVal, binSign.nLen );
     setStatusFinal( rv );
@@ -475,7 +481,6 @@ void VerifyDlg::runDataVerify()
 
     BIN binInput = {0,0};
     QString strType = mInputTypeCombo->currentText();
-
     rv = getBINFromString( &binInput, strType, strInput );
     if( rv < 0 )
     {
@@ -484,7 +489,13 @@ void VerifyDlg::runDataVerify()
     }
 
     BIN binSign = {0,0};
-    JS_BIN_decodeHex( strSign.toStdString().c_str(), &binSign );
+    rv = getBINFromString( &binSign, DATA_HEX, strSign );
+    if( rv < 0 )
+    {
+        JS_BIN_reset( &binInput );
+        manApplet->formatWarn( rv, this );
+        return;
+    }
 
     rv = manApplet->cryptokiAPI()->Verify( slot_info_.getSessionHandle(), binInput.pVal, binInput.nLen, binSign.pVal, binSign.nLen );
     setStatusVerify( rv );

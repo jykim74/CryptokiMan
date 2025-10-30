@@ -142,6 +142,8 @@ void DigestDlg::initialize()
     mInitAutoCheck->setChecked(true);
     mInputTab->setCurrentIndex(0);
     status_type_ = STATUS_NONE;
+    mOutputText->setPlaceholderText( tr("Hex value" ));
+    setLineEditHexOnly( mParamText, tr("Hex value" ));
 
     clearStatusLabel();
 
@@ -311,12 +313,12 @@ void DigestDlg::clickUpdate()
     }
 
     BIN binInput = {0,0};
-    if( mInputCombo->currentIndex() == 0 )
-        JS_BIN_set( &binInput, (unsigned char *)strInput.toStdString().c_str(), strInput.length() );
-    else if( mInputCombo->currentIndex() == 1 )
-        JS_BIN_decodeHex( strInput.toStdString().c_str(), &binInput );
-    else if( mInputCombo->currentIndex() == 2 )
-        JS_BIN_decodeBase64( strInput.toStdString().c_str(), &binInput );
+    rv = getBINFromString( &binInput, mInputCombo->currentText(), strInput );
+    if( rv < 0 )
+    {
+        manApplet->formatWarn( rv, this );
+        return;
+    }
 
     rv = manApplet->cryptokiAPI()->DigestUpdate( slot_info_.getSessionHandle(), binInput.pVal, binInput.nLen );
 

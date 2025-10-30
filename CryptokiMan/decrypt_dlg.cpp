@@ -94,6 +94,9 @@ void DecryptDlg::initUI()
 
     mRunThreadCheck->setChecked(true);
 
+    setLineEditHexOnly( mOAEPSourceText, tr("Hex value") );
+    setLineEditHexOnly( mParamText, tr("Hex value"));
+
     connect( mKeyTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(keyTypeChanged(int)));
 
     connect( mInitBtn, SIGNAL(clicked()), this, SLOT(clickInit()));

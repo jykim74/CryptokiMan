@@ -68,9 +68,11 @@ void CreateRSAPubKeyDlg::setSlotIndex(int index)
 void CreateRSAPubKeyDlg::initialize()
 {
     mLabelText->setPlaceholderText( tr("String value" ));
-    mIDText->setPlaceholderText( tr("Hex value" ));
-    mModulesText->setPlaceholderText( tr("Hex value" ));
-    mExponentText->setPlaceholderText( tr("Hex value" ));
+    mSubjectText->setPlaceholderText( tr("DN value"));
+
+    setLineEditHexOnly( mIDText, tr("Hex value"));
+    setLineEditHexOnly( mModulesText, tr("Hex value"));
+    setLineEditHexOnly( mExponentText, tr("Hex value"));
 }
 
 void CreateRSAPubKeyDlg::initAttributes()

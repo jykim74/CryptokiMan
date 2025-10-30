@@ -79,9 +79,11 @@ void CreateECPubKeyDlg::initialize()
     setWindowTitle( strTitle );
 
     mLabelText->setPlaceholderText( tr("String value" ));
-    mIDText->setPlaceholderText( tr("Hex value" ));
-    mECParamsText->setPlaceholderText( tr("Hex value" ));
-    mECPointsText->setPlaceholderText( tr("Hex value" ));
+    mSubjectText->setPlaceholderText( tr("DN value"));
+
+    setLineEditHexOnly(mIDText, tr("Hex value"));
+    setLineEditHexOnly( mECParamsText, tr("Hex value" ));
+    setLineEditHexOnly( mECPointsText, tr("Hex value" ));
 }
 
 void CreateECPubKeyDlg::initAttributes()

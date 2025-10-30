@@ -97,8 +97,7 @@ void GenKeyDlg::initUI()
     mMechCombo->addItems(sMechGenList);
 
     mLabelText->setPlaceholderText( tr("String value" ));
-    mIDText->setPlaceholderText( tr("Hex value" ));
-    mParamText->setPlaceholderText( tr("Hex value" ));
+    setLineEditHexOnly( mIDText, tr("Hex value") );
 }
 
 void GenKeyDlg::initialize()
@@ -227,13 +226,13 @@ void GenKeyDlg::accept()
 
     QString strParam = mParamText->toPlainText();
     if( !strParam.isEmpty() )
-    {
-        if( mParamCombo->currentIndex() == 0 )
-            JS_BIN_set( &binParam, (unsigned char *)strParam.toStdString().c_str(), strParam.length() );
-        else if( mParamCombo->currentIndex() == 1 )
-            JS_BIN_decodeHex( strParam.toStdString().c_str(), &binParam );
-        else if( mParamCombo->currentIndex() == 2 )
-            JS_BIN_decodeBase64( strParam.toStdString().c_str(), &binParam );
+    {   
+        rv = getBINFromString( &binParam, mParamCombo->currentText(), strParam );
+        if( rv < 0 )
+        {
+            manApplet->formatWarn( rv, this );
+            return;
+        }
 
         sMech.pParameter = binParam.pVal;
         sMech.ulParameterLen = binParam.nLen;
