@@ -29,9 +29,14 @@ public:
     const QString getCSRHex();
 
 private slots:
+    void slotTableMenuRequested( QPoint pos );
+
     void clickOK();
     void clickClear();
     void changeDN();
+
+    void clickRDNAdd();
+    void deleteRDN();
 
     void viewPriObject();
     void viewPubObject();

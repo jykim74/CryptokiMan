@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>477</width>
-    <height>491</height>
+    <width>518</width>
+    <height>568</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -417,67 +417,55 @@
    </item>
    <item>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="4" column="1">
-      <widget class="QLineEdit" name="mOUText"/>
-     </item>
-     <item row="6" column="0">
-      <widget class="QLabel" name="label_7">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_16">
        <property name="text">
-        <string>State/Province (ST)</string>
+        <string>ChallengePassword</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
-      <widget class="QLineEdit" name="mOText"/>
+     <item row="0" column="3">
+      <widget class="QLabel" name="label_17">
+       <property name="text">
+        <string>UnstructuredName</string>
+       </property>
+      </widget>
      </item>
-     <item row="5" column="0">
+     <item row="0" column="4">
+      <widget class="QLineEdit" name="mUnstructuredText"/>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="mChallengeText"/>
+     </item>
+     <item row="0" column="2">
+      <widget class="Line" name="line_9">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="Line" name="line_10">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="gridLayout_8">
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="mCText"/>
+     </item>
+     <item row="2" column="0">
       <widget class="QLabel" name="label_6">
        <property name="text">
         <string>Locality (L)</string>
        </property>
       </widget>
      </item>
-     <item row="5" column="1">
-      <widget class="QLineEdit" name="mLText"/>
-     </item>
-     <item row="6" column="1">
-      <widget class="QLineEdit" name="mSTText"/>
-     </item>
-     <item row="7" column="0">
-      <widget class="QLabel" name="label_8">
-       <property name="text">
-        <string>Country or Region (C)</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>Organization (O)</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>Email (EMAILADDRESS)</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="label_5">
-       <property name="text">
-        <string>Organization Unit (OU)</string>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="1">
-      <widget class="QLineEdit" name="mCText"/>
-     </item>
-     <item row="1" column="1">
-      <widget class="QLineEdit" name="mEMAILADDRESSText"/>
-     </item>
-     <item row="2" column="0">
+     <item row="0" column="3">
       <widget class="QLabel" name="label_2">
        <property name="text">
         <string>Common Name (CN)</string>
@@ -485,16 +473,121 @@
       </widget>
      </item>
      <item row="2" column="1">
+      <widget class="QLineEdit" name="mLText"/>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_8">
+       <property name="text">
+        <string>Country or Region (C)</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="4">
       <widget class="QLineEdit" name="mCNText">
        <property name="minimumSize">
         <size>
-         <width>300</width>
+         <width>0</width>
          <height>0</height>
         </size>
        </property>
       </widget>
      </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="mOUText"/>
+     </item>
+     <item row="2" column="4">
+      <widget class="QLineEdit" name="mSTText"/>
+     </item>
+     <item row="2" column="3">
+      <widget class="QLabel" name="label_7">
+       <property name="text">
+        <string>State/Province (ST)</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Email (EMAILADDRESS)</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="mEMAILADDRESSText"/>
+     </item>
+     <item row="1" column="3">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>Organization (O)</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>Organization Unit (OU)</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="4">
+      <widget class="QLineEdit" name="mOText"/>
+     </item>
+     <item row="0" column="2">
+      <widget class="Line" name="line_6">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="Line" name="line_7">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <widget class="Line" name="line_8">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
     </layout>
+   </item>
+   <item>
+    <widget class="Line" name="line_11">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="gridLayout_9">
+     <item row="0" column="0">
+      <widget class="QComboBox" name="mRDNNameCombo"/>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="mRDNValueText"/>
+     </item>
+     <item row="0" column="2">
+      <widget class="QPushButton" name="mRDNAddBtn">
+       <property name="text">
+        <string>Add</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QTableWidget" name="mRDNTable">
+     <property name="contextMenuPolicy">
+      <enum>Qt::CustomContextMenu</enum>
+     </property>
+     <attribute name="horizontalHeaderHighlightSections">
+      <bool>false</bool>
+     </attribute>
+    </widget>
    </item>
    <item>
     <widget class="Line" name="line_3">
@@ -505,6 +598,12 @@
    </item>
    <item>
     <widget class="QLineEdit" name="mDNText">
+     <property name="minimumSize">
+      <size>
+       <width>500</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="palette">
       <palette>
        <active>
@@ -622,13 +721,6 @@
   <tabstop>mPubLabelCombo</tabstop>
   <tabstop>mPubObjectText</tabstop>
   <tabstop>mPubViewBtn</tabstop>
-  <tabstop>mEMAILADDRESSText</tabstop>
-  <tabstop>mCNText</tabstop>
-  <tabstop>mOText</tabstop>
-  <tabstop>mOUText</tabstop>
-  <tabstop>mLText</tabstop>
-  <tabstop>mSTText</tabstop>
-  <tabstop>mCText</tabstop>
   <tabstop>mDNText</tabstop>
   <tabstop>mSignHashCombo</tabstop>
   <tabstop>mClearBtn</tabstop>

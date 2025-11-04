@@ -4730,112 +4730,112 @@ Do you want to delete the file and continue?</source>
         <translation>보기</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="215"/>
+        <location filename="../export_dlg.cpp" line="222"/>
         <source>That file name already exists. Do you want to overwrite it?</source>
         <translation>이 파일명의 파일이 이미 존재합니다. 덮어 쓰겠습니까?</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="274"/>
+        <location filename="../export_dlg.cpp" line="281"/>
         <source>fail to export: %1</source>
         <translation>내보내기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="317"/>
+        <location filename="../export_dlg.cpp" line="324"/>
         <source>This data is not supported.</source>
         <translation>지원하지 않는 데이타 입니다</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="328"/>
+        <location filename="../export_dlg.cpp" line="335"/>
         <source>Private Key Export</source>
         <translation>개인키 내보내기</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="347"/>
+        <location filename="../export_dlg.cpp" line="354"/>
         <source>Public Key Export</source>
         <translation>공개키 내보내기</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="360"/>
+        <location filename="../export_dlg.cpp" line="367"/>
         <source>Certificate Export</source>
         <translation>인증서 내보내기</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="375"/>
+        <location filename="../export_dlg.cpp" line="382"/>
         <source>CRL Export</source>
         <translation>CRL 내보내기</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="388"/>
+        <location filename="../export_dlg.cpp" line="395"/>
         <source>CSR Export</source>
         <translation>CSR 내보내기</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="403"/>
+        <location filename="../export_dlg.cpp" line="410"/>
         <source>DH Parameter Export</source>
         <translation>DH 파라미터 내보내기</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="415"/>
+        <location filename="../export_dlg.cpp" line="422"/>
         <source>Certificate and Private Key Export</source>
         <translation>인증서와 개인키 내보내기</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="470"/>
+        <location filename="../export_dlg.cpp" line="477"/>
         <source>invalid service: %1</source>
         <translation>유효하지 않는 서비스: %1</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="489"/>
+        <location filename="../export_dlg.cpp" line="496"/>
         <source>Public Key export successfully</source>
         <translation>공개키 내보내기 성공하였습니다.</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="523"/>
+        <location filename="../export_dlg.cpp" line="530"/>
         <source>Private Key export successfully</source>
         <translation>개인키 내보내기 성공하였습니다.</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="560"/>
+        <location filename="../export_dlg.cpp" line="567"/>
         <source>Certificate export successfully</source>
         <translation>인증서 내보내기 성공하였습니다.</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="588"/>
+        <location filename="../export_dlg.cpp" line="595"/>
         <source>CRL export successfully</source>
         <translation>CRL 내보내기 성공하였습니다.</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="616"/>
+        <location filename="../export_dlg.cpp" line="623"/>
         <source>CSR export successfully</source>
         <translation>CSR 내보내기 성공하였습니다.</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="645"/>
+        <location filename="../export_dlg.cpp" line="652"/>
         <source>fail to encrypt PFX: %1</source>
         <translation>PFX 암호화 실패: %1</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="652"/>
+        <location filename="../export_dlg.cpp" line="659"/>
         <source>PFX export successfully</source>
         <translation>PFX 내보내기 성공하였습니다.</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="684"/>
+        <location filename="../export_dlg.cpp" line="691"/>
         <source>fail to encrypt private key: %1</source>
         <translation>개인키 암호화 실패: %1</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="695"/>
+        <location filename="../export_dlg.cpp" line="702"/>
         <source>Encrypted privateKey export successfully</source>
         <translation>암호화 개인키 내보내기 성공하였습니다.</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="731"/>
+        <location filename="../export_dlg.cpp" line="738"/>
         <source>PKCS8 Info export successfully</source>
         <translation>PKCS8 개인키 정보 내보내기 성공하였습니다.</translation>
     </message>
     <message>
-        <location filename="../export_dlg.cpp" line="761"/>
+        <location filename="../export_dlg.cpp" line="768"/>
         <source>DH Parameter export successfully</source>
         <translation>DH 파라미터 내보내기 성공하였습니다.</translation>
     </message>
@@ -8912,83 +8912,123 @@ Do you want to delete the file and continue?</source>
         <translation>보기</translation>
     </message>
     <message>
-        <location filename="../make_csr_dlg.ui" line="470"/>
+        <location filename="../make_csr_dlg.ui" line="423"/>
+        <source>ChallengePassword</source>
+        <translation>도전 암호</translation>
+    </message>
+    <message>
+        <location filename="../make_csr_dlg.ui" line="430"/>
+        <source>UnstructuredName</source>
+        <translation>구조화 안된 이름</translation>
+    </message>
+    <message>
+        <location filename="../make_csr_dlg.ui" line="528"/>
         <source>Organization Unit (OU)</source>
         <translation>Organization Unit (OU)</translation>
     </message>
     <message>
-        <location filename="../make_csr_dlg.ui" line="436"/>
+        <location filename="../make_csr_dlg.ui" line="464"/>
         <source>Locality (L)</source>
         <translation>Locality (L)</translation>
     </message>
     <message>
-        <location filename="../make_csr_dlg.ui" line="463"/>
+        <location filename="../make_csr_dlg.ui" line="511"/>
         <source>Email (EMAILADDRESS)</source>
         <translation>Email (EMAILADDRESS)</translation>
     </message>
     <message>
-        <location filename="../make_csr_dlg.ui" line="449"/>
+        <location filename="../make_csr_dlg.ui" line="481"/>
         <source>Country or Region (C)</source>
         <translation>Country or Region (C)</translation>
     </message>
     <message>
-        <location filename="../make_csr_dlg.ui" line="456"/>
+        <location filename="../make_csr_dlg.ui" line="521"/>
         <source>Organization (O)</source>
         <translation>Organization (O)</translation>
     </message>
     <message>
-        <location filename="../make_csr_dlg.ui" line="483"/>
+        <location filename="../make_csr_dlg.ui" line="471"/>
         <source>Common Name (CN)</source>
         <translation>Common Name (CN)</translation>
     </message>
     <message>
-        <location filename="../make_csr_dlg.ui" line="426"/>
+        <location filename="../make_csr_dlg.ui" line="504"/>
         <source>State/Province (ST)</source>
         <translation>State/Province (ST)</translation>
     </message>
     <message>
-        <location filename="../make_csr_dlg.ui" line="545"/>
+        <location filename="../make_csr_dlg.ui" line="576"/>
+        <source>Add</source>
+        <translation>추가</translation>
+    </message>
+    <message>
+        <location filename="../make_csr_dlg.ui" line="644"/>
         <source>Signature Hash</source>
         <translation>서명 해시</translation>
     </message>
     <message>
-        <location filename="../make_csr_dlg.ui" line="579"/>
+        <location filename="../make_csr_dlg.ui" line="678"/>
         <source>Cancel</source>
         <translation>취소</translation>
     </message>
     <message>
-        <location filename="../make_csr_dlg.ui" line="586"/>
+        <location filename="../make_csr_dlg.ui" line="685"/>
         <source>OK</source>
         <translation>확인</translation>
     </message>
     <message>
-        <location filename="../make_csr_dlg.ui" line="593"/>
+        <location filename="../make_csr_dlg.ui" line="692"/>
         <source>Clear</source>
         <translation>지우기</translation>
     </message>
     <message>
-        <location filename="../make_csr_dlg.cpp" line="210"/>
-        <location filename="../make_csr_dlg.cpp" line="226"/>
+        <location filename="../make_csr_dlg.cpp" line="127"/>
+        <source>Name</source>
+        <translation>이름</translation>
+    </message>
+    <message>
+        <location filename="../make_csr_dlg.cpp" line="127"/>
+        <source>Value</source>
+        <translation>값</translation>
+    </message>
+    <message>
+        <location filename="../make_csr_dlg.cpp" line="340"/>
+        <source>Enter a name</source>
+        <translation>이릅을 입력하세요</translation>
+    </message>
+    <message>
+        <location filename="../make_csr_dlg.cpp" line="347"/>
+        <source>Enter a value</source>
+        <translation>값을 입력하세요</translation>
+    </message>
+    <message>
+        <location filename="../make_csr_dlg.cpp" line="379"/>
+        <location filename="../make_csr_dlg.cpp" line="395"/>
         <source>There is no object</source>
         <translation>객체가 없습니다</translation>
     </message>
     <message>
-        <location filename="../make_csr_dlg.cpp" line="271"/>
+        <location filename="../make_csr_dlg.cpp" line="430"/>
+        <source>Delete</source>
+        <translation>삭제</translation>
+    </message>
+    <message>
+        <location filename="../make_csr_dlg.cpp" line="453"/>
         <source>Insert DN</source>
         <translation>DN 입력하세요</translation>
     </message>
     <message>
-        <location filename="../make_csr_dlg.cpp" line="279"/>
+        <location filename="../make_csr_dlg.cpp" line="461"/>
         <source>fail to get public key: %1</source>
         <translation>공개키 가져오기 실패: %1</translation>
     </message>
     <message>
-        <location filename="../make_csr_dlg.cpp" line="304"/>
+        <location filename="../make_csr_dlg.cpp" line="486"/>
         <source>fail to verify CSR: %1</source>
         <translation>CSR 검증 실패: %1</translation>
     </message>
     <message>
-        <location filename="../make_csr_dlg.cpp" line="312"/>
+        <location filename="../make_csr_dlg.cpp" line="494"/>
         <source>fail to make CSR: %1</source>
         <translation>CSR 만들기 실패: %1</translation>
     </message>
@@ -11731,7 +11771,7 @@ Do you want to delete the file and continue?</source>
     <message>
         <location filename="../verify_dlg.cpp" line="405"/>
         <source>Enter signature</source>
-        <translation type="unfinished"></translation>
+        <translation>서명값을 입력하세요</translation>
     </message>
     <message>
         <location filename="../verify_dlg.cpp" line="424"/>
