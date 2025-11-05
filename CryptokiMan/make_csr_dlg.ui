@@ -461,14 +461,20 @@
      <item row="2" column="0">
       <widget class="QLabel" name="label_6">
        <property name="text">
-        <string>Locality (L)</string>
+        <string>L</string>
        </property>
       </widget>
      </item>
      <item row="0" column="3">
       <widget class="QLabel" name="label_2">
+       <property name="minimumSize">
+        <size>
+         <width>60</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="text">
-        <string>Common Name (CN)</string>
+        <string>CN</string>
        </property>
       </widget>
      </item>
@@ -478,7 +484,7 @@
      <item row="3" column="0">
       <widget class="QLabel" name="label_8">
        <property name="text">
-        <string>Country or Region (C)</string>
+        <string>C</string>
        </property>
       </widget>
      </item>
@@ -501,14 +507,14 @@
      <item row="2" column="3">
       <widget class="QLabel" name="label_7">
        <property name="text">
-        <string>State/Province (ST)</string>
+        <string>ST</string>
        </property>
       </widget>
      </item>
      <item row="0" column="0">
       <widget class="QLabel" name="label_3">
        <property name="text">
-        <string>Email (EMAILADDRESS)</string>
+        <string>emailAddress</string>
        </property>
       </widget>
      </item>
@@ -518,36 +524,22 @@
      <item row="1" column="3">
       <widget class="QLabel" name="label_4">
        <property name="text">
-        <string>Organization (O)</string>
+        <string>O</string>
        </property>
       </widget>
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="label_5">
        <property name="text">
-        <string>Organization Unit (OU)</string>
+        <string>OU</string>
        </property>
       </widget>
      </item>
      <item row="1" column="4">
       <widget class="QLineEdit" name="mOText"/>
      </item>
-     <item row="0" column="2">
+     <item row="0" column="2" rowspan="4">
       <widget class="Line" name="line_6">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="2">
-      <widget class="Line" name="line_7">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="2">
-      <widget class="Line" name="line_8">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
