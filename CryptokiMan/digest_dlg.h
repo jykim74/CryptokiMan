@@ -28,9 +28,13 @@ public:
     int getSlotIndex() { return slot_index_; };
 
 private slots:
-    void changeMech( int index );
+    void dragEnterEvent(QDragEnterEvent *event);
+    void dropEvent(QDropEvent *event);
 
+    void changeMech( int index );
     void changeParam( const QString text );
+
+    void clickReset();
 
     void clickSelectKey();
     void clickDigestKey();
@@ -65,6 +69,7 @@ private:
     void initUI();
 
     long getSessionHandle();
+    void setSrcFileInfo( const QString strFile );
 
     DigestThread* thread_;
     int update_cnt_;

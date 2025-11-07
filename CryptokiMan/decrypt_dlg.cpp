@@ -7,6 +7,10 @@
 #include <QDateTime>
 #include <QFileDialog>
 
+#include <QDragEnterEvent>
+#include <QDropEvent>
+#include <QMimeData>
+
 #include "decrypt_dlg.h"
 #include "man_applet.h"
 #include "mainwindow.h"
@@ -35,6 +39,7 @@ DecryptDlg::DecryptDlg(QWidget *parent) :
     thread_ = NULL;
 
     setupUi(this);
+    setAcceptDrops( true );
     initUI();
 
     mDecryptBtn->setDefault(true);
@@ -60,6 +65,30 @@ DecryptDlg::~DecryptDlg()
 
     if( status_type_ == STATUS_INIT || status_type_ == STATUS_UPDATE )
         clickFinal();
+}
+
+void DecryptDlg::dragEnterEvent(QDragEnterEvent *event)
+{
+    if (event->mimeData()->hasUrls() || event->mimeData()->hasText()) {
+        event->acceptProposedAction();  // 드랍 허용
+    }
+}
+
+void DecryptDlg::dropEvent(QDropEvent *event)
+{
+    if (event->mimeData()->hasUrls()) {
+        QList<QUrl> urls = event->mimeData()->urls();
+
+        for (const QUrl &url : urls)
+        {
+            manApplet->log( QString( "url: %1").arg( url.toLocalFile() ));
+            mInputTab->setCurrentIndex(1);
+            setSrcFileInfo( url.toLocalFile() );
+            break;
+        }
+    } else if (event->mimeData()->hasText()) {
+
+    }
 }
 
 void DecryptDlg::initUI()
@@ -99,6 +128,7 @@ void DecryptDlg::initUI()
 
     connect( mKeyTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(keyTypeChanged(int)));
 
+    connect( mResetBtn, SIGNAL(clicked(bool)), this, SLOT(clickReset()));
     connect( mInitBtn, SIGNAL(clicked()), this, SLOT(clickInit()));
     connect( mUpdateBtn, SIGNAL(clicked()), this, SLOT(clickUpdate()));
     connect( mFinalBtn, SIGNAL(clicked()), this, SLOT(clickFinal()));
@@ -396,11 +426,37 @@ void DecryptDlg::initialize()
     if( manApplet->isLicense() == false ) mInputTab->setTabEnabled( 1, false );
 }
 
+void DecryptDlg::setSrcFileInfo( const QString strFile )
+{
+    if( strFile.length() > 0 )
+    {
+        QFileInfo fileInfo;
+        fileInfo.setFile( strFile );
+        QString strMode;
+
+        qint64 fileSize = fileInfo.size();
+        QDateTime cTime = fileInfo.lastModified();
+
+        QString strInfo = QString("LastModified Time: %1").arg( cTime.toString( "yyyy-MM-dd HH:mm:ss" ));
+
+        mSrcFileText->setText( strFile );
+        mSrcFileSizeText->setText( QString("%1").arg( fileSize ));
+        mSrcFileInfoText->setText( strInfo );
+        mDecProgBar->setValue(0);
+
+        mFileReadSizeText->clear();
+        mFileTotalSizeText->clear();
+        mDstFileInfoText->clear();
+        mDstFileSizeText->clear();
+    }
+}
+
 void DecryptDlg::clearStatusLabel()
 {
-    mInitLabel->clear();
-    mUpdateLabel->clear();
-    mFinalLabel->clear();
+    mStatusLabel->setText( "Status" );
+    mInitText->clear();
+    mUpdateText->clear();
+    mFinalText->clear();
 }
 
 void DecryptDlg::setStatusInit( int rv )
@@ -408,33 +464,55 @@ void DecryptDlg::setStatusInit( int rv )
     clearStatusLabel();
 
     if( rv == CKR_OK )
-        mInitLabel->setText( "Init OK" );
+    {
+        mStatusLabel->setText( "Init OK" );
+        mInitText->setText( "OK" );
+    }
     else
-        mInitLabel->setText( QString( "Init Fail:%1" ).arg( rv ) );
+    {
+        mStatusLabel->setText( QString( "%1" ).arg( P11ERR(rv) ) );
+        mInitText->setText( QString("%1").arg(rv));
+    }
 }
 
 void DecryptDlg::setStatusUpdate( int rv, int count )
 {
     if( rv == CKR_OK )
-        mUpdateLabel->setText( QString( "|Update X %1" ).arg( count ) );
+    {
+        mStatusLabel->setText( "Update OK" );
+        mUpdateText->setText( QString("%1").arg(count));
+    }
     else
-        mUpdateLabel->setText( QString( "|Update Fail:%1").arg( rv ));
+    {
+        mStatusLabel->setText( QString( "%1" ).arg( P11ERR(rv) ) );
+        mUpdateText->setText( QString("%1").arg(rv));
+    }
 }
 
 void DecryptDlg::setStatusFinal( int rv )
 {
     if( rv == CKR_OK )
-        mFinalLabel->setText( QString( "|Final OK" ) );
+    {
+        mStatusLabel->setText( "Final OK" );
+        mFinalText->setText( QString( "OK" ) );
+    }
     else
-        mFinalLabel->setText( QString( "|Final Fail:%1").arg( rv ));
+    {
+        mStatusLabel->setText( QString( "%1" ).arg( P11ERR(rv) ) );
+        mFinalText->setText( QString("%1").arg(rv));
+    }
 }
 
 void DecryptDlg::setStatusDecrypt( int rv )
 {
     if( rv == CKR_OK )
-        mFinalLabel->setText( QString( "|Decrypt OK" ) );
+    {
+        mStatusLabel->setText( QString( "Decrypt OK" ) );
+    }
     else
-        mFinalLabel->setText( QString( "|Decrypt Fail:%1").arg( rv ));
+    {
+        mStatusLabel->setText( QString( "%1").arg( P11ERR(rv) ));
+    }
 }
 
 void DecryptDlg::keyTypeChanged( int index )
@@ -540,6 +618,14 @@ void DecryptDlg::clickFindDstFile()
     QString fileName = manApplet->findSaveFile( this, nType, strPath );
 
     if( fileName.length() > 0 ) mDstFileText->setText( fileName );
+}
+
+void DecryptDlg::clickReset()
+{
+    clearStatusLabel();
+
+    if( status_type_ == STATUS_INIT || status_type_ == STATUS_UPDATE )
+        clickFinal();
 }
 
 int DecryptDlg::clickInit()

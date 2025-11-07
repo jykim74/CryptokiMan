@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>624</width>
-    <height>785</height>
+    <height>809</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -955,7 +955,7 @@
    <item>
     <widget class="QTabWidget" name="mInputTab">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="mDataTab">
       <attribute name="title">
@@ -1071,7 +1071,11 @@
         </layout>
        </item>
        <item>
-        <widget class="QPlainTextEdit" name="mInputText"/>
+        <widget class="QPlainTextEdit" name="mInputText">
+         <property name="acceptDrops">
+          <bool>false</bool>
+         </property>
+        </widget>
        </item>
        <item>
         <layout class="QGridLayout" name="gridLayout_8">
@@ -1688,6 +1692,205 @@
     </widget>
    </item>
    <item>
+    <layout class="QGridLayout" name="gridLayout_19">
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <item row="0" column="7">
+      <widget class="QLineEdit" name="mFinalText">
+       <property name="minimumSize">
+        <size>
+         <width>40</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>40</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="palette">
+        <palette>
+         <active>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </active>
+         <inactive>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </inactive>
+         <disabled/>
+        </palette>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="5">
+      <widget class="QLineEdit" name="mUpdateText">
+       <property name="minimumSize">
+        <size>
+         <width>40</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>40</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="palette">
+        <palette>
+         <active>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </active>
+         <inactive>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </inactive>
+         <disabled/>
+        </palette>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="4">
+      <widget class="QLabel" name="label_28">
+       <property name="text">
+        <string>Update</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="8">
+      <widget class="QPushButton" name="mResetBtn">
+       <property name="text">
+        <string>Reset</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QLineEdit" name="mInitText">
+       <property name="minimumSize">
+        <size>
+         <width>40</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>40</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="palette">
+        <palette>
+         <active>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </active>
+         <inactive>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </inactive>
+         <disabled/>
+        </palette>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="mStatusLabel">
+       <property name="minimumSize">
+        <size>
+         <width>50</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Status</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="6">
+      <widget class="QLabel" name="label_29">
+       <property name="text">
+        <string>Final</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QLabel" name="label_27">
+       <property name="text">
+        <string>Init</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <spacer name="horizontalSpacer_8">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
     <widget class="Line" name="line_8">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -1847,6 +2050,9 @@
        </disabled>
       </palette>
      </property>
+     <property name="acceptDrops">
+      <bool>false</bool>
+     </property>
      <property name="readOnly">
       <bool>true</bool>
      </property>
@@ -1912,14 +2118,14 @@
      <property name="topMargin">
       <number>0</number>
      </property>
-     <item row="0" column="1">
-      <widget class="QLabel" name="mInitLabel">
+     <item row="0" column="2">
+      <widget class="QPushButton" name="mCloseBtn">
        <property name="text">
-        <string>Init</string>
+        <string>Close</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="4">
+     <item row="0" column="1">
       <spacer name="horizontalSpacer_4">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -1931,40 +2137,6 @@
         </size>
        </property>
       </spacer>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="mStatusLabel">
-       <property name="minimumSize">
-        <size>
-         <width>50</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Status</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="5">
-      <widget class="QPushButton" name="mCloseBtn">
-       <property name="text">
-        <string>Close</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="QLabel" name="mUpdateLabel">
-       <property name="text">
-        <string>Update</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="3">
-      <widget class="QLabel" name="mFinalLabel">
-       <property name="text">
-        <string>Final</string>
-       </property>
-      </widget>
      </item>
     </layout>
    </item>
@@ -2011,6 +2183,10 @@
   <tabstop>mFindDstFileBtn</tabstop>
   <tabstop>mDstFileInfoText</tabstop>
   <tabstop>mDstFileSizeText</tabstop>
+  <tabstop>mInitText</tabstop>
+  <tabstop>mUpdateText</tabstop>
+  <tabstop>mFinalText</tabstop>
+  <tabstop>mResetBtn</tabstop>
   <tabstop>mOutputClearBtn</tabstop>
   <tabstop>mOutputLenText</tabstop>
   <tabstop>mOutputText</tabstop>

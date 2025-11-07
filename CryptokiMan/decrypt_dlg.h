@@ -31,8 +31,13 @@ public:
     void changeType( int type );
 
 private slots:
+    void dragEnterEvent(QDragEnterEvent *event);
+    void dropEvent(QDropEvent *event);
+
     void mechChanged( int index );
     void clickObjectView();
+
+    void clickReset();
 
     int clickInit();
     void clickUpdate();
@@ -67,6 +72,8 @@ private slots:
 private:
     void initUI();
     void initialize();
+    void setSrcFileInfo( const QString strFile );
+
     void clearStatusLabel();
     void setStatusInit( int rv );
     void setStatusUpdate( int rv, int count );

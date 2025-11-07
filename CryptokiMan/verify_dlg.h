@@ -31,6 +31,11 @@ public:
     void setObject( int type, long hObj );
 
 private slots:
+    void dragEnterEvent(QDragEnterEvent *event);
+    void dropEvent(QDropEvent *event);
+
+    void clickReset();
+
     int clickInit();
     void clickUpdate();
     void clickFinal();
@@ -63,6 +68,7 @@ private slots:
 private:
     void initUI();
     void initialize();
+    void setSrcFileInfo( const QString strFile );
 
     void clearStatusLabel();
     void setStatusInit( int rv );

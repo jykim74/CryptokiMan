@@ -5,6 +5,9 @@
  */
 #include <QFileInfo>
 #include <QDateTime>
+#include <QDragEnterEvent>
+#include <QDropEvent>
+#include <QMimeData>
 
 #include "digest_dlg.h"
 #include "mainwindow.h"
@@ -26,6 +29,7 @@ DigestDlg::DigestDlg(QWidget *parent) :
     thread_ = NULL;
     update_cnt_ = 0;
     setupUi(this);
+    setAcceptDrops( true );
 
     initUI();
     initialize();
@@ -55,6 +59,30 @@ DigestDlg::~DigestDlg()
         clickFinal();
 }
 
+void DigestDlg::dragEnterEvent(QDragEnterEvent *event)
+{
+    if (event->mimeData()->hasUrls() || event->mimeData()->hasText()) {
+        event->acceptProposedAction();  // 드랍 허용
+    }
+}
+
+void DigestDlg::dropEvent(QDropEvent *event)
+{
+    if (event->mimeData()->hasUrls()) {
+        QList<QUrl> urls = event->mimeData()->urls();
+
+        for (const QUrl &url : urls)
+        {
+            manApplet->log( QString( "url: %1").arg( url.toLocalFile() ));
+            mInputTab->setCurrentIndex(1);
+            setSrcFileInfo( url.toLocalFile() );
+            break;
+        }
+    } else if (event->mimeData()->hasText()) {
+
+    }
+}
+
 void DigestDlg::initUI()
 {
     if( manApplet->settingsMgr()->useDeviceMech() )
@@ -73,6 +101,7 @@ void DigestDlg::initUI()
 
     connect( mParamText, SIGNAL(textChanged(const QString)), this, SLOT(changeParam(const QString)));
     connect( mMechCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changeMech(int)));
+    connect( mResetBtn, SIGNAL(clicked(bool)), this, SLOT(clickReset()));
 
     connect( mInitBtn, SIGNAL(clicked()), this, SLOT(clickInit()));
     connect( mUpdateBtn, SIGNAL(clicked()), this, SLOT(clickUpdate()));
@@ -107,6 +136,28 @@ long DigestDlg::getSessionHandle()
     return hSession;
 }
 
+void DigestDlg::setSrcFileInfo( const QString strFile )
+{
+    if( strFile.length() > 0 )
+    {
+        QFileInfo fileInfo;
+        fileInfo.setFile( strFile );
+
+        qint64 fileSize = fileInfo.size();
+        QDateTime cTime = fileInfo.lastModified();
+
+        QString strInfo = QString("LastModified Time: %1").arg( cTime.toString( "yyyy-MM-dd HH:mm:ss" ));
+
+        mSrcFileText->setText( strFile );
+        mSrcFileSizeText->setText( QString("%1").arg( fileSize ));
+        mSrcFileInfoText->setText( strInfo );
+        mHashProgBar->setValue(0);
+
+        mFileReadSizeText->clear();
+        mFileTotalSizeText->clear();
+    }
+}
+
 void DigestDlg::changeMech( int index )
 {
     QString strMech = mMechCombo->currentText();
@@ -118,6 +169,14 @@ void DigestDlg::changeParam( const QString text )
 {
     QString strLen = getDataLenString( DATA_HEX, mParamText->text() );
     mParamLenText->setText( QString("%1").arg( strLen ));
+}
+
+void DigestDlg::clickReset()
+{
+    clearStatusLabel();
+
+    if( status_type_ == STATUS_INIT || status_type_ == STATUS_UPDATE )
+        clickFinal();
 }
 
 void DigestDlg::setSlotIndex(int index)
@@ -154,9 +213,10 @@ void DigestDlg::initialize()
 
 void DigestDlg::clearStatusLabel()
 {
-    mInitLabel->clear();
-    mUpdateLabel->clear();
-    mFinalLabel->clear();
+    mStatusLabel->setText( "Status" );
+    mInitText->clear();
+    mUpdateText->clear();
+    mFinalText->clear();
 }
 
 void DigestDlg::setStatusInit( int rv )
@@ -164,33 +224,55 @@ void DigestDlg::setStatusInit( int rv )
     clearStatusLabel();
 
     if( rv == CKR_OK )
-        mInitLabel->setText( "Init OK" );
+    {
+        mStatusLabel->setText( "Init OK" );
+        mInitText->setText( "OK" );
+    }
     else
-        mInitLabel->setText( QString( "Init Fail:%1" ).arg( rv ) );
+    {
+        mStatusLabel->setText( QString( "%1" ).arg( P11ERR(rv) ) );
+        mInitText->setText( QString("%1").arg(rv));
+    }
 }
 
 void DigestDlg::setStatusUpdate( int rv, int count )
 {
     if( rv == CKR_OK )
-        mUpdateLabel->setText( QString( "|Update X %1" ).arg( count ) );
+    {
+        mStatusLabel->setText( "Update OK" );
+        mUpdateText->setText( QString("%1").arg(count));
+    }
     else
-        mUpdateLabel->setText( QString( "|Update Fail:%1").arg( rv ));
+    {
+        mStatusLabel->setText( QString( "%1" ).arg( P11ERR(rv) ) );
+        mUpdateText->setText( QString("%1").arg(rv));
+    }
 }
 
 void DigestDlg::setStatusFinal( int rv )
 {
     if( rv == CKR_OK )
-        mFinalLabel->setText( QString( "|Final OK" ) );
+    {
+        mStatusLabel->setText( "Final OK" );
+        mFinalText->setText( QString( "OK" ) );
+    }
     else
-        mFinalLabel->setText( QString( "|Final Fail:%1").arg( rv ));
+    {
+        mStatusLabel->setText( QString( "%1" ).arg( P11ERR(rv) ) );
+        mFinalText->setText( QString("%1").arg(rv));
+    }
 }
 
 void DigestDlg::setStatusDigest( int rv )
 {
     if( rv == CKR_OK )
-        mFinalLabel->setText( QString( "|Digest OK" ) );
+    {
+        mStatusLabel->setText( QString( "Digest OK" ) );
+    }
     else
-        mFinalLabel->setText( QString( "|Digest Fail:%1").arg( rv ));
+    {
+        mStatusLabel->setText( QString( "%1").arg( P11ERR(rv) ));
+    }
 }
 
 void DigestDlg::clickSelectKey()
