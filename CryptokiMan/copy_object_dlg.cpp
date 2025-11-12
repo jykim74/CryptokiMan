@@ -218,19 +218,23 @@ void CopyObjectDlg::accept()
 
     QString strNewObject = QString("%1").arg( uNewObj );
     QString strSrcType = mSrcTypeCombo->currentText();
+    int nDataType = -1;
 
-    manApplet->messageBox( tr("CopyObject successful [New Object Handle: %1]").arg( strNewObject), this );
 
     if( strSrcType == kCertificate )
-        manApplet->showTypeList( slot_index_, HM_ITEM_TYPE_CERTIFICATE );
+        nDataType = HM_ITEM_TYPE_CERTIFICATE;
     else if( strSrcType == kPublicKey )
-        manApplet->showTypeList( slot_index_, HM_ITEM_TYPE_PUBLICKEY );
+        nDataType = HM_ITEM_TYPE_PUBLICKEY;
     else if( strSrcType == kPrivateKey )
-        manApplet->showTypeList( slot_index_, HM_ITEM_TYPE_PRIVATEKEY );
+        nDataType = HM_ITEM_TYPE_PRIVATEKEY;
     else if( strSrcType == kSecretKey )
-        manApplet->showTypeList( slot_index_, HM_ITEM_TYPE_SECRETKEY );
+        nDataType = HM_ITEM_TYPE_SECRETKEY;
     else if( strSrcType == kData )
-        manApplet->showTypeList( slot_index_, HM_ITEM_TYPE_DATA );
+        nDataType = HM_ITEM_TYPE_DATA;
+
+    manApplet->clickTreeMenu( slot_index_, nDataType );
+    manApplet->messageBox( tr("CopyObject successful [New Object Handle: %1]").arg( strNewObject), this );
+
 
     QDialog::accept();
 }

@@ -2899,6 +2899,20 @@ void MainWindow::infoClear()
     info_text_->clear();
 }
 
+void MainWindow::clickTreeMenu( int nSlotIndex, int nType )
+{
+    ManTreeItem *rootItem = getRootItem();
+    if( rootItem == NULL ) return;
+
+    ManTreeItem* item = left_tree_->getItem( nSlotIndex, nType );
+    if( item )
+    {
+        left_tree_->clicked( item->index() );
+        left_tree_->setCurrentIndex( item->index() );
+        left_tree_->setFocus();
+    }
+}
+
 void MainWindow::showTypeList( int nSlotIndex, int nType )
 {
     left_tree_->showTypeList( nSlotIndex, nType );

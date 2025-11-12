@@ -466,6 +466,7 @@ void DeriveKeyDlg::accept()
 
     QString strHandle = QString("%1").arg( uObj );
 
+    manApplet->clickTreeMenu( slot_index_, HM_ITEM_TYPE_SECRETKEY );
     manApplet->messageBox(tr("DeriveKey execution successful [Handle: %1]").arg(strHandle), this );
     freeMechanism( &sMech );
     QDialog::accept();

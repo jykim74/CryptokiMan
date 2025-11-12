@@ -37,6 +37,7 @@ public:
     CryptokiAPI* cryptokiAPI() { return cryptoki_api_; };
     QString cmd() { return cmd_; };
 
+    void clickTreeMenu( int nSlotIndex, int nType );
     void showTypeList( int nSlotIndex, int nType );
     int currentSlotIdx();
 

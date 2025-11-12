@@ -400,8 +400,9 @@ void CreateECPubKeyDlg::accept()
         return;
     }
 
+    manApplet->clickTreeMenu( slot_index_, HM_ITEM_TYPE_PUBLICKEY );
     manApplet->messageBox( tr("EC public key creation successful [Handle: %1]").arg( hObject ), this );
-    manApplet->showTypeList( slot_index_, HM_ITEM_TYPE_PUBLICKEY );
+//    manApplet->showTypeList( slot_index_, HM_ITEM_TYPE_PUBLICKEY );
 
     QDialog::accept();
 }

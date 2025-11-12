@@ -136,7 +136,8 @@ void DelObjectDlg::deleteObj()
         nDataType = HM_ITEM_TYPE_DATA;
     }
 
-    manApplet->showTypeList( slot_index_, nDataType );
+//    manApplet->showTypeList( slot_index_, nDataType );
+    manApplet->clickTreeMenu( slot_index_, nDataType );
     QDialog::accept();
 }
 

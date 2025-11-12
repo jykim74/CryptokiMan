@@ -543,6 +543,11 @@ void UnwrapKeyDlg::accept()
 
     QString strObject = QString("%1").arg( uObj );
 
+    if( objClass == CKO_SECRET_KEY )
+        manApplet->clickTreeMenu( slot_index_, HM_ITEM_TYPE_SECRETKEY );
+    else if( objClass == CKO_PRIVATE_KEY )
+        manApplet->clickTreeMenu( slot_index_, HM_ITEM_TYPE_PRIVATEKEY );
+
     manApplet->messageBox( tr( "UnwrapKey execution successful [Object Handle: %1]" ).arg( strObject), this );
     QDialog::accept();
 }

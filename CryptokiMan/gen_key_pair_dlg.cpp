@@ -848,8 +848,9 @@ void GenKeyPairDlg::accept()
         }
     }
 
+    manApplet->clickTreeMenu( slot_index_, HM_ITEM_TYPE_PRIVATEKEY );
     manApplet->messageBox( tr("GenerateKeyPair execution successful"), this );
-    manApplet->showTypeList( slot_index_, HM_ITEM_TYPE_PRIVATEKEY );
+//    manApplet->showTypeList( slot_index_, HM_ITEM_TYPE_PRIVATEKEY );
 
     QDialog::accept();
 }

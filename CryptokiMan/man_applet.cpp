@@ -221,6 +221,11 @@ end :
     return is_license_;
 }
 
+void ManApplet::clickTreeMenu( int nSlotIndex, int nType )
+{
+    main_win_->clickTreeMenu( nSlotIndex, nType );
+}
+
 void ManApplet::showTypeList( int nSlotIndex, int nType )
 {
     main_win_->showTypeList( nSlotIndex, nType );

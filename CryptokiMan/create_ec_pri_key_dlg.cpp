@@ -433,8 +433,9 @@ void CreateECPriKeyDlg::accept()
         return;
     }
 
+    manApplet->clickTreeMenu( slot_index_, HM_ITEM_TYPE_PRIVATEKEY );
     manApplet->messageBox( tr("EC private key creation successful [Handle: %1]").arg( hObject ), this );
-    manApplet->showTypeList( slot_index_, HM_ITEM_TYPE_PRIVATEKEY );
+//    manApplet->showTypeList( slot_index_, HM_ITEM_TYPE_PRIVATEKEY );
 
     QDialog::accept();
 }

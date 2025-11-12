@@ -57,6 +57,7 @@ public:
     void dlog( const QString strLog );
     void write( const QString strLog, QColor cr = QColor(0x00, 0x00, 0x00) );
 
+    void clickTreeMenu( int nSlotIndex, int nType );
     void showTypeList( int nSlotIndex, int nType );
 
     void showGetInfoList();

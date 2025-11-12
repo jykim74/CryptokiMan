@@ -427,8 +427,9 @@ void CreateKeyDlg::accept()
         return;
     }
 
+    manApplet->clickTreeMenu( slot_index_, HM_ITEM_TYPE_SECRETKEY );
     manApplet->messageBox( tr("Secret key creation successful"), this );
-    manApplet->showTypeList( slot_index_, HM_ITEM_TYPE_SECRETKEY );
+//    manApplet->showTypeList( slot_index_, HM_ITEM_TYPE_SECRETKEY );
 
     QDialog::accept();
 }

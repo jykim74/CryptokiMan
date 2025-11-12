@@ -39,7 +39,10 @@ ManTreeView::ManTreeView( QWidget *parent )
 
 void ManTreeView::onItemClicked( const QModelIndex& index )
 {
-    ManTreeItem *item = currentItem();
+    ManTreeModel *tree_model = (ManTreeModel *)model();
+    if( tree_model == NULL ) return;
+
+    ManTreeItem *item = (ManTreeItem *)tree_model->itemFromIndex(index);
     if( item == NULL ) return;
 
     showTypeList( item->getSlotIndex(), item->getType() );
@@ -49,6 +52,43 @@ int ManTreeView::currentSlotIndex()
 {
     ManTreeItem *item = currentItem();
     return item->getSlotIndex();
+}
+
+ManTreeItem* ManTreeView::getItem( int nSlotIndex, int nType )
+{
+    ManTreeItem *indexItem = nullptr;
+    ManTreeItem *rootItem = manApplet->mainWindow()->getRootItem();
+    if( rootItem == NULL ) return nullptr;
+
+    int rowCount = rootItem->rowCount();
+
+    if( rowCount <= 0 || rowCount <= nSlotIndex ) return nullptr;
+
+    indexItem = (ManTreeItem* )rootItem->child( nSlotIndex );
+    if( indexItem == nullptr ) return nullptr;
+
+    int indexCount = indexItem->rowCount();
+
+    for( int i = 0; i < indexCount; i++ )
+    {
+        ManTreeItem* item = (ManTreeItem *)indexItem->child( i );
+
+        if( item->getType() == nType )
+            return item;
+
+        if( item->hasChildren() == true )
+        {
+            int subCount = item->rowCount();
+            for( int j = 0; j < subCount; j++ )
+            {
+                ManTreeItem* subItem = (ManTreeItem *)item->child(j);
+                if( subItem->getType() == nType )
+                    return subItem;
+            }
+        }
+    }
+
+    return nullptr;
 }
 
 void ManTreeView::showTypeList( int nSlotIndex, int nType )

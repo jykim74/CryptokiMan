@@ -444,8 +444,9 @@ void GenKeyDlg::accept()
         return;
     }
 
+//    manApplet->showTypeList( slot_index_, HM_ITEM_TYPE_SECRETKEY );
+    manApplet->clickTreeMenu( slot_index_, HM_ITEM_TYPE_SECRETKEY );
     manApplet->messageBox( tr( "GenerateKey execution successful" ), this );
-    manApplet->showTypeList( slot_index_, HM_ITEM_TYPE_SECRETKEY );
 
     QDialog::accept();
 }
