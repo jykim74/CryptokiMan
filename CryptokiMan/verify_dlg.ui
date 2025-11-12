@@ -1309,6 +1309,20 @@
       <number>0</number>
      </property>
      <item row="0" column="5">
+      <widget class="QLabel" name="label_23">
+       <property name="text">
+        <string>Update</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="4">
+      <widget class="Line" name="line_8">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="6">
       <widget class="QLineEdit" name="mUpdateText">
        <property name="minimumSize">
         <size>
@@ -1354,16 +1368,10 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="mStatusLabel">
-       <property name="minimumSize">
-        <size>
-         <width>50</width>
-         <height>0</height>
-        </size>
-       </property>
+     <item row="0" column="8">
+      <widget class="QLabel" name="label_24">
        <property name="text">
-        <string>Status</string>
+        <string>Final</string>
        </property>
       </widget>
      </item>
@@ -1413,7 +1421,27 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="7">
+     <item row="0" column="2">
+      <widget class="QLabel" name="label_22">
+       <property name="text">
+        <string>Init</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="mStatusLabel">
+       <property name="minimumSize">
+        <size>
+         <width>50</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Status</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="9">
       <widget class="QLineEdit" name="mFinalText">
        <property name="minimumSize">
         <size>
@@ -1459,10 +1487,10 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="6">
-      <widget class="QLabel" name="label_24">
+     <item row="0" column="10">
+      <widget class="QPushButton" name="mResetBtn">
        <property name="text">
-        <string>Final</string>
+        <string>Reset</string>
        </property>
       </widget>
      </item>
@@ -1479,24 +1507,10 @@
        </property>
       </spacer>
      </item>
-     <item row="0" column="4">
-      <widget class="QLabel" name="label_23">
-       <property name="text">
-        <string>Update</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="QLabel" name="label_22">
-       <property name="text">
-        <string>Init</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="8">
-      <widget class="QPushButton" name="mResetBtn">
-       <property name="text">
-        <string>Reset</string>
+     <item row="0" column="7">
+      <widget class="Line" name="line_9">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
        </property>
       </widget>
      </item>
