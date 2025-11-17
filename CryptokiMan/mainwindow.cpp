@@ -77,7 +77,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     createActions();
     createStatusBar();
-    createMemberDlg();
+//    createMemberDlg();
 
     setUnifiedTitleAndToolBarOnMac(true);
     setAcceptDrops(true);
@@ -783,8 +783,8 @@ void MainWindow::createStatusBar()
 
 void MainWindow::createMemberDlg()
 {
-    hsm_man_dlg_ = new HsmManDlg;
-    hsm_man_dlg_->setMode( HsmModeManage );
+//    hsm_man_dlg_ = new HsmManDlg;
+//    hsm_man_dlg_->setMode( HsmModeManage );
 }
 
 void MainWindow::newFile()
@@ -1715,6 +1715,12 @@ void MainWindow::hsmMan()
     }
 
     int nSlot = pItem->getSlotIndex();
+
+    if( hsm_man_dlg_ == nullptr )
+    {
+        hsm_man_dlg_ = new HsmManDlg;
+        hsm_man_dlg_->setMode( HsmModeManage );
+    }
 
     hsm_man_dlg_->setSlotIndex( nSlot );
     hsm_man_dlg_->show();

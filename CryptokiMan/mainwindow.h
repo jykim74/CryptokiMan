@@ -310,7 +310,7 @@ private:
 
     bool            log_halt_;
 
-    HsmManDlg*       hsm_man_dlg_;
+    HsmManDlg*       hsm_man_dlg_ = nullptr;
 
     QToolBar* file_tool_;
     QAction* new_act_;
