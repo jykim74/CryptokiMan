@@ -145,7 +145,7 @@ void ObjectViewDlg::editCommonObjectValue()
 
     EditAttributeDlg editAttribute;
     editAttribute.setSlotIndex( slot_index_ );
-    editAttribute.setObjectID( mObjectText->text().toLong());
+    editAttribute.setObjectID( hHandle );
     editAttribute.setObjectType( data_type_ );
     editAttribute.setAttrName( item->text() );
     editAttribute.mObjectViewBtn->setEnabled( false );
@@ -177,7 +177,7 @@ void ObjectViewDlg::editPart1ObjectValue()
 
     EditAttributeDlg editAttribute;
     editAttribute.setSlotIndex( slot_index_ );
-    editAttribute.setObjectID( mObjectText->text().toLong());
+    editAttribute.setObjectID( hHandle);
     editAttribute.setObjectType( data_type_ );
     editAttribute.setAttrName( item->text() );
     editAttribute.mObjectViewBtn->setEnabled( false );
@@ -209,7 +209,7 @@ void ObjectViewDlg::editPart2ObjectValue()
 
     EditAttributeDlg editAttribute;
     editAttribute.setSlotIndex( slot_index_ );
-    editAttribute.setObjectID( mObjectText->text().toLong());
+    editAttribute.setObjectID( hHandle );
     editAttribute.setObjectType( data_type_ );
     editAttribute.setAttrName( item->text() );
     editAttribute.mObjectViewBtn->setEnabled( false );
@@ -241,7 +241,7 @@ void ObjectViewDlg::editPart3ObjectValue()
 
     EditAttributeDlg editAttribute;
     editAttribute.setSlotIndex( slot_index_ );
-    editAttribute.setObjectID( mObjectText->text().toLong());
+    editAttribute.setObjectID( hHandle );
     editAttribute.setObjectType( data_type_ );
     editAttribute.setAttrName( item->text() );
     editAttribute.mObjectViewBtn->setEnabled( false );
