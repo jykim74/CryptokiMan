@@ -25,6 +25,16 @@ public:
     void setObject( long hObject );
 
 private slots:
+    void editCommonObjectValue();
+    void editPart1ObjectValue();
+    void editPart2ObjectValue();
+    void editPart3ObjectValue();
+
+    void showCommonContextMenu( QPoint point );
+    void showPart1ContextMenu( QPoint point );
+    void showPart2ContextMenu( QPoint point );
+    void showPart3ContextMenu( QPoint point );
+
     void clickReload();
 
     void clickCommonField( QModelIndex index );
@@ -45,6 +55,7 @@ private:
 
     SlotInfo slot_info_;
     int slot_index_ = -1;
+    int data_type_ = -1;
 };
 
 #endif // OBJECT_VIEW_DLG_H

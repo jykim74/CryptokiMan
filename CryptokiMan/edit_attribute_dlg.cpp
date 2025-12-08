@@ -20,6 +20,7 @@ EditAttributeDlg::EditAttributeDlg(QWidget *parent) :
     object_id_ = -1;
 
     attr_name_ = "";
+    is_changed_ = false;
 
     setupUi(this);
 
@@ -361,6 +362,7 @@ void EditAttributeDlg::clickSetAttribute()
         return;
     }
 
+    is_changed_ = true;
     manApplet->messageBox( tr("SetAttributeValue2 execution successful"), this );
     QMessageBox::information( this ,"EditAttribute", "SetAttribute success" );
 }

@@ -391,6 +391,9 @@
        <height>260</height>
       </size>
      </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::CustomContextMenu</enum>
+     </property>
      <property name="currentIndex">
       <number>2</number>
      </property>
@@ -402,7 +405,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>460</width>
+        <width>466</width>
         <height>160</height>
        </rect>
       </property>
@@ -412,6 +415,9 @@
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
         <widget class="QTableWidget" name="mCommonTable">
+         <property name="contextMenuPolicy">
+          <enum>Qt::CustomContextMenu</enum>
+         </property>
          <attribute name="horizontalHeaderHighlightSections">
           <bool>false</bool>
          </attribute>
@@ -424,7 +430,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>460</width>
+        <width>466</width>
         <height>160</height>
        </rect>
       </property>
@@ -434,6 +440,9 @@
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
         <widget class="QTableWidget" name="mPart1Table">
+         <property name="contextMenuPolicy">
+          <enum>Qt::CustomContextMenu</enum>
+         </property>
          <attribute name="horizontalHeaderHighlightSections">
           <bool>false</bool>
          </attribute>
@@ -446,7 +455,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>460</width>
+        <width>466</width>
         <height>160</height>
        </rect>
       </property>
@@ -456,6 +465,9 @@
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
         <widget class="QTableWidget" name="mPart2Table">
+         <property name="contextMenuPolicy">
+          <enum>Qt::CustomContextMenu</enum>
+         </property>
          <attribute name="horizontalHeaderHighlightSections">
           <bool>false</bool>
          </attribute>
@@ -468,7 +480,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>460</width>
+        <width>466</width>
         <height>160</height>
        </rect>
       </property>
@@ -478,6 +490,9 @@
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
         <widget class="QTableWidget" name="mPart3Table">
+         <property name="contextMenuPolicy">
+          <enum>Qt::CustomContextMenu</enum>
+         </property>
          <attribute name="horizontalHeaderHighlightSections">
           <bool>false</bool>
          </attribute>

@@ -1,9 +1,12 @@
+#include <QMenu>
+
 #include "object_view_dlg.h"
 #include "mainwindow.h"
 #include "man_applet.h"
 #include "common.h"
 #include "cryptoki_api.h"
 #include "settings_mgr.h"
+#include "edit_attribute_dlg.h"
 
 ObjectViewDlg::ObjectViewDlg(QWidget *parent)
     : QDialog(parent)
@@ -13,6 +16,11 @@ ObjectViewDlg::ObjectViewDlg(QWidget *parent)
 
     connect( mCloseBtn, SIGNAL(clicked()), this, SLOT(close()));
     connect( mReloadBtn, SIGNAL(clicked()), this, SLOT(clickReload()));
+
+    connect( mCommonTable, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showCommonContextMenu(QPoint)));
+    connect( mPart1Table, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showPart1ContextMenu(QPoint)));
+    connect( mPart2Table, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showPart2ContextMenu(QPoint)));
+    connect( mPart3Table, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showPart3ContextMenu(QPoint)));
 
     connect( mCommonTable, SIGNAL(clicked(QModelIndex)), this, SLOT(clickCommonField(QModelIndex)));
     connect( mPart1Table, SIGNAL(clicked(QModelIndex)), this, SLOT(clickPart1Field(QModelIndex)));
@@ -120,6 +128,211 @@ void ObjectViewDlg::initUI()
     mObjectToolBox->setItemText( 1, tr("NA"));
     mObjectToolBox->setItemText( 2, tr("NA"));
     mObjectToolBox->setItemText( 3, tr("NA"));
+}
+
+void ObjectViewDlg::editCommonObjectValue()
+{
+    QModelIndex idx = mCommonTable->currentIndex();
+    QTableWidgetItem *item = mCommonTable->item( idx.row(), 0 );
+
+    long hHandle = mObjectText->text().toLong();
+
+    if( item == NULL )
+    {
+        manApplet->warningBox( tr( "There are no selected items"), this );
+        return;
+    }
+
+    EditAttributeDlg editAttribute;
+    editAttribute.setSlotIndex( slot_index_ );
+    editAttribute.setObjectID( mObjectText->text().toLong());
+    editAttribute.setObjectType( data_type_ );
+    editAttribute.setAttrName( item->text() );
+    editAttribute.mObjectViewBtn->setEnabled( false );
+    editAttribute.exec();
+
+    if( editAttribute.isChanged() == true )
+    {
+        int ret = 0;
+        CK_ATTRIBUTE_TYPE uAttType = JS_PKCS11_GetCKAType( item->text().toStdString().c_str() );
+        long nType = CryptokiAPI::getAttrType( uAttType );
+        QString strValue = stringAttribute( nType, uAttType, hHandle, &ret );
+        QTableWidgetItem *item1 = mCommonTable->item( idx.row(), 1 );
+        if( item1 == NULL ) return;
+        item1->setText( strValue );
+    }
+}
+
+void ObjectViewDlg::editPart1ObjectValue()
+{
+    QModelIndex idx = mPart1Table->currentIndex();
+    QTableWidgetItem *item = mPart1Table->item( idx.row(), 0 );
+    long hHandle = mObjectText->text().toLong();
+
+    if( item == NULL )
+    {
+        manApplet->warningBox( tr( "There are no selected items"), this );
+        return;
+    }
+
+    EditAttributeDlg editAttribute;
+    editAttribute.setSlotIndex( slot_index_ );
+    editAttribute.setObjectID( mObjectText->text().toLong());
+    editAttribute.setObjectType( data_type_ );
+    editAttribute.setAttrName( item->text() );
+    editAttribute.mObjectViewBtn->setEnabled( false );
+    editAttribute.exec();
+
+    if( editAttribute.isChanged() == true )
+    {
+        int ret = 0;
+        CK_ATTRIBUTE_TYPE uAttType = JS_PKCS11_GetCKAType( item->text().toStdString().c_str() );
+        long nType = CryptokiAPI::getAttrType( uAttType );
+        QString strValue = stringAttribute( nType, uAttType, hHandle, &ret );
+        QTableWidgetItem *item1 = mPart1Table->item( idx.row(), 1 );
+        if( item1 == NULL ) return;
+        item1->setText( strValue );
+    }
+}
+
+void ObjectViewDlg::editPart2ObjectValue()
+{
+    QModelIndex idx = mPart2Table->currentIndex();
+    QTableWidgetItem *item = mPart2Table->item( idx.row(), 0 );
+    long hHandle = mObjectText->text().toLong();
+
+    if( item == NULL )
+    {
+        manApplet->warningBox( tr( "There are no selected items"), this );
+        return;
+    }
+
+    EditAttributeDlg editAttribute;
+    editAttribute.setSlotIndex( slot_index_ );
+    editAttribute.setObjectID( mObjectText->text().toLong());
+    editAttribute.setObjectType( data_type_ );
+    editAttribute.setAttrName( item->text() );
+    editAttribute.mObjectViewBtn->setEnabled( false );
+    editAttribute.exec();
+
+    if( editAttribute.isChanged() == true )
+    {
+        int ret = 0;
+        CK_ATTRIBUTE_TYPE uAttType = JS_PKCS11_GetCKAType( item->text().toStdString().c_str() );
+        long nType = CryptokiAPI::getAttrType( uAttType );
+        QString strValue = stringAttribute( nType, uAttType, hHandle, &ret );
+        QTableWidgetItem *item1 = mPart2Table->item( idx.row(), 1 );
+        if( item1 == NULL ) return;
+        item1->setText( strValue );
+    }
+}
+
+void ObjectViewDlg::editPart3ObjectValue()
+{
+    QModelIndex idx = mPart3Table->currentIndex();
+    QTableWidgetItem *item = mPart3Table->item( idx.row(), 0 );
+    long hHandle = mObjectText->text().toLong();
+
+    if( item == NULL )
+    {
+        manApplet->warningBox( tr( "There are no selected items"), this );
+        return;
+    }
+
+    EditAttributeDlg editAttribute;
+    editAttribute.setSlotIndex( slot_index_ );
+    editAttribute.setObjectID( mObjectText->text().toLong());
+    editAttribute.setObjectType( data_type_ );
+    editAttribute.setAttrName( item->text() );
+    editAttribute.mObjectViewBtn->setEnabled( false );
+    editAttribute.exec();
+
+    if( editAttribute.isChanged() == true )
+    {
+        int ret = 0;
+        CK_ATTRIBUTE_TYPE uAttType = JS_PKCS11_GetCKAType( item->text().toStdString().c_str() );
+        long nType = CryptokiAPI::getAttrType( uAttType );
+        QString strValue = stringAttribute( nType, uAttType, hHandle, &ret );
+        QTableWidgetItem *item1 = mPart3Table->item( idx.row(), 1 );
+        if( item1 == NULL ) return;
+        item1->setText( strValue );
+    }
+}
+
+void ObjectViewDlg::showCommonContextMenu( QPoint point )
+{
+    QModelIndex idx = mCommonTable->currentIndex();
+    QTableWidgetItem *item = mCommonTable->item( idx.row(), 0 );
+    if( item == NULL ) return;
+
+    QMenu *menu = new QMenu(this);
+    QAction *editAct = new QAction( tr( "Edit" ), this );
+
+    if( manApplet->isLicense() == false )
+        editAct->setEnabled( false );
+
+    connect( editAct, SIGNAL(triggered(bool)), this, SLOT(editCommonObjectValue()));
+
+    menu->addAction( editAct );
+
+    menu->popup( mCommonTable->viewport()->mapToGlobal( point ));
+}
+
+void ObjectViewDlg::showPart1ContextMenu( QPoint point )
+{
+    QModelIndex idx = mPart1Table->currentIndex();
+    QTableWidgetItem *item = mPart1Table->item( idx.row(), 0 );
+    if( item == NULL ) return;
+
+    QMenu *menu = new QMenu(this);
+    QAction *editAct = new QAction( tr( "Edit" ), this );
+
+    if( manApplet->isLicense() == false )
+        editAct->setEnabled( false );
+
+    connect( editAct, SIGNAL(triggered(bool)), this, SLOT(editPart1ObjectValue()));
+
+    menu->addAction( editAct );
+
+    menu->popup( mPart1Table->viewport()->mapToGlobal( point ));
+}
+
+void ObjectViewDlg::showPart2ContextMenu( QPoint point )
+{
+    QModelIndex idx = mPart2Table->currentIndex();
+    QTableWidgetItem *item = mPart2Table->item( idx.row(), 0 );
+    if( item == NULL ) return;
+
+    QMenu *menu = new QMenu(this);
+    QAction *editAct = new QAction( tr( "Edit" ), this );
+
+    if( manApplet->isLicense() == false )
+        editAct->setEnabled( false );
+
+    connect( editAct, SIGNAL(triggered(bool)), this, SLOT(editPart2ObjectValue()));
+
+    menu->addAction( editAct );
+
+    menu->popup( mPart2Table->viewport()->mapToGlobal( point ));
+}
+
+void ObjectViewDlg::showPart3ContextMenu( QPoint point )
+{
+    QModelIndex idx = mPart3Table->currentIndex();
+    QTableWidgetItem *item = mPart3Table->item( idx.row(), 0 );
+    if( item == NULL ) return;
+
+    QMenu *menu = new QMenu(this);
+    QAction *editAct = new QAction( tr( "Edit" ), this );
+
+    if( manApplet->isLicense() == false )
+        editAct->setEnabled( false );
+
+    connect( editAct, SIGNAL(triggered(bool)), this, SLOT(editPart3ObjectValue()));
+
+    menu->addAction( editAct );
+
+    menu->popup( mPart3Table->viewport()->mapToGlobal( point ));
 }
 
 void ObjectViewDlg::clickReload()
@@ -338,30 +551,35 @@ void ObjectViewDlg::setObject( long hObject )
         mObjectToolBox->setItemIcon( 0, QIcon( ":/images/cert.png" ));
         mObjectBtn->setIcon( QIcon(":/images/cert.png") );
         setCertificate( hObject );
+        data_type_ = OBJ_CERT_IDX;
     }
     else if( uClass == CKO_PRIVATE_KEY )
     {
         mObjectToolBox->setItemIcon( 0, QIcon( ":/images/prikey.png" ));
         mObjectBtn->setIcon( QIcon(":/images/prikey.png") );
         setPrivateKey( hObject );
+        data_type_ = OBJ_PRIKEY_IDX;
     }
     else if( uClass == CKO_PUBLIC_KEY )
     {
         mObjectToolBox->setItemIcon( 0, QIcon( ":/images/pubkey.png" ));
         mObjectBtn->setIcon( QIcon(":/images/pubkey.png") );
         setPublicKey( hObject );
+        data_type_ = OBJ_PUBKEY_IDX;
     }
     else if( uClass == CKO_SECRET_KEY )
     {
         mObjectToolBox->setItemIcon( 0, QIcon( ":/images/key.png" ));
         mObjectBtn->setIcon( QIcon(":/images/key.png") );
         setSecretKey( hObject );
+        data_type_ = OBJ_SECRET_IDX;
     }
     else if( uClass == CKO_DATA )
     {
         mObjectToolBox->setItemIcon( 0, QIcon( ":/images/data_add.png" ));
         mObjectBtn->setIcon( QIcon(":/images/data_add.png") );
         setData( hObject );
+        data_type_ = OBJ_DATA_IDX;
     }
 }
 

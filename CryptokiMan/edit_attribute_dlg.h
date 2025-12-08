@@ -28,6 +28,7 @@ public:
     void setObjectType( int type );
     void setObjectID( long id );
     void setAttrName( const QString& strName );
+    bool isChanged() { return is_changed_; };
 
 private slots:
     virtual void accept();
@@ -55,6 +56,7 @@ private:
     int slot_index_ = -1;
 
     QString attr_name_;
+    bool is_changed_ = false;
 };
 
 #endif // EDIT_ATTRIBUTE_DLG_H
