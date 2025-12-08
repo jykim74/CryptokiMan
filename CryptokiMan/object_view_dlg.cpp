@@ -148,7 +148,6 @@ void ObjectViewDlg::editCommonObjectValue()
     editAttribute.setObjectID( hHandle );
     editAttribute.setObjectType( data_type_ );
     editAttribute.setAttrName( item->text() );
-    editAttribute.mObjectViewBtn->setEnabled( false );
     editAttribute.exec();
 
     if( editAttribute.isChanged() == true )
@@ -180,7 +179,6 @@ void ObjectViewDlg::editPart1ObjectValue()
     editAttribute.setObjectID( hHandle);
     editAttribute.setObjectType( data_type_ );
     editAttribute.setAttrName( item->text() );
-    editAttribute.mObjectViewBtn->setEnabled( false );
     editAttribute.exec();
 
     if( editAttribute.isChanged() == true )
@@ -212,7 +210,6 @@ void ObjectViewDlg::editPart2ObjectValue()
     editAttribute.setObjectID( hHandle );
     editAttribute.setObjectType( data_type_ );
     editAttribute.setAttrName( item->text() );
-    editAttribute.mObjectViewBtn->setEnabled( false );
     editAttribute.exec();
 
     if( editAttribute.isChanged() == true )
@@ -244,7 +241,6 @@ void ObjectViewDlg::editPart3ObjectValue()
     editAttribute.setObjectID( hHandle );
     editAttribute.setObjectType( data_type_ );
     editAttribute.setAttrName( item->text() );
-    editAttribute.mObjectViewBtn->setEnabled( false );
     editAttribute.exec();
 
     if( editAttribute.isChanged() == true )

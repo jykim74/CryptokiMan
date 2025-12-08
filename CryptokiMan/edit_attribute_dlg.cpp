@@ -78,6 +78,7 @@ void EditAttributeDlg::setObjectID( long id )
 void EditAttributeDlg::setAttrName( const QString& strName )
 {
     attr_name_ = strName;
+    mObjectViewBtn->setEnabled( false );
 }
 
 
