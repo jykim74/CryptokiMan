@@ -180,7 +180,7 @@ void DigestDlg::clickReset()
     mHashProgBar->setValue( 0 );
 
     if( status_type_ == STATUS_INIT || status_type_ == STATUS_UPDATE )
-        clickFinal();
+        resetFinal();
 }
 
 void DigestDlg::setSlotIndex(int index)
@@ -448,6 +448,22 @@ void DigestDlg::clickFinal()
 
     setStatusFinal( rv );
     JS_BIN_reset( &binDigest );
+}
+
+void DigestDlg::resetFinal()
+{
+    unsigned char sDigest[512];
+    CK_ULONG uDigestLen = 512;
+
+    int rv = manApplet->cryptokiAPI()->DigestFinal( slot_info_.getSessionHandle(), sDigest, &uDigestLen );
+    if( rv == CKR_OK )
+    {
+        status_type_ = STATUS_FINAL;
+    }
+    else
+    {
+        status_type_ = STATUS_NONE;
+    }
 }
 
 void DigestDlg::clickDigest()

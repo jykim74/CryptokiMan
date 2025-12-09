@@ -83,6 +83,7 @@ private:
 
     void setMechanism( void *pMech );
     void freeMechanism( void *pMech );
+    void resetFinal();
 
     SlotInfo slot_info_;
     int slot_index_ = -1;

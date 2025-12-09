@@ -629,7 +629,7 @@ void DecryptDlg::clickReset()
     mDecProgBar->setValue(0);
 
     if( status_type_ == STATUS_INIT || status_type_ == STATUS_UPDATE )
-        clickFinal();
+        resetFinal();
 }
 
 int DecryptDlg::clickInit()
@@ -724,6 +724,25 @@ void DecryptDlg::clickUpdate()
     setStatusUpdate( rv, update_cnt_ );
 
     if( pDecPart ) JS_free( pDecPart );
+}
+
+void DecryptDlg::resetFinal()
+{
+    int rv = -1;
+
+    unsigned char sDec[1024];
+    long uDecLen = 1024;
+
+    rv = manApplet->cryptokiAPI()->DecryptFinal( slot_info_.getSessionHandle(), sDec, (CK_ULONG_PTR)&uDecLen );
+
+    if( rv != CKR_OK )
+    {
+        status_type_ = STATUS_NONE;
+    }
+    else
+    {
+        status_type_ = STATUS_FINAL;
+    }
 }
 
 int DecryptDlg::clickFinal()

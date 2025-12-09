@@ -585,7 +585,7 @@ void EncryptDlg::clickReset()
     mEncProgBar->setValue(0);
 
     if( status_type_ == STATUS_INIT || status_type_ == STATUS_UPDATE )
-        clickFinal();
+        resetFinal();
 }
 
 int EncryptDlg::clickInit()
@@ -714,6 +714,25 @@ int EncryptDlg::clickFinal()
     JS_BIN_reset( &binEncPart );
 
     return rv;
+}
+
+void EncryptDlg::resetFinal()
+{
+    int rv = -1;
+
+    unsigned char sEnc[1024];
+    long uEncLen = 1024;
+
+    rv = manApplet->cryptokiAPI()->EncryptFinal( slot_info_.getSessionHandle(), sEnc, (CK_ULONG_PTR)&uEncLen );
+
+    if( rv != CKR_OK )
+    {
+        status_type_ = STATUS_NONE;
+    }
+    else
+    {
+        status_type_ = STATUS_FINAL;
+    }
 }
 
 void EncryptDlg::clickEncrypt()

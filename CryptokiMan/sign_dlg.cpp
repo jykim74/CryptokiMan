@@ -383,7 +383,7 @@ void SignDlg::clickReset()
     mSignProgBar->setValue(0);
 
     if( status_type_ == STATUS_INIT || status_type_ == STATUS_UPDATE )
-        clickFinal();
+        resetFinal();
 }
 
 int SignDlg::clickInit()
@@ -514,6 +514,25 @@ void SignDlg::clickFinal()
     mOutputText->setPlainText( getHexString( binSign.pVal, binSign.nLen) );
 
     JS_BIN_reset(&binSign);
+}
+
+void SignDlg::resetFinal()
+{
+    int rv = -1;
+
+    unsigned char sSign[1024];
+    long uSignLen = 1024;
+
+    rv = manApplet->cryptokiAPI()->SignFinal( slot_info_.getSessionHandle(), sSign, (CK_ULONG_PTR)&uSignLen );
+
+    if( rv != CKR_OK )
+    {
+        status_type_ = STATUS_NONE;
+    }
+    else
+    {
+        status_type_ = STATUS_FINAL;
+    }
 }
 
 void SignDlg::clickSign()

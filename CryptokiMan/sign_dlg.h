@@ -76,6 +76,7 @@ private:
     void setStatusUpdate( int rv, int count );
     void setStatusFinal( int rv );
     void setStatusSign( int rv );
+    void resetFinal();
 
     SlotInfo slot_info_;
     int slot_index_ = -1;

@@ -70,6 +70,7 @@ private:
 
     long getSessionHandle();
     void setSrcFileInfo( const QString strFile );
+    void resetFinal();
 
     DigestThread* thread_;
     int update_cnt_;

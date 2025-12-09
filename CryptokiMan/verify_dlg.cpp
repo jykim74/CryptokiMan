@@ -380,7 +380,7 @@ void VerifyDlg::clickReset()
     mVerifyProgBar->setValue(0);
 
     if( status_type_ == STATUS_INIT || status_type_ == STATUS_UPDATE )
-        clickFinal();
+        resetFinal();
 }
 
 int VerifyDlg::clickInit()
@@ -515,6 +515,31 @@ void VerifyDlg::clickFinal()
         status_type_ = STATUS_FINAL;
         manApplet->messageBox( tr("Signature value is correct"), this );
     }
+
+    JS_BIN_reset( &binSign );
+}
+
+void VerifyDlg::resetFinal()
+{
+    int rv = -1;
+
+    QString strSign = mSignText->toPlainText();
+
+    BIN binSign = {0,0};
+    getBINFromString( &binSign, DATA_HEX, strSign );
+
+    rv = manApplet->cryptokiAPI()->VerifyFinal( slot_info_.getSessionHandle(), binSign.pVal, binSign.nLen );
+
+    if( rv != CKR_OK )
+    {
+        status_type_ = STATUS_NONE;
+    }
+    else
+    {
+        status_type_ = STATUS_FINAL;
+    }
+
+    JS_BIN_reset( &binSign );
 }
 
 void VerifyDlg::clickVerify()
