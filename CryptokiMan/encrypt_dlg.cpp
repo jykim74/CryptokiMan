@@ -580,6 +580,10 @@ void EncryptDlg::clickReset()
 {
     clearStatusLabel();
 
+    mFileReadSizeText->clear();
+    mFileTotalSizeText->clear();
+    mEncProgBar->setValue(0);
+
     if( status_type_ == STATUS_INIT || status_type_ == STATUS_UPDATE )
         clickFinal();
 }
@@ -752,6 +756,14 @@ void EncryptDlg::runDataEncrypt()
         rv = clickInit();
         if( rv != CKR_OK ) return;
     }
+    else
+    {
+        if( status_type_ != STATUS_INIT )
+        {
+            manApplet->warningBox( tr( "Init execution is required" ), this );
+            return;
+        }
+    }
 
     BIN binInput = {0,0};
 
@@ -858,7 +870,18 @@ void EncryptDlg::runFileEncrypt()
     }
 
     if( mInitAutoCheck->isChecked() )
-        clickInit();
+    {
+        rv = clickInit();
+        if( rv != CKR_OK ) return;
+    }
+    else
+    {
+        if( status_type_ != STATUS_INIT )
+        {
+            manApplet->warningBox( tr( "Init execution is required" ), this );
+            return;
+        }
+    }
 
     FILE *fp = fopen( strSrcFile.toLocal8Bit().toStdString().c_str(), "rb" );
     if( fp == NULL )
@@ -1044,6 +1067,14 @@ void EncryptDlg::runFileEncryptThread()
         if( ret != CKR_OK )
         {
             manApplet->warningBox( tr("failed to initialize [%1]").arg(ret), this );
+            return;
+        }
+    }
+    else
+    {
+        if( status_type_ != STATUS_INIT )
+        {
+            manApplet->warningBox( tr( "Init execution is required" ), this );
             return;
         }
     }

@@ -378,6 +378,10 @@ void SignDlg::clickReset()
 {
     clearStatusLabel();
 
+    mFileReadSizeText->clear();
+    mFileTotalSizeText->clear();
+    mSignProgBar->setValue(0);
+
     if( status_type_ == STATUS_INIT || status_type_ == STATUS_UPDATE )
         clickFinal();
 }
@@ -552,6 +556,14 @@ void SignDlg::runDataSign()
         rv = clickInit();
         if( rv != CKR_OK ) return;
     }
+    else
+    {
+        if( status_type_ != STATUS_INIT )
+        {
+            manApplet->warningBox( tr( "Init execution is required" ), this );
+            return;
+        }
+    }
 
     BIN binInput = {0,0};
     QString strType = mInputTypeCombo->currentText();
@@ -627,6 +639,14 @@ void SignDlg::runFileSign()
         if( ret != CKR_OK )
         {
             manApplet->warningBox( tr("failed to initialize sign [%1]").arg(ret), this );
+            return;
+        }
+    }
+    else
+    {
+        if( status_type_ != STATUS_INIT )
+        {
+            manApplet->warningBox( tr( "Init execution is required" ), this );
             return;
         }
     }
@@ -876,6 +896,14 @@ void SignDlg::runFileSignThread()
         if( ret != CKR_OK )
         {
             manApplet->warningBox( tr("failed to initialize [%1]").arg(ret), this );
+            return;
+        }
+    }
+    else
+    {
+        if( status_type_ != STATUS_INIT )
+        {
+            manApplet->warningBox( tr( "Init execution is required" ), this );
             return;
         }
     }

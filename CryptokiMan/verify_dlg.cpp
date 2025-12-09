@@ -375,6 +375,10 @@ void VerifyDlg::clickReset()
 {
     clearStatusLabel();
 
+    mFileReadSizeText->clear();
+    mFileTotalSizeText->clear();
+    mVerifyProgBar->setValue(0);
+
     if( status_type_ == STATUS_INIT || status_type_ == STATUS_UPDATE )
         clickFinal();
 }
@@ -561,6 +565,14 @@ void VerifyDlg::runDataVerify()
         rv = clickInit();
         if( rv != CKR_OK ) return;
     }
+    else
+    {
+        if( status_type_ != STATUS_INIT )
+        {
+            manApplet->warningBox( tr( "Init execution is required" ), this );
+            return;
+        }
+    }
 
     BIN binInput = {0,0};
     QString strType = mInputTypeCombo->currentText();
@@ -640,6 +652,14 @@ void VerifyDlg::runFileVerify()
         if( ret != CKR_OK )
         {
             manApplet->warningBox( tr("failed to initialize verify:%1").arg(ret), this );
+            return;
+        }
+    }
+    else
+    {
+        if( status_type_ != STATUS_INIT )
+        {
+            manApplet->warningBox( tr( "Init execution is required" ), this );
             return;
         }
     }
@@ -871,6 +891,14 @@ void VerifyDlg::runFileVerifyThread()
         if( ret != CKR_OK )
         {
             manApplet->warningBox( tr("failed to initialize [%1]").arg(ret), this );
+            return;
+        }
+    }
+    else
+    {
+        if( status_type_ != STATUS_INIT )
+        {
+            manApplet->warningBox( tr( "Init execution is required" ), this );
             return;
         }
     }

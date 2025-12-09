@@ -175,6 +175,10 @@ void DigestDlg::clickReset()
 {
     clearStatusLabel();
 
+    mFileTotalSizeText->clear();
+    mFileReadSizeText->clear();
+    mHashProgBar->setValue( 0 );
+
     if( status_type_ == STATUS_INIT || status_type_ == STATUS_UPDATE )
         clickFinal();
 }
@@ -488,6 +492,14 @@ void DigestDlg::runDataDigest()
         rv = clickInit();
         if( rv != CKR_OK ) return;
     }
+    else
+    {
+        if( status_type_ != STATUS_INIT )
+        {
+            manApplet->warningBox( tr( "Init execution is required" ), this );
+            return;
+        }
+    }
 
     BIN binInput = {0,0};
 
@@ -561,6 +573,14 @@ void DigestDlg::runFileDigest()
         if( ret != CKR_OK )
         {
             manApplet->warningBox( tr("failed to initialize digest [%1]").arg(ret), this );
+            return;
+        }
+    }
+    else
+    {
+        if( status_type_ != STATUS_INIT )
+        {
+            manApplet->warningBox( tr( "Init execution is required" ), this );
             return;
         }
     }
@@ -693,6 +713,14 @@ void DigestDlg::runFileDigestThread()
         if( ret != CKR_OK )
         {
             manApplet->warningBox( tr("failed to initialize digest [%1]").arg(ret), this );
+            return;
+        }
+    }
+    else
+    {
+        if( status_type_ != STATUS_INIT )
+        {
+            manApplet->warningBox( tr( "Init execution is required" ), this );
             return;
         }
     }
