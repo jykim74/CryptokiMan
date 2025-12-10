@@ -2493,11 +2493,13 @@ void MainWindow::logToggle()
     {
         log_halt_ = false;
         log( "Log is enable" );
+        manApplet->messageBox( tr("Start logging"), this );
     }
     else
     {
         dlog( "Log is halt" );
         log_halt_ = true;
+        manApplet->messageBox( tr("Stop logging"), this );
     }
 }
 

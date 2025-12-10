@@ -64,7 +64,7 @@ DecryptDlg::~DecryptDlg()
     if( thread_ ) delete thread_;
 
     if( status_type_ == STATUS_INIT || status_type_ == STATUS_UPDATE )
-        clickFinal();
+        resetFinal();
 }
 
 void DecryptDlg::dragEnterEvent(QDragEnterEvent *event)
