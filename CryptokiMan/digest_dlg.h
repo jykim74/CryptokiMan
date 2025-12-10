@@ -63,8 +63,10 @@ private:
     void clearStatusLabel();
     void setStatusInit( int rv );
     void setStatusUpdate( int rv, int count );
-    void setStatusFinal( int rv );
+    void setStatusDigestKey( int rv, int count );
     void setStatusDigest( int rv );
+    void setStatusFinal( int rv );
+
 
     void initUI();
 

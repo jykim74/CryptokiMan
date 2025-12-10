@@ -253,6 +253,20 @@ void DigestDlg::setStatusUpdate( int rv, int count )
     }
 }
 
+void DigestDlg::setStatusDigestKey( int rv, int count )
+{
+    if( rv == CKR_OK )
+    {
+        mStatusLabel->setText( "DigestKey OK" );
+        mUpdateText->setText( QString("%1").arg(count));
+    }
+    else
+    {
+        mStatusLabel->setText( QString( "%1" ).arg( P11ERR(rv) ) );
+        mUpdateText->setText( QString("%1").arg(rv));
+    }
+}
+
 void DigestDlg::setStatusFinal( int rv )
 {
     if( rv == CKR_OK )
@@ -332,16 +346,16 @@ void DigestDlg::clickDigestKey()
 
     if( rv == CKR_OK )
     {
-        QString strMsg = mStatusLabel->text();
-        strMsg += "|DigestKey";
-
-        mStatusLabel->setText( strMsg );
+        update_cnt_++;
+        status_type_ = STATUS_UPDATE;
     }
     else
     {
         manApplet->warningBox( tr("DigestKey execution failure [%1]").arg( JS_PKCS11_GetErrorMsg(rv)), this );
         mOutputText->setText("");
     }
+
+    setStatusDigestKey( rv, update_cnt_ );
 }
 
 int DigestDlg::clickInit()
