@@ -274,13 +274,6 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="3">
-      <widget class="QPushButton" name="mCancelFunctionBtn">
-       <property name="text">
-        <string>CancelFunction</string>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="2">
       <widget class="QPushButton" name="mGetFunctionStatusBtn">
        <property name="text">
@@ -300,6 +293,13 @@
         </size>
        </property>
       </spacer>
+     </item>
+     <item row="0" column="3">
+      <widget class="QPushButton" name="mCancelFunctionBtn">
+       <property name="text">
+        <string>CancelFunction</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

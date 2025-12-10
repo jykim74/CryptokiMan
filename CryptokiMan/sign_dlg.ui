@@ -1333,19 +1333,6 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="mStatusLabel">
-       <property name="minimumSize">
-        <size>
-         <width>50</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Status</string>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="1">
       <spacer name="horizontalSpacer_7">
        <property name="orientation">
@@ -1525,6 +1512,13 @@
        </property>
       </widget>
      </item>
+     <item row="0" column="0">
+      <widget class="QPushButton" name="mInitBtn">
+       <property name="text">
+        <string>Init</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
@@ -1696,13 +1690,6 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QPushButton" name="mInitBtn">
-       <property name="text">
-        <string>Init</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -1763,6 +1750,19 @@
        </property>
       </spacer>
      </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="mStatusLabel">
+       <property name="minimumSize">
+        <size>
+         <width>50</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Status</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
   </layout>
@@ -1800,6 +1800,7 @@
   <tabstop>mFileTotalSizeText</tabstop>
   <tabstop>mFileReadSizeText</tabstop>
   <tabstop>mRunThreadCheck</tabstop>
+  <tabstop>mInitBtn</tabstop>
   <tabstop>mInitText</tabstop>
   <tabstop>mUpdateText</tabstop>
   <tabstop>mFinalText</tabstop>
@@ -1807,7 +1808,6 @@
   <tabstop>mOutputClearBtn</tabstop>
   <tabstop>mOutputLenText</tabstop>
   <tabstop>mOutputText</tabstop>
-  <tabstop>mInitBtn</tabstop>
   <tabstop>mInitAutoCheck</tabstop>
   <tabstop>mSignBtn</tabstop>
   <tabstop>mCloseBtn</tabstop>

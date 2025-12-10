@@ -1882,23 +1882,17 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="mStatusLabel">
-       <property name="minimumSize">
-        <size>
-         <width>50</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Status</string>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="7">
       <widget class="Line" name="line_9">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QPushButton" name="mInitBtn">
+       <property name="text">
+        <string>Init</string>
        </property>
       </widget>
      </item>
@@ -2085,13 +2079,6 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QPushButton" name="mInitBtn">
-       <property name="text">
-        <string>Init</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -2152,6 +2139,19 @@
        </property>
       </spacer>
      </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="mStatusLabel">
+       <property name="minimumSize">
+        <size>
+         <width>50</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Status</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
   </layout>
@@ -2197,6 +2197,7 @@
   <tabstop>mFindDstFileBtn</tabstop>
   <tabstop>mDstFileInfoText</tabstop>
   <tabstop>mDstFileSizeText</tabstop>
+  <tabstop>mInitBtn</tabstop>
   <tabstop>mInitText</tabstop>
   <tabstop>mUpdateText</tabstop>
   <tabstop>mFinalText</tabstop>
@@ -2204,7 +2205,6 @@
   <tabstop>mOutputClearBtn</tabstop>
   <tabstop>mOutputLenText</tabstop>
   <tabstop>mOutputText</tabstop>
-  <tabstop>mInitBtn</tabstop>
   <tabstop>mInitAutoCheck</tabstop>
   <tabstop>mEncryptBtn</tabstop>
   <tabstop>mCloseBtn</tabstop>
