@@ -585,14 +585,18 @@ void VerifyDlg::runDataVerify()
         return;
     }
 
-    if( mInitAutoCheck->isChecked() )
+    if( status_type_ != STATUS_INIT )
     {
-        rv = clickInit();
-        if( rv != CKR_OK ) return;
-    }
-    else
-    {
-        if( status_type_ != STATUS_INIT )
+        if( mInitAutoCheck->isChecked() )
+        {
+            rv = clickInit();
+            if( rv != CKR_OK )
+            {
+                manApplet->warningBox( tr("failed to initialize: %1").arg(JERR(rv)), this );
+                return;
+            }
+        }
+        else
         {
             manApplet->warningBox( tr( "Init execution is required" ), this );
             return;
@@ -671,18 +675,18 @@ void VerifyDlg::runFileVerify()
         return;
     }
 
-    if( mInitAutoCheck->isChecked() )
+    if( status_type_ != STATUS_INIT )
     {
-        ret = clickInit();
-        if( ret != CKR_OK )
+        if( mInitAutoCheck->isChecked() )
         {
-            manApplet->warningBox( tr("failed to initialize verify:%1").arg(ret), this );
-            return;
+            ret = clickInit();
+            if( ret != CKR_OK )
+            {
+                manApplet->warningBox( tr("failed to initialize: %1").arg(JERR(ret)), this );
+                return;
+            }
         }
-    }
-    else
-    {
-        if( status_type_ != STATUS_INIT )
+        else
         {
             manApplet->warningBox( tr( "Init execution is required" ), this );
             return;
@@ -714,7 +718,7 @@ void VerifyDlg::runFileVerify()
         if( ret != CKR_OK )
         {
             setStatusUpdate( ret, update_cnt_ );
-            manApplet->warningBox( tr("VerifyUpdate execution failure [%1]").arg( JS_PKCS11_GetErrorMsg(ret)), this );
+            manApplet->warningBox( tr("VerifyUpdate execution failure: %1").arg( P11ERR(ret)), this );
             goto end;
         }
 
@@ -908,20 +912,20 @@ void VerifyDlg::clickFindSrcFile()
 
 void VerifyDlg::runFileVerifyThread()
 {
-    int ret = 0;
+    int rv = 0;
 
-    if( mInitAutoCheck->isChecked() )
+    if( status_type_ != STATUS_INIT )
     {
-        ret = clickInit();
-        if( ret != CKR_OK )
+        if( mInitAutoCheck->isChecked() )
         {
-            manApplet->warningBox( tr("failed to initialize [%1]").arg(ret), this );
-            return;
+            rv = clickInit();
+            if( rv != CKR_OK )
+            {
+                manApplet->warningBox( tr("failed to initialize: %1").arg(JERR(rv)), this );
+                return;
+            }
         }
-    }
-    else
-    {
-        if( status_type_ != STATUS_INIT )
+        else
         {
             manApplet->warningBox( tr( "Init execution is required" ), this );
             return;

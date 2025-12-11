@@ -570,14 +570,18 @@ void SignDlg::runDataSign()
         return;
     }
 
-    if( mInitAutoCheck->isChecked() )
+    if( status_type_ != STATUS_INIT )
     {
-        rv = clickInit();
-        if( rv != CKR_OK ) return;
-    }
-    else
-    {
-        if( status_type_ != STATUS_INIT )
+        if( mInitAutoCheck->isChecked() )
+        {
+            rv = clickInit();
+            if( rv != CKR_OK )
+            {
+                manApplet->warningBox( tr("failed to initialize: %1").arg(JERR(rv)), this );
+                return;
+            }
+        }
+        else
         {
             manApplet->warningBox( tr( "Init execution is required" ), this );
             return;
@@ -622,7 +626,7 @@ void SignDlg::runDataSign()
 
 void SignDlg::runFileSign()
 {
-    int ret = -1;
+    int rv = -1;
 
     int nRead = 0;
     int nPartSize = manApplet->settingsMgr()->fileReadSize();
@@ -652,18 +656,18 @@ void SignDlg::runFileSign()
 
     nLeft = fileSize;
 
-    if( mInitAutoCheck->isChecked() )
+    if( status_type_ != STATUS_INIT )
     {
-        ret = clickInit();
-        if( ret != CKR_OK )
+        if( mInitAutoCheck->isChecked() )
         {
-            manApplet->warningBox( tr("failed to initialize sign [%1]").arg(ret), this );
-            return;
+            rv = clickInit();
+            if( rv != CKR_OK )
+            {
+                manApplet->warningBox( tr("failed to initialize: %1").arg(JERR(rv)), this );
+                return;
+            }
         }
-    }
-    else
-    {
-        if( status_type_ != STATUS_INIT )
+        else
         {
             manApplet->warningBox( tr( "Init execution is required" ), this );
             return;
@@ -691,16 +695,16 @@ void SignDlg::runFileSign()
             goto end;
         }
 
-        ret = manApplet->cryptokiAPI()->SignUpdate( slot_info_.getSessionHandle(), binPart.pVal, binPart.nLen );
-        if( ret != CKR_OK )
+        rv = manApplet->cryptokiAPI()->SignUpdate( slot_info_.getSessionHandle(), binPart.pVal, binPart.nLen );
+        if( rv != CKR_OK )
         {
-            setStatusUpdate( ret, update_cnt_ );
-            manApplet->warningBox( tr("SignUpdate execution failure [%1]").arg( JS_PKCS11_GetErrorMsg(ret)), this );
+            setStatusUpdate( rv, update_cnt_ );
+            manApplet->warningBox( tr("SignUpdate execution failure: %1").arg( P11ERR(rv)), this );
             goto end;
         }
 
         update_cnt_++;
-        setStatusUpdate( ret, update_cnt_ );
+        setStatusUpdate( rv, update_cnt_ );
         status_type_ = STATUS_UPDATE;
         nReadSize += nRead;
         nPercent = int( ( nReadSize * 100 ) / fileSize );
@@ -722,7 +726,7 @@ void SignDlg::runFileSign()
     {
         mSignProgBar->setValue( 100 );
 
-        if( ret == CKR_OK )
+        if( rv == CKR_OK )
         {
             clickFinal();
         }
@@ -907,20 +911,20 @@ void SignDlg::clickFindSrcFile()
 
 void SignDlg::runFileSignThread()
 {
-    int ret = 0;
+    int rv = 0;
 
-    if( mInitAutoCheck->isChecked() )
+    if( status_type_ != STATUS_INIT )
     {
-        ret = clickInit();
-        if( ret != CKR_OK )
+        if( mInitAutoCheck->isChecked() )
         {
-            manApplet->warningBox( tr("failed to initialize [%1]").arg(ret), this );
-            return;
+            rv = clickInit();
+            if( rv != CKR_OK )
+            {
+                manApplet->warningBox( tr("failed to initialize: %1").arg(JERR(rv)), this );
+                return;
+            }
         }
-    }
-    else
-    {
-        if( status_type_ != STATUS_INIT )
+        else
         {
             manApplet->warningBox( tr( "Init execution is required" ), this );
             return;

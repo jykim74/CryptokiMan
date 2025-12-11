@@ -821,14 +821,18 @@ void DecryptDlg::runDataDecrypt()
     }
     */
 
-    if( mInitAutoCheck->isChecked() )
+    if( status_type_ != STATUS_INIT )
     {
-        rv = clickInit();
-        if( rv != CKR_OK ) return;
-    }
-    else
-    {
-        if( status_type_ != STATUS_INIT )
+        if( mInitAutoCheck->isChecked() )
+        {
+            rv = clickInit();
+            if( rv != CKR_OK )
+            {
+                manApplet->warningBox( tr("failed to initialize: %1").arg(JERR(rv)), this );
+                return;
+            }
+        }
+        else
         {
             manApplet->warningBox( tr( "Init execution is required" ), this );
             return;
@@ -938,14 +942,18 @@ void DecryptDlg::runFileDecrypt()
             return;
     }
 
-    if( mInitAutoCheck->isChecked() )
+    if( status_type_ != STATUS_INIT )
     {
-        rv = clickInit();
-        if( rv != CKR_OK ) return;
-    }
-    else
-    {
-        if( status_type_ != STATUS_INIT )
+        if( mInitAutoCheck->isChecked() )
+        {
+            rv = clickInit();
+            if( rv != CKR_OK )
+            {
+                manApplet->warningBox( tr("failed to initialize: %1").arg(JERR(rv)), this );
+                return;
+            }
+        }
+        else
         {
             manApplet->warningBox( tr( "Init execution is required" ), this );
             return;
@@ -1110,20 +1118,20 @@ void DecryptDlg::clickSelect()
 
 void DecryptDlg::runFileDecryptThread()
 {
-    int ret = 0;
+    int rv = 0;
 
-    if( mInitAutoCheck->isChecked() )
+    if( status_type_ != STATUS_INIT )
     {
-        ret = clickInit();
-        if( ret != CKR_OK )
+        if( mInitAutoCheck->isChecked() )
         {
-            manApplet->warningBox( tr("failed to initialize [%1]").arg(ret), this );
-            return;
+            rv = clickInit();
+            if( rv != CKR_OK )
+            {
+                manApplet->warningBox( tr("failed to initialize: %1").arg(JERR(rv)), this );
+                return;
+            }
         }
-    }
-    else
-    {
-        if( status_type_ != STATUS_INIT )
+        else
         {
             manApplet->warningBox( tr( "Init execution is required" ), this );
             return;
