@@ -5955,7 +5955,7 @@ Do you want to delete the file and continue?</source>
 <context>
     <name>ImportCertDlg</name>
     <message>
-        <location filename="../import_cert_dlg.ui" line="305"/>
+        <location filename="../import_cert_dlg.ui" line="274"/>
         <source>Cert Path</source>
         <translation>인증서 경로</translation>
     </message>
@@ -5977,7 +5977,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">개인적</translation>
     </message>
     <message>
-        <location filename="../import_cert_dlg.ui" line="325"/>
+        <location filename="../import_cert_dlg.ui" line="329"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
@@ -5994,12 +5994,12 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">민감한</translation>
     </message>
     <message>
-        <location filename="../import_cert_dlg.ui" line="394"/>
+        <location filename="../import_cert_dlg.ui" line="421"/>
         <source>Attributes</source>
         <translation>속성</translation>
     </message>
     <message>
-        <location filename="../import_cert_dlg.ui" line="361"/>
+        <location filename="../import_cert_dlg.ui" line="284"/>
         <source>Find</source>
         <translation>찾기</translation>
     </message>
@@ -6009,7 +6009,7 @@ Do you want to delete the file and continue?</source>
         <translation>슬롯 ID</translation>
     </message>
     <message>
-        <location filename="../import_cert_dlg.ui" line="341"/>
+        <location filename="../import_cert_dlg.ui" line="345"/>
         <source>Label</source>
         <translation>라벨</translation>
     </message>
@@ -6028,7 +6028,7 @@ Do you want to delete the file and continue?</source>
         <translation>인증서 가져오기</translation>
     </message>
     <message>
-        <location filename="../import_cert_dlg.ui" line="348"/>
+        <location filename="../import_cert_dlg.ui" line="402"/>
         <source>Subject</source>
         <translation>주체</translation>
     </message>
@@ -6045,22 +6045,21 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">인증서</translation>
     </message>
     <message>
-        <location filename="../import_cert_dlg.ui" line="463"/>
+        <location filename="../import_cert_dlg.ui" line="490"/>
         <source>StartDate</source>
         <translation>StartDate</translation>
     </message>
     <message>
-        <location filename="../import_cert_dlg.ui" line="473"/>
+        <location filename="../import_cert_dlg.ui" line="500"/>
         <source>EndDate</source>
         <translation>EndDate</translation>
     </message>
     <message>
-        <location filename="../import_cert_dlg.ui" line="274"/>
         <source>subject in cert</source>
-        <translation>인증서 주체</translation>
+        <translation type="vanished">인증서 주체</translation>
     </message>
     <message>
-        <location filename="../import_cert_dlg.ui" line="312"/>
+        <location filename="../import_cert_dlg.ui" line="322"/>
         <source>Use SKI</source>
         <translation>SKI 사용</translation>
     </message>
@@ -6069,12 +6068,12 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">인증서 읽기 실패(%1)</translation>
     </message>
     <message>
-        <location filename="../import_cert_dlg.ui" line="453"/>
+        <location filename="../import_cert_dlg.ui" line="480"/>
         <source>Trusted</source>
         <translation>Trusted</translation>
     </message>
     <message>
-        <location filename="../import_cert_dlg.ui" line="368"/>
+        <location filename="../import_cert_dlg.ui" line="355"/>
         <source>PubKeyInfo</source>
         <translation>공개키 정보</translation>
     </message>
@@ -6084,17 +6083,22 @@ Do you want to delete the file and continue?</source>
         <translation>슬롯 이름</translation>
     </message>
     <message>
-        <location filename="../import_cert_dlg.ui" line="378"/>
+        <location filename="../import_cert_dlg.ui" line="365"/>
         <source>Use SPKI</source>
         <translation>SPKI 사용</translation>
     </message>
     <message>
-        <location filename="../import_cert_dlg.ui" line="433"/>
+        <location filename="../import_cert_dlg.ui" line="381"/>
+        <source>Use certificate subject DN</source>
+        <translation>인증서 주체자 DN 사용</translation>
+    </message>
+    <message>
+        <location filename="../import_cert_dlg.ui" line="460"/>
         <source>Copyable</source>
         <translation>Copyable</translation>
     </message>
     <message>
-        <location filename="../import_cert_dlg.ui" line="443"/>
+        <location filename="../import_cert_dlg.ui" line="470"/>
         <source>Destroyable</source>
         <translation>Destroyable</translation>
     </message>
@@ -6187,21 +6191,21 @@ Do you want to delete the file and continue?</source>
     </message>
     <message>
         <location filename="../import_pfx_dlg.ui" line="366"/>
-        <location filename="../import_pfx_dlg.ui" line="384"/>
+        <location filename="../import_pfx_dlg.ui" line="377"/>
         <source>Certificate</source>
         <translation>인증서</translation>
     </message>
     <message>
-        <location filename="../import_pfx_dlg.ui" line="451"/>
+        <location filename="../import_pfx_dlg.ui" line="434"/>
         <location filename="../import_pfx_dlg.ui" line="664"/>
-        <location filename="../import_pfx_dlg.ui" line="978"/>
+        <location filename="../import_pfx_dlg.ui" line="999"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="../import_pfx_dlg.ui" line="441"/>
-        <location filename="../import_pfx_dlg.ui" line="693"/>
-        <location filename="../import_pfx_dlg.ui" line="971"/>
+        <location filename="../import_pfx_dlg.ui" line="424"/>
+        <location filename="../import_pfx_dlg.ui" line="687"/>
+        <location filename="../import_pfx_dlg.ui" line="992"/>
         <source>Label</source>
         <translation>라벨</translation>
     </message>
@@ -6218,9 +6222,9 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">개인적</translation>
     </message>
     <message>
-        <location filename="../import_pfx_dlg.ui" line="497"/>
-        <location filename="../import_pfx_dlg.ui" line="736"/>
-        <location filename="../import_pfx_dlg.ui" line="1018"/>
+        <location filename="../import_pfx_dlg.ui" line="511"/>
+        <location filename="../import_pfx_dlg.ui" line="770"/>
+        <location filename="../import_pfx_dlg.ui" line="1072"/>
         <source>Attributes</source>
         <translation>속성</translation>
     </message>
@@ -6229,8 +6233,8 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">변경가능한</translation>
     </message>
     <message>
-        <location filename="../import_pfx_dlg.ui" line="605"/>
-        <location filename="../import_pfx_dlg.ui" line="623"/>
+        <location filename="../import_pfx_dlg.ui" line="619"/>
+        <location filename="../import_pfx_dlg.ui" line="630"/>
         <source>Private Key</source>
         <translation>개인 키</translation>
     </message>
@@ -6251,9 +6255,9 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">복호화</translation>
     </message>
     <message>
-        <location filename="../import_pfx_dlg.ui" line="428"/>
-        <location filename="../import_pfx_dlg.ui" line="657"/>
-        <location filename="../import_pfx_dlg.ui" line="992"/>
+        <location filename="../import_pfx_dlg.ui" line="489"/>
+        <location filename="../import_pfx_dlg.ui" line="751"/>
+        <location filename="../import_pfx_dlg.ui" line="1050"/>
         <source>Subject</source>
         <translation>주체</translation>
     </message>
@@ -6262,8 +6266,8 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">추출가능한</translation>
     </message>
     <message>
-        <location filename="../import_pfx_dlg.ui" line="904"/>
-        <location filename="../import_pfx_dlg.ui" line="915"/>
+        <location filename="../import_pfx_dlg.ui" line="938"/>
+        <location filename="../import_pfx_dlg.ui" line="949"/>
         <source>Public Key</source>
         <translation>공개 키</translation>
     </message>
@@ -6404,25 +6408,22 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">PFX</translation>
     </message>
     <message>
-        <location filename="../import_pfx_dlg.ui" line="549"/>
-        <location filename="../import_pfx_dlg.ui" line="868"/>
-        <location filename="../import_pfx_dlg.ui" line="1150"/>
+        <location filename="../import_pfx_dlg.ui" line="563"/>
+        <location filename="../import_pfx_dlg.ui" line="902"/>
+        <location filename="../import_pfx_dlg.ui" line="1204"/>
         <source>StartDate</source>
         <translation>StartDate</translation>
     </message>
     <message>
-        <location filename="../import_pfx_dlg.ui" line="569"/>
-        <location filename="../import_pfx_dlg.ui" line="878"/>
-        <location filename="../import_pfx_dlg.ui" line="1130"/>
+        <location filename="../import_pfx_dlg.ui" line="583"/>
+        <location filename="../import_pfx_dlg.ui" line="912"/>
+        <location filename="../import_pfx_dlg.ui" line="1184"/>
         <source>EndDate</source>
         <translation>EndDate</translation>
     </message>
     <message>
-        <location filename="../import_pfx_dlg.ui" line="377"/>
-        <location filename="../import_pfx_dlg.ui" line="616"/>
-        <location filename="../import_pfx_dlg.ui" line="922"/>
         <source>subject in cert</source>
-        <translation>인증서 주체</translation>
+        <translation type="vanished">인증서 주체</translation>
     </message>
     <message>
         <source>fail to import pfx</source>
@@ -6437,25 +6438,25 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">DSA 개인키 생성 실패(%1)</translation>
     </message>
     <message>
-        <location filename="../import_pfx_dlg.ui" line="418"/>
+        <location filename="../import_pfx_dlg.ui" line="411"/>
         <location filename="../import_pfx_dlg.ui" line="671"/>
-        <location filename="../import_pfx_dlg.ui" line="985"/>
+        <location filename="../import_pfx_dlg.ui" line="1006"/>
         <source>Use SKI</source>
         <translation>SKI 사용</translation>
     </message>
     <message>
-        <location filename="../import_pfx_dlg.ui" line="824"/>
+        <location filename="../import_pfx_dlg.ui" line="858"/>
         <source>SignRecover</source>
         <translation>SignRecover</translation>
     </message>
     <message>
-        <location filename="../import_pfx_dlg.ui" line="1062"/>
+        <location filename="../import_pfx_dlg.ui" line="1116"/>
         <source>VerifyRecover</source>
         <translation>VerifyRecover</translation>
     </message>
     <message>
-        <location filename="../import_pfx_dlg.ui" line="539"/>
-        <location filename="../import_pfx_dlg.ui" line="1049"/>
+        <location filename="../import_pfx_dlg.ui" line="553"/>
+        <location filename="../import_pfx_dlg.ui" line="1103"/>
         <source>Trusted</source>
         <translation>Trusted</translation>
     </message>
@@ -6465,35 +6466,42 @@ Do you want to delete the file and continue?</source>
         <translation>슬롯 이름</translation>
     </message>
     <message>
-        <location filename="../import_pfx_dlg.ui" line="461"/>
-        <location filename="../import_pfx_dlg.ui" line="700"/>
+        <location filename="../import_pfx_dlg.ui" line="441"/>
+        <location filename="../import_pfx_dlg.ui" line="694"/>
         <source>PubKeyInfo</source>
         <translation>공개키 정보</translation>
     </message>
     <message>
-        <location filename="../import_pfx_dlg.ui" line="471"/>
-        <location filename="../import_pfx_dlg.ui" line="710"/>
+        <location filename="../import_pfx_dlg.ui" line="451"/>
+        <location filename="../import_pfx_dlg.ui" line="704"/>
         <source>Use SPKI</source>
         <translation>SPKI 사용</translation>
     </message>
     <message>
-        <location filename="../import_pfx_dlg.ui" line="481"/>
-        <location filename="../import_pfx_dlg.ui" line="720"/>
-        <location filename="../import_pfx_dlg.ui" line="1002"/>
+        <location filename="../import_pfx_dlg.ui" line="461"/>
+        <location filename="../import_pfx_dlg.ui" line="714"/>
+        <location filename="../import_pfx_dlg.ui" line="1016"/>
         <source>Same Label</source>
         <translation>동일 라벨</translation>
     </message>
     <message>
-        <location filename="../import_pfx_dlg.ui" line="559"/>
-        <location filename="../import_pfx_dlg.ui" line="858"/>
-        <location filename="../import_pfx_dlg.ui" line="1140"/>
+        <location filename="../import_pfx_dlg.ui" line="477"/>
+        <location filename="../import_pfx_dlg.ui" line="730"/>
+        <location filename="../import_pfx_dlg.ui" line="1032"/>
+        <source>Use certificate subject DN</source>
+        <translation>인증서 주체자 DN 사용</translation>
+    </message>
+    <message>
+        <location filename="../import_pfx_dlg.ui" line="573"/>
+        <location filename="../import_pfx_dlg.ui" line="892"/>
+        <location filename="../import_pfx_dlg.ui" line="1194"/>
         <source>Copyable</source>
         <translation>Copyable</translation>
     </message>
     <message>
-        <location filename="../import_pfx_dlg.ui" line="579"/>
-        <location filename="../import_pfx_dlg.ui" line="848"/>
-        <location filename="../import_pfx_dlg.ui" line="1120"/>
+        <location filename="../import_pfx_dlg.ui" line="593"/>
+        <location filename="../import_pfx_dlg.ui" line="882"/>
+        <location filename="../import_pfx_dlg.ui" line="1174"/>
         <source>Destroyable</source>
         <translation>Destroyable</translation>
     </message>

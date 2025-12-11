@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>591</width>
-    <height>532</height>
+    <height>435</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -264,29 +264,32 @@
     </widget>
    </item>
    <item>
-    <layout class="QGridLayout" name="gridLayout_5">
+    <layout class="QGridLayout" name="gridLayout_6">
      <property name="topMargin">
       <number>0</number>
      </property>
-     <item row="0" column="1">
-      <widget class="QCheckBox" name="mSubjectInCertCheck">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_6">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="text">
-        <string>subject in cert</string>
+        <string>Cert Path</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="mCertPathText"/>
+     </item>
+     <item row="0" column="2">
+      <widget class="QPushButton" name="mFindBtn">
+       <property name="text">
+        <string>Find</string>
        </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
+      </widget>
      </item>
     </layout>
    </item>
@@ -299,25 +302,12 @@
    </item>
    <item>
     <layout class="QGridLayout" name="gridLayout_2">
-     <item row="4" column="0">
-      <widget class="QLabel" name="label_6">
-       <property name="text">
-        <string>Cert Path</string>
-       </property>
-      </widget>
-     </item>
      <item row="1" column="2">
       <widget class="QCheckBox" name="mUseSKICheck">
        <property name="text">
         <string>Use SKI</string>
        </property>
       </widget>
-     </item>
-     <item row="4" column="1">
-      <widget class="QLineEdit" name="mCertPathText"/>
-     </item>
-     <item row="3" column="1">
-      <widget class="QLineEdit" name="mSubjectText"/>
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="label_5">
@@ -342,25 +332,8 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="mSubjectLabel">
-       <property name="text">
-        <string>Subject</string>
-       </property>
-      </widget>
-     </item>
      <item row="1" column="1">
       <widget class="QLineEdit" name="mIDText"/>
-     </item>
-     <item row="3" column="2">
-      <widget class="QComboBox" name="mSubjectTypeCombo"/>
-     </item>
-     <item row="4" column="2">
-      <widget class="QPushButton" name="mFindBtn">
-       <property name="text">
-        <string>Find</string>
-       </property>
-      </widget>
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="label_10">
@@ -376,6 +349,46 @@
       <widget class="QCheckBox" name="mUseSPKICheck">
        <property name="text">
         <string>Use SPKI</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="Line" name="line_5">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="gridLayout_7">
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <item row="1" column="2">
+      <widget class="QComboBox" name="mSubjectTypeCombo"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="mSubjectLabel">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Subject</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="mSubjectText"/>
+     </item>
+     <item row="0" column="0" colspan="3">
+      <widget class="QCheckBox" name="mSubjectInCertCheck">
+       <property name="text">
+        <string>Use certificate subject DN</string>
        </property>
       </widget>
      </item>
@@ -516,7 +529,6 @@
   <tabstop>mSlotIDText</tabstop>
   <tabstop>mSessionText</tabstop>
   <tabstop>mLoginText</tabstop>
-  <tabstop>mSubjectInCertCheck</tabstop>
   <tabstop>mLabelText</tabstop>
   <tabstop>mIDText</tabstop>
   <tabstop>mUseSKICheck</tabstop>
@@ -524,8 +536,6 @@
   <tabstop>mUseSPKICheck</tabstop>
   <tabstop>mSubjectText</tabstop>
   <tabstop>mSubjectTypeCombo</tabstop>
-  <tabstop>mCertPathText</tabstop>
-  <tabstop>mFindBtn</tabstop>
   <tabstop>mPrivateCheck</tabstop>
   <tabstop>mPrivateCombo</tabstop>
   <tabstop>mModifiableCheck</tabstop>
@@ -542,6 +552,8 @@
   <tabstop>mStartDateEdit</tabstop>
   <tabstop>mEndDateCheck</tabstop>
   <tabstop>mEndDateEdit</tabstop>
+  <tabstop>mFindBtn</tabstop>
+  <tabstop>mCertPathText</tabstop>
  </tabstops>
  <resources/>
  <connections>

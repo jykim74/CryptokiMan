@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>678</width>
-    <height>552</height>
+    <width>577</width>
+    <height>468</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="mFirstTab">
       <attribute name="title">
@@ -371,13 +371,6 @@
          <property name="topMargin">
           <number>0</number>
          </property>
-         <item row="0" column="2">
-          <widget class="QCheckBox" name="mCertSubjectInCertCheck">
-           <property name="text">
-            <string>subject in cert</string>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label_20">
            <property name="text">
@@ -419,16 +412,6 @@
            </property>
           </widget>
          </item>
-         <item row="3" column="1">
-          <widget class="QLineEdit" name="mCertSubjectText"/>
-         </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="mCertSubjectLabel">
-           <property name="text">
-            <string>Subject</string>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label_8">
            <property name="minimumSize">
@@ -451,9 +434,6 @@
             <string>ID</string>
            </property>
           </widget>
-         </item>
-         <item row="3" column="2">
-          <widget class="QComboBox" name="mCertSubjectTypeCombo"/>
          </item>
          <item row="2" column="0">
           <widget class="QLabel" name="label_19">
@@ -479,6 +459,40 @@
           <widget class="QPushButton" name="mCertSameLabelBtn">
            <property name="text">
             <string>Same Label</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="Line" name="line_10">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_14">
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <item row="1" column="2">
+          <widget class="QComboBox" name="mCertSubjectTypeCombo"/>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="mCertSubjectText"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="mCertSubjectLabel">
+           <property name="text">
+            <string>Subject</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0" colspan="3">
+          <widget class="QCheckBox" name="mCertSubjectInCertCheck">
+           <property name="text">
+            <string>Use certificate subject DN</string>
            </property>
           </widget>
          </item>
@@ -610,13 +624,6 @@
          <property name="topMargin">
           <number>0</number>
          </property>
-         <item row="0" column="2">
-          <widget class="QCheckBox" name="mPriSubjectInCertCheck">
-           <property name="text">
-            <string>subject in cert</string>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label_18">
            <property name="text">
@@ -651,13 +658,6 @@
          <property name="topMargin">
           <number>0</number>
          </property>
-         <item row="3" column="0">
-          <widget class="QLabel" name="mPriSubjectLabel">
-           <property name="text">
-            <string>Subject</string>
-           </property>
-          </widget>
-         </item>
          <item row="1" column="0">
           <widget class="QLabel" name="label_13">
            <property name="text">
@@ -674,12 +674,6 @@
          </item>
          <item row="1" column="1">
           <widget class="QLineEdit" name="mPriIDText"/>
-         </item>
-         <item row="3" column="1">
-          <widget class="QLineEdit" name="mPriSubjectText"/>
-         </item>
-         <item row="3" column="2">
-          <widget class="QComboBox" name="mPriSubjectTypeCombo"/>
          </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label_11">
@@ -718,6 +712,46 @@
           <widget class="QPushButton" name="mPriSameLabelBtn">
            <property name="text">
             <string>Same Label</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="Line" name="line_11">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_15">
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <item row="1" column="0">
+          <widget class="QLabel" name="mPriSubjectLabel">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Subject</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="mPriSubjectText"/>
+         </item>
+         <item row="1" column="2">
+          <widget class="QComboBox" name="mPriSubjectTypeCombo"/>
+         </item>
+         <item row="0" column="0" colspan="3">
+          <widget class="QCheckBox" name="mPriSubjectInCertCheck">
+           <property name="text">
+            <string>Use certificate subject DN</string>
            </property>
           </widget>
          </item>
@@ -916,13 +950,6 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="2">
-          <widget class="QCheckBox" name="mPubSubjectInCertCheck">
-           <property name="text">
-            <string>subject in cert</string>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="1">
           <spacer name="horizontalSpacer_4">
            <property name="orientation">
@@ -950,14 +977,8 @@
          <property name="topMargin">
           <number>0</number>
          </property>
-         <item row="2" column="2">
-          <widget class="QComboBox" name="mPubSubjectTypeCombo"/>
-         </item>
          <item row="1" column="1">
           <widget class="QLineEdit" name="mPubIDText"/>
-         </item>
-         <item row="2" column="1">
-          <widget class="QLineEdit" name="mPubSubjectText"/>
          </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label_15">
@@ -986,13 +1007,6 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="mPubSubjectLabel">
-           <property name="text">
-            <string>Subject</string>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="1">
           <widget class="QLineEdit" name="mPubLabelText"/>
          </item>
@@ -1000,6 +1014,46 @@
           <widget class="QPushButton" name="mPubSameLabelBtn">
            <property name="text">
             <string>Same Label</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="Line" name="line_12">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QGridLayout" name="gridLayout_16">
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="mPubSubjectText"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="mPubSubjectLabel">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Subject</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QComboBox" name="mPubSubjectTypeCombo"/>
+         </item>
+         <item row="0" column="0" colspan="3">
+          <widget class="QCheckBox" name="mPubSubjectInCertCheck">
+           <property name="text">
+            <string>Use certificate subject DN</string>
            </property>
           </widget>
          </item>
@@ -1201,7 +1255,6 @@
   <tabstop>mPFXPathText</tabstop>
   <tabstop>mFindBtn</tabstop>
   <tabstop>mPasswordText</tabstop>
-  <tabstop>mCertSubjectInCertCheck</tabstop>
   <tabstop>mCertLabelText</tabstop>
   <tabstop>mCertSameLabelBtn</tabstop>
   <tabstop>mCertIDText</tabstop>
@@ -1226,7 +1279,6 @@
   <tabstop>mCertStartDateEdit</tabstop>
   <tabstop>mCertEndDateCheck</tabstop>
   <tabstop>mCertEndDateEdit</tabstop>
-  <tabstop>mPriSubjectInCertCheck</tabstop>
   <tabstop>mPriLabelText</tabstop>
   <tabstop>mPriSameLabelBtn</tabstop>
   <tabstop>mPriIDText</tabstop>
@@ -1263,7 +1315,6 @@
   <tabstop>mPriStartDateEdit</tabstop>
   <tabstop>mPriEndDateCheck</tabstop>
   <tabstop>mPriEndDateEdit</tabstop>
-  <tabstop>mPubSubjectInCertCheck</tabstop>
   <tabstop>mPubLabelText</tabstop>
   <tabstop>mPubSameLabelBtn</tabstop>
   <tabstop>mPubIDText</tabstop>
