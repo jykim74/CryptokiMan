@@ -89,5 +89,6 @@
         <file>images/ed_pu.png</file>
         <file>images/dsa_pr.png</file>
         <file>images/dsa_pu.png</file>
+        <file>images/edit_list.png</file>
     </qresource>
 </RCC>

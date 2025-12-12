@@ -459,7 +459,8 @@ void MainWindow::createObjectActions()
     objectsMenu->addAction( edit_att_act_ );
     if( isView( ACT_OBJECT_EDIT_ATT ) ) object_tool_->addAction( edit_att_act_ );
 
-    edit_att_list_act_ = new QAction( editIcon, tr("Edit Attribute List"), this);
+    const QIcon editListIcon = QIcon::fromTheme("Edit", QIcon(":/images/edit_list.png"));
+    edit_att_list_act_ = new QAction( editListIcon, tr("Edit Attribute List"), this);
     edit_att_list_act_->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_M));
     connect( edit_att_list_act_, &QAction::triggered, this, &MainWindow::editAttributeList2 );
     edit_att_list_act_->setStatusTip(tr("PKCS11 Edit Attribute List"));
@@ -913,17 +914,13 @@ void MainWindow::unload()
     bool bVal = manApplet->yesOrNoBox( tr( "Are you sure to unload cryptokilibrary" ), this );
     if( bVal == false ) return;
 
+    manApplet->cryptokiAPI()->Finalize( NULL );
+
     ret = manApplet->cryptokiAPI()->unloadLibrary();
     if( ret == 0 )
     {
+        left_model_->Reset();
         manApplet->messageBox( tr( "Cryptoki library has been unloaded successfully" ), this );
-
-        ManTreeItem *item = getRootItem();
-        if( item )
-        {
-            item->setText( "No slot" );
-            item->setIcon( QIcon( ":/images/cryptokiman.png") );
-        }
     }
 }
 
@@ -2902,6 +2899,7 @@ void MainWindow::showRightMenu(QPoint point )
 
     if( manApplet->isLicense() == false )
     {
+//        if( viewAct ) viewAct->setEnabled( false );
         if( delAct ) delAct->setEnabled(false);
         if( editAttAct ) editAttAct->setEnabled( false );
         if( editAttListAct ) editAttListAct->setEnabled( false );

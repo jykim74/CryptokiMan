@@ -18,6 +18,7 @@ class ManTreeModel : public QStandardItemModel
 {
 public:
     ManTreeModel( QObject *parent = nullptr );
+    void Reset();
 
 private:
     void initialize();

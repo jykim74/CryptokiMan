@@ -29,3 +29,8 @@ void ManTreeModel::initialize()
 
     insertRow( 0, item );
 }
+
+void ManTreeModel::Reset()
+{
+    initialize();
+}
