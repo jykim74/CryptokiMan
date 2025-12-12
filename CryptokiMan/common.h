@@ -39,6 +39,9 @@
         return x; \
 }
 
+#define TOOL_BAR_WIDTH      24
+#define TOOL_BAR_HEIGHT     24
+
 const QStringList kRSAOptionList = { "1024", "2048", "3072", "4096", "8192" };
 
 const QStringList kECDSAOptionList = { "prime256v1",

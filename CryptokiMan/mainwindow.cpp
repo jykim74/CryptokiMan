@@ -201,18 +201,13 @@ void MainWindow::baseTableHeader()
     right_table_->verticalHeader()->setVisible(false);
 }
 
-
-void MainWindow::createActions()
+void MainWindow::createFileActions()
 {
-    int nWidth = 24;
-    int nHeight = 24;
-    int nSpacing = 0;
-
     QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
     file_tool_ = addToolBar(tr("File"));
 
-    file_tool_->setIconSize( QSize(nWidth,nHeight));
-    file_tool_->layout()->setSpacing(nSpacing);
+    file_tool_->setIconSize( QSize(TOOL_BAR_WIDTH,TOOL_BAR_HEIGHT));
+    file_tool_->layout()->setSpacing(0);
 
     const QIcon newIcon = QIcon::fromTheme("document-new", QIcon(":/images/new.png"));
     new_act_ = new QAction( newIcon, tr("&New"), this);
@@ -273,13 +268,15 @@ void MainWindow::createActions()
     connect( quit_act_, &QAction::triggered, this, &MainWindow::quit );
     fileMenu->addAction(quit_act_);
 
-    if( manApplet->isLicense() ) createViewActions();
+}
 
+void MainWindow::createModuleActions()
+{
     QMenu *moduleMenu = menuBar()->addMenu(tr("&Module"));
     module_tool_ = addToolBar(tr("Module"));
 
-    module_tool_->setIconSize( QSize(nWidth,nHeight));
-    module_tool_->layout()->setSpacing(nSpacing);
+    module_tool_->setIconSize( QSize(TOOL_BAR_WIDTH,TOOL_BAR_HEIGHT));
+    module_tool_->layout()->setSpacing(0);
 
     const QIcon initIcon = QIcon::fromTheme("init", QIcon(":/images/init.png"));
     init_act_ = new QAction( initIcon, tr("Initialize"), this );
@@ -337,13 +334,15 @@ void MainWindow::createActions()
     logout_act_->setStatusTip(tr("PKCS11 C_Logout"));
     moduleMenu->addAction( logout_act_ );
     if( isView( ACT_MODULE_LOGOUT) ) module_tool_->addAction( logout_act_ );
+}
 
-
+void MainWindow::createObjectActions()
+{
     QMenu *objectsMenu = menuBar()->addMenu(tr("&Objects"));
     object_tool_ = addToolBar(tr("Objects"));
 
-    object_tool_->setIconSize( QSize(nWidth,nHeight));
-    object_tool_->layout()->setSpacing(nSpacing);
+    object_tool_->setIconSize( QSize(TOOL_BAR_WIDTH,TOOL_BAR_HEIGHT));
+    object_tool_->layout()->setSpacing(0);
 
 
     const QIcon keypairIcon = QIcon::fromTheme("keypair", QIcon(":/images/keypair.png"));
@@ -372,7 +371,7 @@ void MainWindow::createActions()
     if( isView( ACT_OBJECT_CREATE_DATA ) ) object_tool_->addAction( create_data_act_ );
 
 
-    const QIcon rp1Icon = QIcon::fromTheme("RSA-Public", QIcon(":/images/rp1.png"));
+    const QIcon rp1Icon = QIcon::fromTheme("RSA-Public", QIcon(":/images/rsa_pu.png"));
     create_rsa_pub_key_act_ = new QAction( rp1Icon, tr("Create RSA Public Key"), this);
     create_rsa_pub_key_act_->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_D));
     connect( create_rsa_pub_key_act_, &QAction::triggered, this, &MainWindow::createRSAPublicKey);
@@ -380,7 +379,7 @@ void MainWindow::createActions()
     objectsMenu->addAction( create_rsa_pub_key_act_ );
     if( isView( ACT_OBJECT_CREATE_RSA_PUB_KEY ) ) object_tool_->addAction( create_rsa_pub_key_act_ );
 
-    const QIcon rp2Icon = QIcon::fromTheme("RSA-Private", QIcon(":/images/rp2.png"));
+    const QIcon rp2Icon = QIcon::fromTheme("RSA-Private", QIcon(":/images/rsa_pr.png"));
     create_rsa_pri_key_act_ = new QAction( rp2Icon, tr("Create RSA Private Key"), this);
     create_rsa_pri_key_act_->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_E));
     connect( create_rsa_pri_key_act_, &QAction::triggered, this, &MainWindow::createRSAPrivateKey);
@@ -388,7 +387,7 @@ void MainWindow::createActions()
     objectsMenu->addAction( create_rsa_pri_key_act_ );
     if( isView( ACT_OBJECT_CREATE_RSA_PRI_KEY ) ) object_tool_->addAction( create_rsa_pri_key_act_ );
 
-    const QIcon ep1Icon = QIcon::fromTheme("EC-Public", QIcon(":/images/ep1.png"));
+    const QIcon ep1Icon = QIcon::fromTheme("EC-Public", QIcon(":/images/ec_pu.png"));
     create_ec_pub_key_act_ = new QAction( ep1Icon, tr("Create ECDSA Public Key"), this);
     create_ec_pub_key_act_->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_F));
     connect( create_ec_pub_key_act_, &QAction::triggered, this, &MainWindow::createECPublicKey);
@@ -396,7 +395,7 @@ void MainWindow::createActions()
     objectsMenu->addAction( create_ec_pub_key_act_ );
     if( isView( ACT_OBJECT_CREATE_EC_PUB_KEY ) ) object_tool_->addAction( create_ec_pub_key_act_ );
 
-    const QIcon ep2Icon = QIcon::fromTheme("EC-Private", QIcon(":/images/ep2.png"));
+    const QIcon ep2Icon = QIcon::fromTheme("EC-Private", QIcon(":/images/ec_pr.png"));
     create_ec_pri_key_act_ = new QAction( ep2Icon, tr("Create ECDSA Private Key"), this);
     create_ec_pri_key_act_->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_G));
     connect( create_ec_pri_key_act_, &QAction::triggered, this, &MainWindow::createECPrivateKey);
@@ -404,7 +403,7 @@ void MainWindow::createActions()
     objectsMenu->addAction( create_ec_pri_key_act_ );
     if( isView( ACT_OBJECT_CREATE_EC_PRI_KEY ) ) object_tool_->addAction( create_ec_pri_key_act_ );
 
-    const QIcon ed1Icon = QIcon::fromTheme("ED-Public", QIcon(":/images/ed1.png"));
+    const QIcon ed1Icon = QIcon::fromTheme("ED-Public", QIcon(":/images/ed_pu.png"));
     create_ed_pub_key_act_ = new QAction( ed1Icon, tr("Creating an EDDSA public key"), this);
     create_ed_pub_key_act_->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_P));
     connect( create_ed_pub_key_act_, &QAction::triggered, this, &MainWindow::createEDPublicKey);
@@ -412,7 +411,7 @@ void MainWindow::createActions()
     objectsMenu->addAction( create_ed_pub_key_act_ );
     if( isView( ACT_OBJECT_CREATE_ED_PUB_KEY ) ) object_tool_->addAction( create_ed_pub_key_act_ );
 
-    const QIcon ed2Icon = QIcon::fromTheme("ED-Public", QIcon(":/images/ed2.png"));
+    const QIcon ed2Icon = QIcon::fromTheme("ED-Public", QIcon(":/images/ed_pr.png"));
     create_ed_pri_key_act_ = new QAction( ed2Icon, tr("Creating an EDDSA private key"), this);
     create_ed_pri_key_act_->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_Q));
     connect( create_ed_pri_key_act_, &QAction::triggered, this, &MainWindow::createEDPrivateKey);
@@ -420,7 +419,7 @@ void MainWindow::createActions()
     objectsMenu->addAction( create_ed_pri_key_act_ );
     if( isView( ACT_OBJECT_CREATE_ED_PRI_KEY ) ) object_tool_->addAction( create_ec_pri_key_act_ );
 
-    const QIcon dp1Icon = QIcon::fromTheme("DSA-Public", QIcon(":/images/dp1.png"));
+    const QIcon dp1Icon = QIcon::fromTheme("DSA-Public", QIcon(":/images/dsa_pu.png"));
     create_dsa_pub_key_act_ = new QAction( dp1Icon, tr("Creating an DSA public key"), this);
     create_dsa_pub_key_act_->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_R));
     connect( create_dsa_pub_key_act_, &QAction::triggered, this, &MainWindow::createDSAPublicKey);
@@ -428,7 +427,7 @@ void MainWindow::createActions()
     objectsMenu->addAction( create_dsa_pub_key_act_ );
     if( isView( ACT_OBJECT_CREATE_DSA_PUB_KEY ) ) object_tool_->addAction( create_dsa_pub_key_act_ );
 
-    const QIcon dp2Icon = QIcon::fromTheme("DSA-Private", QIcon(":/images/dp2.png"));
+    const QIcon dp2Icon = QIcon::fromTheme("DSA-Private", QIcon(":/images/dsa_pr.png"));
     create_dsa_pri_key_act_ = new QAction( dp2Icon, tr("Creating an DSA private key"), this);
     create_dsa_pri_key_act_->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_I));
     connect( create_dsa_pri_key_act_, &QAction::triggered, this, &MainWindow::createDSAPrivateKey);
@@ -500,13 +499,15 @@ void MainWindow::createActions()
         edit_att_list_act_->setEnabled( false );
         copy_object_act_->setEnabled( false );
     }
+}
 
-
+void MainWindow::createCryptActions()
+{
     QMenu *cryptMenu = menuBar()->addMenu(tr("&Cryptography"));
     crypt_tool_ = addToolBar(tr("Cryptography"));
 
-    crypt_tool_->setIconSize( QSize(nWidth,nHeight));
-    crypt_tool_->layout()->setSpacing(nSpacing);
+    crypt_tool_->setIconSize( QSize(TOOL_BAR_WIDTH,TOOL_BAR_HEIGHT));
+    crypt_tool_->layout()->setSpacing(0);
 
     const QIcon diceIcon = QIcon::fromTheme("Dice", QIcon(":/images/dice.png"));
     rand_act_ = new QAction( diceIcon, tr("Random"), this);
@@ -574,12 +575,15 @@ void MainWindow::createActions()
         hsm_man_act_->setEnabled( false );
     }
 
+}
 
+void MainWindow::createImportActions()
+{
     QMenu *importMenu = menuBar()->addMenu(tr("&Import"));
 
     import_tool_ = addToolBar(tr("Import"));
-    import_tool_->setIconSize( QSize(nWidth,nHeight));
-    import_tool_->layout()->setSpacing(nSpacing);
+    import_tool_->setIconSize( QSize(TOOL_BAR_WIDTH,TOOL_BAR_HEIGHT));
+    import_tool_->layout()->setSpacing(0);
 
     const QIcon certIcon = QIcon::fromTheme("cert", QIcon(":/images/cert.png"));
     import_cert_act_ = new QAction( certIcon, tr("Import certificate"), this);
@@ -597,7 +601,7 @@ void MainWindow::createActions()
     importMenu->addAction( import_pfx_act_ );
     if( isView( ACT_IMPORT_PFX ) ) import_tool_->addAction( import_pfx_act_ );
 
-    const QIcon priKeyIcon = QIcon::fromTheme("PrivateKey", QIcon(":/images/prikey.png"));
+    const QIcon priKeyIcon = QIcon::fromTheme("PrivateKey", QIcon(":/images/import3.png"));
     import_pri_key_act_ = new QAction( priKeyIcon, tr("Import Private Key"), this);
     import_pri_key_act_->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_P));
     connect( import_pri_key_act_, &QAction::triggered, this, &MainWindow::improtPrivateKey);
@@ -605,11 +609,21 @@ void MainWindow::createActions()
     importMenu->addAction( import_pri_key_act_ );
     if( isView( ACT_IMPORT_PRI_KEY ) ) import_tool_->addAction( import_pri_key_act_ );
 
+    if( manApplet->isLicense() == false )
+    {
+        import_cert_act_->setEnabled( false );
+        import_pfx_act_->setEnabled( false );
+        import_pri_key_act_->setEnabled( false );
+    }
+}
+
+void MainWindow::createToolActions()
+{
     QMenu *toolsMenu = menuBar()->addMenu(tr("&Tools"));
     tool_tool_ = addToolBar(tr("Tools"));
 
-    tool_tool_->setIconSize( QSize(nWidth,nHeight));
-    tool_tool_->layout()->setSpacing(nSpacing);
+    tool_tool_->setIconSize( QSize(TOOL_BAR_WIDTH,TOOL_BAR_HEIGHT));
+    tool_tool_->layout()->setSpacing(0);
 
     const QIcon tokenIcon = QIcon::fromTheme("token", QIcon(":/images/token.png"));
     init_token_act_ = new QAction( tokenIcon, tr("Initialize Token"), this);
@@ -696,10 +710,6 @@ void MainWindow::createActions()
     {
         edit_att_list_act_->setEnabled( false );
 
-        import_cert_act_->setEnabled( false );
-        import_pfx_act_->setEnabled( false );
-        import_pri_key_act_->setEnabled( false );
-
         init_token_act_->setEnabled( false );
         oper_state_act_->setEnabled( false );
         set_pin_act_->setEnabled( false );
@@ -713,12 +723,15 @@ void MainWindow::createActions()
         make_csr_act_->setEnabled( false );
         cavp_act_->setEnabled( false );
     }
+}
 
+void MainWindow::createHelpActions()
+{
     QMenu *helpMenu = menuBar()->addMenu(tr("&Help"));
     help_tool_ = addToolBar(tr("Help"));
 
-    help_tool_->setIconSize( QSize(nWidth,nHeight));
-    help_tool_->layout()->setSpacing(nSpacing);
+    help_tool_->setIconSize( QSize(TOOL_BAR_WIDTH,TOOL_BAR_HEIGHT));
+    help_tool_->layout()->setSpacing(0);
 
     if( manApplet->isLicense() )
     {
@@ -774,6 +787,21 @@ void MainWindow::createActions()
     about_act_->setStatusTip(tr("About CryptokiMan"));
     helpMenu->addAction( about_act_ );
     if( isView( ACT_HELP_ABOUT ) ) help_tool_->addAction( about_act_ );
+}
+
+
+void MainWindow::createActions()
+{
+    createFileActions();
+
+    if( manApplet->isLicense() ) createViewActions();
+
+    createModuleActions();
+    createObjectActions();
+    createCryptActions();
+    createImportActions();
+    createToolActions();
+    createHelpActions();
 }
 
 void MainWindow::createStatusBar()

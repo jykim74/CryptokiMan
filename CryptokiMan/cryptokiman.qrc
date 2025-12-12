@@ -45,8 +45,6 @@
         <file>images/delete.png</file>
         <file>images/edit.png</file>
         <file>images/key_gen.png</file>
-        <file>images/rp1.png</file>
-        <file>images/rp2.png</file>
         <file>cryptokiman.qss</file>
         <file>images/cryptokiman.png</file>
         <file>images/operation.png</file>
@@ -60,11 +58,7 @@
         <file>images/clear.png</file>
         <file>images/key.png</file>
         <file>images/uk.png</file>
-        <file>images/ep1.png</file>
-        <file>images/ep2.png</file>
         <file>cryptokiman_license.lcn</file>
-        <file>images/dp1.png</file>
-        <file>images/dp2.png</file>
         <file>images/license.png</file>
         <file>Info.plist</file>
         <file>images/copy_object.png</file>
@@ -78,8 +72,6 @@
         <file>images/root_cert.png</file>
         <file>../LICENSE</file>
         <file>images/open_session.png</file>
-        <file>images/ed1.png</file>
-        <file>images/ed2.png</file>
         <file>images/close_session.png</file>
         <file>images/type.png</file>
         <file>images/unload.png</file>
@@ -88,5 +80,14 @@
         <file>images/hsm_man.png</file>
         <file>images/cavp.png</file>
         <file>images/loading.gif</file>
+        <file>images/import3.png</file>
+        <file>images/rsa_pr.png</file>
+        <file>images/rsa_pu.png</file>
+        <file>images/ec_pr.png</file>
+        <file>images/ec_pu.png</file>
+        <file>images/ed_pr.png</file>
+        <file>images/ed_pu.png</file>
+        <file>images/dsa_pr.png</file>
+        <file>images/dsa_pu.png</file>
     </qresource>
 </RCC>

@@ -401,7 +401,7 @@ void MainWindow::viewFileNew( bool bChecked )
 {
     if( bChecked == true )
     {
-        file_tool_->addAction( new_act_ );
+        file_tool_->insertAction( open_act_, new_act_ );
         setView( ACT_FILE_NEW );
     }
     else
@@ -415,7 +415,7 @@ void MainWindow::viewFileOpen( bool bChecked )
 {
     if( bChecked == true )
     {
-        file_tool_->addAction( open_act_ );
+        file_tool_->insertAction( unload_act_, open_act_ );
         setView( ACT_FILE_OPEN );
     }
     else
@@ -430,7 +430,7 @@ void MainWindow::viewFileUnload( bool bChecked )
     int nAct = ACT_FILE_UNLOAD;
     if( bChecked == true )
     {
-        file_tool_->addAction( unload_act_ );
+        file_tool_->insertAction( show_dock_act_, unload_act_ );
         setView( nAct );
     }
     else
@@ -460,7 +460,7 @@ void MainWindow::viewModuleInit( bool bChecked )
     int nAct = ACT_MODULE_INIT;
     if( bChecked == true )
     {
-        module_tool_->addAction( init_act_ );
+        module_tool_->insertAction( final_act_, init_act_ );
         setView( nAct );
     }
     else
@@ -476,7 +476,7 @@ void MainWindow::viewModuleFinal( bool bChecked )
     int nAct = ACT_MODULE_FINAL;
     if( bChecked == true )
     {
-        module_tool_->addAction( final_act_ );
+        module_tool_->insertAction( open_sess_act_, final_act_ );
         setView( nAct );
     }
     else
@@ -491,7 +491,7 @@ void MainWindow::viewModuleOpenSess( bool bChecked )
     int nAct = ACT_MODULE_OPEN_SESS;
     if( bChecked == true )
     {
-        module_tool_->addAction( open_sess_act_ );
+        module_tool_->insertAction( close_sess_act_, open_sess_act_ );
         setView( nAct );
     }
     else
@@ -506,7 +506,7 @@ void MainWindow::viewModuleCloseSess( bool bChecked )
     int nAct = ACT_MODULE_CLOSE_SESS;
     if( bChecked == true )
     {
-        module_tool_->addAction( close_sess_act_ );
+        module_tool_->insertAction( close_all_act_, close_sess_act_ );
         setView( nAct );
     }
     else
@@ -521,7 +521,7 @@ void MainWindow::viewModuleCloseAll( bool bChecked )
     int nAct = ACT_MODULE_CLOSE_ALL;
     if( bChecked == true )
     {
-        module_tool_->addAction( close_all_act_ );
+        module_tool_->insertAction( login_act_, close_all_act_ );
         setView( nAct );
     }
     else
@@ -536,7 +536,7 @@ void MainWindow::viewModuleLogin( bool bChecked )
     int nAct = ACT_MODULE_LOGIN;
     if( bChecked == true )
     {
-        module_tool_->addAction( login_act_ );
+        module_tool_->insertAction( logout_act_, login_act_ );
         setView( nAct );
     }
     else
@@ -567,7 +567,7 @@ void MainWindow::viewObjectGenKeyPair( bool bChecked )
     int nAct = ACT_OBJECT_GEN_KEYPAIR;
     if( bChecked == true )
     {
-        object_tool_->addAction( gen_keypair_act_ );
+        object_tool_->insertAction( gen_key_act_, gen_keypair_act_ );
         setView( nAct );
     }
     else
@@ -582,7 +582,7 @@ void MainWindow::viewObjectGenKey( bool bChecked )
     int nAct = ACT_OBJECT_GEN_KEY;
     if( bChecked == true )
     {
-        object_tool_->addAction( gen_key_act_ );
+        object_tool_->insertAction( create_data_act_, gen_key_act_ );
         setView( nAct );
     }
     else
@@ -597,7 +597,7 @@ void MainWindow::viewObjectCreateData( bool bChecked )
     int nAct = ACT_OBJECT_CREATE_DATA;
     if( bChecked == true )
     {
-        object_tool_->addAction( create_data_act_ );
+        object_tool_->insertAction( create_rsa_pub_key_act_, create_data_act_ );
         setView( nAct );
     }
     else
@@ -612,7 +612,7 @@ void MainWindow::viewObjectCreateRSAPubKey( bool bChecked )
     int nAct = ACT_OBJECT_CREATE_RSA_PUB_KEY;
     if( bChecked == true )
     {
-        object_tool_->addAction( create_rsa_pub_key_act_ );
+        object_tool_->insertAction( create_rsa_pri_key_act_, create_rsa_pub_key_act_ );
         setView( nAct );
     }
     else
@@ -627,7 +627,7 @@ void MainWindow::viewObjectCreateRSAPriKey( bool bChecked )
     int nAct = ACT_OBJECT_CREATE_RSA_PRI_KEY;
     if( bChecked == true )
     {
-        object_tool_->addAction( create_rsa_pri_key_act_ );
+        object_tool_->insertAction( create_ec_pub_key_act_, create_rsa_pri_key_act_ );
         setView( nAct );
     }
     else
@@ -642,7 +642,7 @@ void MainWindow::viewObjectCreateECPubKey( bool bChecked )
     int nAct = ACT_OBJECT_CREATE_EC_PUB_KEY;
     if( bChecked == true )
     {
-        object_tool_->addAction( create_ec_pub_key_act_ );
+        object_tool_->insertAction( create_ec_pri_key_act_, create_ec_pub_key_act_ );
         setView( nAct );
     }
     else
@@ -657,7 +657,7 @@ void MainWindow::viewObjectCreateECPriKey( bool bChecked )
     int nAct = ACT_OBJECT_CREATE_EC_PRI_KEY;
     if( bChecked == true )
     {
-        object_tool_->addAction( create_ec_pri_key_act_ );
+        object_tool_->insertAction( create_ed_pub_key_act_, create_ec_pri_key_act_ );
         setView( nAct );
     }
     else
@@ -672,7 +672,7 @@ void MainWindow::viewObjectCreateEDPubKey( bool bChecked )
     int nAct = ACT_OBJECT_CREATE_ED_PUB_KEY;
     if( bChecked == true )
     {
-        object_tool_->addAction( create_ed_pub_key_act_ );
+        object_tool_->insertAction( create_ed_pri_key_act_, create_ed_pub_key_act_ );
         setView( nAct );
     }
     else
@@ -687,7 +687,7 @@ void MainWindow::viewObjectCreateEDPriKey( bool bChecked )
     int nAct = ACT_OBJECT_CREATE_ED_PRI_KEY;
     if( bChecked == true )
     {
-        object_tool_->addAction( create_ed_pri_key_act_ );
+        object_tool_->insertAction( create_dsa_pub_key_act_, create_ed_pri_key_act_ );
         setView( nAct );
     }
     else
@@ -702,7 +702,7 @@ void MainWindow::viewObjectCreateDSAPubKey( bool bChecked )
     int nAct = ACT_OBJECT_CREATE_DSA_PUB_KEY;
     if( bChecked == true )
     {
-        object_tool_->addAction( create_dsa_pub_key_act_ );
+        object_tool_->insertAction( create_dsa_pri_key_act_, create_dsa_pub_key_act_ );
         setView( nAct );
     }
     else
@@ -717,7 +717,7 @@ void MainWindow::viewObjectCreateDSAPriKey( bool bChecked )
     int nAct = ACT_OBJECT_CREATE_DSA_PRI_KEY;
     if( bChecked == true )
     {
-        object_tool_->addAction( create_dsa_pri_key_act_ );
+        object_tool_->insertAction( create_key_act_, create_dsa_pri_key_act_ );
         setView( nAct );
     }
     else
@@ -732,7 +732,7 @@ void MainWindow::viewObjectCreateKey( bool bChecked )
     int nAct = ACT_OBJECT_CREATE_KEY;
     if( bChecked == true )
     {
-        object_tool_->addAction( create_key_act_ );
+        object_tool_->insertAction( del_object_act_, create_key_act_ );
         setView( nAct );
     }
     else
@@ -747,7 +747,7 @@ void MainWindow::viewObjectDelObject( bool bChecked )
     int nAct = ACT_OBJECT_DEL_OBJECT;
     if( bChecked == true )
     {
-        object_tool_->addAction( del_object_act_ );
+        object_tool_->insertAction( edit_att_act_, del_object_act_ );
         setView( nAct );
     }
     else
@@ -762,7 +762,7 @@ void MainWindow::viewObjectEditAtt( bool bChecked )
     int nAct = ACT_OBJECT_EDIT_ATT;
     if( bChecked == true )
     {
-        object_tool_->addAction( edit_att_act_ );
+        object_tool_->insertAction( edit_att_list_act_, edit_att_act_ );
         setView( nAct );
     }
     else
@@ -777,7 +777,7 @@ void MainWindow::viewObjectEditAttList( bool bChecked )
     int nAct = ACT_OBJECT_EDIT_ATT_LIST;
     if( bChecked == true )
     {
-        object_tool_->addAction( edit_att_list_act_ );
+        object_tool_->insertAction( copy_object_act_, edit_att_list_act_ );
         setView( nAct );
     }
     else
@@ -792,7 +792,7 @@ void MainWindow::viewObjectCopyObject( bool bChecked )
     int nAct = ACT_OBJECT_COPY_OBJECT;
     if( bChecked == true )
     {
-        object_tool_->addAction( copy_object_act_ );
+        object_tool_->insertAction( find_object_act_, copy_object_act_ );
         setView( nAct );
     }
     else
@@ -823,7 +823,7 @@ void MainWindow::viewCryptRand( bool bChecked )
     int nAct = ACT_CRYPT_RAND;
     if( bChecked == true )
     {
-        crypt_tool_->addAction( rand_act_ );
+        crypt_tool_->insertAction( digest_act_, rand_act_ );
         setView( nAct );
     }
     else
@@ -838,7 +838,7 @@ void MainWindow::viewCryptDigest( bool bChecked )
     int nAct = ACT_CRYPT_DIGEST;
     if( bChecked == true )
     {
-        crypt_tool_->addAction( digest_act_ );
+        crypt_tool_->insertAction( sign_act_, digest_act_ );
         setView( nAct );
     }
     else
@@ -853,7 +853,7 @@ void MainWindow::viewCryptSign( bool bChecked )
     int nAct = ACT_CRYPT_SIGN;
     if( bChecked == true )
     {
-        crypt_tool_->addAction( sign_act_ );
+        crypt_tool_->insertAction( verify_act_, sign_act_ );
         setView( nAct );
     }
     else
@@ -868,7 +868,7 @@ void MainWindow::viewCryptVerify( bool bChecked )
     int nAct = ACT_CRYPT_VERIFY;
     if( bChecked == true )
     {
-        crypt_tool_->addAction( verify_act_ );
+        crypt_tool_->insertAction( enc_act_, verify_act_ );
         setView( nAct );
     }
     else
@@ -883,7 +883,7 @@ void MainWindow::viewCryptEnc( bool bChecked )
     int nAct = ACT_CRYPT_ENC;
     if( bChecked == true )
     {
-        crypt_tool_->addAction( enc_act_ );
+        crypt_tool_->insertAction( dec_act_, enc_act_ );
         setView( nAct );
     }
     else
@@ -899,7 +899,7 @@ void MainWindow::viewCryptDec( bool bChecked )
     int nAct = ACT_CRYPT_DEC;
     if( bChecked == true )
     {
-        crypt_tool_->addAction( dec_act_ );
+        crypt_tool_->insertAction( hsm_man_act_, dec_act_ );
         setView( nAct );
     }
     else
@@ -929,7 +929,7 @@ void MainWindow::viewImportCert( bool bChecked )
     int nAct = ACT_IMPORT_CERT;
     if( bChecked == true )
     {
-        import_tool_->addAction( import_cert_act_ );
+        import_tool_->insertAction( import_pfx_act_, import_cert_act_ );
         setView( nAct );
     }
     else
@@ -944,7 +944,7 @@ void MainWindow::viewImportPFX( bool bChecked )
     int nAct = ACT_IMPORT_PFX;
     if( bChecked == true )
     {
-        import_tool_->addAction( import_pfx_act_ );
+        import_tool_->insertAction( import_pri_key_act_, import_pfx_act_ );
         setView( nAct );
     }
     else
@@ -975,7 +975,7 @@ void MainWindow::viewToolInitToken( bool bChecked )
     int nAct = ACT_TOOL_INIT_TOKEN;
     if( bChecked == true )
     {
-        tool_tool_->addAction( init_token_act_ );
+        tool_tool_->insertAction( oper_state_act_, init_token_act_ );
         setView( nAct );
     }
     else
@@ -990,7 +990,7 @@ void MainWindow::viewToolOperState( bool bChecked )
     int nAct = ACT_TOOL_OPER_STATE;
     if( bChecked == true )
     {
-        tool_tool_->addAction( oper_state_act_ );
+        tool_tool_->insertAction( set_pin_act_, oper_state_act_ );
         setView( nAct );
     }
     else
@@ -1005,7 +1005,7 @@ void MainWindow::viewToolSetPIN( bool bChecked )
     int nAct = ACT_TOOL_SET_PIN;
     if( bChecked == true )
     {
-        tool_tool_->addAction( set_pin_act_ );
+        tool_tool_->insertAction( init_pin_act_, set_pin_act_ );
         setView( nAct );
     }
     else
@@ -1020,7 +1020,7 @@ void MainWindow::viewToolInitPIN( bool bChecked )
     int nAct = ACT_TOOL_INIT_PIN;
     if( bChecked == true )
     {
-        tool_tool_->addAction( init_pin_act_ );
+        tool_tool_->insertAction( wrap_key_act_, init_pin_act_ );
         setView( nAct );
     }
     else
@@ -1035,7 +1035,7 @@ void MainWindow::viewToolWrapKey( bool bChecked )
     int nAct = ACT_TOOL_WRAP_KEY;
     if( bChecked == true )
     {
-        tool_tool_->addAction( wrap_key_act_ );
+        tool_tool_->insertAction( unwrap_key_act_, wrap_key_act_ );
         setView( nAct );
     }
     else
@@ -1050,7 +1050,7 @@ void MainWindow::viewToolUnwrapKey( bool bChecked )
     int nAct = ACT_TOOL_UNWRAP_KEY;
     if( bChecked == true )
     {
-        tool_tool_->addAction( unwrap_key_act_ );
+        tool_tool_->insertAction( derive_key_act_, unwrap_key_act_ );
         setView( nAct );
     }
     else
@@ -1065,7 +1065,7 @@ void MainWindow::viewToolDeriveKey( bool bChecked )
     int nAct = ACT_TOOL_DERIVE_KEY;
     if( bChecked == true )
     {
-        tool_tool_->addAction( derive_key_act_ );
+        tool_tool_->insertAction( type_name_act_, derive_key_act_ );
         setView( nAct );
     }
     else
@@ -1080,7 +1080,7 @@ void MainWindow::viewToolTypeName( bool bChecked )
     int nAct = ACT_TOOL_TYPE_NAME;
     if( bChecked == true )
     {
-        tool_tool_->addAction( type_name_act_ );
+        tool_tool_->insertAction( make_csr_act_, type_name_act_ );
         setView( nAct );
     }
     else
@@ -1095,7 +1095,7 @@ void MainWindow::viewToolMakeCSR( bool bChecked )
     int nAct = ACT_TOOL_MAKE_CSR;
     if( bChecked == true )
     {
-        tool_tool_->addAction( make_csr_act_ );
+        tool_tool_->insertAction( cavp_act_, make_csr_act_ );
         setView( nAct );
     }
     else
@@ -1125,7 +1125,7 @@ void MainWindow::viewHelpClearLog( bool bChecked )
     int nAct = ACT_HELP_CLEAR_LOG;
     if( bChecked == true )
     {
-        help_tool_->addAction( clear_log_act_ );
+        help_tool_->insertAction( halt_log_act_, clear_log_act_ );
         setView( nAct );
     }
     else
@@ -1140,7 +1140,7 @@ void MainWindow::viewHelpHaltLog( bool bChecked )
     int nAct = ACT_HELP_HALT_LOG;
     if( bChecked == true )
     {
-        help_tool_->addAction( halt_log_act_ );
+        help_tool_->insertAction( setting_act_, halt_log_act_ );
         setView( nAct );
     }
     else
@@ -1155,7 +1155,7 @@ void MainWindow::viewHelpSetting( bool bChecked )
     int nAct = ACT_HELP_SETTING;
     if( bChecked == true )
     {
-        help_tool_->addAction( setting_act_ );
+        help_tool_->insertAction( about_act_, setting_act_ );
         setView( nAct );
     }
     else

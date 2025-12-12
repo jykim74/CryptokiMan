@@ -251,6 +251,13 @@ private:
     void baseTableHeader();
     void createViewActions();
     void createActions();
+    void createFileActions();
+    void createModuleActions();
+    void createObjectActions();
+    void createCryptActions();
+    void createImportActions();
+    void createToolActions();
+    void createHelpActions();
     void createStatusBar();
     void createMemberDlg();
 
