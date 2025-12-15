@@ -57,7 +57,10 @@ int ManTreeView::currentSlotIndex()
 ManTreeItem* ManTreeView::getItem( int nSlotIndex, int nType )
 {
     ManTreeItem *indexItem = nullptr;
-    ManTreeItem *rootItem = manApplet->mainWindow()->getRootItem();
+
+    ManTreeModel *tree_model = (ManTreeModel *)model();
+    ManTreeItem *rootItem = (ManTreeItem *)tree_model->getRootItem();
+
     if( rootItem == NULL ) return nullptr;
 
     int rowCount = rootItem->rowCount();

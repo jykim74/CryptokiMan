@@ -96,7 +96,6 @@ MainWindow::~MainWindow()
 {
     recent_file_list_.clear();
 
-    delete left_tree_;
     delete left_model_;
 
     delete info_text_;
@@ -137,7 +136,6 @@ void MainWindow::dropEvent(QDropEvent *event)
 void MainWindow::initialize()
 {
     hsplitter_ = new QSplitter(Qt::Horizontal);
-    left_tree_ = new ManTreeView(this);
 
     right_table_ = new QTableWidget;
     left_model_ = new ManTreeModel(this);
@@ -148,10 +146,7 @@ void MainWindow::initialize()
     info_text_ = new CodeEditor;
     info_text_->setReadOnly(true);
 
-    left_tree_->setModel(left_model_);
-    left_tree_->header()->setVisible(false);
-
-    hsplitter_->addWidget(left_tree_);
+    hsplitter_->addWidget( left_model_->getTreeView() );
     hsplitter_->addWidget( right_table_ );
 
     text_tab_ = new QTabWidget;
@@ -836,7 +831,6 @@ int MainWindow::openLibrary(const QString libPath)
         file_path_ = libPath;
 
         QStringList labels;
-        left_tree_->header()->setVisible(false);
 
         ManTreeItem *pItem = new ManTreeItem();
         pItem->setText( tr("CryptokiToken"));
@@ -937,9 +931,6 @@ void MainWindow::P11Initialize()
     CK_ULONG uSlotCnt = 0;
     CK_SLOT_ID  sSlotList[10];
 
-    ManTreeItem *parent_item = manApplet->mainWindow()->getRootItem();
-    QList<SlotInfo>& slotInfos = manApplet->mainWindow()->getSlotInfos();
-\
     ret = manApplet->cryptokiAPI()->Initialize( NULL );
 
     if( ret != 0 )
@@ -949,122 +940,7 @@ void MainWindow::P11Initialize()
         return;
     }
 
-    ret = manApplet->cryptokiAPI()->GetSlotList2( CK_FALSE, sSlotList, &uSlotCnt );
-
-    if( ret == 0 )
-    {
-        for( int i=0; i < uSlotCnt; i++ )
-        {
-            CK_SLOT_INFO    sSlotInfo;
-            SlotInfo    slotInfo;
-
-            ret =manApplet->cryptokiAPI()->GetSlotInfo( sSlotList[i], &sSlotInfo );
-
-            if( ret != 0 )
-            {
-                continue;
-            }
-
-            QString strDesc = (char *)sSlotInfo.slotDescription;
-            QStringList strList = strDesc.split( "  " );
-            QString strName;
-
-            if( strList.size() > 0 )
-                strName = QString( "%1 [%2]" ).arg( strList.at(0) ).arg(i);
-            else
-                strName = QString( "Slot [%1]" ).arg(i);
-
-            ManTreeItem *item = new ManTreeItem;
-            item->setType( HM_ITEM_TYPE_SLOT );
-            item->setIcon( QIcon( ":/images/slot.png" ));
-            item->setText( strName );
-            item->setSlotIndex( i );
-
-            parent_item->appendRow( item );
-
-            slotInfo.setDesc( strName );
-            slotInfo.setLogin( false );
-            slotInfo.setSlotID( sSlotList[i]);
-            slotInfo.setSessionHandle(-1);
-
-            slotInfos.push_back( slotInfo );
-
-
-            ManTreeItem *pItemToken = new ManTreeItem( QString(tr("Token")) );
-            pItemToken->setType( HM_ITEM_TYPE_TOKEN );
-            pItemToken->setIcon( QIcon(":/images/token.png"));
-            pItemToken->setSlotIndex(i);
-            item->appendRow( pItemToken );
-
-
-            ManTreeItem *pItemMech = new ManTreeItem( QString(tr("Mechanism")) );
-            pItemMech->setType( HM_ITEM_TYPE_MECHANISM );
-            pItemMech->setIcon(QIcon(":/images/mech.png"));
-            pItemMech->setSlotIndex(i);
-            item->appendRow( pItemMech );
-
-            ManTreeItem *pItemSession = new ManTreeItem( QString(tr("Session")) );
-            pItemSession->setType( HM_ITEM_TYPE_SESSION );
-            pItemSession->setIcon(QIcon(":/images/session.png"));
-            pItemSession->setSlotIndex(i);
-            item->appendRow( pItemSession );
-
-            ManTreeItem *pItemObjects = new ManTreeItem( QString(tr("Objects")) );
-            pItemObjects->setType( HM_ITEM_TYPE_OBJECTS );
-            pItemObjects->setIcon(QIcon(":/images/object.png"));
-            pItemObjects->setSlotIndex(i);
-            item->appendRow( pItemObjects );
-
-            ManTreeItem *pItemCert = new ManTreeItem( QString(tr("Certificate") ) );
-            pItemCert->setType( HM_ITEM_TYPE_CERTIFICATE );
-            pItemCert->setIcon(QIcon(":/images/cert.png"));
-            pItemCert->setSlotIndex(i);
-            pItemObjects->appendRow( pItemCert );
-
-            ManTreeItem *pItemPubKey = new ManTreeItem( QString(tr("PublicKey")) );
-            pItemPubKey->setType( HM_ITEM_TYPE_PUBLICKEY );
-            pItemPubKey->setIcon( QIcon(":/images/pubkey.png") );
-            pItemPubKey->setSlotIndex(i);
-            pItemObjects->appendRow( pItemPubKey );
-
-            ManTreeItem *pItemPriKey = new ManTreeItem( QString(tr("PrivateKey") ) );
-            pItemPriKey->setType( HM_ITEM_TYPE_PRIVATEKEY );
-            pItemPriKey->setIcon( QIcon(":/images/prikey.png") );
-            pItemPriKey->setSlotIndex(i);
-            pItemObjects->appendRow( pItemPriKey );
-
-            ManTreeItem *pItemSecKey = new ManTreeItem( QString(tr("SecretKey") ) );
-            pItemSecKey->setType( HM_ITEM_TYPE_SECRETKEY );
-            pItemSecKey->setIcon(QIcon(":/images/key.png"));
-            pItemSecKey->setSlotIndex(i);
-            pItemObjects->appendRow( pItemSecKey );
-
-            ManTreeItem *pItemData = new ManTreeItem( QString(tr("Data") ) );
-            pItemData->setType( HM_ITEM_TYPE_DATA );
-            pItemData->setIcon(QIcon(":/images/data_add.png"));
-            pItemData->setSlotIndex(i);
-            pItemObjects->appendRow( pItemData );
-        }
-
-//        expand( parent_item->index() );
-        left_tree_->expand( parent_item->index() );
-    }
-
-    MechMgr* mechMgr = manApplet->mechMgr();
-    if( mechMgr == NULL ) return;
-
-    mechMgr->setSlotID( sSlotList[0] );
-
-    if( manApplet->settingsMgr()->useDeviceMech() == true )
-    {
-        int ret = 0;
-        MechMgr* mechMgr = manApplet->mechMgr();
-        if( mechMgr == NULL ) return;
-
-        ret = mechMgr->loadMechList();
-        if( ret == CKR_OK )
-            manApplet->log( "loading mechanism list execution successful" );
-    }
+    left_model_->makeTree();
 }
 
 void MainWindow::P11Finalize()
@@ -1085,28 +961,13 @@ void MainWindow::P11Finalize()
     if( ret == 0 )
     {
         manApplet->messageBox( tr( "Finalize execution successful"), this );
-
-        ManTreeItem* root = getRootItem();
-
-        if( root )
-        {
-            int cnt = root->rowCount();
-            for( int i = 0; i < cnt; i++ )
-            {
-                root->removeRow( cnt - 1 - i );
-            }
-        }
-
-        if( manApplet->settingsMgr()->useDeviceMech() == true )
-        {
-            manApplet->mechMgr()->clearList();
-        }
+        left_model_->clearTree();
     }
 }
 
 void MainWindow::openSession()
-{    
-    ManTreeItem *pItem = currentTreeItem();
+{
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1119,26 +980,13 @@ void MainWindow::openSession()
     if( openSessionDlg.exec() == QDialog::Accepted )
     {
         int pos = openSessionDlg.getSlotIndex();
-
-        ManTreeItem* root = getRootItem();
-        ManTreeItem* item = (ManTreeItem *)root->child( pos );
-        if( item != NULL )
-        {
-            item->setIcon( QIcon( ":/images/open_session.png" ));
-            left_tree_->expand( item->index() );
-
-            ManTreeItem* objItem = (ManTreeItem *)item->child(3);
-            if( objItem )
-            {
-                left_tree_->expand(objItem->index());
-            }
-        }
+        left_model_->openSlot( pos );
     }
 }
 
 void MainWindow::closeSession()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1152,20 +1000,14 @@ void MainWindow::closeSession()
     if( closeSessionDlg.exec() == QDialog::Accepted )
     {
         int pos = closeSessionDlg.getSlotIndex();
-
-        ManTreeItem* root = getRootItem();
-        ManTreeItem* item = (ManTreeItem *)root->child( pos );
-        if( item != NULL )
-        {
-            item->setIcon( QIcon( ":/images/slot.png" ));
-        }
+        left_model_->closeSlot( pos );
     }
 }
 
 
 void MainWindow::closeAllSessions()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1179,23 +1021,13 @@ void MainWindow::closeAllSessions()
 
     if( closeSessionDlg.exec() == QDialog::Accepted )
     {
-        ManTreeItem* root = getRootItem();
-        int nCnt = manApplet->mainWindow()->getSlotInfos().size();
-
-        for( int i = 0; i < nCnt; i++ )
-        {
-            ManTreeItem* item = (ManTreeItem *)root->child( i );
-            if( item != NULL )
-            {
-                item->setIcon( QIcon( ":/images/slot.png" ));
-            }
-        }
+        left_model_->closeAllSlot();
     }
 }
 
 void MainWindow::login()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1208,19 +1040,13 @@ void MainWindow::login()
     if( loginDlg.exec() == QDialog::Accepted )
     {
         int pos = loginDlg.getSlotIndex();
-
-        ManTreeItem* root = getRootItem();
-        ManTreeItem* item = (ManTreeItem *)root->child( pos );
-        if( item != NULL )
-        {
-            item->setIcon( QIcon( ":/images/login.png" ));
-        }
+        left_model_->loginSlot( pos );
     }
 }
 
 void MainWindow::logout()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1233,19 +1059,13 @@ void MainWindow::logout()
     if( logoutDlg.exec() == QDialog::Accepted )
     {
         int pos = logoutDlg.getSlotIndex();
-
-        ManTreeItem* root = getRootItem();
-        ManTreeItem* item = (ManTreeItem *)root->child( pos );
-        if( item != NULL )
-        {
-            item->setIcon( QIcon( ":/images/open_session.png" ));
-        }
+        left_model_->logoutSlot( pos );
     }
 }
 
 void MainWindow::generateKeyPair()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1260,7 +1080,7 @@ void MainWindow::generateKeyPair()
 
 void MainWindow::generateKey()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1275,7 +1095,7 @@ void MainWindow::generateKey()
 
 void MainWindow::createData()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1290,7 +1110,7 @@ void MainWindow::createData()
 
 void MainWindow::createRSAPublicKey()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1305,7 +1125,7 @@ void MainWindow::createRSAPublicKey()
 
 void MainWindow::createRSAPrivateKey()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1320,7 +1140,7 @@ void MainWindow::createRSAPrivateKey()
 
 void MainWindow::createECPublicKey()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1335,7 +1155,7 @@ void MainWindow::createECPublicKey()
 
 void MainWindow::createECPrivateKey()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1350,7 +1170,7 @@ void MainWindow::createECPrivateKey()
 
 void MainWindow::createEDPublicKey()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1365,7 +1185,7 @@ void MainWindow::createEDPublicKey()
 
 void MainWindow::createEDPrivateKey()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1380,7 +1200,7 @@ void MainWindow::createEDPrivateKey()
 
 void MainWindow::createDSAPublicKey()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1395,7 +1215,7 @@ void MainWindow::createDSAPublicKey()
 
 void MainWindow::createDSAPrivateKey()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1410,7 +1230,7 @@ void MainWindow::createDSAPrivateKey()
 
 void MainWindow::createKey()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1425,7 +1245,7 @@ void MainWindow::createKey()
 
 void MainWindow::copyObject()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1440,7 +1260,7 @@ void MainWindow::copyObject()
 
 void MainWindow::findObject()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1455,7 +1275,7 @@ void MainWindow::findObject()
 
 void MainWindow::copyTableObject()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1483,7 +1303,7 @@ void MainWindow::copyTableObject()
 
 void MainWindow::viewObject()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1511,7 +1331,7 @@ void MainWindow::viewObject()
 
 void MainWindow::deleteObject()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1542,7 +1362,7 @@ void MainWindow::deleteObject()
 
 void MainWindow::editObject()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1564,7 +1384,7 @@ void MainWindow::editObject()
 
 void MainWindow::editAttribute()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1597,7 +1417,7 @@ void MainWindow::editAttribute()
 
 void MainWindow::editAttributeList()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1630,7 +1450,7 @@ void MainWindow::editAttributeList()
 
 void MainWindow::editAttributeList2()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1652,7 +1472,7 @@ void MainWindow::editAttributeList2()
 
 void MainWindow::digest()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1669,7 +1489,7 @@ void MainWindow::digest()
 
 void MainWindow::sign()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1684,7 +1504,7 @@ void MainWindow::sign()
 
 void MainWindow::signType()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1702,7 +1522,7 @@ void MainWindow::signType()
 
 void MainWindow::signEach()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1731,7 +1551,7 @@ void MainWindow::signEach()
 
 void MainWindow::hsmMan()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1755,7 +1575,7 @@ void MainWindow::hsmMan()
 
 void MainWindow::verify()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1772,7 +1592,7 @@ void MainWindow::verify()
 
 void MainWindow::verifyType()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1791,7 +1611,7 @@ void MainWindow::verifyType()
 
 void MainWindow::verifyEach()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1818,7 +1638,7 @@ void MainWindow::verifyEach()
 
 void MainWindow::encrypt()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1836,7 +1656,7 @@ void MainWindow::encrypt()
 
 void MainWindow::encryptType()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1857,7 +1677,7 @@ void MainWindow::encryptType()
 
 void MainWindow::encryptEach()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1885,7 +1705,7 @@ void MainWindow::encryptEach()
 
 void MainWindow::decrypt()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1901,7 +1721,7 @@ void MainWindow::decrypt()
 
 void MainWindow::decryptType()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1922,7 +1742,7 @@ void MainWindow::decryptType()
 
 void MainWindow::decryptEach()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -1950,7 +1770,7 @@ void MainWindow::decryptEach()
 
 void MainWindow::importCert()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -2071,7 +1891,7 @@ end :
 
 void MainWindow::importPFX()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -2088,7 +1908,7 @@ void MainWindow::importPFX()
 
 void MainWindow::improtPrivateKey()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -2111,7 +1931,7 @@ void MainWindow::exportPubKey()
     SlotInfo slotInfo = slot_infos.at( slot_index_ );
     CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -2159,7 +1979,7 @@ void MainWindow::exportPriKey()
     SlotInfo slotInfo = slot_infos.at( slot_index_ );
     CK_SESSION_HANDLE hSession = slotInfo.getSessionHandle();
 
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -2233,7 +2053,7 @@ void MainWindow::exportCert()
 
 void MainWindow::makeCSR()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -2267,7 +2087,7 @@ void MainWindow::makeCSR()
 
 void MainWindow::makeCSREach()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -2344,7 +2164,7 @@ void MainWindow::useLog( bool bEnable )
 
 void MainWindow::initToken()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -2361,7 +2181,7 @@ void MainWindow::initToken()
 
 void MainWindow::rand()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -2378,7 +2198,7 @@ void MainWindow::rand()
 
 void MainWindow::setPin()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -2395,7 +2215,7 @@ void MainWindow::setPin()
 
 void MainWindow::initPin()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -2412,7 +2232,7 @@ void MainWindow::initPin()
 
 void MainWindow::wrapKey()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -2429,7 +2249,7 @@ void MainWindow::wrapKey()
 
 void MainWindow::unwrapKey()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -2446,7 +2266,7 @@ void MainWindow::unwrapKey()
 
 void MainWindow::deriveKey()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -2469,7 +2289,7 @@ void MainWindow::typeName()
 
 void MainWindow::CAVP()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -2492,7 +2312,7 @@ void MainWindow::settings()
 
 void MainWindow::operationState()
 {
-    ManTreeItem *pItem = currentTreeItem();
+    ManTreeItem *pItem = left_model_->currentTreeItem();
 
     if( pItem == NULL || pItem->getSlotIndex() < 0 )
     {
@@ -2935,21 +2755,12 @@ void MainWindow::infoClear()
 
 void MainWindow::clickTreeMenu( int nSlotIndex, int nType )
 {
-    ManTreeItem *rootItem = getRootItem();
-    if( rootItem == NULL ) return;
-
-    ManTreeItem* item = left_tree_->getItem( nSlotIndex, nType );
-    if( item )
-    {
-        left_tree_->clicked( item->index() );
-        left_tree_->setCurrentIndex( item->index() );
-        left_tree_->setFocus();
-    }
+    left_model_->clickTreeMenu( nSlotIndex, nType );
 }
 
 void MainWindow::showTypeList( int nSlotIndex, int nType )
 {
-    left_tree_->showTypeList( nSlotIndex, nType );
+    left_model_->getTreeView()->showTypeList( nSlotIndex, nType );
 
     info_text_->clear();
 }
@@ -2996,20 +2807,7 @@ void MainWindow::updateRecentActionList()
         recent_file_list_.at(i)->setVisible(false);
 }
 
-ManTreeItem* MainWindow::currentTreeItem()
-{
-    ManTreeItem *item = NULL;
-    QModelIndex index = left_tree_->currentIndex();
 
-    item = (ManTreeItem *)left_model_->itemFromIndex( index );
-
-    return item;
-}
-
-ManTreeItem*MainWindow:: getRootItem()
-{
-    return (ManTreeItem*)left_model_->item(0,0);
-}
 
 void MainWindow::info( QString strInfo, QColor cr )
 {

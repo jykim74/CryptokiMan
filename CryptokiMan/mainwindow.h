@@ -42,8 +42,6 @@ public:
     void infoClear();
 
     QList<SlotInfo>& getSlotInfos() { return slot_infos_; };
-    ManTreeItem* currentTreeItem();
-    ManTreeItem* getRootItem();
 
     void info( QString strInfo, QColor cr = QColor(0x00, 0x00, 0x00) );
     void info_w( QString strInfo );
@@ -300,7 +298,6 @@ private:
     QSplitter       *hsplitter_;
     QDockWidget     *dock_;
 
-    ManTreeView     *left_tree_;
     ManTreeModel    *left_model_;
     QTableWidget    *right_table_;
 
