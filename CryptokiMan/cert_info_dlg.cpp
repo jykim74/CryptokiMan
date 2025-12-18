@@ -120,6 +120,7 @@ void CertInfoDlg::getFields()
     char    sNotAfter[64];
 
     int nType = mFieldTypeCombo->currentIndex();
+    time_t now_t = time(NULL);
 
     memset( &sCertInfo, 0x00, sizeof(sCertInfo));
 
@@ -141,6 +142,12 @@ void CertInfoDlg::getFields()
         JS_BIN_reset( &binCert );
         this->hide();
         return;
+    }
+
+    if( now_t > sCertInfo.tNotAfter )
+    {
+        mCertBtn->setIcon( QIcon( ":/images/cert_expired.png" ) );
+        mHeadLabel->setText( tr( "Certificate [Expired]") );
     }
 
     JS_PKI_getPubKeyFromCert( &binCert, &binPub );
