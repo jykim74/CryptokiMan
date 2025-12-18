@@ -2145,8 +2145,8 @@ void MainWindow::bugIssueReport()
 
 void MainWindow::qnaDiscussion()
 {
-//    QString link = "https://github.com/jykim74/CryptokiMan/discussions/new?category=q-a";
-    QString link = "https://groups.google.com/g/cryptokiman";
+    QString link = "https://github.com/jykim74/CryptokiMan/discussions";
+//    QString link = "https://groups.google.com/g/cryptokiman";
     QDesktopServices::openUrl(QUrl(link));
 }
 
