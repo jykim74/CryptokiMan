@@ -32,7 +32,9 @@ CloseSessionDlg::~CloseSessionDlg()
 void CloseSessionDlg::setAll(bool all)
 {
     all_ = all;
-    setWindowTitle( "Close all sessions" );
+    QString strLabel = tr( "Close All Sessions" );
+    setWindowTitle( strLabel );
+    mHeadLabel->setText( strLabel );
 }
 
 void CloseSessionDlg::initialize()

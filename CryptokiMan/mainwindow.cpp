@@ -399,7 +399,7 @@ void MainWindow::createObjectActions()
     if( isView( ACT_OBJECT_CREATE_EC_PRI_KEY ) ) object_tool_->addAction( create_ec_pri_key_act_ );
 
     const QIcon ed1Icon = QIcon::fromTheme("ED-Public", QIcon(":/images/ed_pu.png"));
-    create_ed_pub_key_act_ = new QAction( ed1Icon, tr("Creating an EDDSA public key"), this);
+    create_ed_pub_key_act_ = new QAction( ed1Icon, tr("Creating an EDDSA Public key"), this);
     create_ed_pub_key_act_->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_P));
     connect( create_ed_pub_key_act_, &QAction::triggered, this, &MainWindow::createEDPublicKey);
     create_ed_pub_key_act_->setStatusTip(tr("PKCS11 Create EDDSA Public key"));
@@ -407,7 +407,7 @@ void MainWindow::createObjectActions()
     if( isView( ACT_OBJECT_CREATE_ED_PUB_KEY ) ) object_tool_->addAction( create_ed_pub_key_act_ );
 
     const QIcon ed2Icon = QIcon::fromTheme("ED-Public", QIcon(":/images/ed_pr.png"));
-    create_ed_pri_key_act_ = new QAction( ed2Icon, tr("Creating an EDDSA private key"), this);
+    create_ed_pri_key_act_ = new QAction( ed2Icon, tr("Creating an EDDSA Private key"), this);
     create_ed_pri_key_act_->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_Q));
     connect( create_ed_pri_key_act_, &QAction::triggered, this, &MainWindow::createEDPrivateKey);
     create_ed_pri_key_act_->setStatusTip(tr("PKCS11 Create EDDSA Private key"));

@@ -72,7 +72,10 @@ void CreateECPubKeyDlg::initialize()
     QString strTitle;
 
     if( is_ed_ )
+    {
         strTitle = tr( "Create EDDSA public key" );
+        mECBtn->setIcon( QIcon( ":/images/ed_pu.png" ));
+    }
     else
         strTitle = tr( "Create ECDSA public key" );
 

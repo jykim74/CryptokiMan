@@ -69,7 +69,10 @@ void CreateECPriKeyDlg::initialize()
     QString strTitle;
 
     if( is_ed_ )
+    {
         strTitle = tr( "Create EDDSA private key" );
+        mECBtn->setIcon( QIcon( ":/images/ed_pr.png" ));
+    }
     else
         strTitle = tr( "Create ECDSA private key" );
 

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>577</width>
-    <height>468</height>
+    <height>513</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -418,7 +418,7 @@
          <item row="0" column="1">
           <widget class="QLabel" name="label_20">
            <property name="text">
-            <string>Certificate</string>
+            <string>Certificate Attributes</string>
            </property>
           </widget>
          </item>
@@ -710,7 +710,7 @@
          <item row="0" column="1">
           <widget class="QLabel" name="label_18">
            <property name="text">
-            <string>Private Key</string>
+            <string>Private Key Attributes</string>
            </property>
           </widget>
          </item>
@@ -1055,7 +1055,7 @@
          <item row="0" column="1">
           <widget class="QLabel" name="label_12">
            <property name="text">
-            <string>Public Key</string>
+            <string>Public Key Attributes</string>
            </property>
           </widget>
          </item>
