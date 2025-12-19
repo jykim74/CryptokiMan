@@ -1445,3 +1445,32 @@ void setLineEditHexOnly( QLineEdit *pEdit, const QString strPlaceHolder )
     QRegExpValidator* regVal = new QRegExpValidator( regExp );
     pEdit->setValidator( regVal );
 }
+
+const QString getSlotInfo( SlotInfo& info )
+{
+    QString strInfo;
+    QString strSession;
+    QString strLogin;
+
+    strInfo = info.getDesc();
+
+    if( info.getSessionHandle() > 0 )
+    {
+        strInfo += QString( "(Session:%1 Login:%2)" )
+                       .arg( info.getSessionHandle() )
+                       .arg( info.getLogin() ? "Y" : "N" );
+    }
+
+    return strInfo;
+}
+
+const QIcon getSlotIcon( SlotInfo& info )
+{
+    if( info.getLogin() == true )
+        return QIcon( ":/images/login.png" );
+
+    if( info.getSessionHandle() > 0 )
+        return QIcon( ":/images/open_session.png" );
+
+    return QIcon( ":/images/slot.png" );
+}

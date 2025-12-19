@@ -87,7 +87,7 @@
       </widget>
      </item>
      <item row="0" column="0">
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="mKeyBtn">
        <property name="minimumSize">
         <size>
          <width>16</width>
@@ -105,7 +105,7 @@
        </property>
        <property name="icon">
         <iconset resource="cryptokiman.qrc">
-         <normaloff>:/images/keypair.png</normaloff>:/images/keypair.png</iconset>
+         <normaloff>:/images/prikey.png</normaloff>:/images/prikey.png</iconset>
        </property>
        <property name="flat">
         <bool>true</bool>

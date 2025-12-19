@@ -506,12 +506,9 @@ void CAVPDlg::setSlotIndex(int index)
     if( index >= 0 )
     {
         slot_info_ = slot_infos.at(slot_index_);
-        mSlotNameText->setText( slot_info_.getDesc() );
+        mSlotInfoText->setText( getSlotInfo( slot_info_) );
+        mSlotBtn->setIcon( getSlotIcon( slot_info_ ) );
     }
-
-    mSlotIDText->setText( QString( "%1").arg(slot_info_.getSlotID()));
-    mSessionText->setText( QString("%1").arg(slot_info_.getSessionHandle()));
-    mLoginText->setText( slot_info_.getLogin() ? "YES" : "NO" );
 }
 
 void CAVPDlg::clickFindRsp()
@@ -913,7 +910,7 @@ void CAVPDlg::clickACVP_LDTRun()
 
     int nMech = -1;
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
     unsigned char sDigest[128];
     long uDigestLen = 0;
@@ -1033,7 +1030,7 @@ int CAVPDlg::createKey( int nKeyType, const BIN *pKey, long *phObj )
 {
     int ret = 0;
     bool bToken = false;
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
 
     static unsigned char s_sTestID[] = { 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF };
@@ -1148,7 +1145,7 @@ int CAVPDlg::genRSAKeyPair( int nKeyLen, int nE, long *phPri, long *phPub )
         return -1;
     }
 
-    hSession = mSessionText->text().toLong();
+    hSession = slot_info_.getSessionHandle();
 
     /* Pub Template */
     sPubTemplate[nPubCount].type = CKA_CLASS;
@@ -1237,7 +1234,7 @@ int CAVPDlg::importRSAPriKey( const BIN *pRSAPri, long *phPri )
     int ret = 0;
     CK_BBOOL bTrue = CK_TRUE;
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
     long uObj = -1;
 
     CK_ATTRIBUTE sTemplate[20];
@@ -1374,7 +1371,7 @@ int CAVPDlg::importRSAPubKey( const BIN *pRSAPub, long *phPub )
     int ret = 0;
     CK_BBOOL bTrue = CK_TRUE;
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
     long uObj = -1;
 
     CK_ATTRIBUTE sTemplate[10];
@@ -1478,7 +1475,7 @@ int CAVPDlg::genECCKeyPair( const QString strParam, long *phPri, long *phPub )
         return -1;
     }
 
-    hSession = mSessionText->text().toLong();
+    hSession = slot_info_.getSessionHandle();
 
     /* Pub Template */
     sPubTemplate[nPubCount].type = CKA_CLASS;
@@ -1560,7 +1557,7 @@ int CAVPDlg::importECCPriKey( const BIN *pECCPri, long *phPri )
     CK_BBOOL bTrue = true;
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
     long uObj = -1;
 
     CK_ATTRIBUTE sTemplate[10];
@@ -1633,7 +1630,7 @@ int CAVPDlg::importECCPubKey( const BIN *pECCPub, long *phPub )
     int ret = 0;
     CK_BBOOL bTrue = CK_TRUE;
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
     long uObj = -1;
 
     CK_ATTRIBUTE sTemplate[10];
@@ -1725,7 +1722,7 @@ int CAVPDlg::deriveKeyECDH( long uPri, const BIN *pPubX, const BIN *pPubY, long*
     CK_BBOOL bFalse = CK_FALSE;
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
     long uObj = -1;
 
     CK_ATTRIBUTE sTemplate[10];
@@ -1812,7 +1809,7 @@ int CAVPDlg::makeSymData( const QString strAlgMode, const BIN *pKey, const BIN *
 {
     int ret = 0;
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
     BIN binEnc = {0,0};
 
@@ -1884,7 +1881,7 @@ int CAVPDlg::makeAEData( const BIN *pKey, const BIN *pIV, const BIN *pPT, const 
     QString strEncAlg;
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
 
     long uOutLen = 0;
@@ -1982,7 +1979,7 @@ int CAVPDlg::makeADData( const BIN *pKey, const BIN *pIV, const BIN *pCT, const 
     QString strEncAlg;
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
 
     long uOutLen = 0;
@@ -2074,7 +2071,7 @@ int CAVPDlg::makeHashData( int nLen, const BIN *pVal )
     QString strAlg = mHashAlgCombo->currentText();
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
     unsigned char sOut[1024];
     int nOutLen = 0;
@@ -2118,7 +2115,7 @@ int CAVPDlg::makeHMACData( const QString strCount, const QString strKLen, const 
     QString strAlg = mHashAlgCombo->currentText();
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
     unsigned char sOut[1024];
     int nOutLen = 0;
@@ -2268,7 +2265,7 @@ int CAVPDlg::makeSymDec_MCT( const QString strAlgMode, const BIN *pKey, const BI
 int CAVPDlg::makeSymECB_MCT( int nKeyAlg, const BIN *pKey, const BIN *pPT, QJsonArray& jsonRes, bool bWin )
 {
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
     unsigned char sOut[1024];
     int nOutLen = 0;
@@ -2415,7 +2412,7 @@ end :
 int CAVPDlg::makeSymCBC_MCT( int nKeyAlg, const BIN *pKey, const BIN *pIV, const BIN *pPT, QJsonArray& jsonRes, bool bWin )
 {
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
     unsigned char sOut[1024];
     int nOutLen = 0;
@@ -2592,7 +2589,7 @@ end :
 int CAVPDlg::makeSymCTR_MCT( int nKeyAlg, const BIN *pKey, const BIN *pIV, const BIN *pPT, QJsonArray& jsonRes, bool bWin )
 {
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
     unsigned char sOut[1024];
     int nOutLen = 0;
@@ -2755,7 +2752,7 @@ end :
 int CAVPDlg::makeSymCFB_MCT( int nKeyAlg, const BIN *pKey, const BIN *pIV, const BIN *pPT, QJsonArray& jsonRes, bool bWin )
 {
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
     unsigned char sOut[1024];
     int nOutLen = 0;
@@ -2934,7 +2931,7 @@ end :
 int CAVPDlg::makeSymOFB_MCT( int nKeyAlg, const BIN *pKey, const BIN *pIV, const BIN *pPT, QJsonArray& jsonRes, bool bWin )
 {
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
     unsigned char sOut[1024];
     int nOutLen = 0;
@@ -3119,7 +3116,7 @@ end :
 int CAVPDlg::makeSymDecECB_MCT( int nKeyAlg, const BIN *pKey, const BIN *pCT, QJsonArray& jsonRes, bool bWin )
 {
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
     unsigned char sOut[1024];
     int nOutLen = 0;
@@ -3265,7 +3262,7 @@ end :
 int CAVPDlg::makeSymDecCBC_MCT( int nKeyAlg, const BIN *pKey, const BIN *pIV, const BIN *pCT, QJsonArray& jsonRes, bool bWin )
 {
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
     unsigned char sOut[1024];
     int nOutLen = 0;
@@ -3440,7 +3437,7 @@ end :
 int CAVPDlg::makeSymDecCTR_MCT( int nKeyAlg, const BIN *pKey, const BIN *pIV, const BIN *pCT, QJsonArray& jsonRes, bool bWin )
 {
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
     unsigned char sOut[1024];
     int nOutLen = 0;
@@ -3603,7 +3600,7 @@ end :
 int CAVPDlg::makeSymDecCFB_MCT( int nKeyAlg, const BIN *pKey, const BIN *pIV, const BIN *pCT, QJsonArray& jsonRes, bool bWin )
 {
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
     unsigned char sOut[1024];
     int nOutLen = 0;
@@ -3782,7 +3779,7 @@ end :
 int CAVPDlg::makeSymDecOFB_MCT( int nKeyAlg, const BIN *pKey, const BIN *pIV, const BIN *pCT, QJsonArray& jsonRes, bool bWin )
 {
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
     unsigned char sOut[1024];
     int nOutLen = 0;
@@ -3966,7 +3963,7 @@ end :
 int CAVPDlg::makeHash_MCT( const QString strAlg, const BIN *pSeed, QJsonArray& jsonRes, bool bWin )
 {
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
     unsigned char sOut[1024];
     int nOutLen = 0;
@@ -4076,7 +4073,7 @@ end :
 int CAVPDlg::makeHash_AlternateMCT( const QString strAlg, const BIN *pSeed, QJsonArray& jsonRes, bool bWin )
 {
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
     unsigned char sOut[1024];
     int nOutLen = 0;
@@ -4332,7 +4329,7 @@ int CAVPDlg::hashJsonWork( const QString strAlg, const QJsonObject jObject, QJso
     QString strHash = _getHashName( strAlg );
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
     unsigned char sOut[1024];
     int nOutLen = 1024;
@@ -4505,7 +4502,7 @@ int CAVPDlg::ecdsaJsonWork( const QString strMode, const QJsonObject jObject, QJ
     QString strUseCurve = _getECCurveName( strCurve );
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
     unsigned char sOut[1024];
     int nOutLen = 1024;
@@ -4808,7 +4805,7 @@ int CAVPDlg::rsaJsonWork( const QString strMode, const QJsonObject jObject, QJso
     QString strUseHash = _getHashName( strHashAlg );
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
     unsigned char sOut[1024];
     int nOutLen = 1024;
@@ -5285,7 +5282,7 @@ int CAVPDlg::macJsonWork( const QString strAlg, const QJsonObject jObject, QJson
     int nIVLen = jObject["ivLen"].toInt();
     int nTagLen = jObject["tagLen"].toInt();
 
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
 
 
@@ -5581,7 +5578,7 @@ int CAVPDlg::blockCipherJsonWork( const QString strAlg, const QJsonObject jObjec
     BIN binAAD = {0,0};
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
     unsigned char sOut[10240];
     int nOutLen = 10240;
@@ -6088,7 +6085,7 @@ int CAVPDlg::kdaJsonWork( const QString strAlg, const QJsonObject jObject, QJson
     BIN binDerivedKey = {0,0};
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
     unsigned char sOut[1024];
     int nOutLen = 1024;

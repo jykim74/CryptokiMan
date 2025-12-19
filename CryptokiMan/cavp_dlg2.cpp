@@ -1099,7 +1099,7 @@ int CAVPDlg::makeRSA_ES_DET( const QString strPri, const QString strC )
     BIN binPri = {0,0};
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
     CK_MECHANISM sMech;
     long uPri = -1;
@@ -1156,7 +1156,7 @@ int CAVPDlg::makeRSA_ES_ENT( int nE, const QString strN, const QString strM )
     BIN binE = {0,0};
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
     CK_MECHANISM sMech;
     long uPub = -1;
@@ -1217,7 +1217,7 @@ int CAVPDlg::makeRSA_ES_KGT( int nKeyLen, int nE, int nCount )
     JRSAKeyVal sKeyVal;
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
     CK_MECHANISM sMech;
 
@@ -1271,7 +1271,7 @@ int CAVPDlg::makeRSA_PSS_KPG( int nLen, int nE, int nCount )
     JRSAKeyVal sKeyVal;
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
     CK_MECHANISM sMech;
 
@@ -1327,7 +1327,7 @@ int CAVPDlg::makeRSA_PSS_SGT( int nE, const QString strPri, const QString strHas
     //    BIN binPub = {0,0};
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    CK_SESSION_HANDLE hSession = mSessionText->text().toLong();
+    CK_SESSION_HANDLE hSession = slot_info_.getSessionHandle();
 
     CK_MECHANISM sMech;
 
@@ -1388,7 +1388,7 @@ int CAVPDlg::makeRSA_PSS_SVT( int nE, const QString strN, const QString strHash,
     JRSAKeyVal sKeyVal;
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
     CK_MECHANISM sMech;
 
@@ -1460,7 +1460,7 @@ int CAVPDlg::makeECDH_KPG( const QString strParam, int nCount )
     BIN binPri = {0,0};
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
     CK_MECHANISM sMech;
 
@@ -1519,7 +1519,7 @@ int CAVPDlg::makeECDH_PKV( const QString strParam, const QString strPubX, const 
     JECKeyVal   sECVal;
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
     long uPub = -1;
 
@@ -1584,7 +1584,7 @@ int CAVPDlg::makeECDH_KAKAT( const QString strParam, const QString strRA, const 
     BIN binValue = {0,0};
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
     JECKeyVal sECVal;
     long uPriB = -1;
@@ -1663,7 +1663,7 @@ int CAVPDlg::makeECDSA_KPG( const QString strParam, int nNum )
     JECKeyVal sPubVal;
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
     CK_MECHANISM sMech;
 
@@ -1724,7 +1724,7 @@ int CAVPDlg::makeECDSA_PKV( const QString strParam, const QString strYX, const Q
     JECKeyVal   sECVal;
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
     long uPub = -1;
 
@@ -1775,7 +1775,7 @@ int CAVPDlg::makeECDSA_SGT( const QString strParam, const QString strHash, const
     JECKeyVal   sKeyVal;
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
     CK_MECHANISM sMech;
 
@@ -1848,7 +1848,7 @@ int CAVPDlg::makeECDSA_SVT( const QString strParam, const QString strHash, const
     BIN binM = {0,0};
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
-    long hSession = mSessionText->text().toLong();
+    long hSession = slot_info_.getSessionHandle();
 
     JECKeyVal sECVal;
 

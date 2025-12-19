@@ -33,7 +33,6 @@ private slots:
     void dropEvent(QDropEvent *event);
 
     virtual void accept();
-    void slotChanged( int index );
 
     void clickPriSameLabel();
     void clickPubSameLabel();

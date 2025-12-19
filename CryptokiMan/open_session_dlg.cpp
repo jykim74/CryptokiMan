@@ -46,7 +46,8 @@ void OpenSessionDlg::setSlotIndex(int index)
     if( index >= 0 )
     {
         slot_info_ = slot_infos.at(slot_index_);
-        mSlotNameText->setText( slot_info_.getDesc() );
+        mSlotInfoText->setText( getSlotInfo( slot_info_) );
+        mSlotBtn->setIcon( getSlotIcon( slot_info_ ) );
     }
 }
 

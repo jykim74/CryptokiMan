@@ -26,7 +26,6 @@ public:
     int getSlotIndex() { return slot_index_; };
 
 private slots:
-    void slotChanged( int index );
     void changeClass( int index );
     void changeKeyType( int index );
 

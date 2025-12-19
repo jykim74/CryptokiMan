@@ -1045,6 +1045,8 @@ void PriKeyInfoDlg::setPrivateKey( const BIN *pPriKey )
     pub_handle_ = 0;
     pri_handle_ = 0;
 
+    mKeyBtn->setIcon( QIcon( ":/images/prikey.png" ));
+
 
     if( pPriKey == NULL || pPriKey->nLen <= 0 )
         return;
@@ -1101,6 +1103,7 @@ void PriKeyInfoDlg::setPublicKey( const BIN *pPubKey )
 
     mTitleLabel->setText( strTitle );
     setWindowTitle( strTitle );
+    mKeyBtn->setIcon( QIcon( ":/images/pubkey.png" ));
 
     JS_BIN_reset( &pri_key_ );
     JS_BIN_reset( &pub_key_ );
@@ -1167,6 +1170,7 @@ void PriKeyInfoDlg::setPrivateKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE 
 
     mTitleLabel->setText( strTitle );
     setWindowTitle( strTitle );
+    mKeyBtn->setIcon( QIcon( ":/images/prikey.png" ));
 
     JS_BIN_reset( &pri_key_ );
     JS_BIN_reset( &pub_key_ );
@@ -1246,6 +1250,7 @@ void PriKeyInfoDlg::setPublicKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE h
 
     mTitleLabel->setText( strTitle );
     setWindowTitle( strTitle );
+    mKeyBtn->setIcon( QIcon( ":/images/pubkey.png" ));
 
     JS_BIN_reset( &pri_key_ );
     JS_BIN_reset( &pub_key_ );

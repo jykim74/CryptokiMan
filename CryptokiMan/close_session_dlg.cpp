@@ -31,8 +31,18 @@ CloseSessionDlg::~CloseSessionDlg()
 
 void CloseSessionDlg::setAll(bool all)
 {
+    QString strLabel;
     all_ = all;
-    QString strLabel = tr( "Close All Sessions" );
+
+    if( all_ == true )
+    {
+        strLabel = tr( "Close All Sessions" );
+    }
+    else
+    {
+        strLabel = tr( "Close Session" );
+    }
+
     setWindowTitle( strLabel );
     mHeadLabel->setText( strLabel );
 }
@@ -50,12 +60,9 @@ void CloseSessionDlg::setSlotIndex(int index)
     if( index >= 0 )
     {
         slot_info_ = slot_infos.at(slot_index_);
-        mSlotNameText->setText( slot_info_.getDesc() );
+        mSlotInfoText->setText( getSlotInfo( slot_info_ ) );
+        mSlotBtn->setIcon( getSlotIcon( slot_info_ ) );
     }
-
-    mSlotIDText->setText( QString( "%1").arg(slot_info_.getSlotID()));
-    mSessionText->setText( QString("%1").arg(slot_info_.getSessionHandle()));
-    mLoginText->setText( slot_info_.getLogin() ? "YES" : "NO" );
 }
 
 void CloseSessionDlg::accept()

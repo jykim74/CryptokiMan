@@ -9,11 +9,13 @@
 #include <QStringList>
 #include <QWidget>
 #include <QLineEdit>
+#include <QIcon>
 
 #include "js_pkcs11.h"
 #include "js_pki_ext.h"
 #include "define.h"
 #include "js_pki_raw.h"
+#include "slot_info.h"
 
 #define     HM_ITEM_TYPE_ROOT               0
 #define     HM_ITEM_TYPE_SLOT               1
@@ -263,4 +265,7 @@ int writePubKeyPEM( const BIN *pPubKey, const QString strPath );
 
 void setFixedLineText( QLineEdit *pEdit, const QString strText );
 void setLineEditHexOnly( QLineEdit *pEdit, const QString strPlaceHolder = "" );
+
+const QString getSlotInfo( SlotInfo& info );
+const QIcon getSlotIcon( SlotInfo& info );
 #endif // COMMON_H

@@ -61,20 +61,46 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QLabel" name="label">
+      <widget class="QPushButton" name="mSlotBtn">
        <property name="minimumSize">
         <size>
-         <width>80</width>
+         <width>16</width>
          <height>0</height>
         </size>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>16</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="text">
-        <string>Slot name</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="cryptokiman.qrc">
+         <normaloff>:/images/slot.png</normaloff>:/images/slot.png</iconset>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="mSlotNameText">
+      <widget class="QLabel" name="label">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Slot Info</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="mSlotInfoText">
        <property name="palette">
         <palette>
          <active>
@@ -233,7 +259,7 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>mSlotNameText</tabstop>
+  <tabstop>mSlotInfoText</tabstop>
   <tabstop>mSerialCheck</tabstop>
   <tabstop>mRWCheck</tabstop>
   <tabstop>mWaitForSlotEventBtn</tabstop>

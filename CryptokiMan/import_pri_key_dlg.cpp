@@ -86,12 +86,9 @@ void ImportPriKeyDlg::setSlotIndex(int index)
     if( index >= 0 )
     {
         slot_info_ = slot_infos.at(slot_index_);
-        mSlotNameText->setText( slot_info_.getDesc() );
+        mSlotInfoText->setText( getSlotInfo( slot_info_) );
+        mSlotBtn->setIcon( getSlotIcon( slot_info_ ) );
     }
-
-    mSlotIDText->setText( QString( "%1").arg(slot_info_.getSlotID()));
-    mSessionText->setText( QString("%1").arg(slot_info_.getSessionHandle()));
-    mLoginText->setText( slot_info_.getLogin() ? "YES" : "NO" );
 }
 
 void ImportPriKeyDlg::initialize()
@@ -436,18 +433,6 @@ end :
     manApplet->showTypeList( slot_index_, HM_ITEM_TYPE_PRIVATEKEY );
 
     QDialog::accept();
-}
-
-void ImportPriKeyDlg::slotChanged(int index)
-{
-    if( index < 0 ) return;
-
-    QList<SlotInfo> slot_infos = manApplet->mainWindow()->getSlotInfos();
-    SlotInfo slotInfo = slot_infos.at(index);
-
-    mSlotIDText->setText( QString( "%1").arg(slotInfo.getSlotID()));
-    mSessionText->setText( QString("%1").arg(slotInfo.getSessionHandle()));
-    mLoginText->setText( slotInfo.getLogin() ? "YES" : "NO" );
 }
 
 void ImportPriKeyDlg::clickPriSameLabel()
