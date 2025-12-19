@@ -37,6 +37,9 @@
         <iconset resource="cryptokiman.qrc">
          <normaloff>:/images/dk.png</normaloff>:/images/dk.png</iconset>
        </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item row="0" column="1">

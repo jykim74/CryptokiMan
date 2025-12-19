@@ -195,21 +195,7 @@
          <property name="topMargin">
           <number>0</number>
          </property>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_9">
-           <property name="text">
-            <string>Certificate List</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="3">
-          <widget class="QCheckBox" name="mCertKeyPairCheck">
-           <property name="text">
-            <string>Check KeyPair</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
+         <item row="0" column="2">
           <spacer name="horizontalSpacer_6">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -222,10 +208,50 @@
            </property>
           </spacer>
          </item>
-         <item row="0" column="2">
+         <item row="0" column="3">
           <widget class="QPushButton" name="mCertObjectViewBtn">
            <property name="text">
             <string>Object View</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="label_9">
+           <property name="text">
+            <string>Certificate List</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="4">
+          <widget class="QCheckBox" name="mCertKeyPairCheck">
+           <property name="text">
+            <string>Check KeyPair</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QPushButton" name="pushButton_2">
+           <property name="minimumSize">
+            <size>
+             <width>16</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="cryptokiman.qrc">
+             <normaloff>:/images/cert.png</normaloff>:/images/cert.png</iconset>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -328,17 +354,7 @@
          <property name="topMargin">
           <number>0</number>
          </property>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_8">
-           <property name="text">
-            <string>Public Key List</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="3">
-          <widget class="QComboBox" name="mPublicTypeCombo"/>
-         </item>
-         <item row="0" column="1">
+         <item row="0" column="2">
           <spacer name="horizontalSpacer_5">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -351,10 +367,46 @@
            </property>
           </spacer>
          </item>
-         <item row="0" column="2">
+         <item row="0" column="3">
           <widget class="QPushButton" name="mPublicObjectViewBtn">
            <property name="text">
             <string>Object View</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="label_8">
+           <property name="text">
+            <string>Public Key List</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="4">
+          <widget class="QComboBox" name="mPublicTypeCombo"/>
+         </item>
+         <item row="0" column="0">
+          <widget class="QPushButton" name="pushButton_3">
+           <property name="minimumSize">
+            <size>
+             <width>16</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="cryptokiman.qrc">
+             <normaloff>:/images/pubkey.png</normaloff>:/images/pubkey.png</iconset>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -467,7 +519,7 @@
          <property name="rightMargin">
           <number>0</number>
          </property>
-         <item row="0" column="1">
+         <item row="0" column="2">
           <spacer name="horizontalSpacer_4">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -480,7 +532,7 @@
            </property>
           </spacer>
          </item>
-         <item row="0" column="0">
+         <item row="0" column="1">
           <widget class="QLabel" name="label_7">
            <property name="text">
             <string>Private Key List</string>
@@ -488,12 +540,38 @@
           </widget>
          </item>
          <item row="0" column="3">
-          <widget class="QComboBox" name="mPrivateTypeCombo"/>
-         </item>
-         <item row="0" column="2">
           <widget class="QPushButton" name="mPrivateObjectViewBtn">
            <property name="text">
             <string>Object View</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="4">
+          <widget class="QComboBox" name="mPrivateTypeCombo"/>
+         </item>
+         <item row="0" column="0">
+          <widget class="QPushButton" name="pushButton_4">
+           <property name="minimumSize">
+            <size>
+             <width>16</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="cryptokiman.qrc">
+             <normaloff>:/images/prikey.png</normaloff>:/images/prikey.png</iconset>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -603,17 +681,17 @@
          <property name="topMargin">
           <number>0</number>
          </property>
-         <item row="0" column="3">
+         <item row="0" column="4">
           <widget class="QComboBox" name="mSecretTypeCombo"/>
          </item>
-         <item row="0" column="0">
+         <item row="0" column="1">
           <widget class="QLabel" name="label_6">
            <property name="text">
             <string>Secret Key List</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
+         <item row="0" column="2">
           <spacer name="horizontalSpacer_3">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -626,10 +704,36 @@
            </property>
           </spacer>
          </item>
-         <item row="0" column="2">
+         <item row="0" column="3">
           <widget class="QPushButton" name="mSecretObjectViewBtn">
            <property name="text">
             <string>Object View</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QPushButton" name="pushButton_5">
+           <property name="minimumSize">
+            <size>
+             <width>16</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="cryptokiman.qrc">
+             <normaloff>:/images/key.png</normaloff>:/images/key.png</iconset>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
