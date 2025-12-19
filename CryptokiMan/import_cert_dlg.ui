@@ -7,13 +7,57 @@
     <x>0</x>
     <y>0</y>
     <width>591</width>
-    <height>435</height>
+    <height>476</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Import certificate</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QGridLayout" name="gridLayout_5">
+     <item row="0" column="0">
+      <widget class="QPushButton" name="pushButton">
+       <property name="minimumSize">
+        <size>
+         <width>16</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="cryptokiman.qrc">
+         <normaloff>:/images/cert.png</normaloff>:/images/cert.png</iconset>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Import Certificate</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="Line" name="line_6">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
    <item>
     <layout class="QGridLayout" name="gridLayout_4">
      <property name="topMargin">
@@ -555,7 +599,9 @@
   <tabstop>mFindBtn</tabstop>
   <tabstop>mCertPathText</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="cryptokiman.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>

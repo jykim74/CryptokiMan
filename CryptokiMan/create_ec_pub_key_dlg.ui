@@ -15,6 +15,50 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
+    <layout class="QGridLayout" name="gridLayout_7">
+     <item row="0" column="0">
+      <widget class="QPushButton" name="mECBtn">
+       <property name="minimumSize">
+        <size>
+         <width>16</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="cryptokiman.qrc">
+         <normaloff>:/images/ec_pu.png</normaloff>:/images/ec_pu.png</iconset>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="mHeadLabel">
+       <property name="text">
+        <string>Create ECDSA Public Key</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="Line" name="line_6">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
       <number>0</number>
@@ -797,7 +841,9 @@
   <tabstop>mEndDateCheck</tabstop>
   <tabstop>mEndDateEdit</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="cryptokiman.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>

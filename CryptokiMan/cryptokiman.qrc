@@ -91,5 +91,7 @@
         <file>images/dsa_pu.png</file>
         <file>images/edit_list.png</file>
         <file>images/cert_expired.png</file>
+        <file>images/export.png</file>
+        <file>images/passwd.png</file>
     </qresource>
 </RCC>

@@ -7,13 +7,57 @@
     <x>0</x>
     <y>0</y>
     <width>650</width>
-    <height>462</height>
+    <height>388</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Generate key</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QGridLayout" name="gridLayout_7">
+     <item row="0" column="0">
+      <widget class="QPushButton" name="pushButton">
+       <property name="minimumSize">
+        <size>
+         <width>16</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="cryptokiman.qrc">
+         <normaloff>:/images/key_add.png</normaloff>:/images/key_add.png</iconset>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Generate Key</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="Line" name="line_5">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
@@ -24,13 +68,6 @@
        <string>General</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <widget class="QLabel" name="label_11">
-         <property name="text">
-          <string>Generate Key Information</string>
-         </property>
-        </widget>
-       </item>
        <item>
         <layout class="QGridLayout" name="gridLayout">
          <property name="topMargin">
@@ -816,7 +853,9 @@
   <tabstop>mTrustedCheck</tabstop>
   <tabstop>mTrustedCombo</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="cryptokiman.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>
