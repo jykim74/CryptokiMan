@@ -36,7 +36,8 @@ void LogoutDlg::setSlotIndex(int index)
     if( index >= 0 )
     {
         slot_info_ = slot_infos.at(slot_index_);
-        mSlotInfoText->setText( getSlotInfo( slot_info_) );
+//        mSlotInfoText->setText( getSlotInfo( slot_info_) );
+        mSlotInfoText->setText( slot_info_.getDesc() );
         mSlotBtn->setIcon( getSlotIcon( slot_info_ ) );
     }
 }
