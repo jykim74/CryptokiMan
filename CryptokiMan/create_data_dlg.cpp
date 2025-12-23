@@ -45,6 +45,7 @@ void CreateDataDlg::setSlotIndex(int index)
     {
         slot_info_ = slot_infos.at(slot_index_);
         mSlotInfoText->setText( getSlotInfo( slot_info_ ) );
+        mSlotInfoText->setCursorPosition(0);
         mSlotBtn->setIcon( getSlotIcon( slot_info_ ) );
     }
 }
