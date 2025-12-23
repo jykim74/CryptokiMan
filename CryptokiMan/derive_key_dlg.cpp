@@ -187,6 +187,7 @@ void DeriveKeyDlg::initUI()
     mTypeCombo->addItems( sSecKeyTypeList );
 
     mSrcLabelText->setPlaceholderText( tr( "Select a key from HSM Man" ));
+    mSrcObjectText->setPlaceholderText( tr("ObjectID") );
     mLabelText->setPlaceholderText( tr( "String value" ));
     setLineEditHexOnly( mIDText, tr("Hex value" ));
     setLineEditHexOnly( mParam1Text, tr("Hex value" ));

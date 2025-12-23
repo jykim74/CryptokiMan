@@ -152,6 +152,7 @@ void EncryptDlg::initUI()
     keyTypeChanged(0);
 
     mLabelText->setPlaceholderText( tr( "Select a key from HSM Man" ));
+    mObjectText->setPlaceholderText( tr("ObjectID") );
     mParamText->setPlaceholderText( tr( "Hex value" ));
 
 #if defined(Q_OS_MAC)

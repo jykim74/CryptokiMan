@@ -64,7 +64,9 @@ void WrapKeyDlg::initUI()
     connect( mWrappingViewBtn, SIGNAL(clicked()), this, SLOT(clickWrappingView()));
     connect( mViewBtn, SIGNAL(clicked()), this, SLOT(clickView()));
 
+    mWrappingObjectText->setPlaceholderText( tr("ObjectID" ));
     mWrappingLabelText->setPlaceholderText( tr( "Select a key from HSM Man" ));
+    mObjectText->setPlaceholderText( tr("ObjectID") );
     mLabelText->setPlaceholderText( tr( "Select a key from HSM Man" ));
 
     initialize();

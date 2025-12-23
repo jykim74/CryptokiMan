@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>664</width>
-    <height>501</height>
+    <height>437</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -158,13 +158,6 @@
         <widget class="Line" name="line_2">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_6">
-         <property name="text">
-          <string>Key Information</string>
          </property>
         </widget>
        </item>
@@ -805,13 +798,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_12">
-         <property name="text">
-          <string>Attributes</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <layout class="QGridLayout" name="gridLayout_6">
          <property name="topMargin">
           <number>0</number>
@@ -1131,13 +1117,6 @@
         <widget class="Line" name="line_4">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_16">
-         <property name="text">
-          <string>Attributes</string>
          </property>
         </widget>
        </item>

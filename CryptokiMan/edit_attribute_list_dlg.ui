@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>619</width>
-    <height>666</height>
+    <height>540</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -543,13 +543,6 @@
     <widget class="Line" name="line_3">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_6">
-     <property name="text">
-      <string>Attributes</string>
      </property>
     </widget>
    </item>

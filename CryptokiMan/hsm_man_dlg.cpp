@@ -348,7 +348,7 @@ void HsmManDlg::initUI()
     mUsageCombo->addItems( kUsageList );
     mTabWidget->setCurrentIndex(0);
 
-    QStringList sCertLabels = { tr("Label"), tr("Handle"), tr("Subject DN") };
+    QStringList sCertLabels = { tr("Label"), tr("Object"), tr("Subject DN") };
 
     mCertTable->horizontalHeader()->setStretchLastSection(true);
     mCertTable->setColumnCount( sCertLabels.size() );
@@ -363,7 +363,7 @@ void HsmManDlg::initUI()
     mCertTable->setColumnWidth( 1, nWidth * 2/10 );
     mCertTable->setColumnWidth( 2, nWidth * 2/10 );
 
-    QStringList sTableLabels = { tr( "Name" ), tr( "Algorithm"), tr( "Handle"), tr( "ID") };
+    QStringList sTableLabels = { tr( "Name" ), tr( "Algorithm"), tr( "Object"), tr( "ID") };
 
     mPublicTable->horizontalHeader()->setStretchLastSection(true);
     mPublicTable->setColumnCount( sTableLabels.size() );

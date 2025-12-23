@@ -739,11 +739,10 @@ void MainWindow::createHelpActions()
         helpMenu->addAction( clear_log_act_ );
         if( isView( ACT_HELP_CLEAR_LOG ) ) help_tool_->addAction( clear_log_act_ );
 
-        QIcon logIcon = QIcon::fromTheme( "log-halt", QIcon(":/images/log_halt.png" ));
+        QIcon logIcon = QIcon::fromTheme( "log-halt", QIcon(":/images/log_en.png" ));
         halt_log_act_ = new QAction( logIcon, tr( "&Log Halt" ), this );
         connect( halt_log_act_, &QAction::triggered, this, &MainWindow::logToggle );
         halt_log_act_->setShortcut( QKeySequence(Qt::Key_F10));
-        halt_log_act_->setCheckable(true);
         halt_log_act_->setStatusTip( tr( "Halt log" ));
         helpMenu->addAction( halt_log_act_ );
         if( isView( ACT_HELP_HALT_LOG ) ) help_tool_->addAction( halt_log_act_ );
@@ -2338,12 +2337,14 @@ void MainWindow::logToggle()
     {
         log_halt_ = false;
         log( "Log is enable" );
+        halt_log_act_->setIcon( QIcon( ":/images/log_en.png" ));
         manApplet->messageBox( tr("Start logging"), this );
     }
     else
     {
         dlog( "Log is halt" );
         log_halt_ = true;
+        halt_log_act_->setIcon( QIcon( ":/images/log_halt.png" ));
         manApplet->messageBox( tr("Stop logging"), this );
     }
 }
@@ -3692,7 +3693,7 @@ void MainWindow::showCertificateInfoList( int index, long hObject )
 
     removeAllRightTable();
 
-    QStringList headerList = { tr("Label"), tr("Handle"), tr("ID"), tr( "Subject") };
+    QStringList headerList = { tr("Label"), tr("Object"), tr("ID"), tr( "Subject") };
 
     right_table_->clear();
     right_table_->horizontalHeader()->setStretchLastSection(true);
@@ -3793,7 +3794,7 @@ void MainWindow::showPublicKeyInfoList( int index, long hObject )
     int rv = 0;
 
     removeAllRightTable();
-    QStringList headerList = { tr("Label"), tr("Handle"), tr("KeyType"), tr( "ID") };
+    QStringList headerList = { tr("Label"), tr("Object"), tr("KeyType"), tr( "ID") };
 
     right_table_->clear();
     right_table_->horizontalHeader()->setStretchLastSection(true);
@@ -3895,7 +3896,7 @@ void MainWindow::showPrivateKeyInfoList( int index, long hObject )
 
     removeAllRightTable();
 
-    QStringList headerList = { tr("Label"), tr("Handle"), tr("KeyType"), tr( "ID") };
+    QStringList headerList = { tr("Label"), tr("Object"), tr("KeyType"), tr( "ID") };
 
     right_table_->clear();
     right_table_->horizontalHeader()->setStretchLastSection(true);
@@ -3993,7 +3994,7 @@ void MainWindow::showSecretKeyInfoList( int index, long hObject )
     bool bVal = manApplet->settingsMgr()->displayValid();
 
     removeAllRightTable();
-    QStringList headerList = { tr("Label"), tr("Handle"), tr("KeyType"), tr( "ID") };
+    QStringList headerList = { tr("Label"), tr("Object"), tr("KeyType"), tr( "ID") };
 
     right_table_->clear();
     right_table_->horizontalHeader()->setStretchLastSection(true);
@@ -4077,7 +4078,7 @@ void MainWindow::showDataInfoList( int index, long hObject )
     bool bVal = manApplet->settingsMgr()->displayValid();
 
     removeAllRightTable();
-    QStringList headerList = { tr("Label"), tr("Handle"), tr( "ObejctID" ), tr( "Application") };
+    QStringList headerList = { tr("Label"), tr("Object"), tr( "ObejctID" ), tr( "Application") };
 
     right_table_->clear();
     right_table_->horizontalHeader()->setStretchLastSection(true);

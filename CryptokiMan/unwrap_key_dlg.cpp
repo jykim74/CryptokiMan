@@ -110,6 +110,7 @@ void UnwrapKeyDlg::initUI()
     setLineEditHexOnly( mUnwrapParamText, tr("Hex value") );
 
     mUnwrapLabelText->setPlaceholderText( tr( "Select a key from HSM Man" ));
+    mUnwrapObjectText->setPlaceholderText( tr("ObjectID" ));
     mLabelText->setPlaceholderText( tr("String value" ));
     setLineEditHexOnly( mIDText, tr("Hex value" ));
     mInputText->setPlaceholderText( tr("Hex value" ));
