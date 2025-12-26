@@ -155,20 +155,6 @@
    <item>
     <layout class="QGridLayout" name="gridLayout_3">
      <item row="0" column="2">
-      <widget class="QLabel" name="label_8">
-       <property name="text">
-        <string>Object</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="4">
-      <widget class="QPushButton" name="mWrappingSelectBtn">
-       <property name="text">
-        <string>Select</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
       <widget class="QLineEdit" name="mWrappingLabelText">
        <property name="palette">
         <palette>
@@ -202,26 +188,14 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_7">
-       <property name="minimumSize">
-        <size>
-         <width>60</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>60</width>
-         <height>16777215</height>
-        </size>
-       </property>
+     <item row="0" column="3">
+      <widget class="QLabel" name="label_8">
        <property name="text">
-        <string>Label</string>
+        <string>Object</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="3">
+     <item row="0" column="4">
       <widget class="QLineEdit" name="mWrappingObjectText">
        <property name="maximumSize">
         <size>
@@ -272,9 +246,61 @@
       </widget>
      </item>
      <item row="0" column="5">
+      <widget class="QPushButton" name="mWrappingSelectBtn">
+       <property name="text">
+        <string>Select</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="6">
       <widget class="QPushButton" name="mWrappingViewBtn">
        <property name="text">
         <string>View</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="label_7">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Label</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QPushButton" name="pushButton_3">
+       <property name="minimumSize">
+        <size>
+         <width>16</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="cryptokiman.qrc">
+         <normaloff>:/images/hsm_man.png</normaloff>:/images/hsm_man.png</iconset>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -627,7 +653,7 @@
        </property>
        <property name="maximumSize">
         <size>
-         <width>60</width>
+         <width>16777215</width>
          <height>16777215</height>
         </size>
        </property>
