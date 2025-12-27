@@ -1474,3 +1474,48 @@ const QIcon getSlotIcon( SlotInfo& info )
 
     return QIcon( ":/images/slot.png" );
 }
+
+const QString getShowFileSize( qint64 nFileSize )
+{
+    QString strSize;
+    QString strKind = "Byte";
+    const qint64 nKilo = 1024;
+    const qint64 nMega = 1024 * 1024;
+    const qint64 nGiga = 1024 * 1024 * 1024;
+
+    int nFirst = 0;
+    int nSecond = 0;
+
+    if( nFileSize >= nKilo && nFileSize < nMega )
+    {
+        nFirst = int( nFileSize / nKilo );
+        nSecond = nFileSize % nKilo;
+        strSize = QString( "%1.%2" ).arg( nFirst ).arg( nSecond, 3, 10, QChar('0') );
+        strKind = "KB";
+    }
+    else if( nFileSize >= nMega && nFileSize < nGiga  )
+    {
+        nFirst = int( nFileSize / nMega );
+        nSecond = int( nFileSize / nKilo ) % nKilo;
+
+        strSize = QString( "%1.%2" ).arg( nFirst ).arg( nSecond, 3, 10, QChar('0') );
+        strKind = "MB";
+    }
+    else if( nFileSize >= nGiga)
+    {
+        nFirst = int( nFileSize / nGiga );
+        nSecond = int( nFileSize / nMega ) % nKilo;
+
+        strSize = QString( "%1.%2" ).arg( nFirst ).arg( nSecond, 3, 10, QChar('0') );
+        strKind = "GB";
+    }
+    else
+    {
+        strSize = QString( "%1" ).arg( nFileSize );
+    }
+
+    strSize = strSize.remove( QRegularExpression("0+$"));
+    strSize = strSize.remove( QRegularExpression("\\.$"));
+
+    return QString( "%1 %2" ).arg( strSize ).arg( strKind );
+}

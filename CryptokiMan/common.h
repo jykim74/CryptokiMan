@@ -268,4 +268,6 @@ void setLineEditHexOnly( QLineEdit *pEdit, const QString strPlaceHolder = "" );
 
 const QString getSlotInfo( SlotInfo& info );
 const QIcon getSlotIcon( SlotInfo& info );
+const QString getShowFileSize( qint64 nFileSize );
+
 #endif // COMMON_H

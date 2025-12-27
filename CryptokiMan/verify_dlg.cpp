@@ -235,7 +235,7 @@ void VerifyDlg::setSrcFileInfo( const QString strFile )
         QString strInfo = QString("LastModified Time: %1").arg( cTime.toString( "yyyy-MM-dd HH:mm:ss" ));
 
         mSrcFileText->setText( strFile );
-        mSrcFileSizeText->setText( QString("%1").arg( fileSize ));
+        mSrcFileSizeText->setText( getShowFileSize( fileSize ));
         mSrcFileInfoText->setText( strInfo );
         mVerifyProgBar->setValue(0);
 
@@ -889,24 +889,7 @@ void VerifyDlg::clickFindSrcFile()
 
     QString strSrcFile = manApplet->findFile( this, JS_FILE_TYPE_ALL, strPath );
 
-    if( strSrcFile.length() > 0 )
-    {
-        QFileInfo fileInfo;
-        fileInfo.setFile( strSrcFile );
-
-        qint64 fileSize = fileInfo.size();
-        QDateTime cTime = fileInfo.lastModified();
-
-        QString strInfo = QString("LastModified Time: %1").arg( cTime.toString( "yyyy-MM-dd HH:mm:ss" ));
-
-        mSrcFileText->setText( strSrcFile );
-        mSrcFileSizeText->setText( QString("%1").arg( fileSize ));
-        mSrcFileInfoText->setText( strInfo );
-        mVerifyProgBar->setValue(0);
-
-        mFileReadSizeText->clear();
-        mFileTotalSizeText->clear();
-    }
+    if( strSrcFile.length() > 0 ) setSrcFileInfo( strSrcFile );
 }
 
 void VerifyDlg::runFileVerifyThread()

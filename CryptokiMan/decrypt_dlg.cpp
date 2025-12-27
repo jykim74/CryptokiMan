@@ -439,9 +439,13 @@ void DecryptDlg::setSrcFileInfo( const QString strFile )
         QString strInfo = QString("LastModified Time: %1").arg( cTime.toString( "yyyy-MM-dd HH:mm:ss" ));
 
         mSrcFileText->setText( strFile );
-        mSrcFileSizeText->setText( QString("%1").arg( fileSize ));
+        mSrcFileSizeText->setText( getShowFileSize( fileSize ));
         mSrcFileInfoText->setText( strInfo );
         mDecProgBar->setValue(0);
+
+        QString strDstName = QString( "%1/%2_dec.bin" ).arg( fileInfo.absolutePath() ).arg( fileInfo.baseName() );
+
+        mDstFileText->setText( strDstName );
 
         mFileReadSizeText->clear();
         mFileTotalSizeText->clear();
@@ -583,30 +587,7 @@ void DecryptDlg::clickFindSrcFile()
 
     QString strSrcFile = manApplet->findFile( this, JS_FILE_TYPE_ALL, strPath );
 
-    if( strSrcFile.length() > 0 )
-    {
-        QFileInfo fileInfo;
-        fileInfo.setFile( strSrcFile );
-
-        qint64 fileSize = fileInfo.size();
-        QDateTime cTime = fileInfo.lastModified();
-
-        QString strInfo = QString("LastModified Time: %1").arg( cTime.toString( "yyyy-MM-dd HH:mm:ss" ));
-
-        mSrcFileText->setText( strSrcFile );
-        mSrcFileSizeText->setText( QString("%1").arg( fileSize ));
-        mSrcFileInfoText->setText( strInfo );
-        mDecProgBar->setValue(0);
-
-        QString strDstName = QString( "%1/%2_dec.bin" ).arg( fileInfo.absolutePath() ).arg( fileInfo.baseName() );
-
-        mDstFileText->setText( strDstName );
-
-        mFileReadSizeText->clear();
-        mFileTotalSizeText->clear();
-        mDstFileInfoText->clear();
-        mDstFileSizeText->clear();
-    }
+    if( strSrcFile.length() > 0 ) setSrcFileInfo( strSrcFile );
 }
 
 void DecryptDlg::clickFindDstFile()
@@ -1060,7 +1041,7 @@ void DecryptDlg::runFileDecrypt()
             QDateTime cTime = fileInfo.lastModified();
 
             QString strInfo = QString("LastModified Time: %1").arg( cTime.toString( "yyyy-MM-dd HH:mm:ss" ));
-            mDstFileSizeText->setText( QString("%1").arg( fileSize ));
+            mDstFileSizeText->setText( getShowFileSize( fileSize ));
             mDstFileInfoText->setText( strInfo );
         }
     }
@@ -1210,7 +1191,7 @@ void DecryptDlg::onTaskFinished()
     QDateTime cTime = fileInfo.lastModified();
 
     QString strInfo = QString("LastModified Time: %1").arg( cTime.toString( "yyyy-MM-dd HH:mm:ss" ));
-    mDstFileSizeText->setText( QString("%1").arg( fileSize ));
+    mDstFileSizeText->setText( getShowFileSize( fileSize ));
     mDstFileInfoText->setText( strInfo );
 
     thread_->quit();
