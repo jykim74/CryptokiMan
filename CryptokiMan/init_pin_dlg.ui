@@ -34,7 +34,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="cryptokiman.qrc">
+        <iconset>
          <normaloff>:/images/pin2.png</normaloff>:/images/pin2.png</iconset>
        </property>
        <property name="flat">
@@ -111,6 +111,9 @@
          <disabled/>
         </palette>
        </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
        <property name="readOnly">
         <bool>true</bool>
        </property>
@@ -134,7 +137,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="cryptokiman.qrc">
+        <iconset>
          <normaloff>:/images/slot.png</normaloff>:/images/slot.png</iconset>
        </property>
        <property name="flat">
@@ -208,7 +211,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="cryptokiman.qrc">
+        <iconset resource="../../CertMan/CertMan/certman.qrc">
          <normaloff>:/images/passwd.png</normaloff>:/images/passwd.png</iconset>
        </property>
        <property name="flat">
@@ -234,7 +237,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="cryptokiman.qrc">
+        <iconset resource="../../CertMan/CertMan/certman.qrc">
          <normaloff>:/images/passwd.png</normaloff>:/images/passwd.png</iconset>
        </property>
        <property name="flat">
@@ -285,9 +288,7 @@
   <tabstop>pushButton_3</tabstop>
   <tabstop>mPinConfText</tabstop>
  </tabstops>
- <resources>
-  <include location="cryptokiman.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>buttonBox</sender>

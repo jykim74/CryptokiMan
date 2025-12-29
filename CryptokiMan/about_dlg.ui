@@ -25,7 +25,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="cryptokiman.qrc">
+        <iconset>
          <normaloff>:/images/cryptokiman.png</normaloff>:/images/cryptokiman.png</iconset>
        </property>
        <property name="iconSize">
@@ -113,6 +113,9 @@
            <disabled/>
           </palette>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
         </widget>
        </item>
       </layout>
@@ -150,6 +153,9 @@
            </inactive>
            <disabled/>
           </palette>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
         </widget>
        </item>
@@ -208,8 +214,6 @@
   <tabstop>mCheckUpdateBtn</tabstop>
   <tabstop>mCloseBtn</tabstop>
  </tabstops>
- <resources>
-  <include location="cryptokiman.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

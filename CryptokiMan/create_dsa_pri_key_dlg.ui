@@ -61,7 +61,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="mFirstTab">
       <attribute name="title">
@@ -114,6 +114,9 @@
              </inactive>
              <disabled/>
             </palette>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
            </property>
            <property name="readOnly">
             <bool>true</bool>
@@ -383,6 +386,9 @@
              </disabled>
             </palette>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="readOnly">
             <bool>true</bool>
            </property>
@@ -474,6 +480,9 @@
              </disabled>
             </palette>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="readOnly">
             <bool>true</bool>
            </property>
@@ -530,6 +539,9 @@
              </disabled>
             </palette>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="readOnly">
             <bool>true</bool>
            </property>
@@ -585,6 +597,9 @@
               </colorrole>
              </disabled>
             </palette>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
            </property>
            <property name="readOnly">
             <bool>true</bool>

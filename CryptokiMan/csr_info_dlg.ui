@@ -74,6 +74,9 @@
          <disabled/>
         </palette>
        </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
@@ -208,6 +211,9 @@
         </colorrole>
        </disabled>
       </palette>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
      </property>
      <property name="readOnly">
       <bool>true</bool>

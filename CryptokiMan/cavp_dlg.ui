@@ -108,6 +108,9 @@
          <disabled/>
         </palette>
        </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
        <property name="readOnly">
         <bool>true</bool>
        </property>
@@ -182,7 +185,7 @@
    <item>
     <widget class="QTabWidget" name="mTabWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="mTabMCT">
       <attribute name="title">
@@ -276,6 +279,9 @@
              <disabled/>
             </palette>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="readOnly">
             <bool>true</bool>
            </property>
@@ -339,6 +345,9 @@
              </inactive>
              <disabled/>
             </palette>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
            </property>
            <property name="readOnly">
             <bool>true</bool>
@@ -448,6 +457,9 @@
              <disabled/>
             </palette>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
           </widget>
          </item>
          <item row="5" column="1">
@@ -478,6 +490,9 @@
              </inactive>
              <disabled/>
             </palette>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
            </property>
           </widget>
          </item>
@@ -510,6 +525,9 @@
              <disabled/>
             </palette>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
           </widget>
          </item>
          <item row="7" column="1">
@@ -540,6 +558,9 @@
              </inactive>
              <disabled/>
             </palette>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
            </property>
           </widget>
          </item>
@@ -577,6 +598,9 @@
              </inactive>
              <disabled/>
             </palette>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
            </property>
            <property name="readOnly">
             <bool>true</bool>
@@ -618,6 +642,9 @@
              <disabled/>
             </palette>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="readOnly">
             <bool>true</bool>
            </property>
@@ -657,6 +684,9 @@
              </inactive>
              <disabled/>
             </palette>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
            </property>
            <property name="readOnly">
             <bool>true</bool>
@@ -698,6 +728,9 @@
              <disabled/>
             </palette>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="readOnly">
             <bool>true</bool>
            </property>
@@ -737,6 +770,9 @@
              </inactive>
              <disabled/>
             </palette>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
            </property>
            <property name="readOnly">
             <bool>true</bool>
@@ -778,6 +814,9 @@
              <disabled/>
             </palette>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="readOnly">
             <bool>true</bool>
            </property>
@@ -817,6 +856,9 @@
              </inactive>
              <disabled/>
             </palette>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
            </property>
            <property name="readOnly">
             <bool>true</bool>
@@ -909,6 +951,9 @@
              </inactive>
              <disabled/>
             </palette>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
            </property>
            <property name="readOnly">
             <bool>true</bool>
@@ -1037,6 +1082,9 @@
              <disabled/>
             </palette>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="readOnly">
             <bool>true</bool>
            </property>
@@ -1071,6 +1119,9 @@
              <disabled/>
             </palette>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
           </widget>
          </item>
          <item row="2" column="1">
@@ -1101,6 +1152,9 @@
              </inactive>
              <disabled/>
             </palette>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
            </property>
           </widget>
          </item>
@@ -1138,6 +1192,9 @@
              </inactive>
              <disabled/>
             </palette>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
            </property>
            <property name="readOnly">
             <bool>true</bool>
@@ -1178,6 +1235,9 @@
              </inactive>
              <disabled/>
             </palette>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
            </property>
            <property name="readOnly">
             <bool>true</bool>
@@ -2077,6 +2137,9 @@
              <disabled/>
             </palette>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="readOnly">
             <bool>true</bool>
            </property>
@@ -2114,6 +2177,9 @@
              </inactive>
              <disabled/>
             </palette>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
            </property>
            <property name="readOnly">
             <bool>true</bool>
@@ -2167,6 +2233,9 @@
              </inactive>
              <disabled/>
             </palette>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
            </property>
            <property name="readOnly">
             <bool>true</bool>
@@ -2234,6 +2303,9 @@
              </inactive>
              <disabled/>
             </palette>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
            </property>
            <property name="readOnly">
             <bool>true</bool>

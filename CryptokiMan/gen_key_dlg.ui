@@ -34,7 +34,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="cryptokiman.qrc">
+        <iconset>
          <normaloff>:/images/key_add.png</normaloff>:/images/key_add.png</iconset>
        </property>
        <property name="flat">
@@ -102,6 +102,9 @@
              <disabled/>
             </palette>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="readOnly">
             <bool>true</bool>
            </property>
@@ -138,7 +141,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="cryptokiman.qrc">
+            <iconset>
              <normaloff>:/images/slot.png</normaloff>:/images/slot.png</iconset>
            </property>
            <property name="flat">
@@ -241,6 +244,9 @@
              <disabled/>
             </palette>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="readOnly">
             <bool>true</bool>
            </property>
@@ -326,6 +332,9 @@
               </colorrole>
              </disabled>
             </palette>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
            </property>
            <property name="readOnly">
             <bool>true</bool>
@@ -683,9 +692,7 @@
   <tabstop>mEndDateCheck</tabstop>
   <tabstop>mEndDateEdit</tabstop>
  </tabstops>
- <resources>
-  <include location="cryptokiman.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>buttonBox</sender>
