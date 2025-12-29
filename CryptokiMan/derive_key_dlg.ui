@@ -61,7 +61,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="mFirstTab">
       <attribute name="title">
@@ -1105,8 +1105,11 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>pushButton</tabstop>
   <tabstop>tabWidget</tabstop>
+  <tabstop>mSlotBtn</tabstop>
   <tabstop>mSlotInfoText</tabstop>
+  <tabstop>pushButton_2</tabstop>
   <tabstop>mSrcLabelText</tabstop>
   <tabstop>mSrcObjectText</tabstop>
   <tabstop>mSelectSrcBtn</tabstop>

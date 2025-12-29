@@ -748,7 +748,9 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>pushButton</tabstop>
   <tabstop>tabWidget</tabstop>
+  <tabstop>mSlotBtn</tabstop>
   <tabstop>mSlotInfoText</tabstop>
   <tabstop>mLabelText</tabstop>
   <tabstop>mSubjectText</tabstop>
@@ -786,8 +788,8 @@
   <tabstop>mCopyableCombo</tabstop>
   <tabstop>mDestroyableCheck</tabstop>
   <tabstop>mDestroyableCombo</tabstop>
-  <tabstop>mTrustedCombo</tabstop>
   <tabstop>mTrustedCheck</tabstop>
+  <tabstop>mTrustedCombo</tabstop>
   <tabstop>mStartDateCheck</tabstop>
   <tabstop>mStartDateEdit</tabstop>
   <tabstop>mEndDateCheck</tabstop>

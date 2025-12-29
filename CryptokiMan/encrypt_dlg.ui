@@ -2056,6 +2056,8 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>pushButton</tabstop>
+  <tabstop>mSlotBtn</tabstop>
   <tabstop>mSlotInfoText</tabstop>
   <tabstop>mKeyTypeCombo</tabstop>
   <tabstop>mMechCombo</tabstop>
@@ -2071,6 +2073,7 @@
   <tabstop>mAADTypeCombo</tabstop>
   <tabstop>mAADText</tabstop>
   <tabstop>mAADLenText</tabstop>
+  <tabstop>pushButton_2</tabstop>
   <tabstop>mLabelText</tabstop>
   <tabstop>mObjectText</tabstop>
   <tabstop>mSelectBtn</tabstop>

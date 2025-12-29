@@ -646,7 +646,9 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>mECBtn</tabstop>
   <tabstop>tabWidget</tabstop>
+  <tabstop>mSlotBtn</tabstop>
   <tabstop>mSlotInfoText</tabstop>
   <tabstop>mLabelText</tabstop>
   <tabstop>mSubjectText</tabstop>
@@ -684,10 +686,10 @@
   <tabstop>mSignRecoverCombo</tabstop>
   <tabstop>mCopyableCheck</tabstop>
   <tabstop>mCopyableCombo</tabstop>
-  <tabstop>mStartDateCheck</tabstop>
-  <tabstop>mStartDateEdit</tabstop>
   <tabstop>mDestroyableCheck</tabstop>
   <tabstop>mDestroyableCombo</tabstop>
+  <tabstop>mStartDateCheck</tabstop>
+  <tabstop>mStartDateEdit</tabstop>
   <tabstop>mEndDateCheck</tabstop>
   <tabstop>mEndDateEdit</tabstop>
  </tabstops>

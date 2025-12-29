@@ -67,7 +67,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="mFirstTab">
       <attribute name="title">
@@ -270,7 +270,7 @@
        <item>
         <widget class="QTabWidget" name="mParamTab">
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="mDSATab">
           <attribute name="title">
@@ -1294,7 +1294,9 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>pushButton</tabstop>
   <tabstop>tabWidget</tabstop>
+  <tabstop>mSlotBtn</tabstop>
   <tabstop>mSlotInfoText</tabstop>
   <tabstop>mMechCombo</tabstop>
   <tabstop>mMechText</tabstop>

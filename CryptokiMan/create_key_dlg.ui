@@ -619,7 +619,9 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>pushButton</tabstop>
   <tabstop>tabWidget</tabstop>
+  <tabstop>mSlotBtn</tabstop>
   <tabstop>mSlotInfoText</tabstop>
   <tabstop>mKeyTypeCombo</tabstop>
   <tabstop>mKeyTypeText</tabstop>

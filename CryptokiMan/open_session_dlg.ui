@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>425</width>
-    <height>158</height>
+    <height>160</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -259,6 +259,8 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>pushButton</tabstop>
+  <tabstop>mSlotBtn</tabstop>
   <tabstop>mSlotInfoText</tabstop>
   <tabstop>mSerialCheck</tabstop>
   <tabstop>mRWCheck</tabstop>

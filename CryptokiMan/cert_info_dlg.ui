@@ -302,6 +302,7 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>mCertBtn</tabstop>
   <tabstop>mKIDText</tabstop>
   <tabstop>tabWidget</tabstop>
   <tabstop>mFieldTypeCombo</tabstop>

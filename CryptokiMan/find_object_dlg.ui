@@ -685,15 +685,22 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>pushButton</tabstop>
+  <tabstop>mSlotBtn</tabstop>
+  <tabstop>mSlotInfoText</tabstop>
   <tabstop>mClassCombo</tabstop>
   <tabstop>mClassText</tabstop>
   <tabstop>mMaxCountText</tabstop>
   <tabstop>tabWidget</tabstop>
+  <tabstop>mKeyTypeCombo</tabstop>
+  <tabstop>mKeyTypeText</tabstop>
   <tabstop>mLabelText</tabstop>
   <tabstop>mIDText</tabstop>
   <tabstop>mSubjectText</tabstop>
   <tabstop>mPubKeyInfoText</tabstop>
   <tabstop>mApplicationText</tabstop>
+  <tabstop>mObjectIDTypeCombo</tabstop>
+  <tabstop>mObjectIDText</tabstop>
   <tabstop>mPrivateCheck</tabstop>
   <tabstop>mPrivateCombo</tabstop>
   <tabstop>mSensitiveCheck</tabstop>

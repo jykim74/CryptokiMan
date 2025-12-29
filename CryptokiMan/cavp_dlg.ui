@@ -2331,6 +2331,8 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>pushButton</tabstop>
+  <tabstop>mSlotBtn</tabstop>
   <tabstop>mSlotInfoText</tabstop>
   <tabstop>mRspPathText</tabstop>
   <tabstop>mFindRspBtn</tabstop>

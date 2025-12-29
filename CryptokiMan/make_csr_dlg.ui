@@ -597,6 +597,8 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>pushButton</tabstop>
+  <tabstop>mSlotBtn</tabstop>
   <tabstop>mSlotInfoText</tabstop>
   <tabstop>mPriLabelCombo</tabstop>
   <tabstop>mPriObjectText</tabstop>
@@ -604,6 +606,19 @@
   <tabstop>mPubLabelCombo</tabstop>
   <tabstop>mPubObjectText</tabstop>
   <tabstop>mPubViewBtn</tabstop>
+  <tabstop>mChallengeText</tabstop>
+  <tabstop>mUnstructuredText</tabstop>
+  <tabstop>mEMAILADDRESSText</tabstop>
+  <tabstop>mCNText</tabstop>
+  <tabstop>mOUText</tabstop>
+  <tabstop>mOText</tabstop>
+  <tabstop>mLText</tabstop>
+  <tabstop>mSTText</tabstop>
+  <tabstop>mCText</tabstop>
+  <tabstop>mRDNNameCombo</tabstop>
+  <tabstop>mRDNValueText</tabstop>
+  <tabstop>mRDNAddBtn</tabstop>
+  <tabstop>mRDNTable</tabstop>
   <tabstop>mDNText</tabstop>
   <tabstop>mSignHashCombo</tabstop>
   <tabstop>mClearBtn</tabstop>

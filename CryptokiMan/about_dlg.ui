@@ -25,7 +25,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset>
+        <iconset resource="cryptokiman.qrc">
          <normaloff>:/images/cryptokiman.png</normaloff>:/images/cryptokiman.png</iconset>
        </property>
        <property name="iconSize">
@@ -208,6 +208,8 @@
   <tabstop>mCheckUpdateBtn</tabstop>
   <tabstop>mCloseBtn</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="cryptokiman.qrc"/>
+ </resources>
  <connections/>
 </ui>

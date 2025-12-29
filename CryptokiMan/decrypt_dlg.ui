@@ -871,7 +871,7 @@
    <item>
     <widget class="QTabWidget" name="mInputTab">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="mDataTab">
       <attribute name="title">
@@ -2067,6 +2067,8 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>pushButton</tabstop>
+  <tabstop>mSlotBtn</tabstop>
   <tabstop>mSlotInfoText</tabstop>
   <tabstop>mKeyTypeCombo</tabstop>
   <tabstop>mMechCombo</tabstop>
@@ -2082,6 +2084,7 @@
   <tabstop>mAADTypeCombo</tabstop>
   <tabstop>mAADText</tabstop>
   <tabstop>mAADLenText</tabstop>
+  <tabstop>pushButton_2</tabstop>
   <tabstop>mLabelText</tabstop>
   <tabstop>mObjectText</tabstop>
   <tabstop>mSelectBtn</tabstop>

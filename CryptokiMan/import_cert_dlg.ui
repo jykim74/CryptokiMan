@@ -400,12 +400,17 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>pushButton</tabstop>
+  <tabstop>mSlotBtn</tabstop>
   <tabstop>mSlotInfoText</tabstop>
+  <tabstop>mCertPathText</tabstop>
+  <tabstop>mFindBtn</tabstop>
   <tabstop>mLabelText</tabstop>
   <tabstop>mIDText</tabstop>
   <tabstop>mUseSKICheck</tabstop>
   <tabstop>mPubKeyInfoText</tabstop>
   <tabstop>mUseSPKICheck</tabstop>
+  <tabstop>mSubjectInCertCheck</tabstop>
   <tabstop>mSubjectText</tabstop>
   <tabstop>mSubjectTypeCombo</tabstop>
   <tabstop>mPrivateCheck</tabstop>
@@ -424,8 +429,6 @@
   <tabstop>mStartDateEdit</tabstop>
   <tabstop>mEndDateCheck</tabstop>
   <tabstop>mEndDateEdit</tabstop>
-  <tabstop>mFindBtn</tabstop>
-  <tabstop>mCertPathText</tabstop>
  </tabstops>
  <resources>
   <include location="cryptokiman.qrc"/>

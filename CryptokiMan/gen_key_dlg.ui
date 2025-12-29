@@ -635,7 +635,10 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>pushButton</tabstop>
   <tabstop>tabWidget</tabstop>
+  <tabstop>mSlotBtn</tabstop>
+  <tabstop>mSlotInfoText</tabstop>
   <tabstop>mMechCombo</tabstop>
   <tabstop>mMechText</tabstop>
   <tabstop>mKeySizeText</tabstop>
@@ -669,8 +672,16 @@
   <tabstop>mExtractableCombo</tabstop>
   <tabstop>mDeriveCheck</tabstop>
   <tabstop>mDeriveCombo</tabstop>
+  <tabstop>mDestroyableCheck</tabstop>
+  <tabstop>mDestroyableCombo</tabstop>
+  <tabstop>mCopyableCheck</tabstop>
+  <tabstop>mCopyableCombo</tabstop>
   <tabstop>mTrustedCheck</tabstop>
   <tabstop>mTrustedCombo</tabstop>
+  <tabstop>mStartDateCheck</tabstop>
+  <tabstop>mStartDateEdit</tabstop>
+  <tabstop>mEndDateCheck</tabstop>
+  <tabstop>mEndDateEdit</tabstop>
  </tabstops>
  <resources>
   <include location="cryptokiman.qrc"/>

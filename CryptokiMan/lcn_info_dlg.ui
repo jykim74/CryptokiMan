@@ -72,7 +72,7 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="mLicenseTab">
       <attribute name="title">
@@ -452,6 +452,7 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>pushButton_2</tabstop>
   <tabstop>tabWidget</tabstop>
   <tabstop>mCurEmailText</tabstop>
   <tabstop>mCurIssueDateText</tabstop>

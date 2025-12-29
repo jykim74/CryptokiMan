@@ -383,6 +383,8 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>pushButton</tabstop>
+  <tabstop>mSlotBtn</tabstop>
   <tabstop>mSlotInfoText</tabstop>
   <tabstop>mGetFunctionStatusBtn</tabstop>
   <tabstop>mCancelFunctionBtn</tabstop>

@@ -295,7 +295,7 @@
       <enum>Qt::CustomContextMenu</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>3</number>
      </property>
      <property name="tabSpacing">
       <number>1</number>
@@ -305,8 +305,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>460</width>
-        <height>160</height>
+        <width>466</width>
+        <height>168</height>
        </rect>
       </property>
       <attribute name="label">
@@ -330,8 +330,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>460</width>
-        <height>160</height>
+        <width>466</width>
+        <height>168</height>
        </rect>
       </property>
       <attribute name="label">
@@ -355,8 +355,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>460</width>
-        <height>160</height>
+        <width>466</width>
+        <height>168</height>
        </rect>
       </property>
       <attribute name="label">
@@ -380,8 +380,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>460</width>
-        <height>160</height>
+        <width>466</width>
+        <height>168</height>
        </rect>
       </property>
       <attribute name="label">
@@ -483,6 +483,8 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>pushButton</tabstop>
+  <tabstop>mSlotBtn</tabstop>
   <tabstop>mSlotInfoText</tabstop>
   <tabstop>mObjectBtn</tabstop>
   <tabstop>mObjectText</tabstop>

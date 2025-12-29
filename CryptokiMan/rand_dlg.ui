@@ -507,6 +507,8 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>pushButton</tabstop>
+  <tabstop>mSlotBtn</tabstop>
   <tabstop>mSlotInfoText</tabstop>
   <tabstop>mSeedCombo</tabstop>
   <tabstop>mSeedLenText</tabstop>

@@ -932,7 +932,10 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>pushButton</tabstop>
+  <tabstop>mSlotBtn</tabstop>
   <tabstop>mSlotInfoText</tabstop>
+  <tabstop>pushButton_3</tabstop>
   <tabstop>mWrappingLabelText</tabstop>
   <tabstop>mWrappingObjectText</tabstop>
   <tabstop>mWrappingSelectBtn</tabstop>
@@ -943,6 +946,7 @@
   <tabstop>mWrappingParamText</tabstop>
   <tabstop>mWrappingParamLenText</tabstop>
   <tabstop>mTypeCombo</tabstop>
+  <tabstop>pushButton_2</tabstop>
   <tabstop>mLabelText</tabstop>
   <tabstop>mObjectText</tabstop>
   <tabstop>mSelectBtn</tabstop>

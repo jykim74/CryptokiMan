@@ -317,9 +317,14 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>pushButton</tabstop>
+  <tabstop>mSlotBtn</tabstop>
   <tabstop>mSlotInfoText</tabstop>
+  <tabstop>pushButton_2</tabstop>
   <tabstop>mOldPinText</tabstop>
+  <tabstop>pushButton_3</tabstop>
   <tabstop>mNewPinText</tabstop>
+  <tabstop>pushButton_4</tabstop>
   <tabstop>mPinConfText</tabstop>
  </tabstops>
  <resources>

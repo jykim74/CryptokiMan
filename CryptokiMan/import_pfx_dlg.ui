@@ -1177,17 +1177,21 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>pushButton</tabstop>
   <tabstop>tabWidget</tabstop>
+  <tabstop>mSlotBtn</tabstop>
   <tabstop>mSlotInfoText</tabstop>
   <tabstop>mPFXPathText</tabstop>
   <tabstop>mFindBtn</tabstop>
   <tabstop>mPasswordText</tabstop>
+  <tabstop>pushButton_2</tabstop>
   <tabstop>mCertLabelText</tabstop>
   <tabstop>mCertSameLabelBtn</tabstop>
   <tabstop>mCertIDText</tabstop>
   <tabstop>mCertUseSKICheck</tabstop>
   <tabstop>mCertPubKeyInfoText</tabstop>
   <tabstop>mCertUseSPKICheck</tabstop>
+  <tabstop>mCertSubjectInCertCheck</tabstop>
   <tabstop>mCertSubjectText</tabstop>
   <tabstop>mCertSubjectTypeCombo</tabstop>
   <tabstop>mCertPrivateCheck</tabstop>
@@ -1206,12 +1210,14 @@
   <tabstop>mCertStartDateEdit</tabstop>
   <tabstop>mCertEndDateCheck</tabstop>
   <tabstop>mCertEndDateEdit</tabstop>
+  <tabstop>pushButton_3</tabstop>
   <tabstop>mPriLabelText</tabstop>
   <tabstop>mPriSameLabelBtn</tabstop>
   <tabstop>mPriIDText</tabstop>
   <tabstop>mPriUseSKICheck</tabstop>
   <tabstop>mPriPubKeyInfoText</tabstop>
   <tabstop>mPriUseSPKICheck</tabstop>
+  <tabstop>mPriSubjectInCertCheck</tabstop>
   <tabstop>mPriSubjectText</tabstop>
   <tabstop>mPriSubjectTypeCombo</tabstop>
   <tabstop>mPriPrivateCheck</tabstop>
@@ -1242,10 +1248,12 @@
   <tabstop>mPriStartDateEdit</tabstop>
   <tabstop>mPriEndDateCheck</tabstop>
   <tabstop>mPriEndDateEdit</tabstop>
+  <tabstop>pushButton_4</tabstop>
   <tabstop>mPubLabelText</tabstop>
   <tabstop>mPubSameLabelBtn</tabstop>
   <tabstop>mPubIDText</tabstop>
   <tabstop>mPubUseSKICheck</tabstop>
+  <tabstop>mPubSubjectInCertCheck</tabstop>
   <tabstop>mPubSubjectText</tabstop>
   <tabstop>mPubSubjectTypeCombo</tabstop>
   <tabstop>mPubPrivateCheck</tabstop>

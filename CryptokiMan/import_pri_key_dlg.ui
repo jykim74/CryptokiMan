@@ -872,13 +872,16 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>pushButton</tabstop>
   <tabstop>tabWidget</tabstop>
+  <tabstop>mSlotBtn</tabstop>
   <tabstop>mSlotInfoText</tabstop>
   <tabstop>mSavePubKeyCheck</tabstop>
   <tabstop>mEncPriKeyCheck</tabstop>
   <tabstop>mPathText</tabstop>
   <tabstop>mFindBtn</tabstop>
   <tabstop>mPasswdText</tabstop>
+  <tabstop>pushButton_2</tabstop>
   <tabstop>mPriLabelText</tabstop>
   <tabstop>mPriSameLabelBtn</tabstop>
   <tabstop>mPriSubjectText</tabstop>
@@ -915,6 +918,7 @@
   <tabstop>mPriStartDateEdit</tabstop>
   <tabstop>mPriEndDateCheck</tabstop>
   <tabstop>mPriEndDateEdit</tabstop>
+  <tabstop>pushButton_3</tabstop>
   <tabstop>mPubLabelText</tabstop>
   <tabstop>mPubSameLabelBtn</tabstop>
   <tabstop>mPubSubjectText</tabstop>

@@ -416,6 +416,8 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>pushButton</tabstop>
+  <tabstop>mSlotBtn</tabstop>
   <tabstop>mSlotInfoText</tabstop>
   <tabstop>mLabelText</tabstop>
   <tabstop>mApplicationText</tabstop>

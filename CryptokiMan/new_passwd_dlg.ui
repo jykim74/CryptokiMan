@@ -189,7 +189,10 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>pushButton</tabstop>
+  <tabstop>pushButton_2</tabstop>
   <tabstop>mPasswdText</tabstop>
+  <tabstop>pushButton_3</tabstop>
   <tabstop>mConfirmText</tabstop>
   <tabstop>mOKBtn</tabstop>
   <tabstop>mCancelBtn</tabstop>

@@ -183,7 +183,7 @@
       <enum>Qt::CustomContextMenu</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="mCertTab">
       <attribute name="title">
@@ -883,9 +883,12 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>pushButton</tabstop>
   <tabstop>mUsageCombo</tabstop>
+  <tabstop>mSlotBtn</tabstop>
   <tabstop>mSlotInfoText</tabstop>
   <tabstop>mTabWidget</tabstop>
+  <tabstop>pushButton_2</tabstop>
   <tabstop>mCertObjectViewBtn</tabstop>
   <tabstop>mCertKeyPairCheck</tabstop>
   <tabstop>mCertTable</tabstop>
@@ -893,6 +896,7 @@
   <tabstop>mCertDeleteBtn</tabstop>
   <tabstop>mCertExportBtn</tabstop>
   <tabstop>mCertDeleteKeyPairBtn</tabstop>
+  <tabstop>pushButton_3</tabstop>
   <tabstop>mPublicObjectViewBtn</tabstop>
   <tabstop>mPublicTypeCombo</tabstop>
   <tabstop>mPublicTable</tabstop>
@@ -901,6 +905,7 @@
   <tabstop>mPublicVerifyBtn</tabstop>
   <tabstop>mPublicEncryptBtn</tabstop>
   <tabstop>mPublicExportBtn</tabstop>
+  <tabstop>pushButton_4</tabstop>
   <tabstop>mPrivateObjectViewBtn</tabstop>
   <tabstop>mPrivateTypeCombo</tabstop>
   <tabstop>mPrivateTable</tabstop>
@@ -909,6 +914,7 @@
   <tabstop>mPrivateSignBtn</tabstop>
   <tabstop>mPrivateDecryptBtn</tabstop>
   <tabstop>mPrivateExportBtn</tabstop>
+  <tabstop>pushButton_5</tabstop>
   <tabstop>mSecretObjectViewBtn</tabstop>
   <tabstop>mSecretTypeCombo</tabstop>
   <tabstop>mSecretTable</tabstop>

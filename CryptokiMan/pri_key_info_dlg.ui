@@ -130,7 +130,7 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="tabRSA">
       <attribute name="title">
@@ -2649,6 +2649,7 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>mKeyBtn</tabstop>
   <tabstop>mKIDText</tabstop>
   <tabstop>mKeyTab</tabstop>
   <tabstop>mRSA_EText</tabstop>
