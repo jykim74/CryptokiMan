@@ -7197,7 +7197,7 @@ Do you want to delete the file and continue?</source>
         <translation>라이센스 정보</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.ui" line="79"/>
+        <location filename="../lcn_info_dlg.ui" line="99"/>
         <source>Current License</source>
         <translation>현재 라이선스</translation>
     </message>
@@ -7206,74 +7206,74 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">발급 일자</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.ui" line="27"/>
+        <location filename="../lcn_info_dlg.ui" line="60"/>
         <source>CryptokiMan License Information</source>
         <translation>Cryptokiman 라이선스 정보</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.ui" line="245"/>
-        <location filename="../lcn_info_dlg.ui" line="364"/>
+        <location filename="../lcn_info_dlg.ui" line="265"/>
+        <location filename="../lcn_info_dlg.ui" line="384"/>
         <source>Email</source>
         <translation>메일</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.ui" line="252"/>
+        <location filename="../lcn_info_dlg.ui" line="272"/>
         <source>Expire Date</source>
         <translation>만료 일자</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.ui" line="263"/>
+        <location filename="../lcn_info_dlg.ui" line="283"/>
         <source>Message</source>
         <translation>메세지</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.ui" line="297"/>
+        <location filename="../lcn_info_dlg.ui" line="317"/>
         <source>CryptokiMan</source>
         <translation>CryptokiMan</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.ui" line="306"/>
+        <location filename="../lcn_info_dlg.ui" line="326"/>
         <source>Do stop showing this message for the time being</source>
         <translation>당분간 이 메세지 표시 안함</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.ui" line="324"/>
+        <location filename="../lcn_info_dlg.ui" line="344"/>
         <source>Request License</source>
         <translation>요청 라이선스</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.ui" line="351"/>
+        <location filename="../lcn_info_dlg.ui" line="371"/>
         <source>License Key</source>
         <translation>라이선스 키</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.ui" line="383"/>
+        <location filename="../lcn_info_dlg.ui" line="403"/>
         <source>Free License</source>
         <translation>무료 라이선스</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.ui" line="397"/>
+        <location filename="../lcn_info_dlg.ui" line="417"/>
         <source>Update License</source>
         <translation>라이선스 갱신</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.ui" line="404"/>
-        <location filename="../lcn_info_dlg.cpp" line="653"/>
+        <location filename="../lcn_info_dlg.ui" line="424"/>
+        <location filename="../lcn_info_dlg.cpp" line="652"/>
         <source>Get</source>
         <translation>가져오기</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.ui" line="390"/>
+        <location filename="../lcn_info_dlg.ui" line="410"/>
         <source>Use License File</source>
         <translation>파일 라이선스 사용</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.ui" line="435"/>
+        <location filename="../lcn_info_dlg.ui" line="455"/>
         <source>Close</source>
         <translation>닫기</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.ui" line="442"/>
+        <location filename="../lcn_info_dlg.ui" line="462"/>
         <source>Remove</source>
         <translation>제거 하기</translation>
     </message>
@@ -7282,7 +7282,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">갱신</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.ui" line="462"/>
+        <location filename="../lcn_info_dlg.ui" line="22"/>
         <source>License Request</source>
         <translation>라이선스 요청</translation>
     </message>
@@ -7300,22 +7300,22 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">라이선스가 유효하지 않습니다</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="440"/>
+        <location filename="../lcn_info_dlg.cpp" line="439"/>
         <source>Please enter a email</source>
         <translation>이메일을 입력하세요</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="447"/>
+        <location filename="../lcn_info_dlg.cpp" line="446"/>
         <source>Please enter a license key</source>
         <translation>라이센스 키를 입력하세요</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="455"/>
+        <location filename="../lcn_info_dlg.cpp" line="454"/>
         <source>failed to get license %1 : %2</source>
         <translation>라이선스 가져오기 실패 %1 : %2</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="589"/>
+        <location filename="../lcn_info_dlg.cpp" line="588"/>
         <source>failed to renew license %1 : %2</source>
         <translation>라이선스 갱신 실패 %1 : %2</translation>
     </message>
@@ -7324,69 +7324,73 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">라이선스 가져오기 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="117"/>
+        <location filename="../lcn_info_dlg.cpp" line="116"/>
         <source>This CryptokiMan is unlicensed version</source>
         <translation>CryptokiMan 은 라이선스가 없는 버전입니다</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="126"/>
+        <location filename="../lcn_info_dlg.cpp" line="125"/>
         <source>[Expired:%1]</source>
         <translation>[만료일 : %1]</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="134"/>
+        <location filename="../lcn_info_dlg.cpp" line="133"/>
         <source>[No license]</source>
         <translation>[라이선스 없음]</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="467"/>
+        <location filename="../lcn_info_dlg.cpp" line="466"/>
         <source>failed to parse license [%1]</source>
         <translation>라이선스 파싱 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="476"/>
+        <location filename="../lcn_info_dlg.cpp" line="475"/>
         <source>license is not valid [%1]</source>
         <translation>라이선스가 유효하지 않습니다 [%1]</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="490"/>
-        <location filename="../lcn_info_dlg.cpp" line="600"/>
+        <location filename="../lcn_info_dlg.cpp" line="489"/>
+        <location filename="../lcn_info_dlg.cpp" line="599"/>
         <source>Your current license has a longer usage period.</source>
         <translation>현재 라이선스가 더 긴 기간의 라이선스입니다</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="509"/>
-        <location filename="../lcn_info_dlg.cpp" line="623"/>
+        <location filename="../lcn_info_dlg.cpp" line="508"/>
+        <location filename="../lcn_info_dlg.cpp" line="622"/>
         <source>You have changed license. Restart to apply it?</source>
         <translation>라이선스가 변경 되었습니다.적용을 위해 다시 시작 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="528"/>
+        <location filename="../lcn_info_dlg.cpp" line="529"/>
+        <source>An email address is required to issue a free license.</source>
+        <translation>무료 라이선스 발급을 위해서 이메일 주소가 필요합니다</translation>
+    </message>
+    <message>
+        <location filename="../lcn_info_dlg.cpp" line="534"/>
         <source>Would you like to request a free license?</source>
         <translation>무료 라이선스를 요청하겠습니까?</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="533"/>
         <source>Enter a email</source>
-        <translation>이메일을 입력하세요</translation>
+        <translation type="vanished">이메일을 입력하세요</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="541"/>
+        <location filename="../lcn_info_dlg.cpp" line="540"/>
         <source>failed to get free license %1 : %2</source>
         <translation>무료 라이선스 가져오기 실패 %1 : %2</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="554"/>
+        <location filename="../lcn_info_dlg.cpp" line="553"/>
         <source>A free license has been issued. Restart to apply it?</source>
         <translation>무료 라이선스가 발급 되었습니다. 다시 시작 하겠습니까?</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="577"/>
+        <location filename="../lcn_info_dlg.cpp" line="576"/>
         <source>There is currently no license</source>
         <translation>현재 라이선스가 없습니다</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="649"/>
+        <location filename="../lcn_info_dlg.cpp" line="648"/>
         <source>Find</source>
         <translation>찾기</translation>
     </message>
@@ -7395,17 +7399,17 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">라이선스 갱신 실패 [%1]</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="613"/>
+        <location filename="../lcn_info_dlg.cpp" line="612"/>
         <source>License is invalid : %1</source>
         <translation>라이선스가 유효하지 않습니다: %1</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="632"/>
+        <location filename="../lcn_info_dlg.cpp" line="631"/>
         <source>Are you sure you want to remove invalid license information?</source>
         <translation>유효하지 않는 라이선스 정보를 제거 하겠습니까?</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="639"/>
+        <location filename="../lcn_info_dlg.cpp" line="638"/>
         <source>Remove invalid license settings</source>
         <translation>유효하지 않는 라이선스 설정 제거</translation>
     </message>
@@ -7426,7 +7430,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">현재 라이선스가 없습니다</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.ui" line="138"/>
+        <location filename="../lcn_info_dlg.ui" line="158"/>
         <source>Issued Date</source>
         <translation>발급 일자</translation>
     </message>
@@ -7439,7 +7443,7 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">현재 라이선스가 더 긴 기간의 라이선스입니다</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="112"/>
+        <location filename="../lcn_info_dlg.cpp" line="111"/>
         <source>This CryptokiMan is licensed version</source>
         <translation>CryptokiMan 은 라이선스 버전입니다</translation>
     </message>
@@ -7452,8 +7456,8 @@ Do you want to delete the file and continue?</source>
         <translation type="vanished">라이선스가 발급 되지 않았습니다.</translation>
     </message>
     <message>
-        <location filename="../lcn_info_dlg.cpp" line="341"/>
-        <location filename="../lcn_info_dlg.cpp" line="434"/>
+        <location filename="../lcn_info_dlg.cpp" line="340"/>
+        <location filename="../lcn_info_dlg.cpp" line="433"/>
         <source>This service is not yet supported.</source>
         <translation>아직 지원하지 않는 서비스 입니다</translation>
     </message>
