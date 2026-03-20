@@ -325,7 +325,7 @@ void CAVPDlg::clickHashRun()
 
     if( !reqFile.open( QIODevice::ReadOnly | QIODevice::Text ))
     {
-        manApplet->elog( QString( "fail to open file(%1)\n").arg( strPath ));
+        manApplet->elog( QString( "failed to open file(%1)\n").arg( strPath ));
         return;
     }
 

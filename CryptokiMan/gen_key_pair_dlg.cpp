@@ -1145,7 +1145,7 @@ void GenKeyPairDlg::clickExportDHParam()
     ret = JS_PKI_encodeDHParam( &binP, &binG, NULL, &binParam );
     if( ret != 0 )
     {
-        manApplet->elog( QString( "fail to encode DH param: %1").arg( ret ));
+        manApplet->elog( QString( "failed to encode DH param: %1").arg( ret ));
         goto end;
     }
 
@@ -1172,14 +1172,14 @@ void GenKeyPairDlg::clickImportDHParam()
     ret = JS_BIN_fileReadBER( strFileName.toLocal8Bit().toStdString().c_str(), &binParam );
     if( ret <= 0 )
     {
-        manApplet->elog( QString( "fail to read parameters: %1" ).arg( ret ));
+        manApplet->elog( QString( "failed to read parameters: %1" ).arg( ret ));
         goto end;
     }
 
     ret = JS_PKI_decodeDHParam( &binParam, &binP, &binG, NULL );
     if( ret != 0 )
     {
-        manApplet->warningBox( tr( "fail to decode DH parameters: %1").arg( ret ), this );
+        manApplet->warningBox( tr( "failed to decode DH parameters: %1").arg( ret ), this );
         goto end;
     }
 

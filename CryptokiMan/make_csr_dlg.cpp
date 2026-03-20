@@ -465,7 +465,7 @@ void MakeCSRDlg::clickOK()
     ret = getPublicKey( manApplet->cryptokiAPI(), slot_info_.getSessionHandle(), hPub, &binPub );
     if( ret != 0 )
     {
-        manApplet->warningBox( tr( "fail to get public key: %1" ).arg( ret ), this );
+        manApplet->warningBox( tr( "failed to get public key: %1" ).arg( ret ), this );
         return;
     }
 
@@ -490,7 +490,7 @@ void MakeCSRDlg::clickOK()
         ret = JS_PKI_verifyCSR( &csr_ );
         if( ret != JSR_VALID )
         {
-            manApplet->warnLog( tr( "fail to verify CSR: %1").arg( ret ), this );
+            manApplet->warnLog( tr( "failed to verify CSR: %1").arg( ret ), this );
             return;
         }
 
@@ -498,7 +498,7 @@ void MakeCSRDlg::clickOK()
     }
     else
     {
-        manApplet->warnLog( tr( "fail to make CSR: %1").arg( ret ), this);
+        manApplet->warnLog( tr( "failed to make CSR: %1").arg( ret ), this);
         return;
     }
 }

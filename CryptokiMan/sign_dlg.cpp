@@ -443,7 +443,7 @@ int SignDlg::clickInit()
     if( rv != CKR_OK )
     {
         mOutputText->setPlainText( "" );
-        manApplet->warningBox( tr("fail to run SignInit(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("failed to run SignInit(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
     }
     else
     {
@@ -690,7 +690,7 @@ void SignDlg::runFileSign()
         nRead = JS_BIN_fileReadPartFP( fp, nOffset, nPartSize, &binPart );
         if( nRead <= 0 )
         {
-            manApplet->warnLog( tr( "fail to read file: %1").arg( nRead ), this );
+            manApplet->warnLog( tr( "failed to read file: %1").arg( nRead ), this );
             goto end;
         }
 

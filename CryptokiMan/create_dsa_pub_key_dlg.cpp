@@ -502,7 +502,7 @@ void CreateDSAPubKeyDlg::clickFindKey()
     ret = 0;
 
 end :
-    if( ret != 0 ) manApplet->warningBox( tr( "fail to get key value [%1]").arg(ret), this );
+    if( ret != 0 ) manApplet->warningBox( tr( "failed to get key value [%1]").arg(ret), this );
 
     JS_BIN_reset( &binKey );
     JS_PKI_resetDSAKeyVal( &sDSAKey );

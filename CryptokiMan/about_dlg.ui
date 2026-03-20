@@ -25,7 +25,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset>
+        <iconset resource="cryptokiman.qrc">
          <normaloff>:/images/cryptokiman.png</normaloff>:/images/cryptokiman.png</iconset>
        </property>
        <property name="iconSize">
@@ -191,7 +191,7 @@
      <item row="0" column="0">
       <widget class="QPushButton" name="mCheckUpdateBtn">
        <property name="text">
-        <string>Check For Update</string>
+        <string>Check for updates</string>
        </property>
       </widget>
      </item>
@@ -214,6 +214,8 @@
   <tabstop>mCheckUpdateBtn</tabstop>
   <tabstop>mCloseBtn</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="cryptokiman.qrc"/>
+ </resources>
  <connections/>
 </ui>

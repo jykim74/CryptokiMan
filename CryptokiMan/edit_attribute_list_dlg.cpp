@@ -780,7 +780,7 @@ void EditAttributeListDlg::clickGetAttribute()
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr( "fail to get attribute values(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr( "failed to get attribute values(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 

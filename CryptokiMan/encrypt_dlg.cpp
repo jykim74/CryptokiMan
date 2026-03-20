@@ -910,7 +910,7 @@ void EncryptDlg::runFileEncrypt()
         nRead = JS_BIN_fileReadPartFP( fp, nOffset, nPartSize, &binPart );
         if( nRead <= 0 )
         {
-            manApplet->warnLog( tr( "fail to read file: %1").arg( nRead ), this );
+            manApplet->warnLog( tr( "failed to read file: %1").arg( nRead ), this );
             goto end;
         }
 
@@ -946,7 +946,7 @@ void EncryptDlg::runFileEncrypt()
             rv = JS_BIN_fileAppend( &binDst, strDstFile.toLocal8Bit().toStdString().c_str() );
             if( rv != binDst.nLen )
             {
-                manApplet->warnLog( tr( "fail to append file: %1" ).arg( rv ), this );
+                manApplet->warnLog( tr( "failed to append file: %1" ).arg( rv ), this );
                 goto end;
             }
 

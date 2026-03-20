@@ -103,17 +103,17 @@ void CloseSessionDlg::accept()
             slot_infos.replace( slot_index_, slot_info_ );
         }
 
-        manApplet->messageBox( tr("CloseSession(%1) successful").arg(strType), this );
+        manApplet->messageBox( tr("CloseSession(%1) succeeded").arg(strType), this );
         QDialog::accept();
     }
     else {
         if( all_ )
         {
-            manApplet->warningBox( tr("CloseAllSessions(%1) failure [%2]").arg(strType).arg(rv), this );
+            manApplet->warningBox( tr("CloseAllSessions(%1) failed [%2]").arg(strType).arg(rv), this );
         }
         else
         {
-            manApplet->warningBox( tr("CloseSession(%1) failure [%2]").arg(strType).arg(rv), this );
+            manApplet->warningBox( tr("CloseSession(%1) failed [%2]").arg(strType).arg(rv), this );
         }
 
         return;

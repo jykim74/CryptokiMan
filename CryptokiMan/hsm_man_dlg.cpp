@@ -1002,14 +1002,14 @@ void HsmManDlg::clickCertDeleteKeyPair()
         hPri = manApplet->cryptokiAPI()->getHandle( slot_info_.getSessionHandle(), CKO_PRIVATE_KEY, &binID );
         if( hPri < 0 )
         {
-            manApplet->warningBox( tr( "fail to get private handle: %1").arg( hPri ), this );
+            manApplet->warningBox( tr( "failed to get private handle: %1").arg( hPri ), this );
             goto end;
         }
 
         hPub = manApplet->cryptokiAPI()->getHandle( slot_info_.getSessionHandle(), CKO_PUBLIC_KEY, &binID );
         if( hPub < 0 )
         {
-            manApplet->warningBox( tr( "fail to get public handle: %1").arg( hPri ), this );
+            manApplet->warningBox( tr( "failed to get public handle: %1").arg( hPri ), this );
             goto end;
         }
     }
@@ -1017,13 +1017,13 @@ void HsmManDlg::clickCertDeleteKeyPair()
     rv = manApplet->cryptokiAPI()->DestroyObject( slot_info_.getSessionHandle(), hPri );
     if( rv != CKR_OK )
     {
-        manApplet->elog( QString( "fail to delete private key[H:%1]").arg(hPri));
+        manApplet->elog( QString( "failed to delete private key[H:%1]").arg(hPri));
     }
 
     rv = manApplet->cryptokiAPI()->DestroyObject( slot_info_.getSessionHandle(), hPub );
     if( rv != CKR_OK )
     {
-        manApplet->elog( QString( "fail to delete public key[H:%1]").arg(hPub));
+        manApplet->elog( QString( "failed to delete public key[H:%1]").arg(hPub));
     }
 
     rv = manApplet->cryptokiAPI()->DestroyObject( slot_info_.getSessionHandle(), hObj );

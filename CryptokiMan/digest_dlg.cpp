@@ -636,7 +636,7 @@ void DigestDlg::runFileDigest()
         nRead = JS_BIN_fileReadPartFP( fp, nOffset, nPartSize, &binPart );
         if( nRead <= 0 )
         {
-            manApplet->warnLog( tr( "fail to read file: %1").arg( nRead ), this );
+            manApplet->warnLog( tr( "failed to read file: %1").arg( nRead ), this );
             goto end;
         }
 

@@ -163,7 +163,7 @@ void CopyObjectDlg::accept()
 
     if( strSrcObject.toInt() <= 0  )
     {
-        QMessageBox::warning( this, "Copy Object", tr("There is no handler for the source.") );
+        QMessageBox::warning( this, "Copy Object", tr("No handle found for the source.") );
         return;
     }
 

@@ -2146,7 +2146,7 @@ int CAVPDlg::makeHMACData( const QString strCount, const QString strKLen, const 
     ret = createKey( nKeyType, pKey, &uObj );
     if( ret != 0 )
     {
-        manApplet->elog( QString( "fail to create key: %1").arg(ret) );
+        manApplet->elog( QString( "failed to create key: %1").arg(ret) );
         goto end;
     }
 
@@ -2155,7 +2155,7 @@ int CAVPDlg::makeHMACData( const QString strCount, const QString strKLen, const 
     ret = pAPI->SignInit( hSession, &sMech, uObj );
     if( ret != 0 )
     {
-        manApplet->elog( QString( "fail to sign init ret:%1").arg(ret));
+        manApplet->elog( QString( "failed to sign init ret:%1").arg(ret));
         goto end;
     }
 
@@ -2163,7 +2163,7 @@ int CAVPDlg::makeHMACData( const QString strCount, const QString strKLen, const 
     ret = pAPI->Sign( hSession, pMsg->pVal, pMsg->nLen, sOut, (CK_ULONG_PTR)&nOutLen );
     if( ret != 0 )
     {
-        manApplet->elog( QString( "fail to sign ret:%1").arg(ret));
+        manApplet->elog( QString( "failed to sign ret:%1").arg(ret));
         goto end;
     }
 
@@ -4225,7 +4225,7 @@ void CAVPDlg::saveJsonRsp( const QJsonDocument& pJsonDoc )
     saveFile.write( pJsonDoc.toJson() );
     saveFile.close();
 
-    manApplet->messageBox( tr( "%1 file save successfully").arg( strSaveName ), this );
+    manApplet->messageBox( tr( "%1 file saved successfully").arg( strSaveName ), this );
 
 }
 
@@ -4236,7 +4236,7 @@ int CAVPDlg::readJsonReq( const QString strPath, QJsonDocument& pJsonDoc )
 
     if( !jsonFile.open( QIODevice::ReadOnly))
     {
-        manApplet->elog( QString( "fail to read json: %1").arg( strPath));
+        manApplet->elog( QString( "failed to read json: %1").arg( strPath));
         return -1;
     }
 

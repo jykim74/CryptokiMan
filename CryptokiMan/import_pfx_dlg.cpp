@@ -1364,7 +1364,7 @@ int ImportPFXDlg::createRSAPublicKey( JRSAKeyVal *pRsaKeyVal )
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr("fail to create RSA public key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("failed to create RSA public key(%1)").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return rv;
     }
 

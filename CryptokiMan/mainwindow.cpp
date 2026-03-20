@@ -2038,7 +2038,7 @@ void MainWindow::exportCert()
     ret = manApplet->cryptokiAPI()->GetAttributeValue2( hSession, hObj, CKA_VALUE, &binVal );
     if( ret != CKR_OK )
     {
-        manApplet->warningBox( tr( "fail to get certficate" ), this );
+        manApplet->warningBox( tr( "failed to get certficate" ), this );
         return;
     }
 
