@@ -259,6 +259,8 @@ private:
     void createStatusBar();
     void createMemberDlg();
 
+    void setModaless( QDialog* dlg );
+
     int openLibrary( const QString libPath );
     void setTitle(const QString strName);
 

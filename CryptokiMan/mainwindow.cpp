@@ -810,6 +810,15 @@ void MainWindow::createMemberDlg()
 //    hsm_man_dlg_->setMode( HsmModeManage );
 }
 
+
+void MainWindow::setModaless( QDialog* dlg )
+{
+    dlg->setStyleSheet( kModalessStyle );
+    QString strTitle = dlg->windowTitle();
+    strTitle += " [MODALESS]";
+    dlg->setWindowTitle( strTitle );
+}
+
 void MainWindow::newFile()
 {
     QString cmd = manApplet->cmd();
@@ -1564,6 +1573,7 @@ void MainWindow::hsmMan()
     {
         hsm_man_dlg_ = new HsmManDlg;
         hsm_man_dlg_->setMode( HsmModeManage );
+        setModaless( hsm_man_dlg_ );
     }
 
     hsm_man_dlg_->setSlotIndex( nSlot );

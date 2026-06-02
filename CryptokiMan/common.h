@@ -78,6 +78,8 @@ static QString kSelectStyle =
 const QString kReadOnlyStyle = "background-color:#ddddff";
 const QString kDisableStyle = "background-color:#cccccc";
 
+const QString kModalessStyle = "QDialog { background:#EEF4FF; }";
+
 enum {
     DATA_HEX,
     DATA_STRING,
