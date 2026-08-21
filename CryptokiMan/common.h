@@ -274,4 +274,6 @@ const QString getSlotInfo( SlotInfo& info );
 const QIcon getSlotIcon( SlotInfo& info );
 const QString getShowFileSize( qint64 nFileSize );
 
+const QString getCountryString();
+
 #endif // COMMON_H

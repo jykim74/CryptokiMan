@@ -1519,3 +1519,10 @@ const QString getShowFileSize( qint64 nFileSize )
 
     return QString( "%1 %2" ).arg( strSize ).arg( strKind );
 }
+
+const QString getCountryString()
+{
+    QLocale locale;
+    return QLocale::countryToString( locale.country() );
+}
+
