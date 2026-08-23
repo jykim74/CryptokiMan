@@ -20,6 +20,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui)
 find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Network)
 
+
 add_definitions( -D_USE_LCN_SRV )
 
 set( OPENSSL "openssl35" )
