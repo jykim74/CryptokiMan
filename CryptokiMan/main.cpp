@@ -14,6 +14,7 @@
 #include "js_pki.h"
 #include "i18n_helper.h"
 #include "settings_mgr.h"
+#include "js_gen.h"
 
 #if defined(QT_DEBUG)
 int g_nVerbose = 1;
