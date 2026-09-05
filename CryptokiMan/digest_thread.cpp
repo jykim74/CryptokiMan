@@ -10,6 +10,8 @@
 
 #include <QFileInfo>
 
+extern int g_nVerbose;
+
 DigestThread::DigestThread()
 {
     session_ = -1;
@@ -53,7 +55,7 @@ void DigestThread::run()
 
     if( fp == NULL )
     {
-        fprintf( stderr, "failed to read file:%s\n", src_file_.toStdString().c_str());
+        if( g_nVerbose ) fprintf( stderr, "failed to read file:%s\n", src_file_.toStdString().c_str());
         goto end;
     }
 
@@ -65,14 +67,14 @@ void DigestThread::run()
         nRead = JS_BIN_fileReadPartFP( fp, nOffset, nPartSize, &binPart );
         if( nRead <= 0 )
         {
-            fprintf( stderr, "failed to read file: %d\n", nRead );
+            if( g_nVerbose ) fprintf( stderr, "failed to read file: %d\n", nRead );
             goto end;
         }
 
         ret = manApplet->cryptokiAPI()->DigestUpdate( session_, binPart.pVal, binPart.nLen, false );
         if( ret != CKR_OK )
         {
-            fprintf( stderr, "DigestUpdate execution failure [%s:%d]\n", JS_PKCS11_GetErrorMsg(ret), ret);
+            if( g_nVerbose ) fprintf( stderr, "DigestUpdate execution failure [%s:%d]\n", JS_PKCS11_GetErrorMsg(ret), ret);
             goto end;
         }
 

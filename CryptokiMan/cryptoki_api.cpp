@@ -530,7 +530,10 @@ int CryptokiAPI::GetAttributeValue2( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDL
 
     if( rv != CKR_OK )
     {
-        fprintf( stderr, "failed to execute C_GetAttributeValue(%s:%s:%d)\n", JS_PKCS11_GetCKAName(attrType),JS_PKCS11_GetErrorMsg(rv), rv );
+        manApplet->dlog( QString( "failed to execute C_GetAttributeValue(%1:%2:%3)" )
+                            .arg( JS_PKCS11_GetCKAName(attrType) )
+                            .arg( JS_PKCS11_GetErrorMsg(rv) )
+                            .arg( rv ));
         return rv;
     }
 
@@ -539,7 +542,7 @@ int CryptokiAPI::GetAttributeValue2( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDL
         sAttribute.pValue = (CK_BYTE_PTR)JS_calloc( 1, sAttribute.ulValueLen );
         if( sAttribute.pValue == NULL )
         {
-            fprintf( stderr, "out of memory\n" );
+            manApplet->dlog( "out of memory" );
             return -1;
         }
 
@@ -574,7 +577,10 @@ int CryptokiAPI::GetAttributeValue3( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDL
 
     if( rv != CKR_OK )
     {
-        fprintf( stderr, "failed to execute C_GetAttributeValue(%s:%s:%d)\n", JS_PKCS11_GetCKAName(attrType),JS_PKCS11_GetErrorMsg(rv), rv );
+        manApplet->dlog( QString( "failed to execute C_GetAttributeValue(%1:%2:%3)" )
+                            .arg(JS_PKCS11_GetCKAName(attrType))
+                            .arg( JS_PKCS11_GetErrorMsg(rv) )
+                            .arg( rv ));
         return rv;
     }
 
@@ -583,7 +589,7 @@ int CryptokiAPI::GetAttributeValue3( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDL
         sAttribute.pValue = (CK_BYTE_PTR)JS_calloc( 1, sAttribute.ulValueLen );
         if( sAttribute.pValue == NULL )
         {
-            fprintf( stderr, "out of memory\n" );
+            manApplet->dlog( "out of memory" );
             return -1;
         }
 
@@ -614,7 +620,7 @@ int CryptokiAPI::GetAttributeListValue( CK_SESSION_HANDLE hSession, CK_OBJECT_HA
 
     if( rv != CKR_OK )
     {
-        fprintf( stderr, "failed to execute C_GetAttributeValue(%s:%d)\n", JS_PKCS11_GetErrorMsg(rv), rv );
+        manApplet->elog( QString( "failed to execute C_GetAttributeValue(%1:%2)" ).arg(JS_PKCS11_GetErrorMsg(rv)).arg( rv ));
         return rv;
     }
 

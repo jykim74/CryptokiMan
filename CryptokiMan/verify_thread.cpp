@@ -7,6 +7,8 @@
 
 #include <QFileInfo>
 
+extern int g_nVerbose;
+
 VerifyThread::VerifyThread()
 {
 
@@ -50,7 +52,7 @@ void VerifyThread::run()
 
     if( fp == NULL )
     {
-        fprintf( stderr, "failed to read file:%s\n", src_file_.toStdString().c_str());
+        if( g_nVerbose ) fprintf( stderr, "failed to read file:%s\n", src_file_.toStdString().c_str());
         goto end;
     }
 
@@ -62,7 +64,7 @@ void VerifyThread::run()
         nRead = JS_BIN_fileReadPartFP( fp, nOffset, nPartSize, &binPart );
         if( nRead <= 0 )
         {
-            fprintf( stderr, "failed to read file: %d\n", nRead );
+            if( g_nVerbose ) fprintf( stderr, "failed to read file: %d\n", nRead );
             goto end;
         }
 
@@ -70,7 +72,7 @@ void VerifyThread::run()
         ret = manApplet->cryptokiAPI()->VerifyUpdate( session_, binPart.pVal, binPart.nLen, false );
         if( ret != CKR_OK )
         {
-            fprintf( stderr, "SignUpdate execution failure [%s:%d]\n", JS_PKCS11_GetErrorMsg(ret), ret);
+            if( g_nVerbose ) fprintf( stderr, "SignUpdate execution failure [%s:%d]\n", JS_PKCS11_GetErrorMsg(ret), ret);
             goto end;
         }
 

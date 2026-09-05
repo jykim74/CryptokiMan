@@ -7,6 +7,8 @@
 
 #include <QFileInfo>
 
+extern int g_nVerbose;
+
 EncryptThread::EncryptThread()
 {
 
@@ -56,7 +58,7 @@ void EncryptThread::run()
 
     if( fp == NULL )
     {
-        fprintf( stderr, "failed to read file:%s\n", src_file_.toStdString().c_str());
+        if( g_nVerbose ) fprintf( stderr, "failed to read file:%s\n", src_file_.toStdString().c_str());
         goto end;
     }
 
@@ -71,7 +73,7 @@ void EncryptThread::run()
         nRead = JS_BIN_fileReadPartFP( fp, nOffset, nPartSize, &binPart );
         if( nRead <= 0 )
         {
-            fprintf( stderr, "failed to read file: %d\n", nRead );
+            if( g_nVerbose ) fprintf( stderr, "failed to read file: %d\n", nRead );
             goto end;
         }
 
@@ -85,7 +87,7 @@ void EncryptThread::run()
         if( rv != CKR_OK )
         {
             if( pDecPart ) JS_free( pDecPart );
-            fprintf( stderr, "DecryptUpdate execution failure [%s:%d]", JS_PKCS11_GetErrorMsg(rv), rv );
+            if( g_nVerbose ) fprintf( stderr, "DecryptUpdate execution failure [%s:%d]", JS_PKCS11_GetErrorMsg(rv), rv );
             goto end;
         }
 
@@ -102,7 +104,7 @@ void EncryptThread::run()
             rv = JS_BIN_fileAppend( &binDst, dst_file_.toLocal8Bit().toStdString().c_str() );
             if( rv != binDst.nLen )
             {
-                fprintf( stderr, "failed to append file: %d\n", rv );
+                if( g_nVerbose ) fprintf( stderr, "failed to append file: %d\n", rv );
                 goto end;
             }
 
