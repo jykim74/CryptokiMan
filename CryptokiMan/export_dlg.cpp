@@ -652,7 +652,7 @@ int ExportDlg::exportPFX()
     strPass = newPass.mPasswdText->text();
     nPBE = JS_PKI_getNidFromSN( kPriEncMethod );
 
-    ret = JS_PKI_encodePFX( &binPFX, strPass.toStdString().c_str(), nPBE, &data_, &data2_ );
+    ret = JS_PKI_encodePFX( &binPFX, strPass.toStdString().c_str(), nPBE, &data_, &data2_, NULL );
     if( ret != 0 )
     {
         manApplet->warningBox( tr( "failed to encrypt PFX: %1").arg(ret), this);

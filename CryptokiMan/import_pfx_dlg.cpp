@@ -355,7 +355,7 @@ void ImportPFXDlg::accept()
     memset( &rawKeyVal, 0x00, sizeof(JRawKeyVal));
     memset( &sCertInfo, 0x00, sizeof(sCertInfo));
 
-    rv = JS_PKI_decodePFX( &binPFX, strPasswd.toStdString().c_str(), &binPri, &binCert );
+    rv = JS_PKI_decodePFX( &binPFX, strPasswd.toStdString().c_str(), &binPri, &binCert, NULL );
     if( rv != 0 )
     {
         manApplet->warningBox( tr( "failed to decode PFX"), this );
