@@ -44,7 +44,7 @@
 #define TOOL_BAR_WIDTH      24
 #define TOOL_BAR_HEIGHT     24
 
-const QStringList kRSAOptionList = { "1024", "2048", "3072", "4096", "8192" };
+const QStringList kRSAOptionList = { "1024", "2048", "3072", "4096", "8192", "16384" };
 
 const QStringList kECDSAOptionList = { "prime256v1",
     "secp112r1", "secp112r2", "secp128r1", "secp128r2", "secp160k1",
@@ -60,6 +60,8 @@ const QStringList kEdDSAOptionList = { JS_EDDSA_PARAM_NAME_25519, JS_EDDSA_PARAM
 
 const QStringList kDSAOptionList = { "1024", "2048", "3072" };
 const QStringList kDHOptionList = { "1024", "2048", "3072", "4096" };
+const QStringList kML_DSAOptionList = { "44", "65", "87" };
+const QStringList kML_KEMOptionList = { "512", "768", "1024" };
 
 
 static CK_BBOOL kTrue = CK_TRUE;

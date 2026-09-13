@@ -393,11 +393,12 @@ int SignDlg::clickInit()
     CK_MECHANISM sMech;
     BIN binParam = {0,0};
     CK_RSA_PKCS_PSS_PARAMS sRSA_PSS;
+    QString strMech = mMechCombo->currentText();
 
     memset( &sMech, 0x00, sizeof(sMech));
     memset( &sRSA_PSS, 0x00, sizeof(sRSA_PSS));
 
-    sMech.mechanism = JS_PKCS11_GetCKMType( mMechCombo->currentText().toStdString().c_str());
+    sMech.mechanism = JS_PKCS11_GetCKMType( strMech.toStdString().c_str());
 
     if( isRSA_PSS( sMech.mechanism ) == true )
     {
