@@ -16,6 +16,7 @@
 #include "define.h"
 #include "js_pki_raw.h"
 #include "slot_info.h"
+#include "js_pqc.h"
 
 #define     HM_ITEM_TYPE_ROOT               0
 #define     HM_ITEM_TYPE_SLOT               1
@@ -60,8 +61,8 @@ const QStringList kEdDSAOptionList = { JS_EDDSA_PARAM_NAME_25519, JS_EDDSA_PARAM
 
 const QStringList kDSAOptionList = { "1024", "2048", "3072" };
 const QStringList kDHOptionList = { "1024", "2048", "3072", "4096" };
-const QStringList kML_DSAOptionList = { "44", "65", "87" };
-const QStringList kML_KEMOptionList = { "512", "768", "1024" };
+const QStringList kML_DSAOptionList = { JS_PQC_PARAM_ML_DSA_44_NAME, JS_PQC_PARAM_ML_DSA_65_NAME, JS_PQC_PARAM_ML_DSA_87_NAME };
+const QStringList kML_KEMOptionList = { JS_PQC_PARAM_ML_KEM_512_NAME, JS_PQC_PARAM_ML_KEM_768_NAME, JS_PQC_PARAM_ML_KEM_1024_NAME };
 
 
 static CK_BBOOL kTrue = CK_TRUE;

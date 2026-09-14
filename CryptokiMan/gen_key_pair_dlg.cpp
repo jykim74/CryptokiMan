@@ -484,15 +484,15 @@ void GenKeyPairDlg::accept()
 
         sPubTemplate[uPubCount].type = CKA_PARAMETER_SET;
 
-        if( strCurveName.compare( "44", Qt::CaseInsensitive) == 0 )
+        if( strCurveName.compare( JS_PQC_PARAM_ML_DSA_44_NAME, Qt::CaseInsensitive) == 0 )
         {
             parameterSet = CKP_ML_DSA_44;
         }
-        else if( strCurveName.compare( "65", Qt::CaseInsensitive ) == 0 )
+        else if( strCurveName.compare( JS_PQC_PARAM_ML_DSA_65_NAME, Qt::CaseInsensitive ) == 0 )
         {
             parameterSet = CKP_ML_DSA_65;
         }
-        else if( strCurveName.compare( "87", Qt::CaseInsensitive ) == 0 )
+        else if( strCurveName.compare( JS_PQC_PARAM_ML_DSA_87_NAME, Qt::CaseInsensitive ) == 0 )
         {
             parameterSet = CKP_ML_DSA_87;
         }
@@ -508,15 +508,15 @@ void GenKeyPairDlg::accept()
 
         sPubTemplate[uPubCount].type = CKA_PARAMETER_SET;
 
-        if( strCurveName.compare( "512", Qt::CaseInsensitive) == 0 )
+        if( strCurveName.compare( JS_PQC_PARAM_ML_KEM_512_NAME, Qt::CaseInsensitive) == 0 )
         {
             parameterSet = CKP_ML_KEM_512;
         }
-        else if( strCurveName.compare( "768", Qt::CaseInsensitive ) == 0 )
+        else if( strCurveName.compare( JS_PQC_PARAM_ML_KEM_768_NAME, Qt::CaseInsensitive ) == 0 )
         {
             parameterSet = CKP_ML_KEM_768;
         }
-        else if( strCurveName.compare( "1024", Qt::CaseInsensitive ) == 0 )
+        else if( strCurveName.compare( JS_PQC_PARAM_ML_KEM_1024_NAME, Qt::CaseInsensitive ) == 0 )
         {
             parameterSet = CKP_ML_KEM_1024;
         }
