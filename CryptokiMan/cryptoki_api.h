@@ -21,10 +21,11 @@ class CryptokiAPI : public QObject
     Q_OBJECT
 
 public:
-    CryptokiAPI();
+    CryptokiAPI( QObject *parent = nullptr );
     void setCTX( JP11_CTX *pCTX );
     CK_SESSION_HANDLE getSessionHandle();
-    JP11_CTX* getCTX() { return p11_ctx_; };
+    //JP11_CTX* getCTX() { return p11_ctx_; };
+    JP11_CTX* getCTX();
 
     static int getAttrType( CK_ATTRIBUTE_TYPE nType );
 
@@ -165,8 +166,8 @@ private:
     void logTemplate( const CK_ATTRIBUTE sTemplate[], int nCount );
 
 private:
-    JP11_CTX       *p11_ctx_;
-    bool            init_;
+    JP11_CTX       *p11_ctx_ = nullptr;
+    bool            init_ = false;
 };
 
 #endif // CRYPTOKIAPI_H

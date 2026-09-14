@@ -11,9 +11,9 @@
 #include "common.h"
 #include "js_pki_tools.h"
 
-CryptokiAPI::CryptokiAPI()
+CryptokiAPI::CryptokiAPI( QObject *parent )
 {
-    p11_ctx_ = NULL;
+    p11_ctx_ = nullptr;
     init_ = false;
 }
 
@@ -25,6 +25,11 @@ void CryptokiAPI::setCTX( JP11_CTX *pCTX )
     }
 
     p11_ctx_ = pCTX;
+}
+
+JP11_CTX* CryptokiAPI::getCTX()
+{
+    return p11_ctx_;
 }
 
 CK_SESSION_HANDLE CryptokiAPI::getSessionHandle()

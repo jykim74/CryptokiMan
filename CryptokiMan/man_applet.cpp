@@ -94,9 +94,10 @@ void ManApplet::start()
 {
     checkLicense();
 
+    cryptoki_api_ = new CryptokiAPI;
     mech_mgr_ = new MechMgr;
     settings_mgr_ = new SettingsMgr;
-    cryptoki_api_ = new CryptokiAPI;
+
 
     main_win_ = new MainWindow;
     main_win_->show();
