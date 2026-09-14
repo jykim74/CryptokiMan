@@ -504,7 +504,7 @@ void GenKeyPairDlg::accept()
     else if( strMech == "CKM_ML_KEM_KEY_PAIR_GEN" )
     {
         QString strCurveName = mOptionCombo->currentText();
-        CK_ML_DSA_PARAMETER_SET_TYPE parameterSet;
+        CK_ML_KEM_PARAMETER_SET_TYPE parameterSet;
 
         sPubTemplate[uPubCount].type = CKA_PARAMETER_SET;
 
