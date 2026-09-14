@@ -1108,21 +1108,35 @@ QString getStringFromBIN( const BIN *pBin, int nType, bool bSeenOnly )
 
 QString getMechFlagString( unsigned long uFlag )
 {
-    QString strFlag = QString( "0x%1" ).arg( uFlag, -8, 16, QLatin1Char( ' ' ) );
+    QString strFlag = QString( "0x%1" ).arg( uFlag, 8, 16, QLatin1Char( '0' ) );
 
-    if( uFlag & CKF_DECRYPT ) strFlag += " | Decrypt";
-    if( uFlag & CKF_DERIVE ) strFlag += " | Derive";
-    if( uFlag & CKF_DIGEST ) strFlag += " | Digest";
     if( uFlag & CKF_ENCRYPT ) strFlag += " | Encrypt";
-    if( uFlag & CKF_GENERATE ) strFlag += " | Generate";
-    if( uFlag & CKF_GENERATE_KEY_PAIR ) strFlag += " | Generate key pair";
+    if( uFlag & CKF_DECRYPT ) strFlag += " | Decrypt";
+    if( uFlag & CKF_DIGEST ) strFlag += " | Digest";
+    if( uFlag & CKF_SIGN ) strFlag += " | Sign";
+    if( uFlag & CKF_SIGN_RECOVER ) strFlag += " | SignRecover";
+    if( uFlag & CKF_VERIFY ) strFlag += " | Verify";
     if( uFlag & CKF_HW ) strFlag += " | HW";
     if( uFlag & CKF_SIGN ) strFlag += " | Sign";
     if( uFlag & CKF_VERIFY ) strFlag += " | Verify";
+    if( uFlag & CKF_VERIFY_RECOVER ) strFlag += " | VerifyRecover";
+    if( uFlag & CKF_GENERATE ) strFlag += " | Generate";
+    if( uFlag & CKF_GENERATE_KEY_PAIR ) strFlag += " | GenerateKeyPair";
     if( uFlag & CKF_WRAP ) strFlag += " | Wrap";
-    if( uFlag & CKF_UNWRAP ) strFlag += " | Unwrap";
-    if( uFlag & CKF_SIGN_RECOVER ) strFlag += " | Sign recover";
-    if( uFlag & CKF_VERIFY_RECOVER ) strFlag += " | Verify recover";
+    if( uFlag & CKF_DERIVE ) strFlag += " | Derive";
+    if( uFlag & CKF_EC_F_P ) strFlag += " | EC_F_P";
+    if( uFlag & CKF_EC_F_2M ) strFlag += " | EC_F_2M";
+    if( uFlag & CKF_EC_ECPARAMETERS ) strFlag += " | EC_ECPARAMETERS";
+    if( uFlag & CKF_EC_OID ) strFlag += "EC_OID";
+    if( uFlag & CKF_EC_NAMEDCURVE ) strFlag += " | EC_NAMEDCURVE";
+    if( uFlag & CKF_EC_UNCOMPRESS ) strFlag += " | EC_UNCOMPRESS";
+    if( uFlag & CKF_EC_COMPRESS ) strFlag += " | EC_COMPRESS";
+    if( uFlag & CKF_EC_CURVENAME ) strFlag += " | EC_CURVENAME";
+
+    if( uFlag & CKF_ENCAPSULATE ) strFlag += " | Encapsulate";
+    if( uFlag & CKF_DECAPSULATE ) strFlag += " | Decapsulate";
+
+    if( uFlag & CKF_EXTENSION ) strFlag += " | Extension";
 
     return strFlag;
 }
