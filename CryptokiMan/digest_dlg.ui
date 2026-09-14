@@ -340,7 +340,7 @@
    <item>
     <widget class="QTabWidget" name="mInputTab">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="mDataTab">
       <attribute name="title">
@@ -923,12 +923,25 @@
      <property name="topMargin">
       <number>0</number>
      </property>
-     <item row="0" column="4">
-      <widget class="Line" name="line_7">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
+     <item row="0" column="2">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Init</string>
        </property>
       </widget>
+     </item>
+     <item row="0" column="1">
+      <spacer name="horizontalSpacer_7">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
      </item>
      <item row="0" column="5">
       <widget class="QLabel" name="label_17">
@@ -937,66 +950,10 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="9">
-      <widget class="QLineEdit" name="mFinalText">
-       <property name="minimumSize">
-        <size>
-         <width>40</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>40</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="palette">
-        <palette>
-         <active>
-          <colorrole role="Base">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>221</red>
-             <green>221</green>
-             <blue>255</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </active>
-         <inactive>
-          <colorrole role="Base">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>221</red>
-             <green>221</green>
-             <blue>255</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </inactive>
-         <disabled/>
-        </palette>
-       </property>
-       <property name="focusPolicy">
-        <enum>Qt::NoFocus</enum>
-       </property>
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="QLabel" name="label_2">
+     <item row="0" column="8">
+      <widget class="QLabel" name="label_18">
        <property name="text">
-        <string>Init</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="10">
-      <widget class="QPushButton" name="mResetBtn">
-       <property name="text">
-        <string>Reset</string>
+        <string>Final</string>
        </property>
       </widget>
      </item>
@@ -1049,10 +1006,59 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="7">
-      <widget class="Line" name="line_8">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
+     <item row="0" column="9">
+      <widget class="QLineEdit" name="mFinalText">
+       <property name="minimumSize">
+        <size>
+         <width>40</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>40</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="palette">
+        <palette>
+         <active>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </active>
+         <inactive>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>221</red>
+             <green>221</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </inactive>
+         <disabled/>
+        </palette>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="10">
+      <widget class="QPushButton" name="mResetBtn">
+       <property name="text">
+        <string>Reset</string>
        </property>
       </widget>
      </item>
@@ -1105,25 +1111,19 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="8">
-      <widget class="QLabel" name="label_18">
-       <property name="text">
-        <string>Final</string>
+     <item row="0" column="4">
+      <widget class="Line" name="line_7">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
-      <spacer name="horizontalSpacer_7">
+     <item row="0" column="7">
+      <widget class="Line" name="line_8">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Vertical</enum>
        </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
+      </widget>
      </item>
      <item row="0" column="0">
       <widget class="QPushButton" name="mInitBtn">
