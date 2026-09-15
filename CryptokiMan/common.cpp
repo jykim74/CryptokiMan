@@ -1540,3 +1540,116 @@ const QString getCountryString()
     return QLocale::countryToString( locale.country() );
 }
 
+const QString getML_KEMParamName( CK_ML_KEM_PARAMETER_SET_TYPE nType )
+{
+    QString strName;
+
+    if( nType == CKP_ML_KEM_512 )
+        strName = JS_PQC_PARAM_ML_KEM_512_NAME;
+    else if( nType == CKP_ML_KEM_768 )
+        strName = JS_PQC_PARAM_ML_KEM_768_NAME;
+    else if( nType == CKP_ML_KEM_1024 )
+        strName = JS_PQC_PARAM_ML_KEM_1024_NAME;
+
+    return strName;
+}
+
+const QString getML_DSAParamName( CK_ML_DSA_PARAMETER_SET_TYPE nType )
+{
+    QString strName;
+
+    if( nType == CKP_ML_DSA_44 )
+        strName = JS_PQC_PARAM_ML_DSA_44_NAME;
+    else if( nType == CKP_ML_DSA_65 )
+        strName = JS_PQC_PARAM_ML_DSA_65_NAME;
+    else if( nType == CKP_ML_DSA_87 )
+        strName = JS_PQC_PARAM_ML_DSA_87_NAME;
+
+    return strName;
+}
+
+const QString getSLH_DSAParamName( CK_SLH_DSA_PARAMETER_SET_TYPE nType )
+{
+    QString strName;
+
+    if( nType == CKP_SLH_DSA_SHA2_128F )
+        strName = JS_PQC_PARAM_SLH_DSA_SHA2_128F_NAME;
+    else if( nType == CKP_SLH_DSA_SHA2_128S )
+        strName = JS_PQC_PARAM_SLH_DSA_SHA2_128S_NAME;
+    else if( nType == CKP_SLH_DSA_SHA2_192F )
+        strName = JS_PQC_PARAM_SLH_DSA_SHA2_192F_NAME;
+    else if( nType == CKP_SLH_DSA_SHA2_192S )
+        strName = JS_PQC_PARAM_SLH_DSA_SHA2_192S_NAME;
+    else if( nType == CKP_SLH_DSA_SHA2_256F )
+        strName = JS_PQC_PARAM_SLH_DSA_SHA2_256F_NAME;
+    else if( nType == CKP_SLH_DSA_SHA2_256S )
+        strName = JS_PQC_PARAM_SLH_DSA_SHA2_256S_NAME;
+    else if( nType == CKP_SLH_DSA_SHAKE_128F )
+        strName = JS_PQC_PARAM_SLH_DSA_SHAKE_128F_NAME;
+    else if( nType == CKP_SLH_DSA_SHAKE_128S )
+        strName = JS_PQC_PARAM_SLH_DSA_SHAKE_128S_NAME;
+    else if( nType == CKP_SLH_DSA_SHAKE_192F )
+        strName = JS_PQC_PARAM_SLH_DSA_SHAKE_192F_NAME;
+    else if( nType == CKP_SLH_DSA_SHAKE_192S )
+        strName = JS_PQC_PARAM_SLH_DSA_SHAKE_192S_NAME;
+    else if( nType == CKP_SLH_DSA_SHAKE_256F )
+        strName = JS_PQC_PARAM_SLH_DSA_SHAKE_256F_NAME;
+    else if( nType == CKP_SLH_DSA_SHAKE_256S )
+        strName = JS_PQC_PARAM_SLH_DSA_SHAKE_256S_NAME;
+
+    return strName;
+}
+
+CK_ML_KEM_PARAMETER_SET_TYPE getML_KEMParamType( const QString strParam )
+{
+    if( strParam.compare( JS_PQC_PARAM_ML_KEM_512_NAME, Qt::CaseInsensitive ) == 0 )
+        return CKP_ML_KEM_512;
+    else if( strParam.compare( JS_PQC_PARAM_ML_KEM_768_NAME, Qt::CaseInsensitive ) == 0 )
+        return CKP_ML_KEM_768;
+    else if( strParam.compare( JS_PQC_PARAM_ML_KEM_1024_NAME, Qt::CaseInsensitive ) == 0 )
+        return CKP_ML_KEM_1024;
+
+    return JSR_ERR;
+}
+
+CK_ML_DSA_PARAMETER_SET_TYPE getML_DSAParamType( const QString strParam )
+{
+    if( strParam.compare( JS_PQC_PARAM_ML_DSA_44_NAME, Qt::CaseInsensitive ) == 0 )
+        return CKP_ML_DSA_44;
+    else if( strParam.compare( JS_PQC_PARAM_ML_DSA_65_NAME, Qt::CaseInsensitive ) == 0 )
+        return CKP_ML_DSA_65;
+    else if( strParam.compare( JS_PQC_PARAM_ML_DSA_87_NAME, Qt::CaseInsensitive ) == 0 )
+        return CKP_ML_DSA_87;
+
+    return JSR_ERR;
+}
+
+CK_SLH_DSA_PARAMETER_SET_TYPE getSLH_DSAParamType( const QString strParam )
+{
+    if( strParam.compare( JS_PQC_PARAM_SLH_DSA_SHA2_128F_NAME, Qt::CaseInsensitive ) == 0 )
+        return CKP_SLH_DSA_SHA2_128F;
+    else if( strParam.compare( JS_PQC_PARAM_SLH_DSA_SHA2_128S_NAME, Qt::CaseInsensitive ) == 0 )
+        return CKP_SLH_DSA_SHA2_128S;
+    else if( strParam.compare( JS_PQC_PARAM_SLH_DSA_SHA2_192F_NAME, Qt::CaseInsensitive ) == 0 )
+        return CKP_SLH_DSA_SHA2_192F;
+    else if( strParam.compare( JS_PQC_PARAM_SLH_DSA_SHA2_192S_NAME, Qt::CaseInsensitive ) == 0 )
+        return CKP_SLH_DSA_SHA2_192S;
+    else if( strParam.compare( JS_PQC_PARAM_SLH_DSA_SHA2_256F_NAME, Qt::CaseInsensitive ) == 0 )
+        return CKP_SLH_DSA_SHA2_256F;
+    else if( strParam.compare( JS_PQC_PARAM_SLH_DSA_SHA2_256S_NAME, Qt::CaseInsensitive ) == 0 )
+        return CKP_SLH_DSA_SHA2_256S;
+    else if( strParam.compare( JS_PQC_PARAM_SLH_DSA_SHAKE_128F_NAME, Qt::CaseInsensitive ) == 0 )
+        return CKP_SLH_DSA_SHAKE_128F;
+    else if( strParam.compare( JS_PQC_PARAM_SLH_DSA_SHAKE_128S_NAME, Qt::CaseInsensitive ) == 0 )
+        return CKP_SLH_DSA_SHAKE_128S;
+    else if( strParam.compare( JS_PQC_PARAM_SLH_DSA_SHAKE_192F_NAME, Qt::CaseInsensitive ) == 0 )
+        return CKP_SLH_DSA_SHAKE_192F;
+    else if( strParam.compare( JS_PQC_PARAM_SLH_DSA_SHAKE_192S_NAME, Qt::CaseInsensitive ) == 0 )
+        return CKP_SLH_DSA_SHAKE_192S;
+    else if( strParam.compare( JS_PQC_PARAM_SLH_DSA_SHAKE_256F_NAME, Qt::CaseInsensitive ) == 0 )
+        return CKP_SLH_DSA_SHAKE_256F;
+    else if( strParam.compare( JS_PQC_PARAM_SLH_DSA_SHAKE_256S_NAME, Qt::CaseInsensitive ) == 0 )
+        return CKP_SLH_DSA_SHAKE_256S;
+
+    return JSR_ERR;
+}

@@ -63,6 +63,14 @@ const QStringList kDSAOptionList = { "1024", "2048", "3072" };
 const QStringList kDHOptionList = { "1024", "2048", "3072", "4096" };
 const QStringList kML_DSAOptionList = { JS_PQC_PARAM_ML_DSA_44_NAME, JS_PQC_PARAM_ML_DSA_65_NAME, JS_PQC_PARAM_ML_DSA_87_NAME };
 const QStringList kML_KEMOptionList = { JS_PQC_PARAM_ML_KEM_512_NAME, JS_PQC_PARAM_ML_KEM_768_NAME, JS_PQC_PARAM_ML_KEM_1024_NAME };
+const QStringList kSLH_DSAOptionList = {
+    JS_PQC_PARAM_SLH_DSA_SHA2_128F_NAME, JS_PQC_PARAM_SLH_DSA_SHA2_128S_NAME,
+    JS_PQC_PARAM_SLH_DSA_SHA2_192F_NAME, JS_PQC_PARAM_SLH_DSA_SHA2_192S_NAME,
+    JS_PQC_PARAM_SLH_DSA_SHA2_256F_NAME, JS_PQC_PARAM_SLH_DSA_SHA2_256S_NAME,
+    JS_PQC_PARAM_SLH_DSA_SHAKE_128F_NAME, JS_PQC_PARAM_SLH_DSA_SHAKE_128S_NAME,
+    JS_PQC_PARAM_SLH_DSA_SHAKE_192F_NAME, JS_PQC_PARAM_SLH_DSA_SHAKE_192S_NAME,
+    JS_PQC_PARAM_SLH_DSA_SHAKE_256F_NAME, JS_PQC_PARAM_SLH_DSA_SHAKE_256S_NAME,
+};
 
 
 static CK_BBOOL kTrue = CK_TRUE;
@@ -278,5 +286,12 @@ const QIcon getSlotIcon( SlotInfo& info );
 const QString getShowFileSize( qint64 nFileSize );
 
 const QString getCountryString();
+
+const QString getML_KEMParamName( CK_ML_KEM_PARAMETER_SET_TYPE nType );
+const QString getML_DSAParamName( CK_ML_DSA_PARAMETER_SET_TYPE nType );
+const QString getSLH_DSAParamName( CK_SLH_DSA_PARAMETER_SET_TYPE nType );
+CK_ML_KEM_PARAMETER_SET_TYPE getML_KEMParamType( const QString strParam );
+CK_ML_DSA_PARAMETER_SET_TYPE getML_DSAParamType( const QString strParam );
+CK_SLH_DSA_PARAMETER_SET_TYPE getSLH_DSAParamType( const QString strParam );
 
 #endif // COMMON_H

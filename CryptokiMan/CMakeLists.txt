@@ -250,6 +250,8 @@ add_executable(${PROJECT_NAME}
     cavp_dlg.h cavp_dlg.cpp cavp_dlg.ui
     cavp_dlg2.cpp
     object_view_dlg.h object_view_dlg.cpp object_view_dlg.ui
+    create_pqc_pri_key_dlg.h create_pqc_pri_key_dlg.cpp create_pqc_pri_key_dlg.ui
+    create_pqc_pub_key_dlg.h create_pqc_pub_key_dlg.cpp create_pqc_pub_key_dlg.ui
 )
 
 target_link_options( ${PROJECT_NAME} PRIVATE -mwindows -MD )

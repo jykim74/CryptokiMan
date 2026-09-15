@@ -367,6 +367,11 @@ void GenKeyPairDlg::accept()
         stMech.mechanism = CKM_ML_KEM_KEY_PAIR_GEN;
         keyType = CKK_ML_KEM;
     }
+    else if( strMech == "CKM_SLH_DSA_KEY_PAIR_GEN" )
+    {
+        stMech.mechanism = CKM_SLH_DSA_KEY_PAIR_GEN;
+        keyType = CKK_SLH_DSA;
+    }
     else
     {
         manApplet->elog( QString( "Invalid Mechanism:%1").arg(strMech));
@@ -431,6 +436,24 @@ void GenKeyPairDlg::accept()
         sPubTemplate[uPubCount].ulValueLen = binECParam.nLen;
         uPubCount++;
     }
+    else if( strMech == "CKM_EC_EDWARDS_KEY_PAIR_GEN" )
+    {
+        QString strOption = mOptionCombo->currentText();
+        sPubTemplate[uPubCount].type = CKA_EC_PARAMS;
+
+        if( strOption.compare( "ED448", Qt::CaseInsensitive ) == 0 )
+        {
+            sPubTemplate[uPubCount].pValue = kOID_ED448;
+            sPubTemplate[uPubCount].ulValueLen = sizeof(kOID_ED448);
+        }
+        else
+        {
+            sPubTemplate[uPubCount].pValue = kOID_ED25519;
+            sPubTemplate[uPubCount].ulValueLen = sizeof(kOID_ED25519);
+        }
+
+        uPubCount++;
+    }
     else if( strMech == "CKM_DH_PKCS_KEY_PAIR_GEN" )
     {
 
@@ -481,22 +504,20 @@ void GenKeyPairDlg::accept()
     {
         QString strCurveName = mOptionCombo->currentText();
         CK_ML_DSA_PARAMETER_SET_TYPE parameterSet;
+        parameterSet = getML_DSAParamType( strCurveName );
 
         sPubTemplate[uPubCount].type = CKA_PARAMETER_SET;
+        sPubTemplate[uPubCount].pValue = &parameterSet;
+        sPubTemplate[uPubCount].ulValueLen = sizeof(parameterSet);
+        uPubCount++;
+    }
+    else if( strMech == "CKM_SLH_DSA_KEY_PAIR_GEN" )
+    {
+        QString strCurveName = mOptionCombo->currentText();
+        CK_SLH_DSA_PARAMETER_SET_TYPE parameterSet;
+        parameterSet = getSLH_DSAParamType( strCurveName );
 
-        if( strCurveName.compare( JS_PQC_PARAM_ML_DSA_44_NAME, Qt::CaseInsensitive) == 0 )
-        {
-            parameterSet = CKP_ML_DSA_44;
-        }
-        else if( strCurveName.compare( JS_PQC_PARAM_ML_DSA_65_NAME, Qt::CaseInsensitive ) == 0 )
-        {
-            parameterSet = CKP_ML_DSA_65;
-        }
-        else if( strCurveName.compare( JS_PQC_PARAM_ML_DSA_87_NAME, Qt::CaseInsensitive ) == 0 )
-        {
-            parameterSet = CKP_ML_DSA_87;
-        }
-
+        sPubTemplate[uPubCount].type = CKA_PARAMETER_SET;
         sPubTemplate[uPubCount].pValue = &parameterSet;
         sPubTemplate[uPubCount].ulValueLen = sizeof(parameterSet);
         uPubCount++;
@@ -505,22 +526,9 @@ void GenKeyPairDlg::accept()
     {
         QString strCurveName = mOptionCombo->currentText();
         CK_ML_KEM_PARAMETER_SET_TYPE parameterSet;
+        parameterSet = getML_KEMParamType( strCurveName );
 
         sPubTemplate[uPubCount].type = CKA_PARAMETER_SET;
-
-        if( strCurveName.compare( JS_PQC_PARAM_ML_KEM_512_NAME, Qt::CaseInsensitive) == 0 )
-        {
-            parameterSet = CKP_ML_KEM_512;
-        }
-        else if( strCurveName.compare( JS_PQC_PARAM_ML_KEM_768_NAME, Qt::CaseInsensitive ) == 0 )
-        {
-            parameterSet = CKP_ML_KEM_768;
-        }
-        else if( strCurveName.compare( JS_PQC_PARAM_ML_KEM_1024_NAME, Qt::CaseInsensitive ) == 0 )
-        {
-            parameterSet = CKP_ML_KEM_1024;
-        }
-
         sPubTemplate[uPubCount].pValue = &parameterSet;
         sPubTemplate[uPubCount].ulValueLen = sizeof(parameterSet);
         uPubCount++;
@@ -955,6 +963,12 @@ void GenKeyPairDlg::mechChanged(int nIndex)
     {
         mOptionLabel->setText( QString("NamedCurve"));
         mOptionCombo->addItems( kML_KEMOptionList );
+        mParamTab->setDisabled(true);
+    }
+    else if( strMech == "CKM_SLH_DSA_KEY_PAIR_GEN" )
+    {
+        mOptionLabel->setText( QString("NamedCurve"));
+        mOptionCombo->addItems( kSLH_DSAOptionList );
         mParamTab->setDisabled(true);
     }
 }
@@ -1477,7 +1491,7 @@ int GenKeyPairDlg::setSKI_SPKI( long hSession, int nKeyType, long hPri, long hPu
         JS_BIN_reset( &binVal );
         JS_BIN_reset( &binXY );
     }
-    else if( nKeyType == CKK_ML_DSA || nKeyType == CKK_ML_KEM )
+    else if( nKeyType == CKK_ML_DSA || nKeyType == CKK_ML_KEM || nKeyType == CKK_SLH_DSA )
     {
         BIN binVal = {0,0};
 
@@ -1493,6 +1507,8 @@ int GenKeyPairDlg::setSKI_SPKI( long hSession, int nKeyType, long hPri, long hPu
         JS_BIN_encodeHex( &binVal, &pPubHex );
         if( nKeyType == CKK_ML_DSA )
             JS_PKI_setRawKeyVal( &sRawKey, JS_PKI_KEY_NAME_ML_DSA, strOption.toStdString().c_str(), pPubHex, NULL );
+        else if( nKeyType == CKK_SLH_DSA )
+            JS_PKI_setRawKeyVal( &sRawKey, JS_PKI_KEY_NAME_SLH_DSA, strOption.toStdString().c_str(), pPubHex, NULL );
         else
             JS_PKI_setRawKeyVal( &sRawKey, JS_PKI_KEY_NAME_ML_KEM, strOption.toStdString().c_str(), pPubHex, NULL );
 

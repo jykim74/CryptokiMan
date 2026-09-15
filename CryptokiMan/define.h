@@ -10,12 +10,12 @@
 
 //PrintableString curve25519
 static unsigned char kCurveNameX25519[] = { 0x13, 0x0a, 0x63, 0x75, 0x72, 0x76, 0x65, 0x32, 0x35, 0x35, 0x31, 0x39 };
-static unsigned char kOID_X25519[] = { 0x06, 0x03, 0x2B, 0x65, 0x6E };
+//static unsigned char kOID_X25519[] = { 0x06, 0x03, 0x2B, 0x65, 0x6E };
 static unsigned char kOID_ED25519[] = { 0x06, 0x03, 0x2B, 0x65, 0x70 };
 
 //PrintableString cruve448
 static unsigned char kCurveNameX448[] = { 0x13, 0x08, 0x63, 0x75, 0x72, 0x76, 0x65, 0x34, 0x34, 0x38 };
-static unsigned char kOID_X448[] = { 0x06, 0x03, 0x2B, 0x65, 0x6F };
+//static unsigned char kOID_X448[] = { 0x06, 0x03, 0x2B, 0x65, 0x6F };
 static unsigned char kOID_ED448[] = { 0x06, 0x03, 0x2B, 0x65, 0x71 };
 
 
@@ -159,7 +159,7 @@ static QStringList kMechSignAsymList = {
     "CKM_SHA1_RSA_PKCS_PSS", "CKM_SHA256_RSA_PKCS_PSS", "CKM_SHA384_RSA_PKCS_PSS", "CKM_SHA512_RSA_PKCS_PSS",
     "CKM_ECDSA", "CKM_ECDSA_SHA1", "CKM_ECDSA_SHA256", "CKM_ECDSA_SHA384", "CKM_ECDSA_SHA512",
     "CKM_DSA", "CKM_DSA_SHA1", "CKM_DSA_SHA224", "CKM_DSA_SHA256", "CKM_DSA_SHA384", "CKM_DSA_SHA512",
-    "CKM_EDDSA", "CKM_ML_DSA"
+    "CKM_EDDSA", "CKM_ML_DSA", "CKM_SLH_DSA"
 };
 
 static QStringList kMechSignSymList = {
@@ -186,7 +186,8 @@ static QStringList kMechDeriveList = {
 
 static QStringList kMechGenKeyPairList = {
     "CKM_RSA_PKCS_KEY_PAIR_GEN", "CKM_ECDSA_KEY_PAIR_GEN", "CKM_DSA_KEY_PAIR_GEN",
-    "CKM_DH_PKCS_KEY_PAIR_GEN", "CKM_EC_EDWARDS_KEY_PAIR_GEN", "CKM_ML_DSA_KEY_PAIR_GEN", "CKM_ML_KEM_KEY_PAIR_GEN"
+    "CKM_DH_PKCS_KEY_PAIR_GEN", "CKM_EC_EDWARDS_KEY_PAIR_GEN", "CKM_ML_DSA_KEY_PAIR_GEN",
+    "CKM_ML_KEM_KEY_PAIR_GEN", "CKM_SLH_DSA_KEY_PAIR_GEN"
 };
 
 static QStringList kMechGenList = {
