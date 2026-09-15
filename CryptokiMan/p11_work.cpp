@@ -158,6 +158,102 @@ end :
     return ret;
 }
 
+int getML_DSAPublicKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pPubKey )
+{
+    int ret = -1;
+    BIN binParam = {0,0};
+    BIN binValue = {0,0};
+    BIN binPub = {0,0};
+
+    int nParam = -1;
+    CK_ML_DSA_PARAMETER_SET_TYPE parameterSet = -1;
+    QString strParam;
+
+    ret = pAPI->GetAttributeValue2( hSession, hObject, CKA_PARAMETER_SET, &binParam );
+    if( ret != CKR_OK ) goto end;
+
+    if( binParam.nLen <= sizeof(parameterSet) )
+        memcpy( &parameterSet, binParam.pVal, binParam.nLen );
+
+    ret = pAPI->GetAttributeValue2( hSession, hObject, CKA_VALUE, &binValue );
+    if( ret != CKR_OK ) goto end;
+
+    strParam = getML_DSAParamName( parameterSet );
+    nParam = JS_RAW_getParam( strParam.toStdString().c_str() );
+    ret = JS_PKI_encodeRawPublicKeyValue( nParam, &binPub, pPubKey );
+
+end :
+    JS_BIN_reset( &binParam );
+    JS_BIN_reset( &binValue );
+    JS_BIN_reset( &binPub );
+
+    return ret;
+}
+
+int getML_KEMPublicKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pPubKey )
+{
+    int ret = -1;
+    BIN binParam = {0,0};
+    BIN binValue = {0,0};
+    BIN binPub = {0,0};
+
+    int nParam = -1;
+    CK_ML_KEM_PARAMETER_SET_TYPE parameterSet = -1;
+    QString strParam;
+
+    ret = pAPI->GetAttributeValue2( hSession, hObject, CKA_PARAMETER_SET, &binParam );
+    if( ret != CKR_OK ) goto end;
+
+    if( binParam.nLen <= sizeof(parameterSet) )
+        memcpy( &parameterSet, binParam.pVal, binParam.nLen );
+
+    ret = pAPI->GetAttributeValue2( hSession, hObject, CKA_VALUE, &binValue );
+    if( ret != CKR_OK ) goto end;
+
+    strParam = getML_KEMParamName( parameterSet );
+    nParam = JS_RAW_getParam( strParam.toStdString().c_str() );
+    ret = JS_PKI_encodeRawPublicKeyValue( nParam, &binPub, pPubKey );
+
+end :
+    JS_BIN_reset( &binParam );
+    JS_BIN_reset( &binValue );
+    JS_BIN_reset( &binPub );
+
+    return ret;
+}
+
+int getSLH_DSAPublicKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pPubKey )
+{
+    int ret = -1;
+    BIN binParam = {0,0};
+    BIN binValue = {0,0};
+    BIN binPub = {0,0};
+
+    int nParam = -1;
+    CK_SLH_DSA_PARAMETER_SET_TYPE parameterSet = -1;
+    QString strParam;
+
+    ret = pAPI->GetAttributeValue2( hSession, hObject, CKA_PARAMETER_SET, &binParam );
+    if( ret != CKR_OK ) goto end;
+
+    if( binParam.nLen <= sizeof(parameterSet) )
+        memcpy( &parameterSet, binParam.pVal, binParam.nLen );
+
+    ret = pAPI->GetAttributeValue2( hSession, hObject, CKA_VALUE, &binValue );
+    if( ret != CKR_OK ) goto end;
+
+    strParam = getSLH_DSAParamName( parameterSet );
+    nParam = JS_RAW_getParam( strParam.toStdString().c_str() );
+    ret = JS_PKI_encodeRawPublicKeyValue( nParam, &binPub, pPubKey );
+
+end :
+    JS_BIN_reset( &binParam );
+    JS_BIN_reset( &binValue );
+    JS_BIN_reset( &binPub );
+
+    return ret;
+}
+
 int getPublicKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pPubKey )
 {
     int ret = 0;
@@ -177,6 +273,12 @@ int getPublicKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pPubKey )
         ret = getDSAPublicKey( pAPI, hSession, hObject, pPubKey );
     else if( uKeyType == CKK_EC_EDWARDS )
         ret = getEDPublicKey( pAPI, hSession, hObject, pPubKey );
+    else if( uKeyType == CKK_ML_DSA )
+        ret = getML_DSAPublicKey( pAPI, hSession, hObject, pPubKey );
+    else if( uKeyType == CKK_ML_KEM )
+        ret = getML_KEMPublicKey( pAPI, hSession, hObject, pPubKey );
+    else if( uKeyType == CKK_SLH_DSA )
+        ret = getSLH_DSAPublicKey( pAPI, hSession, hObject, pPubKey );
     else
         ret = -1;
 
@@ -371,6 +473,20 @@ end :
     return ret;
 }
 
+int getML_DSAPrivateKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pPubKey )
+{
+    return getML_DSAPublicKey( pAPI, hSession, hObject, pPubKey );
+}
+
+int getML_KEMPrivateKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pPubKey )
+{
+    return getML_KEMPublicKey( pAPI, hSession, hObject, pPubKey );
+}
+
+int getSLH_DSAPrivateKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pPubKey )
+{
+    return getSLH_DSAPublicKey( pAPI, hSession, hObject, pPubKey );
+}
 
 int getPrivateKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pPriKey )
 {
@@ -391,6 +507,12 @@ int getPrivateKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pPriKey 
         ret = getDSAPrivateKey( pAPI, hSession, hObject, pPriKey );
     else if( uKeyType == CKK_EC_EDWARDS )
         ret = getEDPrivateKey( pAPI, hSession, hObject, pPriKey );
+    else if( uKeyType == CKK_ML_DSA )
+        ret = getML_DSAPrivateKey( pAPI, hSession, hObject, pPriKey );
+    else if( uKeyType == CKK_ML_KEM )
+        ret = getML_KEMPrivateKey( pAPI, hSession, hObject, pPriKey );
+    else if( uKeyType == CKK_SLH_DSA )
+        ret = getSLH_DSAPrivateKey( pAPI, hSession, hObject, pPriKey );
     else
         ret = -1;
 

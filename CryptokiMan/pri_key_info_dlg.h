@@ -75,7 +75,7 @@ private:
     void setRSAKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey, bool bPri = true );
     void setECCKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey, bool bPri = true );
     void setDSAKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey, bool bPri = true );
-    void setRawKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey, bool bPri = true );
+    void setRawKey( int nKeyType, CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey, bool bPri = true );
 
     void setModeUI( bool bVal );
 

@@ -678,10 +678,11 @@ void PriKeyInfoDlg::setDSAKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey
     JS_BIN_reset( &binVal );
 }
 
-void PriKeyInfoDlg::setRawKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey,  bool bPri )
+void PriKeyInfoDlg::setRawKey( int nKeyType, CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey,  bool bPri )
 {
     int ret = 0;
     BIN binVal = {0,0};
+    BIN binParam = {0,0};
     QString strParam;
 
     CryptokiAPI *pAPI = manApplet->cryptokiAPI();
@@ -696,54 +697,100 @@ void PriKeyInfoDlg::setRawKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey
         setEnableRawPrivate( false );
     }
 
-    ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_EC_PARAMS, &binVal );
-    if( ret == CKR_OK )
+    if( nKeyType == CKK_EC_EDWARDS )
     {
-        JS_BIN_reset( &binVal );
-    }
-
-    if( bPri == false )
-    {
-        ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_EC_POINT, &binVal );
+        ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_EC_PARAMS, &binVal );
         if( ret == CKR_OK )
         {
-            if( binVal.pVal[1] == 32 )
-                strParam = JS_EDDSA_PARAM_NAME_25519;
-            else
-                strParam = JS_EDDSA_PARAM_NAME_448;
-
-            mRawPublicText->setPlainText( getHexString( &binVal.pVal[2], binVal.nLen - 2 ) );
             JS_BIN_reset( &binVal );
+        }
+
+        if( bPri == false )
+        {
+            ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_EC_POINT, &binVal );
+            if( ret == CKR_OK )
+            {
+                if( binVal.pVal[1] == 32 )
+                    strParam = JS_EDDSA_PARAM_NAME_25519;
+                else
+                    strParam = JS_EDDSA_PARAM_NAME_448;
+
+                mRawPublicText->setPlainText( getHexString( &binVal.pVal[2], binVal.nLen - 2 ) );
+                JS_BIN_reset( &binVal );
+            }
+            else
+            {
+                if( bVal == false )
+                    mRawPublicText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+            }
         }
         else
         {
-            if( bVal == false )
-                mRawPublicText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+            ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_VALUE, &binVal );
+            if( ret == CKR_OK )
+            {
+                if( binVal.nLen == 32 )
+                    strParam = JS_EDDSA_PARAM_NAME_25519;
+                else
+                    strParam = JS_EDDSA_PARAM_NAME_448;
+
+                mRawPrivateText->setPlainText( getHexString( &binVal ) );
+                JS_BIN_reset( &binVal );
+            }
+            else
+            {
+                if( bVal == false )
+                    mRawPrivateText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
+            }
         }
+
+        mRawNameText->setText( JS_PKI_KEY_NAME_EDDSA );
+        mRawParamText->setText( strParam );
     }
     else
     {
+        int ret = -1;
+
+        CK_ULONG parameterSet = -1;
+        QString strParam;
+        QString strName;
+
+        ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_PARAMETER_SET, &binParam );
+
+        if( binParam.nLen <= sizeof(parameterSet) )
+            memcpy( &parameterSet, binParam.pVal, binParam.nLen );
+
+        if( nKeyType == CKK_ML_DSA )
+        {
+            strParam = getML_DSAParamName( parameterSet );
+            strName = JS_PKI_KEY_NAME_ML_DSA;
+        }
+        else if( nKeyType == CKK_ML_KEM )
+        {
+            strParam = getML_KEMParamName( parameterSet );
+            strName = JS_PKI_KEY_NAME_ML_KEM;
+        }
+        else if( nKeyType == CKK_SLH_DSA )
+        {
+            strParam = getSLH_DSAParamName( parameterSet );
+            strName = JS_PKI_KEY_NAME_SLH_DSA;
+        }
+
         ret = pAPI->GetAttributeValue2( hSession, hKey, CKA_VALUE, &binVal );
         if( ret == CKR_OK )
         {
-            if( binVal.nLen == 32 )
-                strParam = JS_EDDSA_PARAM_NAME_25519;
+            if( bPri == true )
+                mRawPrivateText->setPlainText( getHexString(&binVal));
             else
-                strParam = JS_EDDSA_PARAM_NAME_448;
+                mRawPublicText->setPlainText( getHexString(&binVal));
+        }
 
-            mRawPrivateText->setPlainText( getHexString( &binVal ) );
-            JS_BIN_reset( &binVal );
-        }
-        else
-        {
-            if( bVal == false )
-                mRawPrivateText->setPlainText( QString( "[0x%1] %2" ).arg( ret, 0, 16 ).arg( JS_PKCS11_GetErrorMsg( ret )));
-        }
+        mRawParamText->setText( strParam );
+        mRawNameText->setText( strName );
     }
 
-    mRawNameText->setText( JS_PKI_KEY_NAME_EDDSA );
-    mRawParamText->setText( strParam );
     JS_BIN_reset( &binVal );
+    JS_BIN_reset( &binParam );
 }
 
 void PriKeyInfoDlg::changeRSA_N()
@@ -1078,11 +1125,20 @@ void PriKeyInfoDlg::setPrivateKey( const BIN *pPriKey )
         mKeyTab->setTabEnabled(2, true);
         setDSAKey( pPriKey );
     }
-    else if( key_type_ == JS_PKI_KEY_TYPE_EDDSA )
+    else if( key_type_ == JS_PKI_KEY_TYPE_EDDSA || key_type_ == JS_PKI_KEY_TYPE_ML_DSA || key_type_ == JS_PKI_KEY_TYPE_ML_KEM || key_type_ == JS_PKI_KEY_TYPE_SLH_DSA )
     {
         mKeyTab->setCurrentIndex( 3 );
         mKeyTab->setTabEnabled(3, true);
-        mKeyTab->setTabText( 3, JS_PKI_KEY_NAME_EDDSA );
+
+        if( key_type_ == JS_PKI_KEY_TYPE_EDDSA)
+            mKeyTab->setTabText( 3, JS_PKI_KEY_NAME_EDDSA );
+        else if( key_type_ == JS_PKI_KEY_TYPE_ML_DSA )
+            mKeyTab->setTabText( 3, JS_PKI_KEY_NAME_ML_DSA );
+        else if( key_type_ == JS_PKI_KEY_TYPE_ML_KEM )
+            mKeyTab->setTabText( 3, JS_PKI_KEY_NAME_ML_KEM );
+        else if( key_type_ == JS_PKI_KEY_TYPE_SLH_DSA )
+            mKeyTab->setTabText( 3, JS_PKI_KEY_NAME_SLH_DSA );
+
         setRawKey( key_type_, pPriKey );
     }
     else
@@ -1140,11 +1196,20 @@ void PriKeyInfoDlg::setPublicKey( const BIN *pPubKey )
         mKeyTab->setTabEnabled(2, true);
         setDSAKey( pPubKey, false );
     }
-    else if( key_type_ == JS_PKI_KEY_TYPE_EDDSA  )
+    else if( key_type_ == JS_PKI_KEY_TYPE_EDDSA || key_type_ == JS_PKI_KEY_TYPE_ML_DSA || key_type_ == JS_PKI_KEY_TYPE_ML_KEM || key_type_ == JS_PKI_KEY_TYPE_SLH_DSA )
     {
         mKeyTab->setCurrentIndex( 3 );
         mKeyTab->setTabEnabled(3, true);
-        mKeyTab->setTabText( 3, JS_PKI_KEY_NAME_EDDSA );
+
+        if( key_type_ == JS_PKI_KEY_TYPE_EDDSA)
+            mKeyTab->setTabText( 3, JS_PKI_KEY_NAME_EDDSA );
+        else if( key_type_ == JS_PKI_KEY_TYPE_ML_DSA )
+            mKeyTab->setTabText( 3, JS_PKI_KEY_NAME_ML_DSA );
+        else if( key_type_ == JS_PKI_KEY_TYPE_ML_KEM )
+            mKeyTab->setTabText( 3, JS_PKI_KEY_NAME_ML_KEM );
+        else if( key_type_ == JS_PKI_KEY_TYPE_SLH_DSA )
+            mKeyTab->setTabText( 3, JS_PKI_KEY_NAME_SLH_DSA );
+
         setRawKey( key_type_, pPubKey, false );
     }
     else
@@ -1215,12 +1280,21 @@ void PriKeyInfoDlg::setPrivateKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE 
         mKeyTab->setTabEnabled(2, true);
         setDSAKey( hSession, hKey, true );
     }
-    else if( uKeyType == CKK_EC_EDWARDS )
+    else if( uKeyType == CKK_EC_EDWARDS || uKeyType == CKK_ML_DSA || uKeyType == CKK_ML_KEM || uKeyType == CKK_SLH_DSA )
     {
         mKeyTab->setCurrentIndex( 3 );
         mKeyTab->setTabEnabled(3, true);
-        mKeyTab->setTabText( 3, JS_PKI_KEY_NAME_EDDSA );
-        setRawKey( hSession, hKey, true );
+
+        if( uKeyType == CKK_EC_EDWARDS)
+            mKeyTab->setTabText( 3, JS_PKI_KEY_NAME_EDDSA );
+        else if( uKeyType == CKK_ML_DSA )
+            mKeyTab->setTabText( 3, JS_PKI_KEY_NAME_ML_DSA );
+        else if( uKeyType == CKK_ML_KEM )
+            mKeyTab->setTabText( 3, JS_PKI_KEY_NAME_ML_KEM );
+        else if( uKeyType == CKK_SLH_DSA )
+            mKeyTab->setTabText( 3, JS_PKI_KEY_NAME_SLH_DSA );
+
+        setRawKey( uKeyType, hSession, hKey, true );
     }
     else
     {
@@ -1291,12 +1365,21 @@ void PriKeyInfoDlg::setPublicKey( CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE h
         mKeyTab->setTabEnabled(2, true);
         setDSAKey( hSession, hKey, false );
     }
-    else if( uKeyType == CKK_EC_EDWARDS )
+    else if( uKeyType == CKK_EC_EDWARDS || uKeyType == CKK_ML_DSA || uKeyType == CKK_ML_KEM || uKeyType == CKK_SLH_DSA )
     {
         mKeyTab->setCurrentIndex( 3 );
         mKeyTab->setTabEnabled(3, true);
-        mKeyTab->setTabText( 3, JS_PKI_KEY_NAME_EDDSA );
-        setRawKey( hSession, hKey, false );
+
+        if( uKeyType == CKK_EC_EDWARDS)
+            mKeyTab->setTabText( 3, JS_PKI_KEY_NAME_EDDSA );
+        else if( uKeyType == CKK_ML_DSA )
+            mKeyTab->setTabText( 3, JS_PKI_KEY_NAME_ML_DSA );
+        else if( uKeyType == CKK_ML_KEM )
+            mKeyTab->setTabText( 3, JS_PKI_KEY_NAME_ML_KEM );
+        else if( uKeyType == CKK_SLH_DSA )
+            mKeyTab->setTabText( 3, JS_PKI_KEY_NAME_SLH_DSA );
+
+        setRawKey( uKeyType, hSession, hKey, false );
     }
     else
     {
