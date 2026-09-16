@@ -7,6 +7,7 @@
 #define DEFINE_H
 
 #include <QStringList>
+#include "js_pki.h"
 
 //PrintableString curve25519
 static unsigned char kCurveNameX25519[] = { 0x13, 0x0a, 0x63, 0x75, 0x72, 0x76, 0x65, 0x32, 0x35, 0x35, 0x31, 0x39 };
@@ -202,6 +203,9 @@ static QStringList kAsymTypeList = {
     "CKK_RSA", "CKK_ECDSA", "CKK_DSA", "CKK_EC_EDWARDS"
 };
 
+static QStringList kPQCTypeList = {
+    JS_PKI_KEY_NAME_ML_DSA, JS_PKI_KEY_NAME_ML_KEM, JS_PKI_KEY_NAME_SLH_DSA
+};
 
 static QStringList kDNTypeList = { "Text", "DER" };
 static QStringList kMGFList = { "CKG_MGF1_SHA1", "CKG_MGF1_SHA224", "CKG_MGF1_SHA256", "CKG_MGF1_SHA384", "CKG_MGF1_SHA512" };

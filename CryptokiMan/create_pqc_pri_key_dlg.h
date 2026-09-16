@@ -23,6 +23,7 @@ public:
 
 private slots:
     virtual void accept();
+    void changeAlg();
 
     void clickGenKey();
     void clickFindKey();
@@ -48,6 +49,7 @@ private slots:
     void changeECParams( const QString& text );
     void changeKeyValue( const QString& text );
 private:
+    void initUI();
     void initialize();
     void initAttributes();
     void setAttributes();
@@ -55,8 +57,6 @@ private:
 
     void setDefaults();
     int getSKI_SPKI( BIN *pSKI, BIN *pSPKI );
-
-    bool is_ed_;
 
     SlotInfo slot_info_;
     int slot_index_ = -1;

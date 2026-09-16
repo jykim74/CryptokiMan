@@ -17,8 +17,8 @@ static QStringList sFalseTrue = { "false", "true" };
 CreatePQCPriKeyDlg::CreatePQCPriKeyDlg(QWidget *parent)
     : QDialog(parent)
 {
-    is_ed_ = false;
     setupUi(this);
+    initUI();
 
     initAttributes();
     setAttributes();
@@ -59,17 +59,30 @@ void CreatePQCPriKeyDlg::setSlotIndex(int index)
     }
 }
 
+void CreatePQCPriKeyDlg::initUI()
+{
+    mAlgCombo->addItems( kPQCTypeList );
+    changeAlg();
+}
+
+void CreatePQCPriKeyDlg::changeAlg()
+{
+    mParamCombo->clear();
+    QString strAlg = mAlgCombo->currentText();
+
+    if( strAlg == JS_PKI_KEY_NAME_ML_DSA )
+        mParamCombo->addItems( kML_DSAOptionList );
+    else if( strAlg == JS_PKI_KEY_NAME_ML_KEM )
+        mParamCombo->addItems( kML_KEMOptionList );
+    else if( strAlg == JS_PKI_KEY_NAME_SLH_DSA )
+        mParamCombo->addItems( kSLH_DSAOptionList );
+}
 
 void CreatePQCPriKeyDlg::initialize()
 {
     QString strTitle;
 
-    if( is_ed_ )
-    {
-        strTitle = tr( "Create EDDSA private key" );
-    }
-    else
-        strTitle = tr( "Create ECDSA private key" );
+    strTitle = tr( "Create PQC private key" );
 
     setWindowTitle( strTitle );
 
@@ -83,11 +96,6 @@ void CreatePQCPriKeyDlg::initialize()
 
 void CreatePQCPriKeyDlg::initAttributes()
 {
-    if( is_ed_ == true )
-        mParamCombo->addItems( kEdDSAOptionList );
-    else
-        mParamCombo->addItems( kECDSAOptionList );
-
     mSubjectTypeCombo->addItems(kDNTypeList);
 
     mPrivateCombo->addItems(sFalseTrue);
@@ -151,6 +159,8 @@ void CreatePQCPriKeyDlg::setAttributes()
 
 void CreatePQCPriKeyDlg::connectAttributes()
 {
+    connect( mAlgCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(changeAlg()));
+
     connect( mGenKeyBtn, SIGNAL(clicked()), this, SLOT(clickGenKey()));
     connect( mFindKeyBtn, SIGNAL(clicked()), this, SLOT(clickFindKey()));
     connect( mUseSKICheck, SIGNAL(clicked()), this, SLOT(clickUseSKI()));
@@ -179,6 +189,7 @@ void CreatePQCPriKeyDlg::accept()
     int rv = -1;
 
     CK_SESSION_HANDLE hSession = slot_info_.getSessionHandle();
+    QString strAlg = mAlgCombo->currentText();
 
     CK_ATTRIBUTE sTemplate[20];
     long uCount = 0;
@@ -194,10 +205,12 @@ void CreatePQCPriKeyDlg::accept()
     CK_OBJECT_CLASS objClass = CKO_PRIVATE_KEY;
     CK_KEY_TYPE keyType = -1;
 
-    if( is_ed_ == true )
-        keyType = CKK_EC_EDWARDS;
-    else
-        keyType = CKK_ECDSA;
+    if( strAlg == JS_PKI_KEY_NAME_ML_DSA )
+        keyType = CKK_ML_DSA;
+    else if( strAlg == JS_PKI_KEY_NAME_ML_KEM )
+        keyType = CKK_ML_KEM;
+    else if( strAlg == JS_PKI_KEY_NAME_SLH_DSA )
+        keyType = CKK_SLH_DSA;
 
     sTemplate[uCount].type = CKA_CLASS;
     sTemplate[uCount].pValue = &objClass;
@@ -209,19 +222,36 @@ void CreatePQCPriKeyDlg::accept()
     sTemplate[uCount].ulValueLen = sizeof(keyType);
     uCount++;
 
-/*
-    QString strECParams = mECParamsText->text();
-    BIN binECParams = {0,0};
+    QString strKeyValue = mKeyValueText->toPlainText();
+    BIN binKeyValue = {0,0};
 
-    if( !strECParams.isEmpty() )
+    if( !strKeyValue.isEmpty() )
     {
-        JS_BIN_decodeHex( strECParams.toStdString().c_str(), &binECParams );
-        sTemplate[uCount].type = CKA_EC_PARAMS;
-        sTemplate[uCount].pValue = binECParams.pVal;
-        sTemplate[uCount].ulValueLen = binECParams.nLen;
+        JS_BIN_decodeHex( strKeyValue.toStdString().c_str(), &binKeyValue );
+        sTemplate[uCount].type = CKA_VALUE;
+        sTemplate[uCount].pValue = binKeyValue.pVal;
+        sTemplate[uCount].ulValueLen = binKeyValue.nLen;
         uCount++;
     }
-*/
+
+    QString strParam = mParamCombo->currentText();
+
+    if( !strParam.isEmpty() )
+    {
+        CK_ULONG parameterSet = -1;
+
+        if( strAlg == JS_PKI_KEY_NAME_ML_DSA )
+            parameterSet = getML_DSAParamType( strParam );
+        else if( strAlg == JS_PKI_KEY_NAME_ML_KEM )
+            parameterSet = getML_KEMParamType( strParam );
+        else if( strAlg == JS_PKI_KEY_NAME_SLH_DSA )
+            parameterSet = getSLH_DSAParamType( strParam );
+
+        sTemplate[uCount].type = CKA_PARAMETER_SET;
+        sTemplate[uCount].pValue = &parameterSet;
+        sTemplate[uCount].ulValueLen = sizeof(parameterSet);
+        uCount++;
+    }
 
     QString strValue = mKeyValueText->toPlainText();
     BIN binValue = {0,0};
@@ -418,7 +448,7 @@ void CreatePQCPriKeyDlg::accept()
 
     rv = manApplet->cryptokiAPI()->CreateObject( hSession, sTemplate, uCount, &hObject );
 
-//    JS_BIN_reset( &binECParams );
+    JS_BIN_reset( &binKeyValue );
     JS_BIN_reset( &binValue );
     JS_BIN_reset( &binLabel );
     JS_BIN_reset( &binID );
@@ -452,41 +482,15 @@ void CreatePQCPriKeyDlg::clickGenKey()
     memset( &sECKey, 0x00, sizeof(sECKey));
     memset( &sRawKey, 0x00, sizeof(sRawKey));
 
-    if( is_ed_ == true )
-    {
-        int nKeyType = -1;
-        QString strECParam;
+    JS_PKI_getOIDFromString( strParam.toStdString().c_str(), &binOID );
 
-        if( strParam == "ED25519" )
-        {
-            nKeyType = JS_EDDSA_PARAM_25519;
-            strECParam = getHexString( kCurveNameX25519, sizeof(kCurveNameX25519));
-        }
-        else
-        {
-            nKeyType = JS_EDDSA_PARAM_448;
-            strECParam = getHexString( kCurveNameX448, sizeof(kCurveNameX448));
-        }
+    ret = JS_PKI_ECCGenKeyPair( strParam.toStdString().c_str(), &binPub, &binPri );
+    if( ret != 0 ) goto end;
 
-        ret = JS_PKI_EdDSA_GenKeyPair( nKeyType, &binPub, &binPri );
-        if( ret != 0 ) goto end;
+    ret = JS_PKI_getECKeyVal( &binPri, &sECKey );
+    if( ret != 0 ) goto end;
 
-        mKeyValueText->setPlainText( getHexString( &binPri ));
-//        mECParamsText->setText( strECParam );
-    }
-    else
-    {
-        JS_PKI_getOIDFromString( strParam.toStdString().c_str(), &binOID );
-
-        ret = JS_PKI_ECCGenKeyPair( strParam.toStdString().c_str(), &binPub, &binPri );
-        if( ret != 0 ) goto end;
-
-        ret = JS_PKI_getECKeyVal( &binPri, &sECKey );
-        if( ret != 0 ) goto end;
-
-        mKeyValueText->setPlainText( sECKey.pPrivate );
-//        mECParamsText->setText( getHexString( binOID.pVal, binOID.nLen ));
-    }
+    mKeyValueText->setPlainText( sECKey.pPrivate );
 
 end :
     JS_BIN_reset( &binPri );
@@ -522,7 +526,7 @@ void CreatePQCPriKeyDlg::clickFindKey()
 
     JS_PKI_getPriKeyAlgParam( &binPri, &nKeyType, &nParam );
 
-    if( is_ed_ == true )
+    if( nKeyType == JS_PKI_KEY_TYPE_EDDSA )
     {
         if( nKeyType != JS_PKI_KEY_TYPE_EDDSA )
         {

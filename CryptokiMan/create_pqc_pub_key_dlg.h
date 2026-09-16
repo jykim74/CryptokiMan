@@ -23,6 +23,7 @@ public:
 
 private slots:
     virtual void accept();
+    void changeAlg();
 
     void clickGenKey();
     void clickFindKey();
@@ -44,6 +45,7 @@ private slots:
     void changeECPoints( const QString& text );
     void changeECParams( const QString& text );
 private:
+    void initUI();
     void initialize();
     void initAttributes();
     void setAttributes();
@@ -51,7 +53,6 @@ private:
 
     void setDefaults();
     int getSKI( BIN *pSKI );
-    bool is_ed_;
 
     SlotInfo slot_info_;
     int slot_index_ = -1;
