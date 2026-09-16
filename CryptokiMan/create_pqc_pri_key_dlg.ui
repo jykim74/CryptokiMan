@@ -101,7 +101,7 @@
           </widget>
          </item>
          <item row="0" column="0">
-          <widget class="QPushButton" name="pushButton_2">
+          <widget class="QPushButton" name="mSlotBtn">
            <property name="minimumSize">
             <size>
              <width>16</width>
@@ -178,7 +178,7 @@
           <widget class="QLineEdit" name="mPubKeyInfoText"/>
          </item>
          <item row="1" column="2">
-          <widget class="QComboBox" name="comboBox"/>
+          <widget class="QComboBox" name="mSubjectTypeCombo"/>
          </item>
          <item row="2" column="2">
           <widget class="QCheckBox" name="mUseSKICheck">
