@@ -179,6 +179,20 @@ void MainWindow::createViewActions()
     connect( objectCreateDSAPriKeyAct, &QAction::triggered, this, &MainWindow::viewObjectCreateDSAPriKey );
     objectMenu->addAction( objectCreateDSAPriKeyAct );
 
+    QAction *objectCreatePQCPubAct = new QAction( tr("Create PQC Public Key"), this );
+    bVal = isView( ACT_OBJECT_CREATE_PQC_PUB_KEY );
+    objectCreatePQCPubAct->setCheckable(true);
+    objectCreatePQCPubAct->setChecked(bVal);
+    connect( objectCreatePQCPubAct, &QAction::triggered, this, &MainWindow::viewObjectCreatePQCPubKey );
+    objectMenu->addAction( objectCreatePQCPubAct );
+
+    QAction *objectCreatePQCPriKeyAct = new QAction( tr("Create PQC Private Key"), this );
+    bVal = isView( ACT_OBJECT_CREATE_PQC_PRI_KEY );
+    objectCreatePQCPriKeyAct->setCheckable(true);
+    objectCreatePQCPriKeyAct->setChecked(bVal);
+    connect( objectCreatePQCPriKeyAct, &QAction::triggered, this, &MainWindow::viewObjectCreatePQCPriKey );
+    objectMenu->addAction( objectCreatePQCPriKeyAct );
+
     QAction *objectCreateKeyAct = new QAction( tr("Create Key"), this );
     bVal = isView( ACT_OBJECT_CREATE_KEY );
     objectCreateKeyAct->setCheckable(true);
@@ -723,6 +737,36 @@ void MainWindow::viewObjectCreateDSAPriKey( bool bChecked )
     else
     {
         object_tool_->removeAction( create_dsa_pri_key_act_ );
+        unsetView( nAct );
+    }
+}
+
+void MainWindow::viewObjectCreatePQCPubKey( bool bChecked )
+{
+    int nAct = ACT_OBJECT_CREATE_PQC_PUB_KEY;
+    if( bChecked == true )
+    {
+        object_tool_->insertAction( create_dsa_pri_key_act_, create_pqc_pub_key_act_ );
+        setView( nAct );
+    }
+    else
+    {
+        object_tool_->removeAction( create_pqc_pub_key_act_ );
+        unsetView( nAct );
+    }
+}
+
+void MainWindow::viewObjectCreatePQCPriKey( bool bChecked )
+{
+    int nAct = ACT_OBJECT_CREATE_PQC_PRI_KEY;
+    if( bChecked == true )
+    {
+        object_tool_->insertAction( create_pqc_pub_key_act_, create_pqc_pri_key_act_ );
+        setView( nAct );
+    }
+    else
+    {
+        object_tool_->removeAction( create_pqc_pri_key_act_ );
         unsetView( nAct );
     }
 }

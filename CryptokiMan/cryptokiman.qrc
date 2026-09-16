@@ -93,5 +93,7 @@
         <file>images/cert_expired.png</file>
         <file>images/export.png</file>
         <file>images/passwd.png</file>
+        <file>images/pqc_pr.png</file>
+        <file>images/pqc_pu.png</file>
     </qresource>
 </RCC>

@@ -31,6 +31,8 @@
 #include "create_ec_pri_key_dlg.h"
 #include "create_dsa_pub_key_dlg.h"
 #include "create_dsa_pri_key_dlg.h"
+#include "create_pqc_pub_key_dlg.h"
+#include "create_pqc_pri_key_dlg.h"
 #include "create_key_dlg.h"
 #include "del_object_dlg.h"
 #include "edit_attribute_dlg.h"
@@ -429,6 +431,22 @@ void MainWindow::createObjectActions()
     create_dsa_pri_key_act_->setStatusTip(tr("PKCS11 Create DSA Private key"));
     objectsMenu->addAction( create_dsa_pri_key_act_ );
     if( isView( ACT_OBJECT_CREATE_DSA_PRI_KEY ) ) object_tool_->addAction( create_dsa_pri_key_act_ );
+
+    const QIcon pqc1Icon = QIcon::fromTheme("PQC-Public", QIcon(":/images/pqc_pu.png"));
+    create_pqc_pub_key_act_ = new QAction( pqc1Icon, tr("Creating a PQC public key"), this);
+    create_pqc_pub_key_act_->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_R));
+    connect( create_pqc_pub_key_act_, &QAction::triggered, this, &MainWindow::createPQCPublicKey);
+    create_pqc_pub_key_act_->setStatusTip(tr("PKCS11 Create PQC Public key"));
+    objectsMenu->addAction( create_pqc_pub_key_act_ );
+    if( isView( ACT_OBJECT_CREATE_PQC_PUB_KEY ) ) object_tool_->addAction( create_pqc_pub_key_act_ );
+
+    const QIcon pqc2Icon = QIcon::fromTheme("PQC-Private", QIcon(":/images/pqc_pr.png"));
+    create_pqc_pri_key_act_ = new QAction( pqc2Icon, tr("Creating a PQC private key"), this);
+    create_pqc_pri_key_act_->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_I));
+    connect( create_pqc_pri_key_act_, &QAction::triggered, this, &MainWindow::createPQCPrivateKey);
+    create_pqc_pri_key_act_->setStatusTip(tr("PKCS11 Create PQC Private key"));
+    objectsMenu->addAction( create_pqc_pri_key_act_ );
+    if( isView( ACT_OBJECT_CREATE_PQC_PRI_KEY ) ) object_tool_->addAction( create_pqc_pri_key_act_ );
 
     const QIcon keyGenIcon = QIcon::fromTheme("KeyGen", QIcon(":/images/key_gen.png"));
     create_key_act_ = new QAction( keyGenIcon, tr("Create Key"), this);
@@ -1234,6 +1252,36 @@ void MainWindow::createDSAPrivateKey()
     CreateDSAPriKeyDlg createDSAPriKeyDlg;
     if( pItem ) createDSAPriKeyDlg.setSlotIndex( pItem->getSlotIndex() );
     createDSAPriKeyDlg.exec();
+}
+
+void MainWindow::createPQCPublicKey()
+{
+    ManTreeItem *pItem = left_model_->currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "No slot selected" ), this );
+        return;
+    }
+
+    CreatePQCPubKeyDlg createPQCPubKeyDlg;
+//    if( pItem ) createDSAPubKeyDlg.setSlotIndex( pItem->getSlotIndex() );
+    createPQCPubKeyDlg.exec();
+}
+
+void MainWindow::createPQCPrivateKey()
+{
+    ManTreeItem *pItem = left_model_->currentTreeItem();
+
+    if( pItem == NULL || pItem->getSlotIndex() < 0 )
+    {
+        manApplet->warningBox( tr( "No slot selected" ), this );
+        return;
+    }
+
+    CreatePQCPriKeyDlg createPQCPriKeyDlg;
+//    if( pItem ) createDSAPriKeyDlg.setSlotIndex( pItem->getSlotIndex() );
+    createPQCPriKeyDlg.exec();
 }
 
 void MainWindow::createKey()

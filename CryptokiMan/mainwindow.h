@@ -118,6 +118,8 @@ public:
     void viewObjectCreateEDPriKey( bool bChecked );
     void viewObjectCreateDSAPubKey( bool bChecked );
     void viewObjectCreateDSAPriKey( bool bChecked );
+    void viewObjectCreatePQCPubKey( bool bChecked );
+    void viewObjectCreatePQCPriKey( bool bChecked );
     void viewObjectCreateKey( bool bChecked );
     void viewObjectDelObject( bool bChecked );
     void viewObjectEditAtt( bool bChecked );
@@ -182,6 +184,8 @@ public slots:
     void createEDPrivateKey();
     void createDSAPublicKey();
     void createDSAPrivateKey();
+    void createPQCPublicKey();
+    void createPQCPrivateKey();
     void createKey();
     void copyObject();
     void findObject();
@@ -346,6 +350,8 @@ private:
     QAction* create_ed_pri_key_act_;
     QAction* create_dsa_pub_key_act_;
     QAction* create_dsa_pri_key_act_;
+    QAction* create_pqc_pri_key_act_;
+    QAction* create_pqc_pub_key_act_;
     QAction* create_key_act_;
     QAction* del_object_act_;
     QAction* edit_att_act_;
