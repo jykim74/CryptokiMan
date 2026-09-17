@@ -119,6 +119,10 @@ static QStringList kECCKeyAttList = {
     "CKA_EC_PARAMS", "CKA_EC_POINT", "CKA_VALUE"
 };
 
+static QStringList kRawKeyAttList = {
+    "CKA_PARAMETER_SET", "CKA_VALUE"
+};
+
 static QStringList kDSAKeyAttList = {
     "CKA_PRIME", "CKA_SUBPRIME", "CKA_BASE",
     "CKA_VALUE"

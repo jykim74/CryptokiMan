@@ -2601,6 +2601,10 @@ void MainWindow::showPublicKeyInfoDetail( QModelIndex index )
     {
         showInfoECCValue( uObj, true );
     }
+    else if( strKeyType == "CKK_ML_DSA" || strKeyType == "CKK_ML_KEM" || strKeyType == "CKK_SLH_DSA" )
+    {
+        showInfoRawValue( strKeyType, uObj, true );
+    }
 
     JS_BIN_reset( &binDN );
     if( pDN ) JS_free( pDN );
@@ -2655,6 +2659,10 @@ void MainWindow::showPrivateKeyInfoDetail( QModelIndex index )
     else if( strKeyType == "CKK_EC_EDWARDS" )
     {
         showInfoECCValue( uObj, false );
+    }
+    else if( strKeyType == "CKK_ML_DSA" || strKeyType == "CKK_ML_KEM" || strKeyType == "CKK_SLH_DSA" )
+    {
+        showInfoRawValue( strKeyType, uObj, false );
     }
 
     JS_BIN_reset( &binDN );
@@ -4776,6 +4784,40 @@ void MainWindow::showInfoDHValue( CK_OBJECT_HANDLE hObj, bool bPub )
     for( int i = 0; i < kDHKeyAttList.size(); i++ )
     {
         strName = kDHKeyAttList.at(i);
+        uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
+        nType = CryptokiAPI::getAttrType( uAttrType);
+
+        strValue = stringAttribute( nType, uAttrType, hObj, &ret );
+
+        if( ret == CKR_OK )
+        {
+            strValue = getHexStringArea( strValue, nWidth );
+            info( QString( "%1 : \n%2\n" ).arg( strName, kNameWidth ).arg( strValue ));
+        }
+        else if( bVal == false && ret != CKR_OK )
+            info_w( QString( "%1 : %2\n" ).arg( strName, kNameWidth ).arg( strValue ) );
+    }
+
+    infoLine2();
+}
+
+void MainWindow::showInfoRawValue( QString strKeyType, CK_OBJECT_HANDLE hObj, bool bPub )
+{
+    info( QString( "-- %1 Key Value\n" ).arg( strKeyType ) );
+    infoLine2();
+
+    QString strName;
+    QString strValue;
+
+    int nType = -1;
+    CK_ATTRIBUTE_TYPE uAttrType = -1;
+    int nWidth = manApplet->settingsMgr()->hexAreaWidth();
+    int ret = -1;
+    bool bVal = manApplet->settingsMgr()->displayValid();
+
+    for( int i = 0; i < kRawKeyAttList.size(); i++ )
+    {
+        strName = kRawKeyAttList.at(i);
         uAttrType = JS_PKCS11_GetCKAType( strName.toStdString().c_str() );
         nType = CryptokiAPI::getAttrType( uAttrType);
 

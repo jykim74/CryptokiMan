@@ -286,6 +286,7 @@ private:
     void showInfoDSAValue( CK_OBJECT_HANDLE hObj, bool bPub = false );
     void showInfoECCValue( CK_OBJECT_HANDLE hObj, bool bPub = false );
     void showInfoDHValue( CK_OBJECT_HANDLE hObj, bool bPub = false );
+    void showInfoRawValue( QString strKeyType, CK_OBJECT_HANDLE hObj, bool bPub = false );
     void showInfoSecretValue( CK_OBJECT_HANDLE hObj);
 
 

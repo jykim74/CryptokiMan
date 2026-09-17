@@ -162,7 +162,6 @@ int getML_DSAPublicKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pPu
 {
     int ret = -1;
     BIN binParam = {0,0};
-    BIN binValue = {0,0};
     BIN binPub = {0,0};
 
     int nParam = -1;
@@ -175,7 +174,7 @@ int getML_DSAPublicKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pPu
     if( binParam.nLen <= sizeof(parameterSet) )
         memcpy( &parameterSet, binParam.pVal, binParam.nLen );
 
-    ret = pAPI->GetAttributeValue2( hSession, hObject, CKA_VALUE, &binValue );
+    ret = pAPI->GetAttributeValue2( hSession, hObject, CKA_VALUE, &binPub );
     if( ret != CKR_OK ) goto end;
 
     strParam = getML_DSAParamName( parameterSet );
@@ -184,7 +183,6 @@ int getML_DSAPublicKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pPu
 
 end :
     JS_BIN_reset( &binParam );
-    JS_BIN_reset( &binValue );
     JS_BIN_reset( &binPub );
 
     return ret;
@@ -194,7 +192,6 @@ int getML_KEMPublicKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pPu
 {
     int ret = -1;
     BIN binParam = {0,0};
-    BIN binValue = {0,0};
     BIN binPub = {0,0};
 
     int nParam = -1;
@@ -207,7 +204,7 @@ int getML_KEMPublicKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pPu
     if( binParam.nLen <= sizeof(parameterSet) )
         memcpy( &parameterSet, binParam.pVal, binParam.nLen );
 
-    ret = pAPI->GetAttributeValue2( hSession, hObject, CKA_VALUE, &binValue );
+    ret = pAPI->GetAttributeValue2( hSession, hObject, CKA_VALUE, &binPub );
     if( ret != CKR_OK ) goto end;
 
     strParam = getML_KEMParamName( parameterSet );
@@ -216,7 +213,6 @@ int getML_KEMPublicKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pPu
 
 end :
     JS_BIN_reset( &binParam );
-    JS_BIN_reset( &binValue );
     JS_BIN_reset( &binPub );
 
     return ret;
@@ -226,7 +222,6 @@ int getSLH_DSAPublicKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pP
 {
     int ret = -1;
     BIN binParam = {0,0};
-    BIN binValue = {0,0};
     BIN binPub = {0,0};
 
     int nParam = -1;
@@ -239,7 +234,7 @@ int getSLH_DSAPublicKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pP
     if( binParam.nLen <= sizeof(parameterSet) )
         memcpy( &parameterSet, binParam.pVal, binParam.nLen );
 
-    ret = pAPI->GetAttributeValue2( hSession, hObject, CKA_VALUE, &binValue );
+    ret = pAPI->GetAttributeValue2( hSession, hObject, CKA_VALUE, &binPub );
     if( ret != CKR_OK ) goto end;
 
     strParam = getSLH_DSAParamName( parameterSet );
@@ -248,7 +243,6 @@ int getSLH_DSAPublicKey( CryptokiAPI *pAPI, long hSession, long hObject, BIN *pP
 
 end :
     JS_BIN_reset( &binParam );
-    JS_BIN_reset( &binValue );
     JS_BIN_reset( &binPub );
 
     return ret;
