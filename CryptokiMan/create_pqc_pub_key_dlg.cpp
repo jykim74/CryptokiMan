@@ -411,12 +411,12 @@ void CreatePQCPubKeyDlg::accept()
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr( "EC public key creation failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr( "PQC public key creation failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
     manApplet->clickTreeMenu( slot_index_, HM_ITEM_TYPE_PUBLICKEY );
-    manApplet->messageBox( tr("EC public key creation successful [Handle: %1]").arg( hObject ), this );
+    manApplet->messageBox( tr("PQC public key creation successful [Handle: %1]").arg( hObject ), this );
     //    manApplet->showTypeList( slot_index_, HM_ITEM_TYPE_PUBLICKEY );
 
     QDialog::accept();
@@ -427,33 +427,41 @@ void CreatePQCPubKeyDlg::clickGenKey()
     int ret = 0;
     BIN binPub = {0,0};
     BIN binPri = {0,0};
-    BIN binOID = {0,0};
-    JECKeyVal sECKey;
     JRawKeyVal sRawKey;
 
+    QString strAlg = mAlgCombo->currentText();
     QString strParam = mParamCombo->currentText();
 
-    memset( &sECKey, 0x00, sizeof(sECKey));
+    int nAlg = JS_PKI_getKeyAlg( strAlg.toStdString().c_str() );
+    int nParam = JS_RAW_getParam( strParam.toStdString().c_str() );
+
+    if( nAlg < 0 || nParam < 0 )
+    {
+        manApplet->warningBox( tr( "Invalid algorithm" ), this );
+        return;
+    }
+
     memset( &sRawKey, 0x00, sizeof(sRawKey));
 
-    QString strPoints = "04";
+    ret = JS_PKI_genKeyPair( nAlg, nParam, 0, &binPub, &binPri );
+    if( ret != 0 )
+    {
+        manApplet->warningBox( tr( "failed to generate keypair: %1").arg( JERR(ret)), this );
+        goto end;
+    }
 
-    JS_PKI_getOIDFromString( strParam.toStdString().c_str(), &binOID );
+    ret = JS_PKI_getRawKeyVal( &binPri, &sRawKey );
+    if( ret != 0 )
+    {
+        manApplet->warningBox( tr( "failed to get raw key value: %1").arg( JERR(ret)), this );
+        goto end;
+    }
 
-    ret = JS_PKI_ECCGenKeyPair( strParam.toStdString().c_str(), &binPub, &binPri );
-    if( ret != 0 ) goto end;
-
-    ret = JS_PKI_getECKeyVal( &binPri, &sECKey );
-    if( ret != 0 ) goto end;
-
-    strPoints += sECKey.pPubX;
-    strPoints += sECKey.pPubY;
+    mKeyValueText->setPlainText( sRawKey.pPub );
 
 end :
     JS_BIN_reset( &binPri );
     JS_BIN_reset( &binPub );
-    JS_BIN_reset( &binOID );
-    JS_PKI_resetECKeyVal( &sECKey );
     JS_PKI_resetRawKeyVal( &sRawKey );
 }
 
@@ -468,117 +476,44 @@ void CreatePQCPubKeyDlg::clickFindKey()
     int ret = 0;
     int nKeyType = -1;
     int nParam = -1;
-    BIN binKey = {0,0};
-    BIN binOID = {0,0};
-    JECKeyVal sECKey;
+    BIN binPri = {0,0};
     JRawKeyVal sRawKey;
 
     QString strPath;
     QString fileName = manApplet->findFile( this, JS_FILE_TYPE_BER, strPath );
     if( fileName.length() < 1 ) return;
 
-    QString strPoints = "04";
-
-    memset( &sECKey, 0x00, sizeof(sECKey));
     memset( &sRawKey, 0x00, sizeof(sRawKey));
 
-    ret = JS_BIN_fileReadBER( fileName.toLocal8Bit().toStdString().c_str(), &binKey );
+    ret = JS_BIN_fileReadBER( fileName.toLocal8Bit().toStdString().c_str(), &binPri );
     if( ret < 0 )
     {
-        manApplet->elog( QString( "failed to read key [%1]").arg( ret) );
+        manApplet->elog( QString( "failed to read private key [%1]").arg( ret) );
         goto end;
     }
 
-    JS_PKI_getPriKeyAlgParam( &binKey, &nKeyType, &nParam );
-
-    if( nKeyType == JS_PKI_KEY_TYPE_EDDSA )
+    JS_PKI_getPriKeyAlgParam( &binPri, &nKeyType, &nParam );
+    if( nKeyType != JS_PKI_KEY_TYPE_ML_DSA && nKeyType == JS_PKI_KEY_TYPE_ML_KEM && nKeyType != JS_PKI_KEY_TYPE_SLH_DSA )
     {
-        if( nKeyType < 0 )
-        {
-            nKeyType = JS_PKI_getPubKeyType( &binKey );
-            if( nKeyType != JS_PKI_KEY_TYPE_EDDSA )
-            {
-                manApplet->elog( QString( "invalid public key type (%1)").arg( nKeyType ));
-                goto end;
-            }
-
-            ret = JS_PKI_getECKeyValFromPub( &binKey, &sECKey );
-            if( ret != 0 ) goto end;
-        }
-        else if( nKeyType != JS_PKI_KEY_TYPE_EDDSA )
-        {
-            manApplet->elog( QString( "invalid private key type (%1)").arg( nKeyType ));
-            goto end;
-        }
-        else
-        {
-            ret = JS_PKI_getRawKeyVal( &binKey, &sRawKey );
-            if( ret != 0 ) goto end;
-        }
-
-        QString strECParam;
-        QString strECPoint;
-
-        if( nParam == JS_EDDSA_PARAM_25519 )
-        {
-
-            strECParam = getHexString( kCurveNameX25519, sizeof(kCurveNameX25519));
-        }
-        else
-        {
-            strECParam = getHexString( kCurveNameX448, sizeof(kCurveNameX448));
-        }
-
-        strECPoint = "04";
-        strECPoint += QString( "%1" ).arg( strlen(sRawKey.pPub)/2, 2, 16, QLatin1Char('0'));
-        strECPoint += sRawKey.pPub;
-
-//        mECPointsText->setText( strECPoint );
-//        mECParamsText->setText( strECParam );
+        manApplet->warningBox( tr("This is not a supported PQC algorithm."), this );
+        goto end;
     }
-    else
-    {
-        if( nKeyType < 0 )
-        {
-            nKeyType = JS_PKI_getPubKeyType( &binKey );
-            if( nKeyType != JS_PKI_KEY_TYPE_ECDSA )
-            {
-                manApplet->elog( QString( "invalid public key type (%1)").arg( nKeyType ));
-                goto end;
-            }
 
-            ret = JS_PKI_getECKeyValFromPub( &binKey, &sECKey );
-            if( ret != 0 ) goto end;
-        }
-        else if( nKeyType != JS_PKI_KEY_TYPE_ECDSA )
-        {
-            manApplet->elog( QString( "invalid private key type (%1)").arg( nKeyType ));
-            goto end;
-        }
-        else
-        {
-            ret = JS_PKI_getECKeyVal( &binKey, &sECKey );
-            if( ret != 0 ) goto end;
-        }
+    ret = JS_PKI_getRawKeyVal( &binPri, &sRawKey );
+    if( ret != 0 ) goto end;
 
-        JS_PKI_getOIDFromString( sECKey.pCurveOID, &binOID );
+    mAlgCombo->setCurrentText( sRawKey.pAlg );
+    mParamCombo->setCurrentText( sRawKey.pParam );
 
-        strPoints += sECKey.pPubX;
-        strPoints += sECKey.pPubY;
-
-//        mECParamsText->setText( getHexString( binOID.pVal, binOID.nLen ));
-//        mECPointsText->setText( strPoints );
-    }
+    mKeyValueText->setPlainText( sRawKey.pPub );
 
     ret = 0;
 
 end :
-    JS_BIN_reset( &binKey );
-    JS_BIN_reset( &binOID );
-    JS_PKI_resetECKeyVal( &sECKey );
-    JS_PKI_resetRawKeyVal( &sRawKey );
-
     if( ret != 0 ) manApplet->warningBox( tr( "failed to get key value [%1]").arg(ret), this );
+
+    JS_BIN_reset( &binPri );
+    JS_PKI_resetRawKeyVal( &sRawKey );
 }
 
 void CreatePQCPubKeyDlg::clickPrivate()

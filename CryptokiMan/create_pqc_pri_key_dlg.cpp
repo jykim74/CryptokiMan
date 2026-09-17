@@ -457,12 +457,12 @@ void CreatePQCPriKeyDlg::accept()
 
     if( rv != CKR_OK )
     {
-        manApplet->warningBox( tr("EC private key creation failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
+        manApplet->warningBox( tr("PQC private key creation failure [%1]").arg(JS_PKCS11_GetErrorMsg(rv)), this );
         return;
     }
 
     manApplet->clickTreeMenu( slot_index_, HM_ITEM_TYPE_PRIVATEKEY );
-    manApplet->messageBox( tr("EC private key creation successful [Handle: %1]").arg( hObject ), this );
+    manApplet->messageBox( tr("PQC private key creation successful [Handle: %1]").arg( hObject ), this );
     //    manApplet->showTypeList( slot_index_, HM_ITEM_TYPE_PRIVATEKEY );
 
     QDialog::accept();
@@ -473,30 +473,41 @@ void CreatePQCPriKeyDlg::clickGenKey()
     int ret = 0;
     BIN binPub = {0,0};
     BIN binPri = {0,0};
-    BIN binOID = {0,0};
-    JECKeyVal sECKey;
     JRawKeyVal sRawKey;
 
+    QString strAlg = mAlgCombo->currentText();
     QString strParam = mParamCombo->currentText();
 
-    memset( &sECKey, 0x00, sizeof(sECKey));
+    int nAlg = JS_PKI_getKeyAlg( strAlg.toStdString().c_str() );
+    int nParam = JS_RAW_getParam( strParam.toStdString().c_str() );
+
+    if( nAlg < 0 || nParam < 0 )
+    {
+        manApplet->warningBox( tr( "Invalid algorithm" ), this );
+        return;
+    }
+
     memset( &sRawKey, 0x00, sizeof(sRawKey));
 
-    JS_PKI_getOIDFromString( strParam.toStdString().c_str(), &binOID );
+    ret = JS_PKI_genKeyPair( nAlg, nParam, 0, &binPub, &binPri );
+    if( ret != 0 )
+    {
+        manApplet->warningBox( tr( "failed to generate keypair: %1").arg( JERR(ret)), this );
+        goto end;
+    }
 
-    ret = JS_PKI_ECCGenKeyPair( strParam.toStdString().c_str(), &binPub, &binPri );
-    if( ret != 0 ) goto end;
+    ret = JS_PKI_getRawKeyVal( &binPri, &sRawKey );
+    if( ret != 0 )
+    {
+        manApplet->warningBox( tr( "failed to get raw key value: %1").arg( JERR(ret)), this );
+        goto end;
+    }
 
-    ret = JS_PKI_getECKeyVal( &binPri, &sECKey );
-    if( ret != 0 ) goto end;
-
-    mKeyValueText->setPlainText( sECKey.pPrivate );
+    mKeyValueText->setPlainText( sRawKey.pPri );
 
 end :
     JS_BIN_reset( &binPri );
     JS_BIN_reset( &binPub );
-    JS_BIN_reset( &binOID );
-    JS_PKI_resetECKeyVal( &sECKey );
     JS_PKI_resetRawKeyVal( &sRawKey );
 }
 
@@ -506,15 +517,12 @@ void CreatePQCPriKeyDlg::clickFindKey()
     int nKeyType = -1;
     int nParam = -1;
     BIN binPri = {0,0};
-    BIN binOID = {0,0};
-    JECKeyVal  sECKey;
     JRawKeyVal sRawKey;
 
     QString strPath;
     QString fileName = manApplet->findFile( this, JS_FILE_TYPE_BER, strPath );
     if( fileName.length() < 1 ) return;
 
-    memset( &sECKey, 0x00, sizeof(sECKey ));
     memset( &sRawKey, 0x00, sizeof(sRawKey));
 
     ret = JS_BIN_fileReadBER( fileName.toLocal8Bit().toStdString().c_str(), &binPri );
@@ -525,49 +533,19 @@ void CreatePQCPriKeyDlg::clickFindKey()
     }
 
     JS_PKI_getPriKeyAlgParam( &binPri, &nKeyType, &nParam );
-
-    if( nKeyType == JS_PKI_KEY_TYPE_EDDSA )
+    if( nKeyType != JS_PKI_KEY_TYPE_ML_DSA && nKeyType == JS_PKI_KEY_TYPE_ML_KEM && nKeyType != JS_PKI_KEY_TYPE_SLH_DSA )
     {
-        if( nKeyType != JS_PKI_KEY_TYPE_EDDSA )
-        {
-            manApplet->elog( QString( "invalid private key type (%1)").arg( nKeyType ));
-            goto end;
-        }
-
-        QString strECParam;
-
-        if( nParam == JS_EDDSA_PARAM_25519 )
-        {
-            strECParam = getHexString( kCurveNameX25519, sizeof(kCurveNameX25519));
-        }
-        else
-        {
-            strECParam = getHexString( kCurveNameX448, sizeof(kCurveNameX448));
-        }
-
-        ret = JS_PKI_getRawKeyVal( &binPri, &sRawKey );
-        if( ret != 0 ) goto end;
-
-        mKeyValueText->setPlainText( sRawKey.pPri );
-//        mECParamsText->setText( strECParam );
-    }
-    else
-    {
-        if( nKeyType != JS_PKI_KEY_TYPE_ECDSA )
-        {
-            manApplet->elog( QString( "invalid private key type (%1)").arg( nKeyType ));
-            goto end;
-        }
-
-        ret = JS_PKI_getECKeyVal( &binPri, &sECKey );
-        if( ret != 0 ) goto end;
-
-        JS_PKI_getOIDFromString( sECKey.pCurveOID, &binOID );
-
-        mKeyValueText->setPlainText( sECKey.pPrivate );
-//        mECParamsText->setText( getHexString( binOID.pVal, binOID.nLen ));
+        manApplet->warningBox( tr("This is not a supported PQC algorithm."), this );
+        goto end;
     }
 
+    ret = JS_PKI_getRawKeyVal( &binPri, &sRawKey );
+    if( ret != 0 ) goto end;
+
+    mAlgCombo->setCurrentText( sRawKey.pAlg );
+    mParamCombo->setCurrentText( sRawKey.pParam );
+
+    mKeyValueText->setPlainText( sRawKey.pPri );
 
     ret = 0;
 
@@ -575,8 +553,6 @@ end :
     if( ret != 0 ) manApplet->warningBox( tr( "failed to get key value [%1]").arg(ret), this );
 
     JS_BIN_reset( &binPri );
-    JS_BIN_reset( &binOID );
-    JS_PKI_resetECKeyVal( &sECKey );
     JS_PKI_resetRawKeyVal( &sRawKey );
 }
 

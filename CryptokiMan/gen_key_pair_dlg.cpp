@@ -955,19 +955,19 @@ void GenKeyPairDlg::mechChanged(int nIndex)
     }
     else if( strMech == "CKM_ML_DSA_KEY_PAIR_GEN" )
     {
-        mOptionLabel->setText( QString("NamedCurve"));
+        mOptionLabel->setText( QString("Parameter Set"));
         mOptionCombo->addItems( kML_DSAOptionList );
         mParamTab->setDisabled(true);
     }
     else if( strMech == "CKM_ML_KEM_KEY_PAIR_GEN" )
     {
-        mOptionLabel->setText( QString("NamedCurve"));
+        mOptionLabel->setText( QString("Parameter Set"));
         mOptionCombo->addItems( kML_KEMOptionList );
         mParamTab->setDisabled(true);
     }
     else if( strMech == "CKM_SLH_DSA_KEY_PAIR_GEN" )
     {
-        mOptionLabel->setText( QString("NamedCurve"));
+        mOptionLabel->setText( QString("Parameter Set"));
         mOptionCombo->addItems( kSLH_DSAOptionList );
         mParamTab->setDisabled(true);
     }

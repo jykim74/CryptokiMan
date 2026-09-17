@@ -106,7 +106,9 @@ SOURCES += \
         cavp_dlg.cpp \
         cavp_dlg2.cpp \
         object_view_dlg.cpp \
-        thread_work_dlg.cpp
+        thread_work_dlg.cpp \
+        create_pqc_pri_key_dlg.cpp \
+        create_pqc_pub_key_dlg.cpp
 
 HEADERS += \
         about_dlg.h \
@@ -182,7 +184,9 @@ HEADERS += \
         secret_info_dlg.h \
         cavp_dlg.h \
         object_view_dlg.h \
-        thread_work_dlg.h
+        thread_work_dlg.h \
+        create_pqc_pri_key_dlg.h \
+        create_pqc_pub_key_dlg.h
 
 FORMS += \
         about_dlg.ui \
@@ -235,7 +239,9 @@ FORMS += \
         secret_info_dlg.ui \
         cavp_dlg.ui \
         object_view_dlg.ui \
-        thread_work_dlg.ui
+        thread_work_dlg.ui \
+        create_pqc_pri_key_dlg.ui \
+        create_pqc_pub_key_dlg.ui
 
 
 # Default rules for deployment.
