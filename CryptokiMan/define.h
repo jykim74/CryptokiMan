@@ -141,7 +141,8 @@ static QStringList kWrapType = {
 };
 
 static QStringList kMechDigestList = {
-    "CKM_SHA_1", "CKM_SHA224", "CKM_SHA256", "CKM_SHA384", "CKM_SHA512", "CKM_MD5"
+    "CKM_SHA_1", "CKM_SHA224", "CKM_SHA256", "CKM_SHA384", "CKM_SHA512", "CKM_MD5",
+    "CKM_SHA3_224", "CKM_SHA3_256", "CKM_SHA3_384", "CKM_SHA3_512"
 };
 
 static QStringList kMechSHAList = {
@@ -169,7 +170,8 @@ static QStringList kMechSignAsymList = {
 
 static QStringList kMechSignSymList = {
     "CKM_SHA_1_HMAC", "CKM_SHA256_HMAC", "CKM_SHA384_HMAC", "CKM_SHA512_HMAC",
-    "CKM_AES_MAC", "CKM_AES_GMAC", "CKM_AES_CMAC", "CKM_MD5_HMAC"
+    "CKM_AES_MAC", "CKM_AES_GMAC", "CKM_AES_CMAC", "CKM_MD5_HMAC",
+    "CKM_SHA3_224_HMAC", "CKM_SHA3_256_HMAC", "CKM_SHA3_384_HMAC", "CKM_SHA3_512_HMAC"
 };
 
 static QStringList kMechWrapSymList = {

@@ -1117,8 +1117,6 @@ QString getMechFlagString( unsigned long uFlag )
     if( uFlag & CKF_SIGN_RECOVER ) strFlag += " | SignRecover";
     if( uFlag & CKF_VERIFY ) strFlag += " | Verify";
     if( uFlag & CKF_HW ) strFlag += " | HW";
-    if( uFlag & CKF_SIGN ) strFlag += " | Sign";
-    if( uFlag & CKF_VERIFY ) strFlag += " | Verify";
     if( uFlag & CKF_VERIFY_RECOVER ) strFlag += " | VerifyRecover";
     if( uFlag & CKF_GENERATE ) strFlag += " | Generate";
     if( uFlag & CKF_GENERATE_KEY_PAIR ) strFlag += " | GenerateKeyPair";
