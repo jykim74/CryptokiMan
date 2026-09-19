@@ -598,8 +598,8 @@ void SignDlg::runDataSign()
         return;
     }
 
-    unsigned char sSign[1024];
-    long uSignLen = 1024;
+    unsigned char sSign[40960];
+    long uSignLen = 40960;
 
     rv = manApplet->cryptokiAPI()->Sign( slot_info_.getSessionHandle(), binInput.pVal, binInput.nLen, sSign, (CK_ULONG_PTR)&uSignLen );
     setStatusSign( rv );
