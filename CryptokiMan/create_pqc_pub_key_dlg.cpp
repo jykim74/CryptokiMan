@@ -175,6 +175,8 @@ void CreatePQCPubKeyDlg::connectAttributes()
     connect( mTrustedCheck, SIGNAL(clicked()), this, SLOT(clickTrusted()));
     connect( mStartDateCheck, SIGNAL(clicked()), this, SLOT(clickStartDate()));
     connect( mEndDateCheck, SIGNAL(clicked()), this, SLOT(clickEndDate()));
+
+    connect( mKeyValueText, SIGNAL(textChanged()), this, SLOT(changeKeyValue()));
 }
 
 void CreatePQCPubKeyDlg::accept()
@@ -581,16 +583,11 @@ void CreatePQCPubKeyDlg::clickEndDate()
     mEndDateEdit->setEnabled(mEndDateCheck->isChecked());
 }
 
-void CreatePQCPubKeyDlg::changeECPoints( const QString& text )
+void CreatePQCPubKeyDlg::changeKeyValue()
 {
-    QString strLen = getDataLenString( DATA_HEX, text );
-//    mECPointsLenText->setText( QString("%1").arg(strLen));
-}
-
-void CreatePQCPubKeyDlg::changeECParams( const QString& text )
-{
-    QString strLen = getDataLenString( DATA_HEX, text );
-//    mECParamsLenText->setText( QString("%1").arg(strLen));
+    QString strText = mKeyValueText->toPlainText();
+    QString strLen = getDataLenString( DATA_HEX, strText );
+    mKeyValueLenText->setText( QString("%1").arg( strLen ));
 }
 
 void CreatePQCPubKeyDlg::setDefaults()
@@ -613,56 +610,33 @@ void CreatePQCPubKeyDlg::setDefaults()
 int CreatePQCPubKeyDlg::getSKI( BIN *pSKI )
 {
     int ret = 0;
-    JECKeyVal sECKey;
+    JRawKeyVal sRawKey;
 
     BIN binPub = {0,0};
-    BIN binOID = {0,0};
-    BIN binPoints = {0,0};
-    BIN binPubX = {0,0};
-    BIN binPubY = {0,0};
-    char *pHexPubX = NULL;
-    char *pHexPubY = NULL;
 
-    char sOID[128];
-//    QString strParam = mECParamsText->text();
-//    QString strPoints = mECPointsText->text();
-    QString strParam;
-    QString strPoints;
+    QString strValue = mKeyValueText->toPlainText();
+    QString strParam = mParamCombo->currentText();
+    QString strAlg = mAlgCombo->currentText();
 
-    memset( &sECKey, 0x00, sizeof(sECKey));
-    memset(sOID, 0x00, sizeof(sOID));
+    memset( &sRawKey, 0x00, sizeof(sRawKey));
 
-    JS_BIN_decodeHex( strPoints.toStdString().c_str(), &binPoints );
-    JS_BIN_decodeHex( strParam.toStdString().c_str(), &binOID );
-
-    ret = JS_PKI_getStringFromOID( &binOID, sOID );
-    if( ret != 0 )
+    if( strValue.length() <= 3 )
     {
-        manApplet->elog( QString( "invalid parameters [%1]").arg(ret));
+        manApplet->elog( QString( "Invalid public key value" ) );
         goto end;
     }
 
-    if( binPoints.nLen <= 3 )
-    {
-        manApplet->elog( QString( "Invalid Points value" ) );
-        goto end;
-    }
 
-    JS_BIN_set( &binPubX, &binPoints.pVal[1], (binPoints.nLen-1) / 2 );
-    JS_BIN_set( &binPubY, &binPoints.pVal[1 + binPubX.nLen], binPubX.nLen );
-    JS_BIN_encodeHex( &binPubX, &pHexPubX );
-    JS_BIN_encodeHex( &binPubY, &pHexPubY );
+    JS_PKI_setRawKeyVal( &sRawKey,
+                        strAlg.toStdString().c_str(),
+                        strParam.toStdString().c_str(),
+                        strValue.toStdString().c_str(),
+                        NULL );
 
-    JS_PKI_setECKeyVal( &sECKey,
-                       sOID,
-                       pHexPubX,
-                       pHexPubY,
-                       NULL );
-
-    ret = JS_PKI_encodeECPublicKey( &sECKey, &binPub );
+    ret = JS_PKI_encodeRawPublicKey( &sRawKey, &binPub );
     if( ret != 0 )
     {
-        manApplet->elog( QString( "failed to encode private key [%1]").arg(ret));
+        manApplet->elog( QString( "failed to encode public key [%1]").arg(ret));
         goto end;
     }
 
@@ -674,14 +648,8 @@ int CreatePQCPubKeyDlg::getSKI( BIN *pSKI )
     }
 
 end :
-    JS_PKI_resetECKeyVal( &sECKey );
     JS_BIN_reset( &binPub );
-    JS_BIN_reset( &binOID );
-    JS_BIN_reset( &binPoints );
-    JS_BIN_reset( &binPubX );
-    JS_BIN_reset( &binPubY );
-    if( pHexPubX ) JS_free( pHexPubX );
-    if( pHexPubY ) JS_free( pHexPubY );
+    JS_PKI_resetRawKeyVal( &sRawKey );
 
     return ret;
 }

@@ -42,8 +42,7 @@ private slots:
     void clickStartDate();
     void clickEndDate();
 
-    void changeECPoints( const QString& text );
-    void changeECParams( const QString& text );
+    void changeKeyValue();
 private:
     void initUI();
     void initialize();

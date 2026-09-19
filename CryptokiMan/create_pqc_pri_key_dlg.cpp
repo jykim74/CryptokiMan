@@ -166,7 +166,7 @@ void CreatePQCPriKeyDlg::connectAttributes()
     connect( mUseSKICheck, SIGNAL(clicked()), this, SLOT(clickUseSKI()));
     connect( mUseSPKICheck, SIGNAL(clicked()), this, SLOT(clickUseSPKI()));
 
-    connect( mKeyValueText, SIGNAL(textChanged(const QString&)), this, SLOT(changeKeyValue(const QString&)));
+    connect( mKeyValueText, SIGNAL(textChanged()), this, SLOT(changeKeyValue()));
 
     connect( mPrivateCheck, SIGNAL(clicked()), this, SLOT(clickPrivate()));
     connect( mDecryptCheck, SIGNAL(clicked()), this, SLOT(clickDecrypt()));
@@ -638,14 +638,9 @@ void CreatePQCPriKeyDlg::clickEndDate()
     mEndDateEdit->setEnabled(mEndDateCheck->isChecked());
 }
 
-void CreatePQCPriKeyDlg::changeECParams( const QString& text )
+void CreatePQCPriKeyDlg::changeKeyValue()
 {
-    QString strLen = getDataLenString( DATA_HEX, text );
-//    mECParamsLenText->setText( QString("%1").arg( strLen ));
-}
-
-void CreatePQCPriKeyDlg::changeKeyValue( const QString& text )
-{
+    QString text = mKeyValueText->toPlainText();
     QString strLen = getDataLenString( DATA_HEX, text );
     mKeyValueLenText->setText( QString("%1").arg( strLen ));
 }
@@ -670,33 +665,25 @@ void CreatePQCPriKeyDlg::setDefaults()
 int CreatePQCPriKeyDlg::getSKI_SPKI( BIN *pSKI, BIN *pSPKI )
 {
     int ret = 0;
-    JECKeyVal sECKey;
+    JRawKeyVal sRawKey;
 
     BIN binPri = {0,0};
     BIN binPub = {0,0};
-    BIN binOID = {0,0};
-    char sOID[128];
-//    QString strParam = mECParamsText->text();
-    QString strParam;
 
-    memset( &sECKey, 0x00, sizeof(sECKey));
-    memset(sOID, 0x00, sizeof(sOID));
+    QString strAlg = mAlgCombo->currentText();
+    QString strParam = mParamCombo->currentText();
+    QString strValue = mKeyValueText->toPlainText();
 
-    JS_BIN_decodeHex( strParam.toStdString().c_str(), &binOID );
-    ret = JS_PKI_getStringFromOID( &binOID, sOID );
-    if( ret != 0 )
-    {
-        manApplet->elog( QString( "invalid parameters [%1]").arg(ret));
-        goto end;
-    }
+    memset( &sRawKey, 0x00, sizeof(sRawKey));
 
-    JS_PKI_setECKeyVal( &sECKey,
-                       sOID,
-                       NULL,
-                       NULL,
-                       mKeyValueText->toPlainText().toStdString().c_str() );
+    JS_PKI_setRawKeyVal( &sRawKey,
+                        strAlg.toStdString().c_str(),
+                        strParam.toStdString().c_str(),
+                        NULL,
+                        strValue.toStdString().c_str() );
 
-    ret = JS_PKI_encodeECPrivateKey( &sECKey, &binPri );
+    ret = JS_PKI_encodeRawPrivateKey( &sRawKey, &binPri );
+
     if( ret != 0 )
     {
         manApplet->elog( QString( "failed to encode private key [%1]").arg(ret));
@@ -720,10 +707,9 @@ int CreatePQCPriKeyDlg::getSKI_SPKI( BIN *pSKI, BIN *pSPKI )
     JS_BIN_copy( pSPKI, &binPub );
 
 end :
-    JS_PKI_resetECKeyVal( &sECKey );
+    JS_PKI_resetRawKeyVal( &sRawKey );
     JS_BIN_reset( &binPri );
     JS_BIN_reset( &binPub );
-    JS_BIN_reset( &binOID );
 
     return ret;
 }

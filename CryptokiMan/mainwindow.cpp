@@ -1265,7 +1265,7 @@ void MainWindow::createPQCPublicKey()
     }
 
     CreatePQCPubKeyDlg createPQCPubKeyDlg;
-//    if( pItem ) createDSAPubKeyDlg.setSlotIndex( pItem->getSlotIndex() );
+    if( pItem ) createPQCPubKeyDlg.setSlotIndex( pItem->getSlotIndex() );
     createPQCPubKeyDlg.exec();
 }
 
@@ -1280,7 +1280,7 @@ void MainWindow::createPQCPrivateKey()
     }
 
     CreatePQCPriKeyDlg createPQCPriKeyDlg;
-//    if( pItem ) createDSAPriKeyDlg.setSlotIndex( pItem->getSlotIndex() );
+    if( pItem ) createPQCPriKeyDlg.setSlotIndex( pItem->getSlotIndex() );
     createPQCPriKeyDlg.exec();
 }
 

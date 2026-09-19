@@ -744,7 +744,7 @@ int CreateECPubKeyDlg::getSKI( BIN *pSKI )
     ret = JS_PKI_encodeECPublicKey( &sECKey, &binPub );
     if( ret != 0 )
     {
-        manApplet->elog( QString( "failed to encode private key [%1]").arg(ret));
+        manApplet->elog( QString( "failed to encode public key [%1]").arg(ret));
         goto end;
     }
 
