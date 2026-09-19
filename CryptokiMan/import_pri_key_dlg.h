@@ -91,6 +91,8 @@ private:
     int createEDPrivateKey( JRawKeyVal *pRawKeyVal );
     int createDSAPublicKey( JDSAKeyVal *pDSAKeyVal );
     int createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal );
+    int createPQCPublicKey( JRawKeyVal *pRawKeyVal );
+    int createPQCPrivateKey( JRawKeyVal *pRawKeyVal );
 
     void setPubBoolTemplate( CK_ATTRIBUTE sTemplate[], CK_ULONG& uCount );
     void setPriBoolTemplate( CK_ATTRIBUTE sTemplate[], CK_ULONG& uCount );

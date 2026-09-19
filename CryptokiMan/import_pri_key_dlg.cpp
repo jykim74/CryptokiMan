@@ -409,6 +409,18 @@ void ImportPriKeyDlg::accept()
                 rv = createDSAPublicKey( &dsaKeyVal );
         }
     }
+    else if( nKeyType == JS_PKI_KEY_TYPE_ML_DSA || nKeyType == JS_PKI_KEY_TYPE_ML_KEM || nKeyType == JS_PKI_KEY_TYPE_SLH_DSA )
+    {
+        rv = JS_PKI_getRawKeyVal( &binPri, &rawKeyVal );
+        if( rv == 0 )
+        {
+            rv = createPQCPrivateKey( &rawKeyVal );
+            if( rv != 0 ) goto end;
+
+            if( mSavePubKeyCheck->isChecked() )
+                rv = createPQCPublicKey( &rawKeyVal );
+        }
+    }
     else
     {
         manApplet->elog( QString( "Key type not supported (%1)").arg(nKeyType));
@@ -2583,6 +2595,288 @@ int ImportPriKeyDlg::createDSAPrivateKey( JDSAKeyVal *pDSAKeyVal )
 
     return 0;
 }
+
+int ImportPriKeyDlg::createPQCPublicKey( JRawKeyVal *pRawKeyVal )
+{
+    int rv = -1;
+    CK_SESSION_HANDLE hSession = slot_info_.getSessionHandle();
+
+    CK_ATTRIBUTE sTemplate[20];
+    CK_ULONG uCount = 0;
+    CK_OBJECT_HANDLE hObject = -1;
+
+    CK_OBJECT_CLASS objClass = CKO_PUBLIC_KEY;
+    CK_KEY_TYPE keyType = -1;
+
+    QString strAlg = pRawKeyVal->pAlg;
+    CK_ULONG parameterSet;
+
+    if( strAlg == JS_PKI_KEY_NAME_ML_DSA )
+    {
+        keyType = CKK_ML_DSA;
+        parameterSet = getML_DSAParamType( pRawKeyVal->pParam );
+    }
+    else if( strAlg == JS_PKI_KEY_NAME_ML_KEM )
+    {
+        keyType = CKK_ML_KEM;
+        parameterSet = getML_KEMParamType( pRawKeyVal->pParam );
+    }
+    else if( strAlg == JS_PKI_KEY_NAME_SLH_DSA )
+    {
+        keyType = CKK_SLH_DSA;
+        parameterSet = getSLH_DSAParamType( pRawKeyVal->pParam );
+    }
+
+    sTemplate[uCount].type = CKA_CLASS;
+    sTemplate[uCount].pValue = &objClass;
+    sTemplate[uCount].ulValueLen = sizeof(objClass);
+    uCount++;
+
+    sTemplate[uCount].type = CKA_KEY_TYPE;
+    sTemplate[uCount].pValue = &keyType;
+    sTemplate[uCount].ulValueLen = sizeof(keyType);
+    uCount++;
+
+    sTemplate[uCount].type = CKA_PARAMETER_SET;
+    sTemplate[uCount].pValue = &parameterSet;
+    sTemplate[uCount].ulValueLen = sizeof(parameterSet);
+    uCount++;
+
+    QString strLabel = mPubLabelText->text();
+    BIN binLabel = {0,0};
+
+    if( !strLabel.isEmpty() )
+    {
+        JS_BIN_set( &binLabel, (unsigned char *)strLabel.toStdString().c_str(), strLabel.toUtf8().length() );
+        sTemplate[uCount].type = CKA_LABEL;
+        sTemplate[uCount].pValue = binLabel.pVal;
+        sTemplate[uCount].ulValueLen = binLabel.nLen;
+        uCount++;
+    }
+
+    QString strID = mPubIDText->text();
+    BIN binID = {0,0};
+
+    if( mPubUseSKICheck->isChecked() )
+    {
+        JS_BIN_copy( &binID, &ski_ );
+    }
+    else
+    {
+        JS_BIN_decodeHex( strID.toStdString().c_str(), &binID );
+    }
+
+    if( binID.nLen > 0 )
+    {
+        sTemplate[uCount].type = CKA_ID;
+        sTemplate[uCount].pValue = binID.pVal;
+        sTemplate[uCount].ulValueLen = binID.nLen;
+        uCount++;
+    }
+
+    QString strSubject = mPubSubjectText->text();
+    BIN binSubject = {0,0};
+
+    if( !strSubject.isEmpty() )
+    {
+        if( mPubSubjectTypeCombo->currentText() == "Text" )
+            JS_PKI_getDERFromDN( strSubject.toStdString().c_str(), &binSubject );
+        else
+            JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+
+        sTemplate[uCount].type = CKA_SUBJECT;
+        sTemplate[uCount].pValue = binSubject.pVal;
+        sTemplate[uCount].ulValueLen = binSubject.nLen;
+        uCount++;
+    }
+
+    if( strcasecmp( pRawKeyVal->pParam, JS_EDDSA_PARAM_NAME_25519 ) == 0 )
+    {
+        sTemplate[uCount].type = CKA_EC_PARAMS;
+        sTemplate[uCount].pValue = kCurveNameX25519;
+        sTemplate[uCount].ulValueLen = sizeof(kCurveNameX25519);
+        uCount++;
+    }
+    else
+    {
+        sTemplate[uCount].type = CKA_EC_PARAMS;
+        sTemplate[uCount].pValue = kCurveNameX448;
+        sTemplate[uCount].ulValueLen = sizeof(kCurveNameX448);
+        uCount++;
+    }
+
+    QString strECPoint;
+    BIN binECPoint={0,0};
+
+    strECPoint = "04";
+    strECPoint += QString( "%1" ).arg( strlen( pRawKeyVal->pPub )/2, 2, 16, QLatin1Char('0'));
+    strECPoint += pRawKeyVal->pPub;
+
+    JS_BIN_decodeHex( strECPoint.toStdString().c_str(), &binECPoint );
+
+    sTemplate[uCount].type = CKA_EC_POINT;
+    sTemplate[uCount].pValue = binECPoint.pVal;
+    sTemplate[uCount].ulValueLen = binECPoint.nLen;
+    uCount++;
+
+    setPubBoolTemplate( sTemplate, uCount );
+
+    JS_BIN_reset( &binECPoint );
+    JS_BIN_reset( &binSubject );
+    JS_BIN_reset( &binID );
+
+    return 0;
+}
+
+int ImportPriKeyDlg::createPQCPrivateKey( JRawKeyVal *pRawKeyVal )
+{
+    int rv = -1;
+    CK_SESSION_HANDLE hSession = slot_info_.getSessionHandle();
+
+
+    CK_ATTRIBUTE sTemplate[20];
+    CK_ULONG uCount = 0;
+    CK_OBJECT_HANDLE hObject = -1;
+
+    CK_OBJECT_CLASS objClass = CKO_PRIVATE_KEY;
+    CK_KEY_TYPE keyType = -1;
+
+    QString strAlg = pRawKeyVal->pAlg;
+    CK_ULONG parameterSet;
+
+    if( strAlg == JS_PKI_KEY_NAME_ML_DSA )
+    {
+        keyType = CKK_ML_DSA;
+        parameterSet = getML_DSAParamType( pRawKeyVal->pParam );
+    }
+    else if( strAlg == JS_PKI_KEY_NAME_ML_KEM )
+    {
+        keyType = CKK_ML_KEM;
+        parameterSet = getML_KEMParamType( pRawKeyVal->pParam );
+    }
+    else if( strAlg == JS_PKI_KEY_NAME_SLH_DSA )
+    {
+        keyType = CKK_SLH_DSA;
+        parameterSet = getSLH_DSAParamType( pRawKeyVal->pParam );
+    }
+
+    sTemplate[uCount].type = CKA_CLASS;
+    sTemplate[uCount].pValue = &objClass;
+    sTemplate[uCount].ulValueLen = sizeof(objClass);
+    uCount++;
+
+    sTemplate[uCount].type = CKA_KEY_TYPE;
+    sTemplate[uCount].pValue = &keyType;
+    sTemplate[uCount].ulValueLen = sizeof(keyType);
+    uCount++;
+
+    sTemplate[uCount].type = CKA_PARAMETER_SET;
+    sTemplate[uCount].pValue = &parameterSet;
+    sTemplate[uCount].ulValueLen = sizeof(parameterSet);
+    uCount++;
+
+    QString strLabel = mPriLabelText->text();
+    BIN binLabel = {0,0};
+
+    if( !strLabel.isEmpty() )
+    {
+        JS_BIN_set( &binLabel, (unsigned char *)strLabel.toStdString().c_str(), strLabel.toUtf8().length() );
+        sTemplate[uCount].type = CKA_LABEL;
+        sTemplate[uCount].pValue = binLabel.pVal;
+        sTemplate[uCount].ulValueLen = binLabel.nLen;
+        uCount++;
+    }
+
+    QString strID = mPriIDText->text();
+    BIN binID = {0,0};
+
+    if( mPriUseSKICheck->isChecked() )
+    {
+        JS_BIN_copy( &binID, &ski_ );
+    }
+    else
+    {
+        JS_BIN_decodeHex( strID.toStdString().c_str(), &binID );
+    }
+
+    if( binID.nLen > 0 )
+    {
+        sTemplate[uCount].type = CKA_ID;
+        sTemplate[uCount].pValue = binID.pVal;
+        sTemplate[uCount].ulValueLen = binID.nLen;
+        uCount++;
+    }
+
+    QString strPubKeyInfo = mPriPubKeyInfoText->text();
+    BIN binPub = {0,0};
+
+    if( mPriUseSPKICheck->isChecked() )
+    {
+        JS_BIN_copy( &binPub, &spki_ );
+    }
+    else
+    {
+        if( strPubKeyInfo.length() > 0 )
+            JS_BIN_decodeHex( strPubKeyInfo.toStdString().c_str(), &binPub );
+    }
+
+    if( binPub.nLen > 0 )
+    {
+        sTemplate[uCount].type = CKA_PUBLIC_KEY_INFO;
+        sTemplate[uCount].pValue = binPub.pVal;
+        sTemplate[uCount].ulValueLen = binPub.nLen;
+        uCount++;
+    }
+
+    QString strSubject = mPriSubjectText->text();;
+    BIN binSubject = {0,0};
+
+    if( !strSubject.isEmpty() )
+    {
+        if( mPriSubjectTypeCombo->currentText() == "Text" )
+            JS_PKI_getDERFromDN( strSubject.toStdString().c_str(), &binSubject );
+        else
+            JS_BIN_decodeHex( strSubject.toStdString().c_str(), &binSubject );
+
+        sTemplate[uCount].type = CKA_SUBJECT;
+        sTemplate[uCount].pValue = binSubject.pVal;
+        sTemplate[uCount].ulValueLen = binSubject.nLen;
+        uCount++;
+    }
+
+    if( strcasecmp( pRawKeyVal->pParam, JS_EDDSA_PARAM_NAME_25519 ) == 0 )
+    {
+        sTemplate[uCount].type = CKA_EC_PARAMS;
+        sTemplate[uCount].pValue = kCurveNameX25519;
+        sTemplate[uCount].ulValueLen = sizeof(kCurveNameX25519);
+        uCount++;
+    }
+    else
+    {
+        sTemplate[uCount].type = CKA_EC_PARAMS;
+        sTemplate[uCount].pValue = kCurveNameX448;
+        sTemplate[uCount].ulValueLen = sizeof(kCurveNameX448);
+        uCount++;
+    }
+
+    BIN binValue = {0,0};
+    JS_BIN_decodeHex( pRawKeyVal->pPri, &binValue );
+
+    sTemplate[uCount].type = CKA_VALUE;
+    sTemplate[uCount].pValue = binValue.pVal;
+    sTemplate[uCount].ulValueLen = binValue.nLen;
+    uCount++;
+
+    setPriBoolTemplate( sTemplate, uCount );
+
+    JS_BIN_reset( &binValue );
+    JS_BIN_reset( &binSubject );
+    JS_BIN_reset( &binPub );
+    JS_BIN_reset( &binID );
+
+    return 0;
+}
+
 
 
 void ImportPriKeyDlg::setDefaults()
