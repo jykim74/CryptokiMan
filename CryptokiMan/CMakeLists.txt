@@ -257,6 +257,8 @@ add_executable(${PROJECT_NAME}
 target_link_options( ${PROJECT_NAME} PRIVATE -mwindows -MD )
 # add_definitions( -D_USE_RC_LCN )
 
+
+
 if(WIN32)
     include_directories( ../../PKILib
         "c:/msys64/mingw64/include"
