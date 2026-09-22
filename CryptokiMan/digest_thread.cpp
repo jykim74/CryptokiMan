@@ -1,5 +1,5 @@
 #include <stdio.h>
-//#include <stdlib.h>
+#include <stdlib.h>
 
 #include "digest_thread.h"
 #include "man_applet.h"
