@@ -506,6 +506,8 @@ void MainWindow::createObjectActions()
         create_ed_pri_key_act_->setEnabled( false );
         create_dsa_pub_key_act_->setEnabled( false );
         create_dsa_pri_key_act_->setEnabled( false );
+        create_pqc_pub_key_act_->setEnabled( false );
+        create_pqc_pri_key_act_->setEnabled( false );
 
         create_key_act_->setEnabled( false );
         del_object_act_->setEnabled( false );
