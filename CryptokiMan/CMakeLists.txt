@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
 project(CryptokiMan
-    VERSION 2.3.0
+    VERSION 2.3.2
     DESCRIPTION "CryptokiMan Application"
     LANGUAGES CXX )
 
@@ -22,6 +22,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Network)
 
 
 add_definitions( -D_USE_LCN_SRV )
+add_definitions( -D_STDLIB_PATCH )
 
 set( OPENSSL "openssl35" )
 
