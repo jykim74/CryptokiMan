@@ -95,5 +95,6 @@
         <file>images/passwd.png</file>
         <file>images/pqc_pr.png</file>
         <file>images/pqc_pu.png</file>
+        <file>images/manual.png</file>
     </qresource>
 </RCC>

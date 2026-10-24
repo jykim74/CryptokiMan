@@ -206,9 +206,10 @@ enum StatusType {
 #define ACT_HELP_HALT_LOG               VIEW_HELP | 0x00000002
 #define ACT_HELP_SETTING                VIEW_HELP | 0x00000004
 #define ACT_HELP_LCN_INFO               VIEW_HELP | 0x00000008
-#define ACT_HELP_BUG_ISSUE              VIEW_HELP | 0x00000010
-#define ACT_HELP_QNA                    VIEW_HELP | 0x00000020
-#define ACT_HELP_ABOUT                  VIEW_HELP | 0x00000040
+#define ACT_HELP_MANUAL                 VIEW_HELP | 0x00000010
+#define ACT_HELP_BUG_ISSUE              VIEW_HELP | 0x00000020
+#define ACT_HELP_QNA                    VIEW_HELP | 0x00000040
+#define ACT_HELP_ABOUT                  VIEW_HELP | 0x00000080
 
 static const int kFileDefault = ACT_FILE_NEW | ACT_FILE_OPEN;
 

@@ -782,6 +782,14 @@ void MainWindow::createHelpActions()
     lcn_info_act_->setStatusTip(tr("License Information"));
     if( isView( ACT_HELP_LCN_INFO ) ) help_tool_->addAction( lcn_info_act_ );
 
+    const QIcon manIcon = QIcon::fromTheme("cryptokiman_manual", QIcon(":/images/manual.png"));
+    man_act_ = new QAction( manIcon, tr("Manual"), this);
+    connect( man_act_, &QAction::triggered, this, &MainWindow::openManual);
+    helpMenu->addAction( man_act_ );
+    man_act_->setStatusTip(tr("CryptokiMan manual"));
+    if( isView( ACT_HELP_MANUAL ) ) help_tool_->addAction( man_act_ );
+
+
     const QIcon cryptokiManIcon = QIcon::fromTheme("cryptokiman", QIcon(":/images/cryptokiman.png"));
 
     bug_issue_act_ = new QAction( cryptokiManIcon, tr("Bug or Issue Report"), this);
@@ -2206,6 +2214,12 @@ void MainWindow::qnaDiscussion()
 {
     QString link = "https://github.com/jykim74/CryptokiMan/discussions";
 //    QString link = "https://groups.google.com/g/cryptokiman";
+    QDesktopServices::openUrl(QUrl(link));
+}
+
+void MainWindow::openManual()
+{
+    QString link = "https://jykim74.github.io/cryptokiman_manual";
     QDesktopServices::openUrl(QUrl(link));
 }
 
