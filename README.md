@@ -7,6 +7,9 @@ The information and download links in this guide are based on the supplied proje
 ![CryptokiMan main window](https://jykim74.github.io/cryptokiman_manual/images/mainwindow.png)
 
 ## Download
+
+Executable files are available for download for Windows 64-bit, macOS (Intel), and Linux 64-bit.
+
 [CryptokiMan Download](https://jykim74.github.io/wiki/cryptokiman/download/)
 
 ## What you can do
