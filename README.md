@@ -6,6 +6,9 @@ The information and download links in this guide are based on the supplied proje
 
 ![CryptokiMan main window](https://jykim74.github.io/cryptokiman_manual/images/mainwindow.png)
 
+## Download
+[CryptokiMan Download](https://jykim74.github.io/wiki/cryptokiman/download/)
+
 ## What you can do
 
 ### Inspect a Cryptoki module and token
