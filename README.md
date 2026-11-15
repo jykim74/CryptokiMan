@@ -4,7 +4,7 @@
 
 The information and download links in this guide are based on the supplied project index. The screenshots and feature descriptions reflect the CryptokiMan source and its user interface. Availability of an operation depends on the module, token, permissions, and license.
 
-![CryptokiMan main window](images/mainwindow.png)
+![CryptokiMan main window](https://jykim74.github.io/cryptokiman_manual/images/mainwindow.png)
 
 ## What you can do
 
