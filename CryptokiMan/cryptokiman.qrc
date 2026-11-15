@@ -96,5 +96,6 @@
         <file>images/pqc_pr.png</file>
         <file>images/pqc_pu.png</file>
         <file>images/manual.png</file>
+        <file>LICENSE</file>
     </qresource>
 </RCC>
