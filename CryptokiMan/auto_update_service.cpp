@@ -21,11 +21,11 @@ SINGLETON_IMPL(AutoUpdateService)
 namespace  {
 #ifdef Q_OS_WIN32
     const char *kSparkleAppcastURI = "https://jykim74.github.io/appcast/cryptokiman_appcast_win.xml";
-    const char *kSparkleAppcastURIForKR = "https://jykim74.github.io/appcast/cryptokiman_appcast_win_ko.xml";
+//    const char *kSparkleAppcastURIForKR = "https://jykim74.github.io/appcast/cryptokiman_appcast_win_ko.xml";
     const char *kWinSparkleRegPath = "SOFTWARE\\JS Inc\\CryptokiMan\\WinSparkle";
 #else
     const char *kSparkleAppcastURI = "https://jykim74.github.io/appcast/cryptokiman_appcast_mac.xml";
-    const char *kSparkleAppcastURIForKR = "https://jykim74.github.io/appcast/cryptokiman_appcast_mac_ko.xml";
+//    const char *kSparkleAppcastURIForKR = "https://jykim74.github.io/appcast/cryptokiman_appcast_mac_ko.xml";
 #endif
     const char *kSparkleAlreadyEnableUpdateByDefault = "SparkleAlreadyEnableUpdateByDefault";
 }
@@ -43,8 +43,8 @@ QString getAppcastURI() {
         return url_from_env;
     }
 
-//    return kSparkleAppcastURI;
-    return I18NHelper::getInstance()->isKorea() ? kSparkleAppcastURIForKR : kSparkleAppcastURI;
+    return kSparkleAppcastURI;
+//    return I18NHelper::getInstance()->isKorea() ? kSparkleAppcastURIForKR : kSparkleAppcastURI;
 }
 
 class AutoUpdateAdapter {
@@ -64,7 +64,7 @@ public:
         win_sparkle_set_registry_path(kWinSparkleRegPath);
         win_sparkle_set_appcast_url(getAppcastURI().toUtf8().data());
         win_sparkle_set_app_details(
-                    L"JS Inc",
+                    L"JKLab",
                     L"CryptokiMan",
                     QString(STRINGIZE(CRYPTOKIMAN_VERSION)).toStdWString().c_str() );
     }

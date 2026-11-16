@@ -9,7 +9,7 @@
 	<key>CFBundleIconFile</key>
         <string>cryptokiman.icns</string>
 	<key>CFBundleIdentifier</key>
-        <string>com.jsinc.cryptokiman</string>
+        <string>com.jklab.cryptokiman</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleName</key>

@@ -27,8 +27,8 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    QCoreApplication::setOrganizationName( "JS Inc" );
-    QCoreApplication::setOrganizationDomain( "jssoft.com" );
+    QCoreApplication::setOrganizationName( "JKLab" );
+    QCoreApplication::setOrganizationDomain( "jklab.com" );
     QCoreApplication::setApplicationName( "CryptokiMan" );
 
     QGuiApplication::setWindowIcon(QIcon(":/images/cryptokiman.png"));
