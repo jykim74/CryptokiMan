@@ -27,9 +27,9 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    QCoreApplication::setOrganizationName( "JKLab" );
-    QCoreApplication::setOrganizationDomain( "jklab.com" );
-    QCoreApplication::setApplicationName( "CryptokiMan" );
+    QCoreApplication::setOrganizationName( JS_ORG_NAME );
+    QCoreApplication::setOrganizationDomain( JS_ORG_DOMAIN );
+    QCoreApplication::setApplicationName( JS_APP_NAME_CRYPTOKIMAN );
 
     QGuiApplication::setWindowIcon(QIcon(":/images/cryptokiman.png"));
 
